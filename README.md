@@ -22,3 +22,10 @@ The mappable fields are hidden by default and only made visible when the fragmen
 The Clay calendar icon can be turned on or off via the configuration.
 
 The JavaScript will not execute when the fragment is viewed in either the Fragment Editor or the Page Content Editor.
+
+#### Dependency
+In order to correctly render this fragment, it is necessary for each rendered instance within the collection display to have a unique identifier. This is not something that happens at the moment but there is a JIRA issue already in place with a potential fix already to be merged. However, no timeline is currently known for its availability.
+
+In order to ensure each instance had a unique identifier it was necessary to use the com.liferay.portal.kernel.util.PortalUtil to generate a random key. This has meant the need to enable the staticUtil variable so the class can be referenced from the fragment.
+
+To enable this navigate to Control Panel -> System Settings ->Template Engines (under Platform) -> FreeMarker Engine and remove staticUtil from the Restricted Variables list.
