@@ -1,0 +1,68 @@
+.date-display {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-flex-wrap: nowrap;
+    -ms-flex-wrap: nowrap;
+    flex-wrap: nowrap;
+    -webkit-align-items: center;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+}
+
+.date-display .date-display-content {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-flex: 1 0 auto;
+    -ms-flex: 1 0 auto;
+    flex: 1 0 auto;
+    -webkit-align-items: center;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    background-color: #f5f5f5;
+    border-radius: 5px;
+    padding: 15px 24px;
+    width: 325px;
+    height: 95px;
+    margin-right: 7px;
+}
+
+.date-display .date-display-content .date-display-content__icon {
+	font-size: 1rem;
+	margin-right: .75rem;
+}
+
+.date-display .date-display-content .date-display-content__date {
+    font-size: 1.25rem;
+    font-weight: 500;
+    position: relative;
+    top: -1px;
+		text-align: center;
+		display: none;
+}
+
+.date-display .date-display-content .date-display-content__month {
+    color: #757575;
+    font-size: 0.875rem;
+    font-weight: 500;
+		display: none;
+}
+
+.date-display .date-display-content .date-display-content__separator {
+    height: 1px;
+    background: #000;
+    margin: 0 2px;
+    -webkit-transform: rotate(-65deg);
+    -ms-transform: rotate(-65deg);
+    transform: rotate(-65deg);
+    width: 30px;
+		display: none;
+}
+.date-display .date-display-content .show {
+		display: block;
+}

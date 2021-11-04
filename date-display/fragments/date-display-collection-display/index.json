@@ -1,0 +1,15 @@
+{
+	"fieldSets": [
+		{
+			"fields": [
+				{
+					"defaultValue": true,
+					"label": "show-icon",
+					"name": "showIcon",
+					"type": "checkbox"
+				}
+			],
+			"label": "date-display-options"
+		}
+	]
+}

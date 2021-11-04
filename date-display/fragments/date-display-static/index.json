@@ -1,0 +1,27 @@
+{
+	"fieldSets": [
+		{
+			"fields": [
+				{
+					"defaultValue": true,
+					"label": "show-icon",
+					"name": "showIcon",
+					"type": "checkbox"
+				},
+				{
+					"defaultValue": "",
+					"label": "start-date",
+					"name": "startDate",
+					"type": "text"
+				},
+				{
+					"defaultValue": "",
+					"label": "end-date",
+					"name": "endDate",
+					"type": "text"
+				}
+			],
+			"label": "date-display-options"
+		}
+	]
+}
