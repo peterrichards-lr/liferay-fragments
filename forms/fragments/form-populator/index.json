@@ -1,0 +1,43 @@
+{
+	"fieldSets": [
+		{
+			"fields": [
+				{
+					"label": "field-mapping",
+					"name": "fieldMapping",
+					"type": "text"
+				},
+				{
+					"defaultValue": false,
+					"label": "enable-debug",
+					"name": "enableDebug",
+					"type": "checkbox"
+				},
+				{
+					"label": "wait-interval-ms",
+					"name": "waitIntervalMs",
+					"defaultValue": "100",
+					"type": "text",
+					"typeOptions": {
+						"validation": {
+							"min": 100,
+							"type": "number"
+						}
+					}
+				},
+				{
+					"label": "wait-count",
+					"name": "waitCount",
+					"defaultValue": "3",
+					"type": "text",
+					"typeOptions": {
+						"validation": {
+							"min": 1,
+							"type": "number"
+						}
+					}
+				}
+			]
+		}
+	]
+}
