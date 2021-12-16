@@ -36,6 +36,18 @@
 							"type": "number"
 						}
 					}
+				},
+				{
+					"label": "type-text-delay-ms",
+					"name": "typeTextDelay",
+					"defaultValue": "100",
+					"type": "text",
+					"typeOptions": {
+						"validation": {
+							"min": 100,
+							"type": "number"
+						}
+					}
 				}
 			]
 		}

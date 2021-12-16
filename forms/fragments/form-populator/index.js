@@ -7,6 +7,7 @@ if (document.body.classList.contains('has-edit-mode-menu')) // If present then w
 const waitInterval = configuration.waitIntervalMs;
 const waitCount = configuration.waitCount - 1;
 const enableDebug = configuration.enableDebug;
+const typeTextDelay = configuration.typeTextDelay;
 
 const search = location.search.substring(1);
 if (!search) { // If it is not set then there is no query string to map
@@ -29,25 +30,126 @@ if (!configuration.fieldMapping) { // If it is not set then the fragment has not
 }
 	
 if (!isJsonString(configuration.fieldMapping)) {
-	console.error("Field mapping is not in JSON format. It should be an array of { parameter: '...', fieldReference: '...'} objects, where parameter is the query string parameter and fieldReference is the form Field Reference");
+	console.error("Field mapping is not in JSON format. It should be an array of { parameter: '...', fieldReference: '...', fieldType: '...'} objects, where parameter is the query string parameter, fieldReference is the form Field Reference and the fieldType is the Field Type");
 	return;
 }
 
 const fieldMapping = JSON.parse(configuration.fieldMapping);
 if (!Array.isArray(fieldMapping)) {
-	console.error("Field mapping is not an array. It should be an array of { parameter: '...', fieldReference: '...'} objects, where parameter is the query string parameter and fieldReference is the form Field Reference");
+	console.error("Field mapping is not an array. It should be an array of { parameter: '...', fieldReference: '...', fieldType: '...'} objects, where parameter is the query string parameter, fieldReference is the form Field Reference and the fieldType is the Field Type");
 	return;
 }
 
 const searchObj = JSON.parse('{"' + decodeURI(search).replace(/"/g, '\\"').replace(/&/g, '","').replace(/=/g,'":"') + '"}');
-const fieldSelector = "input:not([type=hidden])";
-			
-const populateFields = (mapping) => {
-	if (!mapping["parameter"] || !mapping["fieldReference"])
+
+const populateFieldRetry = (config, fieldSelectorCallback, fieldSetterCallback) => {
+	if (!(typeof config === 'object') || !(typeof fieldSelectorCallback === 'function') || !(typeof fieldSetterCallback  === 'function')) {
+		if (enableDebug)
+			console.debug("The parameters passed to populateFieldRetry are incorrect");
 		return;
+	}
+	let c = 0;
+	const intervalHandle = setInterval(() => 
+	{
+		if (enableDebug)
+			console.debug(config.fieldReference + " - retry : " + (c + 1) + " out of " + (waitCount + 1));
+		let field = fieldSelectorCallback(config);
+	  if (field) {
+			console.debug(config.fieldReference + " - found field");
+			clearInterval(intervalHandle);
+			if (enableDebug)
+				console.debug({
+					field,
+					fieldValue: config.fieldValue,
+					count: c
+				});
+			fieldSetterCallback(field, config)
+			return;
+		}
+		c++;
+		if (c > waitCount) {
+			clearInterval(intervalHandle);
+			if (enableDebug)
+				console.debug(config.fieldReference + " - unable to find within given bounds");
+			return;
+		}
+	}, waitInterval);
+};
+
+const defaultFieldSelector = (config) => {
+	if (enableDebug)
+		console.debug("defaultFieldSelector");
+	if (config && config["rootElement"]) {
+		const selector = "input:not([type=hidden])";
+		return config.rootElement.querySelector(selector);
+	}
+};
+
+const typeText = (field, text, current = 0, time = typeTextDelay) => {
+  const l = text.length;
+	field.value += text[current];
+  if(current < l - 1) {
+    current++;
+    setTimeout(function(){typeText(field, text, current)}, time);
+  } else {
+    field.setAttribute('value',field.value);
+  }
+};
+
+const setNativeValue = (el, value) => {
+  const previousValue = el.value;
+
+  if (el.type === 'checkbox' || el.type === 'radio') {
+    if ((!!value && !el.checked) || (!!!value && el.checked)) {
+      el.click();
+    }
+  } else el.value = value;
+
+  const tracker = el._valueTracker;
+  if (tracker) {
+    tracker.setValue(previousValue);
+  }
+
+  el.dispatchEvent(new Event('change', { bubbles: true }));
+};
+
+const defaultFieldSetter = async (field, config) => {
+	if (enableDebug)
+		console.debug("defaultFieldSetter");
+	if (config && config["fieldValue"]) {
+		setNativeValue(field, config.fieldValue);
+	}
+};
+
+const selectFieldSelector = (config) => {
+	if (enableDebug)
+		console.debug("selectFieldSelector");
+	if (config && config["fieldValue"]) {
+		const selector = "button[label='" + config.fieldValue + "'][class='dropdown-item']";
+		return document.querySelector(selector);
+	}
+	return null;
+};
+
+const selectFieldSetter = (field, config) => {
+	if (enableDebug)
+		console.debug("selectFieldSetter");
+	if (field && typeof field["click"] === 'function');
+		field.click();
+};
+
+const populateFields = (mapping) => {
+	if (!mapping["parameter"] || !mapping["fieldReference"] || !mapping["fieldType"]) {
+		if (enableDebug) {
+			console.debug("The mapping is missing an attribute");
+			console.log(mapping);
+		}
+		return;
+	}
 	
 	const queryStringParameter = mapping.parameter;
-	const fieldReference = mapping.fieldReference;	
+	const fieldReference = mapping.fieldReference;
+	const fieldType = mapping.fieldType;
 	const fieldValue = searchObj[queryStringParameter];
 	
 	if (!fieldValue) {
@@ -60,12 +162,13 @@ const populateFields = (mapping) => {
 		console.debug({
 			queryStringParameter,
 			fieldReference,
-			fieldValue
+			fieldValue,
+			fieldType
 		});
 	
 	const fieldDivSelector = "div[data-field-name='" + fieldReference + "']";
-	
 	const fieldDiv = document.querySelector(fieldDivSelector);
+	
 	if (!fieldDiv) {
 		if (enableDebug) {
 			console.log("Unable to find div wrapper for " + fieldReference);
@@ -73,29 +176,27 @@ const populateFields = (mapping) => {
 		}
 	}
 	
-	let c = 0;
-	const timerHandle = setTimeout(() => 
-	{
-		let field = fieldDiv.querySelector(fieldSelector);	
-	  if (field) {
-			clearTimeout(timerHandle);
-			if (enableDebug)
-				console.debug({
-					field,
-					fieldValue,
-					count: c
-				});
-			field.value = fieldValue;
-			return;
-		}
-		c++;
-		if (c > waitCount) {
-			clearTimeout(timerHandle);
-			if (enableDebug)
-				console.debug("Unable to find " + fieldReference + " within given bounds");
-			return;
-		}
-	}, waitInterval)
+	let fieldSelectorFunc;
+	let fieldSetterFunc;
+	
+	switch(fieldType) {
+		case "selectFromList":
+			fieldSelectorFunc = selectFieldSelector;
+			fieldSetterFunc = selectFieldSetter;
+			break;
+		case "numeric":
+		case "text":
+		case "default":
+			fieldSelectorFunc = defaultFieldSelector;
+			fieldSetterFunc = defaultFieldSetter;
+			break;
+	}
+	
+	populateFieldRetry({
+		fieldReference,
+		rootElement: fieldDiv,
+		fieldValue,
+	}, fieldSelectorFunc, fieldSetterFunc);
 };
 
 Liferay.on('allPortletsReady', () => {
