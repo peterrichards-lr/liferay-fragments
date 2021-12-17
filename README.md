@@ -35,14 +35,14 @@ This fragment can pre-populate a form fields using values passed in the URL quer
 
 Currently, this fragment only populates text, numeric and select from list fields. However, this is likely to be extended in the future.
 
-It contains a configurable retry mechanisim to ensure the form, which is dynamically generated, has finished rendering before attempting to populate the field.
+It contains a configurable retry mechanism to ensure the form, which is dynamically generated, has finished rendering before attempting to populate the field.
 
 This may not be suitable for a production scenario and it is simply intended to be example of what is possible.
 
 #### Mapping Config
 The following example shows the format of the JSON needed. The parameter attribute specifies the key used in the query string that should be used to populate the field value. The fieldReference is the name of the field in the DOM (make sure you examine the DOM once the form is rendered as this value can be different to the one configured). The fieldType determines which selector and setter functions are used. Finally, the fieldConfig is an object which can contain anything else the selector or setter function need in order to correctly populate the field.
 
-In the case of a selectFromList field, it is necessary to provide the position of the list on the page, because the component does not contain a unqiue identifier to distinguish between different list of values.
+In the case of a selectFromList field, it is necessary to provide the position of the list on the page, because the component does not contain a unique identifier to distinguish between different list of values.
 
 If no value is provided for the in the query string, then the field will be skipped. Likewise, if no query string is provided at all then all fields will be skipped.
 ```json
