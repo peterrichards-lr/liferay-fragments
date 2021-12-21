@@ -233,7 +233,7 @@ const populateFields = (mapping) => {
 			break;
 		case "numeric":
 		case "text":
-		case "default":
+		default:
 			fieldSelectorFunc = defaultFieldSelector;
 			fieldSetterFunc = defaultFieldSetter;
 			break;
