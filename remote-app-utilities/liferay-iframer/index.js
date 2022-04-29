@@ -1,3 +1,12 @@
+if (!fragmentNamespace) // If it is not set then we are in fragment editor
+	return;
+
+if (document.body.classList.contains('has-edit-mode-menu')) { // If present then we are in content page editor
+	const loading = fragmentElement.querySelector("div.loading");
+	loading.style.display = "none";
+	return;
+}
+
 Liferay.on('allPortletsReady', () => {
 	const frame = fragmentElement.querySelector("iframe");
 	if (frame) {
