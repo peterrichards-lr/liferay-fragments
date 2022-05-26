@@ -1,0 +1,32 @@
+[#assign enablePreviewMode = configuration.enablePreviewMode/]
+[#assign validPage = true/]
+
+[#if !enablePreviewMode]
+	[#assign layout = themeDisplay.getLayout()/]
+	[#assign title = layout.getHTMLTitle(locale)/]
+	[#assign validPage = validPage && (title == "Profile" || title = "Manage Profile")/]
+
+	[#assign currentURL = themeDisplay.getURLCurrent()/]
+	[#assign validPage = validPage && (currentURL?contains("/web/") || currentURL?contains("/user/"))/]
+
+	[#if validPage]
+		[#if currentURL?contains("/web/")]
+			[#assign screenName = currentURL?keep_after_last("/web/")/]
+		[#else]
+			[#assign screenName = currentURL?keep_after_last("/user/")/]
+		[/#if]
+
+		[#if screenName?contains("/")]
+			[#assign screenName = screenName?keep_before("/")/]
+		[/#if]
+	[/#if]
+[#else]
+	[#assign screenName = "gary.bling"/]
+[/#if]
+
+[#if screenName??]
+	[#assign divId = "pdf-wrapper-" + screenName?replace('.','-') /]
+<div id="${fragmentEntryLinkNamespace}-pdf-export">
+	<button class="pdf-export" profileDivId="${divId}" filename="${screenName}">PDF</button>
+</div>
+[/#if]

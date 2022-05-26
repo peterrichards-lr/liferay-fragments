@@ -1,0 +1,103 @@
+.pdf-wrapper,
+.profile-wrapper {
+	display: flex;
+	flex-flow: row;
+}
+
+.profile-wrapper {
+	flex-wrap: no-wrap;
+	gap: 100px;
+}
+
+@media (max-width: 991.98px) {
+	.profile-wrapper {
+		flex-wrap: wrap;
+		gap: 20px;
+	}
+}
+
+.pdf-wrapper {
+	flex-wrap: wrap;
+	width: 700px;
+}
+
+.pdf-wrapper .profile-summary {
+	display: flex;
+	flex-flow: row;
+	align-items: center;
+}
+
+.profile-wrapper .profile-summary {
+	display: flex;
+	flex-flow: row;
+	align-items: center;
+}
+
+@media (max-width: 575.98px) { 
+	.profile-wrapper .profile-summary {
+		display: flex;
+		flex-flow: column;
+		align-items: center;
+		justify-content: center;
+	}
+}
+
+.profile-wrapper .profile-summary {
+	flex-wrap: no-wrap;
+}
+
+.pdf-wrapper .profile-summary .profile-photo img,
+.profile-wrapper .profile-summary .profile-photo img {
+	object-fit: cover;
+	width: 150px;
+	height: 150px;
+	border-radius: 50%;
+	margin-right: 20px;
+}
+
+.pdf-wrapper .profile-summary .profile-header,
+.profile-wrapper .profile-summary .profile-header {
+	font-style: normal;
+	font-weight: normal;
+}
+
+.pdf-wrapper .profile-summary .profile-header h1,
+.profile-wrapper .profile-summary .profile-header h1 {
+	font-size: 3rem;
+}
+
+.pdf-wrapper .profile-summary .profile-header h3,
+.profile-wrapper .profile-summary .profile-header h3 {
+	font-size: 1.25rem;
+}
+
+.pdf-wrapper .profile-detail,
+.profile-wrapper .profile-detail {
+	display: table;
+}
+
+.pdf-wrapper .profile-detail {
+	font-size: 0.75rem;
+}
+
+.pdf-wrapper .profile-detail .row,
+.pdf-wrapper .profile-detail .cell,
+.profile-wrapper .profile-detail .row,
+.profile-wrapper .profile-detail .cell {
+	padding: 10px;
+}
+
+.pdf-wrapper .profile-detail .row,
+.profile-wrapper .profile-detail .row {
+	display: table-row;
+}
+
+.pdf-wrapper .profile-detail .cell,
+.profile-wrapper .profile-detail .cell {
+	display: table-cell;
+}
+
+.pdf-wrapper .profile-detail .cell:first-child,
+.profile-wrapper .profile-detail .cell:first-child {
+	font-weight: bold;
+}

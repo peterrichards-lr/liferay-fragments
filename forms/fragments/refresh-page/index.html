@@ -1,0 +1,9 @@
+<div class="refresh-page">
+[#if configuration.enableManualRefresh && configuration.enableAutoRefresh]
+	This page will automatically reload after ${configuration.refreshIntervalSec} seconds or click <a onclick="javascript: window.location.reload();">here</a>.
+[#elseif configuration.enableManualRefresh]
+	Click <a onclick="javascript: window.location.reload();">here</a> to reload the page.
+[#else]
+	This page will automatically reload after ${configuration.refreshIntervalSec} seconds.
+[/#if]
+</div>

@@ -1,0 +1,169 @@
+{
+	"fieldSets": [
+		{
+			"fields": [
+				{
+					"dataType": "string",
+					"defaultValue": "h1",
+					"label": "text-type",
+					"name": "textType",
+					"type": "select",
+					"typeOptions": {
+						"validValues": [
+							{
+								"value": "display-1"
+							},
+							{
+								"value": "display-2"
+							},
+							{
+								"value": "display-3"
+							},
+							{
+								"value": "display-4"
+							},
+							{
+								"value": "h1"
+							},
+							{
+								"value": "h2"
+							},
+							{
+								"value": "h3"
+							},
+							{
+								"value": "h4"
+							},
+							{
+								"value": "h5"
+							},
+							{
+								"value": "h6"
+							},
+							{
+								"label": "paragraph-large",
+								"value": "text-paragraph-lg"
+							},
+							{
+								"label": "paragraph-medium",
+								"value": "text-paragraph"
+							},
+							{
+								"label": "paragraph-small",
+								"value": "text-paragraph-sm"
+							},
+							{
+								"label": "paragraph-xsmall",
+								"value": "text-paragraph-xs"
+							},
+							{
+								"label": "paragraph-xxsmall",
+								"value": "text-paragraph-xxs"
+							},
+							{
+								"label": "small-caps",
+								"value": "text-small-caps"
+							},
+							{
+								"label": "link-large",
+								"value": "text-link-lg"
+							},
+							{
+								"label": "link-medium",
+								"value": "text-link-md"
+							},
+							{
+								"label": "link-small",
+								"value": "text-link-sm"
+							}
+						]
+					}
+				},
+				{
+					"dataType": "string",
+					"defaultValue": "solid",
+					"label": "type",
+					"name": "type",
+					"type": "select",
+					"typeOptions": {
+						"validValues": [
+							{
+								"label": "solid",
+								"value": "solid"
+							},
+							{
+								"label": "ghost",
+								"value": "ghost"
+							},
+							{
+								"label": "borderless",
+								"value": "borderless"
+							},
+							{
+								"label": "rounded",
+								"value": "rounded"
+							}
+						]
+					}
+				},
+				{
+					"dataType": "string",
+					"defaultValue": "primary",
+					"label": "style",
+					"name": "style",
+					"type": "select",
+					"typeOptions": {
+						"validValues": [
+							{
+								"value": "primary"
+							},
+							{
+								"value": "secondary"
+							},
+							{
+								"value": "neutral"
+							}
+						]
+					}
+				},
+				{
+					"dataType": "string",
+					"defaultValue": "",
+					"label": "size",
+					"name": "buttonSize",
+					"type": "select",
+					"typeOptions": {
+						"validValues": [
+							{
+								"label": "small",
+								"value": "btn-sm"
+							},
+							{
+								"label": "medium",
+								"value": ""
+							},
+							{
+								"label": "large",
+								"value": "btn-lg"
+							}
+						]
+					}
+				},
+				{
+					"dataType": "string",
+					"defaultValue": false,
+					"label": "inverted",
+					"name": "inverted",
+					"type": "checkbox"
+				},
+				{
+					"dataType": "string",
+					"defaultValue": false,
+					"label": "uppercase",
+					"name": "uppercase",
+					"type": "checkbox"
+				}
+			]
+		}
+	]
+}

@@ -1,0 +1,15 @@
+{
+	"fieldSets": [
+		{
+			"fields": [
+				{
+					"defaultValue": true,
+					"label": "Enable Preview Mode",
+					"name": "enablePreviewMode",
+					"type": "checkbox"
+				}
+			],
+			"label": "General"
+		}
+	]
+}

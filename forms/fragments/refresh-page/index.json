@@ -1,0 +1,80 @@
+{
+	"fieldSets": [
+		{
+			"fields": [
+				{
+					"defaultValue": false,
+					"label": "enable-debug",
+					"name": "enableDebug",
+					"type": "checkbox"
+				}
+			],
+			"label": "General"
+		},
+		{
+			"fields": [
+				{
+					"defaultValue": true,
+					"label": "enable-refresh-trigger",
+					"name": "enableRefreshTrigger",
+					"type": "checkbox"
+				},
+				{
+					"defaultValue": "You have already responded.",
+					"label": "refresh-trigger-text",
+					"name": "refreshTriggerText",
+					"type": "text"
+				},
+				{
+					"label": "wait-interval-ms",
+					"name": "waitIntervalMs",
+					"defaultValue": "100",
+					"type": "text",
+					"typeOptions": {
+						"validation": {
+							"min": 100,
+							"type": "number"
+						}
+					}
+				},
+				{
+					"label": "wait-count",
+					"name": "waitCount",
+					"defaultValue": "3",
+					"type": "text",
+					"typeOptions": {
+						"validation": {
+							"min": 1,
+							"type": "number"
+						}
+					}
+				},
+				{
+					"defaultValue": true,
+					"label": "enable-manual-refresh",
+					"name": "enableManualRefresh",
+					"type": "checkbox"
+				},
+				{
+					"defaultValue": true,
+					"label": "enable-auto-refresh",
+					"name": "enableAutoRefresh",
+					"type": "checkbox"
+				},
+				{
+					"label": "refresh-interval-sec",
+					"name": "refreshIntervalSec",
+					"defaultValue": "5",
+					"type": "text",
+					"typeOptions": {
+						"validation": {
+							"min": 5,
+							"type": "number"
+						}
+					}
+				}
+			],
+			"label": "Refresh"
+		}
+	]
+}

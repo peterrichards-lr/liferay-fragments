@@ -1,0 +1,16 @@
+{
+	"fieldSets": [
+				{
+			"fields": [
+				{
+					"defaultValue": true,
+					"description": "Determines if the vertical bar is present",
+					"label": "Enable Vertical bar",
+					"name": "enableVerticalBar",
+					"type": "checkbox"
+				}
+			],
+			"label": "General"
+		}
+	]
+}

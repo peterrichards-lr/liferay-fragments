@@ -1,0 +1,15 @@
+{
+	"fieldSets": [
+		{
+			"fields": [
+				{
+					"defaultValue": false,
+					"label": "show-site-name",
+					"name": "showSiteName",
+					"type": "checkbox"
+				}
+			],
+			"label": "General"
+		}
+	]
+}

@@ -1,0 +1,45 @@
+{
+	"fieldSets": [
+		{
+			"fields": [
+				{
+					"defaultValue": true,
+					"label": "Enable Notification Indicator",
+					"name": "enableNotificationIndicator",
+					"type": "checkbox"
+				},
+				{
+					"dataType": "int",
+					"defaultValue": "0",
+					"label": "Notification Count",
+					"name": "notificationCount",
+					"type": "text"
+				},
+				{
+					"defaultValue": true,
+					"label": "Enable Custom Link",
+					"name": "enableCustomLink",
+					"type": "checkbox"
+				},
+				{
+					"defaultValue": "/notifications",
+					"label": "Custom Notification Link",
+					"name": "customNotificationLink",
+					"type": "text"
+				}
+			],
+			"label": "Notifications"
+		},
+		{
+			"fields": [
+				{
+					"defaultValue": false,
+					"label": "Enable Sign-in Link",
+					"name": "enableSignInLink",
+					"type": "checkbox"
+				}
+			],
+			"label": "Notifications"
+		}
+	]
+}

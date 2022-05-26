@@ -1,0 +1,119 @@
+[#if serviceLocator?? && staticUtil??]
+	[#assign enablePreviewMode = configuration.enablePreviewMode/]
+	[#assign validPage = true/]
+
+	[#if !enablePreviewMode]
+		[#assign layout = themeDisplay.getLayout()/]
+		[#assign title = layout.getHTMLTitle(locale)/]
+		[#assign validPage = validPage && (title == "Profile" || title = "Manage Profile")/]
+
+		[#assign currentURL = themeDisplay.getURLCurrent()/]
+		[#assign validPage = validPage && (currentURL?contains("/web/") || currentURL?contains("/user/"))/]
+
+		[#if validPage]
+			[#if currentURL?contains("/web/")]
+				[#assign screenName = currentURL?keep_after_last("/web/")/]
+			[#else]
+				[#assign screenName = currentURL?keep_after_last("/user/")/]
+			[/#if]
+			[#if screenName?contains("/")]
+				[#assign screenName = screenName?keep_before("/")/]
+			[/#if]
+		[/#if]
+	[#else]
+		[#assign screenName = "gary.bling"/]
+	[/#if]
+
+	[#if validPage && screenName??]
+		[#assign userService = serviceLocator.findService("com.liferay.portal.kernel.service.UserLocalService")/]
+		[#if userService??]
+			[#assign profileUser = userService.fetchUserByScreenName(themeDisplay.getCompanyId(),screenName)!''/]
+			[#if profileUser?? && profileUser != '']
+				[#assign imgIdToken = staticUtil["com.liferay.portal.kernel.util.DigesterUtil"].digest(profileUser.getUserUuid())/]
+				[#assign profileImageUrl = themeDisplay.getPathImage() + "/user_portrait?img_id=" + profileUser.getPortraitId() + "&img_id_token=" + imgIdToken?url('ISO-8859-1') + "&t=" + webServerToken.getToken(profileUser.getPortraitId()) /]
+
+				[#if profileUser.emailAddressVerified]
+					[#assign displayType = "success"/]
+				[#else]
+					[#assign displayType = "warning"/]
+				[/#if]
+<div class="profile-wrapper">
+	<div class="profile-summary">
+		<div class="profile-photo">
+			<img src="${profileImageUrl}">		
+		</div>
+		<div class="profile-header">
+			<h1>
+				${profileUser.getFirstName()} ${profileUser.getLastName()}
+			</h1>
+			<h3>
+				${profileUser.getJobTitle()}
+			</h3>			
+		</div>
+	</div>
+	<div class="profile-detail">
+		<div class="row">
+			<div class="cell">Name</div>
+			<div class="cell">${profileUser.getFirstName()!""}${(profileUser.getMiddleName()?has_content)?string(' ' + profileUser.getMiddleName(),'')} ${profileUser.getLastName()!""}</div>
+		</div>
+		<div class="row">
+			<div class="cell">Email</div>
+			<div class="cell">${profileUser.getEmailAddress()!""}</div>
+			<div class="cell label-${displayType}">${profileUser.emailAddressVerified?string('Verified', 'Unverified')}</div>
+		</div>
+		<div class="row">
+			<div class="cell">LinkedIn</div>
+			<div class="cell">${profileUser.getExpandoBridge().getAttribute("LinkedIn")!""}</div>
+			<div class="cell"><button class="btn-unstyled copy-to-clipboard">[@clay["icon"] symbol="share" /]</button></div>
+		</div>
+		<div class="row">
+			<div class="cell">Profile</div>
+			<div class="cell">${themeDisplay.getPortalURL() + "/web/" + screenName + "/profile"}</div>
+			<div class="cell"><button class="btn-unstyled copy-to-clipboard">[@clay["icon"] symbol="share" /]</button></div>
+		</div>
+	</div>
+</div>
+
+<div style="display: none;">
+	<div id="pdf-wrapper-${screenName?replace('.','-')}" class="pdf-wrapper">
+		<div class="profile-summary">
+			<div class="profile-photo">
+				<img src="${profileImageUrl}">		
+			</div>
+			<div class="profile-header">
+				<h1>
+					${profileUser.getFirstName()} ${profileUser.getLastName()}
+				</h1>
+				<h3>
+					${profileUser.getJobTitle()}
+				</h3>			
+			</div>
+		</div>
+		<div class="profile-detail">
+			<div class="row">
+				<div class="cell">Name</div>
+				<div class="cell">${profileUser.getFirstName()!""}${(profileUser.getMiddleName()?has_content)?string(' ' + profileUser.getMiddleName(),'')} ${profileUser.getLastName()!""}</div>
+			</div>
+			<div class="row">
+				<div class="cell">Email</div>
+				<div class="cell">${profileUser.getEmailAddress()!""}</div>
+			</div>
+			<div class="row">
+				<div class="cell">LinkedIn</div>
+				<div class="cell">${profileUser.getExpandoBridge().getAttribute("LinkedIn")!""}</div>
+			</div>
+			<div class="row">
+				<div class="cell">Profile</div>
+				<div class="cell">${themeDisplay.getPortalURL() + "/web/" + screenName}</div>
+			</div>
+		</div>
+	</div>
+</div>
+			[/#if]
+		[/#if]
+	[/#if]
+[#elseif serviceLocator??]
+Enable staticUtil via the System Settings > Template Engines
+[#else]
+Enable serviceLocator via the System Settings > Template Engines
+[/#if]

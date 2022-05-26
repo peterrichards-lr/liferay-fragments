@@ -1,0 +1,33 @@
+[#if serviceLocator??]
+	[#if user??]
+		[#assign phoneService = serviceLocator.findService("com.liferay.portal.kernel.service.PhoneLocalService")/]
+<div class="profile-detail">
+	<div class="row">
+		<div class="cell">Mobile Number</div>
+		<div class="cell">[#if phoneService??][#attempt]${phoneService.getPhones(themeDisplay.getCompanyId(),"com.liferay.portal.kernel.model.Contact",user.getContactId())?first.getNumber()}[#recover]<span class="label-danger">Needs updating</span>[/#attempt][/#if]</div>
+	</div>
+	<div class="row">
+		<div class="cell">Availability</div>
+		<div class="cell">${user.getExpandoBridge().getAttribute("Availability")?string('dd MMM yyyy')}</div>
+	</div>
+	<div class="row">
+		<div class="cell">Employment Type</div>
+		<div class="cell">[#attempt]${user.getExpandoBridge().getAttribute("Employment Type")?filter(it -> it??)?first}[#recover]<span class="label-danger">Needs updating</span>[/#attempt]</div>
+	</div>
+	<div class="row">
+		<div class="cell">Current Rate</div>
+		<div class="cell">${user.getExpandoBridge().getAttribute("Current Rate")?string('£#,##0.00')}</div>
+		<div class="cell">Expected Rate</div>
+		<div class="cell">${user.getExpandoBridge().getAttribute("Expected Rate")?string('£#,##0.00')}</div>
+	</div>
+	<div class="row">
+		<div class="cell">Current Salary</div>
+		<div class="cell">${user.getExpandoBridge().getAttribute("Current Salary")?string('£#,##0')}</div>
+		<div class="cell">Expected Salary</div>
+		<div class="cell">${user.getExpandoBridge().getAttribute("Expected Salary")?string('£#,##0')}</div>
+	</div>
+</div>
+	[/#if]
+[#else]
+Enable serviceLocator via the System Settings > Template Engines
+[/#if]

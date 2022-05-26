@@ -1,0 +1,47 @@
+[#assign elementMap = {
+	"display-1": "h1",
+	"display-2": "h1",
+	"display-3": "h1",
+	"display-4": "h1",
+	"h1": "h1",
+	"h2": "h2",
+	"h3": "h3",
+	"h4": "h4",
+	"h5": "h5",
+	"h6": "h6",
+	"text-paragraph-lg": "p",
+	"text-paragraph": "p",
+	"text-paragraph-sm": "p",
+	"text-paragraph-xs": "p",
+	"text-paragraph-xxs": "p",
+	"text-small-caps": "div",
+	"text-link-lg": "div",
+	"text-link-md": "div",
+	"text-link-sm": "div"
+} /]
+
+[#assign element = elementMap[configuration.textType] /]
+<div>
+	<${element} class="component-text ${configuration.textType} mb-0 text-center text-break card-content-heading" data-lfr-editable-id="element-text"
+		data-lfr-editable-type="text">
+		Text Example
+	</${element}>
+	
+	<hr class="card-content-hr">
+	
+	<div class="clearfix mb-4 card-content-text" data-lfr-editable-id="03-content" data-lfr-editable-type="rich-text">
+		<p>
+			This is an example of quick text to fill the body of the
+			card with some content in order to present it properly in
+			page. We hope you like it.
+		</p>
+	</div>
+
+	<div class="row">
+		<div class="col text-center component-button text-break">
+			<a class="btn card-content-button" data-lfr-editable-id="link" data-lfr-editable-type="link" href="" id="fragment-${fragmentEntryLinkNamespace}-link">
+				Go Somewhere
+			</a>
+		</div>
+	</div>
+</div>

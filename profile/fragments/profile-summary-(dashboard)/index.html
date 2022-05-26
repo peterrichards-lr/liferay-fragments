@@ -1,0 +1,91 @@
+[#if serviceLocator?? && staticUtil??]
+	[#assign userService = serviceLocator.findService("com.liferay.portal.kernel.service.UserLocalService")/]
+	[#if userService??]
+		[#if user??]
+			[#assign imgIdToken = staticUtil["com.liferay.portal.kernel.util.DigesterUtil"].digest(user.getUserUuid())/]
+			[#assign profileImageUrl = themeDisplay.getPathImage() + "/user_portrait?img_id=" + user.getPortraitId() + "&img_id_token=" + imgIdToken?url('ISO-8859-1') + "&t=" + webServerToken.getToken(user.getPortraitId()) /]
+
+			[#if user.emailAddressVerified]
+				[#assign displayType = "success"/]
+			[#else]
+				[#assign displayType = "warning"/]
+			[/#if]
+<div class="profile-wrapper">
+	<div class="profile-summary">
+		<div class="profile-photo">
+			<img src="${profileImageUrl}">		
+		</div>
+		<div class="profile-header">
+			<h1>
+				${user.getFirstName()} ${user.getLastName()}
+			</h1>
+			<h3>
+				${user.getJobTitle()}
+			</h3>			
+		</div>
+	</div>
+	<div class="profile-detail">
+		<div class="row">
+			<div class="cell">Name</div>
+			<div class="cell">${user.getFirstName()!""}${(user.getMiddleName()?has_content)?string(' ' + user.getMiddleName(),'')} ${user.getLastName()!""}</div>
+		</div>
+		<div class="row">
+			<div class="cell">Email</div>
+			<div class="cell">${user.getEmailAddress()!""}</div>
+			<div class="cell label-${displayType}">${user.emailAddressVerified?string('Verified', 'Unverified')}</div>
+		</div>
+		<div class="row">
+			<div class="cell">LinkedIn</div>
+			<div class="cell">${user.getExpandoBridge().getAttribute("LinkedIn")!""}</div>
+			<div class="cell"><button class="btn-unstyled copy-to-clipboard">[@clay["icon"] symbol="share" /]</button></div>
+		</div>
+		<div class="row">
+			<div class="cell">Profile</div>
+			<div class="cell">${themeDisplay.getPortalURL() + "/web/" + user.getScreenName() + "/profile"}</div>
+			<div class="cell"><button class="btn-unstyled copy-to-clipboard">[@clay["icon"] symbol="share" /]</button></div>
+		</div>
+	</div>
+</div>
+
+<div style="display: none;">
+	<div id="pdf-wrapper-${user.getScreenName()?replace('.','-')}" class="pdf-wrapper">
+		<div class="profile-summary">
+			<div class="profile-photo">
+				<img src="${profileImageUrl}">		
+			</div>
+			<div class="profile-header">
+				<h1>
+					${user.getFirstName()} ${user.getLastName()}
+				</h1>
+				<h3>
+					${user.getJobTitle()}
+				</h3>			
+			</div>
+		</div>
+		<div class="profile-detail">
+			<div class="row">
+				<div class="cell">Name</div>
+				<div class="cell">${user.getFirstName()!""}${(user.getMiddleName()?has_content)?string(' ' + user.getMiddleName(),'')} ${user.getLastName()!""}</div>
+			</div>
+			<div class="row">
+				<div class="cell">Email</div>
+				<div class="cell">${user.getEmailAddress()!""}</div>
+			</div>
+			<div class="row">
+				<div class="cell">LinkedIn</div>
+				<div class="cell">${user.getExpandoBridge().getAttribute("LinkedIn")!""}</div>
+			</div>
+			<div class="row">
+				<div class="cell">Profile</div>
+				<div class="cell">${themeDisplay.getPortalURL() + "/web/" + user.getScreenName()}</div>
+			</div>
+		</div>
+	</div>
+</div>
+		[/#if]
+	[/#if]
+[#elseif serviceLocator??]
+Enable staticUtil via the System Settings > Template Engines
+[#else]
+Enable serviceLocator via the System Settings > Template Engines
+[/#if]
