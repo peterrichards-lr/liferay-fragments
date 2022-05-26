@@ -23,7 +23,7 @@ The Clay calendar icon can be turned on or off via the configuration.
 
 The JavaScript will not execute when the fragment is viewed in either the Fragment Editor or the Page Content Editor.
 
-![Date Display](images/date-display.PNG)
+![Date Display](images/date-display.png)
 
 #### Dependency
 To correctly render this fragment, it is necessary for each rendered instance within the collection display to have a unique identifier. This is not something that happens at the moment but there is a JIRA issue already in place with a potential fix already to be merged. However, no timeline is currently known for its availability.
@@ -41,7 +41,7 @@ It contains a configurable retry mechanism to ensure the form, which is dynamica
 
 This may not be suitable for a production scenario, and it is simply intended to be example of what is possible.
 
-![Form Populator](images/form-populator.PNG)
+![Form Populator](images/form-populator.png)
 
 #### Mapping Config
 The following example shows the format of the JSON needed. The parameter attribute specifies the key used in the query string that should be used to populate the field value. The fieldReference is the name of the field in the DOM (make sure you examine the DOM once the form is rendered as this value can be different to the one configured). The fieldType determines which selector and setter functions are used. Finally, the fieldConfig is an object which can contain anything else the selector or setter function need in order to correctly populate the field.
@@ -87,7 +87,7 @@ It is useful in the case of Liferay Forms and Workflow where the workflow update
 
 It should work in other circumstances too, but it would need to be tested and amended on a case by case basis.
 
-![Refresh Page](images/page-refresh.PNG)
+![Refresh Page](images/page-refresh.png)
 
 ## Liferay Iframer
 This may seem like an unnecessary fragment but it can actually be very useful, especially when using the new Dialect theme in Liferay DXP 7.4. In Liferay DXP 7.4 there has been a move to module-less customisations and Dialect is the new theme which is intended to reduce the need for traditional theme modules. This approach makes a greater use of Master Pages in order to define the header, including navigation and footer which would normally be defined within the theme module itself.
@@ -98,7 +98,7 @@ My solution to the problem was to make use of the new Remote Apps feature in Lif
 
 The Liferay Iframet fragment solves both of these issues by using a loading animation to hide the iframe before it is ready. Within the same time, the fragment adds CSS styles to the iframe document to hide both the control and site menus. Once everything is ready the load animation is removed, and the portlet can be used as normal.
 
-![Liferay Iframer](images/liferay-iframer.PNG)
+![Liferay Iframer](images/liferay-iframer.png)
 
 ## Layout Components
 
@@ -106,7 +106,7 @@ This group of fragments, demonstrate how a drop-zone can be used to manipulate i
 
 There is a single action card which will take on a different style depending on the wrapping card it is dropped into.
 
-![Layout components](images/layout-components.PNG)
+![Layout components](images/layout-components.png)
 
 ## Header Components
 
@@ -116,7 +116,7 @@ This is a group of fragments, which allow a fragmented theme to be created withi
 
 The following fragments have a couple of variations. The one without the (Dashboard) suffix is intended to be included on a user's personal site. It makes use of Liferay's URL structure to extract the user's screen name from the URL and thereby display the user's profile details regardless of the user viewing it, including anonymous users.
 
-![Public Profile](images/public-profile.PNG)
+![Public Profile](images/public-profile.png)
 
 ### Profile Summary
 
@@ -130,7 +130,7 @@ This fragment uses a similar approach to display more personal profile informati
 
 This fragment uses a third-party library to export the HTML content of a targeted element. If you want to display the profile information in a different way then this can be achieved by using a hidden element. The example Profile Summary fragment, does just that.
 
-![Profile Fragments](images/profile-fragments.PNG)
+![Profile Fragments](images/profile-fragments.png)
 
 ## Miscellaneous
 
