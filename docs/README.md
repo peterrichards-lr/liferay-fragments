@@ -25,12 +25,14 @@ The JavaScript will not execute when the fragment is viewed in either the Fragme
 
 ![Date Display](images/date-display.png)
 
-#### Dependency
+#### Dependency (Prior to 7.4.3.5 CE GA5 / 7.4.13 DXP U1)
 To correctly render this fragment, it is necessary for each rendered instance within the collection display to have a unique identifier. This is not something that happens at the moment but there is a JIRA issue already in place with a potential fix already to be merged. However, no timeline is currently known for its availability.
 
 In order to ensure each instance had a unique identifier it was necessary to use the com.liferay.portal.kernel.util.PortalUtil to generate a random key. This has meant the need to enable the staticUtil variable so the class can be referenced from the fragment.
 
 To enable this, navigate to Control Panel -> System Settings ->Template Engines (under Platform) -> FreeMarker Engine and remove staticUtil from the Restricted Variables list.
+
+This is no longer required in Liferay 7.4 due to the issue being addressed in the product - LPS-138102
 
 ## Form Populator
 This fragment can pre-populate a form fields using values passed in the URL query string. This is achieved by using a JSON based mapping configuration, which is passed to the fragment. The fragment has a drop-zone in which the form is dropped.
