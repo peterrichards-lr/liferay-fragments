@@ -1,0 +1,70 @@
+.customer-profile-outer {
+	padding-top: 30px;
+	padding-bottom: 30px;
+}
+
+.customer-profile .row {
+	background-color: inherit;
+}
+
+.customer-profile h2, h3 {
+	color: black;
+	color: var(--color-brand-primary, black);
+}
+
+.customer-profile .summary {
+	color: black;
+	color: var(--color-neutral-7, black);
+}
+
+.customer-profile button {
+	background-color: grey;
+	background-color: var(--color-neutral-4, grey);
+	color: white;
+	color: var(--color-neutral-1, white);
+}
+
+.customer-profile .component-button {
+	appearance: button;
+	background-color: grey;
+	background-color: var(--color-neutral-4, grey);
+	border-color: var(--btn-default-border-color);
+	border-style: solid;
+	border-width: var(--btn-border-width);
+	border-radius: var(--btn-border-radius);
+	box-shadow: var(--btn-box-shadow);
+	color: white;
+	color: var(--color-neutral-1, white);
+	cursor: pointer;
+	display: inline-block;
+	font-size: var(--btn-font-size);
+	font-weight: var(--btn-font-weight);
+	line-height: var(--btn-line-height);
+	padding-bottom: calc(var(--btn-padding-y) - var(--btn-border-width));
+	padding-left: calc(var(--btn-padding-x) - var(--btn-border-width));
+	padding-right: calc(var(--btn-padding-x) - var(--btn-border-width));
+	padding-top: calc(var(--btn-padding-y) - var(--btn-border-width));
+	text-align: center;
+	text-decoration: none;
+	text-transform: none;
+	transition: color var(--transition-base), background-color var(--transition-base), border-color var(--transition-base), box-shadow var(--transition-base);
+	user-select: none;
+	vertical-align: middle;
+	--btn-default-border-color: transparent;
+}
+
+.customer-profile .component-button:hover {
+	background-color: var(--btn-hover-background-color, var(--btn-default-background-color));
+	color: black;
+	color: var(--color-neutral-7, black);
+	border: var(--color-neutral-4, grey) solid 1px;
+	text-decoration: none;
+}
+
+.spacer-2 {
+	height: 30px;
+}
+
+.spacer-3 {
+	height: 45px;
+}

@@ -1,0 +1,31 @@
+{
+	"fieldSets": [
+				{
+			"fields": [
+				{
+					"name": "colorStop1",
+					"label": "Color Stop 1",
+					"type": "text",
+					"dataType": "string",
+					"defaultValue": "var(--color-brand-primary, #fff)"
+				},
+				{
+					"name": "colorStop2",
+					"label": "Color Stop 2",
+					"type": "text",
+					"dataType": "string",
+					"defaultValue": "var(--color-brand-secondary, #fff)"
+				},
+				{
+					"name": "angle",
+					"label": "Gradient Angle",
+					"description": "A value of 0deg is equivalent to \"to top\". A value of 90deg is equivalent to \"to right\". A value of 180deg is equivalent to \"to bottom\"",
+					"type": "text",
+					"dataType": "int",
+					"defaultValue": "90"
+				}
+			],
+			"label": "General"
+		}
+	]
+}

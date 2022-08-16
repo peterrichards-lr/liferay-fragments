@@ -1,0 +1,42 @@
+[#assign containerId = 'fragment-' + fragmentEntryLinkNamespace + '-container' /]
+<style>
+	#${containerId} {
+		background-color: #f9f8f9;
+		background-color: var(--color-neutral-1, #f9f8f9);
+	}
+</style>
+<div id="${containerId}" class="lfr-layout-structure-item-container customer-profile-outer">
+	<div class="container customer-profile">
+		<div class="row">
+			<div class="col">
+				<div class="spacer-2"></div>
+				<h2>
+					<lfr-editable id="01-type" type="text"></lfr-editable>
+				</h2>
+				<h3>
+					<lfr-editable id="02-size" type="text"></lfr-editable>				
+				</h3>
+				<div class="spacer-2"></div>
+				<div class="summary">
+					<lfr-editable id="03-summary" type="rich-text"></lfr-editable>
+				</div>
+				<div class="spacer-3"></div>
+				<div class="text-break">
+					<a class="component-button" data-lfr-editable-id="link" data-lfr-editable-type="link" href="" id="04-link">
+						Learn More
+					</a>
+				</div>
+				<div class="spacer-2"></div>
+			</div>
+			<div class="col">			
+				<div class="spacer-2"></div>
+				<div class="image">
+					<lfr-editable id="05-image" type="image">
+						<img style="width: 515px; height: auto;">
+					</lfr-editable>
+				</div>
+				<div class="spacer-2"></div>
+			</div>
+		</div>
+	</div>
+</div>

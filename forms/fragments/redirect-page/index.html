@@ -1,0 +1,37 @@
+<div class="refresh-page">
+[#if configuration.enableManualRefresh && configuration.enableAutoRefresh]
+	This page will automatically redirect after ${configuration.refreshIntervalSec} seconds or click
+	[#if configuration.enableRedirect]
+		<a onclick="javascript: window.location = redirectUrl">here</a>.
+	[#else]
+		<a onclick="javascript: window.location.reload();">here</a>.
+	[/#if]
+[#elseif configuration.enableManualRefresh]
+	[#if configuration.enableRedirect]
+		Click <a onclick="javascript: window.location = redirectUrl">here</a> to redirect the page.
+	[#else]
+		Click <a onclick="javascript: window.location.reload();">here</a> to redirect the page.
+	[/#if]
+[#else]
+	This page will automatically redirect after ${configuration.refreshIntervalSec} seconds.
+[/#if]
+</div>
+[#if configuration.enableRedirect]
+<script>
+	var redirectUrl;
+	if (redirectUrl === undefined) {
+		redirectUrl = (() => {
+			//const params = new URLSearchParams(window.location.search);
+			//if (params.has('redirectUrl')) {
+			//	return params.get('redirectUrl') != ""
+			//		? params.get('redirectUrl')
+			//	: window.location.origin;
+			//} else {
+			//	return window.location.origin;
+			//}
+			return window.location.origin + '/checkout';
+		})();
+		console.log(redirectUrl);
+	}
+</script>
+[/#if]
