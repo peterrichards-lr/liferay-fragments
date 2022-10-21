@@ -1,0 +1,5 @@
+.masthead-form div.lfr-ddm__default-page-header > h1 {display: none;}
+.masthead-form div.ddm-layout-builder.ddm-page-container-layout > div > div > h2 {display: none;}
+.masthead-form div.lfr-ddm__default-page-header > div {display: none}
+.masthead-form div.ddm-layout-builder.ddm-page-container-layout > div > div > p {display: none;}
+.masthead-form label {color: #f0f5ff;}
