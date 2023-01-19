@@ -1,0 +1,44 @@
+{
+  "fieldSets": [
+    {
+      "fields": [
+        {
+          "defaultValue": "",
+          "label": "start-date",
+          "name": "startDate",
+          "dataType": "string",
+          "type": "text"
+        },
+        {
+          "defaultValue": "",
+          "label": "end-date",
+          "name": "endDate",
+          "dataType": "string",
+          "type": "text"
+        },
+        {
+          "defaultValue": "7",
+          "label": "max-entires",
+          "name": "maxEntires",
+          "dataType": "int",
+          "type": "text"
+        },
+        {
+          "defaultValue": "10000",
+          "label": "target-steps",
+          "name": "targetSteps",
+          "dataType": "int",
+          "type": "text"
+        },
+        {
+          "defaultValue": "healthcare-example",
+          "label": "pubsub-topic",
+          "name": "pubsubTopic",
+          "dataType": "string",
+          "type": "text"
+        }
+      ],
+      "label": "filter-options"
+    }
+  ]
+}
