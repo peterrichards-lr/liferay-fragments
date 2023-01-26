@@ -1,0 +1,27 @@
+[#assign ns = fragmentEntryLinkNamespace /]
+<script>
+  var ${ns}config = {};
+  [#if request?? && request.getAttribute??]
+  [#assign commerceContext = request.getAttribute("COMMERCE_CONTEXT")! /]
+  [/#if]
+  [#if commerceContext??]
+  ${ns}config.channelId = ${commerceContext.getCommerceChannelId()!-1};
+  [#assign commerceAccount = commerceContext.getCommerceAccount()! /]
+  [#else]
+  ${ns}config.channelId = undefined;
+  [/#if]
+  [#if commerceAccount??]
+  ${ns}config.accountId = ${commerceAccount.getCommerceAccountId()!-1};
+  [#else]
+  ${ns}config.accountId = undefined;
+  [/#if]
+</script>
+<div id="${ns}-results" class="purchased-products"></div>
+<div id="${ns}-product-card-template" style="display: none">
+  <div class="product-card">
+    <a class="product-card-picture"></a>
+    <div class="product-card-info">
+      <a><h3></h3></a>
+    </div>
+  </div>
+</div>

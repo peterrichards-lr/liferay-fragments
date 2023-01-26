@@ -1,0 +1,48 @@
+{
+	"fieldSets": [
+		{
+			"fields": [
+				{
+					"defaultValue": true,
+					"label": "use-commerce-context",
+					"name": "useCommerceContext",
+					"type": "checkbox"
+				},
+        {
+					"label": "account-id",
+					"name": "accountId",
+					"defaultValue": "",
+					"type": "text",
+					"typeOptions": {
+						"validation": {
+							"type": "number"
+						}
+					}
+				},
+        {
+					"label": "channel-id",
+					"name": "channelId",
+					"defaultValue": "",
+					"type": "text",
+					"typeOptions": {
+						"validation": {
+							"type": "number"
+						}
+					}
+				}
+			],
+			"label": "Behaviour"
+		},
+		{
+			"fields": [
+				{
+					"defaultValue": "You currently have no purchased products",
+					"label": "not-found-message",
+					"name": "notfoundMessage",
+					"type": "text"
+				}
+				],
+				"label": "General"
+		}
+	]
+}
