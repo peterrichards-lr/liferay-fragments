@@ -8,12 +8,13 @@ if (document.body.classList.contains('has-edit-mode-menu'))
 
 var config = undefined;
 if (configuration.useCommerceContext) {
-  const configName = `${fragmentNamespace}config`;
-  config = eval(configName);
-  if (!config) {
-    console.error(
-      `The JavaScript config object not found. The configuration name evaluated was ${configName}`
-    );
+  if (Liferay.CommerceContext) {
+    config = {
+      accountId: Liferay.CommerceContext.getAccountId(),
+      channelId: Liferay.CommerceContext.getChannelId(),
+    };
+  } else {
+    console.error('The JavaScript Liferay.CommerceContext object not found.');
     return;
   }
 } else {
@@ -155,7 +156,9 @@ Liferay.Util.fetch(
       const noResults = document.createElement('div');
       noResults.classList.add('alert');
       noResults.classList.add('alert-info');
-      noResults.innerText = configuration.notfoundMessage ? configuration.notfoundMessage : 'You currently have no purchased products';
+      noResults.innerText = configuration.notfoundMessage
+        ? configuration.notfoundMessage
+        : 'You currently have no purchased products';
       results.append(noResults);
     }
   });
