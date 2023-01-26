@@ -113,12 +113,20 @@ Liferay.Util.fetch(
               if (productURLs) {
                 const languageId = Liferay.ThemeDisplay.getLanguageId();
                 if (languageId) {
-                  const clickHandler = () => {
-                    var expires = new Date();
-                    expires.setSeconds(expires.getSeconds + 10);
-                    document.cookie = `purchased=true;expires=${expires.toUTCString()};path=/;`;
-                    document.cookie = `productId=${productId};expires=${expires.toUTCString()};path=/;`;
-                  };
+                  var clickHandler;
+                  if (configuration.enableCookie) {
+                    const expiry = configuration.expiryInSeconds
+                      ? configuration.expiryInSeconds
+                      : 10;
+                    clickHandler = () => {
+                      var expires = new Date();
+                      expires.setSeconds(expires.getSeconds + expiry);
+                      document.cookie = `purchased=true;expires=${expires.toUTCString()};path=/;`;
+                      document.cookie = `productId=${productId};expires=${expires.toUTCString()};path=/;`;
+                    };
+                  } else {
+                    clickHandler = undefined;
+                  }
                   const productUrl = productURLs[languageId]
                     ? productURLs[languageId]
                     : productURLs.length > 0
@@ -130,7 +138,9 @@ Liferay.Util.fetch(
                       for (let i = 0; i < anchors.length; i++) {
                         let anchor = anchors[i];
                         anchor.href = `/p/${productUrl}`;
-                        anchor.addEventListener('click', clickHandler);
+                        if (configuration.enableCookie && clickHandler) {
+                          anchor.addEventListener('click', clickHandler);
+                        }
                       }
                     } else {
                       console.error(

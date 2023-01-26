@@ -1,48 +1,66 @@
 {
-	"fieldSets": [
-		{
-			"fields": [
-				{
-					"defaultValue": true,
-					"label": "use-commerce-context",
-					"name": "useCommerceContext",
-					"type": "checkbox"
-				},
+  "fieldSets": [
+    {
+      "fields": [
         {
-					"label": "account-id",
-					"name": "accountId",
-					"defaultValue": "",
-					"type": "text",
-					"typeOptions": {
-						"validation": {
-							"type": "number"
-						}
-					}
-				},
+          "defaultValue": true,
+          "label": "use-commerce-context",
+          "name": "useCommerceContext",
+          "type": "checkbox"
+        },
         {
-					"label": "channel-id",
-					"name": "channelId",
-					"defaultValue": "",
-					"type": "text",
-					"typeOptions": {
-						"validation": {
-							"type": "number"
-						}
-					}
-				}
-			],
-			"label": "Behaviour"
-		},
-		{
-			"fields": [
-				{
-					"defaultValue": "You currently have no purchased products",
-					"label": "not-found-message",
-					"name": "notfoundMessage",
-					"type": "text"
-				}
-				],
-				"label": "General"
-		}
-	]
+          "label": "account-id",
+          "name": "accountId",
+          "defaultValue": "",
+          "type": "text",
+          "typeOptions": {
+            "validation": {
+              "type": "number"
+            }
+          }
+        },
+        {
+          "label": "channel-id",
+          "name": "channelId",
+          "defaultValue": "",
+          "type": "text",
+          "typeOptions": {
+            "validation": {
+              "type": "number"
+            }
+          }
+        },
+        {
+          "defaultValue": true,
+          "label": "emable-cookie",
+          "name": "enableCookie",
+          "type": "checkbox"
+        },
+        {
+          "label": "cookie-expiry-seconds",
+          "name": "cookieExpirySections",
+          "defaultValue": "10",
+          "type": "text",
+          "typeOptions": {
+            "validation": {
+              "min": 10,
+              "type": "number"
+            }
+          }
+        }
+      ],
+      "label": "Behaviour"
+    },
+    {
+      "fields": [
+        {
+          "defaultValue": "You currently have no purchased products",
+          "label": "not-found-message",
+          "name": "notfoundMessage",
+          "type": "text"
+        }
+      ],
+      "label": "General"
+    }
+  ]
 }
