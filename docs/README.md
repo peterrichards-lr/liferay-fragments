@@ -176,4 +176,8 @@ These cookies can be used to drive personalisation within Liferay DXP using segm
 
 The account Id and channel Id used to retrieve the products can be configured via the page editor or the fragment can be configured to use the Liferay.CommerceContext object (dependent on Commerce Context Contributor fragment) instead.
 
+![Purchased Products](images/purchased-products-found.png)
+
 If no products are found then a suitable, configurable, message is displayed.
+
+![Purchased Products](images/purchased-products-not-found.png)
