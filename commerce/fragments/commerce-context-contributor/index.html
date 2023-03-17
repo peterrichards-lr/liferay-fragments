@@ -20,7 +20,7 @@
 		CommerceContext.prototype.getAccountEntryAllowedTypes = () => [
 		[#if accountEntryAllowedTypes?has_content]
 			[#list accountEntryAllowedTypes as accountEntryAllowedType]
-			  '${accountEntryAllowedType}'
+			  '${accountEntryAllowedType}',
 	    [/#list]
 			 ];
 		[/#if]
@@ -28,10 +28,12 @@
     [#assign commerceAccount = commerceContext.getCommerceAccount()! /]
   	[#if commerceAccount??]
       CommerceContext.prototype.getAccountId = () => ${commerceAccount.getCommerceAccountId()! -1};
+      CommerceContext.prototype.getAccountName = () => "${commerceAccount.getName()!''}";
       CommerceContext.prototype.isBusinessAccount = () => ${commerceAccount.isBusinessAccount()?c};
       CommerceContext.prototype.isPersonalAccount = () => ${commerceAccount.isPersonalAccount()?c};
     [#else]
 	    CommerceContext.prototype.getAccountId = () => undefined;
+	    CommerceContext.prototype.getAccountName = () => undefined;
 	    CommerceContext.prototype.isBusinessAccount = () => undefined;
 	    CommerceContext.prototype.isPersonalAccount = () => undefined;
     [/#if]
