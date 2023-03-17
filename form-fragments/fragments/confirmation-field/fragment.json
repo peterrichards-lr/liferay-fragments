@@ -1,0 +1,10 @@
+{
+  "configurationPath": "configuration.json",
+  "jsPath": "index.js",
+  "htmlPath": "index.html",
+  "cssPath": "index.css",
+  "icon": "forms",
+  "name": "Confirmation Field",
+  "typeOptions": {"fieldTypes": ["text"]},
+  "type": "input"
+}

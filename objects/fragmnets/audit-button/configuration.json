@@ -1,0 +1,93 @@
+{
+	"fieldSets": [
+		{
+			"fields": [
+				{
+					"dataType": "string",
+					"defaultValue": "primary",
+					"label": "type",
+					"name": "buttonType",
+					"type": "select",
+					"typeOptions": {
+						"validValues": [
+							{
+								"value": "primary"
+							},
+							{
+								"value": "secondary"
+							},
+							{
+								"value": "link"
+							},
+							{
+								"value": "outline-primary"
+							},
+							{
+								"value": "outline-secondary"
+							}
+						]
+					}
+				},
+				{
+					"dataType": "string",
+					"defaultValue": "nm",
+					"label": "size",
+					"name": "buttonSize",
+					"type": "select",
+					"typeOptions": {
+						"validValues": [
+							{
+								"label": "small",
+								"value": "sm"
+							},
+							{
+								"label": "normal",
+								"value": "nm"
+							},
+							{
+								"label": "large",
+								"value": "lg"
+							}
+						]
+					}
+				},
+				{
+					"defaultValue": true,
+					"description": "Determines if the button test is used rather than the editible text",
+					"label": "Use button text",
+					"name": "useButtonText",
+					"type": "checkbox"
+				},
+				{
+					"defaultValue": true,
+					"description": "Determines if the prefix and suffix are added to the action text",
+					"label": "Use prefix and suffix text",
+					"name": "usePrefixSuffix",
+					"type": "checkbox"
+				},
+				{
+					"defaultValue": false,
+					"description": "Determines if a space is inserted between the prefix suffix and are added to the action text",
+					"label": "Add Space",
+					"name": "addSpace",
+					"type": "checkbox"
+				},
+				{
+					"dataType": "string",
+					"defaultValue": "Clicked '",
+					"label": "audit-action-prefix",
+					"name": "auditActionPrefix",
+					"type": "text"
+				},
+				{
+					"dataType": "string",
+					"defaultValue": "' button",
+					"label": "audit-action-suffix",
+					"name": "auditActionSuffix",
+					"type": "text"
+				}
+			],
+			"label": "button-options"
+		}
+	]
+}

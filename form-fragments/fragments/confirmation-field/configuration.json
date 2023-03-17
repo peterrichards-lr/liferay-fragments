@@ -1,0 +1,113 @@
+{
+  "fieldSets": [
+    {
+      "fields": [
+				{
+					"dataType": "string",
+					"defaultValue": "",
+					"label": "placeholder",
+					"localizable": true,
+					"name": "placeholder",
+					"type": "text"
+				},
+        {
+          "dataType": "string",
+          "defaultValue": "flex-column-direction",
+          "label": "Direction",
+          "name": "direction",
+          "type": "select",
+          "typeOptions": {
+            "validValues": [
+              {
+                "value": "flex-column-direction",
+                "label": "Horizontal"
+              },
+              {
+                "value": "flex-row-direction",
+                "label": "Vertical"
+              }
+            ]
+          }
+        },{
+					"dataType": "string",
+					"defaultValue": "",
+					"label": "Horizontal Spacer",
+					"name": "horizontalSpacerWidth",
+					"type": "select",
+					"typeOptions": {
+						"validValues": [
+							{
+								"label": "0",
+								"value": ""
+							},
+							{
+								"label": "1",
+								"value": "px-1"
+							},
+							{
+								"label": "2",
+								"value": "px-2"
+							},
+							{
+								"label": "3",
+								"value": "px-3"
+							},
+							{
+								"label": "4",
+								"value": "px-4"
+							},
+							{
+								"label": "5",
+								"value": "px-5"
+							}
+						]
+					}
+        },
+        {
+          "dataType": "string",
+          "defaultValue": "Confirm",
+          "label": "Label",
+          "name": "label",
+          "type": "text"
+        },
+				{
+					"defaultValue": true,
+					"label": "Convert Label Text to Lowercase",
+					"name": "convertLabelToLowercase",
+					"type": "checkbox"
+				},
+        {
+          "dataType": "string",
+          "defaultValue": "The information does not match.",
+          "label": "Error Message",
+          "name": "errorMessage",
+          "type": "text"
+        },
+        {
+          "dataType": "string",
+          "defaultValue": "cssdisplay",
+          "label": "Error Display Method",
+          "name": "errorDisplayMethod",
+          "type": "select",
+          "typeOptions": {
+            "validValues": [
+              {
+                "value": "cssdisplay",
+                "label": "Display"
+              },
+              {
+                "value": "cssvisibility",
+                "label": "Visibility"
+              },
+              {
+                "value": "clientside",
+                "label": "Client-side Validation"
+              }
+            ]
+          }
+        }
+      ],
+      "label": "Configuration"
+    }
+  ]
+}

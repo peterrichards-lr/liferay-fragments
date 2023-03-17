@@ -1,0 +1,12 @@
+<div class="checkbox-input">
+		<div class="form-group mb-0" id="${fragmentEntryLinkNamespace}-form-group">
+			<label class="switch-label [#if !input.showLabel || !input.label?has_content]sr-only[/#if]" for="${fragmentEntryLinkNamespace}-checkbox-input">${htmlUtil.escape(input.label)}[#if input.required][@clay["icon"] className="reference-mark" symbol="asterisk" /][/#if]</label>
+			
+			<label class="switch">
+				<input aria-describedby="${fragmentEntryLinkNamespace}-checkbox-input-help-text" id="${fragmentEntryLinkNamespace}-checkbox-input" class="form-control" name="${input.name}" [#if input.value??]value="${input.value}"[/#if] type="checkbox">
+				<span class="slider round"></span>
+		</label>
+		[#if input.showHelpText && input.helpText?has_content]
+		<p class="mb-0 mt-1 text-secondary" id="${fragmentEntryLinkNamespace}-text-input-help-text">${htmlUtil.escape(input.helpText)}</p>
+		[/#if]
+</div>
