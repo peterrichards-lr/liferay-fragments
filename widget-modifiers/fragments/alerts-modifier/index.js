@@ -73,10 +73,35 @@ if (entries) {
     }
   };
 
+  const getReadAtDate = () => {
+    return new Date().toJSON();
+  };
+
+  const getEntryId = (link) => {
+    var text;
+    if (link.hasAttribute('href')) {
+      text = link.getAttribute('href');
+    } else if (link.hasAttribute('onclick')) {
+      text = link.getAttribute('onclick');
+    }
+    if (text.startsWith('javascript:')) {
+      const markEntryRegEx = /markEntry\(([0-9]+)\)/;
+      const match = text.match(markEntryRegEx);
+      return match ? match[1] : undefined;
+    }
+    return undefined;
+  };
+
   const addMarkAsRead = (entry) => {
+    const actionText = 'Mark as Read';
     const entryContent = entry.querySelector('.entry-content');
     if (!entryContent) {
       console.error("Unable to find the entry's message body");
+      return;
+    }
+    const entryTitle = entry.querySelector('.entry-title');
+    if (!entryTitle) {
+      console.error("Unable to find the entry's header");
       return;
     }
     const contextMenu = entry.querySelector(
@@ -86,25 +111,37 @@ if (entries) {
       console.error("Unable to find the entry's context menu");
       return;
     }
-    const markAsReadMenuItem = queryInnerText(
-      contextMenu,
-      'span',
-      'Mark as Read'
-    );
+    const markAsReadMenuItem = queryInnerText(contextMenu, 'span', actionText);
     if (!markAsReadMenuItem) {
-      console.error("Unable to find the entry's Mark as Read menu");
+      console.error("Unable to find the entry's ' + actionText + ' menu");
       return;
     }
-		const markAsReadMenuItemLink = markAsReadMenuItem.parentElement;
-		const markAsReadButton = document.createElement("a");
-		markAsReadButton.innerText = 'Mark as Read';
-		markAsReadButton.classList.add('btn');
-		markAsReadButton.classList.add('btn-' + configuration.addMarkAsReadButtonSize);
-		markAsReadButton.classList.add('btn-' + configuration.addMarkAsReadButtonType);
-		markAsReadButton.addEventListener('click', (evt) => {
-			markAsReadMenuItemLink.click();
-		});
-		entryContent.appendChild(markAsReadButton);
+    const markAsReadMenuItemLink = markAsReadMenuItem.parentElement;
+    const entryId = getEntryId(markAsReadMenuItemLink);
+    const markAsReadButton = document.createElement('a');
+    markAsReadButton.innerText = actionText;
+    markAsReadButton.classList.add('btn');
+    markAsReadButton.classList.add(
+      'btn-' + configuration.addMarkAsReadButtonSize
+    );
+    markAsReadButton.classList.add(
+      'btn-' + configuration.addMarkAsReadButtonType
+    );
+    markAsReadButton.addEventListener('click', (evt) => {
+      if (configuration.enableAcCustomEvent) {
+        const action = 'Read alert / announcement';
+        if (window.Analytics) {
+          Analytics.track(action, {
+            userId: themeDisplay.getUserId(),
+            readAt: getReadAtDate(),
+            entryId: entryId ? '' + entryId : 'Unknown',
+            entryTitle: entryTitle ? entryTitle : 'Unknown',
+          });
+        }
+      }
+      markAsReadMenuItemLink.click();
+    });
+    entryContent.appendChild(markAsReadButton);
   };
 
   for (var i = 0; i < entries.length; i++) {
