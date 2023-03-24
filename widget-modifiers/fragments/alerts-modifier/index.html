@@ -1,4 +1,5 @@
-[#assign divClassList = 'fragment_1' /]
+[#assign is_signed_in = themeDisplay.isSignedIn()]
+[#assign divClassList = '' /]
 [#if configuration.showRead == false]
   [#assign divClassList = divClassList + ' no_tabs' /]
 [/#if]
@@ -22,21 +23,22 @@
 [#else]
   [#assign pseudo_element = 'after' /]
 [/#if]
+[#assign fragmentSelector = '#${fragmentEntryLinkNamespace}' /]
 <div id="${fragmentEntryLinkNamespace}" class="${divClassList}">
   <style scoped>
-    #${fragmentEntryLinkNamespace}.fragment_1 .portlet-header {
+    ${fragmentSelector} .portlet-header {
       display: none;
     }
 
-    #${fragmentEntryLinkNamespace}.fragment_1.no_tabs ul.nav {
+    ${fragmentSelector}.no_tabs ul.nav {
       display: none;
     }
 
-    #${fragmentEntryLinkNamespace}.fragment_1.no_btn_group .btn-group {
+    ${fragmentSelector}.no_btn_group .btn-group {
       display: none;
     }
 
-    #${fragmentEntryLinkNamespace}.fragment_1.use_clay_alert div.entries > div {
+    ${fragmentSelector}.use_clay_alert div.entries > div {
       border-color: transparent;
       border-style: solid;
       border-width: 0.0625rem;
@@ -51,44 +53,44 @@
       word-wrap: break-word;
     }
 
-    #${fragmentEntryLinkNamespace}.fragment_1.use_clay_alert div.entries > div.important {
+    ${fragmentSelector}.use_clay_alert div.entries > div.important {
       background-color: #feefef;
       border-color: #f48989;
       color: #da1414;
     }
 
-    #${fragmentEntryLinkNamespace}.fragment_1.use_clay_alert div.entries > div.important .component-title {
+    ${fragmentSelector}.use_clay_alert div.entries > div.important .component-title {
       color: #da1414;
     }
 
-    #${fragmentEntryLinkNamespace}.fragment_1.use_clay_alert div.entries > div.important .component-subtitle {
+    ${fragmentSelector}.use_clay_alert div.entries > div.important .component-subtitle {
       color: #f48989;
     }
 
-    #${fragmentEntryLinkNamespace}.fragment_1.use_clay_alert div.entries > div.normal {
+    ${fragmentSelector}.use_clay_alert div.entries > div.normal {
       background-color: #eef2fa;
       border-color: #89a7e0;
       color: #2e5aac;
     }
 
-    #${fragmentEntryLinkNamespace}.fragment_1.use_clay_alert div.entries > div.normal .component-title {
+    ${fragmentSelector}.use_clay_alert div.entries > div.normal .component-title {
       color: #2e5aac;
     }
 
-    #${fragmentEntryLinkNamespace}.fragment_1.use_clay_alert div.entries > div.normal .component-subtitle {
+    ${fragmentSelector}.use_clay_alert div.entries > div.normal .component-subtitle {
       color: #89a7e0;
     }
 
-    #${fragmentEntryLinkNamespace}.fragment_1.use_clay_alert div.entries .entry-title .badge {
+    ${fragmentSelector}.use_clay_alert div.entries .entry-title .badge {
       display: none;
     }
 
-    #${fragmentEntryLinkNamespace}.fragment_1.no_user_info div.entries .entry-user-display-text,
-    #${fragmentEntryLinkNamespace}.fragment_1.no_user_info div.entries > div > div > div > div:nth-child(1) {
+    ${fragmentSelector}.no_user_info div.entries .entry-user-display-text,
+    ${fragmentSelector}.no_user_info div.entries > div > div > div > div:nth-child(1) {
       display: none;
     }
 
-    #${fragmentEntryLinkNamespace}.fragment_1.use_clay_alert
+    ${fragmentSelector}.use_clay_alert
       div.entries
       > div.important
       div.lfr-icon-menu
@@ -96,44 +98,44 @@
       fill: #da1414;
     }
 
-    #${fragmentEntryLinkNamespace}.fragment_1.use_clay_alert div.entries > div.normal div.lfr-icon-menu svg {
+    ${fragmentSelector}.use_clay_alert div.entries > div.normal div.lfr-icon-menu svg {
       fill: #2e5aac;
     }
 
-    #${fragmentEntryLinkNamespace}.fragment_1.no_context_menu div.lfr-icon-menu {
+    ${fragmentSelector}.no_context_menu div.lfr-icon-menu {
       display: none;
     }
 
-		#${fragmentEntryLinkNamespace}.fragment_1.use_accordion div.entries > div.alert-close .entry-title:${pseudo_element},
-    #${fragmentEntryLinkNamespace}.fragment_1.use_accordion div.entries > div .entry-title:${pseudo_element} {
+		${fragmentSelector}.use_accordion div.entries > div.alert-close .entry-title:${pseudo_element},
+    ${fragmentSelector}.use_accordion div.entries > div .entry-title:${pseudo_element} {
       content: '${configuration.accordionClosedIcon}';
       font-weight: bold;
       font-size: 1.125rem;
       line-height: 1.25rem;
     }
 
-    #${fragmentEntryLinkNamespace}.fragment_1.use_accordion div.entries > div .entry-title:${pseudo_element} {
+    ${fragmentSelector}.use_accordion div.entries > div .entry-title:${pseudo_element} {
       content: '${configuration.accordionOpenIcon}';
     }
 
-    #${fragmentEntryLinkNamespace}.fragment_1.use_accordion
+    ${fragmentSelector}.use_accordion
       div.entries
       > div.alert-close.important
       .entry-title:${pseudo_element},
-    #${fragmentEntryLinkNamespace}.fragment_1.use_accordion div.entries > div.important .entry-title:${pseudo_element} {
+    ${fragmentSelector}.use_accordion div.entries > div.important .entry-title:${pseudo_element} {
       color: #da1414;
     }
 
-    #${fragmentEntryLinkNamespace}.fragment_1.use_accordion
+    ${fragmentSelector}.use_accordion
       div.entries
       > div.alert-close.normal
       .entry-title:${pseudo_element},
-    #${fragmentEntryLinkNamespace}.fragment_1.use_accordion div.entries > div.normal .entry-title:${pseudo_element} {
+    ${fragmentSelector}.use_accordion div.entries > div.normal .entry-title:${pseudo_element} {
       color: #2e5aac;
     }
 
-    #${fragmentEntryLinkNamespace}.fragment_1.use_accordion div.entries > div.alert-close .entry-scope,
-    #${fragmentEntryLinkNamespace}.fragment_1.use_accordion div.entries > div.alert-close .entry-content {
+    ${fragmentSelector}.use_accordion div.entries > div.alert-close .entry-scope,
+    ${fragmentSelector}.use_accordion div.entries > div.alert-close .entry-content {
       display: none;
     }
   </style>

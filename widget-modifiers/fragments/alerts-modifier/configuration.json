@@ -4,71 +4,71 @@
       "fields": [
         {
           "defaultValue": "true",
-          "description": "shows-read-messages-if-checked",
-          "label": "show-read",
+          "description": "The default Read / Unread tabs will be displayed if this option is checked",
+          "label": "Show Read / Unread tabs",
           "name": "showRead",
           "type": "checkbox"
         },
         {
           "defaultValue": "true",
-          "description": "shows-buttons-if-checked",
-          "label": "show-buttons",
+          "description": "The default button, such as Add, will be displayed if this option is checked",
+          "label": "Show buttons",
           "name": "showButtons",
           "type": "checkbox"
         },
         {
           "defaultValue": "true",
-          "description": "shows-context-menu-if-checked",
-          "label": "show-context-menu",
+          "description": "The context menu is displayed, such as Mark as Read, will be displayed if this option is checked",
+          "label": "Show the context menu",
           "name": "showContextMenu",
           "type": "checkbox"
         },
         {
           "defaultValue": "true",
-          "description": "shows-user-info-if-checked",
-          "label": "show-user-info",
+          "description": "The avatar and name of the creator will be displayed if this option is checked",
+          "label": "Show user information",
           "name": "showUserInfo",
           "type": "checkbox"
         },
         {
           "defaultValue": "false",
-          "description": "use-clay-alerts-if-checked",
-          "label": "use-clay-alerts",
+          "description": "The alerts / announcements will be modified to reflect Clay alerts if this option is checked. The Clay styles will not fully apply within the page editor",
+          "label": "Use Clay alerts",
           "name": "useClayAlerts",
           "type": "checkbox"
         },
         {
           "defaultValue": "false",
-          "description": "use-accordion-if-checked",
-          "label": "use-accordion",
+          "description": "The user will be able to expand and collape the body of the alter / announcement if this option is checked",
+          "label": "Use accordion",
           "name": "useAccordion",
           "type": "checkbox"
         },
         {
           "defaultValue": "\\2295",
-          "description": "accordion-closed-icon",
-          "label": "accordion-closed-icon",
+          "description": "The CSS unicode hex symbol that is used when the message body is collapsed. Alternative icons can be found here: https://www.w3schools.com/charsets",
+          "label": "Accordion closed icon",
           "name": "accordionClosedIcon",
           "type": "text"
         },
         {
           "defaultValue": "\\2296",
-          "description": "accordion-open-icon",
-          "label": "accordion-open-icon",
+          "description": "The CSS unicode hex symbol that is used when the message body is expanded. Alternative icons can be found here: https://www.w3schools.com/charsets",
+          "label": "Accordion open icon",
           "name": "accordionOpenIcon",
           "type": "text"
         },
         {
           "defaultValue": "true",
-          "description": "accordion-icon-left-if-checked",
-          "label": "accordion-icon-left",
+          "description": "The accordion icon will be placed on the left of the heading if this option is checked",
+          "label": "Left accordion icon",
           "name": "accordionIconLeft",
           "type": "checkbox"
         },
         {
           "defaultValue": "false",
-          "description": "show-alert-open-if-checked",
-          "label": "show-alert-open",
+          "description": "The message body will be intially be expanded if this option is checked",
+          "label": "Show accordion expanded",
           "name": "showAlertOpen",
           "type": "checkbox"
         }
