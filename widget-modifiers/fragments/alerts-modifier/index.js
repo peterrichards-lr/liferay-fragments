@@ -134,8 +134,11 @@ if (entries) {
           Analytics.track(action, {
             userId: themeDisplay.getUserId(),
             readAt: getReadAtDate(),
-            entryId: entryId ? '' + entryId : 'Unknown',
-            entryTitle: entryTitle ? entryTitle : 'Unknown',
+            entryId: entryId ? entryId : 'Unknown',
+            entryTitle: entryTitle ? entryTitle.innerText : 'Unknown',
+            entryPrioirty: entry.classList.contains('important')
+              ? 'Important'
+              : 'Normal',
           });
         }
       }
