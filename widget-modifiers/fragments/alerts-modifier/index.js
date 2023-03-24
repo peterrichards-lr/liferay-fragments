@@ -34,7 +34,7 @@ if (entries) {
     }
   };
 
-  const getReadAtDate = () => {
+  const getJsonDate = () => {
     return new Date().toJSON();
   };
 
@@ -48,7 +48,11 @@ if (entries) {
     if (text.startsWith('javascript:')) {
       const markEntryRegEx = /markEntry\(([0-9]+)\)/;
       const match = text.match(markEntryRegEx);
-      return match ? match[1] : undefined;
+      return match
+        ? isNaN(match[1]) == false
+          ? parseInt(match[1])
+          : match[1]
+        : undefined;
     }
     return undefined;
   };
@@ -87,10 +91,12 @@ if (entries) {
   };
 
   const buildAnalyticsEventData = (entryId, entry, entryTitle) => {
+    const userIdStr = themeDisplay.getUserId();
+    const userId = isNaN(userIdStr) ? userIdStr : parseInt(userIdStr);
     return {
-      userId: themeDisplay.getUserId(),
-      readAt: getReadAtDate(),
-      entryId: entryId ? entryId : 'Unknown',
+      userId: userId,
+      actionAt: getJsonDate(),
+      entryId: entryId,
       entryTitle: entryTitle ? entryTitle.innerText : 'Unknown',
       entryPrioirty: entry.classList.contains('important')
         ? 'Important'
