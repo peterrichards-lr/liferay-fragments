@@ -8,46 +8,7 @@ if (document.body.classList.contains('has-edit-mode-menu'))
 
 const entries = fragmentElement.querySelectorAll('div.entries > div');
 if (entries) {
-  const setPriority = (entry) => {
-    const badge = entry.querySelector('.badge');
-    const important = badge !== null;
-    if (important) {
-      entry.classList.add('important');
-    } else {
-      entry.classList.add('normal');
-    }
-  };
-
-  const getAncestor = (el, gen) => {
-    var parent = el.parentElement;
-    var i = 0;
-    while (i < gen - 1) {
-      parent = parent.parentElement;
-      i++;
-    }
-    return parent;
-  };
-
-  const clickHandler = (evt) => {
-    const entryTitle = evt.target;
-    const entry = getAncestor(entryTitle, 7);
-    if (!entry) {
-      console.warn('Unable to find the entry from the event');
-    }
-    entry.classList.toggle('alert-close');
-  };
-
-  const createAccordion = (entry) => {
-    const entryTitle = entry.querySelector('.entry-title');
-    if (!entryTitle) {
-      console.warn("Unable to find the entry's header");
-    }
-    entryTitle.addEventListener('click', clickHandler);
-    if (!configuration.showAlertOpen) {
-      entry.classList.add('alert-close');
-    }
-  };
-
+  const actionText = 'Mark as Read';
   const queryInnerTextAll = function (root, selector, regex) {
     if (typeof regex === 'string') {
       regex = new RegExp(regex, 'i');
@@ -92,8 +53,87 @@ if (entries) {
     return undefined;
   };
 
+  const setPriority = (entry) => {
+    const badge = entry.querySelector('.badge');
+    const important = badge !== null;
+    if (important) {
+      entry.classList.add('important');
+    } else {
+      entry.classList.add('normal');
+    }
+  };
+
+  const getAncestor = (el, gen) => {
+    var parent = el.parentElement;
+    var i = 0;
+    while (i < gen - 1) {
+      parent = parent.parentElement;
+      i++;
+    }
+    return parent;
+  };
+
+  const getMarkAsReadMenuItem = (entry) => {
+    const contextMenu = entry.querySelector(
+      '.dropdown-menu.dropdown-menu-right'
+    );
+    if (!contextMenu) {
+      console.error("Unable to find the entry's context menu");
+      return;
+    }
+    const markAsReadMenuItem = queryInnerText(contextMenu, 'span', actionText);
+    if (markAsReadMenuItem) return markAsReadMenuItem;
+    return null;
+  };
+
+  const buildAnalyticsEventData = (entryId, entry, entryTitle) => {
+    return {
+      userId: themeDisplay.getUserId(),
+      readAt: getReadAtDate(),
+      entryId: entryId ? entryId : 'Unknown',
+      entryTitle: entryTitle ? entryTitle.innerText : 'Unknown',
+      entryPrioirty: entry.classList.contains('important')
+        ? 'Important'
+        : 'Normal',
+    };
+  };
+
+  const clickHandler = (evt) => {
+    const entryTitle = evt.target;
+    const entry = getAncestor(entryTitle, 7);
+    if (!entry) {
+      console.warn('Unable to find the entry from the event');
+      return;
+    }
+    if (configuration.enableAcCustomEvent && window.Analytics) {
+      if (entry.classList.contains('alert-close')) {
+        const action = 'Viewed alert / announcement';
+        const markAsReadMenuItem = getMarkAsReadMenuItem(entry);
+        if (!markAsReadMenuItem) {
+          console.error("Unable to find the entry's ' + actionText + ' menu");
+          return;
+        }
+        const markAsReadMenuItemLink = markAsReadMenuItem.parentElement;
+        const entryId = getEntryId(markAsReadMenuItemLink);
+        const eventData = buildAnalyticsEventData(entryId, entry, entryTitle);
+        Analytics.track(action, eventData);
+      }
+    }
+    entry.classList.toggle('alert-close');
+  };
+
+  const createAccordion = (entry) => {
+    const entryTitle = entry.querySelector('.entry-title');
+    if (!entryTitle) {
+      console.warn("Unable to find the entry's header");
+    }
+    entryTitle.addEventListener('click', clickHandler);
+    if (!configuration.showAlertOpen) {
+      entry.classList.add('alert-close');
+    }
+  };
+
   const addMarkAsRead = (entry) => {
-    const actionText = 'Mark as Read';
     const entryContent = entry.querySelector('.entry-content');
     if (!entryContent) {
       console.error("Unable to find the entry's message body");
@@ -104,20 +144,12 @@ if (entries) {
       console.error("Unable to find the entry's header");
       return;
     }
-    const contextMenu = entry.querySelector(
-      '.dropdown-menu.dropdown-menu-right'
-    );
-    if (!contextMenu) {
-      console.error("Unable to find the entry's context menu");
-      return;
-    }
-    const markAsReadMenuItem = queryInnerText(contextMenu, 'span', actionText);
+    const markAsReadMenuItem = getMarkAsReadMenuItem(entry);
     if (!markAsReadMenuItem) {
       console.error("Unable to find the entry's ' + actionText + ' menu");
       return;
     }
     const markAsReadMenuItemLink = markAsReadMenuItem.parentElement;
-    const entryId = getEntryId(markAsReadMenuItemLink);
     const markAsReadButton = document.createElement('a');
     markAsReadButton.innerText = actionText;
     markAsReadButton.classList.add('btn');
@@ -128,19 +160,11 @@ if (entries) {
       'btn-' + configuration.addMarkAsReadButtonType
     );
     markAsReadButton.addEventListener('click', (evt) => {
-      if (configuration.enableAcCustomEvent) {
+      if (configuration.enableAcCustomEvent && window.Analytics) {
         const action = 'Read alert / announcement';
-        if (window.Analytics) {
-          Analytics.track(action, {
-            userId: themeDisplay.getUserId(),
-            readAt: getReadAtDate(),
-            entryId: entryId ? entryId : 'Unknown',
-            entryTitle: entryTitle ? entryTitle.innerText : 'Unknown',
-            entryPrioirty: entry.classList.contains('important')
-              ? 'Important'
-              : 'Normal',
-          });
-        }
+        const entryId = getEntryId(markAsReadMenuItemLink);
+        const eventData = buildAnalyticsEventData(entryId, entry, entryTitle);
+        Analytics.track(action, eventData);
       }
       markAsReadMenuItemLink.click();
     });
