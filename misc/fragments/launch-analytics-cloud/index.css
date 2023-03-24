@@ -1,0 +1,9 @@
+.fragment_134 {
+	border-color: var(--secondary) !important;
+	border-style: solid;
+	border-width: 5px !important;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	padding-bottom: var(--spacer-4, 1.5rem) !important;
+}

@@ -1,0 +1,10 @@
+{
+  "configurationPath": "configuration.json",
+  "jsPath": "index.js",
+  "htmlPath": "index.html",
+  "cssPath": "index.css",
+  "icon": "code",
+  "name": "Launch Analytics Cloud",
+  "type": "component",
+  "thumbnail": "thumbnail.png"
+}

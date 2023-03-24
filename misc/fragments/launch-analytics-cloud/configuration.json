@@ -1,0 +1,129 @@
+{
+	"fieldSets": [
+		{
+			"fields": [
+				{
+					"dataType": "string",
+					"defaultValue": "h4",
+					"label": "heading-level",
+					"name": "headingLevel",
+					"type": "select",
+					"typeOptions": {
+						"validValues": [
+							{
+								"value": "h1"
+							},
+							{
+								"value": "h2"
+							},
+							{
+								"value": "h3"
+							},
+							{
+								"value": "h4"
+							},
+							{
+								"value": "h5"
+							},
+							{
+								"value": "h6"
+							}
+						]
+					}
+				}
+			],
+			"label": "heading-options"
+		},
+		{
+			"fields": [
+				{
+					"dataType": "string",
+					"defaultValue": "py-2",
+					"label": "height",
+					"name": "height",
+					"type": "select",
+					"typeOptions": {
+						"validValues": [
+							{
+								"label": "1",
+								"value": "py-1"
+							},
+							{
+								"label": "2",
+								"value": "py-2"
+							},
+							{
+								"label": "3",
+								"value": "py-3"
+							},
+							{
+								"label": "4",
+								"value": "py-4"
+							},
+							{
+								"label": "5",
+								"value": "py-5"
+							}
+						]
+					}
+				}
+			],
+			"label": "spacer-options"
+		},
+		{
+			"fields": [
+				
+				{
+					"dataType": "string",
+					"defaultValue": "primary",
+					"label": "type",
+					"name": "buttonType",
+					"type": "select",
+					"typeOptions": {
+						"validValues": [
+							{
+								"value": "primary"
+							},
+							{
+								"value": "secondary"
+							},
+							{
+								"value": "link"
+							},
+							{
+								"value": "outline-primary"
+							},
+							{
+								"value": "outline-secondary"
+							}
+						]
+					}
+				},
+				{
+					"dataType": "string",
+					"defaultValue": "nm",
+					"label": "size",
+					"name": "buttonSize",
+					"type": "select",
+					"typeOptions": {
+						"validValues": [
+							{
+								"label": "small",
+								"value": "sm"
+							},
+							{
+								"label": "normal",
+								"value": "nm"
+							},
+							{
+								"label": "large",
+								"value": "lg"
+							}
+						]
+					}
+				}
+			],
+			"label": "button-options"
+		}
+	]
+}
