@@ -1,6 +1,6 @@
-[#assign is_signed_in = themeDisplay.isSignedIn()]
+[#assign isSignedIn = configuration.hideAnonymousRead && themeDisplay.isSignedIn()]
 [#assign divClassList = '' /]
-[#if configuration.showRead == false]
+[#if configuration.showRead == false || isSignedIn == false]
   [#assign divClassList = divClassList + ' no_tabs' /]
 [/#if]
 [#if configuration.showButtons == false]
@@ -12,8 +12,8 @@
 [#if configuration.showContextMenu == false]
   [#assign divClassList = divClassList + ' no_context_menu' /]
 [/#if]
-[#if configuration.showUserInfo == false]
-  [#assign divClassList = divClassList + ' no_user_info' /]
+[#if configuration.showCreatorInfo == false]
+  [#assign divClassList = divClassList + ' no_creator_info' /]
 [/#if]
 [#if configuration.useAccordion == true]
   [#assign divClassList = divClassList + ' use_accordion' /]
@@ -26,19 +26,19 @@
 [#assign fragmentSelector = '#${fragmentEntryLinkNamespace}' /]
 <div id="${fragmentEntryLinkNamespace}" class="${divClassList}">
   <style scoped>
-    ${fragmentSelector} .portlet-header {
+     .portlet-header {
       display: none;
     }
 
-    ${fragmentSelector}.no_tabs ul.nav {
+    .no_tabs ul.nav {
       display: none;
     }
 
-    ${fragmentSelector}.no_btn_group .btn-group {
+    .no_btn_group .btn-group {
       display: none;
     }
 
-    ${fragmentSelector}.use_clay_alert div.entries > div {
+    .use_clay_alert div.entries > div {
       border-color: transparent;
       border-style: solid;
       border-width: 0.0625rem;
@@ -53,44 +53,44 @@
       word-wrap: break-word;
     }
 
-    ${fragmentSelector}.use_clay_alert div.entries > div.important {
+    .use_clay_alert div.entries > div.important {
       background-color: #feefef;
       border-color: #f48989;
       color: #da1414;
     }
 
-    ${fragmentSelector}.use_clay_alert div.entries > div.important .component-title {
+    .use_clay_alert div.entries > div.important .component-title {
       color: #da1414;
     }
 
-    ${fragmentSelector}.use_clay_alert div.entries > div.important .component-subtitle {
+    .use_clay_alert div.entries > div.important .component-subtitle {
       color: #f48989;
     }
 
-    ${fragmentSelector}.use_clay_alert div.entries > div.normal {
+    .use_clay_alert div.entries > div.normal {
       background-color: #eef2fa;
       border-color: #89a7e0;
       color: #2e5aac;
     }
 
-    ${fragmentSelector}.use_clay_alert div.entries > div.normal .component-title {
+    .use_clay_alert div.entries > div.normal .component-title {
       color: #2e5aac;
     }
 
-    ${fragmentSelector}.use_clay_alert div.entries > div.normal .component-subtitle {
+    .use_clay_alert div.entries > div.normal .component-subtitle {
       color: #89a7e0;
     }
 
-    ${fragmentSelector}.use_clay_alert div.entries .entry-title .badge {
+    .use_clay_alert div.entries .entry-title .badge {
       display: none;
     }
 
-    ${fragmentSelector}.no_user_info div.entries .entry-user-display-text,
-    ${fragmentSelector}.no_user_info div.entries > div > div > div > div:nth-child(1) {
+    .no_creator_info div.entries .entry-user-display-text,
+    .no_creator_info div.entries > div > div > div > div:nth-child(1) {
       display: none;
     }
 
-    ${fragmentSelector}.use_clay_alert
+    .use_clay_alert
       div.entries
       > div.important
       div.lfr-icon-menu
@@ -98,44 +98,44 @@
       fill: #da1414;
     }
 
-    ${fragmentSelector}.use_clay_alert div.entries > div.normal div.lfr-icon-menu svg {
+    .use_clay_alert div.entries > div.normal div.lfr-icon-menu svg {
       fill: #2e5aac;
     }
 
-    ${fragmentSelector}.no_context_menu div.lfr-icon-menu {
+    .no_context_menu div.lfr-icon-menu {
       display: none;
     }
 
-		${fragmentSelector}.use_accordion div.entries > div.alert-close .entry-title:${pseudo_element},
-    ${fragmentSelector}.use_accordion div.entries > div .entry-title:${pseudo_element} {
+		.use_accordion div.entries > div.alert-close .entry-title:${pseudo_element},
+    .use_accordion div.entries > div .entry-title:${pseudo_element} {
       content: '${configuration.accordionClosedIcon}';
       font-weight: bold;
       font-size: 1.125rem;
       line-height: 1.25rem;
     }
 
-    ${fragmentSelector}.use_accordion div.entries > div .entry-title:${pseudo_element} {
+    .use_accordion div.entries > div .entry-title:${pseudo_element} {
       content: '${configuration.accordionOpenIcon}';
     }
 
-    ${fragmentSelector}.use_accordion
+    .use_accordion
       div.entries
       > div.alert-close.important
       .entry-title:${pseudo_element},
-    ${fragmentSelector}.use_accordion div.entries > div.important .entry-title:${pseudo_element} {
+    .use_accordion div.entries > div.important .entry-title:${pseudo_element} {
       color: #da1414;
     }
 
-    ${fragmentSelector}.use_accordion
+    .use_accordion
       div.entries
       > div.alert-close.normal
       .entry-title:${pseudo_element},
-    ${fragmentSelector}.use_accordion div.entries > div.normal .entry-title:${pseudo_element} {
+    .use_accordion div.entries > div.normal .entry-title:${pseudo_element} {
       color: #2e5aac;
     }
 
-    ${fragmentSelector}.use_accordion div.entries > div.alert-close .entry-scope,
-    ${fragmentSelector}.use_accordion div.entries > div.alert-close .entry-content {
+    .use_accordion div.entries > div.alert-close .entry-scope,
+    .use_accordion div.entries > div.alert-close .entry-content {
       display: none;
     }
   </style>

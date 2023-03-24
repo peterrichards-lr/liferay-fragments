@@ -26,8 +26,8 @@
         {
           "defaultValue": "true",
           "description": "The avatar and name of the creator will be displayed if this option is checked",
-          "label": "Show user information",
-          "name": "showUserInfo",
+          "label": "Show creator information",
+          "name": "showCreatorInfo",
           "type": "checkbox"
         },
         {
@@ -70,6 +70,71 @@
           "description": "The message body will be intially be expanded if this option is checked",
           "label": "Show accordion expanded",
           "name": "showAlertOpen",
+          "type": "checkbox"
+        },
+        {
+          "defaultValue": "true",
+          "description": "A Mark as Read button will be added to the message body if this option is checked",
+          "label": "Add Mark as Read button",
+          "name": "addMarkAsRead",
+          "type": "checkbox"
+        },
+				{
+					"dataType": "string",
+					"defaultValue": "primary",
+					"label": "Mark as Read button type",
+					"name": "addMarkAsReadButtonType",
+          "description": "The type which will be applied to the Mark as Read button",
+					"type": "select",
+					"typeOptions": {
+						"validValues": [
+							{
+								"value": "primary"
+							},
+							{
+								"value": "secondary"
+							},
+							{
+								"value": "link"
+							},
+							{
+								"value": "outline-primary"
+							},
+							{
+								"value": "outline-secondary"
+							}
+						]
+					}
+				},
+				{
+					"dataType": "string",
+					"defaultValue": "sm",
+					"label": "Mark as Read button size",
+					"name": "addMarkAsReadButtonSize",
+          "description": "The size of the Mark as Read button",
+					"type": "select",
+					"typeOptions": {
+						"validValues": [
+							{
+								"label": "small",
+								"value": "sm"
+							},
+							{
+								"label": "normal",
+								"value": "nm"
+							},
+							{
+								"label": "large",
+								"value": "lg"
+							}
+						]
+					}
+				},
+        {
+          "defaultValue": "true",
+          "description": "The default behaviour of showing the Read / Unread tabs to anonymous users will be corrected if this option is checked",
+          "label": "Hide Read / Unread tabs when anonymous",
+          "name": "hideAnonymousRead",
           "type": "checkbox"
         }
       ]
