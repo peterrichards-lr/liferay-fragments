@@ -1,0 +1,141 @@
+[#assign divClassList = 'fragment_1' /]
+[#if configuration.showRead == false]
+  [#assign divClassList = divClassList + ' no_tabs' /]
+[/#if]
+[#if configuration.showButtons == false]
+  [#assign divClassList = divClassList + ' no_btn_group' /]
+[/#if]
+[#if configuration.useClayAlerts == true]
+  [#assign divClassList = divClassList + ' use_clay_alert' /]
+[/#if]
+[#if configuration.showContextMenu == false]
+  [#assign divClassList = divClassList + ' no_context_menu' /]
+[/#if]
+[#if configuration.showUserInfo == false]
+  [#assign divClassList = divClassList + ' no_user_info' /]
+[/#if]
+[#if configuration.useAccordion == true]
+  [#assign divClassList = divClassList + ' use_accordion' /]
+[/#if]
+[#if configuration.accordionIconLeft == true]
+  [#assign pseudo_element = 'before' /]
+[#else]
+  [#assign pseudo_element = 'after' /]
+[/#if]
+<div id="${fragmentEntryLinkNamespace}" class="${divClassList}">
+  <style scoped>
+    #${fragmentEntryLinkNamespace}.fragment_1 .portlet-header {
+      display: none;
+    }
+
+    #${fragmentEntryLinkNamespace}.fragment_1.no_tabs ul.nav {
+      display: none;
+    }
+
+    #${fragmentEntryLinkNamespace}.fragment_1.no_btn_group .btn-group {
+      display: none;
+    }
+
+    #${fragmentEntryLinkNamespace}.fragment_1.use_clay_alert div.entries > div {
+      border-color: transparent;
+      border-style: solid;
+      border-width: 0.0625rem;
+      border-radius: 0.25rem;
+      display: block;
+      font-size: 0.875rem;
+      margin-bottom: 1rem;
+      padding: 0.9375rem 1rem;
+      position: relative;
+      white-space: normal;
+      overflow-wrap: break-word;
+      word-wrap: break-word;
+    }
+
+    #${fragmentEntryLinkNamespace}.fragment_1.use_clay_alert div.entries > div.important {
+      background-color: #feefef;
+      border-color: #f48989;
+      color: #da1414;
+    }
+
+    #${fragmentEntryLinkNamespace}.fragment_1.use_clay_alert div.entries > div.important .component-title {
+      color: #da1414;
+    }
+
+    #${fragmentEntryLinkNamespace}.fragment_1.use_clay_alert div.entries > div.important .component-subtitle {
+      color: #f48989;
+    }
+
+    #${fragmentEntryLinkNamespace}.fragment_1.use_clay_alert div.entries > div.normal {
+      background-color: #eef2fa;
+      border-color: #89a7e0;
+      color: #2e5aac;
+    }
+
+    #${fragmentEntryLinkNamespace}.fragment_1.use_clay_alert div.entries > div.normal .component-title {
+      color: #2e5aac;
+    }
+
+    #${fragmentEntryLinkNamespace}.fragment_1.use_clay_alert div.entries > div.normal .component-subtitle {
+      color: #89a7e0;
+    }
+
+    #${fragmentEntryLinkNamespace}.fragment_1.use_clay_alert div.entries .entry-title .badge {
+      display: none;
+    }
+
+    #${fragmentEntryLinkNamespace}.fragment_1.no_user_info div.entries .entry-user-display-text,
+    #${fragmentEntryLinkNamespace}.fragment_1.no_user_info div.entries > div > div > div > div:nth-child(1) {
+      display: none;
+    }
+
+    #${fragmentEntryLinkNamespace}.fragment_1.use_clay_alert
+      div.entries
+      > div.important
+      div.lfr-icon-menu
+      svg {
+      fill: #da1414;
+    }
+
+    #${fragmentEntryLinkNamespace}.fragment_1.use_clay_alert div.entries > div.normal div.lfr-icon-menu svg {
+      fill: #2e5aac;
+    }
+
+    #${fragmentEntryLinkNamespace}.fragment_1.no_context_menu div.lfr-icon-menu {
+      display: none;
+    }
+
+		#${fragmentEntryLinkNamespace}.fragment_1.use_accordion div.entries > div.alert-close .entry-title:${pseudo_element},
+    #${fragmentEntryLinkNamespace}.fragment_1.use_accordion div.entries > div .entry-title:${pseudo_element} {
+      content: '${configuration.accordionClosedIcon}';
+      font-weight: bold;
+      font-size: 1.125rem;
+      line-height: 1.25rem;
+    }
+
+    #${fragmentEntryLinkNamespace}.fragment_1.use_accordion div.entries > div .entry-title:${pseudo_element} {
+      content: '${configuration.accordionOpenIcon}';
+    }
+
+    #${fragmentEntryLinkNamespace}.fragment_1.use_accordion
+      div.entries
+      > div.alert-close.important
+      .entry-title:${pseudo_element},
+    #${fragmentEntryLinkNamespace}.fragment_1.use_accordion div.entries > div.important .entry-title:${pseudo_element} {
+      color: #da1414;
+    }
+
+    #${fragmentEntryLinkNamespace}.fragment_1.use_accordion
+      div.entries
+      > div.alert-close.normal
+      .entry-title:${pseudo_element},
+    #${fragmentEntryLinkNamespace}.fragment_1.use_accordion div.entries > div.normal .entry-title:${pseudo_element} {
+      color: #2e5aac;
+    }
+
+    #${fragmentEntryLinkNamespace}.fragment_1.use_accordion div.entries > div.alert-close .entry-scope,
+    #${fragmentEntryLinkNamespace}.fragment_1.use_accordion div.entries > div.alert-close .entry-content {
+      display: none;
+    }
+  </style>
+  <lfr-drop-zone></lfr-drop-zone>
+</div>

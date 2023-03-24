@@ -1,0 +1,78 @@
+{
+  "fieldSets": [
+    {
+      "fields": [
+        {
+          "defaultValue": "true",
+          "description": "shows-read-messages-if-checked",
+          "label": "show-read",
+          "name": "showRead",
+          "type": "checkbox"
+        },
+        {
+          "defaultValue": "true",
+          "description": "shows-buttons-if-checked",
+          "label": "show-buttons",
+          "name": "showButtons",
+          "type": "checkbox"
+        },
+        {
+          "defaultValue": "true",
+          "description": "shows-context-menu-if-checked",
+          "label": "show-context-menu",
+          "name": "showContextMenu",
+          "type": "checkbox"
+        },
+        {
+          "defaultValue": "true",
+          "description": "shows-user-info-if-checked",
+          "label": "show-user-info",
+          "name": "showUserInfo",
+          "type": "checkbox"
+        },
+        {
+          "defaultValue": "false",
+          "description": "use-clay-alerts-if-checked",
+          "label": "use-clay-alerts",
+          "name": "useClayAlerts",
+          "type": "checkbox"
+        },
+        {
+          "defaultValue": "false",
+          "description": "use-accordion-if-checked",
+          "label": "use-accordion",
+          "name": "useAccordion",
+          "type": "checkbox"
+        },
+        {
+          "defaultValue": "\\2295",
+          "description": "accordion-closed-icon",
+          "label": "accordion-closed-icon",
+          "name": "accordionClosedIcon",
+          "type": "text"
+        },
+        {
+          "defaultValue": "\\2296",
+          "description": "accordion-open-icon",
+          "label": "accordion-open-icon",
+          "name": "accordionOpenIcon",
+          "type": "text"
+        },
+        {
+          "defaultValue": "true",
+          "description": "accordion-icon-left-if-checked",
+          "label": "accordion-icon-left",
+          "name": "accordionIconLeft",
+          "type": "checkbox"
+        },
+        {
+          "defaultValue": "false",
+          "description": "show-alert-open-if-checked",
+          "label": "show-alert-open",
+          "name": "showAlertOpen",
+          "type": "checkbox"
+        }
+      ]
+    }
+  ]
+}
