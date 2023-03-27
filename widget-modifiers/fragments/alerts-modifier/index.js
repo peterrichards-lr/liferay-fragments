@@ -111,18 +111,35 @@ if (entries) {
       console.warn('Unable to find the entry from the event');
       return;
     }
-    if (configuration.enableAcCustomEvent && window.Analytics) {
-      if (entry.classList.contains('alert-close')) {
-        const action = 'Viewed alert / announcement';
-        const markAsReadMenuItem = getMarkAsReadMenuItem(entry);
-        if (!markAsReadMenuItem) {
-          console.error("Unable to find the entry's ' + actionText + ' menu");
-          return;
+
+    if (!themeDisplay.isSignedIn()) {
+      console.log('The user is anonymous. Context menu will be unavailable');
+      entry.classList.toggle('alert-close');
+      return;
+    }
+
+    if (configuration.enableAcCustomEvent) {
+      if (window.Analytics) {
+        if (entry.classList.contains('alert-close')) {
+          const action = 'Viewed alert / announcement';
+          const markAsReadMenuItem = getMarkAsReadMenuItem(entry);
+          if (markAsReadMenuItem) {
+            const markAsReadMenuItemLink = markAsReadMenuItem.parentElement;
+            const entryId = getEntryId(markAsReadMenuItemLink);
+            const eventData = buildAnalyticsEventData(
+              entryId,
+              entry,
+              entryTitle
+            );
+            Analytics.track(action, eventData);
+          } else {
+            console.error(
+              "Unable to find the entry's '" + actionText + "' menu"
+            );
+          }
         }
-        const markAsReadMenuItemLink = markAsReadMenuItem.parentElement;
-        const entryId = getEntryId(markAsReadMenuItemLink);
-        const eventData = buildAnalyticsEventData(entryId, entry, entryTitle);
-        Analytics.track(action, eventData);
+      } else {
+        console.error('Liferay Analytics unavailable');
       }
     }
     entry.classList.toggle('alert-close');
@@ -152,7 +169,7 @@ if (entries) {
     }
     const markAsReadMenuItem = getMarkAsReadMenuItem(entry);
     if (!markAsReadMenuItem) {
-      console.error("Unable to find the entry's ' + actionText + ' menu");
+      console.error("Unable to find the entry's '" + actionText + "' menu");
       return;
     }
     const markAsReadMenuItemLink = markAsReadMenuItem.parentElement;
@@ -166,11 +183,15 @@ if (entries) {
       'btn-' + configuration.addMarkAsReadButtonType
     );
     markAsReadButton.addEventListener('click', (evt) => {
-      if (configuration.enableAcCustomEvent && window.Analytics) {
-        const action = 'Read alert / announcement';
-        const entryId = getEntryId(markAsReadMenuItemLink);
-        const eventData = buildAnalyticsEventData(entryId, entry, entryTitle);
-        Analytics.track(action, eventData);
+      if (configuration.enableAcCustomEvent) {
+        if (window.Analytics) {
+          const action = 'Read alert / announcement';
+          const entryId = getEntryId(markAsReadMenuItemLink);
+          const eventData = buildAnalyticsEventData(entryId, entry, entryTitle);
+          Analytics.track(action, eventData);
+        } else {
+          console.error('Liferay Analytics unavailable');
+        }
       }
       markAsReadMenuItemLink.click();
     });
@@ -183,7 +204,17 @@ if (entries) {
     if (configuration.useAccordion) {
       createAccordion(entry);
     }
-    if (configuration.addMarkAsRead && themeDisplay.isSignedIn()) {
+    if (!themeDisplay.isSignedIn()) {
+      if (i == 0) {
+        console.log(
+          "The user is anonymous. The '" +
+            actionText +
+            "' button will not be added"
+        );
+      }
+      continue;
+    }
+    if (configuration.addMarkAsRead) {
       addMarkAsRead(entry);
     }
   }
