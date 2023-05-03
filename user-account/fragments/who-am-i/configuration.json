@@ -1,0 +1,77 @@
+{
+  "fieldSets": [
+    {
+      "fields": [
+        {
+          "dataType": "string",
+          "defaultValue": "primary",
+          "label": "type",
+          "name": "buttonType",
+          "type": "select",
+          "typeOptions": {
+            "validValues": [
+              {
+                "value": "primary"
+              },
+              {
+                "value": "secondary"
+              },
+              {
+                "value": "link"
+              },
+              {
+                "value": "outline-primary"
+              },
+              {
+                "value": "outline-secondary"
+              }
+            ]
+          }
+        },
+        {
+          "dataType": "string",
+          "defaultValue": "nm",
+          "label": "size",
+          "name": "buttonSize",
+          "type": "select",
+          "typeOptions": {
+            "validValues": [
+              {
+                "label": "small",
+                "value": "sm"
+              },
+              {
+                "label": "normal",
+                "value": "nm"
+              },
+              {
+                "label": "large",
+                "value": "lg"
+              }
+            ]
+          }
+        }
+      ],
+      "label": "button-options"
+    },
+    {
+      "fields": [
+        {
+          "dataType": "string",
+          "defaultValue": "microservice-lctseuk-prd.lfr.cloud/account/api/v1/whoami",
+          "label": "endpoint-url",
+          "name": "endpointUrl",
+          "type": "text"
+        },
+        {
+          "dataType": "string",
+          "defaultValue": "1451410b-e109-c4a8-e7b2-31eab20e30d2",
+          "label": "user-agent-application-external-reference-code",
+          "name": "userAgentAppExtRefCode",
+          "type": "text"
+        }
+      ],
+      "label": "endpoint-options"
+    }
+  ]
+}
