@@ -1,12 +1,11 @@
-[#assign angle = configuration.angle + 'deg'/]
-[#assign colorStop1 = configuration.colorStop1/]
-[#assign colorStop2 = configuration.colorStop2/]
-[#assign containerId = 'fragment-' + fragmentEntryLinkNamespace + '-container' /]
-<style>
-	#${containerId} {
-		background-image: linear-gradient(${angle}, ${colorStop1}, ${colorStop2});
-	}
-</style>
-<div id="${containerId}">
+<div
+	id="fragment-${fragmentEntryLinkNamespace}-container"
+	class="linear-gradient-container-custom"
+	style="
+		--direction: ${configuration.direction};
+		--start: ${configuration.start.rgbValue};
+		--end: ${configuration.end.rgbValue};
+		"
+	>
 	<lfr-drop-zone></lfr-drop-zone>
 </div>

@@ -3,109 +3,27 @@
 				{
 			"fields": [
 				{
-					"dataType": "string",
-					"defaultValue": "primary",
-					"label": "Color Stop 1",
-					"name": "colorStop1",
-					"type": "select",
-					"typeOptions": {
-						"validValues": [
-							{
-								"value": "primary"
-							},
-							{
-								"value": "secondary"
-							},
-							{
-								"value": "neutral-0"
-							},
-							{
-								"value": "neutral-1"
-							},
-							{
-								"value": "neutral-2"
-							},
-							{
-								"value": "neutral-3"
-							},
-							{
-								"value": "neutral-4"
-							},
-							{
-								"value": "neutral-5"
-							},
-							{
-								"value": "neutral-6"
-							},
-							{
-								"value": "neutral-7"
-							},
-							{
-								"value": "neutral-8"
-							},
-							{
-								"value": "neutral-9"
-							}
-						]
-					}
+					"label": "Start",
+					"name": "start",
+					"type": "colorPicker",
+					"defaultValue": "#000000"
 				},
 				{
-					"dataType": "string",
-					"defaultValue": "primary",
-					"label": "Color Stop 2",
-					"name": "colorStop2",
-					"type": "select",
-					"typeOptions": {
-						"validValues": [
-							{
-								"value": "primary"
-							},
-							{
-								"value": "secondary"
-							},
-							{
-								"value": "neutral-0"
-							},
-							{
-								"value": "neutral-1"
-							},
-							{
-								"value": "neutral-2"
-							},
-							{
-								"value": "neutral-3"
-							},
-							{
-								"value": "neutral-4"
-							},
-							{
-								"value": "neutral-5"
-							},
-							{
-								"value": "neutral-6"
-							},
-							{
-								"value": "neutral-7"
-							},
-							{
-								"value": "neutral-8"
-							},
-							{
-								"value": "neutral-9"
-							}
-						]
-					}
+					"label": "End",
+					"name": "end",
+					"type": "colorPicker",
+					"defaultValue": "#ffffff"
 				},
 				{
-					"name": "angle",
-					"label": "Gradient Angle",
-					"description": "A value of 0deg is equivalent to \"to top\". A value of 90deg is equivalent to \"to right\". A value of 180deg is equivalent to \"to bottom\"",
+					"name": "direction",
+					"label": "Direction",
+					"description": "Write any valid CSS angle.",
 					"type": "text",
-					"dataType": "int",
-					"defaultValue": "90"
+					"dataType": "string",
+					"defaultValue": "90deg"
 				}
 			],
-			"label": "General"
+			"label": "Linear Gradient"
 		}
 	]
 }

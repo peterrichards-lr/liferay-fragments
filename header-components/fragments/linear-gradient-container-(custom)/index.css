@@ -1,2 +1,7 @@
-.fragment_233 {
+.linear-gradient-container-custom {
+	background: linear-gradient(
+		var(--direction),
+		var(--start),
+		var(--end)
+	);
 }

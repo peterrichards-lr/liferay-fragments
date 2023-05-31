@@ -3,29 +3,35 @@
 				{
 			"fields": [
 				{
-					"name": "colorStop1",
-					"label": "Color Stop 1",
-					"type": "text",
-					"dataType": "string",
-					"defaultValue": "var(--color-brand-primary, #fff)"
+					"name": "start",
+					"label": "Start",
+					"type": "colorPalette",
+					"dataType": "object",
+					"defaultValue": {
+						"cssClass": "black",
+						"rgbValue": "rgb(0,0,0)"
+					}
 				},
 				{
-					"name": "colorStop2",
-					"label": "Color Stop 2",
-					"type": "text",
-					"dataType": "string",
-					"defaultValue": "var(--color-brand-secondary, #fff)"
+					"name": "end",
+					"label": "End",
+					"type": "colorPalette",
+					"dataType": "object",
+					"defaultValue": {
+						"cssClass": "white",
+						"rgbValue": "rgb(255,255,255)"
+					}
 				},
 				{
-					"name": "angle",
-					"label": "Gradient Angle",
-					"description": "A value of 0deg is equivalent to \"to top\". A value of 90deg is equivalent to \"to right\". A value of 180deg is equivalent to \"to bottom\"",
+					"name": "direction",
+					"label": "Direction",
+					"description": "Write any valid CSS angle.",
 					"type": "text",
-					"dataType": "int",
-					"defaultValue": "90"
+					"dataType": "string",
+					"defaultValue": "90deg"
 				}
 			],
-			"label": "General"
+			"label": "Linear Gradient"
 		}
 	]
 }
