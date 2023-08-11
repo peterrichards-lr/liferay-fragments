@@ -1,0 +1,57 @@
+{
+  "fieldSets": [
+    {
+      "fields": [
+        {
+          "defaultValue": true,
+          "label": "Dropzone scoped",
+          "description": "Determines if the selectors string is dropzone scoped",
+          "name": "dropzoneScoped",
+          "type": "checkbox"
+        },
+        {
+          "defaultValue": ".btn",
+          "label": "Selectors string",
+          "description": "The CSS selectors string to locate the element(s)",
+          "name": "selectors",
+          "type": "text"
+        },
+        {
+          "dataType": "string",
+          "defaultValue": "click",
+          "label": "Event type",
+          "name": "eventType",
+          "type": "select",
+          "typeOptions": {
+            "validValues": [
+              {
+                "label": "Click",
+                "value": "click"
+              },
+              {
+                "label": "Mouse Over",
+                "value": "mouseover"
+              },
+              {
+                "label": "Focus",
+                "value": "focus"
+              },
+              {
+                "label": "Change",
+                "value": "change"
+              }
+            ]
+          }
+        },
+        {
+          "defaultValue": "",
+          "label": "Default action text",
+          "description": "The action / event text to record in Analytics and Campaign Interaction object",
+          "name": "defaultAction",
+          "type": "text"
+        }
+      ],
+      "label": "general"
+    }
+  ]
+}

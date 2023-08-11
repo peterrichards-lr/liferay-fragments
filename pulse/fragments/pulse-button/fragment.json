@@ -1,0 +1,10 @@
+{
+  "configurationPath": "configuration.json",
+  "jsPath": "index.js",
+  "htmlPath": "index.html",
+  "cssPath": "index.css",
+  "icon": "button",
+  "name": "Pulse Button",
+  "thumbnailPath": "thumbnail.png",
+  "type": "component"
+}
