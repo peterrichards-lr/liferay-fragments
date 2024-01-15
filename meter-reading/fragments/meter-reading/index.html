@@ -1,0 +1,66 @@
+[#assign inputType="text" /]
+[#if configuration.enableSpinner]
+  [#assign inputType="number" /]
+[/#if]
+[#assign readingContainerClass="reading" /]
+[#assign labelClass="digit" /]
+[#if !configuration.showLabels]
+  [#assign readingContainerClass=readingContainerClass+" hide-label" /]
+  [#assign labelClass=labelClass+" hide-label" /]
+[/#if]
+[#assign dateInputClass="date-input" /]
+[#if !configuration.showDateSelector]
+  [#assign dateInputClass=dateInputClass+" hide-date-selector" /]
+[/#if]
+[#assign labels = configuration.labelList?split(";") /]
+[#assign totalDigits = configuration.integerDigitCount + configuration.decimalDigitCount /]
+  <div class="meter-reading" style="--meter-reading-integer-color: ${configuration.integerFGColor};--meter-reading-integer-background-color: ${configuration.integerBGColor};--meter-reading-decimal-color: ${configuration.decimalFGColor};;--meter-reading-decimal-background-color: ${configuration.decimalBGColor};--label-color: ${configuration.labelColor};--meter-reading-font-size: ${configuration.digitFontSize};;--label-font-size: ${configuration.labelFontSize};">
+    <form autocomplete="off">
+      <div class="${readingContainerClass}">
+				[#list 1..totalDigits as i]
+				[#assign classList = "digit"/]
+				[#if i<= configuration.integerDigitCount]
+				[#assign classList=classList+" int" /]
+				[#else]
+				[#assign classList=classList+" dec" /]
+				[/#if]
+        <label class="${labelClass}"
+          ><input
+            size="1"
+            maxlength="1"
+            class="${classList}"
+            type="${inputType}"
+            id="meter-reading-digit-${i}-input"
+            name="meter-reading-digit-${i}"
+            digit="${i}"
+            required
+        />
+				[#if i-1<labels?size]
+				${labels[i-1]?trim}
+				[/#if]
+				</label>
+				[/#list]
+      </div>
+			<div class="${dateInputClass}">
+				<label for="meter-reading-date-date-input" id="meter-reading-date-label">Date of Reading[@clay["icon"] className="reference-mark" symbol="asterisk" /]</label>
+				<input class="date" aria-describedby="meter-reading-date-input-help-text" aria-labelledby="meter-reading-date-label" id="meter-reading-date-input" max="9999-12-31" type="date" name="meter-reading-date" required />
+      </div>
+      <div class="control">
+				<span class="status"></span>
+        <button
+          id="meter-reading-submit-button"
+          class="btn btn-${configuration.buttonSize} btn-${configuration.buttonType}"
+          type="submit"
+        >
+          Submit
+        </button>
+        <button
+          id="meter-reading-reset-button"
+          class="btn btn-${configuration.buttonSize} btn-${configuration.buttonType}"
+          type="reset"
+        >
+          Reset
+        </button>
+      </div>
+    </form>
+  </div>

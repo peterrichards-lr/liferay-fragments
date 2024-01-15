@@ -1,0 +1,167 @@
+.meter-reading {
+	--meter-reading-spacing: 0.5rem;
+	--meter-reading-digit-border-radius: 0.75rem;
+	--meter-reading-digit-font-family: Courier, Courier New, serif;
+	--meter-reading-digit-font-weight: 700;
+	--label-font-family: Arial, Helvetica, sans-serif;
+	--label-font-weight: 700;
+	--meter-reading-digit-padding-y: calc((var(--meter-reading-font-size, 4rem) / 4) * 2.25);
+	--meter-reading-digit-padding-x: calc(var(--meter-reading-font-size, 4rem) / 4);
+	--meter-reading-digit-height: calc(
+		var(--meter-reading-font-size, 4rem) + var(--meter-reading-digit-padding-y, 2.25rem)
+	);
+	--meter-reading-digit-width: calc(var(--meter-reading-font-size, 4rem) + var(--meter-reading-digit-padding-x, 1rem));
+	--meter-reading-height: calc(
+		var(--meter-reading-digit-height, 6.25rem) + var(--label-font-size, 0.8rem) + var(--meter-reading-spacing, 0.5rem)
+	);
+}
+
+.meter-reading {
+	display: inline-block;
+}
+
+.meter-reading form {
+	display: flex;
+	flex-direction: column;
+}
+
+.meter-reading div.reading {
+	white-space: nowrap;
+	margin: var(--meter-reading-spacing, 0.5rem);
+	height: var(--meter-reading-height, 6rem);
+}
+
+.meter-reading div.reading.hide-label {
+	height: calc(
+		var(--meter-reading-height, 6rem) - var(--label-font-size, 0.8rem) + var(--meter-reading-spacing, 0.5rem)
+	);
+}
+
+.meter-reading div.control {
+	margin-left: auto;
+	margin-top: calc(var(--meter-reading-spacing, 0.5rem) * 2);
+	margin-right: calc(var(--meter-reading-spacing, 0.5rem) * 2);
+}
+
+.meter-reading div.date-input {
+	margin-left: auto;
+	margin-top: calc(var(--meter-reading-spacing, 0.5rem) * 2);
+	margin-right: calc(var(--meter-reading-spacing, 0.5rem) * 2);
+}
+
+.meter-reading div.date-input label {
+	margin-right: calc(var(--meter-reading-spacing, 0.5rem) * 2);
+}
+
+.meter-reading div.date-input.hide-date-selector {
+	display: none;
+}
+
+.meter-reading div.date-input input.date {
+	width: 10.25em;
+}
+
+.meter-reading div.control span.status {
+	vertical-align: text-top;
+	font-weight: var(--status-font-weight);
+	margin-right: var(--meter-reading-spacing, 0.5rem);
+}
+
+.meter-reading div.control span.status.success {
+	color: var(--success, green);
+}
+
+.meter-reading div.control span.status.invalid {
+	color: var(--warning, orange);
+}
+
+.meter-reading div.control span.status.error {
+	color: var(--danger, red);
+}
+
+.meter-reading input.digit[type="text"],
+.meter-reading input.digit[type="number"] {
+	display: block;
+	margin: 0;
+	margin-bottom: var(--meter-reading-spacing, 0.5rem);
+	border-radius: var(--meter-reading-digit-border-radius, 0.75rem);
+	box-sizing: border-box;
+	line-height: var(--meter-reading-font-size, 4rem);
+	font-family: var(--meter-reading-font-family, Courier, Courier New, serif);
+	font-size: var(--meter-reading-font-size, 4rem);
+	font-weight: var(--meter-reading-font-weight, 700);
+	padding-top: var(--meter-reading-digit-padding-y, 2.25rem);
+	padding-bottom: var(--meter-reading-digit-padding-y, 2.25rem);
+	padding-left: var(--meter-reading-digit-padding-x, 1rem);
+	padding-right: var(--meter-reading-digit-padding-x, 1rem);
+	height: var(--meter-reading-digit-height, 6.25rem);
+	width: var(--meter-reading-digit-width, 4.5rem);
+	text-align: center;
+}
+
+.meter-reading input.digit.int[type="text"],
+.meter-reading input.digit.int[type="number"] {
+	color: var(--meter-reading-integer-color, white);
+	background-color: var(--meter-reading-integer-background-color, black);
+}
+
+.meter-reading input.digit.dec[type="text"],
+.meter-reading input.digit.dec[type="number"] {
+	color: var(--meter-reading-decimal-color, white);
+	background-color: var(--meter-reading-decimal-background-color, red);
+}
+
+.meter-reading input[type="date"] {
+	background-color: var(--gray-200, #f1f2f5);
+	border-color: var(--gray-200, #f1f2f5);
+	border-style: solid;
+	border-width: 0.0625rem;
+	border-radius: var(--border-radius, 0.25rem);
+	box-shadow: none;
+	color: var(--gray-900, #272833);
+	font-size: 1rem;
+	font-weight: var(--font-weight-normal, 400);
+	height: 2.5rem;
+	letter-spacing: inherit;
+	line-height: 1.5;
+	min-width: 0;
+	padding-bottom: 0.4375rem;
+	padding-left: 1rem;
+	padding-right: 1rem;
+	padding-top: 0.4375rem;
+	transition:
+		border-color 0.15s ease-in-out,
+		box-shadow 0.15s ease-in-out;
+}
+
+.meter-reading label.digit {
+	vertical-align: text-top;
+	white-space: wrap;
+	text-align: center;
+	font-family: var(--label-font-family, Arial, Helvetica, sans-serif);
+	font-size: var(--label-font-size, 0.8rem);
+	line-height: var(--label-font-size, 0.8rem);
+	color: var(--label-color, green);
+	font-weight: var(--label-font-weight, 700);
+	height: var(--meter-reading-digit-height, 6.25rem);
+	width: var(--meter-reading-digit-width, 4.5rem);
+}
+
+.meter-reading label.digit.hide-label {
+	height: var(--meter-reading-digit-height, 6.25rem);
+	font-size: 0;
+}
+
+.meter-reading input.digit[type="number"]::-webkit-inner-spin-button,
+.meter-reading input.digit[type="number"]::-webkit-outer-spin-button {
+	opacity: 1;
+}
+
+.meter-reading input[type="number"]::-webkit-outer-spin-button,
+.meter-reading input[type="number"]::-webkit-inner-spin-button {
+	-webkit-appearance: inner-spin-button !important;
+	position: absolute;
+	top: 0;
+	right: 0;
+	height: 100%;
+}
