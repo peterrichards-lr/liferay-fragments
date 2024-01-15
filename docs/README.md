@@ -18,6 +18,7 @@ Here are some examples with different a look and feel
 ![Meter Readig](images/meter-reading-1.png)
 ![Meter Readig](images/meter-reading-2.png)
 
+The ![Language.properties](../meter-reading/language-overrides/Language_en_US.properties) file can be imported to give more help in the Page Editor view.
 
 ## Date Display (Static)
 This fragment displays a date or date range via its configuration; hence it can only be used for static dates.
