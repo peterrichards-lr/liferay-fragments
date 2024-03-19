@@ -10,6 +10,8 @@ Error messages are stored as a JavaScript array so can easily be updated, with t
 
 To submit the reading to a Liferay Object or third party system, simply change the readingCallback() method. There is a sample implementation included within the fragment.
 
+The [Language.properties](../meter-reading/language-overrides/Language_en_US.properties) file can be imported to give more help in the Page Editor view.
+
 The JavaScript will not execute when the fragment is viewed in either the Fragment Editor or the Page Content Editor. 
 ![Meter Readig Configuration](images/meter-reading-config.png)
 
@@ -17,7 +19,6 @@ Here are some examples with different a look and feel
 
 ![Meter Readig](images/meter-reading-1.png)
 ![Meter Readig](images/meter-reading-2.png)
-
 
 ## Date Display (Static)
 This fragment displays a date or date range via its configuration; hence it can only be used for static dates.
