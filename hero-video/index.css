@@ -1,0 +1,44 @@
+.overlayContainer {
+  position: relative;
+  height: var(--video-height, 450px);
+  margin-top: var(--margin-top, -20px);
+  margin-bottom: var(--margin-bottom, -20px);
+  margin-left: var(--margin-left, -20px);
+  margin-right: var(--margin-right, -20px);
+}
+
+.row:before {
+  display: table;
+  content: "";
+}
+
+.overlayContent {
+  position: absolute;
+  width: var(--video-width, 100%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+  height: var(--video-height, 450px);
+}
+
+.overlayContainer video {
+  height: var(--video-height, 450px) !important;
+  width: var(--video-width, 100%);
+  -o-object-fit: cover;
+  object-fit: cover;
+}
+
+#vidbutton {
+  position: absolute;
+	font-size: 1rem;
+  top: calc(var(--video-height, 450px) - 40px);
+  left: 30px;
+  z-index: 2;
+  color: var(--control-colour, white);
+}
+
+#vidbutton i {
+  color: var(--control-colour, white);
+}

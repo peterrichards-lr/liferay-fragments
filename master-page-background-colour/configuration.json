@@ -1,0 +1,40 @@
+{
+  "fieldSets": [
+    {
+      "fields": [
+        {
+          "name": "colour",
+          "label": "Colour",
+          "type": "colorPicker",
+          "defaultValue": "#3C1053"
+        },
+        {
+          "name": "tint",
+          "label": "Tint",
+          "type": "select",
+          "dataType": "string",
+          "typeOptions": {
+            "validValues": [
+              { "label": "30%", "value": "0.3" },
+              { "label": "50%", "value": "0.5" },
+              { "label": "70%", "value": "0.7" }
+            ]
+          },
+          "defaultValue": "0.3"
+        }
+      ],
+      "label": "General"
+    },
+    {
+      "fields": [
+        {
+          "defaultValue": false,
+          "label": "Enable Debug Logging",
+          "name": "enableDebug",
+          "type": "checkbox"
+        }
+      ],
+      "label": "Debugging"
+    }
+  ]
+}

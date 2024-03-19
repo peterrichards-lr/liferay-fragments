@@ -1,0 +1,126 @@
+{
+  "fieldSets": [
+    {
+      "fields": [
+        {
+          "label": "Video",
+          "name": "video",
+          "type": "videoSelector"
+        },
+        {
+          "defaultValue": true,
+          "label": "Autoplay",
+          "name": "autoplay",
+          "type": "checkbox"
+        },
+        {
+          "defaultValue": true,
+          "label": "Muted",
+          "name": "muted",
+          "type": "checkbox"
+        },
+        {
+          "defaultValue": true,
+          "label": "Loop ",
+          "name": "loop",
+          "type": "checkbox"
+        },
+        {
+          "defaultValue": true,
+          "label": "Controls ",
+          "name": "controls",
+          "type": "checkbox"
+        },
+        {
+          "name": "preload",
+          "label": "Preload",
+          "type": "select",
+          "dataType": "string",
+          "typeOptions": {
+            "validValues": [
+              { "label": "Auto", "value": "auto" },
+              { "label": "Metadata", "value": "metadata" },
+              { "label": "None", "value": "none" }
+            ]
+          },
+          "defaultValue": "metadata"
+        }
+      ],
+      "label": "General"
+    },
+    {
+      "fields": [
+        {
+          "defaultValue": true,
+          "label": "Use Custom Control",
+          "name": "useCustomControl",
+          "type": "checkbox"
+        },
+        {
+          "name": "controlColour",
+          "label": "Control Colour",
+          "type": "colorPicker",
+          "defaultValue": "#ffffff"
+        }
+      ],
+      "label": "Controls"
+    },
+    {
+      "fields": [
+        {
+          "defaultValue": "100%",
+          "label": "Width",
+          "name": "width",
+          "type": "length"
+        },
+        {
+          "defaultValue": "450px",
+          "label": "Height",
+          "name": "height",
+          "type": "length"
+        }
+      ],
+      "label": "Size"
+    },
+    {
+      "fields": [
+        {
+          "defaultValue": "-20px",
+          "label": "Margin (Left)",
+          "name": "marginLeft",
+          "type": "length"
+        },
+        {
+          "defaultValue": "-20px",
+          "label": "Margin (Right)",
+          "name": "marginRight",
+          "type": "length"
+        },
+        {
+          "defaultValue": "-20px",
+          "label": "Margin (Top)",
+          "name": "marginTop",
+          "type": "length"
+        },
+        {
+          "defaultValue": "-20px",
+          "label": "Margin (Bottom)",
+          "name": "marginBottom",
+          "type": "length"
+        }
+      ],
+      "label": "Margins"
+    },
+    {
+      "fields": [
+        {
+          "defaultValue": false,
+          "label": "Enable Debug Logging",
+          "name": "enableDebug",
+          "type": "checkbox"
+        }
+      ],
+      "label": "Debugging"
+    }
+  ]
+}

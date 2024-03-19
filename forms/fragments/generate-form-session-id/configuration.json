@@ -1,0 +1,32 @@
+{
+	"fieldSets": [
+		{
+      "fields": [
+        {
+          "defaultValue": "formsessionid",
+          "label": "Cookie Name",
+          "name": "cookieName",
+          "type": "text"
+        },
+				{
+          "defaultValue": "sessionID",
+          "label": "Input Tag Name",
+          "name": "inputTagName",
+          "type": "text"
+        }
+      ],
+      "label": "General"
+    },
+		{
+      "fields": [
+        {
+          "defaultValue": false,
+          "label": "Enable Debug Logging",
+          "name": "enableDebug",
+          "type": "checkbox"
+        }
+      ],
+      "label": "Debugging"
+    }
+	]
+}

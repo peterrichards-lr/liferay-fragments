@@ -1,0 +1,32 @@
+{
+	"fieldSets": [
+		{
+      "fields": [
+        {
+          "defaultValue": "formsessionid",
+          "label": "Cookie Name",
+          "name": "cookieName",
+          "type": "text"
+        },
+				{
+          "defaultValue": "r_applicant_c_applicantId",
+          "label": "Applicant Relationship Id",
+          "name": "applicantRelationshipId",
+          "type": "text"
+        }
+      ],
+      "label": "General"
+    },
+		{
+      "fields": [
+        {
+          "defaultValue": false,
+          "label": "Enable Debug Logging",
+          "name": "enableDebug",
+          "type": "checkbox"
+        }
+      ],
+      "label": "Debugging"
+    }
+	]
+}

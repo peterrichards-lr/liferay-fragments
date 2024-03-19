@@ -1,0 +1,116 @@
+.tracker {
+ font-size: 0;
+	margin: 30px 0;
+}
+
+.tracker > div {
+	display: flex;
+	flex-flow: row;
+}
+
+.tracker .tracker-step {
+	background: 0 0;
+  display: inline-block;
+  vertical-align: top;
+  color: #fff;
+  font-size: 1rem;
+}
+
+.tracker .tracker-step:last-child span {
+    margin-right: 7.5px
+}
+
+
+.tracker .tracker-step .tracker-step-content {
+height: 50px;
+  position: relative;
+}
+
+.tracker .tracker-step .tracker-step-content.left-arrow {
+	padding-left: 15px;
+}
+
+.tracker .tracker-step .tracker-step-content.left-arrow .content:before {
+content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    border-left: 15px solid transparent;
+    border-top: 25px solid #eea61f;
+    border-bottom: 25px solid #eea61f;
+}
+
+.tracker .tracker-step .tracker-step-content.left-arrow .content.past-step:before {
+border-top-color: #001f38;
+    border-bottom-color: #001f38;
+}
+
+.tracker .tracker-step .tracker-step-content.left-arrow .content.future-step:before {
+border-top-color: #017c92;
+    border-bottom-color: #017c92;
+}
+
+.tracker .tracker-step .tracker-step-content.right-arrow {
+padding-right: 15px;
+}
+
+.tracker .tracker-step .tracker-step-content.right-arrow .content:after {
+    content: "";
+    position: absolute;
+    right: 0;
+    top: 0;
+    border-left: 15px solid #eea61f;
+    border-top: 25px solid transparent;
+    border-bottom: 25px solid transparent;
+}
+
+.tracker .tracker-step .tracker-step-content.right-arrow .content.past-step:after {
+border-left-color: #001f38
+}
+
+.tracker .tracker-step .tracker-step-content.right-arrow .content.future-step:after {
+border-left-color: #017c92
+}
+
+.tracker .tracker-step .tracker-step-content .content {
+    background-color: var(--brand-color-1, #eea61f);
+    color: var(--brand-color-2, #001f38);
+    height: 100%;
+    text-align: center;
+    line-height: 50px;
+	padding: 0 var(--spacer-3);
+}
+
+.tracker .tracker-step .tracker-step-content .content span {
+	    line-height: 1.5;
+    display: inline-block;
+    vertical-align: middle;
+    font-weight: 700
+}
+
+.tracker .tracker-step .tracker-step-content .content span > p {
+	margin-bottom: unset;
+}
+
+.tracker .tracker-step .tracker-step-content .content span > a {
+	color: unset;
+	text-decoration: none;
+}
+
+.tracker .tracker-step .tracker-step-content .content span > a:hover {
+	text-decoration: none;
+}
+
+.tracker .tracker-step .tracker-step-content .content span > a > p {
+	margin-bottom: unset;
+}
+
+.tracker .tracker-step .tracker-step-content .content.future-step {
+    background-color: var(--brand-color-3, #017c92);
+    color: var(--white, #fff);
+}
+
+.tracker .tracker-step .tracker-step-content .content.past-step {
+    background-color: var(--brand-color-2, #001f38);
+    color: var(--white, #fff);
+}

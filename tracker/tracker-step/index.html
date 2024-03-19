@@ -1,0 +1,15 @@
+[#assign trackerStepContentClassList = "tracker-step-content"/]
+[#if configuration.leftArrow]
+[#assign trackerStepContentClassList = trackerStepContentClassList + " left-arrow"/]
+[/#if]
+[#if configuration.rightArrow]
+[#assign trackerStepContentClassList = trackerStepContentClassList + " right-arrow"/]
+[/#if]
+[#assign contentClassList = "content " + configuration.stepState /]
+<div class="tracker-step">
+	<div class="${trackerStepContentClassList}">
+		<div class="${contentClassList}">
+			<span data-lfr-editable-id="01-step-text" data-lfr-editable-type="text">Some Text</span>
+		</div>
+  </div>
+</div>

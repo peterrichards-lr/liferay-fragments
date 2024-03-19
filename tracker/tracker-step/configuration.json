@@ -1,0 +1,35 @@
+{
+  "fieldSets": [
+    {
+      "fields": [
+        {
+          "name": "stepState",
+          "label": "step-state",
+          "type": "select",
+          "dataType": "string",
+          "typeOptions": {
+            "validValues": [
+              { "label": "Active", "value": "" },
+              { "label": "Past", "value": "past-step" },
+              { "label": "Future", "value": "future-step" }
+            ]
+          },
+          "defaultValue": "future-step"
+        },
+				{
+          "defaultValue": false,
+          "label": "left-arrow",
+          "name": "leftArrow",
+          "type": "checkbox"
+        },
+				{
+          "defaultValue": false,
+          "label": "right-arrow",
+          "name": "rightArrow",
+          "type": "checkbox"
+        }
+      ],
+      "label": "Step"
+    }
+  ]
+}

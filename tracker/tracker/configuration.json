@@ -1,0 +1,15 @@
+{
+	"fieldSets": [
+		{
+      "fields": [
+        {
+          "defaultValue": false,
+          "label": "Enable Debug Logging",
+          "name": "enableDebug",
+          "type": "checkbox"
+        }
+      ],
+      "label": "Debugging"
+    }
+	]
+}
