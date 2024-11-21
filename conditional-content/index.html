@@ -1,0 +1,12 @@
+<div class="conditional-content-container">
+	[#if configuration.outcomes??]
+	[#list configuration.outcomes?lower_case?split(",") as outcome]
+	<div class="outcome outcome-${outcome?trim}" data-outcome-value="${outcome?trim}">
+		<lfr-drop-zone></lfr-drop-zone>
+	</div>
+	[/#list]
+	[/#if]
+	<div class="config">
+		<span class="outcome-value" data-lfr-editable-id="outcome-value" data-lfr-editable-type="text"></span>
+	</div>
+</div>

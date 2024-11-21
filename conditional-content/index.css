@@ -1,0 +1,4 @@
+.conditional-content-container .outcome,
+.conditional-content-container .config {
+	display: none;
+}

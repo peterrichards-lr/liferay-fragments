@@ -1,0 +1,22 @@
+{
+	"fieldSets": [
+		{
+			"fields": [
+				{
+					"defaultValue": "approved,declined",
+					"description": "A comma seperated list of outcomes",
+					"label": "outcomes",
+					"name": "outcomes",
+					"type": "text"
+				},
+				{
+					"defaultValue": false,
+					"label": "display-drop-zones",
+					"name": "displayDropZones",
+					"type": "checkbox"
+				}
+			],
+			"label": "General"
+		}
+	]
+}
