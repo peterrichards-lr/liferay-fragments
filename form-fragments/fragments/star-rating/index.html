@@ -1,0 +1,147 @@
+[#assign
+readOnly = input.attributes.readOnly?? && input.attributes.readOnly
+]
+<style>
+.star-rating-${fragmentEntryLinkNamespace} {
+  width: max-content;
+}
+
+.star-rating-${fragmentEntryLinkNamespace} label:not(.star-label) {
+	display: block;
+}
+
+.star-rating-${fragmentEntryLinkNamespace} .star-wrap {
+  position: relative;
+	margin-top: 1rem;
+}
+
+.star-rating-${fragmentEntryLinkNamespace} .star-label.hidden {
+  display: none;
+}
+.star-rating-${fragmentEntryLinkNamespace} .star-label {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  width: 4rem;
+  height: 4rem;
+}
+@media (min-width: 840px) {
+  .star-rating-${fragmentEntryLinkNamespace} .star-label {
+    width: 6rem;
+    height: 6rem;
+  }
+}
+
+.star-rating-${fragmentEntryLinkNamespace} .star-shape {
+  background-color: gold;
+  width: 80%;
+  height: 80%;
+  clip-path: polygon(
+    50% 0%,
+    61% 35%,
+    98% 35%,
+    68% 57%,
+    79% 91%,
+    50% 70%,
+    21% 91%,
+    32% 57%,
+    2% 35%,
+    39% 35%
+  );
+}
+
+.star-rating-${fragmentEntryLinkNamespace} .star:checked + .star-label ~ .star-label .star-shape {
+  background-color: lightgray;
+}
+
+.star-rating-${fragmentEntryLinkNamespace} .star {
+  position: fixed;
+  opacity: 0;
+  left: -90000px;
+}
+
+.star-rating-${fragmentEntryLinkNamespace} .star:focus + .star-label {
+  outline: 2px dotted black;
+}
+.star-rating-${fragmentEntryLinkNamespace} .skip-button {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 1rem;
+  position: absolute;
+  top: -2rem;
+  right: -1rem;
+  text-align: center;
+  line-height: 2rem;
+  font-size:2rem;
+  background-color: rgba(255, 255, 255, 0.1);
+}
+.star-rating-${fragmentEntryLinkNamespace} .skip-button:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+#skip-star-${fragmentEntryLinkNamespace}.readonly ~ .skip-button {
+  display: none;
+}
+#skip-star-${fragmentEntryLinkNamespace}:checked ~ .skip-button {
+  display: none;
+}
+</style>
+<div class="star-rating-${fragmentEntryLinkNamespace}">
+	<div class="form-group mb-0[#if input.errorMessage?has_content] has-error[/#if]">
+		<label class="[#if !input.showLabel || !input.label?has_content]sr-only[/#if]"
+			id="${fragmentEntryLinkNamespace}-select-from-list-input-label">
+			${htmlUtil.escape(input.label)} [#if readOnly](${languageUtil.get(locale, "read-only")})[#elseif
+			input.required][@clay["icon"] className="reference-mark" symbol="asterisk" /][/#if]
+		</label>
+
+		<div class="star-wrap">
+		[#if input.type == 'select']
+		[#assign options=(input.attributes.options)![]]
+		[#if options?has_content]
+		<input checked type="radio" id="skip-star-${fragmentEntryLinkNamespace}" value="" name="${input.name}" autocomplete="off" [#if
+			readOnly]class="star readonly" readonly[#else]class="star"[/#if] />
+		<label class="star-label hidden"></label>
+		[#list options as option]
+		<input class="star" type="radio" id="st-${option.value}" value="${option.value}" name="${input.name}"
+			autocomplete="off" [#if readOnly]readonly[/#if] [#if input.value?? && option.value == input.value]checked aria-selected="true"[/#if] />
+		<label class="star-label" for="st-${option.value}">
+			<div class="star-shape"></div>
+		</label>
+		[/#list]
+		[/#if]
+		[#else]
+		<input checked type="radio" id="skip-star-${fragmentEntryLinkNamespace}" value="" name="${input.name}" autocomplete="off" [#if
+			readOnly]class="star readonly" readonly[#else]class="star"[/#if] />
+		<label class="star-label hidden"></label>
+		[#list 1..configuration.numberOfStars as i]
+		<input class="star" type="radio" id="st-${i}-${fragmentEntryLinkNamespace}" value="${i}" name="${input.name}"
+			autocomplete="off" [#if readOnly]readonly[/#if] [#if input.value?? && i?string == input.value]checked aria-selected="true"[/#if] />
+		<label class="star-label" for="st-${i}-${fragmentEntryLinkNamespace}">
+			<div class="star-shape"></div>
+		</label>
+		[/#list]
+		[/#if]
+		<label class="skip-button" for="skip-star-${fragmentEntryLinkNamespace}">
+			&times;
+		</label>
+		</div>
+
+		[#if input.errorMessage?has_content]
+		<p class="font-weight-semi-bold mt-1 text-danger"
+			id="${fragmentEntryLinkNamespace}-select-from-list-input-error-message">
+			<svg class="lexicon-icon lexicon-icon-info-circle" focusable="false" role="presentation">
+				<use xlink:href="${siteSpritemap}#info-circle" />
+			</svg>
+
+			<span>
+				${input.errorMessage}
+			</span>
+		</p>
+		[/#if]
+
+		[#if input.showHelpText && input.helpText?has_content]
+		<p class="mb-0 mt-1 text-secondary" id="${fragmentEntryLinkNamespace}-help-text">
+			${input.helpText}
+		</p>
+		[/#if]
+	</div>
+</div>
