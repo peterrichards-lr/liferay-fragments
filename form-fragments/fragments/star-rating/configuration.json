@@ -1,22 +1,43 @@
 {
-	"fieldSets": [
-		{
-			"fields": [
-				{
-					"dataType": "int",
-					"defaultValue": "5",
-					"label": "number-of-stars",
-					"name": "numberOfStars",
-					"type": "text",
-					"typeOptions": {
-						"validation": {
-							"min": 1,
-							"type": "number"
-						}
-					}
-				}
-			],
-			"label": "star-options"
-		}
-	]
+  "fieldSets": [
+    {
+      "fields": [
+        {
+          "dataType": "int",
+          "defaultValue": "5",
+          "label": "number-of-stars",
+          "name": "numberOfStars",
+          "description": "this-only-applies-to-integer-types",
+          "type": "text",
+          "typeOptions": {
+            "validation": {
+              "min": 1,
+              "type": "number"
+            }
+          }
+        },
+        {
+          "defaultValue": "4rem",
+          "label": "star-size",
+          "name": "starSize",
+          "type": "length"
+        },
+        {
+          "name": "activeStarColor",
+          "label": "Active Star Color",
+          "description": "active-star-color",
+          "type": "colorPicker",
+          "defaultValue": "#FFD700"
+        },
+        {
+          "name": "passiveStarColor",
+          "label": "Passive Star Color",
+          "description": "passive-star-color",
+          "type": "colorPicker",
+          "defaultValue": "#D3D3D3"
+        }
+      ],
+      "label": "star-options"
+    }
+  ]
 }
