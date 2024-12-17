@@ -3,7 +3,10 @@ readOnly = input.attributes.readOnly?? && input.attributes.readOnly
 ]
 <style>
 .star-rating-${fragmentEntryLinkNamespace} {
-  width: max-content;
+	--starSize: ${configuration.starSize};
+	--activeStarColor: ${configuration.activeStarColor};
+	--passiveStarColor: ${configuration.passiveStarColor};
+	width: max-content;
 }
 
 .star-rating-${fragmentEntryLinkNamespace} label:not(.star-label) {
@@ -22,18 +25,18 @@ readOnly = input.attributes.readOnly?? && input.attributes.readOnly
   display: inline-flex;
   justify-content: center;
   align-items: center;
-  width: 4rem;
-  height: 4rem;
+  width: var(--starSize, 2rem);
+  height: var(--starSize, 2rem);
 }
 @media (min-width: 840px) {
   .star-rating-${fragmentEntryLinkNamespace} .star-label {
-    width: 6rem;
-    height: 6rem;
+    width: var(calc(--starSize * 1.5), 3rem);
+    height: var(calc(--starSize * 1.5), 3rem);
   }
 }
 
 .star-rating-${fragmentEntryLinkNamespace} .star-shape {
-  background-color: gold;
+  background-color: var(--activeStarColor, gold);
   width: 80%;
   height: 80%;
   clip-path: polygon(
@@ -51,7 +54,7 @@ readOnly = input.attributes.readOnly?? && input.attributes.readOnly
 }
 
 .star-rating-${fragmentEntryLinkNamespace} .star:checked + .star-label ~ .star-label .star-shape {
-  background-color: lightgray;
+  background-color: var(--passiveStarColor, lightgray);
 }
 
 .star-rating-${fragmentEntryLinkNamespace} .star {
@@ -85,6 +88,7 @@ readOnly = input.attributes.readOnly?? && input.attributes.readOnly
   display: none;
 }
 </style>
+
 <div class="star-rating-${fragmentEntryLinkNamespace}">
 	<div class="form-group mb-0[#if input.errorMessage?has_content] has-error[/#if]">
 		<label class="[#if !input.showLabel || !input.label?has_content]sr-only[/#if]"
