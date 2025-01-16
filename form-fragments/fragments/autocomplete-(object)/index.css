@@ -1,0 +1,33 @@
+.autocomplete-object-input .autocomplete {
+  position: relative;
+}
+
+.autocomplete-object-input .autocomplete-items {
+  position: absolute;
+  border: 1px solid #d4d4d4;
+	border-color: var(--autocomplte-border-color);
+  border-bottom: none;
+  border-top: none;
+  z-index: 99;
+  top: 100%;
+  left: 0;
+  right: 0;
+}
+.autocomplete-object-input .autocomplete-items div {
+  padding: 10px;
+  cursor: pointer;
+  background-color: var(--autocomplete-bg-color);
+  border-bottom: 1px solid #d4d4d4;
+	border-color: var(--autocomplete-border-color);
+  color: var(--autocomplete-color);
+}
+.autocomplete-object-input .autocomplete-items div:hover {
+  background-color: var(--hover-bg-color);
+	border-color: var(--hover-border-color);
+	color: var(--hover-color);
+}
+.autocomplete-object-input .autocomplete-active {
+  background-color: var(--active-bg-color) !important;
+	border-color: var(--active-border-color) !important;
+  color: var(--active-color) !important;
+}

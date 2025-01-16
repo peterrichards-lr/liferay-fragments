@@ -1,0 +1,129 @@
+{
+  "fieldSets": [
+    {
+      "fields": [
+        {
+          "dataType": "string",
+          "defaultValue": "",
+          "label": "placeholder",
+          "localizable": true,
+          "name": "placeholder",
+          "type": "text"
+        },
+				{
+          "name": "autocompleteColor",
+          "label": "border-color",
+          "description": "border-color-desc",
+          "type": "colorPicker",
+          "defaultValue": "var(--btn-secondary-color)"
+        },
+				{
+          "name": "autocompleteBgColor",
+          "label": "border-bg-color",
+          "description": "border-bg-color-desc",
+          "type": "colorPicker",
+          "defaultValue": "var(--btn-secondary-background-color)"
+        },
+				{
+          "name": "autocompleteBorderColor",
+          "label": "border-color",
+          "description": "border-color-desc",
+          "type": "colorPicker",
+          "defaultValue": "var(--btn-secondary-border-color)"
+        },
+        {
+          "name": "activeColor",
+          "label": "active-color",
+          "description": "active-color-desc",
+          "type": "colorPicker",
+          "defaultValue": "var(--btn-primary-color)"
+        },
+        {
+          "name": "activeBgColor",
+          "label": "active-bg-color",
+          "description": "active-bg-color-desc",
+          "type": "colorPicker",
+          "defaultValue": "var(--btn-primary-background-color)"
+        },
+        {
+          "name": "activeBorderColor",
+          "label": "active-border-color",
+          "description": "active-border-color-desc",
+          "type": "colorPicker",
+          "defaultValue": "var(--btn-primary-border-color)"
+        },
+        {
+          "name": "hoverColor",
+          "label": "hover-color",
+          "description": "hover-color-desc",
+          "type": "colorPicker",
+          "defaultValue": "var(--btn-primary-hover-color)"
+        },
+        {
+          "name": "hoverBgColor",
+          "label": "hover--bg-color",
+          "description": "hover-bg-color-desc",
+          "type": "colorPicker",
+          "defaultValue": "var(--btn-primary-hover-background-color)"
+        },
+        {
+          "name": "hoverBorderColor",
+          "label": "hover-border-color",
+          "description": "hover-border-color-desc",
+          "type": "colorPicker",
+          "defaultValue": "var(--btn-primary-hover-border-color)"
+        }
+      ],
+      "label": "field-options"
+    },
+    {
+      "fields": [
+        {
+          "dataType": "string",
+          "defaultValue": "",
+          "label": "picklist-erc",
+          "localizable": false,
+          "name": "picklistErc",
+          "type": "text"
+        }
+      ],
+      "label": "picklist-options"
+    },
+    {
+      "fields": [
+        {
+          "name": "matchType",
+          "label": "match-type",
+          "type": "select",
+          "dataType": "string",
+          "typeOptions": {
+            "validValues": [
+              { "label": "starts-with", "value": "startsWith" },
+              { "label": "contains", "value": "contains" }
+            ]
+          },
+          "defaultValue": "startsWith"
+        },
+        {
+          "dataType": "string",
+          "defaultValue": "<strong>",
+          "label": "start-tag",
+          "description": "start-tag-desc",
+          "localizable": false,
+          "name": "startTag",
+          "type": "text"
+        },
+        {
+          "dataType": "string",
+          "defaultValue": "</strong>",
+          "label": "end-tag",
+          "description": "end-tag-desc",
+          "localizable": false,
+          "name": "endTag",
+          "type": "text"
+        }
+      ],
+      "label": "match-options"
+    }
+  ]
+}
