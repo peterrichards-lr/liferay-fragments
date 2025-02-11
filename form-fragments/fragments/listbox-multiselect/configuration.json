@@ -1,0 +1,65 @@
+{
+	"fieldSets": [
+		{
+			"fields": [
+				{
+					"dataType": "int",
+					"defaultValue": "8",
+					"label": "number-of-options",
+					"name": "numberOfOptions",
+					"type": "text",
+					"typeOptions": {
+						"validation": {
+							"min": 1,
+							"type": "number"
+						}
+					}
+				},
+				{
+					"dataType": "string",
+					"defaultValue": "primary",
+					"label": "style",
+					"name": "buttonType",
+					"type": "select",
+					"typeOptions": {
+						"validValues": [
+							{
+								"value": "primary"
+							},
+							{
+								"value": "secondary"
+							},
+							{
+								"value": "link"
+							},
+							{
+								"value": "outline-primary"
+							},
+							{
+								"value": "outline-secondary"
+							}
+						]
+					}
+				},
+				{
+					"defaultValue": false,
+					"label": "order-options-alphabetically",
+					"name": "orderOptionsAlphabetically",
+					"type": "checkbox",
+					"typeOptions": {
+						"displayType": "toggle"
+					}
+				},
+				{
+					"defaultValue": false,
+					"label": "show-all-buttons",
+					"name": "showAllButtons",
+					"type": "checkbox",
+					"typeOptions": {
+						"displayType": "toggle"
+					}
+				}
+			]
+		}
+	]
+}

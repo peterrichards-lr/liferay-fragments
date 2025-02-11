@@ -1,0 +1,49 @@
+.muliselect-container h3 {
+	text-align: center;
+}
+
+.muliselect-container .multiselect-list-label {
+	color: #272833;
+	display: inline-block;
+	font-size: 0.875rem;
+	margin-bottom: 0.25rem;
+}
+
+.muliselect-container .list label {
+	font-size: 0.875rem;
+}
+
+.multiselect-list-label .reference-mark {
+	color: #b95000;
+	font-size: 6px;
+}
+
+.muliselect-container .lists-container {
+	display: flex;
+	justify-content: space-between;
+}
+
+.muliselect-container .list {
+	width: 40%;
+}
+
+.muliselect-container .list option:checked {
+	background-color: unset;
+}
+
+.muliselect-container select {
+	width: 100%;
+	font-size: 16px;
+}
+
+.muliselect-container .buttons {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	gap: 10px;
+}
+
+.muliselect-container .buttons .btn {
+	width: 3rem;
+}
