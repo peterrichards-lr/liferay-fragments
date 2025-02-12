@@ -1,0 +1,15 @@
+[#assign entitySource = configuration.entitySource!"custom" ]
+
+[#if entitySource == 'legal-name']
+	[#assign company = themeDisplay.getCompany() /]
+	[#assign copyrightEntity = htmlUtil.escape(company.getLegalName()) /]
+[#elseif entitySource == 'site-name']
+	[#assign pageGroup = layout.getGroup() /]
+	[#assign copyrightEntity = htmlUtil.escape(pageGroup.getDescriptiveName()) /]
+[#else]
+	[#assign copyrightEntity = configuration.customEntityName!"Test" /]
+[/#if]
+
+<div class="fragement_copyright">
+	© <span class="year-date">${.now?string('yyyy')}</span> ${copyrightEntity} ${languageUtil.get(locale, "all-rights-reserved", "All Rights Reserved")}
+</div>

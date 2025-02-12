@@ -1,0 +1,35 @@
+{
+	"fieldSets": [
+		{
+			"fields": [
+				{
+					"dataType": "string",
+					"defaultValue": "legal-name",
+					"label": "entity-source",
+					"name": "entitySource",
+					"type": "select",
+					"typeOptions": {
+						"validValues": [
+							{
+								"value": "legal-name"
+							},
+							{
+								"value": "site-name"
+							},
+							{
+								"value": "custom"
+							}
+						]
+					}
+				}, 
+				{
+					"dataType": "string",
+					"defaultValue": "",
+					"label": "custom-entity-name",
+					"name": "customEntityName",
+					"type": "text"
+				},
+			]
+		}
+	]
+}
