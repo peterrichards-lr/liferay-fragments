@@ -1,0 +1,28 @@
+{
+  "fieldSets": [
+    {
+      "fields": [
+        {
+          "dataType": "string",
+          "defaultValue": "iframe",
+          "label": "execute-mode",
+          "name": "executeMode",
+          "type": "select",
+          "typeOptions": {
+            "validValues": [
+              {
+                "value": "iframe"
+              },
+              {
+                "value": "page"
+              },
+              {
+                "value": "both"
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

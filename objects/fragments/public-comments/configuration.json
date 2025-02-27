@@ -1,0 +1,51 @@
+{
+  "fieldSets": [
+    {
+      "fields": [
+        {
+          "dataType": "string",
+          "defaultValue": "path",
+          "label": "source-method",
+          "name": "sourceMethod",
+          "type": "select",
+          "typeOptions": {
+            "validValues": [
+              {
+                "value": "path"
+              },
+              {
+                "value": "queryString"
+              }
+            ]
+          }
+        },
+        {
+          "defaultValue": "-1",
+          "label": "path-position",
+          "description": "-1 will take the value from the last path token",
+          "name": "pathPosition",
+          "type": "text",
+          "dataType": "int"
+        },
+        {
+          "defaultValue": "id",
+          "label": "id-parameter",
+          "name": "idParameter",
+          "type": "text"
+        },
+        {
+          "defaultValue": true,
+          "label": "use-dummy-id",
+          "name": "useDummyId",
+          "type": "checkbox"
+        },
+        {
+          "defaultValue": "91133",
+          "label": "dummy-id",
+          "name": "dummyId",
+          "type": "text"
+        }
+      ]
+    }
+  ]
+}
