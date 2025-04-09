@@ -1,0 +1,34 @@
+name: Liferay Fragments
+run-name: Releasing Liferay Fragments
+on: 
+  push:
+    tags:        
+      - '**'
+jobs:
+  Build-Fragment-Assets:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v4
+      - name: Create zip files
+        run: ./create-fragment-zips.sh
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: Release ${{ github.ref }}
+          body: |
+            This is a release for ${{ github.ref }}
+          draft: false
+          prerelease: false
+          owner: peterrichards-lr
+          repo: liferay-fragments
+      - name: Upload Release Assets
+        uses: alexellis/upload-assets@0.4.0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          asset_paths: '["./zips/*"]'
