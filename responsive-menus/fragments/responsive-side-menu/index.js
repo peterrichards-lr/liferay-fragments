@@ -84,9 +84,7 @@ if (root) {
         };
       }
 
-      if (isRight) {
-        window.addEventListener('resize', debounce(updateSizes, configuration.debounceDelay));
-      }
+      window.addEventListener('resize', debounce(updateSizes, configuration.debounceDelay));
 
       const hamburger = root.querySelector('.fragment-menu-icon');
       const menu = root.querySelector('.hamburger-zone-wrapper');

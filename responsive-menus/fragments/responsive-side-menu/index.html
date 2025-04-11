@@ -7,68 +7,69 @@
   [#assign menuTextAlign="right" /]
 [/#if]
 [#if configuration.menuStyle?contains('sticky')]
-  <style>
-    .lfr-layout-structure-item-responsive-side-menu {
-      position: -webkit-sticky;
-      position: sticky;
-      top: 0;
-      height: 100vh;
-      z-index: auto;
-    }
+<style>
+  .lfr-layout-structure-item-responsive-side-menu {
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    z-index: auto;
+  }
 
-    .lfr-layout-structure-item-responsive-side-menu>div {
-      height: 100%;
-    }
+  .lfr-layout-structure-item-responsive-side-menu>div {
+    height: 100%;
+  }
 
-    body.has-control-menu .lfr-layout-structure-item-responsive-side-menu {
-      top: var(--control-menu-container-height, 0);
-      height: calc(100vh - var(--control-menu-container-height, 0));
-    }
+  body.has-control-menu .lfr-layout-structure-item-responsive-side-menu {
+    top: var(--control-menu-container-height, 0);
+    height: calc(100vh - var(--control-menu-container-height, 0));
+  }
 
-    [#if configuration.menuStyle?contains('menu-right')]
-    .lfr-layout-structure-item-responsive-side-menu {
-      position: fixed;
-    }
+  [#if configuration.menuStyle?contains('menu-right')]
+  .lfr-layout-structure-item-responsive-side-menu {
+    position: fixed;
+  }
+  
+  body.has-control-menu .master-page .lfr-layout-structure-item-responsive-side-menu,
+  body.has-control-menu .page-editor .lfr-layout-structure-item-responsive-side-menu {
+    position: relative;
+  }
 		
-    body.has-control-menu .master-page .lfr-layout-structure-item-responsive-side-menu,
-    body.has-control-menu .page-editor .lfr-layout-structure-item-responsive-side-menu {
-      position: relative;
-    }
-    [/#if]
-		
-    body.has-control-menu .master-page .lfr-layout-structure-item-responsive-side-menu,
-    body.has-control-menu .page-editor .lfr-layout-structure-item-responsive-side-menu {
-      top: 0;
-      height: calc(100vh - var(--control-menu-container-height, 0) - 65px - 29px);
-    }
-		
-    body.has-edit-mode-menu .page-editor {
-      flex-grow: 1;
-    }
+  [/#if]
+  body.has-control-menu .master-page .lfr-layout-structure-item-responsive-side-menu,
+  body.has-control-menu .page-editor .lfr-layout-structure-item-responsive-side-menu {
+    top: 0;
+    height: calc(100vh - var(--control-menu-container-height, 0) - 65px - 29px);
+  }
+  
+  body.has-edit-mode-menu .page-editor {
+    flex-grow: 1;
+  }
 
-    body.has-edit-mode-menu .page-editor div.page-editor__container>div[data-name="Drop Zone"],
-    body .page-editor div.page-editor__container>div[data-name="Main"] {
-      flex-grow: 1;
-    }
+  body.has-edit-mode-menu .page-editor div.page-editor__container>div[data-name="Drop Zone"],
+  body .page-editor div.page-editor__container>div[data-name="Main"] {
+    flex-grow: 1;
+  }
 
-    body.has-edit-mode-menu .page-editor div.page-editor__container>div:has(div[data-name="Drop Zone"]),
-    body .page-editor div.page-editor__container>div:has(div[data-name="Main"]) {
-      flex-grow: 1;
-    }
+  body.has-edit-mode-menu .page-editor div.page-editor__container>div:has(div[data-name="Drop Zone"]),
+  body .page-editor div.page-editor__container>div:has(div[data-name="Main"]) {
+    flex-grow: 1;
+  }
 
-    body.has-edit-mode-menu div.master-page div:has(#page-editor) {
-      flex-grow: 1;
-    }
+  body.has-edit-mode-menu div.master-page div:has(#page-editor) {
+    flex-grow: 1;
+  }
 
-    [#if configuration.menuStyle?contains('menu-left')]
-    .lfr-layout-structure-item-responsive-side-menu {
-      left: 0;
-    }
-    [#else].lfr-layout-structure-item-responsive-side-menu {
-      right: 0;
-    }
-    [/#if]
-    
+  [#if configuration.menuStyle?contains('menu-left')]
+  .lfr-layout-structure-item-responsive-side-menu {
+    left: 0;
+  }
+  
+  [#else].lfr-layout-structure-item-responsive-side-menu {
+    right: 0;
+  }
+  
+  [/#if]  
 	[#if configuration.enableTabletBreakpoint]
     @media only screen and (max-width: ${configuration.tabletBreakpoint}) {
       .lfr-layout-structure-item-responsive-side-menu {
@@ -85,8 +86,8 @@
       }
       [/#if]
     }
-    [/#if]
-    
+
+    [/#if] 
     [#if configuration.enableLandscapePhoneBreakpoint]
     @media only screen and (max-width: ${configuration.landscapePhoneBreakpoint}) {
       .lfr-layout-structure-item-responsive-side-menu {
@@ -114,12 +115,12 @@
       }
       [/#if]
     }
+	 
     [/#if]
   </style>
 [/#if]
 <style scoped>
   .fragment-root {
-    background-color: ${configuration.menuBgColor};
     height: 100%;
   }
 
@@ -132,14 +133,6 @@
     flex-direction: column;
     height: 100%;
     width: 100%;
-  }
-
-  .fragment-root .dropzone-wrapper .dropzone {
-    margin-bottom: var(--spacer-2, .5rem);
-  }
-	
-  .fragment-root .dropzone-wrapper .dropzone:last-of-type {
-    margin-bottom: 0;
   }
 
   .fragment-root .dropzone-wrapper .dropzone .input-group {
@@ -163,7 +156,6 @@
     list-style-type: none;
     margin: 0;
     padding: 0;
-    overflow: hidden;
     flex-direction: column;
   }
 
@@ -171,8 +163,8 @@
   .fragment-root .dropzone-menu .fragment-menu .navbar-nav {
     justify-content: end;
   }
+	
   [/#if]
-  
   .fragment-root .dropzone-menu .fragment-menu .nav-item .layout-logo {
     max-height: ${configuration.menuItemLogoMaxHeight};
     max-width: ${configuration.menuItemLogoMaxWidth};
@@ -187,18 +179,24 @@
   .fragment-root .dropzone-wrapper {
     align-items: end;
   }
+	
   [/#if]
-  
   .fragment-root .hamburger-zone-wrapper {
     height: 100%;
   }
 
   .fragment-root .hamburger-zone-inner {
+    background-color: ${configuration.desktopMenuBgColor};
     display: flex;
     flex-direction: column;
     height: 100%;
     transition: ease all .5s;
     max-width: 100%;
+    gap: ${configuration.dropzoneGap};
+  }
+
+  .fragment-root .dropzone .zone-layout > div {
+    gap: ${configuration.dropzoneGap};
   }
 
   [#if configuration.menuStyle?contains('menu-right')]
@@ -206,9 +204,9 @@
     justify-content: end;
 
   }
+	
   [/#if]
-  
-  .fragment-root .hamburger-zone-inner .dropzone-menu {
+  .fragment-root .hamburger-zone-inner .${configuration.dropzoneGrower} {
     flex-grow: 1;
   }
 
@@ -227,8 +225,8 @@
     color: ${configuration.menuItemSelectedColor} !important;
     background-color: ${configuration.menuItemSelectedBgColor} !important;
   }
+	
   [/#if]
-
   [#if configuration.separator]
   .fragment-root .dropzone-menu .fragment-menu.separator .lfr-nav-item {
     border-bottom: 1px solid ${configuration.menuItemSeparatorColor};
@@ -237,11 +235,13 @@
   .fragment-root .dropzone-menu .fragment-menu.separator .lfr-nav-item:last-child {
     border-bottom: none;
   }
+	
   [/#if]
 
   [#if configuration.enableTabletBreakpoint]
   @media only screen and (max-width: ${configuration.tabletBreakpoint}) {
     .fragment-root .hamburger-zone-inner {
+      background-color: ${configuration.tabletMenuBgColor};
       max-width: calc(${configuration.menuItemLogoMaxWidth} + 4px);
       overflow: hidden;
       transition: all .5s ease;
@@ -252,6 +252,12 @@
       color: transparent;
       opacity: 1;
       transition: all .5s ease;
+    }
+
+    .fragment-root .dropzone .zone-layout > div {
+      display: flex;
+      flex-direction: column;
+      flex-wrap: nowrap;
     }
 
     .fragment-root .hamburger-zone-inner .dropzone-lower,
@@ -281,8 +287,8 @@
       transition: all .5s ease;
     }
   }
+	
   [/#if]
-
   [#if configuration.enableLandscapePhoneBreakpoint]
   @media only screen and (max-width: ${configuration.landscapePhoneBreakpoint}) {
     .fragment-root {
@@ -297,10 +303,10 @@
     .fragment-root .dropzone-wrapper {
       justify-content: end;
     }
+		
     [/#if]
-	
     .fragment-root .hamburger-zone-wrapper {
-      background-color: ${configuration.menuBgColor};
+      background-color: ${configuration.landscapePhoneMenuBgColor};
       width: 100vw;
       max-width: 100%;
       display: grid;
@@ -328,15 +334,39 @@
       justify-content: end;
     }
 
-    [#if configuration.menuStyle?contains('menu-right')]
     .fragment-root .fragment-menu .lfr-nav-item {
       align-items: end;
     }
-    [/#if]
+
+    .fragment-root .dropzone .zone-layout > div {
+      display: flex;
+      flex-direction: column;
+      align-items: start;
+      justify-content: end;
+    }
+
+    .fragment-root .dropzone .zone-layout > div > * {
+      width: 100vw;
+    }
+
+    .fragment-root .hamburger {
+      transition: all .5s ease;
+      width: 100%;
+    }
+
+    [#if configuration.menuStyle?contains('menu-right')]
+    .fragment-root .hamburger {
+      text-align: right;
+    }
 		
-		.fragment-root .hamburger a {
-			display: inline-block;
-		}
+    [/#if]
+    .fragment-root .hamburger.open {
+      background-color: ${configuration.menuHamburgerBgColor};
+    }
+		
+    .fragment-root .hamburger a {
+      display: inline-block;
+    }
 		
     .fragment-root .hamburger .fragment-menu-icon {
       background-color: ${configuration.menuHamburgerBgColor};
@@ -352,7 +382,7 @@
       background-color: ${configuration.menuHamburgerColor};
     }
 		
-    .fragment-root .hamburger-zone-inner .dropzone-menu {
+    .fragment-root .hamburger-zone-inner .${configuration.dropzoneGrower} {
       flex-grow: 0;
     }
 
@@ -362,11 +392,43 @@
       overflow: visible;
       opacity: 1;
       transition: all .5s ease;
-	  min-width: 100%;
+      min-width: 100%;
     }
-
+  }
+	
+  [/#if]
+  [#if configuration.enablePortraitPhoneBreakpoint]
+  @media only screen and (max-width: ${configuration.portraitPhoneBreakpoint}) {
+    .fragment-root .hamburger-zone-wrapper {
+      background-color: ${configuration.portraitPhoneMenuBgColor};
+    }
   }
   [/#if]
+
+  body.has-edit-mode-menu .dropzone .page-editor__no-fragments-state {
+    min-width: 100px;
+  }
+
+  body.has-edit-mode-menu .dropzone .page-editor__no-fragments-state:first-child:before {
+    color: #6b6c7e;
+    font-size: 14px;
+    font-weight: bold;
+    text-align: center;
+    margin: 0;
+    margin-bottom: 1rem;
+  }
+
+  body.has-edit-mode-menu .dropzone-upper .page-editor__no-fragments-state:first-child:before {
+    content: "Upper Zone";
+  }
+
+    body.has-edit-mode-menu .dropzone-menu .page-editor__no-fragments-state:first-child:before {
+    content: "Menu Zone";
+  }
+
+  body.has-edit-mode-menu .dropzone-lower .page-editor__no-fragments-state:first-child:before {
+    content: "Lower Zone";
+  }
 </style>
 <div class="fragment-root-${fragmentEntryLinkNamespace} fragment-root">
   [#if configuration.dropzoneConfig=='menu-only']

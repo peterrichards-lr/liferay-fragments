@@ -1,313 +1,414 @@
 {
-	"fieldSets": [
-		{
-			"fields": [
-				{
-					"name": "menuStyle",
-					"label": "menu-style",
-					"type": "select",
-					"dataType": "string",
-					"typeOptions": {
-						"validValues": [
-							{
-								"label": "Top",
-								"value": "menu-top"
-							},
-							{
-								"label": "Inline",
-								"value": "menu-inline"
-							},
-							{
-								"label": "Sticky",
-								"value": "menu-top sticky"
-							}
-						]
-					},
-					"defaultValue": "menu-inline"
-				},
-				{
-					"name": "dropzoneConfig",
-					"label": "dropzone-config",
-					"type": "select",
-					"dataType": "string",
-					"typeOptions": {
-						"validValues": [
-							{
-								"label": "Menu Only",
-								"value": "menu-only"
-							},
-							{
-								"label": "1 Zone",
-								"value": "menu-one-zone"
-							},
-							{
-								"label": "2 Zones",
-								"value": "menu-two-zones"
-							}
-						]
-					},
-					"defaultValue": "menu-only"
-				},
-				{
-					"name": "separator",
-					"label": "Separator",
-					"type": "checkbox",
-					"defaultValue": false
-				},
-				{
-					"name": "scrollBackToTop",
-					"label": "scroll-back-to-top",
-					"type": "checkbox",
-					"defaultValue": true
-				},
-				{
-					"name": "scrollBackToTopIcon",
-					"label": "scroll-back-to-top-icon",
-					"type": "text",
-					"defaultValue": "order-arrow-up"
-				},
-			],
-			"label": "general"
-		},
-		{
-			"fields": [
-				{
-					"name": "menuItemLogoMaxWidth",
-					"label": "menu-item-logo-max-width",
-					"type": "length",
-					"defaultValue": "2rem"
-				},
-				{
-					"name": "menuItemLogoMaxHeight",
-					"label": "menu-item-logo-max-height",
-					"type": "length",
-					"defaultValue": "1rem"
-				}
-			],
-			"label": "logos"
-		},
-		{
-			"fields": [
-				{
-					"name": "menuBgColor",
-					"label": "menu-background-color",
-					"type": "colorPicker",
-					"defaultValue": "transparent"
-				},
-				{
-					"name": "menuItemSeparatorColor",
-					"label": "menu-item-separator-color",
-					"type": "colorPicker",
-					"defaultValue": "#bbb"
-				},
-				{
-					"name": "scrollBackToTopColor",
-					"label": "scroll-back-to-top-color",
-					"type": "colorPicker",
-					"defaultValue": "var(--dark, #111)"
-				},
-				{
-					"name": "scrollBackToTopBgColor",
-					"label": "scroll-back-to-top-background-color",
-					"type": "colorPicker",
-					"defaultValue": "var(--light, white)"
-				},
-				{
-					"name": "scrollBackToTopHoverColor",
-					"label": "scroll-back-to-top-hover-color",
-					"type": "colorPicker",
-					"defaultValue": "var(--primary, #0B5FFF)"
-				},
-				{
-					"name": "scrollBackToTopHoverBgColor",
-					"label": "scroll-back-to-top-hover-background-color",
-					"type": "colorPicker",
-					"defaultValue": "var(--light, white)"
-				},
-				{
-					"name": "overrideMenuColors",
-					"label": "Override Menu Colors",
-					"type": "checkbox",
-					"defaultValue": false
-				},
-				{
-					"name": "menuItemColor",
-					"label": "menu-item-color",
-					"type": "colorPicker",
-					"defaultValue": "var(--light, white)"
-				},
-				{
-					"name": "menuItemBgColor",
-					"label": "menu-item-background-color",
-					"type": "colorPicker",
-					"defaultValue": "var(--black, #000)"
-				},
-				{
-					"name": "menuItemHoverColor",
-					"label": "menu-item-hover-color",
-					"type": "colorPicker",
-					"defaultValue": "var(--light, white)"
-				},
-				{
-					"name": "menuItemHoverBgColor",
-					"label": "menu-item-hover-background-color",
-					"type": "colorPicker",
-					"defaultValue": "var(--dark, #111)"
-				},
-				{
-					"name": "menuItemSelectedColor",
-					"label": "menu-item-selected-color",
-					"type": "colorPicker",
-					"defaultValue": "var(--light, white)"
-				},
-				{
-					"name": "menuItemSelectedBgColor",
-					"label": "menu-item-selected-background-color",
-					"type": "colorPicker",
-					"defaultValue": "var(--primary, #0B5FFF)"
-				}
-			],
-			"label": "colors"
-		},
-		{
-			"fields": [
-				{
-					"name": "menuHamburgerColor",
-					"label": "menu-hamburger-color",
-					"type": "colorPicker",
-					"defaultValue": "black"
-				},
-				{
-					"name": "menuHamburgerBgColor",
-					"label": "menu-hamburger-background-color",
-					"type": "colorPicker",
-					"defaultValue": "white"
-				},
-				{
-					"name": "menuHamburgerBorderWidth",
-					"label": "menu-hamburger-border-width",
-					"type": "length",
-					"defaultValue": "0px"
-				},
-				{
-					"name": "menuHamburgerBorderRadius",
-					"label": "menu-hamburger-border-radius",
-					"type": "length",
-					"defaultValue": "0px"
-				},
-				{
-					"name": "menuHamburgerBorderColor",
-					"label": "menu-hamburger-border-color",
-					"type": "colorPicker",
-					"defaultValue": "black"
-				},
-				{
-					"name": "menuHamburgerBorderStyle",
-					"label": "menu-hamburger-border-style",
-					"type": "select",
-					"dataType": "string",
-					"typeOptions": {
-						"validValues": [
-							{
-								"label": "Dotted",
-								"value": "dotted"
-							},
-							{
-								"label": "Dashed",
-								"value": "dashed"
-							},
-							{
-								"label": "Solid",
-								"value": "solid"
-							},
-							{
-								"label": "Double",
-								"value": "double"
-							},
-							{
-								"label": "Groove",
-								"value": "groove"
-							},
-							{
-								"label": "Ridge",
-								"value": "ridge"
-							},
-							{
-								"label": "Inset",
-								"value": "inset"
-							},
-							{
-								"label": "Outset",
-								"value": "outset"
-							},
-							{
-								"label": "None",
-								"value": "none"
-							}
-						]
-					},
-					"defaultValue": "solid"
-				}
-			],
-			"label": "hamburger-menu"
-		},
-		{
-			"fields": [
-				{
-					"name": "portraitPhoneBreakpoint",
-					"label": "portrait-phone",
-					"type": "length",
-					"defaultValue": "360px"
-				},
-				{
-					"name": "enablePortraitPhoneBreakpoint",
-					"label": "enable-portrait-phone",
-					"type": "checkbox",
-					"defaultValue": true
-				},
-				{
-					"name": "landscapePhoneBreakpoint",
-					"label": "landscape-phone",
-					"type": "length",
-					"defaultValue": "576px"
-				},
-				{
-					"name": "enableLandscapePhoneBreakpoint",
-					"label": "enable-landscape-phone",
-					"type": "checkbox",
-					"defaultValue": true
-				},
-				{
-					"name": "tabletBreakpoint",
-					"label": "tablet",
-					"type": "length",
-					"defaultValue": "768px"
-				},
-				{
-					"name": "enableTabletBreakpoint",
-					"label": "enable-tablet",
-					"type": "checkbox",
-					"defaultValue": false
-				},
-				{
-					"name": "desktopBreakpoint",
-					"label": "desktop",
-					"type": "length",
-					"defaultValue": "1305px"
-				}
-			],
-			"label": "breakpoints"
-		},
-		{
-			"fields": [
-				{
-					"name": "menuHeader",
-					"label": "menu-header",
-					"type": "checkbox",
-					"defaultValue": true
-				}
-			],
-			"label": "editor"
-		}
-	]
+  "fieldSets": [
+    {
+      "fields": [
+        {
+          "dataType": "string",
+          "defaultValue": "menu-inline",
+          "label": "menu-style",
+          "name": "menuStyle",
+          "type": "select",
+          "typeOptions": {
+            "validValues": [
+              {
+                "label": "Top",
+                "value": "menu-top"
+              },
+              {
+                "label": "Inline",
+                "value": "menu-inline"
+              },
+              {
+                "label": "Sticky",
+                "value": "menu-top sticky"
+              }
+            ]
+          }
+        }
+      ],
+      "label": "general"
+    },
+    {
+      "fields": [
+        {
+          "dataType": "string",
+          "defaultValue": "menu-only",
+          "label": "dropzone-config",
+          "name": "dropzoneConfig",
+          "type": "select",
+          "typeOptions": {
+            "validValues": [
+              {
+                "label": "Menu Only",
+                "value": "menu-only"
+              },
+              {
+                "label": "Left",
+                "value": "menu-left-zone"
+              },
+              {
+                "label": "Right",
+                "value": "menu-right-zone"
+              },
+              {
+                "label": "Both",
+                "value": "menu-both-zones"
+              }
+            ]
+          }
+        },
+        {
+          "dataType": "string",
+          "defaultValue": "menu-zone",
+          "label": "dropzone-grower",
+          "name": "dropzoneGrower",
+          "type": "select",
+          "typeOptions": {
+            "validValues": [
+              {
+                "label": "Menu",
+                "value": "dropzone-menu"
+              },
+              {
+                "label": "Left",
+                "value": "dropzone-left"
+              },
+              {
+                "label": "Right",
+                "value": "dropzone-right"
+              }
+            ]
+          }
+        },
+        {
+          "defaultValue": "var(--spacer-2, .5rem)",
+          "label": "dropzone-gap",
+          "name": "dropzoneGap",
+          "type": "length"
+        },
+        {
+          "dataType": "string",
+          "defaultValue": "flex-start",
+          "label": "dropzone-align-items",
+          "name": "dropzoneAlignItems",
+          "type": "select",
+          "typeOptions": {
+            "validValues": [
+              {
+                "label": "Center",
+                "value": "center"
+              },
+              {
+                "label": "Flex Start",
+                "value": "flex-start"
+              },
+              {
+                "label": "Flex End",
+                "value": "flex-end"
+              },
+              {
+                "label": "Stretch",
+                "value": "stretch"
+              },
+              {
+                "label": "Baseline",
+                "value": "baseline"
+              },
+              {
+                "label": "Normal",
+                "value": "normal"
+              }
+            ]
+          }
+        }
+      ],
+      "label": "dropzones"
+    },
+    {
+      "fields": [
+        {
+          "defaultValue": "2rem",
+          "label": "menu-item-logo-max-width",
+          "name": "menuItemLogoMaxWidth",
+          "type": "length"
+        },
+        {
+          "defaultValue": "1rem",
+          "label": "menu-item-logo-max-height",
+          "name": "menuItemLogoMaxHeight",
+          "type": "length"
+        }
+      ],
+      "label": "logos"
+    },
+    {
+      "fields": [
+        {
+          "defaultValue": false,
+          "label": "separator",
+          "name": "separator",
+          "type": "checkbox"
+        },
+        {
+          "defaultValue": "#bbb",
+          "label": "menu-item-separator-color",
+          "name": "menuItemSeparatorColor",
+          "type": "colorPicker"
+        }
+      ],
+      "label": "separator"
+    },
+    {
+      "fields": [
+        {
+          "defaultValue": "black",
+          "label": "menu-hamburger-color",
+          "name": "menuHamburgerColor",
+          "type": "colorPicker"
+        },
+        {
+          "defaultValue": "white",
+          "label": "menu-hamburger-background-color",
+          "name": "menuHamburgerBgColor",
+          "type": "colorPicker"
+        },
+        {
+          "defaultValue": "0px",
+          "label": "menu-hamburger-border-width",
+          "name": "menuHamburgerBorderWidth",
+          "type": "length"
+        },
+        {
+          "defaultValue": "0px",
+          "label": "menu-hamburger-border-radius",
+          "name": "menuHamburgerBorderRadius",
+          "type": "length"
+        },
+        {
+          "defaultValue": "black",
+          "label": "menu-hamburger-border-color",
+          "name": "menuHamburgerBorderColor",
+          "type": "colorPicker"
+        },
+        {
+          "dataType": "string",
+          "defaultValue": "solid",
+          "label": "menu-hamburger-border-style",
+          "name": "menuHamburgerBorderStyle",
+          "type": "select",
+          "typeOptions": {
+            "validValues": [
+              {
+                "label": "Dotted",
+                "value": "dotted"
+              },
+              {
+                "label": "Dashed",
+                "value": "dashed"
+              },
+              {
+                "label": "Solid",
+                "value": "solid"
+              },
+              {
+                "label": "Double",
+                "value": "double"
+              },
+              {
+                "label": "Groove",
+                "value": "groove"
+              },
+              {
+                "label": "Ridge",
+                "value": "ridge"
+              },
+              {
+                "label": "Inset",
+                "value": "inset"
+              },
+              {
+                "label": "Outset",
+                "value": "outset"
+              },
+              {
+                "label": "None",
+                "value": "none"
+              }
+            ]
+          }
+        }
+      ],
+      "label": "hamburger-menu"
+    },
+    {
+      "fields": [
+        {
+          "defaultValue": true,
+          "label": "scroll-back-to-top",
+          "name": "scrollBackToTop",
+          "type": "checkbox"
+        },
+        {
+          "defaultValue": "order-arrow-up",
+          "label": "scroll-back-to-top-icon",
+          "name": "scrollBackToTopIcon",
+          "type": "text"
+        },
+        {
+          "defaultValue": "var(--dark, #111)",
+          "label": "scroll-back-to-top-color",
+          "name": "scrollBackToTopColor",
+          "type": "colorPicker"
+        },
+        {
+          "defaultValue": "var(--light, white)",
+          "label": "scroll-back-to-top-background-color",
+          "name": "scrollBackToTopBgColor",
+          "type": "colorPicker"
+        },
+        {
+          "defaultValue": "var(--primary, #0B5FFF)",
+          "label": "scroll-back-to-top-hover-color",
+          "name": "scrollBackToTopHoverColor",
+          "type": "colorPicker"
+        },
+        {
+          "defaultValue": "var(--light, white)",
+          "label": "scroll-back-to-top-hover-background-color",
+          "name": "scrollBackToTopHoverBgColor",
+          "type": "colorPicker"
+        }
+      ],
+      "label": "scroll-back-to-top"
+    },
+    {
+      "fields": [
+        {
+          "defaultValue": true,
+          "label": "enable-portrait-phone",
+          "name": "enablePortraitPhoneBreakpoint",
+          "type": "checkbox"
+        },
+        {
+          "defaultValue": "360px",
+          "label": "portrait-phone",
+          "name": "portraitPhoneBreakpoint",
+          "type": "length"
+        },
+        {
+          "defaultValue": "white",
+          "label": "portrait-phone-menu-background-color",
+          "name": "portraitPhoneMenuBgColor",
+          "type": "colorPicker"
+        },
+        {
+          "defaultValue": true,
+          "label": "enable-landscape-phone",
+          "name": "enableLandscapePhoneBreakpoint",
+          "type": "checkbox"
+        },
+        {
+          "defaultValue": "576px",
+          "label": "landscape-phone",
+          "name": "landscapePhoneBreakpoint",
+          "type": "length"
+        },
+        {
+          "defaultValue": "white",
+          "label": "landscape-phone-menu-background-color",
+          "name": "landscapePhoneMenuBgColor",
+          "type": "colorPicker"
+        },
+        {
+          "defaultValue": false,
+          "label": "enable-tablet",
+          "name": "enableTabletBreakpoint",
+          "type": "checkbox"
+        },
+        {
+          "defaultValue": "768px",
+          "label": "tablet",
+          "name": "tabletBreakpoint",
+          "type": "length"
+        },
+        {
+          "defaultValue": "transparent",
+          "label": "tablet-menu-background-color",
+          "name": "tabletMenuBgColor",
+          "type": "colorPicker"
+        },
+        {
+          "defaultValue": "1305px",
+          "label": "desktop",
+          "name": "desktopBreakpoint",
+          "type": "length"
+        },
+        {
+          "defaultValue": "transparent",
+          "label": "desktop-menu-background-color",
+          "name": "desktopMenuBgColor",
+          "type": "colorPicker"
+        }
+      ],
+      "label": "breakpoints"
+    },
+    {
+      "fields": [
+        {
+          "defaultValue": false,
+          "label": "Override Menu Colors",
+          "name": "overrideMenuColors",
+          "type": "checkbox"
+        },
+        {
+          "defaultValue": "var(--light, white)",
+          "label": "menu-item-color",
+          "name": "menuItemColor",
+          "type": "colorPicker"
+        },
+        {
+          "defaultValue": "var(--black, #000)",
+          "label": "menu-item-background-color",
+          "name": "menuItemBgColor",
+          "type": "colorPicker"
+        },
+        {
+          "defaultValue": "var(--light, white)",
+          "label": "menu-item-hover-color",
+          "name": "menuItemHoverColor",
+          "type": "colorPicker"
+        },
+        {
+          "defaultValue": "var(--dark, #111)",
+          "label": "menu-item-hover-background-color",
+          "name": "menuItemHoverBgColor",
+          "type": "colorPicker"
+        },
+        {
+          "defaultValue": "var(--light, white)",
+          "label": "menu-item-selected-color",
+          "name": "menuItemSelectedColor",
+          "type": "colorPicker"
+        },
+        {
+          "defaultValue": "var(--primary, #0B5FFF)",
+          "label": "menu-item-selected-background-color",
+          "name": "menuItemSelectedBgColor",
+          "type": "colorPicker"
+        }
+      ],
+      "label": "menu-colors"
+    },
+    {
+      "fields": [
+        {
+          "defaultValue": true,
+          "label": "menu-header",
+          "name": "menuHeader",
+          "type": "checkbox"
+        }
+      ],
+      "label": "editor"
+    }
+  ]
 }

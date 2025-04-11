@@ -8,9 +8,9 @@
 [/#if]
 [#assign dropzoneConfig = configuration.dropzoneConfig /]
 [#assign dropzoneCount = 1 /]
-[#if configuration.dropzoneConfig?contains('one')]
+[#if configuration.dropzoneConfig?contains('left') || configuration.dropzoneConfig?contains('right')]
 [#assign dropzoneCount += 1 /]
-[#elseif configuration.dropzoneConfig?contains('two')]
+[#elseif configuration.dropzoneConfig?contains('both')]
 [#assign dropzoneCount += 2 /]
 [/#if]
 [#if configuration.menuStyle?contains('menu-inline')]
@@ -18,26 +18,27 @@
 [#assign dropzoneCount = 1 /]
 [/#if]
 [#if configuration.menuStyle?contains('sticky')]
-  <style>
-    .lfr-layout-structure-item-responsive-menu {
-      position: -webkit-sticky;
-      position: sticky;
-      top: 0;
-      z-index: 1;
-    }
+<style>
+  .lfr-layout-structure-item-responsive-menu {
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0;
+    z-index: 1;
+  }
 
-    body.has-control-menu .lfr-layout-structure-item-responsive-menu {
-      top: var(--control-menu-container-height, 0);
-    }
-		
+  body.has-control-menu .lfr-layout-structure-item-responsive-menu {
+    top: var(--control-menu-container-height, 0);
+  }
+  
   [#if configuration.enableLandscapePhoneBreakpoint]
   @media only screen and (max-width: ${configuration.landscapePhoneBreakpoint}) {
     body.has-control-menu .lfr-layout-structure-item-responsive-menu.top {
       top: 0;
       transition: all .5s ease;
     }
-	[/#if]
-  </style>
+  }
+  [/#if]
+</style>
 [/#if]
 <style scoped>
   body.has-edit-mode-menu .page-editor .fragment-menu-editor-padding.show {
@@ -52,24 +53,20 @@
     padding: 0 8px 0 8px;
     font-weight: 600;
   }
-	
-  body.has-edit-mode-menu .dropzone {
-    min-width: 25px;
-  }
 
   [#if configuration.menuStyle?contains('sticky')]
   body.has-edit-mode-menu div.lfr-layout-structure-item-reponsive-menu {
     top: 0;
   }
+
   [/#if]
-  
+
   .fragment-menu-editor-padding {
     height: 0;
     overflow: hidden;
   }
   
   .fragment-root {
-    background-color: ${configuration.menuBgColor};
     height: 100%;
   }
 
@@ -82,14 +79,6 @@
     flex-direction: column;
     height: 100%;
     width: 100%;
-  }
-
-  .fragment-root .dropzone-wrapper .dropzone {
-    margin-bottom: var(--spacer-2, .5rem);
-  }
-	
-  .fragment-root .dropzone-wrapper .dropzone:last-of-type {
-    margin-bottom: 0;
   }
 
   .fragment-root .dropzone-wrapper .dropzone .input-group {
@@ -113,7 +102,6 @@
     list-style-type: none;
     margin: 0;
     padding: 0;
-    overflow: hidden;
     flex-direction: row;
   }
 
@@ -131,16 +119,24 @@
   }
 
   .fragment-root .hamburger-zone-inner {
+    background-color: ${configuration.desktopMenuBgColor};
     display: flex;
     flex-direction: row;
     height: 100%;
     transition: ease all .5s;
     max-width: 100%;
+    align-items: ${configuration.dropzoneAlignItems};
+    gap: ${configuration.dropzoneGap};
+  }
+
+  .fragment-root .dropzone .zone-layout > div {
+    gap: ${configuration.dropzoneGap};
   }
   
-  .fragment-root .hamburger-zone-inner .dropzone-menu {
+  .fragment-root .hamburger-zone-inner .${configuration.dropzoneGrower} {
     flex-grow: 1;
   }
+	
   [#if configuration.overrideMenuColors]
   .fragment-root .dropzone-menu .fragment-menu .lfr-nav-item a {
     color: ${configuration.menuItemColor} !important;
@@ -170,7 +166,8 @@
   [/#if]
   [#if configuration.enableTabletBreakpoint]
   @media only screen and (max-width: ${configuration.tabletBreakpoint}) {   
-		.fragment-root .hamburger-zone-inner {
+    .fragment-root .hamburger-zone-inner {
+      background-color: ${configuration.tabletMenuBgColor};
       overflow: hidden;
       transition: all .5s ease;
     }
@@ -180,14 +177,22 @@
 			flex-wrap: wrap;
 			justify-content: space-between;
     }
+
+    .fragment-root .dropzone .zone-layout > div {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+    }
 		
-		.fragment-root .hamburger-zone-inner .dropzone-one,
-		.fragment-root .hamburger-zone-inner .dropzone-two {
-			flex-basis: 0;
-			flex-grow: 1;
-			max-width: 100%;
-			min-width: calc(100% / ${dropzoneCount});
+    .fragment-root .hamburger-zone-inner .dropzone-left,
+    .fragment-root .hamburger-zone-inner .dropzone-menu,
+    .fragment-root .hamburger-zone-inner .dropzone-right {
+      flex-basis: 0;
+      flex-grow: 1;
+      max-width: 100%;
+      min-width: calc(100% / ${dropzoneCount});
 		}
+
     [/#if]
   }
   [/#if]
@@ -202,7 +207,7 @@
     }
 
     .fragment-root .hamburger-zone-wrapper {
-      background-color: ${configuration.menuBgColor};
+      background-color: ${configuration.landscapePhoneMenuBgColor};
       display: grid;
       grid-template-rows: 0fr;
       transition: grid-template-rows 0.5s ease-out;
@@ -232,8 +237,23 @@
       justify-content: end;
     }
 		
+    .fragment-root .dropzone .zone-layout > div {
+      display: flex;
+      flex-direction: column;
+      align-items: start;
+      justify-content: end;
+    }
+		
+    .fragment-root .dropzone .zone-layout > div > * {
+      width: 100vw;
+    }
+
+    .fragment-root .hamburger {
+      transition: all .5s ease;
+    }
+
     .fragment-root .hamburger.open {
-      background-color: ${configuration.menuBgColor};
+      background-color: ${configuration.menuHamburgerBgColor};
     }
 		
     .fragment-root .hamburger a {
@@ -254,17 +274,25 @@
       background-color: ${configuration.menuHamburgerColor};
     }
 		
-    .fragment-root .hamburger-zone-inner .dropzone-menu {
+    .fragment-root .hamburger-zone-inner .${configuration.dropzoneGrower} {
       flex-grow: 0;
     }
 
-    .fragment-root .hamburger-zone-inner .dropzone-one,
-    .fragment-root .hamburger-zone-inner .dropzone-two {
+    .fragment-root .hamburger-zone-inner .dropzone-left,
+    .fragment-root .hamburger-zone-inner .dropzone-right {
       visibility: visible;
       overflow: visible;
       opacity: 1;
       transition: all .5s ease;
-	  min-width: 100%;
+      min-width: 100%;
+    }
+  }
+  [/#if]
+
+  [#if configuration.enablePortraitPhoneBreakpoint]
+  @media only screen and (max-width: ${configuration.portraitPhoneBreakpoint}) {
+    .fragment-root .hamburger-zone-wrapper {
+      background-color: ${configuration.portraitPhoneMenuBgColor};
     }
   }
   [/#if]
@@ -290,6 +318,31 @@
     color: ${configuration.scrollBackToTopHoverColor};
   }
   [/#if]
+
+  body.has-edit-mode-menu .dropzone {
+    flex-grow: 1;
+  }
+
+  body.has-edit-mode-menu .dropzone .page-editor__no-fragments-state:first-child:before {
+    color: #6b6c7e;
+    font-size: 14px;
+    font-weight: bold;
+    text-align: center;
+    margin: 0;
+    margin-bottom: 1rem;
+  }
+
+  body.has-edit-mode-menu .dropzone-left .page-editor__no-fragments-state:first-child:before {
+    content: "Left Zone";
+  }
+
+    body.has-edit-mode-menu .dropzone-menu .page-editor__no-fragments-state:first-child:before {
+    content: "Menu Zone";
+  }
+
+  body.has-edit-mode-menu .dropzone-right .page-editor__no-fragments-state:first-child:before {
+    content: "Right Zone";
+  }
 </style>
 <div class="fragment-root-${fragmentEntryLinkNamespace} fragment-root">
   [#if dropzoneConfig=='menu-only']
@@ -314,8 +367,33 @@
       </div>
     </div>
   </div>
-  [#elseif dropzoneConfig=='menu-one-zone']
-  <div class="dropzone-wrapper dropzone-wrapper-one-zone">
+  [#elseif dropzoneConfig=='menu-left-zone']
+  <div class="dropzone-wrapper dropzone-wrapper-left-zone">
+    <div class="${menuHeaderClass}">Responsive Menu</div>
+    <div class="hamburger">
+      <a href="javascript:void(0);" class="fragment-menu-icon">
+        <span></span>
+        <span></span>
+        <span></span>
+      </a>
+    </div>
+    <div class="hamburger-zone-wrapper">
+      <div class="hamburger-zone-inner">
+        <div class="dropzone dropzone-left">
+          <lfr-drop-zone></lfr-drop-zone>
+        </div>
+        <div class="dropzone dropzone-menu">
+          <div>
+            <div class="${menuClasses}">
+              <lfr-drop-zone></lfr-drop-zone>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  [#elseif dropzoneConfig=='menu-right-zone']
+  <div class="dropzone-wrapper dropzone-wrapper-right-zone">
     <div class="${menuHeaderClass}">Responsive Menu</div>
     <div class="hamburger">
       <a href="javascript:void(0);" class="fragment-menu-icon">
@@ -333,14 +411,14 @@
             </div>
           </div>
         </div>
-        <div class="dropzone dropzone-one">
+        <div class="dropzone dropzone-right">
           <lfr-drop-zone></lfr-drop-zone>
         </div>
       </div>
     </div>
   </div>
-  [#elseif dropzoneConfig=='menu-two-zones']
-  <div class="dropzone-wrapper dropzone-wrapper-menu-two-zones">
+  [#elseif dropzoneConfig=='menu-both-zones']
+  <div class="dropzone-wrapper dropzone-wrapper-menu-both-zones">
     <div class="${menuHeaderClass}">Responsive Menu</div>
     <div class="hamburger">
       <a href="javascript:void(0);" class="fragment-menu-icon">
@@ -351,6 +429,9 @@
     </div>
     <div class="hamburger-zone-wrapper">
       <div class="hamburger-zone-inner">
+        <div class="dropzone dropzone-left">
+          <lfr-drop-zone></lfr-drop-zone>
+        </div>
         <div class="dropzone dropzone-menu">
           <div>
             <div class="${menuClasses}">
@@ -358,10 +439,7 @@
             </div>
           </div>
         </div>
-        <div class="dropzone dropzone-one">
-          <lfr-drop-zone></lfr-drop-zone>
-        </div>
-        <div class="dropzone dropzone-two">
+        <div class="dropzone dropzone-right">
           <lfr-drop-zone></lfr-drop-zone>
         </div>
       </div>
