@@ -1,0 +1,170 @@
+{
+  "fieldSets": [
+    {
+      "fields": [
+        {
+          "dataType": "string",
+          "defaultValue": "block",
+          "label": "content-display",
+          "name": "contentDisplay",
+          "type": "select",
+          "typeOptions": {
+            "validValues": [
+              {
+                "label": "Block",
+                "value": "block"
+              },
+              {
+                "label": "flex-row",
+                "value": "flex-row"
+              },
+              {
+                "label": "flex-column",
+                "value": "flex-column"
+              }
+            ]
+          }
+        },
+        {
+          "dataType": "string",
+          "defaultValue": "no-wrap",
+          "label": "flex-wrap",
+          "name": "flexWrap",
+          "type": "select",
+          "typeOptions": {
+            "validValues": [
+              {
+                "label": "nowrap",
+                "value": "nowrap"
+              },
+              {
+                "label": "wrap",
+                "value": "wrap"
+              },
+              {
+                "label": "wrap-reverse",
+                "value": "wrap-reverse"
+              }
+            ]
+          }
+        },
+        {
+          "dataType": "string",
+          "defaultValue": "stretch",
+          "label": "align-items",
+          "name": "alignItems",
+          "type": "select",
+          "typeOptions": {
+            "validValues": [
+              {
+                "label": "start",
+                "value": "start"
+              },
+              {
+                "label": "center[alignment]",
+                "value": "center"
+              },
+              {
+                "label": "end",
+                "value": "end"
+              },
+              {
+                "label": "stretch",
+                "value": "stretch"
+              },
+              {
+                "label": "baseline",
+                "value": "baseline"
+              }
+            ]
+          }
+        },
+        {
+          "dataType": "string",
+          "defaultValue": "start",
+          "label": "justify-content",
+          "name": "justifyContent",
+          "type": "select",
+          "typeOptions": {
+            "validValues": [
+              {
+                "label": "start",
+                "value": "start"
+              },
+              {
+                "label": "center[alignment]",
+                "value": "center"
+              },
+              {
+                "label": "end",
+                "value": "end"
+              },
+              {
+                "label": "between",
+                "value": "between"
+              },
+              {
+                "label": "around",
+                "value": "around"
+              }
+            ]
+          }
+        },
+        {
+          "defaultValue": "var(--spacer-2, .5rem)",
+          "label": "flex-gap",
+          "name": "flexGap",
+          "type": "length"
+        },
+        {
+          "name": "allowMenuOverride",
+          "label": "allow-menu-override",
+          "type": "checkbox",
+          "defaultValue": true
+        }
+      ],
+      "label": "layout"
+    },
+    {
+      "fields": [
+        {
+          "dataType": "string",
+          "defaultValue": "increase-hamburger",
+          "label": "logo-adaption",
+          "name": "logoAdaption",
+          "type": "select",
+          "typeOptions": {
+            "validValues": [
+              {
+                "label": "reduce-logo",
+                "value": "reduce-logo"
+              },
+              {
+                "label": "increase-hamburger",
+                "value": "increase-hamburger"
+              }
+            ]
+          }
+        },
+        {
+          "name": "alwaysDisplayLogo",
+          "label": "always-display-logo",
+          "type": "checkbox",
+          "defaultValue": false
+        }
+      ],
+      "label": "logo"
+    },
+    {
+      "fields": [
+        {
+          "defaultValue": true,
+          "label": "logo-zone-header",
+          "name": "logoZoneHeader",
+          "type": "checkbox"
+        }
+      ],
+      "label": "editor"
+    }
+  ]
+}

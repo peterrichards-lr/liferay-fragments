@@ -1,14 +1,50 @@
-[#assign pageGroup = layout.getGroup() /]
-[#assign siteLogo = htmlUtil.escape(themeDisplay.getCompanyLogo()) /]
-[#assign siteName = htmlUtil.escape(pageGroup.getDescriptiveName()) /]
-[#assign logoLink =
-	themeDisplay.getPortalURL() + '/web' + themeDisplay.layout.getGroup().friendlyURL /]
-<a class="custom-logo" href="${logoLink}" title="Go to">
-	<img alt="${siteName}" class="mr-2" height="60" src="${siteLogo}" />
-
-	[#if configuration.showSiteName]
-	<h2 aria-level="1" class="d-md-inline-flex d-none d-sm-none site-name" role="heading">
-		${siteName}
-	</h2>
-	[/#if]
-</a>
+[#assign logoLink = "" /]
+[#assign logoTitle = "" /]
+[#if configuration.enableLink]
+  [#assign logoLink = configuration.linkUrl /]
+  [#assign logoTitle = configuration.logoTitle /]
+[/#if]
+[#assign logoAltText = configuration.logoAltText /]
+[#if configuration.overrideSiteConfig]
+  [#if configuration.showSiteName]
+    [#assign siteName = configuration.siteName /]
+  [/#if]
+[#else]
+  [#if configuration.showSiteName]
+    [#assign pageGroup = layout.getGroup() /]
+    [#assign siteName = htmlUtil.escape(pageGroup.getDescriptiveName()) /]
+    
+    [#if !logoAltText?has_content]
+      [#assign logoAltText = siteName /]
+    [/#if]
+  [/#if]
+  [#assign logoUrl = htmlUtil.escape(themeDisplay.getCompanyLogo()) /]
+[/#if]
+<style>
+  :root {
+    --responsive-menu-logo-max-height: ${configuration.logoMaxHeight};
+    --responsive-menu-logo-max-width: ${configuration.logoMaxWidth};
+  }
+</style>
+<div class="site-logo"
+  style="--logo-max-height: ${configuration.logoMaxHeight}; --logo-max-width: ${configuration.logoMaxWidth};">
+  [#if configuration.overrideSiteConfig]
+  <a class="logo-link" href="${logoLink}" title="${logoTitle}">
+    <lfr-drop-zone></lfr-drop-zone>
+    [#if configuration.showSiteName]
+    <h2 aria-level="1" class="d-md-inline-flex d-none d-sm-none site-name" role="heading">
+      ${siteName}
+    </h2>
+    [/#if]
+  </a>
+  [#else]
+  <a class="logo-link" href="${logoLink}" title="${logoTitle}">
+    <img alt="${logoAltText}" class="mr-2" src="${logoUrl}" />
+    [#if configuration.showSiteName]
+    <h2 aria-level="1" class="d-md-inline-flex d-none d-sm-none site-name" role="heading">
+      ${siteName}
+    </h2>
+    [/#if]
+  </a>
+  [/#if]
+</div>

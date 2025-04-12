@@ -1,0 +1,77 @@
+{
+  "fieldSets": [
+    {
+      "fields": [
+        {
+          "name": "overrideSiteConfig",
+          "label": "override-site-config",
+          "type": "checkbox",
+          "defaultValue": false
+        }
+      ],
+      "label": "general"
+    },
+    {
+      "fields": [
+        {
+          "defaultValue": "120px",
+          "label": "logo-max-width",
+          "name": "logoMaxWidth",
+          "type": "length"
+        },
+        {
+          "defaultValue": "60px",
+          "label": "logo-max-height",
+          "name": "logoMaxHeight",
+          "type": "length"
+        },
+        {
+          "name": "logoAltText",
+          "label": "logo-alt-text",
+          "type": "text",
+          "dataType": "string"
+        },
+        {
+          "name": "logoTitle",
+          "label": "logo-title",
+          "type": "text",
+          "dataType": "string"
+        }
+      ],
+      "label": "logo"
+    },
+    {
+      "fields": [
+        {
+          "name": "showSiteName",
+          "label": "show-site-name",
+          "type": "checkbox",
+          "defaultValue": false
+        },
+        {
+          "name": "siteName",
+          "label": "site-name",
+          "type": "text",
+          "dataType": "string"
+        }
+      ],
+      "label": "site-name"
+    },
+    {
+      "fields": [
+        {
+          "name": "enableLink",
+          "label": "enable-link",
+          "type": "checkbox",
+          "defaultValue": true
+        },
+        {
+          "name": "linkUrl",
+          "label": "link-url",
+          "type": "url"
+        }
+      ],
+      "label": "link"
+    }
+  ]
+}

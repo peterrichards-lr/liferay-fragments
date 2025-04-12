@@ -50,6 +50,18 @@ if (root) {
     const isTop = configuration.menuStyle.indexOf('menu-top') > -1;
     const isInline = configuration.menuStyle.indexOf('menu-inline') > -1;
     const isSticky = configuration.menuStyle.indexOf('sticky') > -1;
+    const hamburgerZoneWrapper = fragmentElement.querySelector(`div.hamburger-zone-wrapper`);
+    const logoZone = hamburgerZoneWrapper.querySelector('.logo-zone');
+
+    if (logoZone) {
+      const hamburger = fragmentElement.querySelector('.hamburger');
+      if (logoZone.classList.contains('increase-hamburger')) {
+        hamburger.style.height = "var(--responsive-menu-logo-max-height, 35px)";
+      }
+      if (logoZone.classList.contains('logo-always')) {
+        hamburger.classList.add('logo-always');
+      }
+    }
 
     const updateSizes = () => {
       const rootHeight = `${root.clientHeight}px`;
@@ -77,9 +89,13 @@ if (root) {
 
       const hamburger = root.querySelector('.fragment-menu-icon');
       const menu = root.querySelector('.hamburger-zone-wrapper');
+      const logoZone = root.querySelector('.logo-zone');
       hamburger.addEventListener('click', () => {
         hamburger.parentElement.classList.toggle('open');
         menu.classList.toggle('open');
+        if (logoZone) {
+          logoZone.classList.toggle('open');
+        }
       });
 
       if (configuration.scrollBackToTop && !isSticky) {

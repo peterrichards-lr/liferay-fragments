@@ -1,10 +1,16 @@
-a.custom-logo {
-	color: inherit;
-	text-decoration: none;
+.site-logo. a.logo-link {
+  color: inherit;
+  text-decoration: none;
 }
 
-.custom-logo .site-name {
-	font-size: 1.375rem;
-	font-weight: 600;
-	line-height: 1.375rem;
+.site-logo .custom-logo .site-name,
+.site-logo .logo-link .site-name {
+  font-size: 1.375rem;
+  font-weight: 600;
+  line-height: 1.375rem;
+}
+
+.site-logo .logo-link img {
+  max-height: var(--logo-max-height, 60px);
+  max-width: var(--logo-max-width, 120px);
 }
