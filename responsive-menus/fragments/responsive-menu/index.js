@@ -1,3 +1,4 @@
+const debugEnabled = configuration.enableDebug;
 const productMenuWidth = 320;
 const root = fragmentElement.querySelector(`div.fragment-root`);
 
@@ -45,35 +46,37 @@ const portraitPhoneBreakpoint = (() => {
   return landscapePhoneBreakpoint;
 })();
 
+const debug = (...params) => {
+  if (debugEnabled) {
+    console.debug(params);
+  }
+}
+
+if (debugEnabled) {
+  debug('fontSizePixels', fontSizePixels);
+  debug('desktopBreakpoint', desktopBreakpoint);
+  debug('tabletBreakpoint', tabletBreakpoint);
+  debug('landscapePhoneBreakpoint', landscapePhoneBreakpoint);
+  debug('portraitPhoneBreakpoint', portraitPhoneBreakpoint);
+}
+
 if (root) {
   if (layoutMode !== 'preview') {
-    const isTop = configuration.menuStyle.indexOf('menu-top') > -1;
-    const isInline = configuration.menuStyle.indexOf('menu-inline') > -1;
     const isSticky = configuration.menuStyle.indexOf('sticky') > -1;
     const hamburgerZoneWrapper = fragmentElement.querySelector(`div.hamburger-zone-wrapper`);
     const logoZone = hamburgerZoneWrapper.querySelector('.logo-zone');
 
-    if (logoZone) {
-      const hamburger = fragmentElement.querySelector('.hamburger');
-      if (logoZone.classList.contains('increase-hamburger')) {
-        hamburger.style.height = "var(--responsive-menu-logo-max-height, 35px)";
-      }
-      if (logoZone.classList.contains('logo-always')) {
-        hamburger.classList.add('logo-always');
-      }
-    }
-
-    const updateSizes = () => {
-      const rootHeight = `${root.clientHeight}px`;
-      root.style.height = rootHeight;
-      root.setAttribute('data-height', rootHeight);
-    };
-
     if (layoutMode === "view") {
-      updateSizes();
-
       const parentDiv = fragmentElement.parentElement;
       parentDiv.classList.add('fragment-menu-holder');
+
+      const updateSizes = () => {
+				root.style.height = '';
+        const rootHeight = `${root.clientHeight}px`;
+        debug('rootHeight', rootHeight);
+        root.style.height = rootHeight;
+        root.setAttribute('data-height', rootHeight);
+      };
 
       const debounce = (callback, wait) => {
         let timeoutId = null;
@@ -85,13 +88,42 @@ if (root) {
         };
       }
 
+      updateSizes();
       window.addEventListener('resize', debounce(updateSizes, configuration.debounceDelay));
 
-      const hamburger = root.querySelector('.fragment-menu-icon');
+      debug('logoZone', logoZone);
+
+      if (logoZone) {
+        const hamburger = fragmentElement.querySelector('.hamburger');
+        const isAfterLandscapePhoneBreakpoint = window.innerWidth >= landscapePhoneBreakpoint;
+        const isLogoAlwaysDisplayed = logoZone.classList.contains('logo-always');
+        const isIncreaseHamburger = logoZone.classList.contains('increase-hamburger');
+
+        debug('isAfterLandscapePhoneBreakpoint', isAfterLandscapePhoneBreakpoint);
+        debug('isLogoAlwaysDisplayed', isLogoAlwaysDisplayed);
+        debug('isIncreaseHamburger', isIncreaseHamburger);
+
+        if (isIncreaseHamburger) {
+          if (isAfterLandscapePhoneBreakpoint) {
+            hamburger.style.height = '';
+          } else {
+            hamburger.style.height = "var(--responsive-menu-logo-max-height, 35px)";
+          }
+        }
+        if (isLogoAlwaysDisplayed) {
+          if (isAfterLandscapePhoneBreakpoint) {
+            hamburger.classList.remove('logo-always');
+          } else {
+            hamburger.classList.add('logo-always');
+          }
+        }
+        updateSizes();
+      }
+
+      const hamburgerIcon = root.querySelector('.fragment-menu-icon');
       const menu = root.querySelector('.hamburger-zone-wrapper');
-      const logoZone = root.querySelector('.logo-zone');
-      hamburger.addEventListener('click', () => {
-        hamburger.parentElement.classList.toggle('open');
+      hamburgerIcon.addEventListener('click', () => {
+        hamburgerIcon.parentElement.classList.toggle('open');
         menu.classList.toggle('open');
         if (logoZone) {
           logoZone.classList.toggle('open');

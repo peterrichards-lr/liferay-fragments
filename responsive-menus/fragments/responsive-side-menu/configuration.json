@@ -322,6 +322,12 @@
     {
       "fields": [
         {
+          "defaultValue": false,
+          "label": "enable-debug",
+          "name": "enableDebug",
+          "type": "checkbox"
+        },
+        {
           "name": "debounceDelay",
           "label": "debounce-delay",
           "type": "text",

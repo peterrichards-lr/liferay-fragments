@@ -1,3 +1,4 @@
+const debug = configuration.enableDebug;
 const productMenuWidth = 320;
 const root = fragmentElement.querySelector(`div.fragment-root`);
 
@@ -45,6 +46,14 @@ const portraitPhoneBreakpoint = (() => {
   return landscapePhoneBreakpoint;
 })();
 
+if (debug) {
+  console.debug('fontSizePixels', fontSizePixels);
+  console.debug('desktopBreakpoint', desktopBreakpoint);
+  console.debug('tabletBreakpoint', tabletBreakpoint);
+  console.debug('landscapePhoneBreakpoint', landscapePhoneBreakpoint);
+  console.debug('portraitPhoneBreakpoint', portraitPhoneBreakpoint);
+}
+
 if (root) {
   if (layoutMode !== 'preview') {
     const isLeft = configuration.menuStyle.indexOf('menu-left') > -1;
@@ -63,27 +72,22 @@ if (root) {
       }
     }
 
-    const updateSizes = () => {
-      const isAfterTabletBreakpoint = window.innerWidth >= tabletBreakpoint;
-
-      if (isAfterTabletBreakpoint) {
-        const hzwWidth = `${hamburgerZoneWrapper.offsetWidth}px`;
-        hamburgerZoneWrapper.setAttribute('data-width', hzwWidth);
-        hamburgerZoneWrapper.style.width = hzwWidth;
-        if (layoutMode !== 'edit') {
-          mainContent.style.marginRight = hzwWidth;
-        }
-      } else {
-        hamburgerZoneWrapper.style.width = '';
-        mainContent.style.marginRight = '';
-      }
-    };
-
     if (layoutMode === "view") {
-      updateSizes();
+      const updateSizes = () => {
+        const isAfterTabletBreakpoint = window.innerWidth >= tabletBreakpoint;
 
-      const parentDiv = fragmentElement.parentElement;
-      parentDiv.classList.add('fragment-menu-holder');
+        if (isAfterTabletBreakpoint) {
+          const hzwWidth = `${hamburgerZoneWrapper.offsetWidth}px`;
+          hamburgerZoneWrapper.setAttribute('data-width', hzwWidth);
+          hamburgerZoneWrapper.style.width = hzwWidth;
+          if (layoutMode !== 'edit') {
+            mainContent.style.marginRight = hzwWidth;
+          }
+        } else {
+          hamburgerZoneWrapper.style.width = '';
+          mainContent.style.marginRight = '';
+        }
+      };
 
       const debounce = (callback, wait) => {
         let timeoutId = null;
@@ -93,9 +97,14 @@ if (root) {
             callback(...args);
           }, wait);
         };
-      }
+      };
+
+      updateSizes();
 
       window.addEventListener('resize', debounce(updateSizes, configuration.debounceDelay));
+
+      const parentDiv = fragmentElement.parentElement;
+      parentDiv.classList.add('fragment-menu-holder');
 
       const hamburger = root.querySelector('.fragment-menu-icon');
       const menu = root.querySelector('.hamburger-zone-wrapper');
@@ -123,6 +132,7 @@ if (root) {
           observer.observe(sideMenu, { attributes: true });
         }
       }
+
       window.addEventListener('scroll', () => {
         if (document.body.scrollTop > 28 || document.documentElement.scrollTop > 28) {
           if (!parentDiv.classList.contains('top'))
