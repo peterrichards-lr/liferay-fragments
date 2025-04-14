@@ -332,7 +332,7 @@
           "label": "debounce-delay",
           "type": "text",
           "dataType": "int",
-          "defaultValue": "100"
+          "defaultValue": "0"
         }
       ],
       "label": "miscellaneous"

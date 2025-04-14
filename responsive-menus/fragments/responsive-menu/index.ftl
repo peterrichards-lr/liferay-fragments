@@ -162,7 +162,6 @@
   @media only screen and (max-width: ${configuration.tabletBreakpoint}) {
     .fragment-root .hamburger-zone-inner {
       background-color: ${configuration.tabletMenuBgColor};
-      overflow: hidden;
       transition: all .5s ease;
     }
 
@@ -221,12 +220,49 @@
       transition: all .5s ease;
     }
 
-    .fragment-root .hamburger-zone-inner .fragment-menu .lfr-nav-item .text-truncate {
-      text-overflow: inherit;
-      color: inherit;
+    .fragment-root .hamburger-zone-inner .fragment-menu .lfr-nav-item.dropdown {
+      padding-bottom: 0;
+      flex-direction: column;
     }
 
+    .fragment-root .hamburger-zone-inner .fragment-menu .lfr-nav-item.dropdown .dropdown-menu {
+      margin: 0;
+      color: var(--link-color);
+      box-shadow: unset;
+      position: relative;
+      z-index: auto;
+      min-width: 100%;
+      opacity: 0;
+    }
+
+    .fragment-root .hamburger-zone-inner .fragment-menu .lfr-nav-item.dropdown.open .dropdown-menu {
+      opacity: 1;
+      transition: all .5s ease;
+    }
+
+  [#if configuration.menuItemOverflow == 'clip']
+    .fragment-root .hamburger-zone-inner .fragment-menu .lfr-nav-item .text-truncate {
+      text-overflow: clip;
+    }
+
+  [#elseif configuration.menuItemOverflow == 'wrap']
+    .fragment-root .hamburger-zone-inner .fragment-menu .lfr-nav-item .text-truncate {
+      white-space: normal;
+    }
+
+  [#elseif configuration.menuItemOverflow == 'min-width']
+    .fragment-root .hamburger-zone-inner .fragment-menu .lfr-nav-item .text-truncate {
+      text-overflow: unset;
+      white-space: nowrap;
+    }
+
+  [/#if]
+
   [#if isInline]
+    .fragment-root .dropzone-menu {
+      width: 100%
+    }
+
     .fragment-root .dropzone-menu .fragment-menu .navbar-nav {
       flex-direction: column;
       width: 100%;

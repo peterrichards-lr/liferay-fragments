@@ -80,11 +80,11 @@
 
     [#if configuration.menuStyle?contains('menu-left')]
       #main-content {
-        margin-left: calc(${configuration.menuItemLogoMaxWidth} +4px);
+        margin-left: calc(${configuration.menuItemLogoMaxWidth} + 4px);
       }
 
       [#else]#main-content {
-        margin-right: calc(${configuration.menuItemLogoMaxWidth} +4px);
+        margin-right: calc(${configuration.menuItemLogoMaxWidth} + 4px);
       }
 
     [/#if]
@@ -138,6 +138,26 @@
     flex-direction: column;
     height: 100%;
     width: 100%;
+  }
+
+  .fragment-root .hamburger-zone-inner .fragment-menu .lfr-nav-item.dropdown {
+    padding-bottom: 0;
+    flex-direction: column;
+  }
+
+  .fragment-root .hamburger-zone-inner .fragment-menu .lfr-nav-item.dropdown .dropdown-menu {
+    margin: 0;
+    color: var(--link-color);
+    box-shadow: unset;
+    position: relative;
+    z-index: auto;
+    min-width: 100%;
+    opacity: 0;
+  }
+
+  .fragment-root .hamburger-zone-inner .fragment-menu .lfr-nav-item.dropdown.open .dropdown-menu {
+    opacity: 1;
+    transition: all .5s ease;
   }
 
   .fragment-root .dropzone-wrapper .dropzone .input-group {
@@ -247,13 +267,12 @@
   @media only screen and (max-width: ${configuration.tabletBreakpoint}) {
     .fragment-root .hamburger-zone-inner {
       background-color: ${configuration.tabletMenuBgColor};
-      max-width: calc(${configuration.menuItemLogoMaxWidth} +4px);
+      max-width: calc(${configuration.menuItemLogoMaxWidth} + 4px);
       overflow: hidden;
       transition: all .5s ease;
     }
 
     .fragment-root .hamburger-zone-inner .fragment-menu .lfr-nav-item .text-truncate {
-      text-overflow: unset;
       color: transparent;
       opacity: 1;
       transition: all .5s ease;

@@ -24,6 +24,33 @@
               }
             ]
           }
+        },
+        {
+          "dataType": "string",
+          "defaultValue": "ellipsis",
+          "label": "menu-item-overflow",
+          "name": "menuItemOverflow",
+          "type": "select",
+          "typeOptions": {
+            "validValues": [
+              {
+                "label": "Clip",
+                "value": "clip"
+              },
+              {
+                "label": "Ellipsis",
+                "value": "ellipsis"
+              },
+              {
+                "label": "Wrap",
+                "value": "wrap"
+              },
+              {
+                "label": "Minimum Width",
+                "value": "min-width"
+              }
+            ]
+          }
         }
       ],
       "label": "general"
@@ -423,7 +450,7 @@
           "label": "debounce-delay",
           "type": "text",
           "dataType": "int",
-          "defaultValue": "100"
+          "defaultValue": "0"
         }
       ],
       "label": "miscellaneous"

@@ -1,3 +1,5 @@
+// noinspection JSUnresolvedReference
+
 const debug = configuration.enableDebug;
 const productMenuWidth = 320;
 const root = fragmentElement.querySelector(`div.fragment-root`);
@@ -57,7 +59,6 @@ if (debug) {
 if (root) {
   if (layoutMode !== 'preview') {
     const isLeft = configuration.menuStyle.indexOf('menu-left') > -1;
-    const isRight = configuration.menuStyle.indexOf('menu-right') > -1;
     const hamburgerZoneWrapper = fragmentElement.querySelector(`div.hamburger-zone-wrapper`);
     const mainContent = document.getElementById('main-content');
     const logoZone = hamburgerZoneWrapper.querySelector('.logo-zone');
@@ -129,7 +130,7 @@ if (root) {
           };
           productMenuVisibilityHandler();
           const observer = new MutationObserver(productMenuVisibilityHandler);
-          observer.observe(sideMenu, { attributes: true });
+          observer.observe(sideMenu, {attributes: true});
         }
       }
 

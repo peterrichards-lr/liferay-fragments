@@ -1,6 +1,8 @@
+// noinspection JSUnresolvedReference
+
 const debugEnabled = configuration.enableDebug;
-const productMenuWidth = 320;
 const root = fragmentElement.querySelector(`div.fragment-root`);
+const useMinWidth = configuration.menuItemOverflow === 'min-width';
 
 const fontSizePixels = parseFloat(getComputedStyle(document.documentElement).fontSize);
 const convertRemToPixels = (rem) => rem * fontSizePixels;
@@ -67,15 +69,37 @@ if (root) {
     const logoZone = hamburgerZoneWrapper.querySelector('.logo-zone');
 
     if (layoutMode === "view") {
+      const hamburgerIcon = root.querySelector('.fragment-menu-icon');
+      const menu = root.querySelector('.hamburger-zone-wrapper');
+
       const parentDiv = fragmentElement.parentElement;
       parentDiv.classList.add('fragment-menu-holder');
 
       const updateSizes = () => {
         root.style.height = '';
+        root.style.width = '';
+
         const rootHeight = `${root.clientHeight}px`;
         debug('rootHeight', rootHeight);
         root.style.height = rootHeight;
         root.setAttribute('data-height', rootHeight);
+
+        const isAfterLandscapePhoneBreakpoint = window.innerWidth >= landscapePhoneBreakpoint;
+        if (isAfterLandscapePhoneBreakpoint) {
+          hamburgerIcon.parentElement.classList.remove('open');
+          menu.classList.remove('open');
+          if (logoZone) {
+            logoZone.classList.remove('open');
+          }
+        } else {
+          if (useMinWidth) {
+            const innerMenu = hamburgerZoneWrapper.querySelector('.fragment-menu');
+            const rootMinWidth = `${innerMenu.offsetWidth}px`;
+            debug('rootMinWidth', rootMinWidth);
+            root.style.minWidth = rootMinWidth;
+            root.setAttribute('data-min-width', rootMinWidth);
+          }
+        }
       };
 
       const debounce = (callback, wait) => {
@@ -120,8 +144,6 @@ if (root) {
         updateSizes();
       }
 
-      const hamburgerIcon = root.querySelector('.fragment-menu-icon');
-      const menu = root.querySelector('.hamburger-zone-wrapper');
       hamburgerIcon.addEventListener('click', () => {
         hamburgerIcon.parentElement.classList.toggle('open');
         menu.classList.toggle('open');
