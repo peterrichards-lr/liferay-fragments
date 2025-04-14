@@ -71,7 +71,7 @@ if (root) {
       parentDiv.classList.add('fragment-menu-holder');
 
       const updateSizes = () => {
-				root.style.height = '';
+        root.style.height = '';
         const rootHeight = `${root.clientHeight}px`;
         debug('rootHeight', rootHeight);
         root.style.height = rootHeight;

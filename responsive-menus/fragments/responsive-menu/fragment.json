@@ -1,7 +1,7 @@
 {
   "configurationPath": "configuration.json",
   "jsPath": "index.js",
-  "htmlPath": "index.html",
+  "htmlPath": "index.ftl",
   "cssPath": "index.css",
   "icon": "code",
   "name": "Responsive Menu",
