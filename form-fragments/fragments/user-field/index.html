@@ -1,0 +1,38 @@
+<div class="user-attribute-input">
+	<div class="form-group [#if  input.errorMessage?has_content]has-error[/#if] mb-0" id="${fragmentEntryLinkNamespace}-form-group">
+		<label data-localizable="${input.localizable?string('true', 'false')}" class="[#if !input.showLabel || !input.label?has_content]sr-only[/#if]" for="${fragmentEntryLinkNamespace}-user-attribute-input" id="${fragmentEntryLinkNamespace}-user-attribute-input-label">${htmlUtil.escape(input.label)} [#if input.readOnly](${languageUtil.get(locale, "read-only")})[#elseif input.required][@clay["icon"] className="reference-mark" symbol="asterisk" /][/#if]</label>
+
+		<div class="d-flex">
+			<input aria-describedby="${fragmentEntryLinkNamespace}-user-attribute-input-help-text" aria-labelledby="${fragmentEntryLinkNamespace}-user-attribute-input-label [#if  input.errorMessage?has_content]${fragmentEntryLinkNamespace}-user-attribute-input-error-message[/#if]" class="form-control" id="${fragmentEntryLinkNamespace}-user-attribute-input" name="${input.name}" placeholder="${configuration.placeholder}" [#if input.readOnly]readonly[/#if] ${input.required?then('required', '')} type="text" [#if input.value??]value="${input.value}"[/#if] />
+
+			[#if !input.localizable && input.attributes.unlocalizedFieldsMessage??]
+				<div aria-label="${input.attributes.unlocalizedFieldsMessage}" class="d-none lfr-portal-tooltip mt-1 pt-2" data-title="${input.attributes.unlocalizedFieldsMessage}" id="${fragmentEntryLinkNamespace}-unlocalized-info" tabindex="0">
+					[@clay["icon"] className="ml-2 mt-0 text-secondary" symbol="question-circle-full" /]
+				</div>
+			[/#if]
+		</div>
+
+		<p class="mt-1 text-secondary [#if input.errorMessage?has_content || !configuration.showCharactersCount]sr-only[/#if]" id="${fragmentEntryLinkNamespace}-length-info">
+			<span class="sr-only" id="${fragmentEntryLinkNamespace}-length-warning">
+				[@clay["icon"] symbol="info-circle" /]
+
+				<span aria-live="assertive" data-error-message="${languageUtil.get(locale, "maximum-number-of-characters-exceeded")}" data-valid-message="${languageUtil.get(locale, "current-text-length-is-valid")}" id="${fragmentEntryLinkNamespace}-length-warning-text"></span>:
+			</span>
+			<span id="${fragmentEntryLinkNamespace}-current-length">0</span> / [#if input.attributes.maxLength??]${input.attributes.maxLength}[/#if]
+		</p>
+
+		[#if input.errorMessage?has_content]
+			<p class="font-weight-semi-bold mt-1 text-danger" id="${fragmentEntryLinkNamespace}-user-attribute-input-error-message">
+				[@clay["icon"] symbol="info-circle" /]
+
+				<span>
+					${input.errorMessage}
+				</span>
+			</p>
+		[/#if]
+
+		[#if input.showHelpText && input.helpText?has_content]
+			<p class="mb-0 mt-1 text-secondary" id="${fragmentEntryLinkNamespace}-user-attribute-input-help-text">${htmlUtil.escape(input.helpText)}</p>
+		[/#if]
+	</div>
+</div>

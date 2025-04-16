@@ -1,0 +1,10 @@
+{
+  "configurationPath": "configuration.json",
+  "jsPath": "index.js",
+  "htmlPath": "index.html",
+  "cssPath": "index.css",
+  "icon": "forms",
+  "name": "User Attribute",
+  "typeOptions": {"fieldTypes": ["text"]},
+  "type": "input"
+}

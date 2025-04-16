@@ -1,0 +1,91 @@
+{
+	"fieldSets": [
+		{
+			"fields": [
+				{
+					"dataType": "string",
+					"defaultValue": "emailAddress",
+					"label": "user-attribute",
+					"name": "userAttribute",
+					"type": "select",
+					"typeOptions": {
+						"validValues": [
+							{
+								"label": "Full Name",
+								"value": "name"
+							},
+							{
+								"label": "Email",
+								"value": "emailAddress"
+							},
+							{
+								"label": "ERC",
+								"value": "externalReferenceCode"
+							},
+							{
+								"label": "Language",
+								"value": "languageDisplayName"
+							},
+							{
+								"label": "Job Title",
+								"value": "jobTitle"
+							},
+							{
+								"label": "Family Name",
+								"value": "faimlyName"
+							},
+							{
+								"label": "Given Name",
+								"value": "givenName"
+							},
+							{
+								"label": "Additional Name",
+								"value": "additionalName"
+							},
+							{
+								"label": "Screen Name",
+								"value": "alternativeName"
+							},
+							{
+								"label": "User Id",
+								"value": "id"
+							},
+							{
+								"label": "Language Id",
+								"value": "languageId"
+							},
+							{
+								"label": "Custom Field",
+								"value": "customField"
+							}
+						]
+					}
+				},
+				{
+					"dataType": "string",
+					"defaultValue": "",
+					"label": "custom-field",
+					"name": "customFieldName",
+					"type": "text"
+				},
+				{
+					"dataType": "string",
+					"defaultValue": "",
+					"label": "placeholder",
+					"localizable": true,
+					"name": "placeholder",
+					"type": "text"
+				},
+				{
+					"defaultValue": false,
+					"label": "show-characters-count",
+					"name": "showCharactersCount",
+					"type": "checkbox",
+					"typeOptions": {
+						"displayType": "toggle"
+					}
+				}
+			]
+		}
+	]
+}
