@@ -3,23 +3,23 @@
     {
       "fields": [
         {
-          "name": "menuStyle",
-          "label": "menu-style",
-          "type": "select",
           "dataType": "string",
+          "defaultValue": "menu-left sticky",
+          "label": "menu-style",
+          "name": "menuStyle",
+          "type": "select",
           "typeOptions": {
             "validValues": [
               {
-                "label": "Left",
+                "label": "left",
                 "value": "menu-left sticky"
               },
               {
-                "label": "Right",
+                "label": "right",
                 "value": "menu-right sticky"
               }
             ]
-          },
-          "defaultValue": "menu-left sticky"
+          }
         }
       ],
       "label": "general"
@@ -27,57 +27,57 @@
     {
       "fields": [
         {
-          "name": "dropzoneConfig",
-          "label": "dropzone-config",
-          "type": "select",
           "dataType": "string",
+          "defaultValue": "menu-only",
+          "label": "dropzone-config",
+          "name": "dropzoneConfig",
+          "type": "select",
           "typeOptions": {
             "validValues": [
               {
-                "label": "Menu Only",
+                "label": "dropzone-config-menu-only",
                 "value": "menu-only"
               },
               {
-                "label": "Upper",
+                "label": "dropzone-config-upper",
                 "value": "menu-upper-zone"
               },
               {
-                "label": "Lower",
+                "label": "dropzone-config-lower",
                 "value": "menu-lower-zone"
               },
               {
-                "label": "Both",
+                "label": "dropzone-config-both",
                 "value": "menu-both-zones"
               }
             ]
-          },
-          "defaultValue": "menu-only"
+          }
         },
         {
           "dataType": "string",
-          "defaultValue": "menu-zone",
+          "defaultValue": "dropzone-menu",
           "label": "dropzone-grower",
           "name": "dropzoneGrower",
           "type": "select",
           "typeOptions": {
             "validValues": [
               {
-                "label": "Menu",
+                "label": "menu",
                 "value": "dropzone-menu"
               },
               {
-                "label": "Upper",
+                "label": "dropzone-grower-upper",
                 "value": "dropzone-upper"
               },
               {
-                "label": "Lower",
+                "label": "dropzone-grower-lower",
                 "value": "dropzone-lower"
               }
             ]
           }
         },
         {
-          "defaultValue": "var(--spacer-2, .5rem)",
+          "defaultValue": "var(--spacer-2, 0.5rem)",
           "label": "dropzone-gap",
           "name": "dropzoneGap",
           "type": "length"
@@ -88,16 +88,16 @@
     {
       "fields": [
         {
-          "name": "menuItemLogoMaxWidth",
+          "defaultValue": "2rem",
           "label": "menu-item-logo-max-width",
-          "type": "length",
-          "defaultValue": "2rem"
+          "name": "menuItemLogoMaxWidth",
+          "type": "length"
         },
         {
-          "name": "menuItemLogoMaxHeight",
+          "defaultValue": "1rem",
           "label": "menu-item-logo-max-height",
-          "type": "length",
-          "defaultValue": "1rem"
+          "name": "menuItemLogoMaxHeight",
+          "type": "length"
         }
       ],
       "label": "logos"
@@ -105,16 +105,16 @@
     {
       "fields": [
         {
-          "name": "separator",
+          "defaultValue": false,
           "label": "separator",
-          "type": "checkbox",
-          "defaultValue": false
+          "name": "separator",
+          "type": "checkbox"
         },
         {
+          "defaultValue": "#bbb",
+          "label": "separator-color",
           "name": "menuItemSeparatorColor",
-          "label": "menu-item-separator-color",
-          "type": "colorPicker",
-          "defaultValue": "#bbb"
+          "type": "colorPicker"
         }
       ],
       "label": "separator"
@@ -122,81 +122,81 @@
     {
       "fields": [
         {
+          "defaultValue": "black",
+          "label": "color",
           "name": "menuHamburgerColor",
-          "label": "menu-hamburger-color",
-          "type": "colorPicker",
-          "defaultValue": "black"
+          "type": "colorPicker"
         },
         {
+          "defaultValue": "white",
+          "label": "background-color",
           "name": "menuHamburgerBgColor",
-          "label": "menu-hamburger-background-color",
-          "type": "colorPicker",
-          "defaultValue": "white"
+          "type": "colorPicker"
         },
         {
+          "defaultValue": "0px",
+          "label": "border-width",
           "name": "menuHamburgerBorderWidth",
-          "label": "menu-hamburger-border-width",
-          "type": "length",
-          "defaultValue": "0px"
+          "type": "length"
         },
         {
+          "defaultValue": "0px",
+          "label": "border-radius",
           "name": "menuHamburgerBorderRadius",
-          "label": "menu-hamburger-border-radius",
-          "type": "length",
-          "defaultValue": "0px"
+          "type": "length"
         },
         {
+          "defaultValue": "black",
+          "label": "border-color",
           "name": "menuHamburgerBorderColor",
-          "label": "menu-hamburger-border-color",
-          "type": "colorPicker",
-          "defaultValue": "black"
+          "type": "colorPicker"
         },
         {
-          "name": "menuHamburgerBorderStyle",
-          "label": "menu-hamburger-border-style",
-          "type": "select",
           "dataType": "string",
+          "defaultValue": "solid",
+          "label": "border-style",
+          "name": "menuHamburgerBorderStyle",
+          "type": "select",
           "typeOptions": {
             "validValues": [
               {
-                "label": "Dotted",
+                "label": "dotted",
                 "value": "dotted"
               },
               {
-                "label": "Dashed",
+                "label": "dashed",
                 "value": "dashed"
               },
               {
-                "label": "Solid",
+                "label": "solid",
                 "value": "solid"
               },
               {
-                "label": "Double",
+                "label": "double",
                 "value": "double"
               },
               {
-                "label": "Groove",
+                "label": "groove",
                 "value": "groove"
               },
               {
-                "label": "Ridge",
+                "label": "ridge",
                 "value": "ridge"
               },
               {
-                "label": "Inset",
+                "label": "inset",
                 "value": "inset"
               },
               {
-                "label": "Outset",
+                "label": "outset",
                 "value": "outset"
               },
               {
-                "label": "None",
+                "label": "none",
                 "value": "none"
               }
             ]
-          },
-          "defaultValue": "solid"
+          }
         }
       ],
       "label": "hamburger-menu"
@@ -204,70 +204,70 @@
     {
       "fields": [
         {
-          "name": "enablePortraitPhoneBreakpoint",
+          "defaultValue": true,
           "label": "enable-portrait-phone",
-          "type": "checkbox",
-          "defaultValue": true
+          "name": "enablePortraitPhoneBreakpoint",
+          "type": "checkbox"
         },
         {
-          "name": "portraitPhoneBreakpoint",
+          "defaultValue": "360px",
           "label": "portrait-phone",
-          "type": "length",
-          "defaultValue": "360px"
+          "name": "portraitPhoneBreakpoint",
+          "type": "length"
         },
         {
-          "name": "portraitPhoneMenuBgColor",
+          "defaultValue": "white",
           "label": "portrait-phone-menu-background-color",
-          "type": "colorPicker",
-          "defaultValue": "white"
+          "name": "portraitPhoneMenuBgColor",
+          "type": "colorPicker"
         },
         {
-          "name": "enableLandscapePhoneBreakpoint",
+          "defaultValue": true,
           "label": "enable-landscape-phone",
-          "type": "checkbox",
-          "defaultValue": true
+          "name": "enableLandscapePhoneBreakpoint",
+          "type": "checkbox"
         },
         {
-          "name": "landscapePhoneBreakpoint",
+          "defaultValue": "576px",
           "label": "landscape-phone",
-          "type": "length",
-          "defaultValue": "576px"
+          "name": "landscapePhoneBreakpoint",
+          "type": "length"
         },
         {
-          "name": "landscapePhoneMenuBgColor",
+          "defaultValue": "white",
           "label": "landscape-phone-menu-background-color",
-          "type": "colorPicker",
-          "defaultValue": "white"
+          "name": "landscapePhoneMenuBgColor",
+          "type": "colorPicker"
         },
         {
-          "name": "enableTabletBreakpoint",
+          "defaultValue": false,
           "label": "enable-tablet",
-          "type": "checkbox",
-          "defaultValue": false
+          "name": "enableTabletBreakpoint",
+          "type": "checkbox"
         },
         {
-          "name": "tabletBreakpoint",
+          "defaultValue": "768px",
           "label": "tablet",
-          "type": "length",
-          "defaultValue": "768px"
+          "name": "tabletBreakpoint",
+          "type": "length"
         },
         {
-          "name": "tabletMenuBgColor",
+          "defaultValue": "white",
           "label": "tablet-menu-background-color",
-          "type": "colorPicker",
-          "defaultValue": "white"
+          "name": "tabletMenuBgColor",
+          "type": "colorPicker"
         },
         {
-          "name": "desktopBreakpoint",
+          "defaultValue": "1305px",
           "label": "desktop",
-          "type": "length",
-          "defaultValue": "1305px"
+          "name": "desktopBreakpoint",
+          "type": "length"
         },
         {
-          "name": "desktopMenuBgColor",
+          "defaultValue": "transparent",
           "label": "desktop-menu-background-color",
-          "type": "colorPicker",
-          "defaultValue": "transparent"
+          "name": "desktopMenuBgColor",
+          "type": "colorPicker"
         }
       ],
       "label": "breakpoints"
@@ -275,46 +275,46 @@
     {
       "fields": [
         {
+          "defaultValue": false,
+          "label": "override-menu-colors",
           "name": "overrideMenuColors",
-          "label": "Override Menu Colors",
-          "type": "checkbox",
-          "defaultValue": false
+          "type": "checkbox"
         },
         {
+          "defaultValue": "var(--light, white)",
+          "label": "color",
           "name": "menuItemColor",
-          "label": "menu-item-color",
-          "type": "colorPicker",
-          "defaultValue": "var(--light, white)"
+          "type": "colorPicker"
         },
         {
+          "defaultValue": "var(--black, #000)",
+          "label": "background-color",
           "name": "menuItemBgColor",
-          "label": "menu-item-background-color",
-          "type": "colorPicker",
-          "defaultValue": "var(--black, #000)"
+          "type": "colorPicker"
         },
         {
+          "defaultValue": "var(--light, white)",
+          "label": "hover-color",
           "name": "menuItemHoverColor",
-          "label": "menu-item-hover-color",
-          "type": "colorPicker",
-          "defaultValue": "var(--light, white)"
+          "type": "colorPicker"
         },
         {
+          "defaultValue": "var(--dark, #111)",
+          "label": "background-color",
           "name": "menuItemHoverBgColor",
-          "label": "menu-item-hover-background-color",
-          "type": "colorPicker",
-          "defaultValue": "var(--dark, #111)"
+          "type": "colorPicker"
         },
         {
+          "defaultValue": "var(--light, white)",
+          "label": "selected-item-color",
           "name": "menuItemSelectedColor",
-          "label": "menu-item-selected-color",
-          "type": "colorPicker",
-          "defaultValue": "var(--light, white)"
+          "type": "colorPicker"
         },
         {
+          "defaultValue": "var(--primary, #0B5FFF)",
+          "label": "selected-item-background-color",
           "name": "menuItemSelectedBgColor",
-          "label": "menu-item-selected-background-color",
-          "type": "colorPicker",
-          "defaultValue": "var(--primary, #0B5FFF)"
+          "type": "colorPicker"
         }
       ],
       "label": "menu-colors"
@@ -323,16 +323,16 @@
       "fields": [
         {
           "defaultValue": false,
-          "label": "enable-debug",
+          "label": "debug-enabled",
           "name": "enableDebug",
           "type": "checkbox"
         },
         {
-          "name": "debounceDelay",
-          "label": "debounce-delay",
-          "type": "text",
           "dataType": "int",
-          "defaultValue": "0"
+          "defaultValue": "0",
+          "label": "debounce-delay",
+          "name": "debounceDelay",
+          "type": "text"
         }
       ],
       "label": "miscellaneous"

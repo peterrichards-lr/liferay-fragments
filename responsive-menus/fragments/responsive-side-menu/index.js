@@ -1,147 +1,154 @@
-// noinspection JSUnresolvedReference
+(function () {
+  const fontSizePixels = parseFloat(
+    getComputedStyle(document.documentElement).fontSize
+  );
+  const parseBreakpoint = (value, fallback = 0) => {
+    if (!value) return fallback;
+    const num = parseFloat(value);
+    return value.includes('rem') ? num * fontSizePixels : num;
+  };
 
-const debug = configuration.enableDebug;
-const productMenuWidth = 320;
-const root = fragmentElement.querySelector(`div.fragment-root`);
+  // Configuration & constants
+  const {
+    enableDebug: debugEnabled,
+    desktopBreakpoint: desktopBP,
+    enableTabletBreakpoint,
+    tabletBreakpoint: tabletBP,
+    enableLandscapePhoneBreakpoint,
+    landscapePhoneBreakpoint: landscapePhoneBP,
+    enablePortraitPhoneBreakpoint,
+    portraitPhoneBreakpoint: portraitPhoneBP,
+    menuStyle,
+    debounceDelay = 0,
+  } = configuration;
 
-const fontSizePixels = parseFloat(getComputedStyle(document.documentElement).fontSize);
-const convertRemToPixels = (rem) => rem * fontSizePixels;
-const desktopBreakpoint = (() => {
-  if (configuration.desktopBreakpoint.indexOf('rem') > -1) {
-    const rem = parseFloat(configuration.desktopBreakpoint.replace('rem', ''));
-    return convertRemToPixels(rem);
-  } else if (configuration.desktopBreakpoint.indexOf('px') > -1) {
-    return parseFloat(configuration.desktopBreakpoint.replace('px', ''));
+  const productMenuWidth = 320;
+  const root = fragmentElement.querySelector('.fragment-root');
+
+  // Debug logger with context
+  const debug = (label, ...args) => {
+    if (debugEnabled) console.debug(`[Menu] ${label}:`, ...args);
+  };
+
+  // Compute breakpoints
+  const desktopBreakpoint = parseBreakpoint(desktopBP);
+  const tabletBreakpoint = enableTabletBreakpoint
+    ? parseBreakpoint(tabletBP, desktopBreakpoint)
+    : desktopBreakpoint;
+  const landscapePhoneBreakpoint = enableLandscapePhoneBreakpoint
+    ? parseBreakpoint(landscapePhoneBP, tabletBreakpoint)
+    : tabletBreakpoint;
+  const portraitPhoneBreakpoint = enablePortraitPhoneBreakpoint
+    ? parseBreakpoint(portraitPhoneBP, landscapePhoneBreakpoint)
+    : landscapePhoneBreakpoint;
+
+  debug('fontSizePixels', fontSizePixels);
+  debug('desktopBreakpoint', desktopBreakpoint);
+  debug('tabletBreakpoint', tabletBreakpoint);
+  debug('landscapePhoneBreakpoint', landscapePhoneBreakpoint);
+  debug('portraitPhoneBreakpoint', portraitPhoneBreakpoint);
+
+  // Early exit if there's no root or we're in preview mode
+  if (!root || layoutMode === 'preview') {
+    debug('init', 'No root element or in preview mode – exiting.');
+    return;
   }
-})();
-const tabletBreakpoint = (() => {
-  if (configuration.enableTabletBreakpoint) {
-    if (configuration.tabletBreakpoint.indexOf('rem') > -1) {
-      const rem = parseFloat(configuration.tabletBreakpoint.replace('rem', ''));
-      return convertRemToPixels(rem);
-    } else if (configuration.tabletBreakpoint.indexOf('px') > -1) {
-      return parseFloat(configuration.tabletBreakpoint.replace('px', ''));
+
+  // Common elements
+  const hamburgerZoneWrapper = root.querySelector(
+    '.hamburger-zone-wrapper'
+  );
+  const hamburger = root.querySelector('.hamburger');
+  const logoZone = hamburgerZoneWrapper?.querySelector('.logo-zone');
+  const mainContent = document.getElementById('main-content');
+  const isLeft = menuStyle.includes('menu-left');
+
+  // Logo / hamburger modifiers
+  if (logoZone) {
+    const width = window.innerWidth;
+    const afterLP = width >= landscapePhoneBreakpoint;
+    const always = logoZone.classList.contains('logo-always');
+    const enlarged = logoZone.classList.contains('increase-hamburger');
+
+    debug('logoZone state', { afterLP, always, enlarged });
+
+    if (enlarged) {
+      hamburger.classList.add('increase');
+      mainContent.classList.add('increase-hamburger');
     }
+    if (always) hamburger.classList.add('logo-always');
   }
-  return desktopBreakpoint;
-})();
-const landscapePhoneBreakpoint = (() => {
-  if (configuration.enableLandscapePhoneBreakpoint) {
-    if (configuration.landscapePhoneBreakpoint.indexOf('rem') > -1) {
-      const rem = parseFloat(configuration.landscapePhoneBreakpoint.replace('rem', ''));
-      return convertRemToPixels(rem);
-    } else if (configuration.landscapePhoneBreakpoint.indexOf('px') > -1) {
-      return parseFloat(configuration.landscapePhoneBreakpoint.replace('px', ''));
-    }
-  }
-  return tabletBreakpoint;
-})();
-const portraitPhoneBreakpoint = (() => {
-  if (configuration.enablePortraitPhoneBreakpoint) {
-    if (configuration.portraitPhoneBreakpoint.indexOf('rem') > -1) {
-      const rem = parseFloat(configuration.portraitPhoneBreakpoint.replace('rem', ''));
-      return convertRemToPixels(rem);
-    } else if (configuration.portraitPhoneBreakpoint.indexOf('px') > -1) {
-      return parseFloat(configuration.portraitPhoneBreakpoint.replace('px', ''));
-    }
-  }
-  return landscapePhoneBreakpoint;
-})();
 
-if (debug) {
-  console.debug('fontSizePixels', fontSizePixels);
-  console.debug('desktopBreakpoint', desktopBreakpoint);
-  console.debug('tabletBreakpoint', tabletBreakpoint);
-  console.debug('landscapePhoneBreakpoint', landscapePhoneBreakpoint);
-  console.debug('portraitPhoneBreakpoint', portraitPhoneBreakpoint);
-}
+  // Only in "view" mode do we wire up menu behaviours
+  if (layoutMode === 'view') {
+    const holder = fragmentElement.parentElement;
+    holder.classList.add('fragment-menu-holder');
 
-if (root) {
-  if (layoutMode !== 'preview') {
-    const isLeft = configuration.menuStyle.indexOf('menu-left') > -1;
-    const hamburgerZoneWrapper = fragmentElement.querySelector(`div.hamburger-zone-wrapper`);
-    const mainContent = document.getElementById('main-content');
-    const logoZone = hamburgerZoneWrapper.querySelector('.logo-zone');
-
-    if (logoZone) {
-      const hamburger = fragmentElement.querySelector('.hamburger');
-      if (logoZone.classList.contains('increase-hamburger')) {
-        hamburger.style.height = "var(--responsive-menu-logo-max-height, 35px)";
-      }
-      if (logoZone.classList.contains('logo-always')) {
-        hamburger.classList.add('logo-always');
-      }
-    }
-
-    if (layoutMode === "view") {
-      const updateSizes = () => {
-        const isAfterTabletBreakpoint = window.innerWidth >= tabletBreakpoint;
-
-        if (isAfterTabletBreakpoint) {
-          const hzwWidth = `${hamburgerZoneWrapper.offsetWidth}px`;
-          hamburgerZoneWrapper.setAttribute('data-width', hzwWidth);
-          hamburgerZoneWrapper.style.width = hzwWidth;
-          if (layoutMode !== 'edit') {
-            mainContent.style.marginRight = hzwWidth;
-          }
-        } else {
-          hamburgerZoneWrapper.style.width = '';
-          mainContent.style.marginRight = '';
+    // Resize handler
+    const updateSizes = () => {
+      const w = window.innerWidth;
+      if (w >= tabletBreakpoint) {
+        const wPx = `${hamburgerZoneWrapper.offsetWidth}px`;
+        hamburgerZoneWrapper.dataset.width = wPx;
+        hamburgerZoneWrapper.style.width = wPx;
+        if (layoutMode !== 'edit') {
+          mainContent.style.marginRight = wPx;
         }
-      };
+      } else {
+        hamburgerZoneWrapper.style.width = '';
+        mainContent.style.marginRight = '';
+      }
+    };
 
-      const debounce = (callback, wait) => {
-        let timeoutId = null;
-        return (...args) => {
-          window.clearTimeout(timeoutId);
-          timeoutId = window.setTimeout(() => {
-            callback(...args);
-          }, wait);
+    const debounce = (fn, delay) => {
+      let id;
+      return (...args) => {
+        clearTimeout(id);
+        id = setTimeout(() => fn(...args), delay);
+      };
+    };
+
+    updateSizes();
+    window.addEventListener(
+      'resize',
+      debounce(updateSizes, debounceDelay)
+    );
+
+    // Hamburger toggle
+    root
+      .querySelector('.fragment-menu-icon')
+      .addEventListener('click', () => {
+        [hamburger.parentElement, hamburgerZoneWrapper, logoZone].forEach(
+          el => el?.classList.toggle('open')
+        );
+      });
+
+    // Side (product) menu offset
+    if (isLeft) {
+      const sideMenu = document.body.querySelector(
+        'nav.lfr-product-menu-panel'
+      );
+      if (sideMenu) {
+        const onProductToggle = () => {
+          const width = sideMenu.clientWidth;
+          const isOpen = sideMenu.classList.contains('open');
+          const offsetLeft =
+            window.innerWidth <= productMenuWidth ? 0 : width;
+          holder.style.left = isOpen ? `${offsetLeft}px` : '0';
         };
-      };
 
-      updateSizes();
-
-      window.addEventListener('resize', debounce(updateSizes, configuration.debounceDelay));
-
-      const parentDiv = fragmentElement.parentElement;
-      parentDiv.classList.add('fragment-menu-holder');
-
-      const hamburger = root.querySelector('.fragment-menu-icon');
-      const menu = root.querySelector('.hamburger-zone-wrapper');
-      const logoZone = root.querySelector('.logo-zone');
-      hamburger.addEventListener('click', () => {
-        hamburger.parentElement.classList.toggle('open');
-        menu.classList.toggle('open');
-        if (logoZone) {
-          logoZone.classList.toggle('open');
-        }
-      });
-
-      if (isLeft) {
-        const sideMenu = document.body.querySelector('nav.lfr-product-menu-panel');
-
-        if (sideMenu) {
-          const productMenuVisibilityHandler = () => {
-            const sideMenuWidth = sideMenu.clientWidth;
-            const isProductMenuOpen = sideMenu.classList.contains('open');
-            const left = window.innerWidth <= productMenuWidth ? 0 : sideMenuWidth;
-            parentDiv.style.left = isProductMenuOpen ? `${left}px` : '0';
-          };
-          productMenuVisibilityHandler();
-          const observer = new MutationObserver(productMenuVisibilityHandler);
-          observer.observe(sideMenu, {attributes: true});
-        }
+        onProductToggle();
+        new MutationObserver(onProductToggle).observe(sideMenu, {
+          attributes: true,
+        });
       }
-
-      window.addEventListener('scroll', () => {
-        if (document.body.scrollTop > 28 || document.documentElement.scrollTop > 28) {
-          if (!parentDiv.classList.contains('top'))
-            parentDiv.classList.add('top');
-        } else {
-          parentDiv.classList.remove('top');
-        }
-      });
     }
+
+    // Scroll handler: add .top once scrolled past 28px
+    const onScroll = () => {
+      const scrollY = window.scrollY || document.documentElement.scrollTop;
+      holder.classList.toggle('top', scrollY > 28);
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
   }
-}
+})();

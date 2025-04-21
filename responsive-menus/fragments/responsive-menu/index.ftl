@@ -1,50 +1,132 @@
 [#--noinspection CssUnusedSymbol,CssUnresolvedCustomProperty,CssInvalidPropertyValue--]
-[#assign menuClasses="fragment-menu-" + fragmentEntryLinkNamespace + " fragment-menu " + configuration.menuStyle /]
-[#if configuration.separator]
-    [#assign menuClasses +=" separator" /]
-[/#if]
-[#assign menuHeaderClass="fragment-menu-editor-padding" /]
-[#if configuration.menuHeader]
-    [#assign menuHeaderClass +=" show" /]
-[/#if]
-[#assign dropzoneConfig = configuration.dropzoneConfig /]
-[#assign dropzoneCount = 1 /]
-[#if configuration.dropzoneConfig?contains('left') || configuration.dropzoneConfig?contains('right')]
-    [#assign dropzoneCount += 1 /]
-[#elseif configuration.dropzoneConfig?contains('both')]
-    [#assign dropzoneCount += 2 /]
-[/#if]
+[#assign
+menuClassesList = [
+"fragment-menu-${fragmentEntryLinkNamespace}",
+"fragment-menu",
+configuration.menuStyle,
+(configuration.separator?then('separator',''))
+]?filter(x -> x?has_content),
+menuClasses = menuClassesList?join(' '),
+
+menuHeaderClass = 'fragment-menu-editor-padding' + (configuration.menuHeader?then(' show','')),
+
+dropzoneConfig = configuration.dropzoneConfig,
+
+isInline = configuration.menuStyle?contains('inline'),
+isSticky = configuration.menuStyle?contains('sticky'),
+
+menuId = 'nav-' + fragmentEntryLinkNamespace,
+
+langDir = (locale?starts_with("ar") || locale?starts_with("he"))?then("rtl","ltr"),
+htmlLang = locale?replace("_", "-")
+/]
+
 [#if configuration.menuStyle?contains('menu-inline')]
     [#assign dropzoneConfig = 'menu-only' /]
-    [#assign dropzoneCount = 1 /]
 [/#if]
-[#assign isInline = configuration.menuStyle?contains('inline') /]
-[#assign isSticky = configuration.menuStyle?contains('sticky') /]
-[#if isSticky]
-  <style>
-    .lfr-layout-structure-item-responsive-menu {
-      position: -webkit-sticky;
-      position: sticky;
-      top: 0;
-      z-index: 1;
-    }
 
-    body.has-control-menu .lfr-layout-structure-item-responsive-menu {
-      top: var(--control-menu-container-height, 0);
-    }
+[#assign zoneMap = {
+'menu-only': ['menu'],
+'menu-left-zone': ['left','menu'],
+'menu-right-zone': ['menu','right'],
+'menu-both-zones': ['left','menu','right']
+},
+zones = zoneMap[dropzoneConfig]!['menu'],
+dropzoneCount = zones?size
+/]
 
-    [#if configuration.enableLandscapePhoneBreakpoint]
-    @media only screen and (max-width: ${configuration.landscapePhoneBreakpoint}) {
-      body.has-control-menu .lfr-layout-structure-item-responsive-menu.top {
-        top: 0;
-        transition: all .5s ease;
-      }
-    }
+[#macro ScrollToTopButton icon title]
+  <button class="fragment-scroll-to-top" title="${title}" aria-label="${title}">
+      [@clay["icon"] symbol="${icon}" /]
+  </button>
+[/#macro]
 
-    [/#if]
-  </style>
-[/#if]
+[#macro renderHamburgerIcon]
+  <div class="hamburger">
+    <a href="javascript:void(0);" class="fragment-menu-icon" aria-label="Toggle menu" role="button">
+      <span></span>
+      <span></span>
+      <span></span>
+    </a>
+  </div>
+[/#macro]
+
+[#macro renderDropzone zone]
+  <div class="dropzone dropzone-${zone}" role="region" aria-label="${zone?cap_first} zone">
+      [#if zone == 'menu']
+        <nav class="${menuClasses}" role="menu" aria-orientation="vertical">
+          <lfr-drop-zone></lfr-drop-zone>
+        </nav>
+      [#else]
+        <section role="region" aria-label="${zone?cap_first} drop zone">
+          <lfr-drop-zone></lfr-drop-zone>
+        </section>
+      [/#if]
+  </div>
+[/#macro]
+
+[#macro renderDropzones zones]
+  <div id="${menuId}" class="fragment-root-${fragmentEntryLinkNamespace} fragment-root" role="navigation"
+       aria-label="Responsive Menu" lang="${htmlLang}" dir="${langDir}">
+    <div class="dropzone-wrapper dropzone-wrapper-${configuration.dropzoneConfig}">
+      <div class="${menuHeaderClass}">Responsive Menu</div>
+        [@renderHamburgerIcon /]
+      <div class="hamburger-zone-wrapper">
+        <div class="hamburger-zone-inner">
+            [#list zones as zone]
+                [@renderDropzone zone /]
+            [/#list]
+        </div>
+      </div>
+    </div>
+      [#if configuration.scrollBackToTop && !isSticky]
+          [@ScrollToTopButton icon=configuration.scrollBackToTopIcon title="Scroll to top" /]
+      [/#if]
+  </div>
+[/#macro]
+
 <style scoped>
+  :root {
+    --responsive-menu-zone-count: ${dropzoneCount};
+    --responsive-menu-zone-gap: ${configuration.dropzoneGap};
+    --responsive-menu-zone-flex-grow: ${configuration.dropzoneGrower};
+    --responsive-menu-item-logo-max-width: ${configuration.menuItemLogoMaxWidth};
+    --responsive-menu-item-logo-max-height: ${configuration.menuItemLogoMaxHeight};
+    --responsive-menu-breakpoint-desktop-menu-background-color: ${configuration.desktopMenuBgColor};
+    --responsive-menu-breakpoint-tablet-enabled: ${configuration.enableTabletBreakpoint?c};
+    --responsive-menu-breakpoint-tablet-width: ${configuration.tabletBreakpoint};
+    --responsive-menu-breakpoint-tablet-menu-background-color: ${configuration.tabletMenuBgColor};
+    --responsive-menu-breakpoint-phone-landscape-enabled: ${configuration.enableLandscapePhoneBreakpoint?c};
+    --responsive-menu-breakpoint-phone-landscape-width: ${configuration.landscapePhoneBreakpoint};
+    --responsive-menu-breakpoint-phone-landscape-menu-background-color: ${configuration.landscapePhoneMenuBgColor};
+    --responsive-menu-breakpoint-phone-portrait-enabled: ${configuration.enablePortraitPhoneBreakpoint?c};
+    --responsive-menu-breakpoint-phone-portrait-width: ${configuration.portraitPhoneBreakpoint};
+    --responsive-menu-breakpoint-phone-portrait-menu-background-color: ${configuration.portraitPhoneMenuBgColor};
+  }
+
+  [#if isSticky]
+  .lfr-layout-structure-item-responsive-menu {
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0;
+    z-index: 1;
+  }
+
+  body.has-control-menu .lfr-layout-structure-item-responsive-menu {
+    top: var(--control-menu-container-height, 0);
+  }
+
+  [#if configuration.enableLandscapePhoneBreakpoint]
+  @media only screen and (max-width: ${configuration.landscapePhoneBreakpoint}) {
+    body.has-control-menu .lfr-layout-structure-item-responsive-menu.top {
+      top: 0;
+      transition: all 0.5s ease;
+    }
+  }
+
+  [/#if]
+  [/#if]
+
   body.has-edit-mode-menu .page-editor .fragment-menu-editor-padding.show {
     height: 26px;
     min-height: 26px;
@@ -89,7 +171,7 @@
     visibility: visible;
     overflow: visible;
     opacity: 1;
-    transition: all .5s ease;
+    transition: all 0.5s ease;
   }
 
   .fragment-root .dropzone-lower .portlet-header,
@@ -105,8 +187,8 @@
   }
 
   .fragment-root .dropzone-menu .fragment-menu .nav-item .layout-logo {
-    max-height: ${configuration.menuItemLogoMaxHeight};
-    max-width: ${configuration.menuItemLogoMaxWidth};
+    max-height: var(--responsive-menu-item-logo-max-height, 1rem);
+    max-width: var(--responsive-menu-item-logo-max-width, 2rem);
   }
 
   .fragment-root .dropzone-menu .fragment-menu .lfr-nav-item a {
@@ -114,17 +196,17 @@
   }
 
   .fragment-root .hamburger-zone-inner {
-    background-color: ${configuration.desktopMenuBgColor};
+    background-color: var(--responsive-menu-breakpoint-desktop-menu-background-color, transparent);
     display: flex;
     flex-direction: row;
-    transition: ease all .5s;
+    transition: ease all 0.5s;
     max-width: 100%;
     align-items: ${configuration.dropzoneAlignItems};
     gap: ${configuration.dropzoneGap};
   }
 
   .fragment-root .dropzone .zone-layout > div {
-    gap: ${configuration.dropzoneGap};
+    gap: var(--responsive-menu-zone-gap, 0.5rem);
   }
 
   .fragment-root .hamburger-zone-inner .${configuration.dropzoneGrower} {
@@ -161,8 +243,8 @@
   [#if configuration.enableTabletBreakpoint]
   @media only screen and (max-width: ${configuration.tabletBreakpoint}) {
     .fragment-root .hamburger-zone-inner {
-      background-color: ${configuration.tabletMenuBgColor};
-      transition: all .5s ease;
+      background-color: var( --responsive-menu-breakpoint-tablet-menu-background-color, transparent);
+      transition: all 0.5s ease;
     }
 
   [#if configuration.menuStyle?contains('menu-top')]
@@ -202,7 +284,7 @@
     }
 
     .fragment-root .hamburger-zone-wrapper {
-      background-color: ${configuration.landscapePhoneMenuBgColor};
+      background-color: var(--responsive-menu-breakpoint-phone-landscape-menu-background-color, transparent);
       display: grid;
       grid-template-rows: 0fr;
       transition: grid-template-rows 0.5s ease-out;
@@ -217,7 +299,7 @@
       flex-direction: column;
       max-width: none;
       overflow: hidden;
-      transition: all .5s ease;
+      transition: all 0.5s ease;
     }
 
     .fragment-root .hamburger-zone-inner .fragment-menu .lfr-nav-item.dropdown {
@@ -237,7 +319,7 @@
 
     .fragment-root .hamburger-zone-inner .fragment-menu .lfr-nav-item.dropdown.open .dropdown-menu {
       opacity: 1;
-      transition: all .5s ease;
+      transition: all 0.5s ease;
     }
 
   [#if configuration.menuItemOverflow == 'clip']
@@ -296,8 +378,12 @@
       flex-direction: row;
       align-items: center;
       justify-content: start;
-      transition: all .5s ease;
+      transition: all 0.5s ease;
       width: 100%;
+    }
+
+    .fragment-root .hamburger.increase {
+      height: var(--responsive-menu-logo-max-height, 35px);
     }
 
     .fragment-root .hamburger.open {
@@ -331,7 +417,7 @@
       visibility: visible;
       overflow: visible;
       opacity: 1;
-      transition: all .5s ease;
+      transition: all 0.5s ease;
       min-width: 100%;
     }
 
@@ -342,7 +428,7 @@
       right: 0;
       visibility: hidden;
       opacity: 0;
-      transition: all .5s ease;
+      transition: all 0.5s ease;
     }
 
     .fragment-root .dropzone .logo-zone.reduce-logo img {
@@ -365,7 +451,7 @@
   [#if configuration.enablePortraitPhoneBreakpoint]
   @media only screen and (max-width: ${configuration.portraitPhoneBreakpoint}) {
     .fragment-root .hamburger-zone-wrapper {
-      background-color: ${configuration.portraitPhoneMenuBgColor};
+      background-color: var(--responsive-menu-breakpoint-phone-portrait-menu-background-color, transparent);
     }
   }
 
@@ -394,9 +480,19 @@
 
   [/#if]
 
-  body.has-edit-mode-menu .dropzone {
+  body.has-edit-mode-menu .dropzone:has(.page-editor__no-fragments-state) {
     flex-grow: 1;
   }
+
+  body.has-control-menu .master-page .hamburger-zone-inner .${configuration.dropzoneGrower}:not(:has(.page-editor__no-fragments-state)),
+  body.has-control-menu .page-editor .hamburger-zone-inner .${configuration.dropzoneGrower}:not(:has(.page-editor__no-fragments-state)) {
+    flex-grow: 1;
+  }
+
+  body.has-edit-mode-menu .dropzone .page-editor__no-fragments-state {
+    padding: 1vh 12% !important;
+  }
+
 
   body.has-edit-mode-menu .dropzone .page-editor__no-fragments-state:first-child:before {
     color: #6b6c7e;
@@ -418,111 +514,5 @@
     content: "Right Zone";
   }
 </style>
-<div class="fragment-root-${fragmentEntryLinkNamespace} fragment-root">
-    [#if dropzoneConfig=='menu-only']
-      <div class="dropzone-wrapper dropzone-wrapper-menu-only">
-        <div class="${menuHeaderClass}">Responsive Menu</div>
-        <div class="hamburger">
-          <a href="javascript:void(0);" class="fragment-menu-icon">
-            <span></span>
-            <span></span>
-            <span></span>
-          </a>
-        </div>
-        <div class="hamburger-zone-wrapper">
-          <div class="hamburger-zone-inner">
-            <div class="dropzone dropzone-menu">
-              <div>
-                <div class="${menuClasses}">
-                  <lfr-drop-zone></lfr-drop-zone>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    [#elseif dropzoneConfig=='menu-left-zone']
-      <div class="dropzone-wrapper dropzone-wrapper-left-zone">
-        <div class="${menuHeaderClass}">Responsive Menu</div>
-        <div class="hamburger">
-          <a href="javascript:void(0);" class="fragment-menu-icon">
-            <span></span>
-            <span></span>
-            <span></span>
-          </a>
-        </div>
-        <div class="hamburger-zone-wrapper">
-          <div class="hamburger-zone-inner">
-            <div class="dropzone dropzone-left">
-              <lfr-drop-zone></lfr-drop-zone>
-            </div>
-            <div class="dropzone dropzone-menu">
-              <div>
-                <div class="${menuClasses}">
-                  <lfr-drop-zone></lfr-drop-zone>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    [#elseif dropzoneConfig=='menu-right-zone']
-      <div class="dropzone-wrapper dropzone-wrapper-right-zone">
-        <div class="${menuHeaderClass}">Responsive Menu</div>
-        <div class="hamburger">
-          <a href="javascript:void(0);" class="fragment-menu-icon">
-            <span></span>
-            <span></span>
-            <span></span>
-          </a>
-        </div>
-        <div class="hamburger-zone-wrapper">
-          <div class="hamburger-zone-inner">
-            <div class="dropzone dropzone-menu">
-              <div>
-                <div class="${menuClasses}">
-                  <lfr-drop-zone></lfr-drop-zone>
-                </div>
-              </div>
-            </div>
-            <div class="dropzone dropzone-right">
-              <lfr-drop-zone></lfr-drop-zone>
-            </div>
-          </div>
-        </div>
-      </div>
-    [#elseif dropzoneConfig=='menu-both-zones']
-      <div class="dropzone-wrapper dropzone-wrapper-menu-both-zones">
-        <div class="${menuHeaderClass}">Responsive Menu</div>
-        <div class="hamburger">
-          <a href="javascript:void(0);" class="fragment-menu-icon">
-            <span></span>
-            <span></span>
-            <span></span>
-          </a>
-        </div>
-        <div class="hamburger-zone-wrapper">
-          <div class="hamburger-zone-inner">
-            <div class="dropzone dropzone-left">
-              <lfr-drop-zone></lfr-drop-zone>
-            </div>
-            <div class="dropzone dropzone-menu">
-              <div>
-                <div class="${menuClasses}">
-                  <lfr-drop-zone></lfr-drop-zone>
-                </div>
-              </div>
-            </div>
-            <div class="dropzone dropzone-right">
-              <lfr-drop-zone></lfr-drop-zone>
-            </div>
-          </div>
-        </div>
-      </div>
-    [/#if]
-    [#if configuration.scrollBackToTop && !isSticky]
-      <button class="fragment-scroll-to-top" title="Go to top">
-          [@clay["icon"] symbol="${configuration.scrollBackToTopIcon}" /]
-      </button>
-    [/#if]
-</div>
+
+[@renderDropzones zones=zones /]

@@ -1,181 +1,145 @@
-// noinspection JSUnresolvedReference
+(function () {
+  const fontSizePixels = parseFloat(getComputedStyle(document.documentElement).fontSize);
+  const parseBreakpoint = (value, fallback = 0) => {
+    if (!value) return fallback;
+    const num = parseFloat(value);
+    return value.includes('rem') ? num * fontSizePixels : num;
+  };
 
-const debugEnabled = configuration.enableDebug;
-const root = fragmentElement.querySelector(`div.fragment-root`);
-const useMinWidth = configuration.menuItemOverflow === 'min-width';
+  // Configuration & constants
+  const {
+    enableDebug: debugEnabled,
+    menuItemOverflow,
+    desktopBreakpoint: desktopBP,
+    enableTabletBreakpoint,
+    tabletBreakpoint: tabletBP,
+    enableLandscapePhoneBreakpoint,
+    landscapePhoneBreakpoint: landscapePhoneBP,
+    enablePortraitPhoneBreakpoint,
+    portraitPhoneBreakpoint: portraitPhoneBP,
+    menuStyle,
+    debounceDelay = 0,
+    scrollBackToTop = false,
+  } = configuration;
 
-const fontSizePixels = parseFloat(getComputedStyle(document.documentElement).fontSize);
-const convertRemToPixels = (rem) => rem * fontSizePixels;
-const desktopBreakpoint = (() => {
-  if (configuration.desktopBreakpoint.indexOf('rem') > -1) {
-    const rem = parseFloat(configuration.desktopBreakpoint.replace('rem', ''));
-    return convertRemToPixels(rem);
-  } else if (configuration.desktopBreakpoint.indexOf('px') > -1) {
-    return parseFloat(configuration.desktopBreakpoint.replace('px', ''));
-  }
-})();
-const tabletBreakpoint = (() => {
-  if (configuration.enableTabletBreakpoint) {
-    if (configuration.tabletBreakpoint.indexOf('rem') > -1) {
-      const rem = parseFloat(configuration.tabletBreakpoint.replace('rem', ''));
-      return convertRemToPixels(rem);
-    } else if (configuration.tabletBreakpoint.indexOf('px') > -1) {
-      return parseFloat(configuration.tabletBreakpoint.replace('px', ''));
-    }
-  }
-  return desktopBreakpoint;
-})();
-const landscapePhoneBreakpoint = (() => {
-  if (configuration.enableLandscapePhoneBreakpoint) {
-    if (configuration.landscapePhoneBreakpoint.indexOf('rem') > -1) {
-      const rem = parseFloat(configuration.landscapePhoneBreakpoint.replace('rem', ''));
-      return convertRemToPixels(rem);
-    } else if (configuration.landscapePhoneBreakpoint.indexOf('px') > -1) {
-      return parseFloat(configuration.landscapePhoneBreakpoint.replace('px', ''));
-    }
-  }
-  return tabletBreakpoint;
-})();
-const portraitPhoneBreakpoint = (() => {
-  if (configuration.enablePortraitPhoneBreakpoint) {
-    if (configuration.portraitPhoneBreakpoint.indexOf('rem') > -1) {
-      const rem = parseFloat(configuration.portraitPhoneBreakpoint.replace('rem', ''));
-      return convertRemToPixels(rem);
-    } else if (configuration.portraitPhoneBreakpoint.indexOf('px') > -1) {
-      return parseFloat(configuration.portraitPhoneBreakpoint.replace('px', ''));
-    }
-  }
-  return landscapePhoneBreakpoint;
-})();
+  const useMinWidth = menuItemOverflow === 'min-width';
+  const isSticky = menuStyle.includes('sticky');
+  const root = fragmentElement.querySelector('.fragment-root');
 
-const debug = (...params) => {
-  if (debugEnabled) {
-    console.debug(params);
-  }
-}
+  // Debug logger with context
+  const debug = (label, ...args) => {
+    if (debugEnabled) console.debug(`[Menu] ${label}:`, ...args);
+  };
 
-if (debugEnabled) {
+  // Compute breakpoints
+  const desktopBreakpoint = parseBreakpoint(desktopBP);
+  const tabletBreakpoint = enableTabletBreakpoint
+    ? parseBreakpoint(tabletBP, desktopBreakpoint)
+    : desktopBreakpoint;
+  const landscapePhoneBreakpoint = enableLandscapePhoneBreakpoint
+    ? parseBreakpoint(landscapePhoneBP, tabletBreakpoint)
+    : tabletBreakpoint;
+  const portraitPhoneBreakpoint = enablePortraitPhoneBreakpoint
+    ? parseBreakpoint(portraitPhoneBP, landscapePhoneBreakpoint)
+    : landscapePhoneBreakpoint;
+
   debug('fontSizePixels', fontSizePixels);
   debug('desktopBreakpoint', desktopBreakpoint);
   debug('tabletBreakpoint', tabletBreakpoint);
   debug('landscapePhoneBreakpoint', landscapePhoneBreakpoint);
   debug('portraitPhoneBreakpoint', portraitPhoneBreakpoint);
-}
 
-if (root) {
-  if (layoutMode !== 'preview') {
-    const isSticky = configuration.menuStyle.indexOf('sticky') > -1;
-    const hamburgerZoneWrapper = fragmentElement.querySelector(`div.hamburger-zone-wrapper`);
-    const logoZone = hamburgerZoneWrapper.querySelector('.logo-zone');
+  // Early exit if there's no root or we're in preview mode
+  if (!root || layoutMode === 'preview') {
+    debug('init', 'No root element or in preview mode – exiting.');
+    return;
+  }
 
-    if (layoutMode === "view") {
-      const hamburgerIcon = root.querySelector('.fragment-menu-icon');
-      const menu = root.querySelector('.hamburger-zone-wrapper');
+  // Common elements
+  const hamburgerZoneWrapper = root.querySelector('.hamburger-zone-wrapper');
+  const hamburger = root.querySelector('.hamburger');
+  const logoZone = hamburgerZoneWrapper?.querySelector('.logo-zone');
+  const parentDiv = fragmentElement.parentElement;
 
-      const parentDiv = fragmentElement.parentElement;
-      parentDiv.classList.add('fragment-menu-holder');
+  // Logo modifiers
+  if (logoZone) {
+    const width = window.innerWidth;
+    const afterLP = width >= landscapePhoneBreakpoint;
+    const always = logoZone.classList.contains('logo-always');
+    const enlarged = logoZone.classList.contains('increase-hamburger');
 
-      const updateSizes = () => {
-        root.style.height = '';
-        root.style.width = '';
+    debug('logoZone state', { afterLP, always, enlarged });
 
-        const rootHeight = `${root.clientHeight}px`;
-        debug('rootHeight', rootHeight);
-        root.style.height = rootHeight;
-        root.setAttribute('data-height', rootHeight);
+    if (enlarged) hamburger.classList.add('increase');
+    if (always) hamburger.classList.add('logo-always');
+  }
 
-        const isAfterLandscapePhoneBreakpoint = window.innerWidth >= landscapePhoneBreakpoint;
-        if (isAfterLandscapePhoneBreakpoint) {
-          hamburgerIcon.parentElement.classList.remove('open');
-          menu.classList.remove('open');
-          if (logoZone) {
-            logoZone.classList.remove('open');
-          }
-        } else {
-          if (useMinWidth) {
-            const innerMenu = hamburgerZoneWrapper.querySelector('.fragment-menu');
-            const rootMinWidth = `${innerMenu.offsetWidth}px`;
-            debug('rootMinWidth', rootMinWidth);
-            root.style.minWidth = rootMinWidth;
-            root.setAttribute('data-min-width', rootMinWidth);
-          }
-        }
+  // Only in "view" mode do we wire up menu behaviours
+  if (layoutMode === 'view') {
+    parentDiv.classList.add('fragment-menu-holder');
+
+    // Resize handler
+    const updateSizes = () => {
+      // Reset styles
+      root.style.height = '';
+      root.style.width = '';
+      root.style.minWidth = '';
+
+      // Set height
+      const heightPx = `${root.clientHeight}px`;
+      debug('rootHeight', heightPx);
+      root.style.height = heightPx;
+      root.dataset.height = heightPx;
+
+      // At or above landscape-phone, ensure menu is closed
+      if (window.innerWidth >= landscapePhoneBreakpoint) {
+        [hamburger, hamburgerZoneWrapper, logoZone].forEach(el => el?.classList.remove('open'));
+      } else if (useMinWidth) {
+        // For narrow view, set a min-width if configured
+        const innerMenu = hamburgerZoneWrapper.querySelector('.fragment-menu');
+        const minWidth = `${innerMenu.offsetWidth}px`;
+        debug('rootMinWidth', minWidth);
+        root.style.minWidth = minWidth;
+        root.dataset.minWidth = minWidth;
+      }
+    };
+
+    const debounce = (fn, delay) => {
+      let id;
+      return (...args) => {
+        clearTimeout(id);
+        id = setTimeout(() => fn(...args), delay);
       };
+    };
 
-      const debounce = (callback, wait) => {
-        let timeoutId = null;
-        return (...args) => {
-          window.clearTimeout(timeoutId);
-          timeoutId = window.setTimeout(() => {
-            callback(...args);
-          }, wait);
-        };
-      }
+    // Initialize
+    updateSizes();
+    window.addEventListener('resize', debounce(updateSizes, debounceDelay));
 
-      updateSizes();
-      window.addEventListener('resize', debounce(updateSizes, configuration.debounceDelay));
-
-      debug('logoZone', logoZone);
-
-      if (logoZone) {
-        const hamburger = fragmentElement.querySelector('.hamburger');
-        const isAfterLandscapePhoneBreakpoint = window.innerWidth >= landscapePhoneBreakpoint;
-        const isLogoAlwaysDisplayed = logoZone.classList.contains('logo-always');
-        const isIncreaseHamburger = logoZone.classList.contains('increase-hamburger');
-
-        debug('isAfterLandscapePhoneBreakpoint', isAfterLandscapePhoneBreakpoint);
-        debug('isLogoAlwaysDisplayed', isLogoAlwaysDisplayed);
-        debug('isIncreaseHamburger', isIncreaseHamburger);
-
-        if (isIncreaseHamburger) {
-          if (isAfterLandscapePhoneBreakpoint) {
-            hamburger.style.height = '';
-          } else {
-            hamburger.style.height = "var(--responsive-menu-logo-max-height, 35px)";
-          }
-        }
-        if (isLogoAlwaysDisplayed) {
-          if (isAfterLandscapePhoneBreakpoint) {
-            hamburger.classList.remove('logo-always');
-          } else {
-            hamburger.classList.add('logo-always');
-          }
-        }
-        updateSizes();
-      }
-
-      hamburgerIcon.addEventListener('click', () => {
-        hamburgerIcon.parentElement.classList.toggle('open');
-        menu.classList.toggle('open');
-        if (logoZone) {
-          logoZone.classList.toggle('open');
-        }
+    // Hamburger toggle
+    root.querySelector('.fragment-menu-icon')
+      .addEventListener('click', () => {
+        [hamburger, hamburgerZoneWrapper, logoZone].forEach(el => el?.classList.toggle('open'));
       });
 
-      if (configuration.scrollBackToTop && !isSticky) {
-        const scrollToTop = root.querySelector('.fragment-scroll-to-top');
-        scrollToTop.addEventListener('click', () => {
-          document.body.scrollTop = 0; // For Safari
-          document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
-        });
+    // Scroll-to-top or sticky behavior
+    if (scrollBackToTop && !isSticky) {
+      const scrollToTopBtn = root.querySelector('.fragment-scroll-to-top');
 
-        window.addEventListener('scroll', () => {
-          if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
-            scrollToTop.style.display = "block";
-          } else {
-            scrollToTop.style.display = "none";
-          }
-        });
-      } else if (isSticky) {
-        window.addEventListener('scroll', () => {
-          if (document.body.scrollTop > 28 || document.documentElement.scrollTop > 28) {
-            if (!parentDiv.classList.contains('top'))
-              parentDiv.classList.add('top');
-          } else {
-            parentDiv.classList.remove('top');
-          }
-        });
-      }
+      scrollToTopBtn?.addEventListener('click', () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+
+      window.addEventListener('scroll', () => {
+        const visible = window.scrollY > 20;
+        if (scrollToTopBtn) scrollToTopBtn.style.display = visible ? 'block' : 'none';
+      }, { passive: true });
+
+    } else if (isSticky) {
+      window.addEventListener('scroll', () => {
+        const scrolled = window.scrollY > 28;
+        parentDiv.classList.toggle('top', scrolled);
+      }, { passive: true });
     }
   }
-}
+})();
