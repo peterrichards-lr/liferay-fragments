@@ -27,7 +27,7 @@
         },
         {
           "dataType": "string",
-          "defaultValue": "no-wrap",
+          "defaultValue": "nowrap",
           "label": "flex-wrap",
           "name": "flexWrap",
           "type": "select",

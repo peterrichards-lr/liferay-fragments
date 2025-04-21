@@ -80,11 +80,11 @@
 
     [#if configuration.menuStyle?contains('menu-left')]
       #main-content {
-        margin-left: calc(${configuration.menuItemLogoMaxWidth} + 4px);
+        margin-left: calc(${configuration.menuItemLogoMaxWidth} +4px);
       }
 
       [#else]#main-content {
-        margin-right: calc(${configuration.menuItemLogoMaxWidth} + 4px);
+        margin-right: calc(${configuration.menuItemLogoMaxWidth} +4px);
       }
 
     [/#if]
@@ -267,7 +267,7 @@
   @media only screen and (max-width: ${configuration.tabletBreakpoint}) {
     .fragment-root .hamburger-zone-inner {
       background-color: ${configuration.tabletMenuBgColor};
-      max-width: calc(${configuration.menuItemLogoMaxWidth} + 4px);
+      max-width: calc(${configuration.menuItemLogoMaxWidth} +4px);
       overflow: hidden;
       transition: all .5s ease;
     }
