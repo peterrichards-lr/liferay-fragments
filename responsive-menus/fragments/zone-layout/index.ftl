@@ -27,7 +27,9 @@ zoneLayoutHeaderClass = "zone-layout-editor-padding" + (configuration.zoneLayout
   }
 
   body.has-edit-mode-menu .zone-layout lfr-drop-zone .page-editor > div,
-  .zone-layout > div {
+  body.has-edit-mode-menu .zone-layout lfr-drop-zone .lfr-tooltip-scope > div,
+  body:not(.has-edit-mode-menu) .zone-layout lfr-drop-zone .lfr-tooltip-scope > div,
+  body:not(.has-edit-mode-menu) .zone-layout > div {
     display: ${displayValue}${cssImportant};
     flex-direction: ${flexDirection?has_content?then(flexDirection, 'unset')}${cssImportant};
     flex-wrap: ${isFlex?then(configuration.flexWrap, 'unset')}${cssImportant};

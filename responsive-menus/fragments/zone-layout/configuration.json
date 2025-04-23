@@ -117,10 +117,10 @@
           "type": "length"
         },
         {
-          "name": "allowMenuOverride",
+          "defaultValue": true,
           "label": "allow-menu-override",
-          "type": "checkbox",
-          "defaultValue": true
+          "name": "allowMenuOverride",
+          "type": "checkbox"
         }
       ],
       "label": "layout"

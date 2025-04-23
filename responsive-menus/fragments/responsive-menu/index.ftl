@@ -166,6 +166,10 @@ dropzoneCount = zones?size
     flex-wrap: nowrap !important;
   }
 
+  .fragment-root .dropzone-wrapper .dropzone .input-group-item {
+    width: unset;
+  }
+
   .fragment-root .dropzone-lower,
   .fragment-root .dropzone-upper {
     visibility: visible;
@@ -243,7 +247,7 @@ dropzoneCount = zones?size
   [#if configuration.enableTabletBreakpoint]
   @media only screen and (max-width: ${configuration.tabletBreakpoint}) {
     .fragment-root .hamburger-zone-inner {
-      background-color: var( --responsive-menu-breakpoint-tablet-menu-background-color, transparent);
+      background-color: var(--responsive-menu-breakpoint-tablet-menu-background-color, transparent);
       transition: all 0.5s ease;
     }
 
@@ -266,7 +270,7 @@ dropzoneCount = zones?size
       flex-basis: 0;
       flex-grow: 1;
       max-width: 100%;
-      min-width: calc(100% / ${dropzoneCount});
+      min-width: calc((100% - var(--responsive-menu-zone-gap, 0px) * var(--responsive-menu-zone-count, 1)) / var(--responsive-menu-zone-count, 1));
     }
 
   [/#if]

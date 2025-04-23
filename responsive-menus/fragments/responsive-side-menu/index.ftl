@@ -70,8 +70,7 @@ dropzoneCount = zones?size
 
 <style scoped>
   :root {
-    --page-editor-breadcrumb-height: 29px;
-    --page-editor-management-bar: 65px;
+    --page-editor-breadcrumb-height: 0px;
     --responsive-menu-zone-count: ${dropzoneCount};
     --responsive-menu-zone-gap: ${configuration.dropzoneGap};
     --responsive-menu-zone-flex-grow: ${configuration.dropzoneGrower};
@@ -89,6 +88,10 @@ dropzoneCount = zones?size
     --responsive-menu-breakpoint-phone-portrait-menu-background-color: ${configuration.portraitPhoneMenuBgColor};
   }
 
+  body:has(div.page-editor__layout-breadcrumbs:not(.d-none)) {
+    --page-editor-breadcrumb-height: 29px;
+  }
+
   .lfr-layout-structure-item-responsive-side-menu {
     position: -webkit-sticky;
     position: sticky;
@@ -101,13 +104,13 @@ dropzoneCount = zones?size
     height: 100%;
   }
 
-  body.has-control-menu .lfr-layout-structure-item-responsive-side-menu {
+  body.has-control-menu:not(.has-edit-mode-menu) .lfr-layout-structure-item-responsive-side-menu {
     top: var(--control-menu-container-height, 0);
     height: calc(100vh - var(--control-menu-container-height, 0));
   }
 
   body.has-control-menu.has-edit-mode-menu .lfr-layout-structure-item-responsive-side-menu {
-    height: calc(100vh - var(--control-menu-container-height, 0) - var(--page-editor-management-bar, 65px) - var(--page-editor-breadcrumb-height, 29px));
+    height: calc(100vh - var(--control-menu-container-height, 0) - var(--toolbar-height, 64px) - var(--page-editor-breadcrumb-height, 29px));
   }
 
   [#if configuration.menuStyle?contains('menu-right')]
@@ -218,6 +221,10 @@ dropzoneCount = zones?size
       height: auto;
     }
 
+    .master-page .page-editor {
+      margin-top: var(--responsive-menu-logo-max-height, 35px);
+    }
+
     #main-content.increase-hamburger {
       margin-top: var(--responsive-menu-logo-max-height, 35px);
     }
@@ -274,6 +281,10 @@ dropzoneCount = zones?size
 
   .fragment-root .dropzone-wrapper .dropzone .input-group {
     flex-wrap: nowrap !important;
+  }
+
+  .fragment-root .dropzone-wrapper .dropzone .input-group-item {
+    width: unset;
   }
 
   .fragment-root .dropzone-lower,
@@ -355,7 +366,7 @@ dropzoneCount = zones?size
   [/#if]
   [#if configuration.separator]
   .fragment-root .dropzone-menu .fragment-menu.separator .lfr-nav-item {
-    border-bottom: 1px solid ${configuration.menuItemSeparatorColor};
+    border-bottom: 1px solid${configuration.menuItemSeparatorColor};
   }
 
   .fragment-root .dropzone-menu .fragment-menu.separator .lfr-nav-item:last-child {

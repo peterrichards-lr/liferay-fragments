@@ -1,4 +1,4 @@
-(function () {
+setTimeout(() => {
   const fontSizePixels = parseFloat(getComputedStyle(document.documentElement).fontSize);
   const parseBreakpoint = (value, fallback = 0) => {
     if (!value) return fallback;
@@ -142,4 +142,4 @@
       }, { passive: true });
     }
   }
-})();
+}, configuration.initializeDelay);

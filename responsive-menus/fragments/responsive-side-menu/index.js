@@ -1,4 +1,4 @@
-(function () {
+setTimeout(() => {
   const fontSizePixels = parseFloat(
     getComputedStyle(document.documentElement).fontSize
   );
@@ -151,4 +151,4 @@
     };
     window.addEventListener('scroll', onScroll, { passive: true });
   }
-})();
+}, configuration.initializeDelay);

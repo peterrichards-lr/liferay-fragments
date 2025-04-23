@@ -1,9 +1,9 @@
 {
   "configurationPath": "configuration.json",
-  "jsPath": "index.js",
-  "htmlPath": "index.ftl",
   "cssPath": "index.css",
+  "htmlPath": "index.ftl",
   "icon": "code",
+  "jsPath": "index.js",
   "name": "Responsive Side Menu",
   "thumbnailPath": "thumbnail.png",
   "type": "component"
