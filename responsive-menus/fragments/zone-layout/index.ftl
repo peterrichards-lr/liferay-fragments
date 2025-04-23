@@ -4,6 +4,13 @@ isRow = configuration.contentDisplay?contains('row')
 displayValue = isFlex?then('flex', 'block')
 flexDirection = isFlex?then(isRow?then('row', 'column'), '')
 cssImportant = configuration.allowMenuOverride?then('', ' !important')
+zoneLayoutNamespace = "zone-layout-${fragmentEntryLinkNamespace}",
+zoneLayoutClassList = [
+zoneLayoutNamespace,
+"zone-layout",
+(configuration.zoneLayoutHeader?then('allow-override',''))
+]?filter(x -> x?has_content),
+zoneLayoutClass = zoneLayoutClassList?join(' ')
 zoneLayoutHeaderClass = "zone-layout-editor-padding" + (configuration.zoneLayoutHeader?then(" show", ""))
 /]
 
@@ -26,10 +33,10 @@ zoneLayoutHeaderClass = "zone-layout-editor-padding" + (configuration.zoneLayout
     overflow: hidden;
   }
 
-  body.has-edit-mode-menu .zone-layout lfr-drop-zone .page-editor > div,
-  body.has-edit-mode-menu .zone-layout lfr-drop-zone .lfr-tooltip-scope > div,
-  body:not(.has-edit-mode-menu) .zone-layout lfr-drop-zone .lfr-tooltip-scope > div,
-  body:not(.has-edit-mode-menu) .zone-layout > div {
+  body.has-edit-mode-menu .${zoneLayoutNamespace} lfr-drop-zone .page-editor > div,
+  body.has-edit-mode-menu .${zoneLayoutNamespace} lfr-drop-zone .lfr-tooltip-scope > div,
+  body:not(.has-edit-mode-menu) .${zoneLayoutNamespace} lfr-drop-zone .lfr-tooltip-scope > div,
+  body:not(.has-edit-mode-menu) .${zoneLayoutNamespace} > div {
     display: ${displayValue}${cssImportant};
     flex-direction: ${flexDirection?has_content?then(flexDirection, 'unset')}${cssImportant};
     flex-wrap: ${isFlex?then(configuration.flexWrap, 'unset')}${cssImportant};
@@ -38,8 +45,18 @@ zoneLayoutHeaderClass = "zone-layout-editor-padding" + (configuration.zoneLayout
     gap: ${isFlex?then(configuration.flexGap, 'unset')}${cssImportant};
   }
 
+  @media only screen and (max-width: ${configuration.landscapePhoneBreakpoint}) {
+    body.has-edit-mode-menu .${zoneLayoutNamespace}:not(.allow-override) lfr-drop-zone .page-editor > div,
+    body.has-edit-mode-menu .${zoneLayoutNamespace}:not(.allow-override) lfr-drop-zone .lfr-tooltip-scope > div,
+    body:not(.has-edit-mode-menu) .${zoneLayoutNamespace}:not(.allow-override) lfr-drop-zone .lfr-tooltip-scope > div,
+    body:not(.has-edit-mode-menu) .${zoneLayoutNamespace}:not(.allow-override) > div {
+      align-items: ${isFlex?then(configuration.justifyContent, 'unset')}${cssImportant};
+      justify-content: ${isFlex?then(configuration.alignItems, 'unset')}${cssImportant};
+    }
+  }
+
   body.has-edit-mode-menu .zone-layout .page-editor__no-fragments-state {
-    min-width: 100px;
+    min-width: 150px;
   }
 
   body.has-edit-mode-menu .zone-layout .page-editor__no-fragments-state:first-child:before {
@@ -47,7 +64,7 @@ zoneLayoutHeaderClass = "zone-layout-editor-padding" + (configuration.zoneLayout
   }
 </style>
 
-<div class="zone-layout">
+<div class="${zoneLayoutClass}">
   <div class="${zoneLayoutHeaderClass}">Zone Layout</div>
   <lfr-drop-zone></lfr-drop-zone>
 </div>

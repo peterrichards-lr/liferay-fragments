@@ -22,7 +22,7 @@ setTimeout(() => {
     scrollBackToTop = false,
   } = configuration;
 
-  const useMinWidth = menuItemOverflow === 'min-width';
+  const noMenuItemOverflow = menuItemOverflow === 'none';
   const isSticky = menuStyle.includes('sticky');
   const root = fragmentElement.querySelector('.fragment-root');
 
@@ -91,15 +91,12 @@ setTimeout(() => {
       root.style.height = heightPx;
       root.dataset.height = heightPx;
 
-      // At or above landscape-phone, ensure menu is closed
       if (window.innerWidth >= landscapePhoneBreakpoint) {
         [hamburger, hamburgerZoneWrapper, logoZone].forEach(el => el?.classList.remove('open'));
-      } else if (useMinWidth) {
-        // For narrow view, set a min-width if configured
+      } else if (noMenuItemOverflow) {
         const innerMenu = hamburgerZoneWrapper.querySelector('.fragment-menu');
         const minWidth = `${innerMenu.offsetWidth}px`;
         debug('rootMinWidth', minWidth);
-        root.style.minWidth = minWidth;
         root.dataset.minWidth = minWidth;
       }
     };

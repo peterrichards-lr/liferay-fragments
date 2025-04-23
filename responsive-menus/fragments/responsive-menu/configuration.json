@@ -46,11 +46,23 @@
                 "value": "wrap"
               },
               {
-                "label": "min-width",
-                "value": "min-width"
+                "label": "none",
+                "value": "none"
               }
             ]
           }
+        },
+        {
+          "defaultValue": false,
+          "label": "limit-menu-width",
+          "name": "limitMenuWidth",
+          "type": "checkbox"
+        },
+        {
+          "defaultValue": "0",
+          "label": "max-width",
+          "name": "maximumMenuWidth",
+          "type": "length"
         }
       ],
       "label": "general"

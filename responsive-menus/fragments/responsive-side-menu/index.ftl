@@ -86,7 +86,47 @@ dropzoneCount = zones?size
     --responsive-menu-breakpoint-phone-portrait-enabled: ${configuration.enablePortraitPhoneBreakpoint?c};
     --responsive-menu-breakpoint-phone-portrait-width: ${configuration.portraitPhoneBreakpoint};
     --responsive-menu-breakpoint-phone-portrait-menu-background-color: ${configuration.portraitPhoneMenuBgColor};
+    --responsive-menu-limit-width: ${configuration.limitMenuWidth?c};
   }
+
+  [#if configuration.limitMenuWidth]
+  :root {
+    --responsive-menu-width: ${configuration.menuWidth};
+  }
+
+  [/#if]
+
+  .hamburger-zone-wrapper {
+    max-width: var(--responsive-menu-min-width, none);
+  }
+
+  [#if configuration.limitMenuWidth]
+  [#if configuration.menuItemOverflow == 'clip']
+  .fragment-root .hamburger-zone-inner .fragment-menu .lfr-nav-item .text-truncate {
+    text-overflow: clip;
+  }
+
+  [#elseif configuration.menuItemOverflow == 'wrap']
+  .fragment-root .hamburger-zone-inner .fragment-menu .lfr-nav-item .text-truncate {
+    white-space: normal;
+  }
+
+  [#elseif configuration.menuItemOverflow == 'none']
+  .fragment-root .hamburger-zone-inner .fragment-menu .lfr-nav-item .text-truncate {
+    text-overflow: unset;
+    white-space: normal;
+    overflow: visible;
+  }
+
+  [/#if]
+  [#else]
+  .fragment-root .hamburger-zone-inner .fragment-menu .lfr-nav-item .text-truncate {
+    text-overflow: unset;
+    white-space: nowrap;
+    overflow: visible;
+  }
+
+  [/#if]
 
   body:has(div.page-editor__layout-breadcrumbs:not(.d-none)) {
     --page-editor-breadcrumb-height: 29px;
@@ -193,11 +233,11 @@ dropzoneCount = zones?size
 
   [#if configuration.menuStyle?contains('menu-left')]
     #main-content {
-      margin-left: calc(var(--responsive-menu-item-logo-max-width, 2rem) + 4px);
+      margin-left: calc(var(--responsive-menu-item-logo-max-width, 2rem) + 4px) !important;
     }
 
     [#else]#main-content {
-      margin-right: calc(var(--responsive-menu-item-logo-max-width, 2rem) + 4px);
+      margin-right: calc(var(--responsive-menu-item-logo-max-width, 2rem) + 4px) !important;
     }
 
   [/#if]
@@ -283,7 +323,7 @@ dropzoneCount = zones?size
     flex-wrap: nowrap !important;
   }
 
-  .fragment-root .dropzone-wrapper .dropzone .input-group-item {
+  .fragment-root .dropzone-wrapper .dropzone .input-group-inset {
     width: unset;
   }
 
@@ -378,11 +418,18 @@ dropzoneCount = zones?size
   [#if configuration.enableTabletBreakpoint]
   @media only screen and (max-width: ${configuration.tabletBreakpoint}) {
     .fragment-root .hamburger-zone-inner {
+      position: relative;
       background-color: var(--responsive-menu-breakpoint-tablet-menu-background-color, transparent);
-      max-width: calc(var(--responsive-menu-item-logo-max-width, 2rem) + 4px);
       overflow: hidden;
       transition: all 0.5s ease;
     }
+
+  [#if configuration.menuStyle?contains('menu-right')]
+    .fragment-root .hamburger-zone-inner {
+      transform: translateX(calc(100% - var(--responsive-menu-item-logo-max-width, 2rem) + 4px));
+    }
+
+  [/#if]
 
     .fragment-root .hamburger-zone-inner .fragment-menu .lfr-nav-item .text-truncate {
       color: transparent;
@@ -390,7 +437,7 @@ dropzoneCount = zones?size
       transition: all 0.5s ease;
     }
 
-    .fragment-root .dropzone .zone-layout > div {
+    .fragment-root .dropzone .zone-layout.allow-override > div {
       display: flex;
       flex-direction: column;
       flex-wrap: nowrap;
@@ -408,16 +455,32 @@ dropzoneCount = zones?size
       visibility: visible;
       overflow: visible;
       opacity: 1;
-      transition: all0 .5s ease;
+      transition: all 0.5s ease;
     }
 
+    .fragment-root .hamburger-zone-wrapper {
+      width: calc(var(--responsive-menu-item-logo-max-width, 2rem) + 4px) !important;
+      transition: all 0.5s ease;
+    }
+
+  [#if configuration.limitMenuWidth]
+    .fragment-root:hover .hamburger-zone-wrapper {
+      width: var(--responsive-menu-width, 5rem) !important;
+    }
+
+  [#else]
+    .fragment-root:hover .hamburger-zone-wrapper {
+      width: 100% !important;
+    }
+
+  [/#if]
+
     .fragment-root:hover .hamburger-zone-inner {
-      max-width: 100%;
+      transform: unset;
       overflow: hidden;
     }
 
     .fragment-root:hover .hamburger-zone-inner .fragment-menu .lfr-nav-item .text-truncate {
-      text-overflow: inherit;
       color: inherit;
       opacity: 1;
       transition: all 0.5s ease;
@@ -443,23 +506,49 @@ dropzoneCount = zones?size
   [/#if]
     .fragment-root .hamburger-zone-wrapper {
       background-color: var(--responsive-menu-breakpoint-phone-landscape-menu-background-color, transparent);
-      width: 100vw;
+      width: 100vw !important;
       max-width: 100%;
       display: grid;
       grid-template-rows: 0fr;
       transition: grid-template-rows 0.5s ease-out;
     }
 
+
+  [#if configuration.menuItemOverflow == 'clip']
+    .fragment-root .hamburger-zone-inner .fragment-menu .lfr-nav-item .text-truncate {
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: clip;
+    }
+
+  [#elseif configuration.menuItemOverflow == 'wrap']
+    .fragment-root .hamburger-zone-inner .fragment-menu .lfr-nav-item .text-truncate {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: normal;
+    }
+
+  [#else]
+    .fragment-root .hamburger-zone-inner .fragment-menu .lfr-nav-item .text-truncate {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+  [/#if]
+
     .fragment-root .hamburger-zone-wrapper.open {
       grid-template-rows: 1fr;
+      width: 100vw !important;
     }
 
     .fragment-root .hamburger-zone-inner {
+      right: unset;
+      transform: unset;
       max-width: none;
     }
 
     .fragment-root .hamburger-zone-inner .fragment-menu .lfr-nav-item .text-truncate {
-      text-overflow: inherit;
       color: inherit;
     }
 
@@ -474,14 +563,14 @@ dropzoneCount = zones?size
       align-items: end;
     }
 
-    .fragment-root .dropzone .zone-layout > div {
+    .fragment-root .dropzone .zone-layout.allow-override > div {
       display: flex;
       flex-direction: column;
       align-items: start;
       justify-content: end;
     }
 
-    .fragment-root .dropzone .zone-layout > div > * {
+    .fragment-root .dropzone .zone-layout.allow-override > div > * {
       width: 100vw;
     }
 
@@ -504,7 +593,11 @@ dropzoneCount = zones?size
     }
 
   [/#if]
-    .fragment-root .hamburger.open {
+    .fragment-root .dropzone-wrapper.open {
+      background-color: var(--responsive-menu-breakpoint-phone-landscape-menu-background-color, transparent);
+    }
+
+    .fragment-root .dropzone-wrapper.open {
       background-color: ${configuration.menuHamburgerBgColor};
     }
 
@@ -541,11 +634,16 @@ dropzoneCount = zones?size
 
     .fragment-root .dropzone .logo-zone.reduce-logo,
     .fragment-root .dropzone .logo-zone.increase-hamburger {
-      position: absolute;
-      top: 0;
+      position: fixed;
+      top: var(--control-menu-container-height, 0);
       visibility: hidden;
       opacity: 0;
       transition: all 0.5s ease;
+    }
+
+    .lfr-layout-structure-item-responsive-side-menu.top .fragment-root .dropzone .logo-zone.reduce-logo,
+    .lfr-layout-structure-item-responsive-side-menu.top .fragment-root .dropzone .logo-zone.increase-hamburger {
+      top: 0;
     }
 
   [#if configuration.menuStyle?contains('menu-left')]
@@ -568,7 +666,7 @@ dropzoneCount = zones?size
     }
 
     .fragment-root .hamburger.logo-always {
-      background-color: ${configuration.menuHamburgerBgColor};
+      background-color: var(--responsive-menu-breakpoint-phone-landscape-menu-background-color, transparent);
     }
 
     .fragment-root .dropzone .logo-zone.open,

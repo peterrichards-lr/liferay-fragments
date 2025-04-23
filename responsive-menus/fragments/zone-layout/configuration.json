@@ -121,6 +121,12 @@
           "label": "allow-menu-override",
           "name": "allowMenuOverride",
           "type": "checkbox"
+        },
+        {
+          "defaultValue": "576px",
+          "label": "landscape-phone",
+          "name": "landscapePhoneBreakpoint",
+          "type": "length"
         }
       ],
       "label": "layout"

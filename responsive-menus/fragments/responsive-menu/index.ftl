@@ -102,7 +102,38 @@ dropzoneCount = zones?size
     --responsive-menu-breakpoint-phone-portrait-enabled: ${configuration.enablePortraitPhoneBreakpoint?c};
     --responsive-menu-breakpoint-phone-portrait-width: ${configuration.portraitPhoneBreakpoint};
     --responsive-menu-breakpoint-phone-portrait-menu-background-color: ${configuration.portraitPhoneMenuBgColor};
+    --responsive-menu-limit-width: ${configuration.limitMenuWidth?c};
   }
+
+  [#if configuration.limitMenuWidth]
+  :root {
+    --responsive-menu-max-width: ${configuration.maximumMenuWidth};
+  }
+
+  [/#if]
+
+  .fragment-menu {
+    max-width: var(--responsive-menu-max-width, none);
+  }
+
+  [#if configuration.menuItemOverflow == 'clip']
+  .fragment-root .hamburger-zone-inner .fragment-menu .lfr-nav-item .text-truncate {
+    text-overflow: clip;
+  }
+
+  [#elseif configuration.menuItemOverflow == 'wrap']
+  .fragment-root .hamburger-zone-inner .fragment-menu .lfr-nav-item .text-truncate {
+    white-space: normal;
+  }
+
+  [#elseif configuration.menuItemOverflow == 'min-width']
+  .fragment-root .hamburger-zone-inner .fragment-menu .lfr-nav-item .text-truncate {
+    text-overflow: unset;
+    white-space: normal;
+    overflow: visible;
+  }
+
+  [/#if]
 
   [#if isSticky]
   .lfr-layout-structure-item-responsive-menu {
@@ -326,24 +357,6 @@ dropzoneCount = zones?size
       transition: all 0.5s ease;
     }
 
-  [#if configuration.menuItemOverflow == 'clip']
-    .fragment-root .hamburger-zone-inner .fragment-menu .lfr-nav-item .text-truncate {
-      text-overflow: clip;
-    }
-
-  [#elseif configuration.menuItemOverflow == 'wrap']
-    .fragment-root .hamburger-zone-inner .fragment-menu .lfr-nav-item .text-truncate {
-      white-space: normal;
-    }
-
-  [#elseif configuration.menuItemOverflow == 'min-width']
-    .fragment-root .hamburger-zone-inner .fragment-menu .lfr-nav-item .text-truncate {
-      text-overflow: unset;
-      white-space: nowrap;
-    }
-
-  [/#if]
-
   [#if isInline]
     .fragment-root .dropzone-menu {
       width: 100%
@@ -369,11 +382,14 @@ dropzoneCount = zones?size
     .fragment-root .dropzone .zone-layout > div {
       display: flex;
       flex-direction: column;
+    }
+
+    .fragment-root .dropzone .zone-layout.allow-override > div {
       align-items: start;
       justify-content: end;
     }
 
-    .fragment-root .dropzone .zone-layout > div > * {
+    .fragment-root .dropzone .zone-layout.allow-override > div > * {
       width: 100vw;
     }
 

@@ -20,6 +20,8 @@ setTimeout(() => {
     portraitPhoneBreakpoint: portraitPhoneBP,
     menuStyle,
     debounceDelay = 0,
+    limitMenuWidth = false,
+    menuWidth = '5rem'
   } = configuration;
 
   const productMenuWidth = 320;
@@ -86,17 +88,25 @@ setTimeout(() => {
 
     // Resize handler
     const updateSizes = () => {
-      const w = window.innerWidth;
-      if (w >= tabletBreakpoint) {
-        const wPx = `${hamburgerZoneWrapper.offsetWidth}px`;
-        hamburgerZoneWrapper.dataset.width = wPx;
-        hamburgerZoneWrapper.style.width = wPx;
-        if (layoutMode !== 'edit') {
-          mainContent.style.marginRight = wPx;
-        }
+      debug('limitMenuWidth', limitMenuWidth);
+      if (limitMenuWidth) {
+        debug('limitMenuWidth', menuWidth);
+        hamburgerZoneWrapper.style.width = menuWidth;
+        mainContent.style.marginRight = menuWidth;
       } else {
-        hamburgerZoneWrapper.style.width = '';
-        mainContent.style.marginRight = '';
+        const w = window.innerWidth;
+        debug('w', w);
+        if (w >= tabletBreakpoint) {
+          const wPx = `${hamburgerZoneWrapper.offsetWidth}px`;
+          debug('wPx', wPx);
+          hamburgerZoneWrapper.style.width = wPx;
+          if (layoutMode !== 'edit') {
+            mainContent.style.marginRight = wPx;
+          }
+        } else {
+          hamburgerZoneWrapper.style.width = '';
+          mainContent.style.marginRight = '';
+        }
       }
     };
 

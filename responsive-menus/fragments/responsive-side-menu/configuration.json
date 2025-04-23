@@ -20,6 +20,45 @@
               }
             ]
           }
+        },
+        {
+          "dataType": "string",
+          "defaultValue": "ellipsis",
+          "label": "menu-item-overflow",
+          "name": "menuItemOverflow",
+          "type": "select",
+          "typeOptions": {
+            "validValues": [
+              {
+                "label": "menu-item-overflow-clip",
+                "value": "clip"
+              },
+              {
+                "label": "menu-item-overflow-ellipsis",
+                "value": "ellipsis"
+              },
+              {
+                "label": "wrap",
+                "value": "wrap"
+              },
+              {
+                "label": "none",
+                "value": "none"
+              }
+            ]
+          }
+        },
+        {
+          "defaultValue": true,
+          "label": "limit-menu-width",
+          "name": "limitMenuWidth",
+          "type": "checkbox"
+        },
+        {
+          "defaultValue": "25vw",
+          "label": "menu-width",
+          "name": "menuWidth",
+          "type": "length"
         }
       ],
       "label": "general"
