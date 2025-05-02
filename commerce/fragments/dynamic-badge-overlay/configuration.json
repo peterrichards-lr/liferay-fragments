@@ -1,0 +1,460 @@
+{
+  "fieldSets": [
+    {
+      "fields": [
+        {
+          "defaultValue": "var(--font-family-base, Arial)",
+          "label": "font-family",
+          "name": "badgeFont",
+          "type": "text"
+        },
+        {
+          "defaultValue": "limited-stock",
+          "description": "badge-type-priority-description",
+          "label": "badge-type-priority",
+          "name": "badgeTypePriority",
+          "type": "select",
+          "typeOptions": {
+            "validValues": [
+              {
+                "label": "badge-type-limited-stock",
+                "value": "limited-stock"
+              },
+              {
+                "label": "badge-type-offer",
+                "value": "offer"
+              },
+              {
+                "label": "badge-type-new-product",
+                "value": "new-product"
+              }
+            ]
+          }
+        }
+      ],
+      "label": "common"
+    },
+    {
+      "fields": [
+        {
+          "defaultValue": "top-left",
+          "label": "position",
+          "name": "offerBadgePosition",
+          "type": "select",
+          "typeOptions": {
+            "validValues": [
+              {
+                "label": "badge-position-top-left",
+                "value": "top-left"
+              },
+              {
+                "label": "badge-position-top-right",
+                "value": "top-right"
+              },
+              {
+                "label": "badge-position-bottom-right",
+                "value": "bottom-right"
+              },
+              {
+                "label": "badge-position-bottom-left",
+                "value": "bottom-left"
+              }
+            ]
+          }
+        },
+        {
+          "defaultValue": "var(--font-size-lg, 1.125rem)",
+          "label": "font-size",
+          "name": "offerFontSize",
+          "type": "length"
+        },
+        {
+          "defaultValue": "var(--font-weight-bold, 700)",
+          "label": "font-weight",
+          "name": "offerFontWeight",
+          "type": "text"
+        },
+        {
+          "defaultValue": "0px",
+          "label": "offset",
+          "name": "offerBadgeOffset",
+          "type": "length"
+        },
+        {
+          "defaultValue": "150px",
+          "label": "width",
+          "name": "offerBadgeWidth",
+          "type": "length"
+        },
+        {
+          "defaultValue": "150px",
+          "label": "height",
+          "name": "offerBadgeHeight",
+          "type": "length"
+        },
+        {
+          "defaultValue": "{discount} off!",
+          "description": "offer-text-template-description",
+          "label": "text-template",
+          "name": "offerTextTemplate",
+          "type": "text"
+        },
+        {
+          "defaultValue": "discount-percentage",
+          "label": "offer-type",
+          "name": "offerType",
+          "type": "select",
+          "typeOptions": {
+            "validValues": [
+              {
+                "label": "discount-percentage",
+                "value": "discount-percentage"
+              },
+              {
+                "label": "discount-value",
+                "value": "discount-value"
+              },
+              {
+                "label": "discount-currency",
+                "value": "discount-currency"
+              }
+            ]
+          }
+        },
+        {
+          "defaultValue": "corner-ribbon",
+          "label": "badge-shape",
+          "name": "offerBadgeShape",
+          "type": "select",
+          "typeOptions": {
+            "validValues": [
+              {
+                "label": "circle",
+                "value": "circle"
+              },
+              {
+                "label": "badge-shape-corner-ribbon",
+                "value": "corner-ribbon"
+              },
+              {
+                "label": "pill",
+                "value": "pill"
+              },
+              {
+                "label": "badge-shape-rectangle",
+                "value": "rectangle"
+              }
+            ]
+          }
+        },
+        {
+          "defaultValue": "red",
+          "label": "color",
+          "name": "offerBadgeColor",
+          "type": "colorPicker"
+        },
+        {
+          "defaultValue": "white",
+          "label": "text-color",
+          "name": "offerBadgeTextColor",
+          "type": "colorPicker"
+        },
+        {
+          "defaultValue": false,
+          "label": "shadow",
+          "name": "offerBadgeShadow",
+          "type": "checkbox"
+        }
+      ],
+      "label": "offer-section"
+    },
+    {
+      "fields": [
+        {
+          "defaultValue": "top-right",
+          "label": "position",
+          "name": "newProductBadgePosition",
+          "type": "select",
+          "typeOptions": {
+            "validValues": [
+              {
+                "label": "top-left",
+                "value": "top-left"
+              },
+              {
+                "label": "top-right",
+                "value": "top-right"
+              },
+              {
+                "label": "bottom-right",
+                "value": "bottom-right"
+              },
+              {
+                "label": "bottom-left",
+                "value": "bottom-left"
+              }
+            ]
+          }
+        },
+        {
+          "defaultValue": "18px",
+          "label": "font-size",
+          "name": "newProductFontSize",
+          "type": "length"
+        },
+        {
+          "defaultValue": "var(--font-weight-semi-bold, 600)",
+          "label": "font-weight",
+          "name": "newProductFontWeight",
+          "type": "text"
+        },
+        {
+          "defaultValue": "10px",
+          "label": "offset",
+          "name": "newProductBadgeOffset",
+          "type": "length"
+        },
+        {
+          "defaultValue": "80px",
+          "label": "width",
+          "name": "newProductBadgeWidth",
+          "type": "length"
+        },
+        {
+          "defaultValue": "40px",
+          "label": "height",
+          "name": "newProductBadgeHeight",
+          "type": "length"
+        },
+        {
+          "defaultValue": "New!",
+          "description": "new-product-text-template-description",
+          "label": "text-template",
+          "name": "newProductTextTemplate",
+          "type": "text"
+        },
+        {
+          "dataType": "int",
+          "defaultValue": "14",
+          "description": "new-product-freshness-description",
+          "label": "new-product-freshness",
+          "name": "newProductFreshness",
+          "type": "text"
+        },
+        {
+          "defaultValue": "displayDate",
+          "description": "new-product-date-field-description",
+          "label": "new-product-date-field",
+          "name": "newProductDateField",
+          "type": "select",
+          "typeOptions": {
+            "validValues": [
+              {
+                "label": "display-date",
+                "value": "displayDate"
+              }
+            ]
+          }
+        },
+        {
+          "defaultValue": "pill",
+          "label": "badge-shape",
+          "name": "newProductBadgeShape",
+          "type": "select",
+          "typeOptions": {
+            "validValues": [
+              {
+                "label": "circle",
+                "value": "circle"
+              },
+              {
+                "label": "badge-shape-corner-ribbon",
+                "value": "corner-ribbon"
+              },
+              {
+                "label": "pill",
+                "value": "pill"
+              },
+              {
+                "label": "badge-shape-rectangle",
+                "value": "rectangle"
+              }
+            ]
+          }
+        },
+        {
+          "defaultValue": "#2a9d8f",
+          "label": "color",
+          "name": "newProductBadgeColor",
+          "type": "colorPicker"
+        },
+        {
+          "defaultValue": "#ffffff",
+          "label": "text-color",
+          "name": "newProductBadgeTextColor",
+          "type": "colorPicker"
+        },
+        {
+          "defaultValue": true,
+          "label": "shadow",
+          "name": "newProductBadgeShadow",
+          "type": "checkbox"
+        }
+      ],
+      "label": "new-product-section"
+    },
+    {
+      "fields": [
+        {
+          "defaultValue": "bottom-right",
+          "label": "position",
+          "name": "limitedStockBadgePosition",
+          "type": "select",
+          "typeOptions": {
+            "validValues": [
+              {
+                "label": "top-left",
+                "value": "top-left"
+              },
+              {
+                "label": "top-right",
+                "value": "top-right"
+              },
+              {
+                "label": "bottom-right",
+                "value": "bottom-right"
+              },
+              {
+                "label": "bottom-left",
+                "value": "bottom-left"
+              }
+            ]
+          }
+        },
+        {
+          "defaultValue": "var(--font-size-base, 0.875rem)",
+          "label": "font-size",
+          "name": "limitedStockFontSize",
+          "type": "length"
+        },
+        {
+          "defaultValue": "var(--font-weight-bolder, 900)",
+          "label": "font-weight",
+          "name": "limitedStockFontWeight",
+          "type": "text"
+        },
+        {
+          "defaultValue": "10px",
+          "label": "offset",
+          "name": "limitedStockBadgeOffset",
+          "type": "length"
+        },
+        {
+          "defaultValue": "140px",
+          "label": "width",
+          "name": "limitedStockBadgeWidth",
+          "type": "length"
+        },
+        {
+          "defaultValue": "40px",
+          "label": "height",
+          "name": "limitedStockBadgeHeight",
+          "type": "length"
+        },
+        {
+          "defaultValue": "Limited Stock!",
+          "description": "limtied-stock-text-template-description",
+          "label": "text-template",
+          "name": "limitedStockTextTemplate",
+          "type": "text"
+        },
+        {
+          "dataType": "int",
+          "defaultValue": "10",
+          "description": "stock-level-threshold-description",
+          "label": "stock-level-threshold",
+          "name": "limitedStockLevelThreshold",
+          "type": "text"
+        },
+        {
+          "defaultValue": "rectangle",
+          "label": "badge-shape",
+          "name": "limitedStockBadgeShape",
+          "type": "select",
+          "typeOptions": {
+            "validValues": [
+              {
+                "label": "circle",
+                "value": "circle"
+              },
+              {
+                "label": "badge-shape-corner-ribbon",
+                "value": "corner-ribbon"
+              },
+              {
+                "label": "pill",
+                "value": "pill"
+              },
+              {
+                "label": "badge-shape-rectangle",
+                "value": "rectangle"
+              }
+            ]
+          }
+        },
+        {
+          "defaultValue": "var(--primary, var(--color-brand-primary, #f4a261))",
+          "label": "color",
+          "name": "limitedStockBadgeColor",
+          "type": "colorPicker"
+        },
+        {
+          "defaultValue": "var(--body-bg, (var(--white, #ffffff))",
+          "label": "text-color",
+          "name": "limitedStockBadgeTextColor",
+          "type": "colorPicker"
+        },
+        {
+          "defaultValue": true,
+          "label": "shadow",
+          "name": "limitedStockBadgeShadow",
+          "type": "checkbox"
+        }
+      ],
+      "label": "limited-stock-section"
+    },
+    {
+      "fields": [
+        {
+          "defaultValue": false,
+          "label": "debug-enabled",
+          "name": "enableDebug",
+          "type": "checkbox"
+        },
+        {
+          "defaultValue": true,
+          "description": "fragment-header-description",
+          "label": "fragment-header",
+          "name": "fragmentHeader",
+          "type": "checkbox"
+        },
+        {
+          "defaultValue": true,
+          "description": "all-portlets-ready-description",
+          "label": "all-portlets-ready",
+          "name": "allPortletsReady",
+          "type": "checkbox"
+        },
+        {
+          "dataType": "int",
+          "defaultValue": "1000",
+          "description": "initialize-delay-description",
+          "label": "initialize-delay",
+          "name": "initializeDelay",
+          "type": "text"
+        }
+      ],
+      "label": "miscellaneous-section"
+    }
+  ]
+}

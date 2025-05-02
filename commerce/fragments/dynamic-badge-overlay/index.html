@@ -1,0 +1,18 @@
+[#assign
+fragmentClassesList = [
+"dynamic-badge-overlay-${fragmentEntryLinkNamespace}",
+"dynamic-badge-overlay"
+]?filter(x -> x?has_content),
+fragmentClasses = fragmentClassesList?join(' '),
+fragmentHeaderClass = 'fragment-editor-padding' + (configuration.fragmentHeader?then(' show',''))
+/]
+<div class="${fragmentClasses}">
+	<div class="${fragmentHeaderClass}">Product Badge</div>
+	<lfr-drop-zone></lfr-drop-zone>
+</div>
+<div class="config" style="display: none">
+	<span data-lfr-editable-id="01-product-id" data-lfr-js-id="productId" data-lfr-js-type="int"
+		data-lfr-editable-type="text"></span>
+	<span data-lfr-editable-id="02-sku" data-lfr-js-id="sku" data-lfr-js-type="string"
+		data-lfr-editable-type="text"></span>
+</div>
