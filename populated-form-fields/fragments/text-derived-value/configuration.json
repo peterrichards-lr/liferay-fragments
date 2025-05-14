@@ -1,0 +1,39 @@
+{
+  "fieldSets": [
+    {
+      "fields": [
+        {
+          "dataType": "string",
+          "defaultValue": "",
+          "label": "placeholder",
+          "localizable": true,
+          "name": "placeholder",
+          "type": "text"
+        },
+        {
+          "defaultValue": false,
+          "label": "show-characters-count",
+          "name": "showCharactersCount",
+          "type": "checkbox",
+          "typeOptions": {
+            "displayType": "toggle"
+          }
+        },
+        {
+          "defaultValue": false,
+          "label": "derive-value",
+          "name": "deriveValue",
+          "type": "checkbox"
+        },
+        {
+          "dataType": "string",
+          "description": "derive-value-template-description",
+          "defaultValue": "",
+          "label": "derive-value-template",
+          "name": "deriveValueTemplate",
+          "type": "text"
+        }
+      ]
+    }
+  ]
+}
