@@ -1,0 +1,4 @@
+.range-input input[type='range'] {
+  width: 100%;
+  accent-color: var(--color-brand-primary);
+}

@@ -1,0 +1,63 @@
+{
+  "fieldSets": [
+    {
+      "fields": [
+        {
+          "dataType": "string",
+          "description": "fields-list-description",
+          "label": "fields-list",
+          "name": "fieldsList",
+          "type": "text"
+        },
+        {
+          "dataType": "string",
+          "description": "storage-key-prefix-description",
+          "label": "storage-key-prefix",
+          "name": "storageKeyPrefix",
+          "type": "text"
+        },
+        {
+          "defaultValue": true,
+          "description": "update-target-field-only-description",
+          "label": "update-target-field-only",
+          "name": "updateTargetFieldOnly",
+          "type": "checkbox"
+        }
+      ],
+      "label": "data-mapping"
+    },
+    {
+      "fields": [
+        {
+          "defaultValue": true,
+          "label": "debug-enabled",
+          "name": "enableDebug",
+          "type": "checkbox"
+        },
+        {
+          "defaultValue": true,
+          "description": "fragment-header-description",
+          "label": "fragment-header",
+          "name": "fragmentHeader",
+          "type": "checkbox"
+        },
+        {
+          "defaultValue": true,
+          "description": "all-portlets-ready-description",
+          "label": "all-portlets-ready",
+          "name": "allPortletsReady",
+          "type": "checkbox"
+        },
+        {
+          "dataType": "int",
+          "defaultValue": "1000",
+          "description": "initialize-delay-description",
+          "label": "initialize-delay",
+          "name": "initializeDelay",
+          "type": "text"
+        }
+      ],
+      "label": "miscellaneous-section"
+    }
+  ]
+}

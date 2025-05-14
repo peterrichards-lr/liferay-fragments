@@ -4,7 +4,11 @@
   "htmlPath": "index.html",
   "cssPath": "index.css",
   "icon": "forms",
-  "name": "Star Rating",
-  "typeOptions": {"fieldTypes": ["select", "number"]},
+  "name": "Populated Range",
+  "typeOptions": {
+    "fieldTypes": [
+      "number"
+    ]
+  },
   "type": "input"
 }

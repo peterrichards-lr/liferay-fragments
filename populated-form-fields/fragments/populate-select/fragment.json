@@ -3,8 +3,13 @@
   "jsPath": "index.js",
   "htmlPath": "index.html",
   "cssPath": "index.css",
-  "icon": "forms",
-  "name": "Star Rating",
-  "typeOptions": {"fieldTypes": ["select", "number"]},
+  "icon": "select",
+  "name": "Populate Select",
+  "typeOptions": {
+    "fieldTypes": [
+      "relationship",
+      "select"
+    ]
+  },
   "type": "input"
 }

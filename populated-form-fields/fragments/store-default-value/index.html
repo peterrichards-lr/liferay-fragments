@@ -1,0 +1,25 @@
+[#assign
+fragmentName = "Store Default Value",
+fragmentClassName = fragmentName?lower_case?replace(' ', '-'),
+fragmentUniqueClassName = "${fragmentClassName}-${fragmentEntryLinkNamespace}",
+fragmentClassesList = [
+fragmentUniqueClassName,
+fragmentClassName
+]?filter(x -> x?has_content),
+fragmentClasses = fragmentClassesList?join(' '),
+fragmentHeaderClass = '${fragmentClassName}-padding' + (configuration.fragmentHeader?then(' show',''))
+/]
+<div data-lfr-js-fragment-unique-class-name="${fragmentUniqueClassName}" data-lfr-js-fragment-name="${fragmentName}" data-lfr-js-fragment-class-name="${fragmentClassName}" class="${fragmentClasses}">
+	<div class="${fragmentHeaderClass}">${fragmentName}</div>
+</div>
+<div class="config" style="display: none">
+	<label for="${fragmentUniqueClassName}-key">Form Value Key</label>
+	<span id="${fragmentUniqueClassName}-key" data-lfr-editable-id="01-key" data-lfr-js-id="key" data-lfr-js-type="string"
+		data-lfr-editable-type="text">*** key not set ***</span>
+	<label for="${fragmentUniqueClassName}-value">Form Value</label>
+	<span id="${fragmentUniqueClassName}-value" data-lfr-editable-id="02-value" data-lfr-js-id="value" data-lfr-js-type="${configuration.dataLfrJsType}"
+		data-lfr-editable-type="text">*** value not set ***</span>
+	<label for="${fragmentUniqueClassName}-condition-value">Condition Value</label>
+	<span id="${fragmentUniqueClassName}-condition-value" data-lfr-editable-id="03-condition-value" data-lfr-js-id="conditionFieldValue" data-lfr-js-type="${configuration.conditionValueType}"
+		data-lfr-editable-type="text">*** value not set ***</span>
+</div>

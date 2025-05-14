@@ -1,0 +1,100 @@
+{
+  "fieldSets": [
+    {
+      "fields": [
+        {
+          "defaultValue": "string",
+          "label": "data-lfr-js-type",
+          "name": "dataLfrJsType",
+          "type": "select",
+          "typeOptions": {
+            "validValues": [
+              {
+                "label": "string",
+                "value": "string"
+              },
+              {
+                "label": "integer",
+                "value": "int"
+              },
+              {
+                "label": "boolean",
+                "value": "bool"
+              }
+            ]
+          }
+        },
+        {
+          "defaultValue": true,
+          "label": "use-condition-field",
+          "name": "useConditionField",
+          "type": "checkbox"
+        },
+        {
+          "dataType": "string",
+          "description": "condition-value-description",
+          "label": "condition-value",
+          "name": "conditionValue",
+          "type": "text"
+        },
+        {
+          "defaultValue": "string",
+          "description": "condition-value-type-description",
+          "label": "condition-value-type",
+          "name": "conditionValueType",
+          "type": "select",
+          "typeOptions": {
+            "validValues": [
+              {
+                "label": "string",
+                "value": "string"
+              },
+              {
+                "label": "integer",
+                "value": "int"
+              },
+              {
+                "label": "boolean",
+                "value": "bool"
+              }
+            ]
+          }
+        }
+      ],
+      "label": "data-mapping"
+    },
+    {
+      "fields": [
+        {
+          "defaultValue": true,
+          "label": "debug-enabled",
+          "name": "enableDebug",
+          "type": "checkbox"
+        },
+        {
+          "defaultValue": true,
+          "description": "fragment-header-description",
+          "label": "fragment-header",
+          "name": "fragmentHeader",
+          "type": "checkbox"
+        },
+        {
+          "defaultValue": true,
+          "description": "all-portlets-ready-description",
+          "label": "all-portlets-ready",
+          "name": "allPortletsReady",
+          "type": "checkbox"
+        },
+        {
+          "dataType": "int",
+          "defaultValue": "1000",
+          "description": "initialize-delay-description",
+          "label": "initialize-delay",
+          "name": "initializeDelay",
+          "type": "text"
+        }
+      ],
+      "label": "miscellaneous-section"
+    }
+  ]
+}

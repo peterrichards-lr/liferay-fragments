@@ -1,0 +1,34 @@
+{
+	"fieldSets": [
+		{
+			"fields": [
+				{
+					"defaultValue": true,
+					"label": "use-storage-value",
+					"name": "useStorageValue",
+					"type": "checkbox"
+				},
+				{
+					"dataType": "string",
+					"description": "storage-key-prefix-description",
+					"label": "storage-key-prefix",
+					"name": "storageKeyPrefix",
+					"type": "text"
+				},
+				{
+					"defaultValue": false,
+					"label": "use-specific-storage-key",
+					"name": "useSpecificStorageKey",
+					"type": "checkbox"
+				},
+				{
+					"dataType": "string",
+					"description": "specific-storage-key-description",
+					"label": "specific-storage-key",
+					"name": "specificStorageKey",
+					"type": "text"
+				}
+			]
+		}
+	]
+}

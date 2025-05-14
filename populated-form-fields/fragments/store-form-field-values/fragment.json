@@ -3,8 +3,7 @@
   "jsPath": "index.js",
   "htmlPath": "index.html",
   "cssPath": "index.css",
-  "icon": "forms",
-  "name": "Star Rating",
-  "typeOptions": {"fieldTypes": ["select", "number"]},
-  "type": "input"
+  "icon": "code",
+  "name": "Store Form Field Values",
+  "type": "component"
 }

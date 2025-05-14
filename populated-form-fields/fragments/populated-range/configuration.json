@@ -1,0 +1,109 @@
+{
+  "fieldSets": [
+    {
+      "fields": [
+        {
+          "dataType": "string",
+          "defaultValue": "",
+          "label": "placeholder",
+          "localizable": true,
+          "name": "placeholder",
+          "type": "text"
+        },
+        {
+          "dataType": "string",
+          "defaultValue": false,
+          "label": "custom-range",
+          "name": "customRange",
+          "type": "checkbox"
+        },
+        {
+          "dataType": "int",
+          "defaultValue": "0",
+          "label": "min",
+          "name": "min",
+          "type": "text"
+        },
+        {
+          "dataType": "int",
+          "defaultValue": "10",
+          "label": "max",
+          "name": "max",
+          "type": "text"
+        },
+        {
+          "dataType": "int",
+          "defaultValue": "1",
+          "label": "step",
+          "name": "step",
+          "type": "text"
+        },
+        {
+          "dataType": "string",
+          "defaultValue": true,
+          "label": "display-value",
+          "name": "displayValue",
+          "type": "checkbox"
+        },
+        {
+          "dataType": "string",
+          "defaultValue": "",
+          "label": "value-prefix",
+          "name": "valuePrefix",
+          "type": "text"
+        },
+        {
+          "dataType": "string",
+          "defaultValue": "",
+          "label": "value-suffix",
+          "name": "valueSuffix",
+          "type": "text"
+        },
+        {
+          "dataType": "string",
+          "defaultValue": false,
+          "label": "add-id",
+          "name": "addId",
+          "type": "checkbox"
+        },
+        {
+          "dataType": "string",
+          "defaultValue": "",
+          "label": "id-value",
+          "name": "idValue",
+          "type": "text"
+        }
+      ]
+    },
+    {
+      "fields": [
+        {
+          "defaultValue": true,
+          "label": "use-storage-value",
+          "name": "useStorageValue",
+          "type": "checkbox"
+        },
+        {
+          "dataType": "string",
+          "description": "storage-key-prefix-description",
+          "label": "storage-key-prefix",
+          "name": "storageKeyPrefix",
+          "type": "text"
+        },
+        {
+          "defaultValue": false,
+          "label": "use-specific-storage-key",
+          "name": "useSpecificStorageKey",
+          "type": "checkbox"
+        },
+        {
+          "dataType": "string",
+          "description": "specific-storage-key-description",
+          "label": "specific-storage-key",
+          "name": "specificStorageKey",
+          "type": "text"
+        },
+      ]
+    }
+  ]
+}

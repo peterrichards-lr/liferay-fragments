@@ -1,0 +1,24 @@
+.store-form-field-values {
+}
+
+.store-form-field-values-padding {
+  height: 0;
+  overflow: hidden;
+}
+
+.config span {
+  display: block;
+}
+
+body.has-edit-mode-menu .page-editor .store-form-field-values-padding.show {
+  height: 26px;
+  min-height: 26px;
+  box-sizing: border-box;
+  background-color: rgb(247, 248, 249);
+  text-align: center;
+  font-size: 12px;
+  line-height: 26px;
+  border-radius: 2px 2px 0 0;
+  padding: 0 8px 0 8px;
+  font-weight: 600;
+}
