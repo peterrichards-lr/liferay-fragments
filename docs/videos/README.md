@@ -6,7 +6,7 @@ A selction of vidoes to demonstrate some of the features of these fragments and 
 
 This set of fragments were created to allow Liferay users to build out wizard style forms with several steps / pages.
 
-** N.B. This has more recently become obsolete with the out of the box Stepper feature. Find out more [here](https://learn.liferay.com/w/dxp/site-building/creating-pages/page-fragments-and-widgets/using-fragments/using-form-fragments/using-fragments-to-build-multi-step-forms#using-fragments-to-build-multi-step-forms) **
+__N.B. This has more recently become obsolete with the out of the box Stepper feature. Find out more [here](https://learn.liferay.com/w/dxp/site-building/creating-pages/page-fragments-and-widgets/using-fragments/using-form-fragments/using-fragments-to-build-multi-step-forms#using-fragments-to-build-multi-step-forms)__
 
 [Tracker Form](Tracker%20Form.mp4)
 
