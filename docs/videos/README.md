@@ -1,4 +1,4 @@
-# Liferay Fragment Cideos
+# Liferay Fragment Videos
 
 A selction of vidoes to demonstrate some of the features of these fragments and how they can be used.
 
