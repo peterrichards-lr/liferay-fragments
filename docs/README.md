@@ -1,6 +1,10 @@
 # liferay-fragments
 A selection of Liferay Fragments
 
+## Videos
+
+I am sharing some helpful videos [here](./videos/).
+
 ## Meter Reading
 This fragement captures a numeric value using individual input elements for each digit. It does this while supporting usual input experience, such as moving to the next digit as it is provided, removing each digit as backspace or delete are used and copy and paste of a suitability sized number.
 
