@@ -15,4 +15,5 @@ This set of fragments were created to allow Liferay users to build out wizard st
 These two videos demonstrate how to use the fragments to build a top or side menu.
 
 [Building a top menu](Building%20Top%20Menu.mp4)
+
 [Bulding a righthand side menu](Building%20Righthand%20Side%20Menu.mp4)
