@@ -1,0 +1,108 @@
+.segmented-numeric {
+	--segmented-numeric-spacing: 0.5rem;
+	--segmented-numeric-digit-border-radius: 0.75rem;
+	--segmented-numeric-digit-font-family: Courier, Courier New, serif;
+	--segmented-numeric-digit-font-weight: 700;
+	--label-font-family: Arial, Helvetica, sans-serif;
+	--label-font-weight: 700;
+	--segmented-numeric-digit-padding-y: calc((var(--segmented-numeric-font-size, 4rem) / 4) * 2.25);
+	--segmented-numeric-digit-padding-x: calc(var(--segmented-numeric-font-size, 4rem) / 4);
+	--segmented-numeric-digit-height: calc(
+		var(--segmented-numeric-font-size, 4rem) + var(--segmented-numeric-digit-padding-y, 2.25rem)
+	);
+	--segmented-numeric-digit-width: calc(var(--segmented-numeric-font-size, 4rem) + var(--segmented-numeric-digit-padding-x, 1rem));
+	--segmented-numeric-height: calc(
+		var(--segmented-numeric-digit-height, 6.25rem) + var(--label-font-size, 0.8rem) + var(--segmented-numeric-spacing, 0.5rem)
+	);
+}
+
+.segmented-numeric {
+	display: inline-block;
+}
+
+.segmented-numeric form {
+	display: flex;
+	flex-direction: column;
+}
+
+.segmented-numeric div.number {
+	white-space: nowrap;
+	margin: var(--segmented-numeric-spacing, 0.5rem);
+	height: var(--segmented-numeric-height, 6rem);
+}
+
+.segmented-numeric div.number.hide-label {
+	height: calc(
+		var(--segmented-numeric-height, 6rem) - var(--label-font-size, 0.8rem) + var(--segmented-numeric-spacing, 0.5rem)
+	);
+}
+
+.segmented-numeric div.control {
+	margin-left: auto;
+	margin-top: calc(var(--segmented-numeric-spacing, 0.5rem) * 2);
+	margin-right: calc(var(--segmented-numeric-spacing, 0.5rem) * 2);
+}
+
+.segmented-numeric input.digit[type="text"],
+.segmented-numeric input.digit[type="number"] {
+	display: block;
+	margin: 0;
+	margin-bottom: var(--segmented-numeric-spacing, 0.5rem);
+	border-radius: var(--segmented-numeric-digit-border-radius, 0.75rem);
+	box-sizing: border-box;
+	line-height: var(--segmented-numeric-font-size, 4rem);
+	font-family: var(--segmented-numeric-font-family, Courier, Courier New, serif);
+	font-size: var(--segmented-numeric-font-size, 4rem);
+	font-weight: var(--segmented-numeric-font-weight, 700);
+	padding-top: var(--segmented-numeric-digit-padding-y, 2.25rem);
+	padding-bottom: var(--segmented-numeric-digit-padding-y, 2.25rem);
+	padding-left: var(--segmented-numeric-digit-padding-x, 1rem);
+	padding-right: var(--segmented-numeric-digit-padding-x, 1rem);
+	height: var(--segmented-numeric-digit-height, 6.25rem);
+	width: var(--segmented-numeric-digit-width, 4.5rem);
+	text-align: center;
+}
+
+.segmented-numeric input.digit.int[type="text"],
+.segmented-numeric input.digit.int[type="number"] {
+	color: var(--segmented-numeric-integer-color, white);
+	background-color: var(--segmented-numeric-integer-background-color, black);
+}
+
+.segmented-numeric input.digit.dec[type="text"],
+.segmented-numeric input.digit.dec[type="number"] {
+	color: var(--segmented-numeric-decimal-color, white);
+	background-color: var(--segmented-numeric-decimal-background-color, red);
+}
+
+.segmented-numeric label.digit {
+	vertical-align: text-top;
+	white-space: wrap;
+	text-align: center;
+	font-family: var(--label-font-family, Arial, Helvetica, sans-serif);
+	font-size: var(--label-font-size, 0.8rem);
+	line-height: var(--label-font-size, 0.8rem);
+	color: var(--label-color, green);
+	font-weight: var(--label-font-weight, 700);
+	height: var(--segmented-numeric-digit-height, 6.25rem);
+	width: var(--segmented-numeric-digit-width, 4.5rem);
+}
+
+.segmented-numeric label.digit.hide-label {
+	height: var(--segmented-numeric-digit-height, 6.25rem);
+	font-size: 0;
+}
+
+.segmented-numeric input.digit[type="number"]::-webkit-inner-spin-button,
+.segmented-numeric input.digit[type="number"]::-webkit-outer-spin-button {
+	opacity: 1;
+}
+
+.segmented-numeric input[type="number"]::-webkit-outer-spin-button,
+.segmented-numeric input[type="number"]::-webkit-inner-spin-button {
+	-webkit-appearance: inner-spin-button !important;
+	position: absolute;
+	top: 0;
+	right: 0;
+	height: 100%;
+}

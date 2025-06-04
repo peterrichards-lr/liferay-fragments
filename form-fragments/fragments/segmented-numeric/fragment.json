@@ -1,0 +1,10 @@
+{
+  "configurationPath": "configuration.json",
+  "jsPath": "index.js",
+  "htmlPath": "index.ftl",
+  "cssPath": "index.css",
+  "icon": "forms",
+  "name": "Segmented Numeric",
+  "typeOptions": {"fieldTypes": ["number"]},
+  "type": "input"
+}

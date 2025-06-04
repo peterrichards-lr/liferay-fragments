@@ -1,0 +1,119 @@
+{
+  "fieldSets": [
+    {
+      "fields": [
+        {
+          "defaultValue": false,
+          "label": "integer-number",
+          "description": "integer-number-desc",
+          "name": "integerNumber",
+          "type": "checkbox"
+        },
+        {
+          "defaultValue": true,
+          "label": "allow-partial-paste",
+          "description": "allow-partial-paste-desc",
+          "name": "allowPartialPaste",
+          "type": "checkbox"
+        }
+      ],
+      "label": "General"
+    },
+    {
+      "fields": [
+        {
+          "defaultValue": false,
+          "label": "enable-spinner",
+          "name": "enableSpinner",
+          "type": "checkbox"
+        },
+        {
+          "defaultValue": "4rem",
+          "label": "digit-font-size",
+          "name": "digitFontSize",
+          "type": "length"
+        },
+				{
+          "defaultValue": "5",
+          "label": "integer-digit-count",
+          "name": "integerDigitCount",
+          "type": "text",
+          "dataType": "int"
+        },
+				{
+          "label": "integer-fg-color",
+          "name": "integerFGColor",
+          "type": "colorPicker",
+          "defaultValue": "#FFFFFF"
+        },
+        {
+          "label": "integer-bg-color",
+          "name": "integerBGColor",
+          "type": "colorPicker",
+          "defaultValue": "#000000"
+        },
+        {
+          "defaultValue": "3",
+          "label": "decimal-digit-count",
+          "name": "decimalDigitCount",
+          "type": "text",
+          "dataType": "int"
+        },
+				{
+          "label": "decimal-fg-color",
+          "name": "decimalFGColor",
+          "type": "colorPicker",
+          "defaultValue": "#FFFFFF"
+        },
+        {
+          "label": "decimal-bg-color",
+          "name": "decimalBGColor",
+          "type": "colorPicker",
+          "defaultValue": "#FF0000"
+        }
+      ],
+      "label": "Digits"
+    },
+    {
+      "fields": [
+				{
+          "defaultValue": true,
+          "label": "show-labels",
+          "name": "showLabels",
+          "type": "checkbox"
+        },
+        {
+          "label": "label-color",
+          "name": "labelColor",
+          "type": "colorPicker",
+          "defaultValue": "#008000"
+        },
+        {
+          "defaultValue": "0.8rem",
+          "label": "label-font-size",
+          "name": "labelFontSize",
+          "type": "length"
+        },
+        {
+          "defaultValue": ";;;;1,000 litres;100 litres;10 litres; 1 litre ",
+          "label": "label-list",
+          "description": "label-list-desc",
+          "name": "labelList",
+          "type": "text"
+        }
+      ],
+      "label": "Labels"
+    },
+		{
+      "fields": [
+        {
+          "defaultValue": false,
+          "label": "debug-enabled",
+          "name": "enableDebug",
+          "type": "checkbox"
+        }
+      ],
+      "label": "miscellaneous-section"
+    }
+  ]
+}
