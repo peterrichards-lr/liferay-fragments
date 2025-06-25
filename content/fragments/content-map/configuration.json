@@ -1,0 +1,262 @@
+{
+  "fieldSets": [
+    {
+      "fields": [
+        {
+          "description": "collection-description",
+          "label": "collection",
+          "name": "collectionIdentier",
+          "type": "text"
+        }
+      ],
+      "label": "collection"
+    },
+    {
+      "fields": [
+        {
+          "defaultValue": true,
+          "label": "auto-fit-bounds",
+          "name": "autoFitBounds",
+          "type": "checkbox"
+        },
+        {
+          "dataType": "int",
+          "defaultValue": "20",
+          "label": "map-center-latitude",
+          "name": "mapCenterLat",
+          "type": "text",
+          "typeOptions": {
+            "dependency": {
+              "autoFitBounds": {
+                "type": "equal",
+                "value": "false"
+              }
+            }
+          }
+        },
+        {
+          "dataType": "int",
+          "defaultValue": "0",
+          "label": "map-center-longitude",
+          "name": "mapCenterLong",
+          "type": "text",
+          "typeOptions": {
+            "dependency": {
+              "autoFitBounds": {
+                "type": "equal",
+                "value": "false"
+              }
+            }
+          }
+        },
+        {
+          "dataType": "int",
+          "defaultValue": "2",
+          "label": "map-zoom",
+          "name": "mapZoom",
+          "type": "text",
+          "typeOptions": {
+            "dependency": {
+              "autoFitBounds": {
+                "type": "equal",
+                "value": "false"
+              }
+            }
+          }
+        }
+      ],
+      "label": "map-config"
+    },
+    {
+      "fields": [
+        {
+          "dataType": "string",
+          "defaultValue": "osm",
+          "label": "map-provider",
+          "name": "mapProvider",
+          "type": "select",
+          "typeOptions": {
+            "validValues": [
+              {
+                "label": "google-maps",
+                "value": "google"
+              },
+              {
+                "label": "openstreetmap",
+                "value": "osm"
+              }
+            ]
+          }
+        },
+        {
+          "label": "api-key",
+          "name": "googleApiKey",
+          "type": "text",
+          "typeOptions": {
+            "dependency": {
+              "mapProvider": {
+                "type": "equal",
+                "value": "google"
+              }
+            }
+          }
+        },
+        {
+          "defaultValue": "DEMO_MAP_ID",
+          "description": "google-map-id-description",
+          "label": "google-map-id",
+          "name": "googleMapId",
+          "type": "text",
+          "typeOptions": {
+            "dependency": {
+              "mapProvider": {
+                "type": "equal",
+                "value": "google"
+              }
+            }
+          }
+        }
+      ],
+      "label": "map-provider"
+    },
+    {
+      "fields": [
+        {
+          "defaultValue": false,
+          "label": "use-custom-markers",
+          "name": "useCustomMarkers",
+          "type": "checkbox"
+        },
+        {
+          "description": "vocabulary-id-description",
+          "label": "vocabulary-id",
+          "name": "vocabularyId",
+          "type": "text",
+          "typeOptions": {
+            "dependency": {
+              "useCustomMarkers": {
+                "type": "equal",
+                "value": "true"
+              }
+            }
+          }
+        }
+      ],
+      "label": "custom-markers"
+    },
+    {
+      "fields": [
+        {
+          "defaultValue": "click",
+          "description": "info-window-trigger-description",
+          "label": "info-window-trigger",
+          "name": "infoWindowTrigger",
+          "type": "select",
+          "typeOptions": {
+            "validValues": [
+              {
+                "label": "hover",
+                "value": "hover"
+              },
+              {
+                "label": "click",
+                "value": "click"
+              },
+              {
+                "label": "none",
+                "value": "none"
+              }
+            ]
+          }
+        },
+        {
+          "dataType": "int",
+          "defaultValue": "200",
+          "description": "info-window-close-delay-description",
+          "label": "info-window-close-delay",
+          "name": "infoWindowCloseDelay",
+          "type": "text"
+        },
+        {
+          "defaultValue": false,
+          "label": "use-custom-info-template",
+          "name": "useCustomInfoTemplate",
+          "type": "checkbox"
+        },
+        {
+          "description": "info-template-id-description",
+          "label": "info-template-id",
+          "name": "contentTemplateId",
+          "type": "text",
+          "typeOptions": {
+            "dependency": {
+              "useCustomInfoTemplate": {
+                "type": "equal",
+                "value": "true"
+              }
+            }
+          }
+        }
+      ],
+      "label": "info-window"
+    },
+    {
+      "fields": [
+        {
+          "defaultValue": false,
+          "description": "navigate-on-click-description",
+          "label": "navigate-on-click",
+          "name": "navigateOnClick",
+          "type": "checkbox"
+        },
+        {
+          "defaultValue": false,
+          "description": "open-in-new-tab-description",
+          "label": "open-in-new-tab",
+          "name": "openInNewTab",
+          "type": "checkbox",
+          "typeOptions": {
+            "dependency": {
+              "navigateOnClick": {
+                "type": "equal",
+                "value": "true"
+              }
+            }
+          }
+        },
+        {
+          "defaultValue": false,
+          "label": "use-custom-display-page",
+          "name": "useCustomDisplayPage",
+          "type": "checkbox"
+        },
+        {
+          "description": "display-page-url-description",
+          "label": "display-page-url",
+          "name": "displayPageTemplateUrl",
+          "type": "text",
+          "typeOptions": {
+            "dependency": {
+              "useCustomDisplayPage": {
+                "type": "equal",
+                "value": "true"
+              }
+            }
+          }
+        }
+      ],
+      "label": "display-page-navigation"
+    },
+    {
+      "fields": [
+        {
+          "defaultValue": false,
+          "label": "debug-enabled",
+          "name": "enableDebug",
+          "type": "checkbox"
+        }
+      ],
+      "label": "miscellaneous"
+    }
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "configurationPath": "configuration.json",
+  "cssPath": "index.css",
+  "htmlPath": "index.ftl",
+  "icon": "maps",
+  "jsPath": "index.js",
+  "name": "Content Map",
+  "thumbnailPath": "thumbnail.png",
+  "type": "component"
+}
