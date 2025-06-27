@@ -140,6 +140,21 @@
               }
             }
           }
+        },
+        {
+          "defaultValue": true,
+          "description": "marker-fallback-description",
+          "label": "marker-fallback",
+          "name": "markerFallback",
+          "type": "checkbox",
+          "typeOptions": {
+            "dependency": {
+              "useCustomMarkers": {
+                "type": "equal",
+                "value": "true"
+              }
+            }
+          }
         }
       ],
       "label": "custom-markers"
@@ -188,6 +203,21 @@
           "label": "info-template-id",
           "name": "contentTemplateId",
           "type": "text",
+          "typeOptions": {
+            "dependency": {
+              "useCustomInfoTemplate": {
+                "type": "equal",
+                "value": "true"
+              }
+            }
+          }
+        },
+        {
+          "defaultValue": true,
+          "description": "template-fallback-description",
+          "label": "template-fallback",
+          "name": "templateFallback",
+          "type": "checkbox",
           "typeOptions": {
             "dependency": {
               "useCustomInfoTemplate": {
@@ -253,6 +283,13 @@
           "defaultValue": false,
           "label": "debug-enabled",
           "name": "enableDebug",
+          "type": "checkbox"
+        },
+        {
+          "defaultValue": false,
+          "description": "debug-in-error-handler-description",
+          "label": "debug-in-error-handler",
+          "name": "debugInErrorHandler",
           "type": "checkbox"
         }
       ],
