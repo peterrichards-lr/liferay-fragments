@@ -65,7 +65,7 @@ const defaultTemplate =
 `;
 
 const loadScript = (src, opts = {}) => {
-  const { async = false, defer = false } = opts;
+  const { async = false, defer = false, sennaTrack = 'temporary' } = opts;
 
   // 1) Check if already loaded
   if (document.querySelector(`script[src="${src}"]`)) {
@@ -79,6 +79,7 @@ const loadScript = (src, opts = {}) => {
     script.src = src;
     script.async = async;
     script.defer = defer;
+    script.setAttribute('data-senna-track', sennaTrack);
 
     const cleanupAndResolve = () => {
       teardown();
@@ -105,7 +106,7 @@ const loadScript = (src, opts = {}) => {
 }
 
 const loadCSS = (href, opts = {}) => {
-  const { async = false } = opts;
+  const { async = false, sennaTrack = 'temporary' } = opts;
 
   // 1) If already present, skip
   if (document.querySelector(`link[href="${href}"]`)) {
@@ -120,6 +121,7 @@ const loadCSS = (href, opts = {}) => {
       link.rel = 'preload';
       link.as = 'style';
       link.href = href;
+      link.setAttribute('data-senna-track', sennaTrack);
       link.onload = () => {
         link.onload = null;
         // switch to real stylesheet
@@ -133,6 +135,7 @@ const loadCSS = (href, opts = {}) => {
     } else {
       link.rel = 'stylesheet';
       link.href = href;
+      link.setAttribute('data-senna-track', sennaTrack);
       link.onload = () => resolve();
       link.onerror = () => reject(new Error(`Failed to load CSS: ${href}`));
     }
@@ -783,7 +786,7 @@ if (mapProvider === 'google') {
     if (!googleApiKey) throw { type: "config", message: "Please specify your Google Maps API key" };
     if (!googleMapId) throw { type: "config", message: "Please specify your Google Maps Id" };
     const googleMapSrc = `https://maps.googleapis.com/maps/api/js?key=${googleApiKey}&libraries=marker&map_ids=${googleMapId}`;
-    loadScript(googleMapSrc)
+    loadScript(googleMapSrc, { async: true })
       .then(doMapping)
       .catch(errorHandler);
   } catch (err) {
@@ -792,7 +795,7 @@ if (mapProvider === 'google') {
 } else {
   const osmSrc = `https://unpkg.com/leaflet/dist/leaflet.js`;
   const osmCssSrc = `https://unpkg.com/leaflet/dist/leaflet.css`;
-  loadScript(osmSrc)
+  loadScript(osmSrc, { async: true })
     .then(() => loadCSS(osmCssSrc))
     .then(doMapping)
     .catch(errorHandler);
