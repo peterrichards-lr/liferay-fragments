@@ -1,8 +1,8 @@
-# Conent Fragments
+# Content Fragments
 
 ## Content Map
 
-This fragment uses the headless API to deliver an ehnahced content map similar to what the Asset Publisher provides.
+This fragment uses the headless API to deliver an enhanced content map similar to what the Asset Publisher provides.
 
 - You can use the default markers and info window template to get going straightaway.
 - You can use OpenStreetMap (Leaflet) or Google Maps.
@@ -12,12 +12,13 @@ This fragment uses the headless API to deliver an ehnahced content map similar t
 - You can configure taxonomy within DXP to specify the icon and colour used for each marker. The fragment uses UNKPG icons. - The priority property can be used to control which category icon is used where multiple categories are mapped to a web content item.
 - You can use a Web Content Template to control the layout of the info window. This uses custom placeholders which are substituted when the template is rendered in the fragment.
 
-
 ![ontnet Map](../docs/images/content-map.png)
 
 ### Videos
 
-[Custom Markers](../docs/videos/Content%20Map%20Fragment%20-%20Custom%20Markers.mp4)
+- [Custom Markers](../docs/videos/Content%20Map%20Fragment%20-%20Custom%20Markers.mp4)
+- [Basic](../docs/videos/Content%20Map%20Fragment%20-%20Basic.mp4)
+- [Advanced](../docs/videos/Content%20Map%20Fragment%20-%20Advanced.mp4)
 
 ### Usage
 
@@ -36,9 +37,58 @@ This fragment supports custom markers through Liferay Taxonomy. This requires cr
 
 There is an additional priority property which is used when a web content item has been assigned more than one category so that the fragment can determine which icon and colour to use. A value with a lower value is given a higher priority, negative integers are also supported.
 
+__You can configure the fragment to fallback to the default markers within the map provider in the case where the user does not have permission to read the category or it was not found.__
+
+1. Create a new vocabulary
+2. Create one or more categories
+3. For each category, add icon, colour and priority properties
+4. Assign one or more categories to the web content items
+
 ![Category - properties](../docs/images/content-map-category-properties.png)
 
-1. Create a new vocabolary
-2. Cretae one or more categories
-3. For each category, add icon, colour and priority properties
-4. Assign one or more cateogries to the web content items
+### Custom Info Window
+
+The fragment makes use of Liferay Content Templates to customise the content of the Info window. Below is an example of a custom template.
+
+To reference web content fields within the template, use the {{...}} syntax. The Field Reference is used for the name of the field and a dot notation is used to navigate to it within the structure where the Label of each nested field set is the path. For example, the buildingNameNumber field is within a field set with a label Address, which in turn is nested within a field set called Location.
+
+```html
+<div class="info-window">
+  <h3>{{location.address.buildingNameNumber}}</h3>
+  <p><em>{{categories}}</em></p>
+  <div>{{description}}</div>
+  <p>Published: {{datePublished}}</p>
+  <p>Phone: {{contactInformation.phoneNumber}}</p>
+  <p>
+    Website:
+    <a href="{{contactInformation.website}}" target="_blank">
+      {{contactInformation.website}}
+    </a>
+  </p>
+</div>
+```
+
+__You can configure the fragment to fallback to the default Info template in the case where the user does not have permission to read the template or it was not found.__
+
+### Guest Permissions
+
+In order to allow anonymous / guest users to view the template then you need to create a new the Service Access Policy.
+
+Depending on the value provided when configuring the Collection the Service Access Policy needs to include one or more of the following service signatures.
+
+- Id - ``com.liferay.headless.delivery.internal.resource.v1_0.ContentSetElementResourceImpl#getContentSetContentSetElementsPage``
+- Key - ``com.liferay.headless.delivery.internal.resource.v1_0.ContentSetElementResourceImpl#getSiteContentSetByKeyContentSetElementsPage``
+- UUID - ``com.liferay.headless.delivery.internal.resource.v1_0.ContentSetElementResourceImpl#getSiteContentSetByUuidContentSetElementsPage``
+- Name - ``com.liferay.headless.delivery.internal.resource.v1_0.ContentSetElementResourceImpl#getSiteContentSetByKeyContentSetElementsPage``
+
+__The service signature for the Key and Name are the same, the fragment knows how to convert the name into a key__
+
+For custom markers, add the following service signature:
+
+``com.liferay.headless.admin.taxonomy.internal.resource.v1_0.BaseTaxonomyCategoryResourceImpl#getTaxonomyVocabularyTaxonomyCategoriesPage``
+
+Finally, to define a custom template, add this service signature:
+
+``com.liferay.headless.delivery.internal.resource.v1_0.ContentTemplateResourceImpl#getSiteContentTemplate``
+
+![Service Access Policy](../docs/images/content-map-service-access-policy.png)
