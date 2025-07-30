@@ -1,0 +1,39 @@
+.service-icon {
+  --size: var(--size, 72px);
+  --font-size: calc(var(--size) / 3);
+  --top: calc(50% - (var(--font-size, 24px) / 2));
+  --left: calc(50% - (var(--font-size, 24px) / 2));
+  --padding: calc(var(--size) / 4.5);
+  padding-top: var(--padding);
+}
+
+.service-icon .circle {
+  height: var(--size);
+  width: var(--size);
+  background-color: var(--background-color, #d7e5ff);
+  border-radius: 50%;
+  display: block;
+  margin: 0px auto;
+}
+
+.service-icon .circle .svg-icon {
+  position: relative;
+  font-size: var(--font-size);
+  line-height: var(--font-size);
+  top: var(--top);
+  left: var(--left);
+  color: var(--icon-color, #0960ff);
+}
+
+.service-icon a,
+a.service-icon {
+  color: inherit;
+}
+
+.service-icon .text {
+  padding: var(--padding);
+  text-align: center;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 18px;
+}

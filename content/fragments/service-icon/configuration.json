@@ -1,0 +1,87 @@
+{
+  "fieldSets": [
+    {
+      "fields": [
+        {
+          "defaultValue": false,
+          "label": "asset-library-collection",
+          "name": "assetLibraryCollection",
+          "type": "checkbox"
+        },
+        {
+          "description": "asset-library-id-description",
+          "label": "asset-library-id",
+          "name": "assetLibraryId",
+          "type": "text"
+        }
+      ],
+      "label": "content"
+    },
+		{
+      "fields": [
+        {
+          "defaultValue": false,
+          "description": "use-default-page-url-description",
+          "label": "use-default-page-url",
+          "name": "useDefaultPageUrl",
+          "type": "checkbox"
+        },
+        {
+          "description": "default-page-url-description",
+          "label": "default-page-url",
+          "name": "defaultPageUrl",
+          "type": "text"
+        }
+      ],
+      "label": "page-url"
+    },
+    {
+      "fields": [
+        {
+          "defaultValue": "#d7e5ff",
+          "label": "Background Color",
+          "name": "backgroundColor",
+          "type": "colorPicker"
+        },
+        {
+          "dataType": "string",
+          "defaultValue": "coin",
+          "label": "Default Symbol",
+          "name": "defaultIcon",
+          "type": "text"
+        },
+        {
+          "defaultValue": "#0960ff",
+          "label": "Icon Color",
+          "name": "iconColor",
+          "type": "colorPicker"
+        },
+        {
+          "defaultValue": "72px",
+          "label": "size",
+          "name": "size",
+          "type": "length"
+        }
+      ],
+      "label": "icon"
+    },
+    {
+      "fields": [
+        {
+          "defaultValue": false,
+          "label": "debug-enabled",
+          "name": "enableDebug",
+          "type": "checkbox"
+        },
+        {
+          "defaultValue": false,
+          "description": "debug-in-error-handler-description",
+          "label": "debug-in-error-handler",
+          "name": "debugInErrorHandler",
+          "type": "checkbox"
+        }
+      ],
+      "label": "miscellaneous"
+    }
+  ]
+}

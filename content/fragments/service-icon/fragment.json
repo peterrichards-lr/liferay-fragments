@@ -1,0 +1,10 @@
+{
+  "configurationPath": "configuration.json",
+  "cssPath": "index.css",
+  "htmlPath": "index.ftl",
+  "icon": "link",
+  "jsPath": "index.js",
+  "name": "Service Icon",
+  "thumbnailPath": "thumbnail.png",
+  "type": "component"
+}

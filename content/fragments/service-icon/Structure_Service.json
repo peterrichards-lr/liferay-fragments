@@ -1,0 +1,457 @@
+{
+  "availableLanguageIds": [
+    "en_US"
+  ],
+  "contentType": "journal",
+  "dataDefinitionFields": [
+    {
+      "customProperties": {
+        "labelAtStructureLevel": true,
+        "confirmationErrorMessage": {
+          "en_US": ""
+        },
+        "hideField": false,
+        "dataType": "string",
+        "tooltip": {
+          "en_US": ""
+        },
+        "requireConfirmation": false,
+        "displayStyle": "singleline",
+        "fieldNamespace": "",
+        "visibilityExpression": "",
+        "options": {},
+        "nativeField": false,
+        "confirmationLabel": {
+          "en_US": ""
+        },
+        "fieldReference": "clayIconName",
+        "placeholder": {
+          "en_US": ""
+        },
+        "htmlAutocompleteAttribute": "",
+        "direction": [
+          "vertical"
+        ]
+      },
+      "defaultValue": {
+        "en_US": ""
+      },
+      "fieldType": "text",
+      "indexType": "keyword",
+      "indexable": true,
+      "label": {
+        "en_US": "Clay Icon Name"
+      },
+      "localizable": true,
+      "name": "Text45536745",
+      "nestedDataDefinitionFields": [],
+      "readOnly": false,
+      "repeatable": false,
+      "required": false,
+      "showLabel": true,
+      "tip": {
+        "en_US": ""
+      }
+    },
+    {
+      "customProperties": {
+        "labelAtStructureLevel": true,
+        "confirmationErrorMessage": {
+          "en_US": ""
+        },
+        "hideField": false,
+        "dataType": "string",
+        "tooltip": {
+          "en_US": ""
+        },
+        "requireConfirmation": false,
+        "displayStyle": "singleline",
+        "fieldNamespace": "",
+        "visibilityExpression": "",
+        "options": {},
+        "nativeField": false,
+        "confirmationLabel": {
+          "en_US": ""
+        },
+        "fieldReference": "name",
+        "placeholder": {
+          "en_US": ""
+        },
+        "htmlAutocompleteAttribute": "",
+        "direction": [
+          "vertical"
+        ]
+      },
+      "defaultValue": {
+        "en_US": ""
+      },
+      "fieldType": "text",
+      "indexType": "keyword",
+      "indexable": true,
+      "label": {
+        "en_US": "Name"
+      },
+      "localizable": true,
+      "name": "Text33624891",
+      "nestedDataDefinitionFields": [],
+      "readOnly": false,
+      "repeatable": false,
+      "required": false,
+      "showLabel": true,
+      "tip": {
+        "en_US": ""
+      }
+    },
+    {
+      "customProperties": {
+        "labelAtStructureLevel": true,
+        "confirmationErrorMessage": {
+          "en_US": ""
+        },
+        "hideField": false,
+        "dataType": "string",
+        "tooltip": {
+          "en_US": ""
+        },
+        "requireConfirmation": false,
+        "displayStyle": "singleline",
+        "fieldNamespace": "",
+        "visibilityExpression": "",
+        "options": {},
+        "nativeField": false,
+        "confirmationLabel": {
+          "en_US": ""
+        },
+        "fieldReference": "pageUrlOld",
+        "placeholder": {
+          "en_US": ""
+        },
+        "htmlAutocompleteAttribute": "",
+        "direction": [
+          "vertical"
+        ]
+      },
+      "defaultValue": {
+        "en_US": ""
+      },
+      "fieldType": "text",
+      "indexType": "keyword",
+      "indexable": true,
+      "label": {
+        "en_US": "Page"
+      },
+      "localizable": true,
+      "name": "Text53446458",
+      "nestedDataDefinitionFields": [],
+      "readOnly": false,
+      "repeatable": false,
+      "required": false,
+      "showLabel": true,
+      "tip": {
+        "en_US": ""
+      }
+    },
+    {
+      "customProperties": {
+        "labelAtStructureLevel": true,
+        "confirmationErrorMessage": {
+          "en_US": ""
+        },
+        "hideField": false,
+        "dataType": "string",
+        "tooltip": {
+          "en_US": ""
+        },
+        "requireConfirmation": false,
+        "displayStyle": "singleline",
+        "fieldNamespace": "",
+        "visibilityExpression": "",
+        "options": {},
+        "nativeField": false,
+        "confirmationLabel": {
+          "en_US": ""
+        },
+        "fieldReference": "description",
+        "placeholder": {
+          "en_US": ""
+        },
+        "htmlAutocompleteAttribute": "",
+        "direction": [
+          "vertical"
+        ]
+      },
+      "defaultValue": {
+        "en_US": ""
+      },
+      "fieldType": "text",
+      "indexType": "keyword",
+      "indexable": true,
+      "label": {
+        "en_US": "Description"
+      },
+      "localizable": true,
+      "name": "Text49702478",
+      "nestedDataDefinitionFields": [],
+      "readOnly": false,
+      "repeatable": false,
+      "required": false,
+      "showLabel": true,
+      "tip": {
+        "en_US": ""
+      }
+    },
+    {
+      "customProperties": {
+        "normalizedStructure": false,
+        "labelAtStructureLevel": true,
+        "ddmStructureKey": "644668",
+        "ddmStructureLayoutId": "",
+        "ddmStructureId": "644669",
+        "upgradedStructure": false,
+        "fieldReference": "siteUrls",
+        "rows": [
+          {
+            "columns": [
+              {
+                "size": 12,
+                "fields": [
+                  "Numeric47620052"
+                ]
+              }
+            ]
+          },
+          {
+            "columns": [
+              {
+                "size": 12,
+                "fields": [
+                  "Text16646748"
+                ]
+              }
+            ]
+          }
+        ],
+        "collapsible": true,
+        "externalReferenceCode": "a6a9856a-0c6f-6ef5-094f-eaa78ae908b5"
+      },
+      "defaultValue": {
+        "en_US": ""
+      },
+      "fieldType": "fieldset",
+      "indexable": false,
+      "label": {
+        "en_US": "Site URL"
+      },
+      "localizable": false,
+      "name": "Fieldset02164987",
+      "nestedDataDefinitionFields": [
+        {
+          "customProperties": {
+            "labelAtStructureLevel": true,
+            "confirmationErrorMessage": {
+              "en_US": ""
+            },
+            "hideField": false,
+            "dataType": "integer",
+            "tooltip": {
+              "en_US": ""
+            },
+            "requireConfirmation": false,
+            "inputMask": false,
+            "characterOptions": false,
+            "fieldNamespace": "",
+            "requiredErrorMessage": {
+              "en_US": ""
+            },
+            "visibilityExpression": "",
+            "objectFieldName": "",
+            "inputMaskFormat": {
+              "en_US": ""
+            },
+            "nativeField": false,
+            "confirmationLabel": {
+              "en_US": ""
+            },
+            "fieldReference": "siteId",
+            "placeholder": {
+              "en_US": ""
+            },
+            "numericInputMask": {
+              "en_US": {
+                "decimalPlaces": 2,
+                "append": "",
+                "symbols": {
+                  "decimalSymbol": ".",
+                  "thousandsSeparator": "none"
+                },
+                "appendType": "prefix"
+              }
+            },
+            "htmlAutocompleteAttribute": "",
+            "direction": [
+              "vertical"
+            ]
+          },
+          "defaultValue": {
+            "en_US": ""
+          },
+          "fieldType": "numeric",
+          "indexType": "none",
+          "indexable": true,
+          "label": {
+            "en_US": "Site ID"
+          },
+          "localizable": false,
+          "name": "Numeric47620052",
+          "nestedDataDefinitionFields": [],
+          "readOnly": false,
+          "repeatable": false,
+          "required": false,
+          "showLabel": true,
+          "tip": {
+            "en_US": ""
+          }
+        },
+        {
+          "customProperties": {
+            "labelAtStructureLevel": true,
+            "confirmationErrorMessage": {
+              "en_US": ""
+            },
+            "hideField": false,
+            "dataType": "string",
+            "tooltip": {
+              "en_US": ""
+            },
+            "requireConfirmation": false,
+            "displayStyle": "singleline",
+            "fieldNamespace": "",
+            "requiredErrorMessage": {
+              "en_US": ""
+            },
+            "visibilityExpression": "",
+            "objectFieldName": "",
+            "options": {},
+            "nativeField": false,
+            "confirmationLabel": {
+              "en_US": ""
+            },
+            "fieldReference": "pageUrl",
+            "placeholder": {
+              "en_US": ""
+            },
+            "htmlAutocompleteAttribute": "",
+            "direction": [
+              "vertical"
+            ]
+          },
+          "defaultValue": {
+            "en_US": ""
+          },
+          "fieldType": "text",
+          "indexType": "text",
+          "indexable": true,
+          "label": {
+            "en_US": "Page URL"
+          },
+          "localizable": true,
+          "name": "Text16646748",
+          "nestedDataDefinitionFields": [],
+          "readOnly": false,
+          "repeatable": false,
+          "required": false,
+          "showLabel": true,
+          "tip": {
+            "en_US": ""
+          }
+        }
+      ],
+      "readOnly": false,
+      "repeatable": true,
+      "required": false,
+      "showLabel": true,
+      "tip": {
+        "en_US": ""
+      }
+    }
+  ],
+  "dataDefinitionKey": "496547",
+  "defaultDataLayout": {
+    "dataLayoutFields": {},
+    "dataLayoutPages": [
+      {
+        "dataLayoutRows": [
+          {
+            "dataLayoutColumns": [
+              {
+                "columnSize": 12,
+                "fieldNames": [
+                  "Text45536745"
+                ]
+              }
+            ]
+          },
+          {
+            "dataLayoutColumns": [
+              {
+                "columnSize": 12,
+                "fieldNames": [
+                  "Text33624891"
+                ]
+              }
+            ]
+          },
+          {
+            "dataLayoutColumns": [
+              {
+                "columnSize": 12,
+                "fieldNames": [
+                  "Text53446458"
+                ]
+              }
+            ]
+          },
+          {
+            "dataLayoutColumns": [
+              {
+                "columnSize": 12,
+                "fieldNames": [
+                  "Text49702478"
+                ]
+              }
+            ]
+          },
+          {
+            "dataLayoutColumns": [
+              {
+                "columnSize": 12,
+                "fieldNames": [
+                  "Fieldset02164987"
+                ]
+              }
+            ]
+          }
+        ],
+        "description": {
+          "en_US": ""
+        },
+        "title": {
+          "en_US": ""
+        }
+      }
+    ],
+    "dataRules": [],
+    "description": {},
+    "name": {
+      "en_US": "Service"
+    },
+    "paginationMode": "single-page"
+  },
+  "defaultLanguageId": "en_US",
+  "description": {},
+  "externalReferenceCode": "9c61bdc1-ae23-7d09-7606-9612a17927da",
+  "name": {
+    "en_US": "Service"
+  },
+  "storageType": "default"
+}
