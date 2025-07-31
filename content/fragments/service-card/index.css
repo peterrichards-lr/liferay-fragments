@@ -1,0 +1,53 @@
+div.service-card {
+  --size: var(--size, 72px);
+  --font-size: calc(var(--size) / 3);
+  --top: calc(50% - (var(--font-size, 24px) / 2));
+  --left: calc(50% - (var(--font-size, 24px) / 2));
+  --padding: calc(var(--size) / 4.5);
+
+  border: 1px solid #d8d8d8;
+  border-radius: 0.5rem;
+  padding: var(--spacer-3, 16px) var(--spacer-2, 8px);
+}
+
+div.service-card___content {
+  gap: 1rem;
+}
+
+.service-card a,
+a.service-card {
+  color: inherit;
+}
+
+.service-card a:hover,
+a.service-card:hover {
+  text-decoration: none;
+}
+
+a.service-card:hover {
+  background-color: var(--light, #eff5ff);
+}
+
+.service-card .component-heading {
+  font-size: 1.125rem;
+}
+
+.service-card .circle {
+  height: var(--size);
+  width: var(--size);
+  min-height: var(--size);
+  min-width: var(--size);
+  background-color: var(--background-color, #d7e5ff);
+  border-radius: 50%;
+  display: block;
+  margin: 0px auto;
+}
+
+.service-card .circle .svg-icon {
+  position: relative;
+  font-size: var(--font-size);
+  line-height: var(--font-size);
+  top: var(--top);
+  left: var(--left);
+  color: var(--icon-color, #0960ff);
+}

@@ -1,0 +1,10 @@
+{
+  "configurationPath": "configuration.json",
+  "cssPath": "index.css",
+  "htmlPath": "index.ftl",
+  "icon": "cards-full",
+  "jsPath": "index.js",
+  "name": "Service Card",
+  "thumbnailPath": "thumbnail.png",
+  "type": "component"
+}
