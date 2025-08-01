@@ -1,0 +1,145 @@
+{
+  "fieldSets": [
+    {
+      "fields": [
+        {
+          "dataType": "int",
+          "description": "destination-site-id-description",
+          "label": "destination-site-id",
+          "name": "destinationSiteId",
+          "type": "text"
+        },
+        {
+          "dataType": "int",
+          "label": "content-structure-id",
+          "name": "contentStructureId",
+          "type": "text"
+        },
+        {
+          "defaultValue": false,
+          "label": "asset-library-collection",
+          "name": "assetLibraryCollection",
+          "type": "checkbox"
+        },
+        {
+          "dataType": "int",
+          "description": "asset-library-id-description",
+          "label": "asset-library-id",
+          "name": "assetLibraryId",
+          "type": "text"
+        }
+      ],
+      "label": "content"
+    },
+    {
+      "configurationRole": "advanced",
+      "fields": [
+        {
+          "defaultValue": false,
+          "description": "use-default-page-url-description",
+          "label": "use-default-page-url",
+          "name": "useDefaultPageUrl",
+          "type": "checkbox"
+        },
+        {
+          "description": "default-page-url-description",
+          "label": "default-page-url",
+          "name": "defaultPageUrl",
+          "type": "text"
+        }
+      ],
+      "label": "page-url"
+    },
+    {
+      "configurationRole": "style",
+      "fields": [
+        {
+          "dataType": "string",
+          "defaultValue": "link",
+          "label": "type",
+          "name": "type",
+          "type": "select",
+          "typeOptions": {
+            "validValues": [
+              {
+                "value": "link"
+              },
+              {
+                "value": "action"
+              }
+            ]
+          }
+        },
+        {
+          "dataType": "string",
+          "defaultValue": "primary",
+          "label": "style",
+          "name": "buttonType",
+          "type": "select",
+          "typeOptions": {
+            "validValues": [
+              {
+                "value": "primary"
+              },
+              {
+                "value": "secondary"
+              },
+              {
+                "value": "link"
+              },
+              {
+                "value": "outline-primary"
+              },
+              {
+                "value": "outline-secondary"
+              }
+            ]
+          }
+        },
+        {
+          "dataType": "string",
+          "defaultValue": "nm",
+          "label": "size",
+          "name": "buttonSize",
+          "type": "select",
+          "typeOptions": {
+            "validValues": [
+              {
+                "label": "small",
+                "value": "sm"
+              },
+              {
+                "label": "normal",
+                "value": "nm"
+              },
+              {
+                "label": "large",
+                "value": "lg"
+              }
+            ]
+          }
+        }
+      ],
+      "label": "button-options"
+    },
+    {
+      "configurationRole": "advanced",
+      "fields": [
+        {
+          "defaultValue": false,
+          "label": "debug-enabled",
+          "name": "enableDebug",
+          "type": "checkbox"
+        },
+        {
+          "defaultValue": false,
+          "description": "debug-in-error-handler-description",
+          "label": "debug-in-error-handler",
+          "name": "debugInErrorHandler",
+          "type": "checkbox"
+        }
+      ],
+      "label": "miscellaneous"
+    }
+  ]
+}
