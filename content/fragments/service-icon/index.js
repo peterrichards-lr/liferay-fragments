@@ -2,12 +2,12 @@ const {
   assetLibraryCollection,
   assetLibraryId,
   backgroundColor,
+  contentStructureId,
   debugInErrorHandler,
   defaultIcon,
   defaultPageUrl,
   enableDebug: debugEnabled,
   iconColor,
-  siteId,
   size,
   useDefaultPageUrl
 } = configuration;
@@ -20,24 +20,32 @@ debug('configuration', {
   assetLibraryCollection,
   assetLibraryId,
   backgroundColor,
+  contentStructureId,
   debugInErrorHandler,
   defaultIcon,
   defaultPageUrl,
   debugEnabled,
   iconColor,
-  siteId,
   size,
   useDefaultPageUrl
 });
+
+const resetFragment = (showFragmentContent = true) => {
+  if (showFragmentContent) {
+    const serviceLinkButtonContent = fragmentElement.querySelector('div.service-icon___content');
+    serviceLinkButtonContent.classList.replace('d-none', 'd-flex');
+  }
+  const loadingAnimation = fragmentElement.querySelector('.loading-animation-primary');
+  loadingAnimation.style.display = 'none';
+}
 
 const iconConfig = fragmentElement.querySelector('span.config-icon');
 const iconName = iconConfig?.textContent.trim() || defaultIcon;
 
 const titleConfig = fragmentElement.querySelector('span.config-title');
-const title = titleConfig?.textContent.trim() || defaultIcon;
+const title = titleConfig?.textContent.trim();
 
 if (iconName && title) {
-  const loadingAnimation = fragmentElement.querySelector('.loading-animation-primary');
 
   const toCamelCase = (str) => {
     if (!/\s/.test(str)) {
@@ -145,7 +153,7 @@ if (iconName && title) {
     if (debugInErrorHandler)
       debugger;
 
-    loadingAnimation.style.display = 'none';
+    resetFragment(false);
     if (layoutMode !== 'view' || !(Liferay?.Util?.openToast)) {
       const heading = err.type === 'unexpected' ? 'Unexepcted exception' : 'Configure Your Service Icon';
       const style = err.type === 'unexpected' ? 'style="color: var(--danger)"' : '';
@@ -192,7 +200,18 @@ if (iconName && title) {
       throw { type: "config", message: 'Specify a asset library id.' };
     }
 
-    const filter = contentTitle ? `&filter=title eq '${encodeURIComponent(contentTitle)}'` : '';
+    let filter;
+    if (contentStructureId) {
+      filter = `&filter=contentStructureId eq ${contentStructureId}`;
+    }
+
+    const titleFilter = contentTitle ? `title eq '${encodeURIComponent(contentTitle)}'` : '';
+    if (filter) {
+      filter += ` and ${titleFilter}`;
+    } else {
+      filter = `&filter=${titleFilter}`;
+    }
+
     const queryString = `?fields=id%2CcontentFields&flatten=true${filter}`;
 
     if (assetLibraryId) {
@@ -275,9 +294,9 @@ if (iconName && title) {
         } else {
           debug('items', items);
         }
-        const serviceCardContent = fragmentElement.querySelector('div.service-icon___content');
-        serviceCardContent.classList.replace('d-none', 'd-flex');
-        loadingAnimation.style.display = 'none';
+        resetFragment();
       }).catch(errorHandler);
   }
+} else {
+  resetFragment();
 }

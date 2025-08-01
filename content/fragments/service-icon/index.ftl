@@ -1,7 +1,7 @@
 <div class="service-icon"
 	style="--size: ${configuration.size}; --icon-color: ${configuration.iconColor}; --background-color: ${configuration.backgroundColor};">
 	<span aria-hidden="true" class="loading-animation-squares loading-animation-primary loading-animation-md"></span>
-	<div class="service-icon___content" style="visibility: hidden;">
+	<div class="service-icon___content d-none flex-column align-items-center justify-content-start">
 		<div class="circle">
 			<span class="svg-icon"></span>
 		</div>

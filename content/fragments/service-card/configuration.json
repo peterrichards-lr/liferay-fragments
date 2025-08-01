@@ -1,7 +1,13 @@
 {
   "fieldSets": [
-        {
+    {
       "fields": [
+        {
+          "dataType": "int",
+          "label": "content-structure-id",
+          "name": "contentStructureId",
+          "type": "text"
+        },
         {
           "defaultValue": false,
           "label": "asset-library-collection",
@@ -9,6 +15,7 @@
           "type": "checkbox"
         },
         {
+          "dataType": "int",
           "description": "asset-library-id-description",
           "label": "asset-library-id",
           "name": "assetLibraryId",
@@ -18,6 +25,7 @@
       "label": "content"
     },
     {
+      "configurationRole": "style",
       "fields": [
         {
           "defaultValue": false,
@@ -54,6 +62,7 @@
       "label": "icon"
     },
     {
+      "configurationRole": "advanced",
       "fields": [
         {
           "defaultValue": false,
