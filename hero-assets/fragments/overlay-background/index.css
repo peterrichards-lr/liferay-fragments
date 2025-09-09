@@ -1,0 +1,9 @@
+.overlay-background {
+  background-image: linear-gradient(
+      to bottom,
+      var(--gradient-color, rgba(0, 0, 0, 0.4)) 0%,
+      var(--gradient-color, rgba(0, 0, 0, 0.4)) 100%
+    ),
+    var(--background-image);
+  background-size: cover;
+}

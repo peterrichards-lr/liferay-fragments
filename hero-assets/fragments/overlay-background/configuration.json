@@ -1,0 +1,75 @@
+{
+  "fieldSets": [
+    {
+			"configurationRole": "style",
+      "fields": [
+        {
+          "label": "background-image",
+          "name": "backgroundImage",
+          "type": "itemSelector",
+          "typeOptions": {
+            "itemType": "com.liferay.portal.kernel.repository.model.FileEntry",
+            "mimeTypes": [
+              "image/png",
+              "image/webp",
+              "image/jpeg",
+              "image/gif",
+              "image/apng",
+              "image/avif"
+            ]
+          }
+        },
+        {
+          "name": "overlayColor",
+          "label": "overlay-color",
+          "type": "colorPicker",
+          "defaultValue": "#000000"
+        },
+        {
+          "dataType": "int",
+          "label": "alpha",
+          "name": "alpha",
+          "defaultValue": "40",
+          "type": "text",
+          "typeOptions": {
+            "validation": {
+              "min": 0,
+              "max": 100,
+              "type": "number"
+            }
+          }
+        }
+      ]
+    },
+		{
+			"configurationRole": "advanced",
+      "fields": [
+        {
+          "defaultValue": "360px",
+          "label": "portrait-phone",
+          "name": "portraitPhoneBreakpoint",
+          "type": "length"
+        },
+        {
+          "defaultValue": "576px",
+          "label": "landscape-phone",
+          "name": "landscapePhoneBreakpoint",
+          "type": "length"
+        },
+        {
+          "defaultValue": "768px",
+          "label": "tablet",
+          "name": "tabletBreakpoint",
+          "type": "length"
+        },
+        {
+          "defaultValue": "1305px",
+          "label": "desktop",
+          "name": "desktopBreakpoint",
+          "type": "length"
+        }
+      ],
+      "label": "breakpoints"
+    }
+  ]
+}

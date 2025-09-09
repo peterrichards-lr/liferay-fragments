@@ -1,0 +1,10 @@
+{
+  "configurationPath": "configuration.json",
+  "cssPath": "index.css",
+  "htmlPath": "index.html",
+  "icon": "picture",
+  "jsPath": "index.js",
+  "name": "Overlay Background",
+  "thumbnailPath": "thumbnail.png",
+  "type": "component"
+}
