@@ -1,7 +1,7 @@
 {
   "fieldSets": [
     {
-			"configurationRole": "style",
+      "configurationRole": "style",
       "fields": [
         {
           "label": "background-image",
@@ -20,56 +20,83 @@
           }
         },
         {
-          "name": "overlayColor",
-          "label": "overlay-color",
-          "type": "colorPicker",
-          "defaultValue": "#000000"
+          "label": "background-image-alt",
+          "name": "backgroundImageAlt",
+          "type": "text"
+        },
+        {
+          "label": "aria-label",
+          "name": "ariaLabel",
+          "type": "text"
         },
         {
           "dataType": "int",
-          "label": "alpha",
-          "name": "alpha",
-          "defaultValue": "40",
+          "defaultValue": "50",
+          "label": "Focal X (%)",
+          "name": "focalX",
           "type": "text",
           "typeOptions": {
             "validation": {
-              "min": 0,
               "max": 100,
+              "min": 0,
+              "type": "number"
+            }
+          }
+        },
+        {
+          "dataType": "int",
+          "defaultValue": "50",
+          "label": "Focal Y (%)",
+          "name": "focalY",
+          "type": "text",
+          "typeOptions": {
+            "validation": {
+              "max": 100,
+              "min": 0,
               "type": "number"
             }
           }
         }
-      ]
+      ],
+      "label": "image"
     },
-		{
-			"configurationRole": "advanced",
+    {
+      "configurationRole": "style",
       "fields": [
         {
-          "defaultValue": "360px",
-          "label": "portrait-phone",
-          "name": "portraitPhoneBreakpoint",
-          "type": "length"
+          "defaultValue": "#000000",
+          "label": "overlay-color",
+          "name": "overlayColor",
+          "type": "colorPicker"
         },
         {
-          "defaultValue": "576px",
-          "label": "landscape-phone",
-          "name": "landscapePhoneBreakpoint",
-          "type": "length"
-        },
-        {
-          "defaultValue": "768px",
-          "label": "tablet",
-          "name": "tabletBreakpoint",
-          "type": "length"
-        },
-        {
-          "defaultValue": "1305px",
-          "label": "desktop",
-          "name": "desktopBreakpoint",
-          "type": "length"
+          "dataType": "int",
+          "defaultValue": "40",
+          "label": "alpha",
+          "name": "alpha",
+          "type": "text",
+          "typeOptions": {
+            "validation": {
+              "max": 100,
+              "min": 0,
+              "type": "number"
+            }
+          }
         }
       ],
-      "label": "breakpoints"
+      "label": "overlay"
+    },
+    {
+      "configurationRole": "advanced",
+      "fields": [
+        {
+          "defaultValue": false,
+          "label": "debug-enabled",
+          "name": "enableDebug",
+          "type": "checkbox"
+        }
+      ],
+      "label": "miscellaneous"
     }
   ]
 }

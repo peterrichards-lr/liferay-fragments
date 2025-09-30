@@ -1,9 +1,32 @@
 .overlay-background {
-  background-image: linear-gradient(
-      to bottom,
-      var(--gradient-color, rgba(0, 0, 0, 0.4)) 0%,
-      var(--gradient-color, rgba(0, 0, 0, 0.4)) 100%
-    ),
-    var(--background-image);
-  background-size: cover;
+  position: relative;
+}
+
+.overlay-media,
+.overlay-tint {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.overlay-media {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: var(--focal-x, 50%) var(--focal-y, 50%);
+  display: block;
+}
+
+.overlay-tint {
+  background: linear-gradient(
+    to bottom,
+    var(--gradient-color, rgba(0, 0, 0, 0.4)) 0%,
+    var(--gradient-color, rgba(0, 0, 0, 0.4)) 100%
+  );
+  z-index: 1;
+}
+
+.overlay-content {
+  position: relative;
+  z-index: 2;
 }
