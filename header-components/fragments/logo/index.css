@@ -1,5 +1,6 @@
-.site-logo. a.logo-link {
-  color: inherit;
+.site-logo a.logo-link,
+.site-logo a.logo-link:hover {
+  color: currentColor;
   text-decoration: none;
 }
 

@@ -1,7 +1,7 @@
 {
   "configurationPath": "configuration.json",
   "cssPath": "index.css",
-  "htmlPath": "index.html",
+  "htmlPath": "index.ftl",
   "icon": "picture",
   "jsPath": "index.js",
   "name": "Overlay Background",
