@@ -142,6 +142,7 @@
       "label": "logos"
     },
     {
+      "configurationRole": "style",
       "fields": [
         {
           "defaultValue": false,
@@ -159,6 +160,7 @@
       "label": "separator"
     },
     {
+      "configurationRole": "style",
       "fields": [
         {
           "defaultValue": "black",
@@ -241,6 +243,7 @@
       "label": "hamburger-menu"
     },
     {
+      "configurationRole": "advanced",
       "fields": [
         {
           "defaultValue": true,
@@ -291,7 +294,7 @@
           "type": "length"
         },
         {
-          "defaultValue": "white",
+          "defaultValue": "transparent",
           "label": "tablet-menu-background-color",
           "name": "tabletMenuBgColor",
           "type": "colorPicker"
@@ -312,6 +315,7 @@
       "label": "breakpoints"
     },
     {
+      "configurationRole": "style",
       "fields": [
         {
           "defaultValue": false,
@@ -339,7 +343,7 @@
         },
         {
           "defaultValue": "var(--dark, #111)",
-          "label": "background-color",
+          "label": "hover-background-color",
           "name": "menuItemHoverBgColor",
           "type": "colorPicker"
         },
@@ -359,6 +363,7 @@
       "label": "menu-colors"
     },
     {
+      "configurationRole": "advanced",
       "fields": [
         {
           "defaultValue": false,

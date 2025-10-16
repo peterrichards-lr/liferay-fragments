@@ -63,12 +63,7 @@
           "label": "max-width",
           "name": "maximumMenuWidth",
           "type": "length"
-        }
-      ],
-      "label": "general"
-    },
-    {
-      "fields": [
+        },
         {
           "dataType": "string",
           "defaultValue": "menu-only",
@@ -163,9 +158,10 @@
           }
         }
       ],
-      "label": "dropzones"
+      "label": "menu-layout"
     },
     {
+      "configurationRole": "style",
       "fields": [
         {
           "defaultValue": "2rem",
@@ -183,6 +179,7 @@
       "label": "logos"
     },
     {
+      "configurationRole": "style",
       "fields": [
         {
           "defaultValue": false,
@@ -200,6 +197,7 @@
       "label": "separator"
     },
     {
+      "configurationRole": "style",
       "fields": [
         {
           "defaultValue": "black",
@@ -282,6 +280,7 @@
       "label": "hamburger-menu"
     },
     {
+      "configurationRole": "style",
       "fields": [
         {
           "defaultValue": true,
@@ -323,6 +322,7 @@
       "label": "scroll-back-to-top"
     },
     {
+      "configurationRole": "advanced",
       "fields": [
         {
           "defaultValue": true,
@@ -394,6 +394,7 @@
       "label": "breakpoints"
     },
     {
+      "configurationRole": "style",
       "fields": [
         {
           "defaultValue": false,
@@ -441,6 +442,7 @@
       "label": "menu-colors"
     },
     {
+      "configurationRole": "advanced",
       "fields": [
         {
           "defaultValue": true,
@@ -452,6 +454,7 @@
       "label": "editor"
     },
     {
+      "configurationRole": "advanced",
       "fields": [
         {
           "defaultValue": false,

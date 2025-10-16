@@ -8,9 +8,9 @@ cssImportant = configuration.allowMenuOverride?then('', ' !important')
 logoZoneHeaderClass = "logo-zone-editor-padding" + (configuration.logoZoneHeader?then(" show", ""))
 /]
 
-<style scoped>
-  body.has-edit-mode-menu .logo-zone lfr-drop-zone .page-editor > div,
-  .logo-zone .site-logo .logo-link {
+<style>
+  body.has-edit-mode-menu .logo-zone-${fragmentEntryLinkNamespace} lfr-drop-zone .page-editor > div,
+  .logo-zone-${fragmentEntryLinkNamespace} .site-logo .logo-link {
     display: ${displayValue}${cssImportant};
     flex-direction: ${flexDirection?has_content?then(flexDirection, 'unset')}${cssImportant};
     flex-wrap: ${isFlex?then(configuration.flexWrap, 'unset')}${cssImportant};
@@ -19,11 +19,11 @@ logoZoneHeaderClass = "logo-zone-editor-padding" + (configuration.logoZoneHeader
     gap: ${isFlex?then(configuration.flexGap, 'unset')}${cssImportant};
   }
 
-  body.has-edit-mode-menu .logo-zone .page-editor__no-fragments-state {
+  body.has-edit-mode-menu .logo-zone-${fragmentEntryLinkNamespace} .page-editor__no-fragments-state {
     min-width: 100px;
   }
 
-  body.has-edit-mode-menu .logo-zone .page-editor__no-fragments-state:first-child:before {
+  body.has-edit-mode-menu .logo-zone-${fragmentEntryLinkNamespace} .page-editor__no-fragments-state:first-child:before {
     content: unset;
   }
 
@@ -44,9 +44,15 @@ logoZoneHeaderClass = "logo-zone-editor-padding" + (configuration.logoZoneHeader
     height: 0;
     overflow: hidden;
   }
+
+  .logo-zone :where(a, button, [tabindex]):focus-visible {
+    outline: 2px solid currentColor;
+    outline-offset: 2px;
+    border-radius: .25rem;
+  }
 </style>
 
-<div class="logo-zone ${logoClass}">
-  <div class="${logoZoneHeaderClass}">Logo Zone</div>
+<div class="logo-zone logo-zone-${fragmentEntryLinkNamespace} ${logoClass}"
+     data-always-display="${(configuration.alwaysDisplayLogo!false)?string('true','false')}">  <div class="${logoZoneHeaderClass}" aria-hidden="true">Logo Zone</div>
   <lfr-drop-zone></lfr-drop-zone>
 </div>
