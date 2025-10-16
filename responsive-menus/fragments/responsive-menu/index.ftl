@@ -43,31 +43,38 @@ dropzoneCount = zones?size
 
 [#macro renderHamburgerIcon]
   <div class="hamburger">
-    <a href="javascript:void(0);" class="fragment-menu-icon" aria-label="Toggle menu" role="button">
-      <span></span>
-      <span></span>
-      <span></span>
-    </a>
+    <button class="fragment-menu-icon" type="button"
+        aria-label="Open menu"
+        aria-controls="fragmentMenuList-${fragmentEntryLinkNamespace}"
+        aria-expanded="false">
+      <span class="visually-hidden">Menu</span>
+      <span class="bar" aria-hidden="true"></span>
+      <span class="bar" aria-hidden="true"></span>
+      <span class="bar" aria-hidden="true"></span>
+    </button>
   </div>
 [/#macro]
 
 [#macro renderDropzone zone]
-  <div class="dropzone dropzone-${zone}" role="region" aria-label="${zone?cap_first} zone">
-      [#if zone == 'menu']
-        <nav class="${menuClasses}" role="menu" aria-orientation="vertical">
-          <lfr-drop-zone></lfr-drop-zone>
-        </nav>
-      [#else]
-        <section role="region" aria-label="${zone?cap_first} drop zone">
-          <lfr-drop-zone></lfr-drop-zone>
-        </section>
-      [/#if]
-  </div>
+  [#local zoneId = (zone == 'menu')?then(
+    "fragmentMenuList-${fragmentEntryLinkNamespace}",
+    "dropzone-${zone}-${fragmentEntryLinkNamespace}"
+  ) /]
+
+  [#if zone == 'menu']
+    <nav id="${zoneId}" class="${menuClasses} dropzone dropzone-${zone}" aria-label="Menu">
+      <lfr-drop-zone></lfr-drop-zone>
+    </nav>
+  [#else]
+    <section id="${zoneId}" class="dropzone dropzone-${zone}" aria-label="${zone?cap_first} zone">
+      <lfr-drop-zone></lfr-drop-zone>
+    </section>
+  [/#if]
 [/#macro]
 
 [#macro renderDropzones zones]
-  <div id="${menuId}" class="fragment-root-${fragmentEntryLinkNamespace} fragment-root" role="navigation"
-       aria-label="Responsive Menu" lang="${htmlLang}" dir="${langDir}">
+  <div id="${menuId}" class="fragment-root-${fragmentEntryLinkNamespace} fragment-root" role="group"
+       lang="${htmlLang}" dir="${langDir}">
     <div class="dropzone-wrapper dropzone-wrapper-${configuration.dropzoneConfig}">
       <div class="${menuHeaderClass}">Responsive Menu</div>
         [@renderHamburgerIcon /]
@@ -85,7 +92,7 @@ dropzoneCount = zones?size
   </div>
 [/#macro]
 
-<style scoped>
+<style>
   :root {
     --responsive-menu-zone-count: ${dropzoneCount};
     --responsive-menu-zone-gap: ${configuration.dropzoneGap};
@@ -533,6 +540,66 @@ dropzoneCount = zones?size
   body.has-edit-mode-menu .dropzone-right .page-editor__no-fragments-state:first-child:before {
     content: "Right Zone";
   }
+
+  .visually-hidden {
+    position:absolute; width:1px; height:1px; padding:0; margin:-1px;
+    overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0;
+  }
+
+  .is-menu-view .logo-zone[data-always-display="false"] { display: none; }
+
+  [#if configuration.enableTabletBreakpoint]
+  @media only screen and (max-width: ${configuration.tabletBreakpoint}) {
+    .fragment-root .hamburger-zone-inner {
+      position: relative;
+      overflow: hidden;
+      transition: all .5s ease;
+    }
+
+    .fragment-root .dropzone-menu > .fragment-menu {
+      position: absolute;
+      inset: auto 0 0 0;
+      display: none;
+      flex-direction: column;
+      z-index: 1000;
+      opacity: 0;
+      transform: translateY(-.5rem);
+    }
+
+    .hamburger.open .fragment-menu,
+    .hamburger-zone-wrapper.open .fragment-menu {
+      display: flex;
+      opacity: 1;
+      transform: none;
+    }
+
+    /* optional: compress surrounding zones on tablet */
+    .fragment-root .hamburger-zone-inner .dropzone-upper,
+    .fragment-root .hamburger-zone-inner .dropzone-lower { opacity:.999; }
+  }
+  [/#if]
+
+  [#if configuration.enableLandscapePhoneBreakpoint]
+  @media only screen and (max-width: ${configuration.landscapePhoneBreakpoint}) {
+    .fragment-root .hamburger-zone-wrapper {
+      width: 100vw !important;
+      max-width: 100%;
+      display: grid;
+      grid-template-rows: 0fr;
+      transition: grid-template-rows .5s ease-out;
+    }
+
+    .fragment-root .hamburger-zone-wrapper.open { grid-template-rows: 1fr; }
+    .fragment-root .dropzone-menu > .fragment-menu { position: static; display: block; opacity:1; transform:none; }
+  }
+  [/#if]
+
+  [#if configuration.enablePortraitPhoneBreakpoint]
+  @media only screen and (max-width: ${configuration.portraitPhoneBreakpoint}) {
+    /* color or spacing tweaks for the smallest view */
+    .fragment-root .hamburger-zone-wrapper { background-color: var(--responsive-menu-breakpoint-phone-portrait-menu-background-color, transparent); }
+  }
+  [/#if]
 </style>
 
 [@renderDropzones zones=zones /]

@@ -30,33 +30,46 @@ dropzoneCount = zones?size
 
 [#macro renderHamburgerIcon]
   <div class="hamburger">
-    <a href="javascript:void(0);" class="fragment-menu-icon" aria-label="Toggle menu" role="button">
-      <span></span>
-      <span></span>
-      <span></span>
-    </a>
+    <button
+      class="fragment-menu-icon"
+      type="button"
+      aria-label="Open menu"
+      aria-controls="fragmentMenuList-${fragmentEntryLinkNamespace}"
+      aria-expanded="false">
+      <span class="visually-hidden">Menu</span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+    </button>
   </div>
 [/#macro]
 
 [#macro renderDropzone zone]
-  <div class="dropzone dropzone-${zone}" role="region" aria-label="${zone?cap_first} zone">
-      [#if zone == 'menu']
-        <nav class="${menuClasses}" role="menu" aria-orientation="vertical">
-          <lfr-drop-zone></lfr-drop-zone>
-        </nav>
-      [#else]
-        <section role="region" aria-label="${zone?cap_first} drop zone">
-          <lfr-drop-zone></lfr-drop-zone>
-        </section>
-      [/#if]
-  </div>
+  [#local zoneId = (zone == 'menu')?then(
+    "fragmentMenuList-${fragmentEntryLinkNamespace}",
+    "dropzone-${zone}-${fragmentEntryLinkNamespace}"
+  ) /]
+  [#if zone == 'menu']
+    <div class="dropzone dropzone-${zone}">
+      <nav id="${zoneId}" class="${menuClasses}" aria-label="Menu">
+        <lfr-drop-zone></lfr-drop-zone>
+      </nav>
+    </div>
+  [#else]
+    <div class="dropzone dropzone-${zone}" role="region" aria-label="${zone?cap_first} zone">
+      <section id="${zoneId}" aria-label="${zone?cap_first} drop zone">
+        <lfr-drop-zone></lfr-drop-zone>
+      </section>
+    </div>
+  [/#if]
 [/#macro]
 
 [#macro renderDropzones zones]
-  <div id="${menuId}" class="fragment-root-${fragmentEntryLinkNamespace} fragment-root" role="navigation"
-       aria-label="Responsive Menu" lang="${htmlLang}" dir="${langDir}">
+  <div id="${menuId}" class="fragment-root-${fragmentEntryLinkNamespace} fragment-root"
+       role="group" lang="${htmlLang}" dir="${langDir}">
     <div class="dropzone-wrapper dropzone-wrapper-${configuration.dropzoneConfig}">
-        [@renderHamburgerIcon /]
+      <div aria-hidden="true">Responsive Menu</div>
+      [@renderHamburgerIcon /]
       <div class="hamburger-zone-wrapper">
         <div class="hamburger-zone-inner">
             [#list zones as zone]
@@ -68,7 +81,7 @@ dropzoneCount = zones?size
   </div>
 [/#macro]
 
-<style scoped>
+<style>
   :root {
     --page-editor-breadcrumb-height: 0px;
     --responsive-menu-zone-count: ${dropzoneCount};
@@ -684,6 +697,83 @@ dropzoneCount = zones?size
     }
   }
 
+  [/#if]
+
+  .visually-hidden {
+    position:absolute; width:1px; height:1px; padding:0; margin:-1px;
+    overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0;
+  }
+
+  .fragment-root :where(a, button, [tabindex]):focus-visible {
+    outline: 2px solid currentColor;
+    outline-offset: 2px;
+    border-radius: .25rem;
+  }
+
+  .is-menu-view .logo-zone[data-always-display="false"] { display: none; }
+
+  [#if configuration.enableTabletBreakpoint]
+  @media only screen and (max-width: ${configuration.tabletBreakpoint}) {
+    .fragment-root .hamburger-zone-inner {
+      position: relative;
+      background-color: var(--responsive-menu-breakpoint-tablet-menu-background-color, transparent);
+      overflow: hidden;
+      transition: all .5s ease;
+    }
+
+    [#if configuration.menuStyle?contains('menu-right')]
+    .fragment-root .hamburger-zone-inner { transform: translateX(calc(100% - var(--responsive-menu-item-logo-max-width, 2rem) + 4px)); }
+    [/#if]
+
+    .fragment-root .hamburger-zone-inner .dropzone-lower,
+    .fragment-root .hamburger-zone-inner .dropzone-upper {
+      visibility: hidden; opacity: 0; transition: all .5s ease;
+    }
+
+    .fragment-root:hover .hamburger-zone-inner { transform: unset; }
+    .fragment-root:hover .hamburger-zone-inner .dropzone-lower,
+    .fragment-root:hover .hamburger-zone-inner .dropzone-upper {
+      visibility: visible; opacity: 1;
+    }
+  }
+  [/#if]
+
+  [#if configuration.enableLandscapePhoneBreakpoint]
+  @media only screen and (max-width: ${configuration.landscapePhoneBreakpoint}) {
+    .fragment-root { height:auto; }
+    .fragment-root .dropzone-wrapper { height:auto; }
+
+    [#if configuration.menuStyle?contains('menu-right')]
+    .fragment-root .dropzone-wrapper { justify-content: end; }
+    [/#if]
+
+    .fragment-root .hamburger-zone-wrapper {
+      background-color: var(--responsive-menu-breakpoint-phone-landscape-menu-background-color, transparent);
+      width: 100vw !important;
+      max-width: 100%;
+      display: grid;
+      grid-template-rows: 0fr;
+      transition: grid-template-rows .5s ease-out;
+    }
+    .fragment-root .hamburger-zone-wrapper.open { grid-template-rows: 1fr; }
+
+    /* side panel content stacks and fills width */
+    .fragment-root .fragment-menu .lfr-nav-item { flex-direction: column; width: 100vw; align-items: start; }
+    .fragment-root .dropzone .zone-layout.allow-override > div { display:flex; flex-direction:column; align-items:start; }
+    .fragment-root .dropzone .zone-layout.allow-override > div > * { width:100vw; }
+
+    /* logo surfacing while panel is open */
+    .fragment-root .dropzone .logo-zone.open,
+    .fragment-root .dropzone .logo-zone.logo-always { visibility:visible; opacity:1; }
+  }
+  [/#if]
+
+  [#if configuration.enablePortraitPhoneBreakpoint]
+  @media only screen and (max-width: ${configuration.portraitPhoneBreakpoint}) {
+    .fragment-root .hamburger-zone-wrapper {
+      background-color: var(--responsive-menu-breakpoint-phone-portrait-menu-background-color, transparent);
+    }
+  }
   [/#if]
 </style>
 

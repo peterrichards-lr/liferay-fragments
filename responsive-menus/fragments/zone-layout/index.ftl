@@ -14,7 +14,7 @@ zoneLayoutClass = zoneLayoutClassList?join(' ')
 zoneLayoutHeaderClass = "zone-layout-editor-padding" + (configuration.zoneLayoutHeader?then(" show", ""))
 /]
 
-<style scoped>
+<style>
   body.has-edit-mode-menu .page-editor .zone-layout-editor-padding.show {
     height: 26px;
     min-height: 26px;
@@ -55,16 +55,30 @@ zoneLayoutHeaderClass = "zone-layout-editor-padding" + (configuration.zoneLayout
     }
   }
 
-  body.has-edit-mode-menu .zone-layout .page-editor__no-fragments-state {
+  body.has-edit-mode-menu .${zoneLayoutNamespace} .page-editor__no-fragments-state {
     min-width: 150px;
   }
 
-  body.has-edit-mode-menu .zone-layout .page-editor__no-fragments-state:first-child:before {
+  body.has-edit-mode-menu .${zoneLayoutNamespace} .page-editor__no-fragments-state:first-child:before {
     content: unset;
   }
+
+  .${zoneLayoutNamespace} :where(a, button, [tabindex]):focus-visible {
+    outline: 2px solid currentColor${cssImportant};
+    outline-offset: 2px${cssImportant};
+    border-radius: .25rem${cssImportant};
+  }
+
+  [#if isFlex]
+  .is-menu-view .${zoneLayoutNamespace}.zone-layout {
+    flex-direction: column${cssImportant};
+    align-items: stretch${cssImportant};
+    justify-content: flex-start${cssImportant};
+  }
+  [/#if]
 </style>
 
 <div class="${zoneLayoutClass}">
-  <div class="${zoneLayoutHeaderClass}">Zone Layout</div>
+  <div class="${zoneLayoutHeaderClass}" aria-hidden="true">Zone Layout</div>
   <lfr-drop-zone></lfr-drop-zone>
 </div>
