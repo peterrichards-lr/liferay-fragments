@@ -43,26 +43,33 @@ dropzoneCount = zones?size
 
 [#macro renderHamburgerIcon]
   <div class="hamburger">
-    <a href="javascript:void(0);" class="fragment-menu-icon" aria-label="Toggle menu" role="button">
-      <span></span>
-      <span></span>
-      <span></span>
-    </a>
+    <button class="fragment-menu-icon"
+            type="button"
+            aria-label="Open menu"
+            aria-controls="fragmentMenuList-${fragmentEntryLinkNamespace}"
+            aria-expanded="false">
+      <span class="visually-hidden">Menu</span>
+      <span class="bar" aria-hidden="true"></span>
+      <span class="bar" aria-hidden="true"></span>
+      <span class="bar" aria-hidden="true"></span>
+    </button>
   </div>
 [/#macro]
 
 [#macro renderDropzone zone]
-  <div class="dropzone dropzone-${zone}" role="region" aria-label="${zone?cap_first} zone">
-      [#if zone == 'menu']
-        <nav class="${menuClasses}" role="menu" aria-orientation="vertical">
-          <lfr-drop-zone></lfr-drop-zone>
-        </nav>
-      [#else]
-        <section role="region" aria-label="${zone?cap_first} drop zone">
-          <lfr-drop-zone></lfr-drop-zone>
-        </section>
-      [/#if]
-  </div>
+  [#local zoneId = (zone == 'menu')?then(
+    "fragmentMenuList-${fragmentEntryLinkNamespace}",
+    "dropzone-${zone}-${fragmentEntryLinkNamespace}"
+  ) /]
+  [#if zone == 'menu']
+    <nav id="${zoneId}" class="${menuClasses} dropzone dropzone-menu" aria-label="Primary">
+      <lfr-drop-zone></lfr-drop-zone>
+    </nav>
+  [#else]
+    <section id="${zoneId}" class="dropzone dropzone-${zone}" aria-label="${zone?cap_first} zone">
+      <lfr-drop-zone></lfr-drop-zone>
+    </section>
+  [/#if]
 [/#macro]
 
 [#macro renderDropzones zones]
@@ -105,6 +112,22 @@ dropzoneCount = zones?size
     --responsive-menu-limit-width: ${configuration.limitMenuWidth?c};
   }
 
+  .visually-hidden{
+    position:absolute !important;
+    width:1px;
+    height:1px;
+    padding:0;
+    margin:-1px;
+    overflow:hidden;
+    clip:rect(0 0 0 0);
+    clip-path:inset(50%);
+    border:0;
+    white-space:nowrap;
+  }
+
+  .fragment-root .fragment-menu-icon { min-width: 44px; min-height: 44px; }
+  .fragment-root .fragment-menu-icon:focus-visible { outline: 2px solid currentColor; outline-offset: 2px; }
+
   [#if configuration.limitMenuWidth]
   :root { --responsive-menu-max-width: ${configuration.maximumMenuWidth}; }
   [/#if]
@@ -120,12 +143,13 @@ dropzoneCount = zones?size
   .fragment-root .dropzone-lower .portlet-header,
   .fragment-root .dropzone-upper .portlet-header { display:none; }
 
-  .fragment-root .dropzone-menu .fragment-menu .navbar-nav { list-style:none; margin:0; padding:0; flex-direction:row; }
-  .fragment-root .dropzone-menu .fragment-menu .nav-item .layout-logo {
+  .fragment-root .dropzone-menu.fragment-menu .navbar-nav { list-style:none; margin:0; padding:0; flex-direction:row; }
+  .fragment-root .dropzone-menu.fragment-menu .nav-item .layout-logo,
+   {
     max-height: var(--responsive-menu-item-logo-max-height, 1rem);
     max-width: var(--responsive-menu-item-logo-max-width, 2rem);
   }
-  .fragment-root .dropzone-menu .fragment-menu .lfr-nav-item a { width:100%; }
+  .fragment-root .dropzone-menu.fragment-menu .lfr-nav-item a { width:100%; }
 
   .fragment-root .hamburger-zone-inner {
     background-color: var(--responsive-menu-breakpoint-desktop-menu-background-color, transparent);
@@ -138,20 +162,20 @@ dropzoneCount = zones?size
   .fragment-root .hamburger-zone-inner .${configuration.dropzoneGrower} { flex-grow:1 ;flex-shrink: 0; }
 
   [#if configuration.overrideMenuColors]
-  .fragment-root .dropzone-menu .fragment-menu .lfr-nav-item a {
+  .fragment-root .dropzone-menu.fragment-menu .lfr-nav-item a {
     color:${configuration.menuItemColor} !important; background-color:${configuration.menuItemBgColor} !important;
   }
-  .fragment-root .dropzone-menu .fragment-menu .lfr-nav-item a:hover {
+  .fragment-root .dropzone-menu.fragment-menu .lfr-nav-item a:hover {
     color:${configuration.menuItemHoverColor} !important; background-color:${configuration.menuItemHoverBgColor} !important;
   }
-  .fragment-root .dropzone-menu .fragment-menu .lfr-nav-item.selected a {
+  .fragment-root .dropzone-menu.fragment-menu .lfr-nav-item.selected a {
     color:${configuration.menuItemSelectedColor} !important; background-color:${configuration.menuItemSelectedBgColor} !important;
   }
   [/#if]
 
   [#if configuration.separator]
-  .fragment-root .dropzone-menu .fragment-menu.separator .lfr-nav-item { border-right:1px solid ${configuration.menuItemSeparatorColor}; }
-  .fragment-root .dropzone-menu .fragment-menu.separator .lfr-nav-item:last-child { border-right:none; }
+  .fragment-root .dropzone-menu.fragment-menu.separator .lfr-nav-item { border-right:1px solid ${configuration.menuItemSeparatorColor}; }
+  .fragment-root .dropzone-menu.fragment-menu.separator .lfr-nav-item:last-child { border-right:none; }
   [/#if]
 
   [#if configuration.menuItemOverflow == 'clip']
@@ -194,7 +218,7 @@ dropzoneCount = zones?size
 
   [#if configuration.enableTabletBreakpoint]
   @media (max-width:${configuration.tabletBreakpoint}) {
-    .fragment-root .fragment-menu-icon { display:inline-flex; flex-direction:column; cursor:pointer; }
+    .fragment-root .fragment-menu-icon { display:none; }
 
     .fragment-root .hamburger-zone-inner {
       background-color: var(--responsive-menu-breakpoint-tablet-menu-background-color, transparent);
@@ -222,6 +246,7 @@ dropzoneCount = zones?size
       display:flex; flex-direction:row; align-items:center; justify-content:end; flex-wrap: wrap;
       gap: var(--responsive-menu-zone-gap, .5rem); width:100%; max-width: var(--responsive-menu-max-width, 100%); margin-inline:0;
     }
+
     .fragment-root-${fragmentEntryLinkNamespace} .dropzone .zone-layout.allow-override > div > * { max-width:100%; }
   }
   [/#if]
@@ -288,14 +313,14 @@ dropzoneCount = zones?size
       pointer-events: auto; opacity:1; transform:none;
     }
 
-    .fragment-root .dropzone-menu .fragment-menu .navbar-nav {
+    .fragment-root .dropzone-menu.fragment-menu .navbar-nav {
       flex-direction: column;
       width: 100%;
       align-items: start;
       justify-content: end;
     }
     [#if !isInline]
-    .fragment-root .dropzone-menu .fragment-menu .navbar-nav { width: 100vw; }
+    .fragment-root .dropzone-menu.fragment-menu .navbar-nav { width: 100vw; }
     [/#if]
 
     .fragment-root .dropzone .zone-layout > div { display:flex; flex-direction:column; }
@@ -313,8 +338,8 @@ dropzoneCount = zones?size
       border-radius: ${configuration.menuHamburgerBorderRadius};
     }
 
-    .fragment-root .hamburger .fragment-menu-icon span {
-      display:block; width:25px; height:5px; margin:5px; background-color:${configuration.menuHamburgerColor};
+    .fragment-root .hamburger .fragment-menu-icon .bar {
+      display:block; width:25px; height:5px; margin:2.5px; background-color:${configuration.menuHamburgerColor};
     }
 
     .fragment-root .hamburger-zone-inner .dropzone-left,
@@ -373,7 +398,6 @@ dropzoneCount = zones?size
 
     .fragment-root .hamburger-zone-inner {
       flex-direction: column; align-items: flex-start; flex-wrap: nowrap; max-width:none; overflow:hidden; transition:all .5s ease;
-    }
 
     .fragment-root .dropzone-menu :is(>.fragment-menu, &.fragment-menu) {
       display: none;
@@ -388,7 +412,7 @@ dropzoneCount = zones?size
       pointer-events: auto; opacity:1; transform:none;
     }
 
-    .fragment-root .dropzone-menu .fragment-menu .navbar-nav {
+    .fragment-root .dropzone-menu.fragment-menu .navbar-nav {
       flex-direction: column; width: 100vw; align-items: start; justify-content: end;
     }
     [#if !isInline]
@@ -439,6 +463,11 @@ dropzoneCount = zones?size
   body.has-control-menu .page-editor .hamburger-zone-inner .${configuration.dropzoneGrower}:not(:has(.page-editor__no-fragments-state)) { flex-grow:1; }
 
   @media (prefers-reduced-motion: reduce) { .fragment-root .fragment-menu { transition: none !important; } }
+
+  .reduce-motion * {
+    transition: none !important;
+    animation: none !important;
+  }
 </style>
 
 [@renderDropzones zones=zones /]

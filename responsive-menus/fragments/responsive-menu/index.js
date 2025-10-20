@@ -1,9 +1,11 @@
 setTimeout(() => {
-  const fontSizePixels = parseFloat(getComputedStyle(document.documentElement).fontSize);
+  const fontSizePixels = parseFloat(
+    getComputedStyle(document.documentElement).fontSize || '16'
+  );
   const parseBreakpoint = (value, fallback = 0) => {
     if (!value) return fallback;
-    const n = parseFloat(value);
-    return value.includes('rem') ? n * fontSizePixels : n;
+    const num = parseFloat(value);
+    return String(value).includes('rem') ? num * fontSizePixels : num;
   };
 
   const {
@@ -27,12 +29,20 @@ setTimeout(() => {
   const root = fragmentElement.querySelector('.fragment-root');
   if (!root || layoutMode === 'preview') return;
 
-  const debug = (...a) => { if (debugEnabled) console.debug('[Menu]', ...a); };
+  const debug = (...a) => {
+    if (debugEnabled) console.debug('[Menu]', ...a);
+  };
 
   const desktopBreakpoint = parseBreakpoint(desktopBP);
-  const tabletBreakpoint = enableTabletBreakpoint ? parseBreakpoint(tabletBP, desktopBreakpoint) : desktopBreakpoint;
-  const landscapePhoneBreakpoint = enableLandscapePhoneBreakpoint ? parseBreakpoint(landscapePhoneBP, tabletBreakpoint) : tabletBreakpoint;
-  const portraitPhoneBreakpoint = enablePortraitPhoneBreakpoint ? parseBreakpoint(portraitPhoneBP, landscapePhoneBreakpoint) : landscapePhoneBreakpoint;
+  const tabletBreakpoint = enableTabletBreakpoint
+    ? parseBreakpoint(tabletBP, desktopBreakpoint)
+    : desktopBreakpoint;
+  const landscapePhoneBreakpoint = enableLandscapePhoneBreakpoint
+    ? parseBreakpoint(landscapePhoneBP, tabletBreakpoint)
+    : tabletBreakpoint;
+  const portraitPhoneBreakpoint = enablePortraitPhoneBreakpoint
+    ? parseBreakpoint(portraitPhoneBP, landscapePhoneBreakpoint)
+    : landscapePhoneBreakpoint;
 
   const qs = (sel, scope = root) => scope.querySelector(sel);
   const qsa = (sel, scope = root) => Array.from(scope.querySelectorAll(sel));
@@ -47,7 +57,10 @@ setTimeout(() => {
   const setAriaWiring = () => {
     if (!toggleButton) return;
     if (fragmentMenu && !toggleButton.hasAttribute('aria-controls')) {
-      toggleButton.setAttribute('aria-controls', 'fragmentMenuList-' + fragmentEntryLinkNamespace);
+      toggleButton.setAttribute(
+        'aria-controls',
+        'fragmentMenuList-' + fragmentEntryLinkNamespace
+      );
     }
     if (!toggleButton.hasAttribute('aria-expanded')) {
       toggleButton.setAttribute('aria-expanded', 'false');
@@ -56,7 +69,9 @@ setTimeout(() => {
 
   const getFocusableMenuItems = () => {
     if (!fragmentMenu) return [];
-    const candidates = fragmentMenu.querySelectorAll('a[href],button:not([disabled]),[tabindex]:not([tabindex="-1"])');
+    const candidates = fragmentMenu.querySelectorAll(
+      'a[href],button:not([disabled]),[tabindex]:not([tabindex="-1"])'
+    );
     return Array.from(candidates).filter((el) => el.offsetParent !== null);
   };
 
@@ -68,18 +83,26 @@ setTimeout(() => {
     );
 
   const setOpen = (open) => {
-    [hamburger, zoneWrapper, logoZone].forEach((el) => el && el.classList.toggle('open', open));
-    if (toggleButton) toggleButton.setAttribute('aria-expanded', open ? 'true' : 'false');
+    [hamburger, zoneWrapper, logoZone].forEach(
+      (el) => el && el.classList.toggle('open', open)
+    );
+    if (toggleButton)
+      toggleButton.setAttribute('aria-expanded', open ? 'true' : 'false');
     document.body.classList.toggle('is-menu-view', open);
   };
 
   const openMenu = () => {
     setOpen(true);
     const items = getFocusableMenuItems();
-    if (items.length) items[0].focus();
+    if (items.length) {
+      requestAnimationFrame(() => items[0].focus());
+    }
   };
 
-  const closeMenu = () => setOpen(false);
+  const closeMenu = () => {
+    setOpen(false);
+    setTimeout(() => toggleButton?.focus(), 150);
+  };
 
   const markCurrentPageLink = () => {
     const here = window.location.href.replace(/#$/, '');
@@ -127,6 +150,10 @@ setTimeout(() => {
     };
   };
 
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    root.classList.add('reduce-motion');
+  }
+
   if (layoutMode === 'view') {
     holder.classList.add('fragment-menu-holder');
     setAriaWiring();
@@ -139,6 +166,18 @@ setTimeout(() => {
 
     const onToggle = () => (isMenuOpen() ? closeMenu() : openMenu());
     toggleButton?.addEventListener('click', onToggle);
+
+    if (toggleButton && toggleButton.tagName !== 'BUTTON') {
+      toggleButton.setAttribute('role', 'button');
+      toggleButton.setAttribute('tabindex', '0');
+    }
+
+    toggleButton?.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        onToggle();
+      }
+    });
 
     document.addEventListener('keydown', (e) => {
       if (e.key !== 'Escape') return;
@@ -160,7 +199,9 @@ setTimeout(() => {
         const v = window.scrollY > 20;
         if (btn) btn.style.display = v ? 'block' : 'none';
       };
-      btn?.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+      btn?.addEventListener('click', () =>
+        window.scrollTo({ top: 0, behavior: 'smooth' })
+      );
       window.addEventListener('scroll', onScroll, { passive: true });
       onScroll();
     } else if (isSticky) {
@@ -174,4 +215,15 @@ setTimeout(() => {
       );
     }
   }
+
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    root.classList.add('reduce-motion');
+  }
+
+  const closeIfWiderThanPhones = () => {
+    if (window.innerWidth >= landscapePhoneBreakpoint) {
+      setOpen(false);
+    }
+  };
+  window.matchMedia(`(min-width:${landscapePhoneBreakpoint}px)`).addEventListener('change', closeIfWiderThanPhones);
 }, configuration.initializeDelay);
