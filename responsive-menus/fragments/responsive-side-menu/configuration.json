@@ -361,6 +361,17 @@
     {
       "fields": [
         {
+          "defaultValue": true,
+          "label": "menu-header",
+          "name": "menuHeader",
+          "type": "checkbox"
+        }
+      ],
+      "label": "editor"
+    },
+    {
+      "fields": [
+        {
           "defaultValue": false,
           "label": "debug-enabled",
           "name": "enableDebug",
