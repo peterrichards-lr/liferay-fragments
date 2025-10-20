@@ -1,0 +1,27 @@
+.zone-layout-editor-padding {
+  height: 0;
+  overflow: hidden;
+}
+
+body.has-edit-mode-menu .page-editor .zone-layout-editor-padding.show {
+  height: 26px;
+  min-height: 26px;
+  box-sizing: border-box;
+  background-color: rgb(247, 248, 249);
+  text-align: right;
+  font-size: 12px;
+  line-height: 26px;
+  border-radius: 2px 2px 0 0;
+  padding: 0 8px;
+  font-weight: 600;
+}
+
+body.has-edit-mode-menu .zone-layout-fragment .page-editor__no-fragments-state {
+  min-width: 150px;
+}
+
+body.has-edit-mode-menu
+  .zone-layout-fragment
+  .page-editor__no-fragments-state:first-child:before {
+  content: unset;
+}
