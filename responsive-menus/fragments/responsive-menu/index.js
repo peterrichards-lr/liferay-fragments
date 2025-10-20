@@ -2,11 +2,10 @@ setTimeout(() => {
   const fontSizePixels = parseFloat(getComputedStyle(document.documentElement).fontSize);
   const parseBreakpoint = (value, fallback = 0) => {
     if (!value) return fallback;
-    const num = parseFloat(value);
-    return value.includes('rem') ? num * fontSizePixels : num;
+    const n = parseFloat(value);
+    return value.includes('rem') ? n * fontSizePixels : n;
   };
 
-  // Configuration & constants
   const {
     enableDebug: debugEnabled,
     menuItemOverflow,
@@ -22,121 +21,157 @@ setTimeout(() => {
     scrollBackToTop = false,
   } = configuration;
 
-  const noMenuItemOverflow = menuItemOverflow === 'none';
   const isSticky = menuStyle.includes('sticky');
-  const root = fragmentElement.querySelector('.fragment-root');
+  const noMenuItemOverflow = menuItemOverflow === 'none';
 
-  // Debug logger with context
-  const debug = (label, ...args) => {
-    if (debugEnabled) console.debug(`[Menu] ${label}:`, ...args);
+  const root = fragmentElement.querySelector('.fragment-root');
+  if (!root || layoutMode === 'preview') return;
+
+  const debug = (...a) => { if (debugEnabled) console.debug('[Menu]', ...a); };
+
+  const desktopBreakpoint = parseBreakpoint(desktopBP);
+  const tabletBreakpoint = enableTabletBreakpoint ? parseBreakpoint(tabletBP, desktopBreakpoint) : desktopBreakpoint;
+  const landscapePhoneBreakpoint = enableLandscapePhoneBreakpoint ? parseBreakpoint(landscapePhoneBP, tabletBreakpoint) : tabletBreakpoint;
+  const portraitPhoneBreakpoint = enablePortraitPhoneBreakpoint ? parseBreakpoint(portraitPhoneBP, landscapePhoneBreakpoint) : landscapePhoneBreakpoint;
+
+  const qs = (sel, scope = root) => scope.querySelector(sel);
+  const qsa = (sel, scope = root) => Array.from(scope.querySelectorAll(sel));
+
+  const holder = fragmentElement.parentElement;
+  const zoneWrapper = qs('.hamburger-zone-wrapper');
+  const hamburger = qs('.hamburger');
+  const toggleButton = qs('.fragment-menu-icon');
+  const fragmentMenu = qs('#fragmentMenuList-' + fragmentEntryLinkNamespace);
+  const logoZone = zoneWrapper ? zoneWrapper.querySelector('.logo-zone') : null;
+
+  const setAriaWiring = () => {
+    if (!toggleButton) return;
+    if (fragmentMenu && !toggleButton.hasAttribute('aria-controls')) {
+      toggleButton.setAttribute('aria-controls', 'fragmentMenuList-' + fragmentEntryLinkNamespace);
+    }
+    if (!toggleButton.hasAttribute('aria-expanded')) {
+      toggleButton.setAttribute('aria-expanded', 'false');
+    }
   };
 
-  // Compute breakpoints
-  const desktopBreakpoint = parseBreakpoint(desktopBP);
-  const tabletBreakpoint = enableTabletBreakpoint
-    ? parseBreakpoint(tabletBP, desktopBreakpoint)
-    : desktopBreakpoint;
-  const landscapePhoneBreakpoint = enableLandscapePhoneBreakpoint
-    ? parseBreakpoint(landscapePhoneBP, tabletBreakpoint)
-    : tabletBreakpoint;
-  const portraitPhoneBreakpoint = enablePortraitPhoneBreakpoint
-    ? parseBreakpoint(portraitPhoneBP, landscapePhoneBreakpoint)
-    : landscapePhoneBreakpoint;
+  const getFocusableMenuItems = () => {
+    if (!fragmentMenu) return [];
+    const candidates = fragmentMenu.querySelectorAll('a[href],button:not([disabled]),[tabindex]:not([tabindex="-1"])');
+    return Array.from(candidates).filter((el) => el.offsetParent !== null);
+  };
 
-  debug('fontSizePixels', fontSizePixels);
-  debug('desktopBreakpoint', desktopBreakpoint);
-  debug('tabletBreakpoint', tabletBreakpoint);
-  debug('landscapePhoneBreakpoint', landscapePhoneBreakpoint);
-  debug('portraitPhoneBreakpoint', portraitPhoneBreakpoint);
+  const isMenuOpen = () =>
+    !!(
+      hamburger?.classList.contains('open') ||
+      zoneWrapper?.classList.contains('open') ||
+      logoZone?.classList.contains('open')
+    );
 
-  // Early exit if there's no root or we're in preview mode
-  if (!root || layoutMode === 'preview') {
-    debug('init', 'No root element or in preview mode – exiting.');
-    return;
-  }
+  const setOpen = (open) => {
+    [hamburger, zoneWrapper, logoZone].forEach((el) => el && el.classList.toggle('open', open));
+    if (toggleButton) toggleButton.setAttribute('aria-expanded', open ? 'true' : 'false');
+    document.body.classList.toggle('is-menu-view', open);
+  };
 
-  // Common elements
-  const hamburgerZoneWrapper = root.querySelector('.hamburger-zone-wrapper');
-  const hamburger = root.querySelector('.hamburger');
-  const logoZone = hamburgerZoneWrapper?.querySelector('.logo-zone');
-  const parentDiv = fragmentElement.parentElement;
+  const openMenu = () => {
+    setOpen(true);
+    const items = getFocusableMenuItems();
+    if (items.length) items[0].focus();
+  };
 
-  // Logo modifiers
-  if (logoZone) {
+  const closeMenu = () => setOpen(false);
+
+  const markCurrentPageLink = () => {
+    const here = window.location.href.replace(/#$/, '');
+    qsa('.fragment-menu a[href]').forEach((a) => {
+      const t = a.href && a.href.replace(/#$/, '');
+      if (t === here) a.setAttribute('aria-current', 'page');
+    });
+  };
+
+  const logoSetup = () => {
+    if (!logoZone) return;
     const width = window.innerWidth;
     const afterLP = width >= landscapePhoneBreakpoint;
     const always = logoZone.classList.contains('logo-always');
     const enlarged = logoZone.classList.contains('increase-hamburger');
+    debug('logo', { afterLP, always, enlarged });
+    if (enlarged) hamburger?.classList.add('increase');
+    if (always) hamburger?.classList.add('logo-always');
+  };
 
-    debug('logoZone state', { afterLP, always, enlarged });
-
-    if (enlarged) hamburger.classList.add('increase');
-    if (always) hamburger.classList.add('logo-always');
-  }
-
-  // Only in "view" mode do we wire up menu behaviours
-  if (layoutMode === 'view') {
-    parentDiv.classList.add('fragment-menu-holder');
-
-    // Resize handler
-    const updateSizes = () => {
-      // Reset styles
-      root.style.height = '';
-      root.style.width = '';
-      root.style.minWidth = '';
-
-      // Set height
-      const heightPx = `${root.clientHeight}px`;
-      debug('rootHeight', heightPx);
-      root.style.height = heightPx;
-      root.dataset.height = heightPx;
-
-      if (window.innerWidth >= landscapePhoneBreakpoint) {
-        [hamburger, hamburgerZoneWrapper, logoZone].forEach(el => el?.classList.remove('open'));
-      } else if (noMenuItemOverflow) {
-        const innerMenu = hamburgerZoneWrapper.querySelector('.fragment-menu');
-        const minWidth = `${innerMenu.offsetWidth}px`;
-        debug('rootMinWidth', minWidth);
-        root.dataset.minWidth = minWidth;
+  const updateSizes = () => {
+    root.style.height = '';
+    root.style.width = '';
+    root.style.minWidth = '';
+    const h = `${root.clientHeight}px`;
+    root.style.height = h;
+    root.dataset.height = h;
+    if (window.innerWidth >= landscapePhoneBreakpoint) {
+      closeMenu();
+    } else if (noMenuItemOverflow) {
+      const innerMenu = zoneWrapper?.querySelector('.fragment-menu');
+      if (innerMenu) {
+        const mw = `${innerMenu.offsetWidth}px`;
+        root.dataset.minWidth = mw;
       }
-    };
+    }
+  };
 
-    const debounce = (fn, delay) => {
-      let id;
-      return (...args) => {
-        clearTimeout(id);
-        id = setTimeout(() => fn(...args), delay);
-      };
+  const debounce = (fn, delay) => {
+    if (!delay) return fn;
+    let id;
+    return (...args) => {
+      clearTimeout(id);
+      id = setTimeout(() => fn(...args), delay);
     };
+  };
 
-    // Initialize
+  if (layoutMode === 'view') {
+    holder.classList.add('fragment-menu-holder');
+    setAriaWiring();
+    logoSetup();
+    markCurrentPageLink();
+
+    const onResize = debounce(updateSizes, debounceDelay);
     updateSizes();
-    window.addEventListener('resize', debounce(updateSizes, debounceDelay));
+    window.addEventListener('resize', onResize, { passive: true });
 
-    // Hamburger toggle
-    root.querySelector('.fragment-menu-icon')
-      .addEventListener('click', () => {
-        [hamburger, hamburgerZoneWrapper, logoZone].forEach(el => el?.classList.toggle('open'));
-      });
+    const onToggle = () => (isMenuOpen() ? closeMenu() : openMenu());
+    toggleButton?.addEventListener('click', onToggle);
 
-    // Scroll-to-top or sticky behavior
+    document.addEventListener('keydown', (e) => {
+      if (e.key !== 'Escape') return;
+      if (!isMenuOpen()) return;
+      e.preventDefault();
+      closeMenu();
+      toggleButton?.focus();
+    });
+
+    document.addEventListener('click', (e) => {
+      if (root.contains(e.target)) return;
+      if (!isMenuOpen()) return;
+      closeMenu();
+    });
+
     if (scrollBackToTop && !isSticky) {
-      const scrollToTopBtn = root.querySelector('.fragment-scroll-to-top');
-
-      scrollToTopBtn?.addEventListener('click', () => {
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-      });
-
-      window.addEventListener('scroll', () => {
-        const visible = window.scrollY > 20;
-        if (scrollToTopBtn) scrollToTopBtn.style.display = visible ? 'block' : 'none';
-      }, { passive: true });
-
+      const btn = qs('.fragment-scroll-to-top');
+      const onScroll = () => {
+        const v = window.scrollY > 20;
+        if (btn) btn.style.display = v ? 'block' : 'none';
+      };
+      btn?.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+      window.addEventListener('scroll', onScroll, { passive: true });
+      onScroll();
     } else if (isSticky) {
-      window.addEventListener('scroll', () => {
-        const scrolled = window.scrollY > 28;
-        parentDiv.classList.toggle('top', scrolled);
-      }, { passive: true });
+      window.addEventListener(
+        'scroll',
+        () => {
+          const scrolled = window.scrollY > 28;
+          holder.classList.toggle('top', scrolled);
+        },
+        { passive: true }
+      );
     }
   }
 }, configuration.initializeDelay);
