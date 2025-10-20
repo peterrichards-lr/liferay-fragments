@@ -1,0 +1,55 @@
+.logo-zone-editor-padding { height: 0; overflow: hidden; }
+body.has-edit-mode-menu .page-editor .logo-zone-editor-padding.show {
+   height: 26px;
+   min-height: 26px;
+   box-sizing: border-box;
+   background-color: rgb(247, 248, 249);
+   text-align: right;
+   font-size: 12px;
+   line-height: 26px;
+   border-radius: 2px 2px 0 0;
+   padding: 0 8px;
+   font-weight: 600;
+}
+
+body.has-edit-mode-menu .logo-zone-fragment .page-editor__no-fragments-state { min-width: 100px; }
+body.has-edit-mode-menu .logo-zone-fragment .page-editor__no-fragments-state:first-child:before { content: unset; }
+
+body.has-edit-mode-menu .logo-zone-fragment lfr-drop-zone .page-editor > div,
+  .logo-zone-fragment .site-logo .logo-link {
+    display: var(--lz-display, block);
+    flex-direction: var(--lz-flex-direction, initial);
+    flex-wrap: var(--lz-flex-wrap, initial);
+    align-items: var(--lz-align-items, initial);
+    justify-content: var(--lz-justify-content, initial);
+    gap: var(--lz-gap, 0);
+}
+
+body:not(.has-edit-mode-menu) .logo-zone-fragment .site-logo .logo-link,
+body:not(.has-edit-mode-menu) .logo-zone-fragment > lfr-drop-zone > *:first-child {
+  display: var(--lz-display, block);
+  flex-direction: var(--lz-flex-direction, initial);
+  flex-wrap: var(--lz-flex-wrap, initial);
+  align-items: var(--lz-align-items, initial);
+  justify-content: var(--lz-justify-content, initial);
+  gap: var(--lz-gap, 0);
+}
+
+body.has-edit-mode-menu .logo-zone-fragment[data-lock="true"] lfr-drop-zone .page-editor > div {
+  display: var(--lz-display, block) !important;
+  flex-direction: var(--lz-flex-direction, initial) !important;
+  flex-wrap: var(--lz-flex-wrap, initial) !important;
+  align-items: var(--lz-align-items, initial) !important;
+  justify-content: var(--lz-justify-content, initial) !important;
+  gap: var(--lz-gap, 0) !important;
+}
+
+body:not(.has-edit-mode-menu) .logo-zone-fragment[data-lock="true"] .site-logo .logo-link,
+body:not(.has-edit-mode-menu) .logo-zone-fragment[data-lock="true"] > lfr-drop-zone > *:first-child {
+  display: var(--lz-display, block) !important;
+  flex-direction: var(--lz-flex-direction, initial) !important;
+  flex-wrap: var(--lz-flex-wrap, initial) !important;
+  align-items: var(--lz-align-items, initial) !important;
+  justify-content: var(--lz-justify-content, initial) !important;
+  gap: var(--lz-gap, 0) !important;
+}
