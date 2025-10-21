@@ -72,24 +72,27 @@ setTimeout(() => {
 
     const setFixedWidthForDesktopLike = () => {
       if (!hamburgerZoneWrapper || !mainContent) return;
-      if (limitMenuWidth) {
-        hamburgerZoneWrapper.style.width = menuWidth;
-        if (isLeft) mainContent.style.marginLeft = menuWidth;
-        else mainContent.style.marginRight = menuWidth;
+
+      const w = window.innerWidth;
+
+      if (w < tabletBreakpoint) {
+        hamburgerZoneWrapper.style.removeProperty('width');
+        if (isLeft) mainContent.style.removeProperty('margin-left');
+        else mainContent.style.removeProperty('margin-right');
         return;
       }
-      const w = window.innerWidth;
-      if (w >= tabletBreakpoint) {
-        const wPx = hamburgerZoneWrapper.offsetWidth + 'px';
-        hamburgerZoneWrapper.style.width = wPx;
-        if (layoutMode !== 'edit') {
-          if (isLeft) mainContent.style.marginLeft = wPx;
-          else mainContent.style.marginRight = wPx;
-        }
+
+      let targetWidth;
+      if (limitMenuWidth) {
+        targetWidth = menuWidth;
       } else {
-        hamburgerZoneWrapper.style.width = '';
-        if (isLeft) mainContent.style.marginLeft = '';
-        else mainContent.style.marginRight = '';
+        targetWidth = hamburgerZoneWrapper.offsetWidth + 'px';
+      }
+      hamburgerZoneWrapper.style.width = targetWidth;
+
+      if (layoutMode !== 'edit') {
+        if (isLeft) mainContent.style.marginLeft = targetWidth;
+        else mainContent.style.marginRight = targetWidth;
       }
     };
 
