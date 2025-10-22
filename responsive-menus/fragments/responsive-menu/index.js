@@ -54,6 +54,65 @@ setTimeout(() => {
   const fragmentMenu = qs('#fragmentMenuList-' + fragmentEntryLinkNamespace);
   const logoZone = zoneWrapper ? zoneWrapper.querySelector('.logo-zone') : null;
 
+  const menuImageSelector = '.dropzone-menu.fragment-menu .text-truncate img';
+
+  function setHasMenuImages() {
+    const imgs = root.querySelectorAll(menuImageSelector);
+    const has =
+      imgs.length > 0 &&
+      Array.from(imgs).some((img) =>
+        img.complete ? img.naturalWidth > 0 : true
+      );
+    root.classList.toggle('has-menu-images', has);
+  }
+
+  function watchMenuImages() {
+    const menu = root.querySelector('.dropzone-menu.fragment-menu') || root;
+
+    const onLoadOnce = (img) => {
+      img.addEventListener('load', setHasMenuImages, { once: true });
+      img.addEventListener('error', setHasMenuImages, { once: true });
+    };
+
+    root.querySelectorAll(menuImageSelector).forEach(onLoadOnce);
+
+    if (typeof MutationObserver !== 'undefined') {
+      const mo = new MutationObserver((muts) => {
+        let touched = false;
+        for (const m of muts) {
+          if (
+            m.type === 'childList' ||
+            (m.type === 'attributes' && m.attributeName === 'src')
+          ) {
+            touched = true;
+            if (m.addedNodes) {
+              m.addedNodes.forEach((n) => {
+                if (n.nodeType === 1) {
+                  n.querySelectorAll?.(menuImageSelector).forEach(onLoadOnce);
+                }
+              });
+            }
+          }
+        }
+        if (touched) setHasMenuImages();
+      });
+
+      mo.observe(menu, {
+        subtree: true,
+        childList: true,
+        attributes: true,
+        attributeFilter: ['src'],
+      });
+    } else {
+      const id = setInterval(setHasMenuImages, 1000);
+      root.addEventListener('DOMNodeRemoved', () => clearInterval(id), {
+        once: true,
+      });
+    }
+
+    setHasMenuImages();
+  }
+
   const setAriaWiring = () => {
     if (!toggleButton) return;
     if (fragmentMenu && !toggleButton.hasAttribute('aria-controls')) {
@@ -88,7 +147,8 @@ setTimeout(() => {
     );
     if (toggleButton)
       toggleButton.setAttribute('aria-expanded', open ? 'true' : 'false');
-    document.body.classList.toggle('is-menu-view', open);
+    root.classList.toggle('is-menu-view', open);
+    root.classList.toggle('is-open', open);
   };
 
   const openMenu = () => {
@@ -123,33 +183,6 @@ setTimeout(() => {
     if (always) hamburger?.classList.add('logo-always');
   };
 
-  const updateSizes = () => {
-    root.style.height = '';
-    root.style.width = '';
-    root.style.minWidth = '';
-    const h = `${root.clientHeight}px`;
-    root.style.height = h;
-    root.dataset.height = h;
-    if (window.innerWidth >= landscapePhoneBreakpoint) {
-      closeMenu();
-    } else if (noMenuItemOverflow) {
-      const innerMenu = zoneWrapper?.querySelector('.fragment-menu');
-      if (innerMenu) {
-        const mw = `${innerMenu.offsetWidth}px`;
-        root.dataset.minWidth = mw;
-      }
-    }
-  };
-
-  const debounce = (fn, delay) => {
-    if (!delay) return fn;
-    let id;
-    return (...args) => {
-      clearTimeout(id);
-      id = setTimeout(() => fn(...args), delay);
-    };
-  };
-
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
     root.classList.add('reduce-motion');
   }
@@ -159,10 +192,7 @@ setTimeout(() => {
     setAriaWiring();
     logoSetup();
     markCurrentPageLink();
-
-    const onResize = debounce(updateSizes, debounceDelay);
-    updateSizes();
-    window.addEventListener('resize', onResize, { passive: true });
+    watchMenuImages();
 
     const onToggle = () => (isMenuOpen() ? closeMenu() : openMenu());
     toggleButton?.addEventListener('click', onToggle);
@@ -225,5 +255,7 @@ setTimeout(() => {
       setOpen(false);
     }
   };
-  window.matchMedia(`(min-width:${landscapePhoneBreakpoint}px)`).addEventListener('change', closeIfWiderThanPhones);
+  window
+    .matchMedia(`(min-width:${landscapePhoneBreakpoint}px)`)
+    .addEventListener('change', closeIfWiderThanPhones);
 }, configuration.initializeDelay);
