@@ -162,17 +162,17 @@
     position: -webkit-sticky;
     position: sticky;
     top: 0;
-    height: 100vh;
+    height: 100dvh;
     z-index: auto;
   }
   .lfr-layout-structure-item-responsive-side-menu > div { height: 100%; }
 
   body.has-control-menu:not(.has-edit-mode-menu) .lfr-layout-structure-item-responsive-side-menu {
     top: var(--control-menu-container-height, 0);
-    height: calc(100vh - var(--control-menu-container-height, 0));
+    height: calc(100dvh - var(--control-menu-container-height, 0));
   }
   body.has-control-menu.has-edit-mode-menu .lfr-layout-structure-item-responsive-side-menu {
-    height: calc(100vh - var(--control-menu-container-height, 0) - var(--toolbar-height, 64px) - var(--page-editor-breadcrumb-height, 29px));
+    height: calc(100dvh - var(--control-menu-container-height, 0) - var(--toolbar-height, 64px) - var(--page-editor-breadcrumb-height, 29px));
   }
 
   [#if configuration.menuStyle?contains('menu-right')]
@@ -409,7 +409,7 @@
     .fragment-root:has(.dropzone-menu.fragment-menu .text-truncate img) .hamburger-zone-wrapper,
     .fragment-root:has(.dropzone-menu.fragment-menu .text-truncate img) .hamburger-zone-wrapper:hover {
       background-color: var(--responsive-menu-breakpoint-phone-landscape-menu-background-color, transparent);
-      width: 100vw;
+      width: 100dvw;
       max-width: 100%;
       display: grid;
       grid-template-rows: 0fr !important;
@@ -422,7 +422,7 @@
     .fragment-root:has(.dropzone-menu.fragment-menu .text-truncate img) .hamburger-zone-wrapper.open,
     .fragment-root:has(.dropzone-menu.fragment-menu .text-truncate img) .hamburger-zone-wrapper.open:hover {
       grid-template-rows: 1fr !important;
-      width: 100vw;
+      width: 100dvw;
     }
 
     .fragment-root .hamburger-zone-inner { max-width: none; overflow: hidden; }
@@ -497,7 +497,7 @@
     .fragment-root:has(.dropzone-menu.fragment-menu .text-truncate img) .hamburger-zone-wrapper,
     .fragment-root:has(.dropzone-menu.fragment-menu .text-truncate img) .hamburger-zone-wrapper:hover {
       background-color: var(--responsive-menu-breakpoint-phone-landscape-menu-background-color, transparent);
-      width: 100vw;
+      width: 100dvw;
       max-width: 100%;
       display: grid;
       grid-template-rows: 0fr !important;
@@ -510,7 +510,7 @@
     .fragment-root:has(.dropzone-menu.fragment-menu .text-truncate img) .hamburger-zone-wrapper.open,
     .fragment-root:has(.dropzone-menu.fragment-menu .text-truncate img) .hamburger-zone-wrapper.open:hover {
       grid-template-rows: 1fr !important;
-      width: 100vw;
+      width: 100dvw;
     }
 
     .fragment-root .hamburger-zone-inner { max-width: none; overflow: hidden; }
