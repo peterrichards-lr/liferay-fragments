@@ -143,7 +143,59 @@ setTimeout(() => {
       logoZone?.classList.contains('open')
     );
 
+  const wireFocusTrap = ({ container, initialFocus, onDeactivate }) => {
+    let active = false;
+    const getFocusables = () => {
+      if (!container) return [];
+      const nodes = container.querySelectorAll(
+        'a[href],button:not([disabled]),[tabindex]:not([tabindex="-1"]),select,textarea,input'
+      );
+      return Array.from(nodes).filter((el) => el.offsetParent !== null);
+    };
+    const keydown = (e) => {
+      if (!active) return;
+      if (e.key !== 'Tab') return;
+      const els = getFocusables();
+      if (!els.length) {
+        e.preventDefault();
+        const t = typeof initialFocus === 'function' ? initialFocus() : initialFocus;
+        t?.focus?.();
+        return;
+      }
+      const first = els[0];
+      const last = els[els.length - 1];
+      if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault();
+        first.focus();
+      } else if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault();
+        last.focus();
+      }
+    };
+    const activate = () => {
+      if (active) return;
+      active = true;
+      document.addEventListener('keydown', keydown, true);
+      const t = typeof initialFocus === 'function' ? initialFocus() : initialFocus;
+      t?.focus?.();
+    };
+    const deactivate = () => {
+      if (!active) return;
+      active = false;
+      document.removeEventListener('keydown', keydown, true);
+      onDeactivate?.();
+    };
+    return { activate, deactivate };
+  };
+
+  const focusTrap = wireFocusTrap({
+    container: zoneWrapper,
+    initialFocus: () => getFocusableMenuItems()[0] || toggleButton,
+    onDeactivate: () => toggleButton?.focus()
+  });
+
   const setOpen = (open) => {
+    const isOverlay = window.innerWidth < landscapePhoneBreakpoint;
     [hamburger, zoneWrapper, logoZone].forEach(
       (el) => el && el.classList.toggle('open', open)
     );
@@ -151,6 +203,12 @@ setTimeout(() => {
       toggleButton.setAttribute('aria-expanded', open ? 'true' : 'false');
     root.classList.toggle('is-menu-view', open);
     root.classList.toggle('is-open', open);
+    if (isOverlay) {
+      if (open) focusTrap.activate();
+      else focusTrap.deactivate();
+    } else {
+      focusTrap.deactivate();
+    }
   };
 
   const openMenu = () => {
@@ -290,7 +348,7 @@ setTimeout(() => {
           (transitionTarget || menuContainer).addEventListener('transitionend', onDone, true);
           setTimeout(onDone, transitionTimeout);
         });
-      }
+      };
 
       wireCloseOnInternalNav({
         root,
@@ -300,6 +358,7 @@ setTimeout(() => {
         closeMenu: () => {
           zoneWrapper?.classList.remove('open');
           root.classList.remove('is-menu-view');
+          focusTrap.deactivate();
         },
         enabled: configuration.enableCloseOnInternalNav === true,
         transitionTimeout: 300

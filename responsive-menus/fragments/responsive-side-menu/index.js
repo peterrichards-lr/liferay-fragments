@@ -42,27 +42,15 @@ setTimeout(() => {
     ? parseBreakpoint(portraitPhoneBP, landscapePhoneBreakpoint)
     : landscapePhoneBreakpoint;
 
-  debug('fontSizePixels', fontSizePixels);
-  debug('desktopBreakpoint', desktopBreakpoint);
-  debug('tabletBreakpoint', tabletBreakpoint);
-  debug('landscapePhoneBreakpoint', landscapePhoneBreakpoint);
-  debug('portraitPhoneBreakpoint', portraitPhoneBreakpoint);
-
-  if (!root || layoutMode === 'preview') {
-    debug('init', 'No root element or in preview mode – exiting.');
-    return;
-  }
+  if (!root || layoutMode === 'preview') return;
 
   const qs = (sel, scope = root) => scope.querySelector(sel);
   const qsa = (sel, scope = root) => Array.from(scope.querySelectorAll(sel));
 
   const holder = fragmentElement.parentElement;
-
   const zoneWrapper = qs('.hamburger-zone-wrapper');
   const hamburger = qs('.hamburger');
-  const logoZone = zoneWrapper
-    ? zoneWrapper.querySelector('.logo-zone')
-    : null;
+  const logoZone = zoneWrapper ? zoneWrapper.querySelector('.logo-zone') : null;
   const toggleButton = qs('.fragment-menu-icon');
   const fragmentMenu = qs('#fragmentSideMenuList-' + fragmentEntryLinkNamespace);
   const mainContent = document.getElementById('main-content');
@@ -81,6 +69,64 @@ setTimeout(() => {
     }
   };
 
+  const getFocusableMenuItems = () => {
+    if (!fragmentMenu) return [];
+    const nodes = fragmentMenu.querySelectorAll(
+      'a[href],button:not([disabled]),[tabindex]:not([tabindex="-1"]),select,textarea,input'
+    );
+    return Array.from(nodes).filter((el) => el.offsetParent !== null);
+  };
+
+  const wireFocusTrap = ({ container, initialFocus, onDeactivate }) => {
+    let active = false;
+    const getFocusables = () => {
+      if (!container) return [];
+      const nodes = container.querySelectorAll(
+        'a[href],button:not([disabled]),[tabindex]:not([tabindex="-1"]),select,textarea,input'
+      );
+      return Array.from(nodes).filter((el) => el.offsetParent !== null);
+    };
+    const keydown = (e) => {
+      if (!active || e.key !== 'Tab') return;
+      const els = getFocusables();
+      if (!els.length) {
+        e.preventDefault();
+        const t = typeof initialFocus === 'function' ? initialFocus() : initialFocus;
+        t?.focus?.();
+        return;
+      }
+      const first = els[0];
+      const last = els[els.length - 1];
+      if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault();
+        first.focus();
+      } else if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault();
+        last.focus();
+      }
+    };
+    const activate = () => {
+      if (active) return;
+      active = true;
+      document.addEventListener('keydown', keydown, true);
+      const t = typeof initialFocus === 'function' ? initialFocus() : initialFocus;
+      t?.focus?.();
+    };
+    const deactivate = () => {
+      if (!active) return;
+      active = false;
+      document.removeEventListener('keydown', keydown, true);
+      onDeactivate?.();
+    };
+    return { activate, deactivate };
+  };
+
+  const focusTrap = wireFocusTrap({
+    container: zoneWrapper,
+    initialFocus: () => getFocusableMenuItems()[0] || toggleButton,
+    onDeactivate: () => toggleButton?.focus()
+  });
+
   if (logoZone && hamburger) {
     const width = window.innerWidth;
     const afterLP = width >= landscapePhoneBreakpoint;
@@ -94,8 +140,30 @@ setTimeout(() => {
     if (always) hamburger.classList.add('logo-always');
   }
 
+  const setOpen = (open) => {
+    const isOverlay = window.innerWidth < landscapePhoneBreakpoint;
+    const parent = hamburger?.parentElement || null;
+    if (parent) parent.classList.toggle('open', open);
+    zoneWrapper?.classList.toggle('open', open);
+    logoZone?.classList.toggle('open', open);
+    if (toggleButton) toggleButton.setAttribute('aria-expanded', open ? 'true' : 'false');
+    root.classList.toggle('is-menu-view', open && isOverlay);
+    if (isOverlay) {
+      if (open) focusTrap.activate();
+      else focusTrap.deactivate();
+    } else {
+      focusTrap.deactivate();
+    }
+  };
+
+  const isMenuOpen = () =>
+    !!(
+      zoneWrapper?.classList.contains('open') ||
+      hamburger?.parentElement?.classList.contains('open')
+    );
+
   if (layoutMode === 'view') {
-    if (holder) holder.classList.add('fragment-menu-holder');
+    holder?.classList.add('fragment-menu-holder');
     setAriaWiring();
 
     const debounce = (fn, delay) => {
@@ -108,24 +176,17 @@ setTimeout(() => {
 
     const setFixedWidthForDesktopLike = () => {
       if (!zoneWrapper || !mainContent) return;
-
       const w = window.innerWidth;
-
       if (w < tabletBreakpoint) {
         zoneWrapper.style.removeProperty('width');
         if (isLeft) mainContent.style.removeProperty('margin-left');
         else mainContent.style.removeProperty('margin-right');
         return;
       }
-
       let targetWidth;
-      if (limitMenuWidth) {
-        targetWidth = menuWidth;
-      } else {
-        targetWidth = zoneWrapper.offsetWidth + 'px';
-      }
+      if (limitMenuWidth) targetWidth = menuWidth;
+      else targetWidth = zoneWrapper.offsetWidth + 'px';
       zoneWrapper.style.width = targetWidth;
-
       if (layoutMode !== 'edit') {
         if (isLeft) mainContent.style.marginLeft = targetWidth;
         else mainContent.style.marginRight = targetWidth;
@@ -141,18 +202,13 @@ setTimeout(() => {
 
     if (toggleButton) {
       toggleButton.addEventListener('click', () => {
-        if (!zoneWrapper || !hamburger) return;
-        const parent = hamburger.parentElement;
-        if (parent) parent.classList.toggle('open');
-        zoneWrapper.classList.toggle('open');
-        if (logoZone) logoZone.classList.toggle('open');
+        setOpen(!isMenuOpen());
+        if (root.hasAttribute('data-closing')) root.removeAttribute('data-closing');
       });
     }
 
     if (isLeft) {
-      const sideMenu = document.body.querySelector(
-        'nav.lfr-product-menu-panel'
-      );
+      const sideMenu = document.body.querySelector('nav.lfr-product-menu-panel');
       if (sideMenu && holder) {
         const onProductToggle = () => {
           const width = sideMenu.clientWidth;
@@ -176,13 +232,7 @@ setTimeout(() => {
     window.addEventListener('scroll', onScroll, { passive: true });
 
     const closeIfWiderThanPhones = () => {
-      if (!zoneWrapper || !hamburger) return;
-      if (window.innerWidth >= landscapePhoneBreakpoint) {
-        zoneWrapper.classList.remove('open');
-        const parent = hamburger.parentElement;
-        if (parent) parent.classList.remove('open');
-        if (logoZone) logoZone.classList.remove('open');
-      }
+      if (window.innerWidth >= landscapePhoneBreakpoint) setOpen(false);
     };
     window
       .matchMedia(`(min-width:${landscapePhoneBreakpoint}px)`)
@@ -199,7 +249,6 @@ setTimeout(() => {
         transitionTimeout = 300,
       }) => {
         if (!enabled || !menuContainer) return;
-
         const isModifier = (e) =>
           e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button === 1;
         const isInternal = (a) => {
@@ -211,7 +260,6 @@ setTimeout(() => {
           }
         };
         const getClosestLink = (el) => el.closest('a[href]');
-
         menuContainer.addEventListener('click', (e) => {
           const a = getClosestLink(e.target);
           if (!a) return;
@@ -223,7 +271,6 @@ setTimeout(() => {
             return;
           if (!isInternal(a)) return;
           if (!isMenuOpen()) return;
-
           e.preventDefault();
           const href = a.href;
           let navigated = false;
@@ -233,7 +280,6 @@ setTimeout(() => {
               window.location.assign(href);
             }
           };
-
           const onDone = () => {
             (transitionTarget || menuContainer).removeEventListener(
               'transitionend',
@@ -243,10 +289,8 @@ setTimeout(() => {
             root.removeAttribute('data-closing');
             go();
           };
-
           root.setAttribute('data-closing', 'true');
           closeMenu();
-
           (transitionTarget || menuContainer).addEventListener(
             'transitionend',
             onDone,
@@ -265,8 +309,7 @@ setTimeout(() => {
           root.classList.contains('is-menu-view') ||
           zoneWrapper?.classList.contains('open'),
         closeMenu: () => {
-          zoneWrapper?.classList.remove('open');
-          root.classList.remove('is-menu-view');
+          setOpen(false);
         },
         enabled: configuration.enableCloseOnInternalNav === true,
         transitionTimeout: 300,
