@@ -343,8 +343,24 @@
   body.has-control-menu .master-page .hamburger-zone-inner .${configuration.dropzoneGrower}:not(:has(.page-editor__no-fragments-state)),
   body.has-control-menu .page-editor .hamburger-zone-inner .${configuration.dropzoneGrower}:not(:has(.page-editor__no-fragments-state)) { flex-grow: 1; }
 
-  @media (prefers-reduced-motion: reduce) { .fragment-root .fragment-menu { transition: none; } }
-  .reduce-motion * { transition: none; animation: none; }
+  @media (prefers-reduced-motion: reduce) {
+    .fragment-root .hamburger-zone-wrapper { transition: none; }
+    .fragment-root .hamburger-zone-inner { transition: none; }
+    .fragment-root .dropzone-menu :is(>.fragment-menu, &.fragment-menu),
+    .fragment-root .dropzone .logo-zone.increase-hamburger
+    {
+      transition: none;
+      transform: none;
+      opacity: 1;
+    }
+    .fragment-root .hamburger { transition: none; }
+    .fragment-root .fragment-menu { transition: none; }
+  }
+
+  .reduce-motion * {
+    transition: none;
+    animation: none;
+  }
 </style>
 
 [@renderDropzones zones=zones /]

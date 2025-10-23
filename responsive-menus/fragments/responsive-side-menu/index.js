@@ -26,7 +26,11 @@ setTimeout(() => {
   } = configuration;
 
   const productMenuWidth = 320;
+  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
   const root = fragmentElement.querySelector('.fragment-root');
+  if (!root || layoutMode === 'preview') return;
+
   const debug = (label, ...args) => {
     if (debugEnabled) console.debug('[Menu]', label + ':', ...args);
   };
@@ -161,6 +165,10 @@ setTimeout(() => {
       zoneWrapper?.classList.contains('open') ||
       hamburger?.parentElement?.classList.contains('open')
     );
+
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    root.classList.add('reduce-motion');
+  }
 
   if (layoutMode === 'view') {
     holder?.classList.add('fragment-menu-holder');
@@ -312,7 +320,7 @@ setTimeout(() => {
           setOpen(false);
         },
         enabled: configuration.enableCloseOnInternalNav === true,
-        transitionTimeout: 300,
+        transitionTimeout: prefersReduced ? 0 : 300
       });
     }
   }

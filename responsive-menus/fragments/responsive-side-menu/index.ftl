@@ -567,6 +567,43 @@
     .fragment-root:has(.dropzone-menu.fragment-menu .text-truncate img) .dropzone-menu.fragment-menu .lfr-nav-item .text-truncate { color: inherit; }
   }
   [/#if]
+
+  @media (prefers-reduced-motion: reduce) {
+    .fragment-root { --side-menu-open-duration: 0s; }
+  }
+
+  @media (prefers-reduced-motion: reduce) and (max-width: ${configuration.landscapePhoneBreakpoint}) {
+    .fragment-root:not(:has(.dropzone-menu.fragment-menu .text-truncate img)) .hamburger-zone-wrapper,
+    .fragment-root:has(.dropzone-menu.fragment-menu .text-truncate img) .hamburger-zone-wrapper,
+    .fragment-root .dropzone .logo-zone.increase-hamburger {
+      transition: none;
+    }
+    .fragment-root .dropzone-menu.fragment-menu,
+    .fragment-root .hamburger-zone-wrapper .dropzone-upper,
+    .fragment-root .hamburger-zone-wrapper .dropzone-lower {
+      transition: none;
+      transform: none;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) and (max-width: ${configuration.portraitPhoneBreakpoint}) {
+    .fragment-root:not(:has(.dropzone-menu.fragment-menu .text-truncate img)) .hamburger-zone-wrapper,
+    .fragment-root:has(.dropzone-menu.fragment-menu .text-truncate img) .hamburger-zone-wrapper,
+    .fragment-root .dropzone .logo-zone.increase-hamburger {
+      transition: none;
+    }
+    .fragment-root .dropzone-menu.fragment-menu,
+    .fragment-root .hamburger-zone-wrapper .dropzone-upper,
+    .fragment-root .hamburger-zone-wrapper .dropzone-lower {
+      transition: none;
+      transform: none;
+    }
+  }
+
+  .reduce-motion * {
+    transition: none !important;
+    animation: none !important;
+  }
 </style>
 
 [@renderDropzones zones=zones /]

@@ -27,6 +27,7 @@ setTimeout(() => {
 
   const isSticky = menuStyle.includes('sticky');
   const noMenuItemOverflow = menuItemOverflow === 'none';
+  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   const root = fragmentElement.querySelector('.fragment-root');
   if (!root || layoutMode === 'preview') return;
@@ -290,7 +291,7 @@ setTimeout(() => {
         if (btn) btn.style.display = v ? 'block' : 'none';
       };
       btn?.addEventListener('click', () =>
-        window.scrollTo({ top: 0, behavior: 'smooth' })
+        window.scrollTo({ top: 0, behavior: prefersReduced ? 'auto' : 'smooth' })
       );
       window.addEventListener('scroll', onScroll, { passive: true });
       onScroll();
@@ -361,7 +362,7 @@ setTimeout(() => {
           focusTrap.deactivate();
         },
         enabled: configuration.enableCloseOnInternalNav === true,
-        transitionTimeout: 300
+        transitionTimeout: prefersReduced ? 0 : 300
       });
     }
   }
