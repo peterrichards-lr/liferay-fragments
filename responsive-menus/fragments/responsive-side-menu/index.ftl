@@ -114,6 +114,10 @@
     white-space: nowrap;
   }
 
+  .fragment-root[data-closing="true"] .dropzone-menu :is(>.fragment-menu, &.fragment-menu) {
+    opacity: 0.001;
+  }
+
   .fragment-menu-editor-padding { height: 0; overflow: hidden; }
   body.has-edit-mode-menu .page-editor .fragment-menu-editor-padding.show {
     height: 26px;

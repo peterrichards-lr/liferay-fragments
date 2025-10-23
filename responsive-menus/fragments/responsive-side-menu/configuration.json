@@ -127,6 +127,23 @@
     {
       "fields": [
         {
+          "defaultValue": false,
+          "label": "scroll-lock",
+          "name": "enableScrollLock",
+          "type": "checkbox"
+        },
+        {
+          "defaultValue": true,
+          "label": "close-on-internal-nav",
+          "name": "enableCloseOnInternalNav",
+          "type": "checkbox"
+        }
+      ],
+      "label": "behavior"
+    },
+    {
+      "fields": [
+        {
           "defaultValue": "2rem",
           "label": "menu-item-logo-max-width",
           "name": "menuItemLogoMaxWidth",

@@ -131,6 +131,10 @@
     white-space: nowrap;
   }
 
+  .fragment-root[data-closing="true"] .dropzone-menu :is(>.fragment-menu, &.fragment-menu) {
+    opacity: 0.001;
+  }
+
   .fragment-root .fragment-menu-icon { min-width: 44px; min-height: 44px; }
   .fragment-root .fragment-menu-icon:focus-visible { outline: 2px solid currentColor; outline-offset: 2px; }
 
@@ -192,9 +196,10 @@
     .fragment-root .hamburger-zone-inner .fragment-menu .lfr-nav-item .text-truncate { text-overflow: unset; white-space: normal; overflow: visible; }
   [/#if]
 
+  body.has-control-menu .lfr-layout-structure-item-responsive-menu { top: var(--control-menu-container-height, 0); }
+
   [#if isSticky]
     .lfr-layout-structure-item-responsive-menu { position: -webkit-sticky; position: sticky; top: 0; z-index: 1; }
-    body.has-control-menu .lfr-layout-structure-item-responsive-menu { top: var(--control-menu-container-height, 0); }
     [#if configuration.enableLandscapePhoneBreakpoint]
       @media (max-width: ${configuration.landscapePhoneBreakpoint}) {
         body.has-control-menu .lfr-layout-structure-item-responsive-menu.top { top: 0; transition: all .5s ease; }
