@@ -99,6 +99,9 @@
     --responsive-menu-breakpoint-phone-portrait-width: ${configuration.portraitPhoneBreakpoint};
     --responsive-menu-breakpoint-phone-portrait-menu-background-color: ${configuration.portraitPhoneMenuBgColor};
     --responsive-menu-limit-width: ${configuration.limitMenuWidth?c};
+    --responsive-menu-hamburger-size: 2.75rem;
+    --responsive-menu-hamburger-min-size: 44px;
+    --responsive-menu-hamburger-border-width: ${configuration.menuHamburgerBorderWidth};
   }
 
   .visually-hidden {
@@ -216,19 +219,12 @@
     .lfr-layout-structure-item-responsive-side-menu { right: 0; }
   [/#if]
 
-  .fragment-root { height: 100%; }
+  .fragment-root { height: 100%; position: relative; overflow: visible; }
   .fragment-root .fragment-menu-icon { display: none; }
 
-  .fragment-root .dropzone-wrapper { display: flex; flex-direction: column; height: 100%; width: 100%; }
-  .fragment-root .hamburger-zone-wrapper { height: 100%; }
-  .fragment-root .hamburger-zone-inner {
-    background-color: var(--responsive-menu-breakpoint-desktop-menu-background-color, transparent);
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-    max-width: 100%;
-    gap: var(--responsive-menu-zone-gap, .5rem);
-  }
+  .fragment-root .dropzone-wrapper { display: flex; flex-direction: column; height: 100%; width: 100%; position: relative; overflow: visible; }
+  .fragment-root .hamburger-zone-wrapper { height: 100%; position: relative; overflow: visible; }
+  .fragment-root .hamburger-zone-inner { background-color: var(--responsive-menu-breakpoint-desktop-menu-background-color, transparent); display: flex; flex-direction: column; height: 100%; max-width: 100%; gap: var(--responsive-menu-zone-gap, .5rem); overflow: visible; }
 
   .fragment-root .dropzone .zone-layout > div { gap: var(--responsive-menu-zone-gap, .5rem); }
   .fragment-root .dropzone-wrapper .dropzone .input-group       { flex-wrap: nowrap !important; }
@@ -265,6 +261,16 @@
 
   .fragment-root .hamburger-zone-inner .${configuration.dropzoneGrower} { flex-grow: 1; }
 
+  .fragment-root .dropzone .logo-zone.logo-always {
+    visibility: visible;
+    opacity: 1;
+    pointer-events: auto;
+  }
+  [#if configuration.menuStyle?contains('menu-right')]
+  .fragment-root .dropzone .logo-zone.logo-always { inset-inline-start: 0; inset-inline-end: auto; }
+  [/#if]
+  .fragment-root:has(.logo-zone.logo-always) .hamburger-zone-inner { overflow: visible !important; }
+
   [#if configuration.enableTabletBreakpoint]
   @media only screen and (max-width: ${configuration.tabletBreakpoint}) {
     .lfr-layout-structure-item-responsive-side-menu { position: fixed; z-index: 1; }
@@ -294,17 +300,41 @@
     .fragment-root .hamburger-zone-inner { position: relative; max-width: none; overflow: hidden; }
 
     .fragment-root .fragment-menu-icon {
+      --_h-size: var(--responsive-menu-hamburger-size, 2.75rem);
+      --_h-min: var(--responsive-menu-hamburger-min-size, 44px);
+      --_h-effective: max(var(--_h-size), var(--_h-min));
+      --hamburger-bar-width: calc(var(--_h-effective) * 0.6);
+      --hamburger-bar-height: calc(var(--_h-effective) * 0.12);
+      --hamburger-bar-gap: calc(var(--_h-effective) * 0.18);
+
       display: inline-flex;
+      box-sizing: border-box;
       flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: var(--hamburger-bar-gap);
+
+      width: var(--_h-effective);
+      height: var(--_h-effective);
+      padding: calc(var(--_h-effective) * 0.18 - (var(--responsive-menu-hamburger-border-width, 0px) / 2));
+      min-width: var(--_h-min);
+      min-height: var(--_h-min);
+
+      margin: 0;
       cursor: pointer;
       background-color: ${configuration.menuHamburgerBgColor};
       border: ${configuration.menuHamburgerBorderWidth} ${configuration.menuHamburgerBorderStyle} ${configuration.menuHamburgerBorderColor};
       border-radius: ${configuration.menuHamburgerBorderRadius};
     }
     .fragment-root .fragment-menu-icon .bar {
-      display: block; width: 25px; height: 5px; margin: 2.5px; background-color: ${configuration.menuHamburgerColor};
+      display: block;
+      width: var(--hamburger-bar-width);
+      height: var(--hamburger-bar-height);
+      border-radius: calc(var(--hamburger-bar-height) / 2);
+      background-color: ${configuration.menuHamburgerColor};
     }
-
+    .fragment-root .fragment-menu-icon:focus-visible { outline: 2px solid currentColor; outline-offset: 2px; }
+    
     .fragment-root .dropzone-menu.fragment-menu {
       flex-direction: column;
       pointer-events: none;
@@ -397,15 +427,38 @@
 
     .fragment-root .fragment-menu-icon,
     .fragment-root:has(.dropzone-menu.fragment-menu .text-truncate img) .fragment-menu-icon {
+      --_h-size: var(--responsive-menu-hamburger-size, 2.75rem);
+      --_h-min: var(--responsive-menu-hamburger-min-size, 44px);
+      --_h-effective: max(var(--_h-size), var(--_h-min));
+      --hamburger-bar-width: calc(var(--_h-effective) * 0.6);
+      --hamburger-bar-height: calc(var(--_h-effective) * 0.12);
+      --hamburger-bar-gap: calc(var(--_h-effective) * 0.18);
+
       display: inline-flex;
       flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: var(--hamburger-bar-gap);
+
+      width: var(--_h-effective);
+      height: var(--_h-effective);
+      min-width: var(--_h-min);
+      min-height: var(--_h-min);
+      padding: calc(var(--_h-effective) * 0.18);
+      box-sizing: border-box;
+
       cursor: pointer;
       background-color: ${configuration.menuHamburgerBgColor};
       border: ${configuration.menuHamburgerBorderWidth} ${configuration.menuHamburgerBorderStyle} ${configuration.menuHamburgerBorderColor};
       border-radius: ${configuration.menuHamburgerBorderRadius};
     }
+    .fragment-root .fragment-menu-icon:focus-visible { outline: 2px solid currentColor; outline-offset: 2px; }
     .fragment-root .fragment-menu-icon .bar {
-      display: block; width: 25px; height: 5px; margin: 2.5px; background-color: ${configuration.menuHamburgerColor};
+      display: block;
+      width: var(--hamburger-bar-width);
+      height: var(--hamburger-bar-height);
+      border-radius: calc(var(--hamburger-bar-height) / 2);
+      background-color: ${configuration.menuHamburgerColor};
     }
 
     .fragment-root:not(:has(.dropzone-menu.fragment-menu .text-truncate img)) .hamburger-zone-wrapper,
@@ -475,6 +528,20 @@
     .fragment-root:has(.dropzone-menu.fragment-menu .text-truncate img) .hamburger-zone-inner .dropzone-lower { display: block; }
     .fragment-root .dropzone-menu.fragment-menu .lfr-nav-item .text-truncate,
     .fragment-root:has(.dropzone-menu.fragment-menu .text-truncate img) .hamburger-zone-wrapper .dropzone-menu.fragment-menu .lfr-nav-item .text-truncate { color: inherit; }
+
+    body > .logo-zone.logo-zone-fragment.reduce-logo.logo-always.floating-logo img,
+    .fragment-root .dropzone .logo-zone.reduce-logo img {
+      height: auto;
+      object-fit: contain;
+      max-height: min(
+        var(--_h-effective, 2.75rem),
+        var(--logo-max-height, 60px)
+      );
+      max-width: var(--logo-max-width, 120px);
+    }
+
+    .fragment-root .hamburger.increase { height: var(--responsive-menu-logo-max-height); }
+    #main-content.increase-hamburger { margin-top: var(--responsive-menu-logo-max-height); }
   }
   [/#if]
 
@@ -485,15 +552,38 @@
 
     .fragment-root .fragment-menu-icon,
     .fragment-root:has(.dropzone-menu.fragment-menu .text-truncate img) .fragment-menu-icon {
+      --_h-size: var(--responsive-menu-hamburger-size, 2.75rem);
+      --_h-min: var(--responsive-menu-hamburger-min-size, 44px);
+      --_h-effective: max(var(--_h-size), var(--_h-min));
+      --hamburger-bar-width: calc(var(--_h-effective) * 0.6);
+      --hamburger-bar-height: calc(var(--_h-effective) * 0.12);
+      --hamburger-bar-gap: calc(var(--_h-effective) * 0.18);
+
       display: inline-flex;
       flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: var(--hamburger-bar-gap);
+
+      width: var(--_h-effective);
+      height: var(--_h-effective);
+      min-width: var(--_h-min);
+      min-height: var(--_h-min);
+      padding: calc(var(--_h-effective) * 0.18);
+      box-sizing: border-box;
+
       cursor: pointer;
       background-color: ${configuration.menuHamburgerBgColor};
       border: ${configuration.menuHamburgerBorderWidth} ${configuration.menuHamburgerBorderStyle} ${configuration.menuHamburgerBorderColor};
       border-radius: ${configuration.menuHamburgerBorderRadius};
     }
+    .fragment-root .fragment-menu-icon:focus-visible { outline: 2px solid currentColor; outline-offset: 2px; }
     .fragment-root .fragment-menu-icon .bar {
-      display: block; width: 25px; height: 5px; margin: 2.5px; background-color: ${configuration.menuHamburgerColor};
+      display: block;
+      width: var(--hamburger-bar-width);
+      height: var(--hamburger-bar-height);
+      border-radius: calc(var(--hamburger-bar-height) / 2);
+      background-color: ${configuration.menuHamburgerColor};
     }
 
     .fragment-root:not(:has(.dropzone-menu.fragment-menu .text-truncate img)) .hamburger-zone-wrapper,
@@ -561,10 +651,22 @@
     .fragment-root .dropzone .zone-layout.allow-override > div { display: flex; flex-direction: column; align-items: start; justify-content: end; }
     .fragment-root .dropzone .zone-layout.allow-override > div > * { width: 100%; }
 
-    .fragment-root:has(.dropzone-menu.fragment-menu .text-truncate img) .hamburger-zone-inner .dropzone-upper,
-    .fragment-root:has(.dropzone-menu.fragment-menu .text-truncate img) .hamburger-zone-inner .dropzone-lower { display: block; }
     .fragment-root .dropzone-menu.fragment-menu .lfr-nav-item .text-truncate,
     .fragment-root:has(.dropzone-menu.fragment-menu .text-truncate img) .dropzone-menu.fragment-menu .lfr-nav-item .text-truncate { color: inherit; }
+
+    body > .logo-zone.logo-zone-fragment.reduce-logo.logo-always.floating-logo img,
+    .fragment-root .dropzone .logo-zone.reduce-logo img {
+      height: auto;
+      object-fit: contain;
+      max-height: min(
+        var(--_h-effective, 2.75rem),
+        var(--logo-max-height, 60px)
+      );
+      max-width: var(--logo-max-width, 120px);
+    }
+
+    .fragment-root .hamburger.increase { height: var(--responsive-menu-logo-max-height); }
+    #main-content.increase-hamburger { margin-top: var(--responsive-menu-logo-max-height); }
   }
   [/#if]
 

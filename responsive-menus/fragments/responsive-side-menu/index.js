@@ -26,7 +26,9 @@ setTimeout(() => {
   } = configuration;
 
   const productMenuWidth = 320;
-  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const prefersReduced = window.matchMedia(
+    '(prefers-reduced-motion: reduce)'
+  ).matches;
 
   const root = fragmentElement.querySelector('.fragment-root');
   if (!root || layoutMode === 'preview') return;
@@ -46,19 +48,40 @@ setTimeout(() => {
     ? parseBreakpoint(portraitPhoneBP, landscapePhoneBreakpoint)
     : landscapePhoneBreakpoint;
 
-  if (!root || layoutMode === 'preview') return;
-
   const qs = (sel, scope = root) => scope.querySelector(sel);
-  const qsa = (sel, scope = root) => Array.from(scope.querySelectorAll(sel));
-
   const holder = fragmentElement.parentElement;
   const zoneWrapper = qs('.hamburger-zone-wrapper');
   const hamburger = qs('.hamburger');
-  const logoZone = zoneWrapper ? zoneWrapper.querySelector('.logo-zone') : null;
   const toggleButton = qs('.fragment-menu-icon');
-  const fragmentMenu = qs('#fragmentSideMenuList-' + fragmentEntryLinkNamespace);
+  const fragmentMenu = qs(
+    '#fragmentSideMenuList-' + fragmentEntryLinkNamespace
+  );
   const mainContent = document.getElementById('main-content');
+  const logoZone = zoneWrapper ? zoneWrapper.querySelector('.logo-zone') : null;
   const isLeft = menuStyle.includes('menu-left');
+
+  const ensureStyleOnce = (() => {
+    let done = false;
+    return () => {
+      if (done) return;
+      const style = document.createElement('style');
+      style.textContent =
+        '.logo-zone-collapse > *{display:none !important} .floating-logo{will-change:opacity}';
+      document.head.appendChild(style);
+      done = true;
+    };
+  })();
+
+  const stripIds = (el) => {
+    if (!el) return;
+    if (el.id) el.removeAttribute('id');
+    el.querySelectorAll('[id]').forEach((n) => n.removeAttribute('id'));
+  };
+
+  const getLogoAnchor = (el) => {
+    if (!el) return null;
+    return el.tagName === 'A' ? el : el.querySelector('a[href]') || null;
+  };
 
   const setAriaWiring = () => {
     if (!toggleButton) return;
@@ -95,7 +118,8 @@ setTimeout(() => {
       const els = getFocusables();
       if (!els.length) {
         e.preventDefault();
-        const t = typeof initialFocus === 'function' ? initialFocus() : initialFocus;
+        const t =
+          typeof initialFocus === 'function' ? initialFocus() : initialFocus;
         t?.focus?.();
         return;
       }
@@ -113,7 +137,8 @@ setTimeout(() => {
       if (active) return;
       active = true;
       document.addEventListener('keydown', keydown, true);
-      const t = typeof initialFocus === 'function' ? initialFocus() : initialFocus;
+      const t =
+        typeof initialFocus === 'function' ? initialFocus() : initialFocus;
       t?.focus?.();
     };
     const deactivate = () => {
@@ -128,8 +153,161 @@ setTimeout(() => {
   const focusTrap = wireFocusTrap({
     container: zoneWrapper,
     initialFocus: () => getFocusableMenuItems()[0] || toggleButton,
-    onDeactivate: () => toggleButton?.focus()
+    onDeactivate: () => toggleButton?.focus(),
   });
+
+  let floatingLogo = null;
+
+  const ensureFloatingLogo = () => {
+    if (floatingLogo || !logoZone) return;
+    ensureStyleOnce();
+    floatingLogo = logoZone.cloneNode(true);
+    stripIds(floatingLogo);
+    floatingLogo.classList.add('floating-logo');
+    floatingLogo.removeAttribute('aria-hidden');
+
+    const origA = getLogoAnchor(logoZone);
+    const cloneA = getLogoAnchor(floatingLogo);
+
+    if (origA) {
+      const href = origA.getAttribute('href');
+      const target = origA.getAttribute('target');
+      if (cloneA) {
+        cloneA.setAttribute('href', href || '#');
+        if (target) cloneA.setAttribute('target', target);
+        cloneA.setAttribute('tabindex', '0');
+        cloneA.addEventListener('click', (e) => {
+          if (!href || href === '#') return;
+          if (target === '_blank') return;
+          e.preventDefault();
+          window.location.assign(href);
+        });
+        cloneA.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            cloneA.click();
+          }
+        });
+      } else {
+        floatingLogo.setAttribute('tabindex', '0');
+        floatingLogo.setAttribute('role', 'link');
+        floatingLogo.addEventListener('click', () => {
+          if (!href || href === '#') return;
+          if (target === '_blank') window.open(href, '_blank');
+          else window.location.assign(href);
+        });
+        floatingLogo.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            floatingLogo.click();
+          }
+        });
+      }
+    }
+
+    floatingLogo.style.position = 'fixed';
+    floatingLogo.style.top = 'var(--control-menu-container-height, 0)';
+    if (isLeft) {
+      floatingLogo.style.right = '8px';
+      floatingLogo.style.left = 'auto';
+    } else {
+      floatingLogo.style.left = '8px';
+      floatingLogo.style.right = 'auto';
+    }
+    floatingLogo.style.zIndex = '1004';
+    floatingLogo.style.pointerEvents = 'auto';
+    floatingLogo.style.userSelect = 'none';
+    floatingLogo.style.webkitUserDrag = 'none';
+    floatingLogo.style.opacity = '0';
+    floatingLogo.style.visibility = 'hidden';
+    floatingLogo.style.display = 'block';
+    floatingLogo.style.transition = prefersReduced
+      ? 'none'
+      : 'opacity .2s ease';
+
+    document.body.appendChild(floatingLogo);
+  };
+
+  const menuHasImages = () =>
+    !!fragmentMenu?.querySelector('.text-truncate img');
+  const isMobileLike = () => window.innerWidth < landscapePhoneBreakpoint;
+  const isLogoAlways = () => !!logoZone?.classList.contains('logo-always');
+
+  const collapseOriginal = (on) => {
+    if (!logoZone) return;
+    if (on) {
+      logoZone.classList.add('logo-zone-collapse');
+      logoZone.setAttribute('aria-hidden', 'true');
+    } else {
+      logoZone.classList.remove('logo-zone-collapse');
+      logoZone.removeAttribute('aria-hidden');
+    }
+  };
+
+  const placeFloatingLogo = () => {
+    if (!floatingLogo) return;
+    floatingLogo.style.top = 'var(--control-menu-container-height, 0)';
+    if (isLeft) {
+      floatingLogo.style.right = '8px';
+      floatingLogo.style.left = 'auto';
+    } else {
+      floatingLogo.style.left = '8px';
+      floatingLogo.style.right = 'auto';
+    }
+  };
+
+  const showFloating = (show) => {
+    if (!floatingLogo) return;
+    if (show) {
+      floatingLogo.style.visibility = 'visible';
+      floatingLogo.style.opacity = '1';
+    } else {
+      floatingLogo.style.opacity = '0';
+      if (prefersReduced) floatingLogo.style.visibility = 'hidden';
+      else
+        setTimeout(() => {
+          floatingLogo.style.visibility = 'hidden';
+        }, 200);
+    }
+  };
+
+  const isMenuOpen = () =>
+    !!(
+      zoneWrapper?.classList.contains('open') ||
+      hamburger?.parentElement?.classList.contains('open')
+    );
+
+  const syncLogoMode = () => {
+    if (!logoZone) return;
+    ensureFloatingLogo();
+
+    const desktopOrWider = !isMobileLike();
+    const mobileWithImages = isMobileLike() && menuHasImages();
+    const mobileAlways = isMobileLike() && isLogoAlways() && !menuHasImages();
+    const mobileToggle = isMobileLike() && !isLogoAlways() && !menuHasImages();
+
+    if (desktopOrWider || mobileWithImages) {
+      collapseOriginal(false);
+      showFloating(false);
+    } else if (mobileAlways) {
+      placeFloatingLogo();
+      collapseOriginal(true);
+      showFloating(true);
+    } else if (mobileToggle) {
+      placeFloatingLogo();
+      const open = isMenuOpen();
+      collapseOriginal(open);
+      showFloating(open);
+    }
+
+    debug('logo sync', {
+      width: window.innerWidth,
+      mobile: isMobileLike(),
+      hasImages: menuHasImages(),
+      logoAlways: isLogoAlways(),
+      open: isMenuOpen(),
+    });
+  };
 
   if (logoZone && hamburger) {
     const width = window.innerWidth;
@@ -150,7 +328,8 @@ setTimeout(() => {
     if (parent) parent.classList.toggle('open', open);
     zoneWrapper?.classList.toggle('open', open);
     logoZone?.classList.toggle('open', open);
-    if (toggleButton) toggleButton.setAttribute('aria-expanded', open ? 'true' : 'false');
+    if (toggleButton)
+      toggleButton.setAttribute('aria-expanded', open ? 'true' : 'false');
     root.classList.toggle('is-menu-view', open && isOverlay);
     if (isOverlay) {
       if (open) focusTrap.activate();
@@ -158,13 +337,8 @@ setTimeout(() => {
     } else {
       focusTrap.deactivate();
     }
+    syncLogoMode();
   };
-
-  const isMenuOpen = () =>
-    !!(
-      zoneWrapper?.classList.contains('open') ||
-      hamburger?.parentElement?.classList.contains('open')
-    );
 
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
     root.classList.add('reduce-motion');
@@ -176,9 +350,9 @@ setTimeout(() => {
 
     const debounce = (fn, delay) => {
       let id;
-      return (...args) => {
+      return (...a) => {
         clearTimeout(id);
-        id = setTimeout(() => fn(...args), delay);
+        id = setTimeout(() => fn(...a), delay);
       };
     };
 
@@ -191,9 +365,9 @@ setTimeout(() => {
         else mainContent.style.removeProperty('margin-right');
         return;
       }
-      let targetWidth;
-      if (limitMenuWidth) targetWidth = menuWidth;
-      else targetWidth = zoneWrapper.offsetWidth + 'px';
+      const targetWidth = limitMenuWidth
+        ? menuWidth
+        : zoneWrapper.offsetWidth + 'px';
       zoneWrapper.style.width = targetWidth;
       if (layoutMode !== 'edit') {
         if (isLeft) mainContent.style.marginLeft = targetWidth;
@@ -203,20 +377,26 @@ setTimeout(() => {
 
     const updateSizes = () => {
       setFixedWidthForDesktopLike();
+      placeFloatingLogo();
+      syncLogoMode();
     };
 
     updateSizes();
     window.addEventListener('resize', debounce(updateSizes, debounceDelay));
+    window.addEventListener('scroll', debounce(placeFloatingLogo, 50));
 
     if (toggleButton) {
       toggleButton.addEventListener('click', () => {
         setOpen(!isMenuOpen());
-        if (root.hasAttribute('data-closing')) root.removeAttribute('data-closing');
+        if (root.hasAttribute('data-closing'))
+          root.removeAttribute('data-closing');
       });
     }
 
     if (isLeft) {
-      const sideMenu = document.body.querySelector('nav.lfr-product-menu-panel');
+      const sideMenu = document.body.querySelector(
+        'nav.lfr-product-menu-panel'
+      );
       if (sideMenu && holder) {
         const onProductToggle = () => {
           const width = sideMenu.clientWidth;
@@ -241,6 +421,7 @@ setTimeout(() => {
 
     const closeIfWiderThanPhones = () => {
       if (window.innerWidth >= landscapePhoneBreakpoint) setOpen(false);
+      syncLogoMode();
     };
     window
       .matchMedia(`(min-width:${landscapePhoneBreakpoint}px)`)
@@ -316,11 +497,9 @@ setTimeout(() => {
         isMenuOpen: () =>
           root.classList.contains('is-menu-view') ||
           zoneWrapper?.classList.contains('open'),
-        closeMenu: () => {
-          setOpen(false);
-        },
+        closeMenu: () => setOpen(false),
         enabled: configuration.enableCloseOnInternalNav === true,
-        transitionTimeout: prefersReduced ? 0 : 300
+        transitionTimeout: prefersReduced ? 0 : 300,
       });
     }
   }
