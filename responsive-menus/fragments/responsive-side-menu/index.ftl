@@ -104,6 +104,12 @@
     --responsive-menu-hamburger-border-width: ${configuration.menuHamburgerBorderWidth};
   }
 
+  html.menu-scroll-locked,
+  body.menu-scroll-locked {
+    overflow: hidden;
+    height: 100dvh;
+  }
+
   .visually-hidden {
     position: absolute !important;
     width: 1px;
@@ -269,8 +275,17 @@
   [#if configuration.menuStyle?contains('menu-right')]
   .fragment-root .dropzone .logo-zone.logo-always { inset-inline-start: 0; inset-inline-end: auto; }
   [/#if]
-  .fragment-root:has(.logo-zone.logo-always) .hamburger-zone-inner { overflow: visible !important; }
 
+  [#if configuration.menuStyle?contains('menu-right')]
+  .fragment-root:has(.logo-zone.logo-always) .hamburger-zone-inner {
+    overflow: visible !important;
+  }
+  [#else]
+  .fragment-root:has(.logo-zone.logo-always) .hamburger-zone-inner {
+    overflow: hidden !important;
+  }
+  [/#if]
+  
   [#if configuration.enableTabletBreakpoint]
   @media only screen and (max-width: ${configuration.tabletBreakpoint}) {
     .lfr-layout-structure-item-responsive-side-menu { position: fixed; z-index: 1; }
@@ -283,7 +298,7 @@
       display: grid;
       grid-template-rows: 0fr;
       transition: grid-template-rows var(--side-menu-open-duration) ease-out;
-      z-index: 1000;
+      z-index: 980;
       height: 0;
     }
     .fragment-root .hamburger-zone-wrapper.open { grid-template-rows: 1fr; height: 100%; }
@@ -471,7 +486,7 @@
       display: grid;
       grid-template-rows: 0fr !important;
       transition: grid-template-rows var(--side-menu-open-duration) ease-out;
-      z-index: 1000;
+      z-index: 980;
       height: auto;
     }
     .fragment-root:not(:has(.dropzone-menu.fragment-menu .text-truncate img)) .hamburger-zone-wrapper.open,
@@ -596,7 +611,7 @@
       display: grid;
       grid-template-rows: 0fr !important;
       transition: grid-template-rows var(--side-menu-open-duration) ease-out;
-      z-index: 1000;
+      z-index: 980;
       height: auto;
     }
     .fragment-root:not(:has(.dropzone-menu.fragment-menu .text-truncate img)) .hamburger-zone-wrapper.open,

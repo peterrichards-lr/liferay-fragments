@@ -27,7 +27,9 @@ setTimeout(() => {
 
   const isSticky = menuStyle.includes('sticky');
   const noMenuItemOverflow = menuItemOverflow === 'none';
-  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const prefersReduced = window.matchMedia(
+    '(prefers-reduced-motion: reduce)'
+  ).matches;
 
   const root = fragmentElement.querySelector('.fragment-root');
   if (!root || layoutMode === 'preview') return;
@@ -56,6 +58,9 @@ setTimeout(() => {
   const toggleButton = qs('.fragment-menu-icon');
   const fragmentMenu = qs('#fragmentMenuList-' + fragmentEntryLinkNamespace);
   const logoZone = zoneWrapper ? zoneWrapper.querySelector('.logo-zone') : null;
+
+  const bodyEl = document.body;
+  const mainContentEl = document.getElementById('main-content');
 
   const menuImageSelector = '.dropzone-menu.fragment-menu .text-truncate img';
 
@@ -144,6 +149,40 @@ setTimeout(() => {
       logoZone?.classList.contains('open')
     );
 
+  let __lockY = 0;
+
+  const shouldScrollLock = () =>
+    enableScrollLock &&
+    !document.body.classList.contains('has-edit-mode-menu') &&
+    window.innerWidth < landscapePhoneBreakpoint;
+
+  const lockScroll = () => {
+    if (!shouldScrollLock()) return;
+    __lockY = window.scrollY || document.documentElement.scrollTop || 0;
+
+    document.documentElement.classList.add('menu-scroll-locked');
+    document.body.classList.add('menu-scroll-locked');
+
+    document.body.style.position = 'fixed';
+    document.body.style.top = `-${__lockY}px`;
+    document.body.style.left = '0';
+    document.body.style.right = '0';
+    document.body.style.width = '100%';
+  };
+
+  const unlockScroll = () => {
+    document.documentElement.classList.remove('menu-scroll-locked');
+    document.body.classList.remove('menu-scroll-locked');
+
+    document.body.style.position = '';
+    document.body.style.top = '';
+    document.body.style.left = '';
+    document.body.style.right = '';
+    document.body.style.width = '';
+
+    if (__lockY) window.scrollTo(0, __lockY);
+  };
+
   const wireFocusTrap = ({ container, initialFocus, onDeactivate }) => {
     let active = false;
     const getFocusables = () => {
@@ -159,7 +198,8 @@ setTimeout(() => {
       const els = getFocusables();
       if (!els.length) {
         e.preventDefault();
-        const t = typeof initialFocus === 'function' ? initialFocus() : initialFocus;
+        const t =
+          typeof initialFocus === 'function' ? initialFocus() : initialFocus;
         t?.focus?.();
         return;
       }
@@ -177,7 +217,8 @@ setTimeout(() => {
       if (active) return;
       active = true;
       document.addEventListener('keydown', keydown, true);
-      const t = typeof initialFocus === 'function' ? initialFocus() : initialFocus;
+      const t =
+        typeof initialFocus === 'function' ? initialFocus() : initialFocus;
       t?.focus?.();
     };
     const deactivate = () => {
@@ -192,23 +233,45 @@ setTimeout(() => {
   const focusTrap = wireFocusTrap({
     container: zoneWrapper,
     initialFocus: () => getFocusableMenuItems()[0] || toggleButton,
-    onDeactivate: () => toggleButton?.focus()
+    onDeactivate: () => toggleButton?.focus(),
   });
 
   const setOpen = (open) => {
+    debug({
+      enableScrollLock: configuration.enableScrollLock,
+      bodyHasEditModeMenu:
+        document.body.classList.contains('has-edit-mode-menu'),
+      windowUnnerWidth: window.innerWidth,
+      mobileBreakpoint:
+        window.innerWidth <
+        (typeof landscapePhoneBreakpoint !== 'undefined'
+          ? landscapePhoneBreakpoint
+          : 999999),
+    });
+
     const isOverlay = window.innerWidth < landscapePhoneBreakpoint;
+
     [hamburger, zoneWrapper, logoZone].forEach(
       (el) => el && el.classList.toggle('open', open)
     );
+
     if (toggleButton)
       toggleButton.setAttribute('aria-expanded', open ? 'true' : 'false');
-    root.classList.toggle('is-menu-view', open);
+
+    root.classList.toggle('is-menu-view', open && isOverlay);
     root.classList.toggle('is-open', open);
+
     if (isOverlay) {
-      if (open) focusTrap.activate();
-      else focusTrap.deactivate();
+      if (open) {
+        focusTrap.activate();
+        lockScroll();
+      } else {
+        focusTrap.deactivate();
+        unlockScroll();
+      }
     } else {
       focusTrap.deactivate();
+      unlockScroll();
     }
   };
 
@@ -291,7 +354,10 @@ setTimeout(() => {
         if (btn) btn.style.display = v ? 'block' : 'none';
       };
       btn?.addEventListener('click', () =>
-        window.scrollTo({ top: 0, behavior: prefersReduced ? 'auto' : 'smooth' })
+        window.scrollTo({
+          top: 0,
+          behavior: prefersReduced ? 'auto' : 'smooth',
+        })
       );
       window.addEventListener('scroll', onScroll, { passive: true });
       onScroll();
@@ -314,31 +380,50 @@ setTimeout(() => {
         isMenuOpen,
         closeMenu,
         enabled = true,
-        transitionTimeout = 300
+        transitionTimeout = 300,
       }) => {
         if (!enabled || !menuContainer) return;
 
-        const isModifier = (e) => e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button === 1;
+        const isModifier = (e) =>
+          e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button === 1;
         const isInternal = (a) => {
-          try { const u = new URL(a.href, location.href); return u.origin === location.origin; }
-          catch { return false; }
+          try {
+            const u = new URL(a.href, location.href);
+            return u.origin === location.origin;
+          } catch {
+            return false;
+          }
         };
         const getClosestLink = (el) => el.closest('a[href]');
 
         menuContainer.addEventListener('click', (e) => {
           const a = getClosestLink(e.target);
           if (!a) return;
-          if (a.target === '_blank' || a.hasAttribute('download') || isModifier(e)) return;
+          if (
+            a.target === '_blank' ||
+            a.hasAttribute('download') ||
+            isModifier(e)
+          )
+            return;
           if (!isInternal(a)) return;
           if (!isMenuOpen()) return;
 
           e.preventDefault();
           const href = a.href;
           let navigated = false;
-          const go = () => { if (!navigated) { navigated = true; window.location.assign(href); } };
+          const go = () => {
+            if (!navigated) {
+              navigated = true;
+              window.location.assign(href);
+            }
+          };
 
           const onDone = () => {
-            (transitionTarget || menuContainer).removeEventListener('transitionend', onDone, true);
+            (transitionTarget || menuContainer).removeEventListener(
+              'transitionend',
+              onDone,
+              true
+            );
             root.removeAttribute('data-closing');
             go();
           };
@@ -346,7 +431,11 @@ setTimeout(() => {
           root.setAttribute('data-closing', 'true');
           closeMenu();
 
-          (transitionTarget || menuContainer).addEventListener('transitionend', onDone, true);
+          (transitionTarget || menuContainer).addEventListener(
+            'transitionend',
+            onDone,
+            true
+          );
           setTimeout(onDone, transitionTimeout);
         });
       };
@@ -354,15 +443,19 @@ setTimeout(() => {
       wireCloseOnInternalNav({
         root,
         menuContainer: fragmentMenu,
-        transitionTarget: zoneWrapper?.querySelector('.fragment-menu') || fragmentMenu,
-        isMenuOpen: () => root.classList.contains('is-menu-view') || zoneWrapper?.classList.contains('open'),
+        transitionTarget:
+          zoneWrapper?.querySelector('.fragment-menu') || fragmentMenu,
+        isMenuOpen: () =>
+          root.classList.contains('is-menu-view') ||
+          zoneWrapper?.classList.contains('open'),
         closeMenu: () => {
           zoneWrapper?.classList.remove('open');
           root.classList.remove('is-menu-view');
           focusTrap.deactivate();
+          unlockScroll();
         },
         enabled: configuration.enableCloseOnInternalNav === true,
-        transitionTimeout: prefersReduced ? 0 : 300
+        transitionTimeout: prefersReduced ? 0 : 300,
       });
     }
   }

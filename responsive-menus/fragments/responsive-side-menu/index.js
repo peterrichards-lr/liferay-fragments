@@ -56,9 +56,40 @@ setTimeout(() => {
   const fragmentMenu = qs(
     '#fragmentSideMenuList-' + fragmentEntryLinkNamespace
   );
-  const mainContent = document.getElementById('main-content');
+  const mainContent =
+    document.getElementById('main-content') ||
+    document.querySelector('.main-content');
   const logoZone = zoneWrapper ? zoneWrapper.querySelector('.logo-zone') : null;
   const isLeft = menuStyle.includes('menu-left');
+  const bodyEl = document.body;
+
+  let __lockY = 0;
+
+  const applyScrollLock = (on) => {
+    if (!enableScrollLock) return;
+    if (document.body.classList.contains('has-edit-mode-menu')) return;
+    if (window.innerWidth >= landscapePhoneBreakpoint) on = false;
+
+    if (on) {
+      __lockY = window.scrollY || document.documentElement.scrollTop || 0;
+      document.documentElement.classList.add('menu-scroll-locked');
+      document.body.classList.add('menu-scroll-locked');
+      document.body.style.position = 'fixed';
+      document.body.style.top = `-${__lockY}px`;
+      document.body.style.left = '0';
+      document.body.style.right = '0';
+      document.body.style.width = '100%';
+    } else {
+      document.documentElement.classList.remove('menu-scroll-locked');
+      document.body.classList.remove('menu-scroll-locked');
+      document.body.style.position = '';
+      document.body.style.top = '';
+      document.body.style.left = '';
+      document.body.style.right = '';
+      document.body.style.width = '';
+      if (__lockY) window.scrollTo(0, __lockY);
+    }
+  };
 
   const ensureStyleOnce = (() => {
     let done = false;
@@ -323,6 +354,18 @@ setTimeout(() => {
   }
 
   const setOpen = (open) => {
+    debug({
+      enableScrollLock: configuration.enableScrollLock,
+      bodyHasEditModeMenu:
+        document.body.classList.contains('has-edit-mode-menu'),
+      windowUnnerWidth: window.innerWidth,
+      mobileBreakpoint:
+        window.innerWidth <
+        (typeof landscapePhoneBreakpoint !== 'undefined'
+          ? landscapePhoneBreakpoint
+          : 999999),
+    });
+
     const isOverlay = window.innerWidth < landscapePhoneBreakpoint;
     const parent = hamburger?.parentElement || null;
     if (parent) parent.classList.toggle('open', open);
@@ -331,12 +374,20 @@ setTimeout(() => {
     if (toggleButton)
       toggleButton.setAttribute('aria-expanded', open ? 'true' : 'false');
     root.classList.toggle('is-menu-view', open && isOverlay);
+
     if (isOverlay) {
-      if (open) focusTrap.activate();
-      else focusTrap.deactivate();
+      if (open) {
+        applyScrollLock(true);
+        focusTrap.activate();
+      } else {
+        applyScrollLock(false);
+        focusTrap.deactivate();
+      }
     } else {
+      applyScrollLock(false);
       focusTrap.deactivate();
     }
+
     syncLogoMode();
   };
 
@@ -358,20 +409,27 @@ setTimeout(() => {
 
     const setFixedWidthForDesktopLike = () => {
       if (!zoneWrapper || !mainContent) return;
+
       const w = window.innerWidth;
+
       if (w < tabletBreakpoint) {
         zoneWrapper.style.removeProperty('width');
-        if (isLeft) mainContent.style.removeProperty('margin-left');
-        else mainContent.style.removeProperty('margin-right');
+        mainContent.style.removeProperty('margin-left');
+        mainContent.style.removeProperty('margin-right');
         return;
       }
-      const targetWidth = limitMenuWidth
-        ? menuWidth
-        : zoneWrapper.offsetWidth + 'px';
+
+      const targetWidth = limitMenuWidth ? menuWidth : zoneWrapper.offsetWidth + 'px';
       zoneWrapper.style.width = targetWidth;
+
       if (layoutMode !== 'edit') {
-        if (isLeft) mainContent.style.marginLeft = targetWidth;
-        else mainContent.style.marginRight = targetWidth;
+        if (isLeft) {
+          mainContent.style.removeProperty('margin-left');
+          mainContent.style.removeProperty('margin-right');
+        } else {
+          mainContent.style.marginRight = targetWidth;
+          mainContent.style.removeProperty('margin-left');
+        }
       }
     };
 
