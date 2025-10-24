@@ -63,30 +63,94 @@ setTimeout(() => {
   const isLeft = menuStyle.includes('menu-left');
   const bodyEl = document.body;
 
+  const deriveSiteName = () => {
+    const og = document
+      .querySelector('meta[property="og:site_name"]')
+      ?.content?.trim();
+    if (og) return og;
+    const app = document
+      .querySelector('meta[name="application-name"]')
+      ?.content?.trim();
+    if (app) return app;
+    const doc = (document.title || '').trim();
+    if (doc) return doc;
+    const host = (location.hostname || '').replace(/^www\./, '').trim();
+    if (host) return host;
+    return 'Home';
+  };
+
+  const getAccessibleName = (link) => {
+    if (
+      link.hasAttribute('aria-label') &&
+      link.getAttribute('aria-label').trim()
+    )
+      return null;
+    if (
+      link.hasAttribute('aria-labelledby') &&
+      link.getAttribute('aria-labelledby').trim()
+    )
+      return null;
+
+    if (link.textContent && link.textContent.trim().length) return null;
+
+    const imgAlt = link.querySelector('img[alt]')?.getAttribute('alt')?.trim();
+    if (imgAlt) return imgAlt;
+
+    return deriveSiteName();
+  };
+
+  const ensureLogoLinkA11y = (rootEl) => {
+    const link =
+      rootEl?.querySelector?.(
+        'a.logo-link, .logo-zone a[href], .floating-logo a[href]'
+      ) || null;
+    if (!link) return;
+
+    const name =
+      getAccessibleName(link) ||
+      link.getAttribute('aria-label') ||
+      link.getAttribute('title') ||
+      deriveSiteName();
+
+    if (
+      name &&
+      !(
+        link.hasAttribute('aria-label') &&
+        link.getAttribute('aria-label').trim()
+      )
+    ) {
+      link.setAttribute('aria-label', name);
+    }
+
+    if (!link.hasAttribute('title') || !link.getAttribute('title').trim()) {
+      link.setAttribute('title', name);
+    }
+  };
+
   let __lockY = 0;
 
   const applyScrollLock = (on) => {
     if (!enableScrollLock) return;
-    if (document.body.classList.contains('has-edit-mode-menu')) return;
+    if (bodyEl.classList.contains('has-edit-mode-menu')) return;
     if (window.innerWidth >= landscapePhoneBreakpoint) on = false;
 
     if (on) {
       __lockY = window.scrollY || document.documentElement.scrollTop || 0;
       document.documentElement.classList.add('menu-scroll-locked');
-      document.body.classList.add('menu-scroll-locked');
-      document.body.style.position = 'fixed';
-      document.body.style.top = `-${__lockY}px`;
-      document.body.style.left = '0';
-      document.body.style.right = '0';
-      document.body.style.width = '100%';
+      bodyEl.classList.add('menu-scroll-locked');
+      bodyEl.style.position = 'fixed';
+      bodyEl.style.top = `-${__lockY}px`;
+      bodyEl.style.left = '0';
+      bodyEl.style.right = '0';
+      bodyEl.style.width = '100%';
     } else {
       document.documentElement.classList.remove('menu-scroll-locked');
-      document.body.classList.remove('menu-scroll-locked');
-      document.body.style.position = '';
-      document.body.style.top = '';
-      document.body.style.left = '';
-      document.body.style.right = '';
-      document.body.style.width = '';
+      bodyEl.classList.remove('menu-scroll-locked');
+      bodyEl.style.position = '';
+      bodyEl.style.top = '';
+      bodyEl.style.left = '';
+      bodyEl.style.right = '';
+      bodyEl.style.width = '';
       if (__lockY) window.scrollTo(0, __lockY);
     }
   };
@@ -256,7 +320,7 @@ setTimeout(() => {
       ? 'none'
       : 'opacity .2s ease';
 
-    document.body.appendChild(floatingLogo);
+    bodyEl.appendChild(floatingLogo);
   };
 
   const menuHasImages = () =>
@@ -353,11 +417,12 @@ setTimeout(() => {
     if (always) hamburger.classList.add('logo-always');
   }
 
+  ensureLogoLinkA11y(logoZone || root);
+
   const setOpen = (open) => {
     debug({
       enableScrollLock: configuration.enableScrollLock,
-      bodyHasEditModeMenu:
-        document.body.classList.contains('has-edit-mode-menu'),
+      bodyHasEditModeMenu: bodyEl.classList.contains('has-edit-mode-menu'),
       windowUnnerWidth: window.innerWidth,
       mobileBreakpoint:
         window.innerWidth <
@@ -419,7 +484,9 @@ setTimeout(() => {
         return;
       }
 
-      const targetWidth = limitMenuWidth ? menuWidth : zoneWrapper.offsetWidth + 'px';
+      const targetWidth = limitMenuWidth
+        ? menuWidth
+        : zoneWrapper.offsetWidth + 'px';
       zoneWrapper.style.width = targetWidth;
 
       if (layoutMode !== 'edit') {
@@ -452,9 +519,7 @@ setTimeout(() => {
     }
 
     if (isLeft) {
-      const sideMenu = document.body.querySelector(
-        'nav.lfr-product-menu-panel'
-      );
+      const sideMenu = bodyEl.querySelector('nav.lfr-product-menu-panel');
       if (sideMenu && holder) {
         const onProductToggle = () => {
           const width = sideMenu.clientWidth;

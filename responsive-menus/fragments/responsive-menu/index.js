@@ -58,10 +58,7 @@ setTimeout(() => {
   const toggleButton = qs('.fragment-menu-icon');
   const fragmentMenu = qs('#fragmentMenuList-' + fragmentEntryLinkNamespace);
   const logoZone = zoneWrapper ? zoneWrapper.querySelector('.logo-zone') : null;
-
   const bodyEl = document.body;
-  const mainContentEl = document.getElementById('main-content');
-
   const menuImageSelector = '.dropzone-menu.fragment-menu .text-truncate img';
 
   function setHasMenuImages() {
@@ -149,11 +146,75 @@ setTimeout(() => {
       logoZone?.classList.contains('open')
     );
 
+  const deriveSiteName = () => {
+    const og = document
+      .querySelector('meta[property="og:site_name"]')
+      ?.content?.trim();
+    if (og) return og;
+    const app = document
+      .querySelector('meta[name="application-name"]')
+      ?.content?.trim();
+    if (app) return app;
+    const doc = (document.title || '').trim();
+    if (doc) return doc;
+    const host = (location.hostname || '').replace(/^www\./, '').trim();
+    if (host) return host;
+    return 'Home';
+  };
+
+  const getAccessibleName = (link) => {
+    if (
+      link.hasAttribute('aria-label') &&
+      link.getAttribute('aria-label').trim()
+    )
+      return null;
+    if (
+      link.hasAttribute('aria-labelledby') &&
+      link.getAttribute('aria-labelledby').trim()
+    )
+      return null;
+
+    if (link.textContent && link.textContent.trim().length) return null;
+
+    const imgAlt = link.querySelector('img[alt]')?.getAttribute('alt')?.trim();
+    if (imgAlt) return imgAlt;
+
+    return deriveSiteName();
+  };
+
+  const ensureLogoLinkA11y = (rootEl) => {
+    const link =
+      rootEl?.querySelector?.(
+        'a.logo-link, .logo-zone a[href], .floating-logo a[href]'
+      ) || null;
+    if (!link) return;
+
+    const name =
+      getAccessibleName(link) ||
+      link.getAttribute('aria-label') ||
+      link.getAttribute('title') ||
+      deriveSiteName();
+
+    if (
+      name &&
+      !(
+        link.hasAttribute('aria-label') &&
+        link.getAttribute('aria-label').trim()
+      )
+    ) {
+      link.setAttribute('aria-label', name);
+    }
+
+    if (!link.hasAttribute('title') || !link.getAttribute('title').trim()) {
+      link.setAttribute('title', name);
+    }
+  };
+
   let __lockY = 0;
 
   const shouldScrollLock = () =>
     enableScrollLock &&
-    !document.body.classList.contains('has-edit-mode-menu') &&
+    !bodyEl.classList.contains('has-edit-mode-menu') &&
     window.innerWidth < landscapePhoneBreakpoint;
 
   const lockScroll = () => {
@@ -161,24 +222,24 @@ setTimeout(() => {
     __lockY = window.scrollY || document.documentElement.scrollTop || 0;
 
     document.documentElement.classList.add('menu-scroll-locked');
-    document.body.classList.add('menu-scroll-locked');
+    bodyEl.classList.add('menu-scroll-locked');
 
-    document.body.style.position = 'fixed';
-    document.body.style.top = `-${__lockY}px`;
-    document.body.style.left = '0';
-    document.body.style.right = '0';
-    document.body.style.width = '100%';
+    bodyEl.style.position = 'fixed';
+    bodyEl.style.top = `-${__lockY}px`;
+    bodyEl.style.left = '0';
+    bodyEl.style.right = '0';
+    bodyEl.style.width = '100%';
   };
 
   const unlockScroll = () => {
     document.documentElement.classList.remove('menu-scroll-locked');
-    document.body.classList.remove('menu-scroll-locked');
+    bodyEl.classList.remove('menu-scroll-locked');
 
-    document.body.style.position = '';
-    document.body.style.top = '';
-    document.body.style.left = '';
-    document.body.style.right = '';
-    document.body.style.width = '';
+    bodyEl.style.position = '';
+    bodyEl.style.top = '';
+    bodyEl.style.left = '';
+    bodyEl.style.right = '';
+    bodyEl.style.width = '';
 
     if (__lockY) window.scrollTo(0, __lockY);
   };
@@ -239,8 +300,7 @@ setTimeout(() => {
   const setOpen = (open) => {
     debug({
       enableScrollLock: configuration.enableScrollLock,
-      bodyHasEditModeMenu:
-        document.body.classList.contains('has-edit-mode-menu'),
+      bodyHasEditModeMenu: bodyEl.classList.contains('has-edit-mode-menu'),
       windowUnnerWidth: window.innerWidth,
       mobileBreakpoint:
         window.innerWidth <
@@ -315,6 +375,7 @@ setTimeout(() => {
     holder.classList.add('fragment-menu-holder');
     setAriaWiring();
     logoSetup();
+    ensureLogoLinkA11y(logoZone || root);
     markCurrentPageLink();
     watchMenuImages();
 
