@@ -182,9 +182,9 @@
   .fragment-root .hamburger-zone-inner .${configuration.dropzoneGrower} { flex-grow: 1; flex-shrink: 0; }
 
   [#if configuration.overrideMenuColors]
-    .fragment-root .dropzone-menu.fragment-menu .lfr-nav-item a { color: ${configuration.menuItemColor}; background-color: ${configuration.menuItemBgColor}; }
-    .fragment-root .dropzone-menu.fragment-menu .lfr-nav-item a:hover { color: ${configuration.menuItemHoverColor}; background-color: ${configuration.menuItemHoverBgColor}; }
-    .fragment-root .dropzone-menu.fragment-menu .lfr-nav-item.selected a { color: ${configuration.menuItemSelectedColor}; background-color: ${configuration.menuItemSelectedBgColor}; }
+    .fragment-root .dropzone-menu.fragment-menu .lfr-nav-item a { color: ${configuration.menuItemColor} !important; background-color: ${configuration.menuItemBgColor} !important; }
+    .fragment-root .dropzone-menu.fragment-menu .lfr-nav-item a:hover { color: ${configuration.menuItemHoverColor} !important; background-color: ${configuration.menuItemHoverBgColor} !important; }
+    .fragment-root .dropzone-menu.fragment-menu .lfr-nav-item.selected a { color: ${configuration.menuItemSelectedColor} !important; background-color: ${configuration.menuItemSelectedBgColor} !important; }
   [/#if]
 
   [#if configuration.separator]

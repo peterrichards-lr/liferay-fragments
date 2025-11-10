@@ -425,6 +425,12 @@
     .fragment-root:has(.dropzone-menu.fragment-menu .text-truncate img) .hamburger-zone-wrapper:hover,
     .fragment-root:has(.dropzone-menu.fragment-menu .text-truncate img) .hamburger-zone-wrapper.open { width: 100%; }
 
+    [#if configuration.overrideMenuColors]
+      .fragment-root .dropzone-menu.fragment-menu .lfr-nav-item a { color: ${configuration.menuItemColor} !important; background-color: ${configuration.menuItemBgColor} !important; }
+      .fragment-root .dropzone-menu.fragment-menu .lfr-nav-item a:hover { color: ${configuration.menuItemHoverColor} !important; background-color: ${configuration.menuItemHoverBgColor} !important; }
+      .fragment-root .dropzone-menu.fragment-menu .lfr-nav-item.selected a { color: ${configuration.menuItemSelectedColor} !important; background-color: ${configuration.menuItemSelectedBgColor} !important; }
+    [/#if]
+
     [#if configuration.menuStyle?contains('menu-right')]
     .fragment-root:has(.dropzone-menu.fragment-menu .text-truncate img) .hamburger-zone-inner {
       transform: translateX(calc(100% - var(--responsive-menu-item-logo-max-width, 2rem) + 4px));
