@@ -419,18 +419,8 @@ setTimeout(() => {
 
   ensureLogoLinkA11y(logoZone || root);
 
-  const setOpen = (open) => {
-    debug({
-      enableScrollLock: configuration.enableScrollLock,
-      bodyHasEditModeMenu: bodyEl.classList.contains('has-edit-mode-menu'),
-      windowUnnerWidth: window.innerWidth,
-      mobileBreakpoint:
-        window.innerWidth <
-        (typeof landscapePhoneBreakpoint !== 'undefined'
-          ? landscapePhoneBreakpoint
-          : 999999),
-    });
-
+  const setOpen = (open, opts = {}) => {
+    const deferUnlock = !!opts.deferUnlock;
     const isOverlay = window.innerWidth < landscapePhoneBreakpoint;
     const parent = hamburger?.parentElement || null;
     if (parent) parent.classList.toggle('open', open);
@@ -439,21 +429,58 @@ setTimeout(() => {
     if (toggleButton)
       toggleButton.setAttribute('aria-expanded', open ? 'true' : 'false');
     root.classList.toggle('is-menu-view', open && isOverlay);
-
     if (isOverlay) {
       if (open) {
         applyScrollLock(true);
         focusTrap.activate();
       } else {
-        applyScrollLock(false);
+        if (!deferUnlock) applyScrollLock(false);
         focusTrap.deactivate();
       }
     } else {
       applyScrollLock(false);
       focusTrap.deactivate();
     }
-
     syncLogoMode();
+  };
+
+  const onTransitionEndOnce = (el, cb, timeout = prefersReduced ? 0 : 300) => {
+    if (!el) {
+      cb();
+      return;
+    }
+    let done = false;
+    const finish = () => {
+      if (done) return;
+      done = true;
+      el.removeEventListener('transitionend', finish, true);
+      cb();
+    };
+    el.addEventListener('transitionend', finish, true);
+    if (timeout >= 0) setTimeout(finish, timeout);
+  };
+
+  const openMenu = () => {
+    setOpen(true);
+    const items = getFocusableMenuItems();
+    if (items.length) {
+      requestAnimationFrame(() => items[0].focus());
+    }
+  };
+
+  const closeMenu = (restoreFocus = true) => {
+    if (!isMenuOpen()) return;
+    const transitionTarget =
+      zoneWrapper?.querySelector('.fragment-menu') || fragmentMenu || zoneWrapper;
+    if (!root.hasAttribute('data-closing')) {
+      root.setAttribute('data-closing', 'true');
+    }
+    setOpen(false, { deferUnlock: true });
+    onTransitionEndOnce(transitionTarget, () => {
+      applyScrollLock(false);
+      root.removeAttribute('data-closing');
+      if (restoreFocus) toggleButton?.focus();
+    });
   };
 
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
@@ -512,11 +539,26 @@ setTimeout(() => {
 
     if (toggleButton) {
       toggleButton.addEventListener('click', () => {
-        setOpen(!isMenuOpen());
-        if (root.hasAttribute('data-closing'))
-          root.removeAttribute('data-closing');
+        if (isMenuOpen()) {
+          closeMenu(true);
+        } else {
+          openMenu();
+        }
       });
     }
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key !== 'Escape') return;
+      if (!isMenuOpen()) return;
+      e.preventDefault();
+      closeMenu(true);
+    });
+
+    document.addEventListener('click', (e) => {
+      if (!isMenuOpen()) return;
+      if (root.contains(e.target)) return;
+      closeMenu(true);
+    });
 
     if (isLeft) {
       const sideMenu = bodyEl.querySelector('nav.lfr-product-menu-panel');
@@ -620,7 +662,7 @@ setTimeout(() => {
         isMenuOpen: () =>
           root.classList.contains('is-menu-view') ||
           zoneWrapper?.classList.contains('open'),
-        closeMenu: () => setOpen(false),
+        closeMenu: () => closeMenu(false),
         enabled: configuration.enableCloseOnInternalNav === true,
         transitionTimeout: prefersReduced ? 0 : 300,
       });

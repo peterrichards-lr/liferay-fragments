@@ -104,10 +104,13 @@
     --responsive-menu-hamburger-border-width: ${configuration.menuHamburgerBorderWidth};
   }
 
+  html { scrollbar-gutter: stable both-edges; }
+
   html.menu-scroll-locked,
   body.menu-scroll-locked {
     overflow: hidden;
     height: 100dvh;
+    overscroll-behavior: contain;
   }
 
   .visually-hidden {
@@ -195,8 +198,26 @@
   [/#if]
 
   body.has-control-menu .master-page .hamburger-zone-inner .${configuration.dropzoneGrower}:not(:has(.page-editor__no-fragments-state)),
-  body.has-control-menu .page-editor   .hamburger-zone-inner .${configuration.dropzoneGrower}:not(:has(.page-editor__no-fragments-state)) { flex-grow: 1; }
+  body.has-control-menu .page-editor  .hamburger-zone-inner .${configuration.dropzoneGrower}:not(:has(.page-editor__no-fragments-state)) { flex-grow: 1; }
   .hamburger-zone-inner .${configuration.dropzoneGrower} { flex-grow: 1; }
+
+  .fragment-root .dropzone-menu > lfr-drop-zone {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+
+  body.has-control-menu .${configuration.dropzoneGrower} > lfr-drop-zone > .lfr-tooltip-scope,
+  body.has-control-menu .${configuration.dropzoneGrower} > lfr-drop-zone > .lfr-tooltip-scope > .page-editor,
+  body.has-control-menu .${configuration.dropzoneGrower} > lfr-drop-zone > .lfr-tooltip-scope > .page-editor > .page-editor__root {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+
+  body.has-control-menu .${configuration.dropzoneGrower} .page-editor__no-fragments-state {
+    flex: 1;
+  }
 
   body.has-edit-mode-menu .dropzone .page-editor__no-fragments-state {
     min-width: 100px;
@@ -225,8 +246,8 @@
     .lfr-layout-structure-item-responsive-side-menu { right: 0; }
   [/#if]
 
-  .fragment-root { height: 100%; position: relative; overflow: visible; }
-  .fragment-root .fragment-menu-icon { display: none; }
+  .fragment-root { height: 100%; position: relative; overflow: visible; isolation: isolate; }
+  .fragment-root .fragment-menu-icon { display: none; pointer-events: auto; }
 
   .fragment-root .dropzone-wrapper { display: flex; flex-direction: column; height: 100%; width: 100%; position: relative; overflow: visible; }
   .fragment-root .hamburger-zone-wrapper { height: 100%; position: relative; overflow: visible; }
@@ -301,7 +322,17 @@
       z-index: 980;
       height: 0;
     }
-    .fragment-root .hamburger-zone-wrapper.open { grid-template-rows: 1fr; height: 100%; }
+    .fragment-root .hamburger-zone-wrapper.open {
+      grid-template-rows: 1fr;
+      height: 100%;
+      position: fixed;
+      inset-inline-start: 0;
+      inset-inline-end: 0;
+      inset-block-start: calc(var(--control-menu-container-height, 0) + var(--responsive-menu-hamburger-min-size, 44px));
+      max-height: calc(100dvh - (var(--control-menu-container-height, 0) + var(--responsive-menu-hamburger-min-size, 44px)));
+      overflow: auto;
+      z-index: 980;
+    }
 
     .fragment-root:has(.dropzone-menu.fragment-menu .text-truncate img) .hamburger-zone-wrapper {
       height: 100%;
@@ -315,6 +346,16 @@
     .fragment-root .hamburger-zone-inner { position: relative; max-width: none; overflow: hidden; }
 
     .fragment-root .fragment-menu-icon {
+      position: fixed;
+      inset-block-start: var(--control-menu-container-height, 0);
+      [#if configuration.menuStyle?contains('menu-right')]
+      inset-inline-end: 8px;
+      inset-inline-start: auto;
+      [#else]
+      inset-inline-start: 8px;
+      inset-inline-end: auto;
+      [/#if]
+      z-index: 981;
       --_h-size: var(--responsive-menu-hamburger-size, 2.75rem);
       --_h-min: var(--responsive-menu-hamburger-min-size, 44px);
       --_h-effective: max(var(--_h-size), var(--_h-min));
@@ -448,6 +489,16 @@
 
     .fragment-root .fragment-menu-icon,
     .fragment-root:has(.dropzone-menu.fragment-menu .text-truncate img) .fragment-menu-icon {
+      position: fixed;
+      inset-block-start: var(--control-menu-container-height, 0);
+      [#if configuration.menuStyle?contains('menu-right')]
+      inset-inline-end: 8px;
+      inset-inline-start: auto;
+      [#else]
+      inset-inline-start: 8px;
+      inset-inline-end: auto;
+      [/#if]
+      z-index: 981;
       --_h-size: var(--responsive-menu-hamburger-size, 2.75rem);
       --_h-min: var(--responsive-menu-hamburger-min-size, 44px);
       --_h-effective: max(var(--_h-size), var(--_h-min));
@@ -501,6 +552,13 @@
     .fragment-root:has(.dropzone-menu.fragment-menu .text-truncate img) .hamburger-zone-wrapper.open:hover {
       grid-template-rows: 1fr !important;
       width: 100dvw;
+      position: fixed;
+      inset-inline-start: 0;
+      inset-inline-end: 0;
+      inset-block-start: calc(var(--control-menu-container-height, 0) + var(--responsive-menu-hamburger-min-size, 44px));
+      max-height: calc(100dvh - (var(--control-menu-container-height, 0) + var(--responsive-menu-hamburger-min-size, 44px)));
+      overflow: auto;
+      z-index: 980;
     }
 
     .fragment-root .hamburger-zone-inner { max-width: none; overflow: hidden; }
@@ -573,6 +631,16 @@
 
     .fragment-root .fragment-menu-icon,
     .fragment-root:has(.dropzone-menu.fragment-menu .text-truncate img) .fragment-menu-icon {
+      position: fixed;
+      inset-block-start: var(--control-menu-container-height, 0);
+      [#if configuration.menuStyle?contains('menu-right')]
+      inset-inline-end: 8px;
+      inset-inline-start: auto;
+      [#else]
+      inset-inline-start: 8px;
+      inset-inline-end: auto;
+      [/#if]
+      z-index: 981;
       --_h-size: var(--responsive-menu-hamburger-size, 2.75rem);
       --_h-min: var(--responsive-menu-hamburger-min-size, 44px);
       --_h-effective: max(var(--_h-size), var(--_h-min));
@@ -626,6 +694,13 @@
     .fragment-root:has(.dropzone-menu.fragment-menu .text-truncate img) .hamburger-zone-wrapper.open:hover {
       grid-template-rows: 1fr !important;
       width: 100dvw;
+      position: fixed;
+      inset-inline-start: 0;
+      inset-inline-end: 0;
+      inset-block-start: calc(var(--control-menu-container-height, 0) + var(--responsive-menu-hamburger-min-size, 44px));
+      max-height: calc(100dvh - (var(--control-menu-container-height, 0) + var(--responsive-menu-hamburger-min-size, 44px)));
+      overflow: auto;
+      z-index: 980;
     }
 
     .fragment-root .hamburger-zone-inner { max-width: none; overflow: hidden; }

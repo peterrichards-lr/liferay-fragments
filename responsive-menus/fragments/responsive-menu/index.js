@@ -326,8 +326,12 @@ setTimeout(() => {
         focusTrap.activate();
         lockScroll();
       } else {
-        focusTrap.deactivate();
-        unlockScroll();
+        if (root.hasAttribute('data-closing')) {
+          focusTrap.deactivate();
+        } else {
+          focusTrap.deactivate();
+          unlockScroll();
+        }
       }
     } else {
       focusTrap.deactivate();
@@ -343,8 +347,27 @@ setTimeout(() => {
     }
   };
 
-  const closeMenu = () => {
-    setOpen(false);
+  const closeMenu = (withTransition = true) => {
+    if (!isMenuOpen()) return;
+
+    const transitionTarget = zoneWrapper?.querySelector('.fragment-menu') || zoneWrapper || null;
+
+    if (withTransition && transitionTarget && !root.hasAttribute('data-closing')) {
+      root.setAttribute('data-closing', 'true');
+      setOpen(false);
+
+      const onDone = () => {
+        transitionTarget.removeEventListener('transitionend', onDone, true);
+        unlockScroll();
+        root.removeAttribute('data-closing');
+      };
+
+      transitionTarget.addEventListener('transitionend', onDone, true);
+      setTimeout(onDone, prefersReduced ? 0 : 300);
+    } else {
+      setOpen(false);
+    }
+
     setTimeout(() => toggleButton?.focus(), 150);
   };
 
@@ -379,7 +402,7 @@ setTimeout(() => {
     markCurrentPageLink();
     watchMenuImages();
 
-    const onToggle = () => (isMenuOpen() ? closeMenu() : openMenu());
+    const onToggle = () => (isMenuOpen() ? closeMenu(true) : openMenu());
     toggleButton?.addEventListener('click', onToggle);
 
     if (toggleButton && toggleButton.tagName !== 'BUTTON') {
@@ -398,14 +421,14 @@ setTimeout(() => {
       if (e.key !== 'Escape') return;
       if (!isMenuOpen()) return;
       e.preventDefault();
-      closeMenu();
+      closeMenu(true);
       toggleButton?.focus();
     });
 
     document.addEventListener('click', (e) => {
       if (root.contains(e.target)) return;
       if (!isMenuOpen()) return;
-      closeMenu();
+      closeMenu(true);
     });
 
     if (scrollBackToTop && !isSticky) {
