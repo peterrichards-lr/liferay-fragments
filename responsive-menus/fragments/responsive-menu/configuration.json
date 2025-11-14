@@ -195,6 +195,28 @@
           "label": "menu-item-logo-max-height",
           "name": "menuItemLogoMaxHeight",
           "type": "length"
+        },
+        {
+          "defaultValue": "middle",
+          "label": "floating-logo-vertical-alignment",
+          "name": "floatingLogoVerticalAlignment",
+          "type": "select",
+          "typeOptions": {
+            "validValues": [
+              {
+                "label": "Top",
+                "value": "top"
+              },
+              {
+                "label": "Middle",
+                "value": "middle"
+              },
+              {
+                "label": "Bottom",
+                "value": "bottom"
+              }
+            ]
+          }
         }
       ],
       "label": "logos"

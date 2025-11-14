@@ -10,7 +10,6 @@
   menuHeaderClass = 'fragment-menu-editor-padding' + (configuration.menuHeader?then(' show', '')),
 
   dropzoneConfig = configuration.dropzoneConfig,
-
   isInline = configuration.menuStyle?contains('inline'),
   isSticky = configuration.menuStyle?contains('sticky'),
 
@@ -128,6 +127,7 @@
   body.menu-scroll-locked {
     overflow: hidden;
     height: 100dvh;
+    overscroll-behavior: contain;
   }
 
   .visually-hidden {
@@ -304,11 +304,44 @@
       inset-inline: 0;
       z-index: 980;
     }
+
+    .fragment-root .dropzone-wrapper:not(.increase) .hamburger-zone-wrapper,
+    .fragment-root .dropzone-wrapper:not(.increase) .hamburger-zone-wrapper.open,
+    .fragment-root[data-closing="true"] .dropzone-wrapper:not(.increase) .hamburger-zone-wrapper {
+      inset-block-start: calc(
+        var(--control-menu-container-height, 0) +
+        var(--responsive-menu-hamburger-min-size, 44px)
+      );
+      max-height: calc(
+        100dvh - var(--control-menu-container-height, 0) -
+        var(--responsive-menu-hamburger-min-size, 44px)
+      );
+    }
+
+    .fragment-root .dropzone-wrapper.increase .hamburger-zone-wrapper,
+    .fragment-root .dropzone-wrapper.increase .hamburger-zone-wrapper.open,
+    .fragment-root[data-closing="true"] .dropzone-wrapper.increase .hamburger-zone-wrapper {
+      inset-block-start: calc(
+        var(--control-menu-container-height, 0) +
+        var(
+          --responsive-menu-logo-max-height,
+          var(--responsive-menu-hamburger-min-size, 44px)
+        )
+      );
+      max-height: calc(
+        100dvh - var(--control-menu-container-height, 0) -
+        var(
+          --responsive-menu-logo-max-height,
+          var(--responsive-menu-hamburger-min-size, 44px)
+        )
+      );
+    }
+
     .fragment-root .hamburger {
       position: fixed;
       top: var(--control-menu-container-height, 0);
       inset-inline-start: 0;
-      z-index: 981; /* above panel (980), below Liferay UI */
+      z-index: 981;
       pointer-events: auto;
     }
     .fragment-root.menu-right .hamburger {
@@ -340,7 +373,7 @@
     .fragment-root .dropzone .zone-layout.allow-override > div > * { width: 100dvw; }
 
     .fragment-root .hamburger { display: flex; flex-direction: row; align-items: center; justify-content: start; transition: all .5s ease; width: 100%; }
-    .fragment-root .hamburger.increase { height: var(--responsive-menu-logo-max-height); }
+    .fragment-root .dropzone-wrapper.increase .hamburger { height: var(--responsive-menu-logo-max-height); }
     .fragment-root .hamburger.open { background-color: ${configuration.menuHamburgerBgColor}; }
     .fragment-root .hamburger a { display: inline-block; }
     .fragment-root .hamburger-zone-inner .dropzone-left,
@@ -400,6 +433,39 @@
       inset-inline: 0;
       z-index: 980;
     }
+
+    .fragment-root .dropzone-wrapper:not(.increase) .hamburger-zone-wrapper,
+    .fragment-root .dropzone-wrapper:not(.increase) .hamburger-zone-wrapper.open,
+    .fragment-root[data-closing="true"] .dropzone-wrapper:not(.increase) .hamburger-zone-wrapper {
+      inset-block-start: calc(
+        var(--control-menu-container-height, 0) +
+        var(--responsive-menu-hamburger-min-size, 44px)
+      );
+      max-height: calc(
+        100dvh - var(--control-menu-container-height, 0) -
+        var(--responsive-menu-hamburger-min-size, 44px)
+      );
+    }
+
+    .fragment-root .dropzone-wrapper.increase .hamburger-zone-wrapper,
+    .fragment-root .dropzone-wrapper.increase .hamburger-zone-wrapper.open,
+    .fragment-root[data-closing="true"] .dropzone-wrapper.increase .hamburger-zone-wrapper {
+      inset-block-start: calc(
+        var(--control-menu-container-height, 0) +
+        var(
+          --responsive-menu-logo-max-height,
+          var(--responsive-menu-hamburger-min-size, 44px)
+        )
+      );
+      max-height: calc(
+        100dvh - var(--control-menu-container-height, 0) -
+        var(
+          --responsive-menu-logo-max-height,
+          var(--responsive-menu-hamburger-min-size, 44px)
+        )
+      );
+    }
+
     .fragment-root .hamburger {
       position: fixed;
       top: var(--control-menu-container-height, 0);
@@ -436,7 +502,7 @@
     .fragment-root .dropzone .zone-layout.allow-override > div > * { width: 100dvw; }
 
     .fragment-root .hamburger { display: flex; flex-direction: row; align-items: center; justify-content: start; transition: all .5s ease; width: 100%; }
-    .fragment-root .hamburger.increase { height: var(--responsive-menu-logo-max-height); }
+    .fragment-root .dropzone-wrapper.increase .hamburger { height: var(--responsive-menu-logo-max-height); }
     .fragment-root .hamburger.open { background-color: ${configuration.menuHamburgerBgColor}; }
     .fragment-root .hamburger a { display: inline-block; }
     .fragment-root .hamburger-zone-inner .dropzone-left,
