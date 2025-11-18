@@ -42,11 +42,11 @@ setTimeout(() => {
     ? parseBreakpoint(tabletBP, desktopBreakpoint)
     : desktopBreakpoint;
   const landscapePhoneBreakpoint = enableLandscapePhoneBreakpoint
-    ? parseBreakpoint(landscapePhoneBP, tabletBreakpoint)
-    : tabletBreakpoint;
+    ? parseBreakpoint(landscapePhoneBP, desktopBreakpoint)
+    : desktopBreakpoint;
   const portraitPhoneBreakpoint = enablePortraitPhoneBreakpoint
-    ? parseBreakpoint(portraitPhoneBP, landscapePhoneBreakpoint)
-    : landscapePhoneBreakpoint;
+    ? parseBreakpoint(portraitPhoneBP, desktopBreakpoint)
+    : desktopBreakpoint;
 
   const qs = (sel, scope = root) => scope.querySelector(sel);
   const holder = fragmentElement.parentElement;
@@ -132,7 +132,7 @@ setTimeout(() => {
   const applyScrollLock = (on) => {
     if (!enableScrollLock) return;
     if (bodyEl.classList.contains('has-edit-mode-menu')) return;
-    if (window.innerWidth >= landscapePhoneBreakpoint) on = false;
+    if (window.innerWidth > landscapePhoneBreakpoint) on = false;
 
     if (on) {
       __lockY = window.scrollY || document.documentElement.scrollTop || 0;
@@ -325,7 +325,7 @@ setTimeout(() => {
 
   const menuHasImages = () =>
     !!fragmentMenu?.querySelector('.text-truncate img');
-  const isMobileLike = () => window.innerWidth < landscapePhoneBreakpoint;
+  const isMobileLike = () => window.innerWidth <= landscapePhoneBreakpoint;
   const isLogoAlways = () => !!logoZone?.classList.contains('logo-always');
 
   const collapseOriginal = (on) => {
@@ -504,7 +504,7 @@ setTimeout(() => {
 
       const w = window.innerWidth;
 
-      if (w < tabletBreakpoint) {
+      if (w <= landscapePhoneBreakpoint) {
         zoneWrapper.style.removeProperty('width');
         mainContent.style.removeProperty('margin-left');
         mainContent.style.removeProperty('margin-right');
@@ -518,7 +518,7 @@ setTimeout(() => {
 
       if (layoutMode !== 'edit') {
         if (isLeft) {
-          mainContent.style.removeProperty('margin-left');
+          mainContent.style.marginLeft = targetWidth;
           mainContent.style.removeProperty('margin-right');
         } else {
           mainContent.style.marginRight = targetWidth;
@@ -585,9 +585,26 @@ setTimeout(() => {
     window.addEventListener('scroll', onScroll, { passive: true });
 
     const closeIfWiderThanPhones = () => {
-      if (window.innerWidth >= landscapePhoneBreakpoint) setOpen(false);
+      if (window.innerWidth > landscapePhoneBreakpoint) setOpen(false);
       syncLogoMode();
     };
+
+    // --- control menu offset logic ---
+    const updateControlMenuOffset = () => {
+      const hasControlMenu = document.body.classList.contains('has-control-menu');
+      const scrollY = window.scrollY || document.documentElement.scrollTop || 0;
+      const isPortrait = window.innerWidth <= portraitPhoneBreakpoint;
+
+      if (isPortrait && hasControlMenu && scrollY > 0) {
+        root.classList.add('control-menu-offscreen');
+      } else {
+        root.classList.remove('control-menu-offscreen');
+      }
+    };
+
+    window.addEventListener('scroll', updateControlMenuOffset, { passive: true });
+    window.addEventListener('resize', updateControlMenuOffset);
+    updateControlMenuOffset();
     window
       .matchMedia(`(min-width:${landscapePhoneBreakpoint}px)`)
       .addEventListener('change', closeIfWiderThanPhones);

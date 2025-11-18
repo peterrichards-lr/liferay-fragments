@@ -333,6 +333,12 @@
       overflow: auto;
       z-index: 980;
     }
+    .fragment-root.control-menu-offscreen .hamburger-zone-wrapper.open {
+      inset-block-start: var(--responsive-menu-hamburger-min-size, 44px);
+    }
+    .fragment-root.control-menu-offscreen .fragment-menu-icon {
+      inset-block-start: 0;
+    }
 
     .fragment-root:has(.dropzone-menu.fragment-menu .text-truncate img) .hamburger-zone-wrapper {
       height: 100%;
@@ -479,13 +485,22 @@
     .fragment-root:has(.dropzone-menu.fragment-menu .text-truncate img) .hamburger-zone-wrapper:hover .hamburger-zone-inner,
     .fragment-root:has(.dropzone-menu.fragment-menu .text-truncate img) .hamburger-zone-wrapper.open   .hamburger-zone-inner { transform: none; }
     [/#if]
+
+    .fragment-root .hamburger.increase { height: var(--responsive-menu-logo-max-height); }
+    body:has(.logo-zone.logo-always) #main-content.increase-hamburger { margin-top: var(--responsive-menu-logo-max-height); }
   }
   [/#if]
 
   [#if configuration.enableLandscapePhoneBreakpoint]
   @media only screen and (max-width: ${configuration.landscapePhoneBreakpoint}) {
     .fragment-root { height: auto; }
-    .fragment-root .dropzone-wrapper { height: auto; }
+    .fragment-root .dropzone-wrapper { height: auto; width: 0; }
+    .lfr-layout-structure-item-responsive-side-menu {
+      position: static;
+      top: auto;
+      height: auto;
+      z-index: auto;
+    }
 
     .fragment-root .fragment-menu-icon,
     .fragment-root:has(.dropzone-menu.fragment-menu .text-truncate img) .fragment-menu-icon {
@@ -524,6 +539,33 @@
       border: ${configuration.menuHamburgerBorderWidth} ${configuration.menuHamburgerBorderStyle} ${configuration.menuHamburgerBorderColor};
       border-radius: ${configuration.menuHamburgerBorderRadius};
     }
+    .fragment-root.control-menu-offscreen .fragment-menu-icon {
+      inset-block-start: 0;
+    }
+
+    body:has(.logo-zone.logo-always) .fragment-root .hamburger,
+    .fragment-root .dropzone-wrapper:has(.hamburger-zone-wrapper.open) .hamburger {
+      position: fixed;
+      inset-block-start: var(--control-menu-container-height, 0);
+      inset-inline-start: 0;
+      width: 100dvw;
+      height: var(--responsive-menu-hamburger-min-size, 44px);
+      background-color: var(--responsive-menu-breakpoint-phone-landscape-menu-background-color, transparent);
+      z-index: 979;
+      display: flex;
+      align-items: center;
+    }
+
+    .fragment-root.control-menu-offscreen .fragment-menu-icon,
+    .fragment-root.control-menu-offscreen:has(.dropzone-menu.fragment-menu .text-truncate img) .fragment-menu-icon {
+      inset-block-start: 0;
+    }
+
+    body:has(.logo-zone.logo-always) .fragment-root.control-menu-offscreen .hamburger,
+    .fragment-root.control-menu-offscreen .dropzone-wrapper:has(.hamburger-zone-wrapper.open) .hamburger {
+      inset-block-start: 0;
+    }
+
     .fragment-root .fragment-menu-icon:focus-visible { outline: 2px solid currentColor; outline-offset: 2px; }
     .fragment-root .fragment-menu-icon .bar {
       display: block;
@@ -559,6 +601,10 @@
       max-height: calc(100dvh - (var(--control-menu-container-height, 0) + var(--responsive-menu-hamburger-min-size, 44px)));
       overflow: auto;
       z-index: 980;
+    }
+    .fragment-root.control-menu-offscreen:not(:has(.dropzone-menu.fragment-menu .text-truncate img)) .hamburger-zone-wrapper.open,
+    .fragment-root.control-menu-offscreen:has(.dropzone-menu.fragment-menu .text-truncate img) .hamburger-zone-wrapper.open {
+      inset-block-start: var(--responsive-menu-hamburger-min-size, 44px);
     }
 
     .fragment-root .hamburger-zone-inner { max-width: none; overflow: hidden; }
@@ -620,14 +666,20 @@
     }
 
     .fragment-root .hamburger.increase { height: var(--responsive-menu-logo-max-height); }
-    #main-content.increase-hamburger { margin-top: var(--responsive-menu-logo-max-height); }
+    body:has(.logo-zone.logo-always) #main-content.increase-hamburger { margin-top: var(--responsive-menu-logo-max-height); }
   }
   [/#if]
 
   [#if configuration.enablePortraitPhoneBreakpoint]
   @media only screen and (max-width: ${configuration.portraitPhoneBreakpoint}) {
     .fragment-root { height: auto; }
-    .fragment-root .dropzone-wrapper { height: auto; }
+    .fragment-root .dropzone-wrapper { height: auto; width: 0; }
+    .lfr-layout-structure-item-responsive-side-menu {
+      position: static;
+      top: auto;
+      height: auto;
+      z-index: auto;
+    }
 
     .fragment-root .fragment-menu-icon,
     .fragment-root:has(.dropzone-menu.fragment-menu .text-truncate img) .fragment-menu-icon {
@@ -666,6 +718,33 @@
       border: ${configuration.menuHamburgerBorderWidth} ${configuration.menuHamburgerBorderStyle} ${configuration.menuHamburgerBorderColor};
       border-radius: ${configuration.menuHamburgerBorderRadius};
     }
+    .fragment-root.control-menu-offscreen .fragment-menu-icon {
+      inset-block-start: 0;
+    }
+
+    body:has(.logo-zone.logo-always) .fragment-root .hamburger,
+    .fragment-root .dropzone-wrapper:has(.hamburger-zone-wrapper.open) .hamburger {
+      position: fixed;
+      inset-block-start: var(--control-menu-container-height, 0);
+      inset-inline-start: 0;
+      width: 100dvw;
+      height: var(--responsive-menu-hamburger-min-size, 44px);
+      background-color: var(--responsive-menu-breakpoint-phone-landscape-menu-background-color, transparent);
+      z-index: 979;
+      display: flex;
+      align-items: center;
+    }
+
+    .fragment-root.control-menu-offscreen .fragment-menu-icon,
+    .fragment-root.control-menu-offscreen:has(.dropzone-menu.fragment-menu .text-truncate img) .fragment-menu-icon {
+      inset-block-start: 0;
+    }
+
+    body:has(.logo-zone.logo-always) .fragment-root.control-menu-offscreen .hamburger,
+    .fragment-root.control-menu-offscreen .dropzone-wrapper:has(.hamburger-zone-wrapper.open) .hamburger {
+      inset-block-start: 0;
+    }
+
     .fragment-root .fragment-menu-icon:focus-visible { outline: 2px solid currentColor; outline-offset: 2px; }
     .fragment-root .fragment-menu-icon .bar {
       display: block;
@@ -701,6 +780,10 @@
       max-height: calc(100dvh - (var(--control-menu-container-height, 0) + var(--responsive-menu-hamburger-min-size, 44px)));
       overflow: auto;
       z-index: 980;
+    }
+    .fragment-root.control-menu-offscreen:not(:has(.dropzone-menu.fragment-menu .text-truncate img)) .hamburger-zone-wrapper.open,
+    .fragment-root.control-menu-offscreen:has(.dropzone-menu.fragment-menu .text-truncate img) .hamburger-zone-wrapper.open {
+      inset-block-start: var(--responsive-menu-hamburger-min-size, 44px);
     }
 
     .fragment-root .hamburger-zone-inner { max-width: none; overflow: hidden; }
@@ -762,7 +845,7 @@
     }
 
     .fragment-root .hamburger.increase { height: var(--responsive-menu-logo-max-height); }
-    #main-content.increase-hamburger { margin-top: var(--responsive-menu-logo-max-height); }
+    body:has(.logo-zone.logo-always) #main-content.increase-hamburger { margin-top: var(--responsive-menu-logo-max-height); }
   }
   [/#if]
 
