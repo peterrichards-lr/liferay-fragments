@@ -1,0 +1,41 @@
+{
+  "fieldSets": [
+    {
+      "fields": [
+        {
+          "defaultValue": "1000",
+          "label": "end-value",
+          "name": "endValue",
+          "type": "text",
+          "dataType": "int"
+        },
+        {
+          "defaultValue": "2000",
+          "label": "animation-duration-ms",
+          "name": "duration",
+          "type": "text",
+          "dataType": "int"
+        },
+        {
+          "defaultValue": "",
+          "label": "prefix",
+          "name": "prefix",
+          "type": "text"
+        },
+        {
+          "defaultValue": "",
+          "label": "suffix",
+          "name": "suffix",
+          "type": "text"
+        },
+        {
+          "defaultValue": "var(--primary)",
+          "label": "text-color",
+          "name": "textColor",
+          "type": "colorPicker"
+        }
+      ],
+      "label": "General"
+    }
+  ]
+}

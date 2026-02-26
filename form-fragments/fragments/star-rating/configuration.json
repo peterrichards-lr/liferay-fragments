@@ -27,14 +27,14 @@
           "label": "Active Star Color",
           "description": "active-star-color",
           "type": "colorPicker",
-          "defaultValue": "#FFD700"
+          "defaultValue": "var(--warning)"
         },
         {
           "name": "passiveStarColor",
           "label": "Passive Star Color",
           "description": "passive-star-color",
           "type": "colorPicker",
-          "defaultValue": "#D3D3D3"
+          "defaultValue": "var(--gray-300)"
         }
       ],
       "label": "star-options"

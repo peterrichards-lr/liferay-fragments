@@ -3,7 +3,7 @@
 }
 
 .muliselect-container .multiselect-list-label {
-	color: #272833;
+	color: var(--body-color, #272833);
 	display: inline-block;
 	font-size: 0.875rem;
 	margin-bottom: 0.25rem;

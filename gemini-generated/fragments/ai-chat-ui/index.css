@@ -1,0 +1,98 @@
+.ai-chat-fragment {
+    display: flex;
+    flex-direction: column;
+    height: 500px;
+    background: var(--white, #fff);
+    border-radius: var(--border-radius-lg, 0.5rem);
+    border: 1px solid var(--gray-200, #eee);
+    overflow: hidden;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+}
+
+.chat-header {
+    background: var(--gray-100, #f7f8f9);
+    padding: var(--spacer-3, 1rem);
+    border-bottom: 1px solid var(--gray-200, #eee);
+    font-weight: var(--font-weight-bold, 700);
+    color: var(--body-color);
+}
+
+.chat-messages {
+    flex-grow: 1;
+    overflow-y: auto;
+    padding: var(--spacer-4, 1.5rem);
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacer-3, 1rem);
+}
+
+.message {
+    max-width: 80%;
+    display: flex;
+}
+
+.message.assistant { align-self: flex-start; }
+.message.user { align-self: flex-end; }
+
+.bubble {
+    padding: var(--spacer-2, 0.75rem) var(--spacer-3, 1rem);
+    border-radius: 1.25rem;
+    font-size: var(--font-size-base, 1rem);
+    line-height: 1.4;
+}
+
+.assistant .bubble {
+    background: var(--secondary-l3, #e7e7ed);
+    color: var(--body-color);
+    border-bottom-left-radius: 0.25rem;
+}
+
+.user .bubble {
+    background: var(--user-color, var(--primary));
+    color: var(--white, #fff);
+    border-bottom-right-radius: 0.25rem;
+}
+
+.chat-input-wrap {
+    padding: var(--spacer-3, 1rem);
+    background: var(--gray-100, #f7f8f9);
+    border-top: 1px solid var(--gray-200, #eee);
+    display: flex;
+    gap: var(--spacer-2, 0.5rem);
+}
+
+.chat-input-wrap input {
+    flex-grow: 1;
+    border: 1px solid var(--gray-300, #ccc);
+    border-radius: 2rem;
+    padding: 0.5rem var(--spacer-4, 1.5rem);
+    font-size: var(--font-size-base);
+    outline: none;
+}
+
+.chat-input-wrap input:focus {
+    border-color: var(--primary);
+}
+
+.chat-input-wrap button {
+    background: var(--primary);
+    color: var(--white, #fff);
+    border: none;
+    border-radius: 50%;
+    width: 2.5rem;
+    height: 2.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: opacity 0.2s;
+}
+
+.chat-input-wrap button:hover { opacity: 0.9; }
+
+.typing-indicator {
+    font-style: italic;
+    font-size: var(--font-size-xs);
+    color: var(--text-secondary-color);
+    margin-left: var(--spacer-3);
+}

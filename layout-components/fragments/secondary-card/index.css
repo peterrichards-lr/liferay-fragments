@@ -1,25 +1,25 @@
-.fragment_6535 .wrapper {
+.secondary-card-${fragmentEntryLinkNamespace} .wrapper {
 	background-color: transparent;
-	padding: .75rem;
+	padding: var(--spacer-2, .75rem);
 }
 
-.fragment_6535 .action-card {
+.secondary-card-${fragmentEntryLinkNamespace} .action-card {
 	display: inline-block;
-	background-color: white;
+	background-color: var(--white, white);
 	text-align: center;
-	border: 6px solid white;
-	border-radius: 20px;
-	padding: 1rem;
+	border: 6px solid var(--white, white);
+	border-radius: var(--border-radius-xl, 20px);
+	padding: var(--spacer-3, 1rem);
 	width: 100%;
 	min-height: 250px;
 }
 
-.fragment_6535 .action-card .card-content-heading {
+.secondary-card-${fragmentEntryLinkNamespace} .action-card .card-content-heading {
 	color: var(--body-color, black);
 }
 
-.fragment_6535 .action-card .card-content-hr {
-	color: var(--color-brand-primary, black);
+.secondary-card-${fragmentEntryLinkNamespace} .action-card .card-content-hr {
+	color: var(--primary, black);
 	line-height: 0.5em;
   position: relative;
   outline: 0;
@@ -28,12 +28,12 @@
   height: 1em;
   opacity: 0.5;
 	margin: unset;
-	margin-bottom: 1rem;
+	margin-bottom: var(--spacer-3, 1rem);
 }
 
-.fragment_6535 .action-card .card-content-hr:before {
+.secondary-card-${fragmentEntryLinkNamespace} .action-card .card-content-hr:before {
     content: '';
-    background: linear-gradient(to right, transparent, var(--color-brand-primary, black), transparent);
+    background: linear-gradient(to right, transparent, var(--primary, black), transparent);
     position: absolute;
     left: 0;
     top: 50%;
@@ -41,11 +41,11 @@
     height: 1px;
   }
 
-.fragment_6535 .action-card .card-content-text {
+.secondary-card-${fragmentEntryLinkNamespace} .action-card .card-content-text {
 	color: var(--body-color, black);
 }
 
-.fragment_6535 .action-card .card-content-button {
-	color: var(--color-brand-primary, white);
-	background-color: var(--color-brand-secondary, --primary);
+.secondary-card-${fragmentEntryLinkNamespace} .action-card .card-content-button {
+	color: var(--white, white);
+	background-color: var(--primary, black);
 }

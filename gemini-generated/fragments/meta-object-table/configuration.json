@@ -1,0 +1,28 @@
+{
+  "fieldSets": [
+    {
+      "fields": [
+        {
+          "label": "object-external-reference-code",
+          "name": "objectERC",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "defaultValue": true,
+          "label": "enable-pagination",
+          "name": "enablePagination",
+          "type": "checkbox"
+        },
+        {
+          "defaultValue": "10",
+          "label": "page-size",
+          "name": "pageSize",
+          "type": "text",
+          "dataType": "int"
+        }
+      ],
+      "label": "Data Source"
+    }
+  ]
+}

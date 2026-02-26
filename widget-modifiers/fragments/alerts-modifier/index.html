@@ -108,14 +108,14 @@
 
 		.use_accordion div.entries > div.alert-close .entry-title:${pseudo_element},
     .use_accordion div.entries > div .entry-title:${pseudo_element} {
-      content: '${configuration.accordionClosedIcon}';
+      content: '${configuration.accordionClosedIcon!}';
       font-weight: bold;
       font-size: 1.125rem;
       line-height: 1.25rem;
     }
 
     .use_accordion div.entries > div .entry-title:${pseudo_element} {
-      content: '${configuration.accordionOpenIcon}';
+      content: '${configuration.accordionOpenIcon!}';
     }
 
     .use_accordion

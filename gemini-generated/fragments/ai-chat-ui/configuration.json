@@ -1,0 +1,21 @@
+{
+  "fieldSets": [
+    {
+      "fields": [
+        {
+          "defaultValue": "http://localhost:8080/o/ai-backend",
+          "label": "backend-url",
+          "name": "backendUrl",
+          "type": "text"
+        },
+        {
+          "defaultValue": "var(--primary)",
+          "label": "user-bubble-color",
+          "name": "userBubbleColor",
+          "type": "colorPicker"
+        }
+      ],
+      "label": "Integration"
+    }
+  ]
+}

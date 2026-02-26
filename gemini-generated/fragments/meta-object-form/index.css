@@ -1,0 +1,40 @@
+.meta-form-container {
+    padding: var(--spacer-6, 2.5rem);
+    background: var(--white, #fff);
+    border-radius: var(--border-radius-lg, 0.5rem);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.meta-form-container .object-title {
+    font-size: var(--h2-font-size);
+    color: var(--body-color);
+    font-weight: var(--font-weight-bold, 700);
+    text-align: center;
+}
+
+.dynamic-form .form-group label {
+    font-weight: var(--font-weight-semi-bold, 600);
+    color: var(--body-color);
+    margin-bottom: var(--spacer-2, 0.5rem);
+}
+
+.dynamic-form .form-control {
+    background-color: var(--gray-100, #f7f8f9);
+    border: 1px solid var(--gray-200, #eee);
+    padding: var(--spacer-3, 1rem);
+    border-radius: var(--border-radius, 0.25rem);
+}
+
+.dynamic-form .form-control:focus {
+    border-color: var(--primary);
+    background-color: var(--white);
+}
+
+.dynamic-form .btn-primary {
+    background-color: var(--btn-color, var(--primary));
+    border: none;
+    font-weight: var(--font-weight-bold);
+    border-radius: var(--border-radius-lg);
+}

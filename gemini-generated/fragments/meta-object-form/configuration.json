@@ -1,0 +1,21 @@
+{
+  "fieldSets": [
+    {
+      "fields": [
+        {
+          "label": "object-external-reference-code",
+          "name": "objectERC",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "defaultValue": "var(--primary)",
+          "label": "submit-button-color",
+          "name": "buttonColor",
+          "type": "colorPicker"
+        }
+      ],
+      "label": "Data Source"
+    }
+  ]
+}

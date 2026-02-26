@@ -1,0 +1,34 @@
+{
+  "fieldSets": [
+    {
+      "fields": [
+        {
+          "defaultValue": "waterreadings",
+          "label": "object-path",
+          "name": "objectPath",
+          "type": "text"
+        },
+        {
+          "defaultValue": "reading",
+          "label": "value-field",
+          "name": "valueField",
+          "type": "text"
+        },
+        {
+          "defaultValue": "5000",
+          "label": "target-value",
+          "name": "targetValue",
+          "type": "text",
+          "dataType": "int"
+        },
+        {
+          "defaultValue": "var(--primary)",
+          "label": "gauge-color",
+          "name": "gaugeColor",
+          "type": "colorPicker"
+        }
+      ],
+      "label": "General"
+    }
+  ]
+}

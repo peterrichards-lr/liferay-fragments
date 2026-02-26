@@ -112,13 +112,13 @@
 }
 
 .meter-reading input[type="date"] {
-	background-color: var(--gray-200, #f1f2f5);
-	border-color: var(--gray-200, #f1f2f5);
+	background-color: var(--gray-200, var(--gray-200, #f1f2f5));
+	border-color: var(--gray-200, var(--gray-200, #f1f2f5));
 	border-style: solid;
 	border-width: 0.0625rem;
 	border-radius: var(--border-radius, 0.25rem);
 	box-shadow: none;
-	color: var(--gray-900, #272833);
+	color: var(--gray-900, var(--body-color, #272833));
 	font-size: 1rem;
 	font-weight: var(--font-weight-normal, 400);
 	height: 2.5rem;

@@ -1,23 +1,29 @@
 <div class="calculator-container">
-    <h2 class="component-text h2 mb-0 text-break">Loan Calculator</h2>
-    <div class="slider-container">
-        <label for="loanAmount">Amount: $<span id="amountValue">5000</span></label>
-        <input type="range" id="loanAmount" min="1000" max="50000" step="100" value="5000">
+    <div class="alert alert-danger d-none error-container mb-3"></div>
+    <div class="alert alert-danger d-none singleton-error">
+        <strong>Error:</strong> Only one instance of the Loan Calculator is allowed per page. Please remove the duplicate.
     </div>
-    <div class="slider-container">
-        <label for="loanTerm">Term: <span id="termValue">12</span> months</label>
-        <input type="range" id="loanTerm" min="6" max="60" step="6" value="12">
-    </div>
-    <div class="summary">
-        <h3 class="component-text h3 mb-0 text-break">Summary</h3>
-        <p id="summaryText" class="component-text text-paragraph mb-0 text-break">You will pay back a total of $<span id="totalPayment">0</span> over <span
-                id="termMonths">0</span> months at a rate of <span id="interestRate">0%</span> representative.</p>
-    </div>
-    <div class="component-button text-break [#if !configuration.show]d-none[/#if]">
-        <a class="btn ${configuration.buttonSize} btn-style-${configuration.style} btn-${configuration.type} [#if configuration.inverted]btn-inverted[/#if] [#if configuration.uppercase]text-uppercase[/#if]"
-            data-lfr-editable-id="link" data-lfr-editable-type="link" href=""
-            id="fragment-${fragmentEntryLinkNamespace}-link">
-            Go Somewhere
-        </a>
+    <div class="calculator-content">
+        <h2 class="component-text h2 mb-0 text-break">Loan Calculator</h2>
+        <div class="slider-container">
+            <label for="loanAmount-${fragmentEntryLinkNamespace}">Amount: $<span id="amountValue-${fragmentEntryLinkNamespace}">5000</span></label>
+            <input type="range" id="loanAmount-${fragmentEntryLinkNamespace}" min="1000" max="50000" step="100" value="5000">
+        </div>
+        <div class="slider-container">
+            <label for="loanTerm-${fragmentEntryLinkNamespace}">Term: <span id="termValue-${fragmentEntryLinkNamespace}">12</span> months</label>
+            <input type="range" id="loanTerm-${fragmentEntryLinkNamespace}" min="6" max="60" step="6" value="12">
+        </div>
+        <div class="summary">
+            <h3 class="component-text h3 mb-0 text-break">Summary</h3>
+            <p id="summaryText-${fragmentEntryLinkNamespace}" class="component-text text-paragraph mb-0 text-break">You will pay back a total of $<span id="totalPayment-${fragmentEntryLinkNamespace}">0</span> over <span
+                    id="termMonths-${fragmentEntryLinkNamespace}">0</span> months at a rate of <span id="interestRate-${fragmentEntryLinkNamespace}">0%</span> representative.</p>
+        </div>
+        <div class="component-button text-break [#if !configuration.show]d-none[/#if]">
+            <a class="btn ${configuration.buttonSize!} btn-style-${configuration.style!} btn-${configuration.type!} [#if configuration.inverted]btn-inverted[/#if] [#if configuration.uppercase]text-uppercase[/#if]"
+                data-lfr-editable-id="link" data-lfr-editable-type="link" href=""
+                id="fragment-${fragmentEntryLinkNamespace}-link">
+                Go Somewhere
+            </a>
+        </div>
     </div>
 </div>

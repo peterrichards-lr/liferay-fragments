@@ -1,6 +1,6 @@
 <div class="refresh-page">
 [#if configuration.enableManualRefresh && configuration.enableAutoRefresh]
-	This page will automatically redirect after ${configuration.refreshIntervalSec} seconds or click
+	This page will automatically redirect after ${configuration.refreshIntervalSec!} seconds or click
 	[#if configuration.enableRedirect]
 		<a onclick="javascript: window.location = redirectUrl">here</a>.
 	[#else]
@@ -13,7 +13,7 @@
 		Click <a onclick="javascript: window.location.reload();">here</a> to redirect the page.
 	[/#if]
 [#else]
-	This page will automatically redirect after ${configuration.refreshIntervalSec} seconds.
+	This page will automatically redirect after ${configuration.refreshIntervalSec!} seconds.
 [/#if]
 </div>
 [#if configuration.enableRedirect]

@@ -12,5 +12,5 @@
 .select-from-list__dropdown-menu .dropdown-item.active[aria-selected='true'],
 .select-from-list__dropdown-menu .dropdown-item[aria-selected='true'] {
   background-color: #f0f5ff;
-  color: #272833;
+  color: var(--body-color, #272833);
 }

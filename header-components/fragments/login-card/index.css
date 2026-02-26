@@ -18,7 +18,7 @@
 
 #loginCardArea {
     border-radius: 0.75rem;
-    background-color: #ffffff;
+    background-color: var(--white, #fff);
     min-width: 300px;
     max-width: 400px;
     position: fixed;

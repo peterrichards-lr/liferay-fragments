@@ -70,5 +70,5 @@
 }
 
 .comment-item-container .comment-area .metadata .comment-date-time {
-	color: #6b6c7e;
+	color: var(--text-secondary-color, #6b6c7e);
 }

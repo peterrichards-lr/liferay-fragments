@@ -1,0 +1,14 @@
+<div class="pricing-grid-fragment pricing-${fragmentEntryLinkNamespace}" style="--highlight-color: ${configuration.highlightColor!};">
+    <div class="pricing-toggle-wrap">
+        <span class="toggle-label monthly">Monthly</span>
+        <label class="pricing-toggle">
+            <input type="checkbox" id="toggle-${fragmentEntryLinkNamespace}">
+            <span class="toggle-slider"></span>
+        </label>
+        <span class="toggle-label yearly">Yearly <span class="badge badge-success badge-sm">Save 20%</span></span>
+    </div>
+
+    <div class="pricing-grid" id="grid-${fragmentEntryLinkNamespace}">
+        <!-- Plans dynamically injected here -->
+    </div>
+</div>

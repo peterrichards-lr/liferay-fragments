@@ -1,0 +1,45 @@
+{
+  "fieldSets": [
+    {
+      "fields": [
+        {
+          "label": "collection",
+          "name": "collectionId",
+          "type": "collectionSelector"
+        },
+        {
+          "defaultValue": "3",
+          "label": "slides-per-view",
+          "name": "slidesPerView",
+          "type": "text",
+          "dataType": "int"
+        },
+        {
+          "defaultValue": true,
+          "label": "autoplay",
+          "name": "autoplay",
+          "type": "checkbox"
+        },
+        {
+          "defaultValue": false,
+          "label": "loop",
+          "name": "loop",
+          "type": "checkbox"
+        },
+        {
+          "defaultValue": "var(--primary)",
+          "label": "theme-color",
+          "name": "themeColor",
+          "type": "colorPicker"
+        },
+        {
+          "defaultValue": "var(--spacer-4)",
+          "label": "spacing",
+          "name": "spacing",
+          "type": "length"
+        }
+      ],
+      "label": "General"
+    }
+  ]
+}

@@ -38,6 +38,13 @@ if (
           } else if (response.ok) {
             return response.json();
           } else {
+            if (status === 401 || status === 403) {
+                const container = fragmentElement.querySelector('.error-container');
+                if (container) {
+                    container.textContent = 'You do not have permission to access this object data.';
+                    container.classList.remove('d-none');
+                }
+            }
             throw {
               name: 'HttpError',
               message: `Request returned ${response.status}`,
@@ -54,7 +61,7 @@ if (
               Liferay.ThemeDisplay.getDefaultLanguageId();
             items = items.map((i) => {
               const prop = i[`${objectField}_i18n`];
-              return Object.hasOwn(prop, languageCode)
+              return Object.prototype.hasOwnProperty.call(prop, languageCode)
                 ? prop[languageCode]
                 : prop[defaultLanguageCode];
             });

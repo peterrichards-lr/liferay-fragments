@@ -25,8 +25,8 @@
 
 <style>
   :root {
-    --responsive-menu-logo-max-height: ${configuration.logoMaxHeight};
-    --responsive-menu-logo-max-width: ${configuration.logoMaxWidth};
+    --responsive-menu-logo-max-height: ${configuration.logoMaxHeight!};
+    --responsive-menu-logo-max-width: ${configuration.logoMaxWidth!};
   }
 
   .site-logo .logo-link {
@@ -36,8 +36,8 @@
   }
 </style>
 <div class="site-logo"
-     style="--logo-max-height: ${configuration.logoMaxHeight};
-            --logo-max-width: ${configuration.logoMaxWidth};">
+     style="--logo-max-height: ${configuration.logoMaxHeight!};
+            --logo-max-width: ${configuration.logoMaxWidth!};">
   [#if configuration.overrideSiteConfig]
     [#if configuration.enableLink]
       <a class="logo-link" href="${logoLink}" title="${logoTitle}">

@@ -47,7 +47,7 @@
 }
 
 .date-display .date-display-content .date-display-content__month {
-    color: #757575;
+    color: var(--gray-600, #757575);
     font-size: 0.875rem;
     font-weight: 500;
 		display: none;
@@ -55,7 +55,7 @@
 
 .date-display .date-display-content .date-display-content__separator {
     height: 1px;
-    background: #000;
+    background: var(--black, #000);
     margin: 0 2px;
     -webkit-transform: rotate(-65deg);
     -ms-transform: rotate(-65deg);

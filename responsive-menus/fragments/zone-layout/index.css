@@ -7,7 +7,7 @@ body.has-edit-mode-menu .page-editor .zone-layout-editor-padding.show {
   height: 26px;
   min-height: 26px;
   box-sizing: border-box;
-  background-color: rgb(247, 248, 249);
+  background-color: var(--gray-100, #f7f8f9);
   text-align: right;
   font-size: 12px;
   line-height: 26px;

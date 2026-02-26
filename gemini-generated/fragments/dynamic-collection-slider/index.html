@@ -1,0 +1,19 @@
+<div class="dynamic-slider-container slider-${fragmentEntryLinkNamespace}" style="--theme-color: ${configuration.themeColor!}; --slide-gap: ${configuration.spacing!};">
+    <div class="slider-controls">
+        <button class="slider-btn prev-btn" aria-label="Previous Slide">
+            [@clay["icon"] symbol="angle-left" /]
+        </button>
+        <button class="slider-btn next-btn" aria-label="Next Slide">
+            [@clay["icon"] symbol="angle-right" /]
+        </button>
+    </div>
+
+    <div class="slider-viewport">
+        <div class="slider-track" id="track-${fragmentEntryLinkNamespace}">
+            <!-- Slides dynamically injected here -->
+            <div class="slider-status">Loading collection items...</div>
+        </div>
+    </div>
+
+    <div class="slider-pagination" id="pagination-${fragmentEntryLinkNamespace}"></div>
+</div>

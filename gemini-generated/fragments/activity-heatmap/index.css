@@ -1,0 +1,54 @@
+.heatmap-fragment-container {
+    padding: var(--spacer-4, 1.5rem);
+    background: var(--white, #fff);
+    border-radius: var(--border-radius-lg, 0.5rem);
+    border: 1px solid var(--gray-200, #eee);
+    display: inline-block;
+}
+
+.heatmap-header {
+    font-weight: var(--font-weight-bold, 700);
+    margin-bottom: var(--spacer-3, 1rem);
+    color: var(--body-color);
+}
+
+.heatmap-grid {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr); /* Monthly grouping for simplicity */
+    grid-auto-flow: column;
+    gap: 4px;
+}
+
+.heatmap-cell {
+    width: 12px;
+    height: 12px;
+    border-radius: 2px;
+    background: var(--gray-100, #f7f8f9);
+}
+
+/* Color levels using rgb relative color syntax if supported, or fallback */
+.cell.level-0 { background: var(--gray-100, #f7f8f9); }
+.cell.level-1 { background: color-mix(in srgb, var(--base-color), white 70%); }
+.cell.level-2 { background: color-mix(in srgb, var(--base-color), white 40%); }
+.cell.level-3 { background: color-mix(in srgb, var(--base-color), white 10%); }
+.cell.level-4 { background: var(--base-color); }
+
+.heatmap-footer {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: var(--spacer-3, 1rem);
+    font-size: var(--font-size-xs, 0.75rem);
+    color: var(--text-secondary-color);
+}
+
+.legend {
+    display: flex;
+    gap: 4px;
+}
+
+.legend .cell {
+    width: 10px;
+    height: 10px;
+    border-radius: 2px;
+}

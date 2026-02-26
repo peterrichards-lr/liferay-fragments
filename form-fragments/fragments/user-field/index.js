@@ -1,20 +1,20 @@
-const currentLength = document.getElementById(
-  `${fragmentNamespace}-current-length`
+const currentLength = fragmentElement.querySelector(
+  `#${fragmentNamespace}-current-length`
 );
-const errorMessage = document.getElementById(
-  `${fragmentNamespace}-user-attribute-input-error-message`
+const errorMessage = fragmentElement.querySelector(
+  `#${fragmentNamespace}-user-attribute-input-error-message`
 );
-const formGroup = document.getElementById(`${fragmentNamespace}-form-group`);
-const lengthInfo = document.getElementById(`${fragmentNamespace}-length-info`);
-const lengthWarning = document.getElementById(
-  `${fragmentNamespace}-length-warning`
+const formGroup = fragmentElement.querySelector(`#${fragmentNamespace}-form-group`);
+const lengthInfo = fragmentElement.querySelector(`#${fragmentNamespace}-length-info`);
+const lengthWarning = fragmentElement.querySelector(
+  `#${fragmentNamespace}-length-warning`
 );
-const lengthWarningText = document.getElementById(
-  `${fragmentNamespace}-length-warning-text`
+const lengthWarningText = fragmentElement.querySelector(
+  `#${fragmentNamespace}-length-warning-text`
 );
 
-const inputElement = document.getElementById(
-  `${fragmentNamespace}-user-attribute-input`
+const inputElement = fragmentElement.querySelector(
+  `#${fragmentNamespace}-user-attribute-input`
 );
 
 function enableLengthWarning() {
@@ -61,11 +61,28 @@ function onInputKeyup(event) {
 
 let currentLanguageId = themeDisplay.getDefaultLanguageId();
 
+const showError = (message, details) => {
+  const container = fragmentElement.querySelector('.error-container');
+  if (container) {
+    container.textContent = message;
+    container.classList.remove('d-none');
+  }
+  console.error(`[User Field] ${message}`, details);
+};
+
 const setAttributeValue = () => {
   const userAttribute = configuration.userAttribute;
   const customFieldName = configuration.customFieldName;
   Liferay.Util.fetch('/o/headless-admin-user/v1.0/my-user-account')
-    .then((response) => response.json())
+    .then((response) => {
+      if (!response.ok) {
+        if (response.status === 401 || response.status === 403) {
+          throw new Error('You do not have permission to access user account data.');
+        }
+        throw new Error(`API error: ${response.statusText} (${response.status})`);
+      }
+      return response.json();
+    })
     .then((json) => {
       if (userAttribute !== 'customField') {
         inputElement.value = json[userAttribute];
@@ -89,7 +106,8 @@ const setAttributeValue = () => {
       } else {
         inputElement.value = customField.customValue.data;
       }
-    });
+    })
+    .catch(err => showError(err.message, err));
 };
 
 function main() {
@@ -123,8 +141,8 @@ function main() {
 
         if (Liferay.FeatureFlags['LPD-37927'] && !input.localizable) {
           if (currentLanguageId === themeDisplay.getDefaultLanguageId()) {
-            const unlocalizedInfo = document.getElementById(
-              `${fragmentNamespace}-unlocalized-info`
+            const unlocalizedInfo = fragmentElement.querySelector(
+              `#${fragmentNamespace}-unlocalized-info`
             );
 
             unlocalizedInfo.classList.add('d-none');
@@ -135,8 +153,8 @@ function main() {
               inputElement.setAttribute('readonly', '');
             }
 
-            const unlocalizedInfo = document.getElementById(
-              `${fragmentNamespace}-unlocalized-info`
+            const unlocalizedInfo = fragmentElement.querySelector(
+              `#${fragmentNamespace}-unlocalized-info`
             );
 
             unlocalizedInfo.classList.remove('d-none');
@@ -170,8 +188,8 @@ function main() {
         const isDefaultLanguage =
           event.languageId === themeDisplay.getDefaultLanguageId();
 
-        const unlocalizedInfo = document.getElementById(
-          `${fragmentNamespace}-unlocalized-info`
+        const unlocalizedInfo = fragmentElement.querySelector(
+          `#${fragmentNamespace}-unlocalized-info`
         );
 
         if (isDefaultLanguage) {
@@ -208,7 +226,7 @@ function getDefaultLanguageValue() {
 function getOrCreateTranslationInput(languageId) {
   const inputId = `${fragmentNamespace}${input.name}_${languageId}`;
 
-  let translationInput = document.getElementById(inputId);
+  let translationInput = fragmentElement.querySelector('#' + CSS.escape(inputId));
 
   if (!translationInput) {
     translationInput = document.createElement('input');

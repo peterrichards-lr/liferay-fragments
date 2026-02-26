@@ -1,0 +1,33 @@
+{
+  "fieldSets": [
+    {
+      "fields": [
+        {
+          "defaultValue": "0.5",
+          "label": "parallax-speed",
+          "name": "speed",
+          "type": "text"
+        },
+        {
+          "defaultValue": "var(--white)",
+          "label": "text-color",
+          "name": "textColor",
+          "type": "colorPicker"
+        },
+        {
+          "defaultValue": "80vh",
+          "label": "height",
+          "name": "height",
+          "type": "length"
+        },
+        {
+          "defaultValue": "rgba(0,0,0,0.3)",
+          "label": "overlay-color",
+          "name": "overlayColor",
+          "type": "colorPicker"
+        }
+      ],
+      "label": "General"
+    }
+  ]
+}

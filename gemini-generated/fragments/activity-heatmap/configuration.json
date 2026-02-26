@@ -1,0 +1,27 @@
+{
+  "fieldSets": [
+    {
+      "fields": [
+        {
+          "defaultValue": "waterreadings",
+          "label": "object-path",
+          "name": "objectPath",
+          "type": "text"
+        },
+        {
+          "defaultValue": "readingDate",
+          "label": "date-field",
+          "name": "dateField",
+          "type": "text"
+        },
+        {
+          "defaultValue": "var(--primary)",
+          "label": "base-color",
+          "name": "baseColor",
+          "type": "colorPicker"
+        }
+      ],
+      "label": "General"
+    }
+  ]
+}

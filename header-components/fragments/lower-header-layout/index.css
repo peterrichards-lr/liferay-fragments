@@ -3,7 +3,7 @@
 }
 
 .lower-header-bg {
-	background-color: #fff;
+	background-color: var(--white, #fff);
 }
 
 .lower-header > .container-fluid {
@@ -20,7 +20,7 @@
     color: currentColor;
     cursor: pointer;
     border: none;
-    background-color: #fff;
+    background-color: var(--white, #fff);
     display: flex;
     font-size: 1rem;
     height: 70px;

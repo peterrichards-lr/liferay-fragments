@@ -1,0 +1,93 @@
+.timeline-fragment-container {
+    position: relative;
+    padding: var(--spacer-8, 4rem) 0;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.timeline-line {
+    position: absolute;
+    left: 50%;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: var(--gray-200, #eee);
+    transform: translateX(-50%);
+    z-index: 1;
+}
+
+.timeline-items {
+    position: relative;
+    z-index: 2;
+}
+
+.timeline-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: var(--spacer-10, 6rem);
+    width: 100%;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 0.6s ease-out;
+}
+
+.timeline-item.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.timeline-content {
+    width: 42%;
+    padding: var(--spacer-4, 1.5rem);
+    background: var(--white, #fff);
+    border-radius: var(--border-radius-lg, 0.5rem);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    border: 1px solid var(--gray-200, #eee);
+    position: relative;
+}
+
+.timeline-item:nth-child(even) {
+    flex-direction: row-reverse;
+}
+
+.timeline-dot {
+    position: absolute;
+    left: 50%;
+    top: var(--spacer-4, 1.5rem);
+    width: 1rem;
+    height: 1rem;
+    background: var(--timeline-color, var(--primary));
+    border: 4px solid var(--white, #fff);
+    border-radius: 50%;
+    transform: translateX(-50%);
+    box-shadow: 0 0 0 4px var(--gray-100);
+}
+
+.timeline-date {
+    font-weight: var(--font-weight-bold, 700);
+    color: var(--timeline-color, var(--primary));
+    font-size: var(--font-size-sm, 0.875rem);
+    margin-bottom: var(--spacer-1, 0.25rem);
+    display: block;
+}
+
+.timeline-title {
+    font-size: var(--font-size-lg, 1.125rem);
+    font-weight: var(--font-weight-bold, 700);
+    color: var(--body-color, #212529);
+    margin-bottom: var(--spacer-2, 0.5rem);
+}
+
+.timeline-desc {
+    font-size: var(--font-size-base, 1rem);
+    color: var(--text-secondary-color, #6c757d);
+    line-height: 1.5;
+}
+
+@media (max-width: 768px) {
+    .timeline-line { left: 2rem; }
+    .timeline-item { flex-direction: row !important; margin-bottom: var(--spacer-6, 2.5rem); }
+    .timeline-content { width: calc(100% - 4rem); margin-left: 4rem; }
+    .timeline-dot { left: 2rem; }
+}

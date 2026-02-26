@@ -1,24 +1,25 @@
-.fragment_6534 .wrapper {
+.primary-card-${fragmentEntryLinkNamespace} .wrapper {
 	background-color: transparent;
-	padding: .75rem;
+	padding: var(--spacer-2, .75rem);
 }
 
-.fragment_6534 .action-card {
+.primary-card-${fragmentEntryLinkNamespace} .action-card {
 	display: inline-block;
-	background-color: var(--color-brand-primary, transparent);
+	background-color: var(--primary, transparent);
 	text-align: center;
-	border: 6px solid white;
-	border-radius: 20px;
-	padding: 1rem;
+	border: 6px solid var(--white, white);
+	border-radius: var(--border-radius-xl, 20px);
+	padding: var(--spacer-3, 1rem);
 	width: 100%;
 	min-height: 250px;
 }
 
-.fragment_6534 .action-card .card-content-heading {
-	color: var(--color-neutral-0, white);
+.primary-card-${fragmentEntryLinkNamespace} .action-card .card-content-heading {
+	color: var(--white, white);
 }
-.fragment_6534 .action-card .card-content-hr {
-	color: var(--color-neutral-0, white);
+
+.primary-card-${fragmentEntryLinkNamespace} .action-card .card-content-hr {
+	color: var(--white, white);
 	line-height: 0.5em;
   position: relative;
   outline: 0;
@@ -27,12 +28,12 @@
   height: 1em;
   opacity: 0.5;
 	margin: unset;
-	margin-bottom: 1rem;
+	margin-bottom: var(--spacer-3, 1rem);
 }
 
-.fragment_6534 .action-card .card-content-hr:before {
+.primary-card-${fragmentEntryLinkNamespace} .action-card .card-content-hr:before {
     content: '';
-    background: linear-gradient(to right, transparent, var(--color-neutral-0, white), transparent);
+    background: linear-gradient(to right, transparent, var(--white, white), transparent);
     position: absolute;
     left: 0;
     top: 50%;
@@ -40,11 +41,11 @@
     height: 1px;
   }
 
-.fragment_6534 .action-card .card-content-text {
-	color: var(--color-neutral-0, white);
+.primary-card-${fragmentEntryLinkNamespace} .action-card .card-content-text {
+	color: var(--white, white);
 }
 
-.fragment_6534 .action-card .card-content-button {
-	color: var(--color-brand-primary, black);
-	background-color: var(--color-neutral-0, white);
+.primary-card-${fragmentEntryLinkNamespace} .action-card .card-content-button {
+	color: var(--primary, black);
+	background-color: var(--white, white);
 }

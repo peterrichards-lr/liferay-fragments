@@ -1,0 +1,47 @@
+{
+  "fieldSets": [
+    {
+      "fields": [
+        {
+          "defaultValue": "waterreadings",
+          "label": "object-path",
+          "name": "objectPath",
+          "type": "text"
+        },
+        {
+          "defaultValue": "readingDate",
+          "label": "label-field",
+          "name": "labelField",
+          "type": "text"
+        },
+        {
+          "defaultValue": "reading",
+          "label": "value-field",
+          "name": "valueField",
+          "type": "text"
+        },
+        {
+          "defaultValue": "bar",
+          "label": "chart-type",
+          "name": "chartType",
+          "type": "select",
+          "typeOptions": {
+            "validValues": [
+              { "value": "bar", "label": "Bar" },
+              { "value": "line", "label": "Line" },
+              { "value": "pie", "label": "Pie" },
+              { "value": "doughnut", "label": "Doughnut" }
+            ]
+          }
+        },
+        {
+          "defaultValue": "var(--primary)",
+          "label": "chart-color",
+          "name": "chartColor",
+          "type": "colorPicker"
+        }
+      ],
+      "label": "General"
+    }
+  ]
+}

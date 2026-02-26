@@ -202,9 +202,9 @@ const populateFields = (mapping) => {
 		return;
 	}
 	
-	const queryStringObj = JSON.parse('{"' + decodeURI(search).replace(/"/g, '\\"').replace(/&/g, '","').replace(/=/g,'":"') + '"}');
+	const urlParams = new URLSearchParams(window.location.search);
 	const queryStringParameter = mapping.parameter;
-	const fieldValue = queryStringObj[queryStringParameter];
+	const fieldValue = urlParams.get(queryStringParameter);
 	const fieldType = mapping.fieldType;
 	const fieldReference = mapping.fieldReference;
 	const fieldConfig = mapping.fieldConfig;

@@ -1,12 +1,12 @@
 .component-tabs .navigation-bar-light .navbar-toggler {
-	color: #272833;
+	color: var(--body-color, #272833);
 }
 
 .component-tabs .navigation-bar-light .icon-caret-bottom {
 	border-left: 5px solid transparent;
 	border-radius: 4px;
 	border-right: 5px solid transparent;
-	border-top: 5px solid #272833;
+	border-top: 5px solid var(--body-color, #272833);
 	height: 0;
 	margin-left: 4px;
 	margin-top: 4px;
@@ -16,11 +16,11 @@
 .component-tabs .navigation-bar-light .nav-link {
 	background: none;
 	border: none;
-	color: #6b6c7e;
+	color: var(--text-secondary-color, #6b6c7e);
 }
 
 .component-tabs .navigation-bar-light .nav-link.active {
-	color: #272833;
+	color: var(--body-color, #272833);
 }
 
 .component-tabs .navigation-bar-light .nav-link span:focus {

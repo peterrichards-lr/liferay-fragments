@@ -1,0 +1,98 @@
+.dynamic-slider-container {
+    position: relative;
+    padding: var(--spacer-4, 1.5rem) 0;
+    overflow: hidden;
+}
+
+.slider-viewport {
+    overflow: hidden;
+    margin: 0 var(--spacer-8, 4rem);
+}
+
+.slider-track {
+    display: flex;
+    transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    gap: var(--slide-gap, 1rem);
+}
+
+.slider-slide {
+    flex: 0 0 calc((100% - (var(--slides-per-view, 3) - 1) * var(--slide-gap, 1rem)) / var(--slides-per-view, 3));
+    min-width: 250px;
+    background: var(--white, #fff);
+    border-radius: var(--border-radius-lg, 0.5rem);
+    padding: var(--spacer-4, 1.5rem);
+    box-shadow: var(--card-box-shadow, 0 2px 8px rgba(0,0,0,0.05));
+    border: 1px solid var(--gray-200, #eee);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 200px;
+}
+
+.slide-title {
+    font-size: var(--font-size-lg, 1.125rem);
+    font-weight: var(--font-weight-bold, 700);
+    color: var(--body-color, #212529);
+    margin-bottom: var(--spacer-2, 0.5rem);
+}
+
+.slide-content {
+    font-size: var(--font-size-sm, 0.875rem);
+    color: var(--text-secondary-color, #6c757d);
+    flex-grow: 1;
+}
+
+.slider-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: var(--white, #fff);
+    border: 1px solid var(--gray-300, #ced4da);
+    border-radius: 50%;
+    width: 3rem;
+    height: 3rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 10;
+    color: var(--theme-color, var(--primary));
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.slider-btn:hover {
+    background: var(--theme-color, var(--primary));
+    color: var(--white, #fff);
+    border-color: var(--theme-color, var(--primary));
+}
+
+.prev-btn { left: var(--spacer-2, 0.5rem); }
+.next-btn { right: var(--spacer-2, 0.5rem); }
+
+.slider-pagination {
+    display: flex;
+    justify-content: center;
+    gap: var(--spacer-2, 0.5rem);
+    margin-top: var(--spacer-4, 1.5rem);
+}
+
+.dot {
+    width: 0.75rem;
+    height: 0.75rem;
+    border-radius: 50%;
+    background: var(--gray-300, #ced4da);
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.dot.active {
+    background: var(--theme-color, var(--primary));
+}
+
+.slider-status {
+    width: 100%;
+    text-align: center;
+    padding: var(--spacer-5, 2rem);
+    color: var(--text-secondary-color);
+}

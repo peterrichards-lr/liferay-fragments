@@ -3,6 +3,13 @@
     {
       "fields": [
         {
+          "defaultValue": "waterreadings",
+          "label": "object-path",
+          "description": "object-path-desc",
+          "name": "objectPath",
+          "type": "text"
+        },
+        {
           "defaultValue": false,
           "label": "show-date-selector",
           "description": "show-date-selector-desc",
@@ -51,13 +58,13 @@
           "label": "integer-fg-color",
           "name": "integerFGColor",
           "type": "colorPicker",
-          "defaultValue": "#FFFFFF"
+          "defaultValue": "var(--white)"
         },
         {
           "label": "integer-bg-color",
           "name": "integerBGColor",
           "type": "colorPicker",
-          "defaultValue": "#000000"
+          "defaultValue": "var(--black)"
         },
         {
           "defaultValue": "3",
@@ -70,13 +77,13 @@
           "label": "decimal-fg-color",
           "name": "decimalFGColor",
           "type": "colorPicker",
-          "defaultValue": "#FFFFFF"
+          "defaultValue": "var(--white)"
         },
         {
           "label": "decimal-bg-color",
           "name": "decimalBGColor",
           "type": "colorPicker",
-          "defaultValue": "#FF0000"
+          "defaultValue": "var(--danger)"
         }
       ],
       "label": "Digits"
@@ -93,7 +100,7 @@
           "label": "label-color",
           "name": "labelColor",
           "type": "colorPicker",
-          "defaultValue": "#008000"
+          "defaultValue": "var(--primary)"
         },
         {
           "defaultValue": "0.8rem",

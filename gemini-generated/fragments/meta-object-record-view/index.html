@@ -1,0 +1,19 @@
+<div class="meta-record-container record-container-${fragmentEntryLinkNamespace}" style="--accent-color: ${configuration.accentColor!};">
+    <div class="record-header d-flex justify-content-between align-items-center mb-4">
+        <h2 class="object-name-label mb-0">Record Detail</h2>
+        <button class="btn btn-secondary btn-sm d-none" id="pdf-${fragmentEntryLinkNamespace}">
+            [@clay["icon"] symbol="download" /] Download PDF
+        </button>
+    </div>
+
+    <!-- This div will be captured for the PDF -->
+    <div class="record-card" id="capture-${fragmentEntryLinkNamespace}">
+        <div class="record-branding mb-4 d-none d-print-block">
+            <h1 class="h3">${configuration.objectERC!} Report</h1>
+            <hr>
+        </div>
+        <div class="record-fields" id="fields-${fragmentEntryLinkNamespace}">
+            <div class="meta-status text-center p-5">Loading record details...</div>
+        </div>
+    </div>
+</div>

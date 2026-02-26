@@ -1,0 +1,46 @@
+{
+  "fieldSets": [
+    {
+      "fields": [
+        {
+          "label": "object-external-reference-code",
+          "name": "objectERC",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "label": "image-field-name",
+          "name": "imageField",
+          "type": "text",
+          "defaultValue": "image"
+        },
+        {
+          "label": "title-field-name",
+          "name": "titleField",
+          "type": "text",
+          "defaultValue": "title"
+        },
+        {
+          "label": "description-field-name",
+          "name": "descriptionField",
+          "type": "text",
+          "defaultValue": "description"
+        },
+        {
+          "defaultValue": "3",
+          "label": "columns",
+          "name": "columns",
+          "type": "select",
+          "typeOptions": {
+            "validValues": [
+              { "value": "2", "label": "2 Columns" },
+              { "value": "3", "label": "3 Columns" },
+              { "value": "4", "label": "4 Columns" }
+            ]
+          }
+        }
+      ],
+      "label": "General"
+    }
+  ]
+}
