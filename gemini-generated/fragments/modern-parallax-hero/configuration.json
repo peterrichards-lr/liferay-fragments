@@ -3,6 +3,7 @@
     {
       "fields": [
         {
+          "dataType": "string",
           "defaultValue": "0.5",
           "label": "parallax-speed",
           "name": "speed",

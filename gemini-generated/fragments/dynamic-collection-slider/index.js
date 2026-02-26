@@ -51,7 +51,6 @@ const fetchCollectionItems = async (identifier) => {
     }
 
     const data = await response.json();
-    // Headless content-set-elements returns items wraped in 'content' or direct
     const items = data.items.map(i => i.content || i);
     cache.set(url, items);
     return items;
@@ -66,15 +65,39 @@ const renderSlides = () => {
         return;
     }
 
-    track.innerHTML = state.items.map((item, index) => `
-        <div class="slider-slide" role="group" aria-roledescription="slide" aria-label="${index + 1} of ${state.items.length}">
-            <div class="slide-content-top">
-                <div class="slide-title">${item.title || 'Untitled'}</div>
-                <div class="slide-content">${item.description || ''}</div>
+    const { displayStyle } = configuration;
+
+    track.innerHTML = state.items.map((item, index) => {
+        const imageUrl = item.image?.url || item.featuredImage?.url || item.thumbnail?.url || '';
+        const hasImage = !!imageUrl;
+
+        let contentHtml = '';
+        if (displayStyle === 'background' && hasImage) {
+            contentHtml = `
+                <div class="slide-bg" style="background-image: url('${imageUrl}')"></div>
+                <div class="slide-overlay"></div>
+                <div class="slide-content-top">
+                    <div class="slide-title">${item.title || 'Untitled'}</div>
+                    <div class="slide-content">${item.description || ''}</div>
+                </div>
+            `;
+        } else {
+            contentHtml = `
+                ${hasImage ? `<div class="slide-image" style="background-image: url('${imageUrl}')"></div>` : ''}
+                <div class="slide-content-top">
+                    <div class="slide-title">${item.title || 'Untitled'}</div>
+                    <div class="slide-content">${item.description || ''}</div>
+                </div>
+            `;
+        }
+
+        return `
+            <div class="slider-slide style-${displayStyle}" role="group" aria-roledescription="slide" aria-label="${index + 1} of ${state.items.length}">
+                ${contentHtml}
+                ${item.url ? `<a href="${item.url}" class="btn btn-sm btn-link p-0 text-left">Read More</a>` : ''}
             </div>
-            ${item.url ? `<a href="${item.url}" class="btn btn-sm btn-link p-0 text-left">Read More</a>` : ''}
-        </div>
-    `).join('');
+        `;
+    }).join('');
 
     updatePagination();
     updatePosition();
