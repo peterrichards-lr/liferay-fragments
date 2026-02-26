@@ -66,10 +66,20 @@ const updatePagination = () => {
     });
 };
 
+const getSlidesPerView = () => {
+    const configured = parseInt(configuration.slidesPerView || '3');
+    if (window.innerWidth < 576) return 1;
+    if (window.innerWidth < 992) return Math.min(configured, 2);
+    return configured;
+};
+
 const updatePosition = () => {
     const track = fragmentElement.querySelector(`#track-${fragmentEntryLinkNamespace}`);
     const slide = fragmentElement.querySelector('.slider-slide');
     if (!track || !slide) return;
+
+    state.slidesPerView = getSlidesPerView();
+    fragmentElement.querySelector('.dynamic-slider-container').style.setProperty('--slides-per-view', state.slidesPerView);
 
     const gap = parseInt(getComputedStyle(fragmentElement.querySelector('.slider-track')).gap) || 0;
     const slideWidth = slide.offsetWidth;
@@ -129,7 +139,7 @@ const init = async () => {
             return;
         }
 
-        // Set slides per view for CSS variable
+        state.slidesPerView = getSlidesPerView();
         fragmentElement.querySelector('.dynamic-slider-container').style.setProperty('--slides-per-view', state.slidesPerView);
 
         state.items = await fetchCollectionItems(collectionId);

@@ -38,9 +38,15 @@
 .parallax-hero .hero-content {
     position: relative;
     z-index: 3;
-    padding: var(--spacer-5, 2rem);
+    padding: var(--spacer-4, 1.5rem);
     color: var(--text-color, var(--white, #fff));
     max-width: 800px;
+}
+
+@media (min-width: 768px) {
+    .parallax-hero .hero-content {
+        padding: var(--spacer-5, 2rem);
+    }
 }
 
 .parallax-hero .hero-title {

@@ -33,6 +33,58 @@
     background-color: var(--primary-l3, #effaff);
 }
 
+@media (max-width: 768px) {
+    .meta-table-header {
+        flex-direction: column;
+        align-items: flex-start !important;
+        gap: 1rem;
+    }
+
+    .meta-table-container .table thead {
+        display: none;
+    }
+
+    .meta-table-container .table, 
+    .meta-table-container .table tbody, 
+    .meta-table-container .table tr, 
+    .meta-table-container .table td {
+        display: block;
+        width: 100%;
+    }
+
+    .meta-table-container .table tr {
+        margin-bottom: var(--spacer-4, 1.5rem);
+        border: 1px solid var(--gray-200, #eee);
+        border-radius: var(--border-radius, 0.25rem);
+        padding: var(--spacer-2, 0.5rem);
+    }
+
+    .meta-table-container .table td {
+        text-align: right;
+        padding-left: 50%;
+        position: relative;
+        border-bottom: 1px solid var(--gray-100, #f7f8f9);
+    }
+
+    .meta-table-container .table td:last-child {
+        border-bottom: none;
+    }
+
+    .meta-table-container .table td:before {
+        content: attr(data-label);
+        position: absolute;
+        left: var(--spacer-3, 1rem);
+        width: 45%;
+        padding-right: 10px;
+        white-space: nowrap;
+        text-align: left;
+        font-weight: var(--font-weight-bold, 700);
+        color: var(--text-secondary-color);
+        font-size: var(--font-size-xs, 0.75rem);
+        text-transform: uppercase;
+    }
+}
+
 .meta-status {
     color: var(--text-secondary-color);
     font-style: italic;

@@ -4,17 +4,24 @@
 }
 
 .primary-card-${fragmentEntryLinkNamespace} .action-card {
-	display: inline-block;
-	background-color: var(--primary, transparent);
-	text-align: center;
-	border: 6px solid var(--white, white);
-	border-radius: var(--border-radius-xl, 20px);
-	padding: var(--spacer-3, 1rem);
-	width: 100%;
-	min-height: 250px;
+        display: inline-block;
+        background-color: var(--primary, transparent);
+        text-align: center;
+        border: 6px solid var(--white, white);
+        border-radius: var(--border-radius-xl, 20px);
+        padding: var(--spacer-3, 1rem);
+        width: 100%;
+        min-height: 250px;
+}
+
+@media (min-width: 768px) {
+    .primary-card-${fragmentEntryLinkNamespace} .action-card {
+        padding: var(--spacer-6, 2.5rem);
+    }
 }
 
 .primary-card-${fragmentEntryLinkNamespace} .action-card .card-content-heading {
+
 	color: var(--white, white);
 }
 

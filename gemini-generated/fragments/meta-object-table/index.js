@@ -54,7 +54,7 @@ const initMetaTable = async () => {
 
         tbody.innerHTML = state.items.map(item => `
             <tr>
-                ${fields.map(f => `<td>${item[f.name] || '-'}</td>`).join('')}
+                ${fields.map(f => `<td data-label="${f.label}">${item[f.name] || '-'}</td>`).join('')}
             </tr>
         `).join('');
 
