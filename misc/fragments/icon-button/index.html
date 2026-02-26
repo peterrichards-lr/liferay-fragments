@@ -1,15 +1,22 @@
 [#assign elementId = fragmentElementId?has_content?then(fragmentElementId[9..], '') /]
 [#if configuration.type == "action"]
-	<button class="btn btn-${configuration.buttonSize!} btn-${configuration.buttonType!} btn-icon" data-lfr-editable-id="01-action" data-lfr-editable-type="action" id="button-${elementId}">
-		Go Somewhere
-	</button>
-	[#else]
-		<div class="component-button text-break">
-			<a class="btn btn-${configuration.buttonSize!} btn-${configuration.buttonType!} btn-icon"  data-lfr-editable-id="01-link" data-lfr-editable-type="link" href="" id="button-${elementId}">
-				Go Somewhere
-			</a>
-		</div>
+        <button class="btn btn-${configuration.buttonSize!} btn-${configuration.buttonType!} btn-icon" 
+                data-lfr-editable-id="01-action" data-lfr-editable-type="action" 
+                id="button-${elementId}"
+                aria-label="Action">
+                Go Somewhere
+        </button>
+        [#else]
+                <div class="component-button text-break">
+                        <a class="btn btn-${configuration.buttonSize!} btn-${configuration.buttonType!} btn-icon"  
+                           data-lfr-editable-id="01-link" data-lfr-editable-type="link" 
+                           href="" id="button-${elementId}"
+                           aria-label="Link">
+                                Go Somewhere
+                        </a>
+                </div>
 [/#if]
+
 <div style="display: none; width: 0; height: 0" id="icon-${elementId}">
 	<span class="svg-icon">
 	<svg class="lexicon-icon lexicon-icon-${configuration.iconName!}" role="presentation" viewBox="0 0 512 512">

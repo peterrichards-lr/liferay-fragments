@@ -104,3 +104,22 @@ Tasks to ensure a high-quality experience across all device sizes (Mobile-First)
 - [x] **Pricing Comparison Grid**: Ensure cards transition from a multi-column desktop layout to a single-column stacked layout on mobile. (Implemented)
 - [x] **Card Components**: Review `primary-card` and `secondary-card` for font-size scaling and padding adjustments on small viewports. (Implemented for primary-card)
 - [x] **Parallax Hero**: Ensure text doesn't overlap or become unreadable on small screens when the background image scales. (Implemented)
+
+## Accessibility Improvements (A11y)
+
+Tasks to ensure compliance with WCAG standards and a better experience for assistive technology users.
+
+### High Priority (Navigation & Forms)
+- [x] **Star Rating**: Add `<fieldset>` and `<legend>` for grouping radio inputs. Replace `aria-selected` with `aria-checked`. Add `aria-label="Clear rating"` to the reset button. (Implemented)
+- [x] **Meter Reading**: Group digit inputs within a `<fieldset>` with a descriptive `<legend>`. Add `aria-label` to each digit input (e.g., \"Digit 1 of 6\"). (Implemented)
+- [x] **Collection Slider**: Convert pagination `div` dots to `<button>` elements. Add `aria-roledescription=\"carousel\"` to the container and `aria-live=\"polite\"` to the status area. (Implemented)
+- [x] **AI Assistant**: Add `aria-live=\"polite\"` to the message container so new messages are announced. Ensure bubbles are semantically labeled as \"Assistant\" or \"You\". (Implemented)
+
+### Interactive Elements
+- [x] **Loan Calculator**: Add `aria-live=\"polite\"` to the summary paragraph so updates to total payments are announced as the user slides. (Implemented)
+- [x] **Object-Linked Chart**: Provide an `aria-label` or a visually hidden fallback table that summarizes the chart data for screen readers. (Implemented)
+- [x] **All Icon-Only Buttons**: Audit all fragments (e.g., `back-button`, `icon-button`, `slider-btn`) to ensure they have an explicit `aria-label`. (Implemented)
+
+### Low Priority (Visual & Structural)
+- [ ] **Color Contrast**: Verify that custom color pickers in `configuration.json` have defaults that meet WCAG AA contrast ratios against their respective backgrounds.
+- [x] **Focus Management**: Ensure a visible focus ring is present for all interactive elements, especially in fragments with custom-styled inputs like `toggle-switch`. (Implemented for toggle-switch)

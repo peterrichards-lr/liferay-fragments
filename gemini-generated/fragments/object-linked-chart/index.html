@@ -3,6 +3,9 @@
         <span class="error-message"></span>
     </div>
     <div class="chart-wrapper">
-        <canvas id="chart-${fragmentEntryLinkNamespace}"></canvas>
+        <canvas id="chart-${fragmentEntryLinkNamespace}" aria-hidden="true"></canvas>
+        <div class="sr-only" id="fallback-table-${fragmentEntryLinkNamespace}">
+            <!-- Accessible table data populated here -->
+        </div>
     </div>
 </div>

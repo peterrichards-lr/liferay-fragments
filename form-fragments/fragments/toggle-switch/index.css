@@ -43,7 +43,7 @@
 }
 
 .toggle-switch-container input:focus + .slider {
-  box-shadow: var(--component-focus-box-shadow);
+  box-shadow: 0 0 0 2px var(--white, #fff), 0 0 0 4px var(--primary, #007dad);
 }
 
 .toggle-switch-container input:checked + .slider:before {

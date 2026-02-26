@@ -53,7 +53,9 @@ Use `document` or `window` only for broader page environment awareness.
     - `itemSelector`: Dialog for selecting Liferay assets (images, documents, etc.).
     - `url`: Specialized field for URL input/selection.
     - `videoSelector`: Returns a JSON string with embed code (see *Advanced Logic*).
-    - `collectionSelector`: For selecting a Collection of items.
+    - `collectionSelector`: For selecting a Collection of items. 
+        - **FreeMarker Pattern**: Access items via `${fieldName}ObjectList`.
+        - **Headless Note**: This type is primarily for server-side listing. If a fragment requires a Collection ID for client-side AJAX/Headless fetching, a standard `text` field may be more reliable for user input.
     - `navigationMenuSelector`: For choosing a Navigation Menu.
 - **Field Dependencies**: Use the `dependencies` key within `typeOptions` to control field visibility based on other configuration values (supported for `text`, `select`, and `checkbox`).
 - **Invalid Config Types**: Do NOT use `image`, `link`, or `rich-text` as types in `configuration.json`. These must be defined as editable in the HTML.

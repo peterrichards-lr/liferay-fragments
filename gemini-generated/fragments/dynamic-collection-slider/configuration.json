@@ -3,9 +3,10 @@
     {
       "fields": [
         {
-          "label": "collection",
+          "label": "collection-name-key-or-id",
           "name": "collectionId",
-          "type": "collectionSelector"
+          "type": "text",
+          "defaultValue": ""
         },
         {
           "defaultValue": "3",

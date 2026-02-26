@@ -59,6 +59,19 @@ const initChart = async () => {
         const labels = items.map(item => item[labelField] || 'N/A');
         const values = items.map(item => item[valueField] || 0);
 
+        // Populate fallback table for accessibility
+        const fallbackTable = fragmentElement.querySelector(`#fallback-table-${fragmentEntryLinkNamespace}`);
+        if (fallbackTable) {
+            fallbackTable.innerHTML = `
+                <table aria-label="Data table for the chart above">
+                    <thead><tr><th>${labelField}</th><th>${valueField}</th></tr></thead>
+                    <tbody>
+                        ${items.map(item => `<tr><td>${item[labelField]}</td><td>${item[valueField]}</td></tr>`).join('')}
+                    </tbody>
+                </table>
+            `;
+        }
+
         const ctx = fragmentElement.querySelector(`#chart-${fragmentEntryLinkNamespace}`).getContext('2d');
         
         new Chart(ctx, {

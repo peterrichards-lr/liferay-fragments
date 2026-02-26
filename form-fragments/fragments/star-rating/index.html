@@ -3,45 +3,46 @@ readOnly = input.attributes.readOnly?? && input.attributes.readOnly
 ]
 
 <div class="star-rating-container" style="--starSize: ${configuration.starSize!}; --activeStarColor: ${configuration.activeStarColor!}; --passiveStarColor: ${configuration.passiveStarColor!};">
-	<div class="form-group mb-0[#if input.errorMessage?has_content] has-error[/#if]">
-		<label class="[#if !input.showLabel || !input.label?has_content]sr-only[/#if]"
-			id="${fragmentEntryLinkNamespace}-select-from-list-input-label">
-			${htmlUtil.escape(input.label)} [#if readOnly](${languageUtil.get(locale, "read-only")})[#elseif
-			input.required][@clay["icon"] className="reference-mark" symbol="asterisk" /][/#if]
-		</label>
+        <div class="form-group mb-0[#if input.errorMessage?has_content] has-error[/#if]">
+                <fieldset>
+                        <legend class="[#if !input.showLabel || !input.label?has_content]sr-only[/#if]"
+                                id="${fragmentEntryLinkNamespace}-select-from-list-input-label">
+                                ${htmlUtil.escape(input.label)} [#if readOnly](${languageUtil.get(locale, "read-only")})[#elseif
+                                input.required][@clay["icon"] className="reference-mark" symbol="asterisk" /][/#if]
+                        </legend>
 
-		<div class="star-wrap">
-		[#if input.type == 'select']
-		[#assign options=(input.attributes.options)![]]
-		[#if options?has_content]
-		<input checked type="radio" id="skip-star-${fragmentEntryLinkNamespace}" value="" name="${input.name}" autocomplete="off" [#if
-			readOnly]class="star readonly" readonly[#else]class="star"[/#if] />
-		<label class="star-label hidden"></label>
-		[#list options as option]
-		<input class="star" type="radio" id="st-${option.value}" value="${option.value}" name="${input.name}"
-			autocomplete="off" [#if readOnly]readonly[/#if] [#if input.value?? && option.value == input.value]checked aria-selected="true"[/#if] />
-		<label class="star-label" for="st-${option.value}">
-			<div class="star-shape"></div>
-		</label>
-		[/#list]
-		[/#if]
-		[#else]
-		<input checked type="radio" id="skip-star-${fragmentEntryLinkNamespace}" value="" name="${input.name}" autocomplete="off" [#if
-			readOnly]class="star readonly" readonly[#else]class="star"[/#if] />
-		<label class="star-label hidden"></label>
-		[#list 1..configuration.numberOfStars as i]
-		<input class="star" type="radio" id="st-${i}-${fragmentEntryLinkNamespace}" value="${i}" name="${input.name}"
-			autocomplete="off" [#if readOnly]readonly[/#if] [#if input.value?? && i?string == input.value]checked aria-selected="true"[/#if] />
-		<label class="star-label" for="st-${i}-${fragmentEntryLinkNamespace}">
-			<div class="star-shape"></div>
-		</label>
-		[/#list]
-		[/#if]
-		<label class="skip-button" for="skip-star-${fragmentEntryLinkNamespace}">
-			&times;
-		</label>
-		</div>
-
+                        <div class="star-wrap">
+                        [#if input.type == 'select']
+                        [#assign options=(input.attributes.options)![]]
+                        [#if options?has_content]
+                        <input checked type="radio" id="skip-star-${fragmentEntryLinkNamespace}" value="" name="${input.name}" autocomplete="off" aria-label="Clear rating" [#if
+                                readOnly]class="star readonly" readonly[#else]class="star"[/#if] />
+                        <label class="star-label hidden" for="skip-star-${fragmentEntryLinkNamespace}"></label>
+                        [#list options as option]
+                        <input class="star" type="radio" id="st-${option.value}" value="${option.value}" name="${input.name}"
+                                autocomplete="off" [#if readOnly]readonly[/#if] [#if input.value?? && option.value == input.value]checked aria-checked="true"[/#if] />
+                        <label class="star-label" for="st-${option.value}">
+                                <div class="star-shape"></div>
+                        </label>
+                        [/#list]
+                        [/#if]
+                        [#else]
+                        <input checked type="radio" id="skip-star-${fragmentEntryLinkNamespace}" value="" name="${input.name}" autocomplete="off" aria-label="Clear rating" [#if
+                                readOnly]class="star readonly" readonly[#else]class="star"[/#if] />
+                        <label class="star-label hidden" for="skip-star-${fragmentEntryLinkNamespace}"></label>
+                        [#list 1..configuration.numberOfStars as i]
+                        <input class="star" type="radio" id="st-${i}-${fragmentEntryLinkNamespace}" value="${i}" name="${input.name}"
+                                autocomplete="off" [#if readOnly]readonly[/#if] [#if input.value?? && i?string == input.value]checked aria-checked="true"[/#if] />
+                        <label class="star-label" for="st-${i}-${fragmentEntryLinkNamespace}">
+                                <div class="star-shape"></div>
+                        </label>
+                        [/#list]
+                        [/#if]
+                        <label class="skip-button" for="skip-star-${fragmentEntryLinkNamespace}" aria-hidden="true">
+                                &times;
+                        </label>
+                        </div>
+                </fieldset>
 		[#if input.errorMessage?has_content]
 		<p class="font-weight-semi-bold mt-1 text-danger"
 			id="${fragmentEntryLinkNamespace}-select-from-list-input-error-message">

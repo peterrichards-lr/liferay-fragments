@@ -4,8 +4,9 @@ const sendBtn = fragmentElement.querySelector('button');
 
 const addMessage = (content, role) => {
     const msgDiv = document.createElement('div');
+    const label = role === 'assistant' ? 'Assistant message' : 'Your message';
     msgDiv.className = `message ${role}`;
-    msgDiv.innerHTML = `<div class="bubble">${content}</div>`;
+    msgDiv.innerHTML = `<div class="bubble" aria-label="${label}">${content}</div>`;
     messagesContainer.appendChild(msgDiv);
     messagesContainer.scrollTop = messagesContainer.scrollHeight;
 };

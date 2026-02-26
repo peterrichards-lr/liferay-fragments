@@ -1,4 +1,9 @@
-<div class="dynamic-slider-container slider-${fragmentEntryLinkNamespace}" style="--theme-color: ${configuration.themeColor!}; --slide-gap: ${configuration.spacing!};">
+<div class="dynamic-slider-container slider-${fragmentEntryLinkNamespace}" 
+     style="--theme-color: ${configuration.themeColor!}; --slide-gap: ${configuration.spacing!};"
+     role="region" 
+     aria-roledescription="carousel" 
+     aria-label="Collection Content Slider">
+    
     <div class="slider-controls">
         <button class="slider-btn prev-btn" aria-label="Previous Slide">
             [@clay["icon"] symbol="angle-left" /]
@@ -9,11 +14,11 @@
     </div>
 
     <div class="slider-viewport">
-        <div class="slider-track" id="track-${fragmentEntryLinkNamespace}">
+        <div class="slider-track" id="track-${fragmentEntryLinkNamespace}" aria-live="polite">
             <!-- Slides dynamically injected here -->
             <div class="slider-status">Loading collection items...</div>
         </div>
     </div>
 
-    <div class="slider-pagination" id="pagination-${fragmentEntryLinkNamespace}"></div>
+    <div class="slider-pagination" id="pagination-${fragmentEntryLinkNamespace}" role="tablist" aria-label="Slide Selection"></div>
 </div>
