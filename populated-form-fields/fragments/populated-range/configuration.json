@@ -100,10 +100,11 @@
           "dataType": "string",
           "description": "specific-storage-key-description",
           "label": "specific-storage-key",
-          "name": "specificStorageKey",
-          "type": "text"
-        },
-      ]
-    }
-  ]
-}
+          					"name": "specificStorageKey",
+          					"type": "text"
+          				}
+          			]
+          		}
+          	]
+          }
+          

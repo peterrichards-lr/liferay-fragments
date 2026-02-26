@@ -51,7 +51,6 @@ const fetchCollectionItems = async (identifier) => {
     }
 
     const data = await response.json();
-    // Headless content-set-elements returns items wraped in 'content' or direct
     const items = data.items.map(i => i.content || i);
     cache.set(url, items);
     return items;
@@ -66,15 +65,70 @@ const renderSlides = () => {
         return;
     }
 
-    track.innerHTML = state.items.map((item, index) => `
-        <div class="slider-slide" role="group" aria-roledescription="slide" aria-label="${index + 1} of ${state.items.length}">
-            <div class="slide-content-top">
-                <div class="slide-title">${item.title || 'Untitled'}</div>
-                <div class="slide-content">${item.description || ''}</div>
+    const { displayStyle } = configuration;
+
+    track.innerHTML = state.items.map((item, index) => {
+        // Handle image extraction (different sources possible in Headless)
+        let imageUrl = item.image?.url || item.featuredImage?.url || item.thumbnail?.url || '';
+        
+        // Fallback: Check contentFields for an image field or an <img> tag in text
+        if (!imageUrl && item.contentFields) {
+            // 1. Try to find a specific image field
+            const imageField = item.contentFields.find(f => f.dataType === 'image');
+            if (imageField?.contentFieldValue?.image?.url) {
+                imageUrl = imageField.contentFieldValue.image.url;
+            } 
+            // 2. Try to extract from first <img> tag in any string/rich-text field (User's case)
+            else {
+                const textField = item.contentFields.find(f => f.dataType === 'string' && f.contentFieldValue?.data?.includes('<img'));
+                if (textField) {
+                    const match = textField.contentFieldValue.data.match(/<img[^>]+src=['"]([^'"]+)['"]/);
+                    if (match) imageUrl = match[1];
+                }
+            }
+        }
+
+        const hasImage = !!imageUrl;
+
+        // Extract Link URL
+        let itemUrl = '#';
+        if (item.renderedContents && item.renderedContents.length > 0) {
+            itemUrl = item.renderedContents[0].renderedContentURL;
+        } else if (item.friendlyUrlPath) {
+             const sitePath = Liferay.ThemeDisplay.getPathFriendlyURLPublic() + Liferay.ThemeDisplay.getSiteGroupFriendlyURL();
+             itemUrl = `${sitePath}/w/${item.friendlyUrlPath}`;
+        } else if (item.url) {
+            itemUrl = item.url;
+        }
+
+        let contentHtml = '';
+        if (displayStyle === 'background' && hasImage) {
+            contentHtml = `
+                <img class="slide-bg" src="${imageUrl}" alt="${item.title || 'Slide Image'}" loading="lazy" />
+                <div class="slide-overlay"></div>
+                <div class="slide-content-top">
+                    <div class="slide-title">${item.title || 'Untitled'}</div>
+                    <div class="slide-content">${item.description || ''}</div>
+                </div>
+            `;
+        } else {
+            contentHtml = `
+                ${hasImage ? `<img class="slide-image" src="${imageUrl}" alt="${item.title || 'Slide Image'}" loading="lazy" />` : ''}
+                <div class="slide-content-top">
+                    <div class="slide-title">${item.title || 'Untitled'}</div>
+                    <div class="slide-content">${item.description || ''}</div>
+                </div>
+            `;
+        }
+
+        return `
+            <div class="slider-slide style-${displayStyle}" role="group" aria-roledescription="slide" aria-label="${index + 1} of ${state.items.length}">
+                <a href="${itemUrl}" class="slide-link">
+                    ${contentHtml}
+                </a>
             </div>
-            ${item.url ? `<a href="${item.url}" class="btn btn-sm btn-link p-0 text-left">Read More</a>` : ''}
-        </div>
-    `).join('');
+        `;
+    }).join('');
 
     updatePagination();
     updatePosition();

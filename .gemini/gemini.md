@@ -57,7 +57,7 @@ Use `document` or `window` only for broader page environment awareness.
         - **FreeMarker Pattern**: Access items via `${fieldName}ObjectList`.
         - **Headless Note**: This type is primarily for server-side listing. If a fragment requires a Collection ID for client-side AJAX/Headless fetching, a standard `text` field may be more reliable for user input.
     - `navigationMenuSelector`: For choosing a Navigation Menu.
-- **Field Dependencies**: Use the `dependencies` key within `typeOptions` to control field visibility based on other configuration values (supported for `text`, `select`, and `checkbox`).
+- **Field Dependency**: Use the `dependency` key within `typeOptions` to control field visibility based on other configuration values (supported for `text`, `select`, and `checkbox`).
 - **Invalid Config Types**: Do NOT use `image`, `link`, or `rich-text` as types in `configuration.json`. These must be defined as editable in the HTML.
 - **Editable Content**: Use `data-lfr-editable-type` (e.g., `text`, `rich-text`, `image`, `link`, `date-time`, `action`) directly in the HTML. Avoid redundant configuration fields for these types.
     - **Image Requirement**: For `data-lfr-editable-type="image"`, the attribute MUST be placed on an `<img>` tag. Using it on a `<div>` or other element will cause import warnings in Liferay.
