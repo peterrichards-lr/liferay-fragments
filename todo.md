@@ -88,3 +88,19 @@ High-impact, visually appealing components to extend the repository's capabiliti
 - [x] **Interactive Event Timeline**: A vertical/horizontal timeline that dynamically renders milestones from a Liferay Object. (Implemented in `gemini-generated` collection)
 - [x] **AI Assistant Chat UI**: A polished messaging interface for integrating with AI backend extensions. (Implemented in `gemini-generated` collection)
 - [ ] **Modern Search Overlay**: A specialized search component that expands into a full-screen categorical navigation/search interface.
+
+## Responsiveness Improvements
+
+Tasks to ensure a high-quality experience across all device sizes (Mobile-First).
+
+### Priority Refactors
+- [ ] **Meter Reading**: Convert from fixed-width inline-block layout to a responsive Grid/Flexbox design. Ensure digits wrap or scale on small screens (e.g., iPhone SE).
+- [ ] **Meta-Object Table**: Implement a stacked mobile view. Use CSS `:before` content or `data-label` to display column headers alongside cell data when the table collapses.
+- [ ] **Loan Calculator**: Remove hardcoded `max-width: 400px`. Use relative widths and responsive padding to better adapt to parent grid columns.
+- [ ] **Navigation Fragment**: Audit for mobile wrapping. Ensure long menus don't overflow horizontally or overlap with other header elements.
+
+### Visual Polish
+- [ ] **Dynamic Collection Slider**: Add mobile-specific configuration or logic to adjust `slidesPerView` based on screen width (e.g., 1 slide on mobile, 3 on desktop).
+- [ ] **Pricing Comparison Grid**: Ensure cards transition from a multi-column desktop layout to a single-column stacked layout on mobile.
+- [ ] **Card Components**: Review `primary-card` and `secondary-card` for font-size scaling and padding adjustments on small viewports.
+- [ ] **Parallax Hero**: Ensure text doesn't overlap or become unreadable on small screens when the background image scales.
