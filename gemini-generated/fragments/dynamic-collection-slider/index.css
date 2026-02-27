@@ -2,17 +2,26 @@
     position: relative;
     padding: var(--spacer-4, 1.5rem) 0;
     overflow: hidden;
+    touch-action: pan-y;
+    user-select: none;
+    outline: none;
+}
+
+.dynamic-slider-container.is-dragging {
+    cursor: grabbing;
 }
 
 .slider-viewport {
     overflow: hidden;
     margin: 0 var(--spacer-8, 4rem);
+    perspective: 1000px;
 }
 
 .slider-track {
     display: flex;
     transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
     gap: var(--slide-gap, var(--spacer-3, 1rem));
+    transform-style: preserve-3d;
 }
 
 .slider-slide {
@@ -25,11 +34,26 @@
     min-height: var(--slide-height, 350px);
     overflow: hidden;
     position: relative;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    transition: transform 0.5s ease, opacity 0.5s ease, box-shadow 0.3s ease;
+    opacity: 0.5;
+    transform: scale(0.9) translateZ(-100px);
+    z-index: 1;
+}
+
+.slider-slide.is-visible {
+    opacity: 0.8;
+    transform: scale(0.95) translateZ(-50px);
+}
+
+.slider-slide.is-active {
+    opacity: 1;
+    transform: scale(1.05) translateZ(0);
+    z-index: 5;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+    border-color: var(--theme-color, var(--primary));
 }
 
 .slider-slide:hover {
-    transform: translateY(-5px);
     box-shadow: 0 8px 16px rgba(0,0,0,0.1);
 }
 
@@ -40,6 +64,11 @@
     width: 100%;
     text-decoration: none;
     color: inherit;
+    pointer-events: auto;
+}
+
+.is-dragging .slider-slide .slide-link {
+    pointer-events: none;
 }
 
 /* Common Image handling */
@@ -48,9 +77,10 @@
     object-fit: cover;
     object-position: center;
     display: block;
+    pointer-events: none;
 }
 
-.slide-image { height: 15rem; } /* Approx 240px using rem */
+.slide-image { height: 15rem; }
 .slide-bg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
 
 .slide-overlay {
@@ -83,7 +113,7 @@
 /* Style: Inset Overlay */
 .slider-slide.style-inset { 
     border: none;
-    padding: var(--spacer-4, 1.5rem); /* Add padding to container to show image edges */
+    padding: var(--spacer-4, 1.5rem);
 }
 
 .style-inset .slide-content-top {
@@ -176,4 +206,9 @@
     .style-split .slide-image { width: 100%; height: 10rem; }
     .style-split .slide-content-top { width: 100%; }
     .slider-viewport { margin: 0 var(--spacer-4, 2rem); }
+    
+    .slider-slide {
+        opacity: 0.9;
+        transform: scale(1);
+    }
 }

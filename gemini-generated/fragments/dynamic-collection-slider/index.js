@@ -5,8 +5,10 @@ let state = {
     currentIndex: 0,
     slidesPerView: 3,
     autoplayInterval: null,
-    touchStartX: 0,
-    touchEndX: 0
+    pointerStartX: 0,
+    pointerCurrentX: 0,
+    isDragging: false,
+    dragThreshold: 10
 };
 
 const cache = new Map();
@@ -74,7 +76,7 @@ const renderSlides = () => {
         let contentHtml = '';
         if ((displayStyle === 'background' || displayStyle === 'inset') && hasImage) {
             contentHtml = `
-                <img class="slide-bg" src="${imageUrl}" alt="${item.title || ''}" loading="lazy" />
+                <img class="slide-bg" src="${imageUrl}" alt="${item.title || ''}" loading="lazy" draggable="false" />
                 <div class="slide-overlay"></div>
                 <div class="slide-content-top">
                     <div class="slide-title">${item.title || 'Untitled'}</div>
@@ -83,14 +85,14 @@ const renderSlides = () => {
             `;
         } else {
             contentHtml = `
-                ${hasImage ? `<img class="slide-image" src="${imageUrl}" alt="${item.title || ''}" loading="lazy" />` : ''}
+                ${hasImage ? `<img class="slide-image" src="${imageUrl}" alt="${item.title || ''}" loading="lazy" draggable="false" />` : ''}
                 <div class="slide-content-top">
                     <div class="slide-title">${item.title || 'Untitled'}</div>
                     <div class="slide-content">${item.description || ''}</div>
                 </div>
             `;
         }
-        return `<div class="slider-slide style-${displayStyle}" role="group" aria-roledescription="slide" aria-label="${index + 1} of ${state.items.length}"><a href="${itemUrl}" class="slide-link">${contentHtml}</a></div>`;
+        return `<div class="slider-slide style-${displayStyle}" data-index="${index}" role="group" aria-roledescription="slide" aria-label="${index + 1} of ${state.items.length}"><a href="${itemUrl}" class="slide-link">${contentHtml}</a></div>`;
     }).join('');
     updatePagination();
     updatePosition();
@@ -121,10 +123,29 @@ const updatePosition = () => {
     const track = fragmentElement.querySelector(`#track-${fragmentEntryLinkNamespace}`);
     const slide = fragmentElement.querySelector('.slider-slide');
     if (!track || !slide) return;
+    
     state.slidesPerView = getSlidesPerView();
     fragmentElement.querySelector('.dynamic-slider-container').style.setProperty('--slides-per-view', state.slidesPerView);
+    
     const gap = parseInt(getComputedStyle(fragmentElement.querySelector('.slider-track')).gap) || 0;
-    track.style.transform = `translateX(-${state.currentIndex * (slide.offsetWidth + gap)}px)`;
+    const slideWidth = slide.offsetWidth;
+    track.style.transform = `translateX(-${state.currentIndex * (slideWidth + gap)}px)`;
+
+    // Update classes for Coverflow-lite effect
+    const slides = fragmentElement.querySelectorAll('.slider-slide');
+    const activeMidOffset = Math.floor(state.slidesPerView / 2);
+    const activeIndex = state.currentIndex + activeMidOffset;
+
+    slides.forEach((s, i) => {
+        s.classList.remove('is-active', 'is-visible');
+        if (i >= state.currentIndex && i < state.currentIndex + state.slidesPerView) {
+            s.classList.add('is-visible');
+        }
+        if (i === activeIndex || (state.slidesPerView === 1 && i === state.currentIndex)) {
+            s.classList.add('is-active');
+        }
+    });
+
     updatePagination();
 };
 
@@ -152,12 +173,10 @@ const resetAutoplay = () => {
 };
 
 const handleGesture = () => {
-    const threshold = 50;
-    if (state.touchEndX < state.touchStartX - threshold) {
-        nextSlide();
-        resetAutoplay();
-    } else if (state.touchEndX > state.touchStartX + threshold) {
-        prevSlide();
+    const deltaX = state.pointerStartX - state.pointerCurrentX;
+    if (Math.abs(deltaX) > state.dragThreshold * 5) {
+        if (deltaX > 0) nextSlide();
+        else prevSlide();
         resetAutoplay();
     }
 };
@@ -228,23 +247,44 @@ const init = async (isEditMode) => {
                 fragmentElement.querySelector('.prev-btn').addEventListener('click', (e) => { e.preventDefault(); prevSlide(); resetAutoplay(); });
             }
 
-            // Keyboard Navigation (fragmentElement now has tabindex="0")
+            // Keyboard Navigation
             fragmentElement.addEventListener('keydown', (e) => {
                 if (e.key === 'ArrowLeft') { prevSlide(); resetAutoplay(); }
                 if (e.key === 'ArrowRight') { nextSlide(); resetAutoplay(); }
             });
 
-            // Swipe Implementation
-            fragmentElement.addEventListener('touchstart', e => { state.touchStartX = e.changedTouches[0].screenX; }, {passive: true});
-            fragmentElement.addEventListener('touchend', e => { state.touchEndX = e.changedTouches[0].screenX; handleGesture(); }, {passive: true});
-            
-            fragmentElement.addEventListener('mousedown', e => { 
-                state.touchStartX = e.screenX; 
+            // Unified Pointer Interaction (Mouse + Touch)
+            fragmentElement.addEventListener('pointerdown', (e) => {
+                // Ignore if clicking a button
+                if (e.target.closest('.slider-btn, .dot')) return;
+                
+                state.isDragging = true;
+                state.pointerStartX = e.pageX;
+                state.pointerCurrentX = e.pageX;
+                fragmentElement.classList.add('is-dragging');
+                resetAutoplay();
             });
-            fragmentElement.addEventListener('mouseup', e => { 
-                state.touchEndX = e.screenX; 
+
+            window.addEventListener('pointermove', (e) => {
+                if (!state.isDragging) return;
+                state.pointerCurrentX = e.pageX;
+            });
+
+            window.addEventListener('pointerup', (e) => {
+                if (!state.isDragging) return;
+                state.isDragging = false;
+                fragmentElement.classList.remove('is-dragging');
                 handleGesture();
             });
+
+            // Prevent link navigation during drag
+            fragmentElement.addEventListener('click', (e) => {
+                const deltaX = Math.abs(state.pointerStartX - state.pointerCurrentX);
+                if (deltaX > state.dragThreshold) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                }
+            }, true);
 
             window.addEventListener('resize', Liferay.Util.debounce(() => updatePosition(), 200));
             startAutoplay();
