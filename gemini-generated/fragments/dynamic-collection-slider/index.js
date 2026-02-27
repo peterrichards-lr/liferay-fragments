@@ -107,9 +107,13 @@ const updatePagination = () => {
     container.classList.remove('d-none');
     const pageCount = Math.ceil(state.items.length / state.slidesPerView);
     container.innerHTML = Array.from({ length: pageCount }).map((_, i) => `<button class="dot ${Math.floor(state.currentIndex / state.slidesPerView) === i ? 'active' : ''}" data-index="${i * state.slidesPerView}" role="tab" aria-selected="${Math.floor(state.currentIndex / state.slidesPerView) === i}" aria-label="Go to slide ${i + 1}" aria-controls="track-${fragmentEntryLinkNamespace}"></button>`).join('');
-    container.querySelectorAll('.dot').forEach(dot => {
-        dot.addEventListener('click', () => { state.currentIndex = parseInt(dot.dataset.index); updatePosition(); resetAutoplay(); });
-    });
+    
+    // Only add events if not in edit mode
+    if (layoutMode === 'view') {
+        container.querySelectorAll('.dot').forEach(dot => {
+            dot.addEventListener('click', () => { state.currentIndex = parseInt(dot.dataset.index); updatePosition(); resetAutoplay(); });
+        });
+    }
 };
 
 const getSlidesPerView = () => {
@@ -137,19 +141,14 @@ const updatePosition = () => {
 
     slides.forEach((s, i) => {
         s.classList.remove('is-active', 'is-visible');
-        
-        // Basic visibility always matters for simple fade if used
         if (i >= state.currentIndex && i < state.currentIndex + state.slidesPerView) {
             s.classList.add('is-visible');
         }
-
-        // Only apply 'active' depth if enabled
         if (configuration.enableDepthEffect) {
             if (i === activeIndex || (state.slidesPerView === 1 && i === state.currentIndex)) {
                 s.classList.add('is-active');
             }
         } else {
-            // If depth effect is disabled, all visible slides are effectively 'active' (flat)
             if (i >= state.currentIndex && i < state.currentIndex + state.slidesPerView) {
                 s.classList.add('is-active');
             }
@@ -222,6 +221,7 @@ const init = async (isEditMode) => {
     if (errorEl) errorEl.classList.add('d-none');
     if (infoEl) infoEl.classList.add('d-none');
 
+    // Handle initial visibility from config
     if (sliderControls && !configuration.showControls) sliderControls.classList.add('d-none');
     if (sliderPagination && !configuration.showPagination) sliderPagination.classList.add('d-none');
 
@@ -247,8 +247,8 @@ const init = async (isEditMode) => {
             state.items = state.items.slice(0, state.slidesPerView);
             renderSlides();
             track.style.transition = `none`;
-            if (sliderControls) sliderControls.style.display = 'none';
-            if (sliderPagination) sliderPagination.style.display = 'none';
+            // Note: sliderControls and sliderPagination remain visible (if configured)
+            // but no event listeners are attached in this block.
         } else {
             renderSlides();
             
