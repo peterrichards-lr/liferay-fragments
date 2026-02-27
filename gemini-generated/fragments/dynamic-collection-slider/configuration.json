@@ -84,6 +84,7 @@
           "type": "select",
           "typeOptions": {
             "validValues": [
+              { "label": "0%", "value": "0" },
               { "label": "10%", "value": "0.1" },
               { "label": "20%", "value": "0.2" },
               { "label": "30%", "value": "0.3" },
@@ -103,6 +104,7 @@
                   "type": "select",
                   "typeOptions": {
                     "validValues": [
+                      { "label": "0%", "value": "0" },
                       { "label": "10%", "value": "0.1" },
                       { "label": "20%", "value": "0.2" },
                       { "label": "30%", "value": "0.3" },
