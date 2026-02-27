@@ -26,10 +26,11 @@
 					"dataType": "string",
 					"defaultValue": "",
 					"label": "custom-entity-name",
-					"name": "customEntityName",
-					"type": "text"
-				},
-			]
-		}
-	]
-}
+										"name": "customEntityName",
+										"type": "text"
+									}
+								]
+							}
+						]
+					}
+					

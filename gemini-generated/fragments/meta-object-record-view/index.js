@@ -61,7 +61,12 @@ const initRecordView = async (isEditMode) => {
         let record = {};
         if (recordId) {
             const dataRes = await Liferay.Util.fetch(`${definition.restContextPath}/${recordId}`);
-            if (!dataRes.ok) throw new Error('Record not found.');
+            if (!dataRes.ok) {
+                if (dataRes.status === 401 || dataRes.status === 403) {
+                    throw new Error('You do not have permission to view this record.');
+                }
+                throw new Error('Record not found.');
+            }
             record = await dataRes.json();
         } else if (isEditMode) {
             const listRes = await Liferay.Util.fetch(`${definition.restContextPath}/?pageSize=1`);

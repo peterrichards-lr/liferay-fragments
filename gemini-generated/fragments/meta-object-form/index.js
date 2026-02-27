@@ -59,7 +59,12 @@ const initMetaForm = async (isEditMode) => {
 
     try {
         const response = await Liferay.Util.fetch(`${ADMIN_API_BASE}/object-definitions/by-external-reference-code/${objectERC}`);
-        if (!response.ok) throw new Error(response.status === 404 ? 'Object not found.' : 'Permission denied.');
+        if (!response.ok) {
+            if (response.status === 401 || response.status === 403) {
+                throw new Error('You do not have permission to view this object definition.');
+            }
+            throw new Error(response.status === 404 ? 'Object not found.' : 'Permission denied.');
+        }
         
         state.definition = await response.json();
         titleEl.textContent = state.definition.name + (isEditMode ? ' (Preview)' : '');
@@ -87,7 +92,12 @@ const initMetaForm = async (isEditMode) => {
                         statusMsg.className = 'form-status-msg mt-3 alert alert-success';
                         statusMsg.classList.remove('d-none');
                         form.reset();
-                    } else throw new Error('Failed to save entry.');
+                    } else {
+                        if (saveRes.status === 401 || saveRes.status === 403) {
+                            throw new Error('You do not have permission to save entries to this object.');
+                        }
+                        throw new Error('Failed to save entry.');
+                    }
                 } catch (err) {
                     statusMsg.textContent = err.message;
                     statusMsg.className = 'form-status-msg mt-3 alert alert-danger';

@@ -261,11 +261,13 @@ const init = async (isEditMode) => {
                 fragmentElement.querySelector('.prev-btn').addEventListener('click', (e) => { e.preventDefault(); prevSlide(); resetAutoplay(); });
             }
 
+            // Keyboard Navigation
             fragmentElement.addEventListener('keydown', (e) => {
                 if (e.key === 'ArrowLeft') { prevSlide(); resetAutoplay(); }
                 if (e.key === 'ArrowRight') { nextSlide(); resetAutoplay(); }
             });
 
+            // Unified Pointer Interaction (Mouse + Touch)
             fragmentElement.addEventListener('pointerdown', (e) => {
                 if (e.target.closest('.slider-btn, .dot')) return;
                 state.isDragging = true;

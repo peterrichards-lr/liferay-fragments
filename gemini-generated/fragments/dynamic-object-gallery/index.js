@@ -41,7 +41,12 @@ const initGallery = async (isEditMode) => {
 
         const pageSize = isEditMode ? 4 : 20;
         const dataRes = await Liferay.Util.fetch(`${definition.restContextPath}/?pageSize=${pageSize}`);
-        if (!dataRes.ok) throw new Error('Data fetch failed.');
+        if (!dataRes.ok) {
+            if (dataRes.status === 401 || dataRes.status === 403) {
+                throw new Error('You do not have permission to view data for this object.');
+            }
+            throw new Error('Data fetch failed.');
+        }
         const data = await dataRes.json();
         const items = data.items || [];
 
