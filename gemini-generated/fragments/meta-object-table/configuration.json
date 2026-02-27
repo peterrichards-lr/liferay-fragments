@@ -9,6 +9,26 @@
           "defaultValue": ""
         },
         {
+          "defaultValue": false,
+          "label": "customize-display-columns",
+          "name": "customizeColumns",
+          "type": "checkbox"
+        },
+        {
+          "label": "columns-to-display",
+          "name": "columnsToDisplay",
+          "type": "text",
+          "defaultValue": "configKey,description,configStatus.name,configValue",
+          "typeOptions": {
+            "dependency": {
+              "customizeColumns": {
+                "type": "equal",
+                "value": true
+              }
+            }
+          }
+        },
+        {
           "defaultValue": true,
           "label": "enable-pagination",
           "name": "enablePagination",

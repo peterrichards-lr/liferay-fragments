@@ -84,7 +84,7 @@ const initMetaForm = async () => {
             statusMsg.classList.add('d-none');
 
             try {
-                const saveResponse = await Liferay.Util.fetch(`/o/c/${state.definition.restContextPath}/`, {
+                const saveResponse = await Liferay.Util.fetch(`${state.definition.restContextPath}/`, { // Fixed URL
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(payload)
@@ -117,5 +117,6 @@ const initMetaForm = async () => {
 if (layoutMode === 'view') {
     initMetaForm();
 } else {
+    // Static dummy header for editor
     fragmentElement.querySelector('.object-title').textContent = 'Meta-Object Form';
 }

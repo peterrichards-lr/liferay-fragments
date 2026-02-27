@@ -128,3 +128,101 @@ For truly dynamic fragments (e.g., auto-generated forms or tables), fragments sh
 - Check `layoutMode` to disable interactive or intrusive logic during page editing.
 - Use `Liferay.Util.fetch` for API calls to handle authentication automatically.
 - Prefer hardcoded inline SVG icons for performance, unless they must be editable.
+
+    <overall_goal>
+        Develop a robust collection of dynamically configurable, accessible, and responsive Liferay fragments, aligned with the Meridian theme, and support a multi-version build process for Liferay DXP platforms.
+    </overall_goal>
+
+    <active_constraints>
+        - **File Naming**: Configuration files must be `configuration.json`.
+        - **Scoping**: JS selectors for internal elements must use `fragmentElement.querySelector`; page-level/cross-fragment state uses `document` or `window`.
+        - **ID Safety**: All internal IDs and labels must be prefixed with `${fragmentEntryLinkNamespace}` to prevent DOM collisions.
+        - **Freemarker Safety**: All configuration variables in HTML must use null-safe defaults: `${configuration.var!'default'}`.
+        - **Theme Integration**: Prefer Meridian CSS tokens (`--primary`, `--secondary`, `--body-color`, `--body-background-color`, `--spacer-X`, `--font-size-base`) over hardcoded values or manual overrides in `configuration.json`.
+        - **Asset Management**: Use `[resources:filename.ext]` syntax for static assets; store in the collection's `resources/` directory.
+        - **Bypass Validation**: Use `[#-- empty --]` instead of `&nbsp;` for intentional empty HTML fragments.
+        - **Compatibility**: Use `Object.prototype.hasOwnProperty.call()` instead of `Object.hasOwn`.
+        - **Editable Image Requirement**: For `data-lfr-editable-type="image"`, the attribute MUST be placed on an `<img>` tag to prevent Liferay import warnings.
+        - **API Permissions**: All fragments making API calls must include user-friendly alert messages in HTML for 401/403 errors, in addition to console logging.
+    </active_constraints>
+
+    <key_knowledge>
+        - **Meridian Theme**: A new theme defining standardized CSS variables for global and component-specific styling.
+        - **Dynamic Styling**: `index.css` is not Freemarker-processed; dynamic theme/config values must be mapped to CSS variables in the HTML root element's `style` attribute.
+        - **Singleton Pattern**: Fragments intended as singletons (calculators, meter readings) use a `window` registry (e.g., `window.LFR_FRAG_SINGLETON_...`) to detect and warn about duplicate instances.
+        - **Liferay Context**: Fragments frequently interact with `document.body` classes like `has-edit-mode-menu` to disable interactive logic in edit mode.
+        - **Liferay Object Headless APIs**:
+            - `Object Admin API`: `/o/object-admin/v1.0/object-definitions/by-external-reference-code/{erc}` for metadata discovery.
+            - `Custom Object API`: `/o/c/{objectPath}/` for CRUD operations on entries. `restContextPath` from Object Definition *often already includes* the `/o/c/` prefix.
+        - **Collection Selector Behavior**: Primarily designed for server-side FreeMarker rendering (`collectionObjectList`). For client-side headless fetching, a plain `text` field for Collection Name/Key/ID is more robust.
+        - **Field Dependency Version**: The `dependency` key within `typeOptions` in `configuration.json` requires **Liferay DXP 2025.Q3** or later.
+        - **Image Extraction from Collections**: Headless API items can provide images via `item.image?.url`, `item.featuredImage?.url`, `item.thumbnail?.url`, or embedded as `<img>` tags within Rich Text fields (`contentFields`). Robust parsing is required.
+    </key_knowledge>
+
+    <artifact_trail>
+        - `.gemini/gemini.md`: Established as the source of truth for fragment architectural standards, Meridian theme rules, AI integration interface, editable image requirements, object metadata integration, and conditional field visibility versioning. Updated to reflect correct singular 'dependency' key and Liferay DXP 2025.Q3+ requirement.
+        - `todo.md`: Comprehensive list of identified, in-progress, and completed improvements (security, structural, theme, accessibility, responsiveness, new fragments).
+        - `forms/fragments/form-populator/index.js`: Replaced manual regex parsing with `URLSearchParams`.
+        - `finance/fragments/loan-calculator/`: Refactored for singleton enforcement, namespaced IDs, Meridian token adoption, API permission checks, `aria-live` regions, and responsive layout.
+        - `meter-reading/fragments/meter-reading/`: Fixed mismatched IDs, added safety checks, API paths configurable, API permission checks, and responsive flexbox layout.
+        - `form-fragments/fragments/star-rating/`: Refactored static CSS, Meridian tokens, and accessibility (fieldset/legend, `aria-checked`, `aria-label`).
+        - `layout-components/primary-card/`: Updated to use Meridian tokens, proper namespace scoping, and responsive padding/font scaling.
+        - Repository-wide: Renamed all `index.json` to `configuration.json` and updated `fragment.json` via script.
+        - `gemini-generated/` (New Collection):
+            - `object-linked-chart/`: Data visualization with Chart.js, object data, and an accessible fallback table for screen readers.
+            - `animated-metric-counter/`: Animated counter, Meridian styled, with `IntersectionObserver`.
+            - `radial-kpi-gauge/`: SVG gauge, object data.
+            - `modern-parallax-hero/`: Parallax effect, responsive, with `<img>` tag for editable background image and `dataType: "string"` for parallax speed config.
+            - `dynamic-collection-slider/`: Headless collection, responsive, autoplay configurable (`autoplayInterval` with `dependency` fix), clickable cards using DPT URLs, lazy-loading images, flexible identifier (Name/Key/ID), with fixed `bgOpacity` config as `select` type.
+            - `interactive-event-timeline/`: Object data, responsive, scroll animations.
+            - `pricing-comparison-grid/`: Configurable plans, responsive stacking.
+            - `ai-chat-ui/`: UI shell, accessible (`aria-live`, semantic labels), configurable backend URL.
+            - `meta-object-table/`: Dynamic table from object metadata, CSV export, responsive mobile view, API permission checks, and fix for duplicate `/o/c/` in REST path.
+            - `meta-object-form/`: Dynamic form from object metadata, API permission checks.
+            - `meta-object-record-view/`: Single-entry detail view with PDF export (jsPDF/html2canvas), API permission checks.
+            - `dynamic-object-gallery/`: Dynamic gallery from object metadata, API permission checks.
+        - `create-fragment-zips.sh`: Updated for multi-version build (standard and legacy with stripped `dependency` blocks using `jq`).
+        - `.github/workflows/release.yml`: Updated to install `jq` for the build script.
+        - `misc/fragments/back-button/index.html`: Added `aria-label`.
+        - `misc/fragments/icon-button/index.html`: Added `aria-label`.
+        - `form-fragments/fragments/toggle-switch/index.css`: Added focus management.
+        - `form-fragments/fragments/autocomplete-(object)/`: Added HTML error container, permission checks, fixed JSON syntax.
+        - `form-fragments/fragments/user-field/`: Added HTML error container, permission checks.
+        - `misc/fragments/dynamic-copyright/configuration.json`: Corrected JSON syntax (trailing comma).
+        - `populated-form-fields/fragments/populated-range/configuration.json`: Corrected JSON syntax (trailing comma).
+    </artifact_trail>
+
+    <file_system_state>
+        - CWD: `/Volumes/SanDisk/repos/liferay-fragments`
+        - Branches: `gemini`, `responsive`, `accessibility` (all synchronized to the latest commit `a4ae143`).
+        - Created: `gemini-generated/` collection with 11 new fragments.
+        - Modified: Numerous existing fragments and core repository files.
+    </file_system_state>
+
+    <recent_actions>
+        - Corrected the `dependency` key name (`dependencies` to `dependency`) and its placement within `typeOptions` in `dynamic-collection-slider/configuration.json` to resolve Liferay configuration validation errors.
+        - Removed validation type from `bgOpacity` and fixed a typo in its select `validValues`.
+        - Added `dataType: "string"` to `speed` field in `modern-parallax-hero/configuration.json` to ensure proper parsing of decimal defaults.
+        - Fixed the incorrect URL construction for fetching entries in `meta-object-table/index.js` by ensuring `state.definition.restContextPath` is correctly used without duplicating `/o/c/`.
+        - Fixed the incorrect URL construction for fetching entries in `meta-object-form/index.js` by ensuring `state.definition.restContextPath` is correctly used without duplicating `/o/c/`.
+        - Fixed the incorrect URL construction for fetching entries in `meta-object-record-view/index.js` by ensuring `state.definition.restContextPath` is correctly used without duplicating `/o/c/`.
+        - Fixed the incorrect URL construction for fetching entries in `dynamic-object-gallery/index.js` by ensuring `state.definition.restContextPath` is correctly used without duplicating `/o/c/`.
+    </recent_actions>
+
+    <task_state>
+        1. [DONE] Implement full suite of new `gemini-generated` fragments (visual, data, meta-object).
+        2. [DONE] Implement comprehensive responsiveness improvements.
+        3. [DONE] Implement comprehensive accessibility improvements (High Priority, Interactive Elements, Low Priority).
+        4. [DONE] Document architectural best practices in `.gemini/gemini.md`.
+        5. [DONE] Enhance API permission checking with user-friendly HTML messages across existing fragments.
+        6. [DONE] Implement multi-version build process (`create-fragment-zips.sh`) and GitHub Actions integration (`release.yml`).
+        7. [DONE] Fix various JSON syntax errors in `configuration.json` files.
+        8. [DONE] Improve `dynamic-collection-slider` image extraction (multi-source, rich text parsing).
+        9. [DONE] Make `dynamic-collection-slider` cards fully clickable with correct DPT URL resolution.
+        10. [DONE] Make `dynamic-collection-slider` autoplay speed configurable and correct `bgOpacity` configuration validation.
+        11. [DONE] Fix duplicate `/o/c/` in REST API calls for meta-object fragments.
+            - [DONE] `meta-object-table/index.js`
+            - [DONE] `meta-object-form/index.js`
+            - [DONE] `meta-object-record-view/index.js`
+            - [DONE] `dynamic-object-gallery/index.js`
+    </task_state>
