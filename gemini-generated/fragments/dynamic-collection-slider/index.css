@@ -81,13 +81,17 @@
 .style-split .slide-content-top { width: 60%; }
 
 /* Style: Inset Overlay */
-.slider-slide.style-inset { border: none; }
+.slider-slide.style-inset { 
+    border: none;
+    padding: var(--spacer-4, 1.5rem); /* Add padding to container to show image edges */
+}
+
 .style-inset .slide-content-top {
     position: absolute;
-    bottom: var(--spacer-4, 1.5rem);
-    left: var(--spacer-4, 1.5rem);
-    right: var(--spacer-4, 1.5rem);
-    background: var(--white, #fff);
+    bottom: var(--spacer-6, 2.5rem);
+    left: var(--spacer-6, 2.5rem);
+    right: var(--spacer-6, 2.5rem);
+    background: rgba(255, 255, 255, var(--inset-opacity, 0.9));
     color: var(--body-color);
     padding: var(--spacer-4, 1.5rem);
     border-radius: var(--border-radius, 0.25rem);

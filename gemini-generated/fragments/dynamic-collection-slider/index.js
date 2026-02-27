@@ -152,11 +152,11 @@ const resetAutoplay = () => {
 };
 
 const handleGesture = () => {
-    if (state.touchEndX < state.touchStartX - 50) {
+    const threshold = 50;
+    if (state.touchEndX < state.touchStartX - threshold) {
         nextSlide();
         resetAutoplay();
-    }
-    if (state.touchEndX > state.touchStartX + 50) {
+    } else if (state.touchEndX > state.touchStartX + threshold) {
         prevSlide();
         resetAutoplay();
     }
@@ -193,7 +193,6 @@ const init = async (isEditMode) => {
     if (errorEl) errorEl.classList.add('d-none');
     if (infoEl) infoEl.classList.add('d-none');
 
-    // Handle initial visibility from config
     if (sliderControls && !configuration.showControls) sliderControls.classList.add('d-none');
     if (sliderPagination && !configuration.showPagination) sliderPagination.classList.add('d-none');
 
@@ -225,23 +224,27 @@ const init = async (isEditMode) => {
             renderSlides();
             
             if (configuration.showControls) {
-                fragmentElement.querySelector('.next-btn').addEventListener('click', () => { nextSlide(); resetAutoplay(); });
-                fragmentElement.querySelector('.prev-btn').addEventListener('click', () => { prevSlide(); resetAutoplay(); });
+                fragmentElement.querySelector('.next-btn').addEventListener('click', (e) => { e.preventDefault(); nextSlide(); resetAutoplay(); });
+                fragmentElement.querySelector('.prev-btn').addEventListener('click', (e) => { e.preventDefault(); prevSlide(); resetAutoplay(); });
             }
 
-            // Keyboard Navigation
+            // Keyboard Navigation (fragmentElement now has tabindex="0")
             fragmentElement.addEventListener('keydown', (e) => {
                 if (e.key === 'ArrowLeft') { prevSlide(); resetAutoplay(); }
                 if (e.key === 'ArrowRight') { nextSlide(); resetAutoplay(); }
             });
 
-            // Touch / Mouse Swipe
-            const viewport = fragmentElement.querySelector('.slider-viewport');
-            viewport.addEventListener('touchstart', e => { state.touchStartX = e.changedTouches[0].screenX; }, {passive: true});
-            viewport.addEventListener('touchend', e => { state.touchEndX = e.changedTouches[0].screenX; handleGesture(); }, {passive: true});
+            // Swipe Implementation
+            fragmentElement.addEventListener('touchstart', e => { state.touchStartX = e.changedTouches[0].screenX; }, {passive: true});
+            fragmentElement.addEventListener('touchend', e => { state.touchEndX = e.changedTouches[0].screenX; handleGesture(); }, {passive: true});
             
-            viewport.addEventListener('mousedown', e => { state.touchStartX = e.screenX; });
-            viewport.addEventListener('mouseup', e => { state.touchEndX = e.screenX; handleGesture(); });
+            fragmentElement.addEventListener('mousedown', e => { 
+                state.touchStartX = e.screenX; 
+            });
+            fragmentElement.addEventListener('mouseup', e => { 
+                state.touchEndX = e.screenX; 
+                handleGesture();
+            });
 
             window.addEventListener('resize', Liferay.Util.debounce(() => updatePosition(), 200));
             startAutoplay();
