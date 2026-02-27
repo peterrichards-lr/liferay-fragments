@@ -116,12 +116,18 @@
                     }
                   }
                 },
-                {
-                  "defaultValue": "var(--primary)",
-                  "label": "theme-color",
-                  "name": "themeColor",
-                  "type": "colorPicker"
-                }
+        {
+          "defaultValue": "350px",
+          "label": "slide-height",
+          "name": "slideHeight",
+          "type": "length"
+        },
+        {
+          "defaultValue": "var(--primary)",
+          "label": "theme-color",
+          "name": "themeColor",
+          "type": "colorPicker"
+        }
         ,
         {
           "defaultValue": "var(--spacer-4)",

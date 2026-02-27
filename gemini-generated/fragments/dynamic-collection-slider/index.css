@@ -22,7 +22,7 @@
     border-radius: var(--border-radius-lg, 0.5rem);
     box-shadow: var(--card-box-shadow, 0 2px 8px rgba(0,0,0,0.05));
     border: 1px solid var(--gray-200, #eee);
-    min-height: 250px;
+    min-height: var(--slide-height, 350px);
     overflow: hidden;
     position: relative;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
@@ -50,7 +50,7 @@
     display: block;
 }
 
-.slide-image { height: 10rem; } /* Approx 160px using rem */
+.slide-image { height: 15rem; } /* Approx 240px using rem */
 .slide-bg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
 
 .slide-overlay {
