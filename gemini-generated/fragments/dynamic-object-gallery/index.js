@@ -7,13 +7,23 @@ const initGallery = async (isEditMode) => {
     const infoEl = fragmentElement.querySelector(`#info-${fragmentEntryLinkNamespace}`);
 
     const showError = (msg) => {
-        if (isEditMode && errorEl) { errorEl.textContent = msg; errorEl.classList.remove('d-none'); }
-        if (grid) grid.innerHTML = `<div class="text-center p-5 w-100 text-danger">${msg}</div>`;
+        if (isEditMode && errorEl) {
+            errorEl.textContent = msg;
+            errorEl.classList.remove('d-none');
+            if (grid) grid.innerHTML = '';
+        } else if (grid) {
+            grid.innerHTML = `<div class="text-center p-5 w-100 text-danger">${msg}</div>`;
+        }
     };
 
     const showInfo = (msg) => {
-        if (isEditMode && infoEl) { infoEl.textContent = msg; infoEl.classList.remove('d-none'); }
-        if (grid) grid.innerHTML = `<div class="text-center p-5 w-100 text-muted">${msg}</div>`;
+        if (isEditMode && infoEl) {
+            infoEl.textContent = msg;
+            infoEl.classList.remove('d-none');
+            if (grid) grid.innerHTML = '';
+        } else if (grid) {
+            grid.innerHTML = `<div class="text-center p-5 w-100 text-muted">${msg}</div>`;
+        }
     };
 
     if (errorEl) errorEl.classList.add('d-none');

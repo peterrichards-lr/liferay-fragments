@@ -24,18 +24,35 @@ const updateGauge = (percent) => {
 const initGauge = async (isEditMode) => {
     const errorEl = fragmentElement.querySelector(`#error-${fragmentEntryLinkNamespace}`);
     const infoEl = fragmentElement.querySelector(`#info-${fragmentEntryLinkNamespace}`);
+    const gaugeWrap = fragmentElement.querySelector('.gauge-wrap');
     
+    const showError = (msg) => {
+        if (isEditMode && errorEl) {
+            errorEl.textContent = msg;
+            errorEl.classList.remove('d-none');
+            if (gaugeWrap) gaugeWrap.classList.add('d-none');
+        } else {
+            console.error('Gauge Error:', msg);
+        }
+    };
+
+    const showInfo = (msg) => {
+        if (isEditMode && infoEl) {
+            infoEl.textContent = msg;
+            infoEl.classList.remove('d-none');
+            if (gaugeWrap) gaugeWrap.classList.add('d-none');
+        }
+    };
+
     if (errorEl) errorEl.classList.add('d-none');
     if (infoEl) infoEl.classList.add('d-none');
+    if (gaugeWrap) gaugeWrap.classList.remove('d-none');
 
     const { objectPath, valueField, targetValue } = configuration;
 
     if (!objectPath) {
-        if (isEditMode && infoEl) {
-            infoEl.textContent = 'Please configure an Object Path in the configuration.';
-            infoEl.classList.remove('d-none');
-            updateGauge(75);
-        }
+        showInfo('Please configure an Object Path in the configuration.');
+        updateGauge(75);
         return;
     }
 
@@ -46,16 +63,15 @@ const initGauge = async (isEditMode) => {
         const percent = Math.min((total / target) * 100, 100);
         
         if (items.length === 0 && isEditMode) {
-             infoEl.textContent = `No items found for object "${objectPath}". Rendering 75% as placeholder.`;
-             infoEl.classList.remove('d-none');
+             showInfo(`No items found for object "${objectPath}". Rendering 75% as placeholder.`);
              updateGauge(75);
              return;
         }
 
         setTimeout(() => updateGauge(percent), 300);
     } catch (err) {
-        if (isEditMode && errorEl) { errorEl.textContent = err.message; errorEl.classList.remove('d-none'); updateGauge(75); }
-        console.error('Gauge Error:', err);
+        showError(err.message);
+        updateGauge(75);
     }
 };
 

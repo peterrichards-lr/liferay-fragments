@@ -35,32 +35,47 @@ const renderHeatmap = (items) => {
 const initHeatmap = async (isEditMode) => {
     const errorEl = fragmentElement.querySelector(`#error-${fragmentEntryLinkNamespace}`);
     const infoEl = fragmentElement.querySelector(`#info-${fragmentEntryLinkNamespace}`);
-    const grid = fragmentElement.querySelector('.heatmap-grid');
+    const grid = fragmentElement.querySelector(`#grid-${fragmentEntryLinkNamespace}`);
     
+    const showError = (msg) => {
+        if (isEditMode && errorEl) {
+            errorEl.textContent = msg;
+            errorEl.classList.remove('d-none');
+            if (grid) grid.innerHTML = '';
+        } else if (grid) {
+            grid.innerHTML = `<div class="heatmap-status text-danger">${msg}</div>`;
+        }
+    };
+
+    const showInfo = (msg) => {
+        if (isEditMode && infoEl) {
+            infoEl.textContent = msg;
+            infoEl.classList.remove('d-none');
+            if (grid) grid.innerHTML = '';
+        } else if (grid) {
+            grid.innerHTML = `<div class="heatmap-status">${msg}</div>`;
+        }
+    };
+
     if (errorEl) errorEl.classList.add('d-none');
     if (infoEl) infoEl.classList.add('d-none');
 
     const { objectPath } = configuration;
 
     if (!objectPath) {
-        if (isEditMode && infoEl) {
-            infoEl.textContent = 'Please configure an Object Path.';
-            infoEl.classList.remove('d-none');
-            renderHeatmap([]);
-        }
+        showInfo('Please configure an Object Path.');
+        renderHeatmap([]);
         return;
     }
 
     try {
         const items = await fetchData();
         if (items.length === 0 && isEditMode) {
-             infoEl.textContent = `No items found for "${objectPath}". Rendering placeholder.`;
-             infoEl.classList.remove('d-none');
+             showInfo(`No items found for "${objectPath}". Rendering placeholder.`);
         }
         renderHeatmap(items);
     } catch (err) {
-        if (isEditMode && errorEl) { errorEl.textContent = err.message; errorEl.classList.remove('d-none'); renderHeatmap([]); }
-        console.error('Heatmap Error:', err);
+        showError(err.message);
     }
 };
 

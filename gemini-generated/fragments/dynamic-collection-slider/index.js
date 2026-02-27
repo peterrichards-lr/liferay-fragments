@@ -171,13 +171,23 @@ const init = async (isEditMode) => {
     const infoEl = fragmentElement.querySelector(`#info-${fragmentEntryLinkNamespace}`);
 
     const showError = (msg) => {
-        if (isEditMode && errorEl) { errorEl.textContent = msg; errorEl.classList.remove('d-none'); }
-        if (track) track.innerHTML = `<div class="slider-status text-danger">${msg}</div>`;
+        if (isEditMode && errorEl) {
+            errorEl.textContent = msg;
+            errorEl.classList.remove('d-none');
+            if (track) track.innerHTML = '';
+        } else if (track) {
+            track.innerHTML = `<div class="slider-status text-danger">${msg}</div>`;
+        }
     };
 
     const showInfo = (msg) => {
-        if (isEditMode && infoEl) { infoEl.textContent = msg; infoEl.classList.remove('d-none'); }
-        if (track) track.innerHTML = `<div class="slider-status">${msg}</div>`;
+        if (isEditMode && infoEl) {
+            infoEl.textContent = msg;
+            infoEl.classList.remove('d-none');
+            if (track) track.innerHTML = '';
+        } else if (track) {
+            track.innerHTML = `<div class="slider-status">${msg}</div>`;
+        }
     };
 
     if (errorEl) errorEl.classList.add('d-none');

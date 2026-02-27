@@ -81,6 +81,7 @@ const initChat = () => {
         if (infoEl) {
             infoEl.textContent = 'Please configure a Backend URL in the configuration.';
             infoEl.classList.remove('d-none');
+            if (messagesContainer) messagesContainer.classList.add('d-none');
         }
     }
 

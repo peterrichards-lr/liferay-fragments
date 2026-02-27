@@ -20,13 +20,23 @@ const initRecordView = async (isEditMode) => {
     const recordId = getRecordId();
 
     const showError = (msg) => {
-        if (isEditMode && errorEl) { errorEl.textContent = msg; errorEl.classList.remove('d-none'); }
-        if (fieldsWrap) fieldsWrap.innerHTML = `<div class="text-center p-5 text-danger">${msg}</div>`;
+        if (isEditMode && errorEl) {
+            errorEl.textContent = msg;
+            errorEl.classList.remove('d-none');
+            if (fieldsWrap) fieldsWrap.innerHTML = '';
+        } else if (fieldsWrap) {
+            fieldsWrap.innerHTML = `<div class="text-center p-5 text-danger">${msg}</div>`;
+        }
     };
 
     const showInfo = (msg) => {
-        if (isEditMode && infoEl) { infoEl.textContent = msg; infoEl.classList.remove('d-none'); }
-        if (fieldsWrap) fieldsWrap.innerHTML = `<div class="text-center p-5 text-muted">${msg}</div>`;
+        if (isEditMode && infoEl) {
+            infoEl.textContent = msg;
+            infoEl.classList.remove('d-none');
+            if (fieldsWrap) fieldsWrap.innerHTML = '';
+        } else if (fieldsWrap) {
+            fieldsWrap.innerHTML = `<div class="text-center p-5 text-muted">${msg}</div>`;
+        }
     };
 
     if (errorEl) errorEl.classList.add('d-none');

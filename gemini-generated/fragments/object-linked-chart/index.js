@@ -29,13 +29,23 @@ const initChart = async (isEditMode) => {
     const chartWrapper = fragmentElement.querySelector('.chart-wrapper');
 
     const showError = (msg) => {
-        if (isEditMode && errorEl) { errorEl.textContent = msg; errorEl.classList.remove('d-none'); }
-        if (chartWrapper) chartWrapper.innerHTML = `<div class="d-flex align-items-center justify-content-center h-100 text-danger">${msg}</div>`;
+        if (isEditMode && errorEl) {
+            errorEl.textContent = msg;
+            errorEl.classList.remove('d-none');
+            if (chartWrapper) chartWrapper.innerHTML = '';
+        } else if (chartWrapper) {
+            chartWrapper.innerHTML = `<div class="d-flex align-items-center justify-content-center h-100 text-danger">${msg}</div>`;
+        }
     };
 
     const showInfo = (msg) => {
-        if (isEditMode && infoEl) { infoEl.textContent = msg; infoEl.classList.remove('d-none'); }
-        if (chartWrapper) chartWrapper.innerHTML = `<div class="d-flex align-items-center justify-content-center h-100 text-muted">${msg}</div>`;
+        if (isEditMode && infoEl) {
+            infoEl.textContent = msg;
+            infoEl.classList.remove('d-none');
+            if (chartWrapper) chartWrapper.innerHTML = '';
+        } else if (chartWrapper) {
+            chartWrapper.innerHTML = `<div class="d-flex align-items-center justify-content-center h-100 text-muted">${msg}</div>`;
+        }
     };
 
     if (errorEl) errorEl.classList.add('d-none');
@@ -90,14 +100,10 @@ const initChart = async (isEditMode) => {
 
 if (layoutMode === 'view') initChart(false);
 else {
-    // Show a small preview if configured
     if (configuration.objectPath) initChart(true);
     else {
-         fragmentElement.querySelector('.chart-wrapper').innerHTML = '<div class="d-flex align-items-center justify-content-center h-100 bg-light text-muted">Chart Preview (Configure Object Path)</div>';
-         const infoEl = fragmentElement.querySelector(`#info-${fragmentEntryLinkNamespace}`);
-         if (infoEl) {
-             infoEl.textContent = 'Please provide an Object Path in the configuration.';
-             infoEl.classList.remove('d-none');
-         }
+         const chartWrapper = fragmentElement.querySelector('.chart-wrapper');
+         if (chartWrapper) chartWrapper.innerHTML = '';
+         showInfo('Please provide an Object Path in the configuration.');
     }
 }

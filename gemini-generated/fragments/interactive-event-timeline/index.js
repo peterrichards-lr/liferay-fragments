@@ -35,6 +35,7 @@ const renderTimeline = (items) => {
 };
 
 const initAnimations = () => {
+    if (layoutMode !== 'view') return;
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('is-visible'); });
     }, { threshold: 0.2 });
@@ -46,32 +47,47 @@ const initTimeline = async (isEditMode) => {
     const infoEl = fragmentElement.querySelector(`#info-${fragmentEntryLinkNamespace}`);
     const itemsEl = fragmentElement.querySelector(`#items-${fragmentEntryLinkNamespace}`);
     
+    const showError = (msg) => {
+        if (isEditMode && errorEl) {
+            errorEl.textContent = msg;
+            errorEl.classList.remove('d-none');
+            if (itemsEl) itemsEl.innerHTML = '';
+        } else if (itemsEl) {
+            itemsEl.innerHTML = `<div class="timeline-status text-danger">${msg}</div>`;
+        }
+    };
+
+    const showInfo = (msg) => {
+        if (isEditMode && infoEl) {
+            infoEl.textContent = msg;
+            infoEl.classList.remove('d-none');
+            if (itemsEl) itemsEl.innerHTML = '';
+        } else if (itemsEl) {
+            itemsEl.innerHTML = `<div class="timeline-status">${msg}</div>`;
+        }
+    };
+
     if (errorEl) errorEl.classList.add('d-none');
     if (infoEl) infoEl.classList.add('d-none');
 
     const { objectPath } = configuration;
 
     if (!objectPath) {
-        if (isEditMode && infoEl) {
-            infoEl.textContent = 'Please configure an Object Path.';
-            infoEl.classList.remove('d-none');
-            renderTimeline([{ title: 'Placeholder Item 1', date: '2025-01-01', description: 'Sample description.' }]);
-        }
+        showInfo('Please configure an Object Path.');
+        renderTimeline([{ title: 'Placeholder Item 1', date: '2025-01-01', description: 'Sample description.' }]);
         return;
     }
 
     try {
         const items = await fetchData();
         if (items.length === 0 && isEditMode) {
-             infoEl.textContent = `No items found for "${objectPath}". Rendering placeholder.`;
-             infoEl.classList.remove('d-none');
+             showInfo(`No items found for "${objectPath}". Rendering placeholder.`);
              renderTimeline([{ title: 'Placeholder Item', date: '2025-01-01', description: 'Sample description.' }]);
              return;
         }
         renderTimeline(items);
     } catch (err) {
-        if (isEditMode && errorEl) { errorEl.textContent = err.message; errorEl.classList.remove('d-none'); renderTimeline([]); }
-        console.error('Timeline Error:', err);
+        showError(err.message);
     }
 };
 

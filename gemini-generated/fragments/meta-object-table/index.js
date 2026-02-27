@@ -86,16 +86,20 @@ const initMetaTable = async (isEditMode) => {
         if (isEditMode && errorEl) {
             errorEl.textContent = msg;
             errorEl.classList.remove('d-none');
+            if (tbody) tbody.innerHTML = '';
+        } else if (tbody) {
+            tbody.innerHTML = `<tr><td colspan="100" class="text-center p-5 text-danger">${msg}</td></tr>`;
         }
-        if (tbody) tbody.innerHTML = `<tr><td colspan="100" class="text-center p-5 text-danger">${msg}</td></tr>`;
     };
 
     const showInfo = (msg) => {
         if (isEditMode && infoEl) {
             infoEl.textContent = msg;
             infoEl.classList.remove('d-none');
+            if (tbody) tbody.innerHTML = '';
+        } else if (tbody) {
+            tbody.innerHTML = `<tr><td colspan="100" class="text-center p-5 text-muted">${msg}</td></tr>`;
         }
-        if (tbody) tbody.innerHTML = `<tr><td colspan="100" class="text-center p-5 text-muted">${msg}</td></tr>`;
     };
 
     clearAlerts();
