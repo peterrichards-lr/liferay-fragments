@@ -228,6 +228,7 @@ const init = async (isEditMode) => {
     if (errorEl) errorEl.classList.add('d-none');
     if (infoEl) infoEl.classList.add('d-none');
 
+    // Handle initial visibility from config
     if (sliderControls && !configuration.showControls) sliderControls.classList.add('d-none');
     if (sliderPagination && !configuration.showPagination) sliderPagination.classList.add('d-none');
 
