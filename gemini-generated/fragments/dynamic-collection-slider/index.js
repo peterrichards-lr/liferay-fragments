@@ -105,15 +105,22 @@ const updatePagination = () => {
         return;
     }
     container.classList.remove('d-none');
+
+    if (layoutMode !== 'view') {
+        // Mock two dots for editor preview
+        container.innerHTML = `
+            <button class="dot active" role="tab" aria-selected="true" aria-label="Mock active dot"></button>
+            <button class="dot" role="tab" aria-selected="false" aria-label="Mock inactive dot"></button>
+        `;
+        return;
+    }
+
     const pageCount = Math.ceil(state.items.length / state.slidesPerView);
     container.innerHTML = Array.from({ length: pageCount }).map((_, i) => `<button class="dot ${Math.floor(state.currentIndex / state.slidesPerView) === i ? 'active' : ''}" data-index="${i * state.slidesPerView}" role="tab" aria-selected="${Math.floor(state.currentIndex / state.slidesPerView) === i}" aria-label="Go to slide ${i + 1}" aria-controls="track-${fragmentEntryLinkNamespace}"></button>`).join('');
     
-    // Only add events if not in edit mode
-    if (layoutMode === 'view') {
-        container.querySelectorAll('.dot').forEach(dot => {
-            dot.addEventListener('click', () => { state.currentIndex = parseInt(dot.dataset.index); updatePosition(); resetAutoplay(); });
-        });
-    }
+    container.querySelectorAll('.dot').forEach(dot => {
+        dot.addEventListener('click', () => { state.currentIndex = parseInt(dot.dataset.index); updatePosition(); resetAutoplay(); });
+    });
 };
 
 const getSlidesPerView = () => {
@@ -221,7 +228,6 @@ const init = async (isEditMode) => {
     if (errorEl) errorEl.classList.add('d-none');
     if (infoEl) infoEl.classList.add('d-none');
 
-    // Handle initial visibility from config
     if (sliderControls && !configuration.showControls) sliderControls.classList.add('d-none');
     if (sliderPagination && !configuration.showPagination) sliderPagination.classList.add('d-none');
 
@@ -247,8 +253,6 @@ const init = async (isEditMode) => {
             state.items = state.items.slice(0, state.slidesPerView);
             renderSlides();
             track.style.transition = `none`;
-            // Note: sliderControls and sliderPagination remain visible (if configured)
-            // but no event listeners are attached in this block.
         } else {
             renderSlides();
             
@@ -257,13 +261,11 @@ const init = async (isEditMode) => {
                 fragmentElement.querySelector('.prev-btn').addEventListener('click', (e) => { e.preventDefault(); prevSlide(); resetAutoplay(); });
             }
 
-            // Keyboard Navigation
             fragmentElement.addEventListener('keydown', (e) => {
                 if (e.key === 'ArrowLeft') { prevSlide(); resetAutoplay(); }
                 if (e.key === 'ArrowRight') { nextSlide(); resetAutoplay(); }
             });
 
-            // Unified Pointer Interaction (Mouse + Touch)
             fragmentElement.addEventListener('pointerdown', (e) => {
                 if (e.target.closest('.slider-btn, .dot')) return;
                 state.isDragging = true;
