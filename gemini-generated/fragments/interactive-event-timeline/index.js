@@ -1,18 +1,13 @@
 const fetchData = async () => {
     const { objectPath } = configuration;
     if (!objectPath) throw new Error('Object path not configured.');
-
     const siteId = Liferay.ThemeDisplay.getScopeGroupId();
     const url = `/o/c/${objectPath}/scopes/${siteId}`;
-
     const response = await Liferay.Util.fetch(url);
     if (!response.ok) {
-        if (response.status === 401 || response.status === 403) {
-            throw new Error('You do not have permission to view milestones for this object.');
-        }
-        throw new Error(`Failed to fetch from ${objectPath}.`);
+        if (response.status === 401 || response.status === 403) throw new Error('Permission denied.');
+        throw new Error(`Failed to fetch from "${objectPath}".`);
     }
-
     const data = await response.json();
     return data.items || [];
 };
@@ -20,19 +15,14 @@ const fetchData = async () => {
 const renderTimeline = (items) => {
     const container = fragmentElement.querySelector(`#items-${fragmentEntryLinkNamespace}`);
     if (!container) return;
-
     if (items.length === 0) {
-        container.innerHTML = '<div class="timeline-status text-muted">No milestones found for this object.</div>';
+        container.innerHTML = '<div class="timeline-status text-muted text-center p-5">No milestones found.</div>';
         return;
     }
-
     const { dateField, titleField, descriptionField } = configuration;
-
-    // Sort items by date
     const sortedItems = items.sort((a, b) => new Date(a[dateField]) - new Date(b[dateField]));
-
     container.innerHTML = sortedItems.map(item => `
-        <div class="timeline-item">
+        <div class="timeline-item is-visible">
             <div class="timeline-dot"></div>
             <div class="timeline-content">
                 <span class="timeline-date">${item[dateField] ? new Date(item[dateField]).toLocaleDateString() : 'No Date'}</span>
@@ -41,43 +31,49 @@ const renderTimeline = (items) => {
             </div>
         </div>
     `).join('');
-
     initAnimations();
 };
 
 const initAnimations = () => {
     const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('is-visible');
-            }
-        });
+        entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('is-visible'); });
     }, { threshold: 0.2 });
-
-    fragmentElement.querySelectorAll('.timeline-item').forEach(item => {
-        observer.observe(item);
-    });
+    fragmentElement.querySelectorAll('.timeline-item').forEach(item => observer.observe(item));
 };
 
-const init = async () => {
+const initTimeline = async (isEditMode) => {
+    const errorEl = fragmentElement.querySelector(`#error-${fragmentEntryLinkNamespace}`);
+    const infoEl = fragmentElement.querySelector(`#info-${fragmentEntryLinkNamespace}`);
+    const itemsEl = fragmentElement.querySelector(`#items-${fragmentEntryLinkNamespace}`);
+    
+    if (errorEl) errorEl.classList.add('d-none');
+    if (infoEl) infoEl.classList.add('d-none');
+
+    const { objectPath } = configuration;
+
+    if (!objectPath) {
+        if (isEditMode && infoEl) {
+            infoEl.textContent = 'Please configure an Object Path.';
+            infoEl.classList.remove('d-none');
+            renderTimeline([{ title: 'Placeholder Item 1', date: '2025-01-01', description: 'Sample description.' }]);
+        }
+        return;
+    }
+
     try {
         const items = await fetchData();
+        if (items.length === 0 && isEditMode) {
+             infoEl.textContent = `No items found for "${objectPath}". Rendering placeholder.`;
+             infoEl.classList.remove('d-none');
+             renderTimeline([{ title: 'Placeholder Item', date: '2025-01-01', description: 'Sample description.' }]);
+             return;
+        }
         renderTimeline(items);
     } catch (err) {
-        console.error('Timeline init failed:', err);
-        const container = fragmentElement.querySelector('.timeline-items');
-        if (container) container.innerHTML = `<div class="timeline-status text-danger">Error: ${err.message}</div>`;
+        if (isEditMode && errorEl) { errorEl.textContent = err.message; errorEl.classList.remove('d-none'); renderTimeline([]); }
+        console.error('Timeline Error:', err);
     }
 };
 
-if (layoutMode === 'view') {
-    init();
-} else {
-    // Static preview for edit/preview modes
-    const mockItems = [
-        { title: 'Project Start', date: '2025-01-01', description: 'Kickoff meeting and initial planning.' },
-        { title: 'Design Phase', date: '2025-03-15', description: 'Completing the brand identity and UI/UX design.' }
-    ];
-    renderTimeline(mockItems);
-    fragmentElement.querySelectorAll('.timeline-item').forEach(i => i.classList.add('is-visible'));
-}
+if (layoutMode === 'view') initTimeline(false);
+else initTimeline(true);

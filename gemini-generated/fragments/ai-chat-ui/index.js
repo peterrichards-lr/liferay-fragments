@@ -1,6 +1,8 @@
 const messagesContainer = fragmentElement.querySelector('.chat-messages');
 const inputField = fragmentElement.querySelector('input');
 const sendBtn = fragmentElement.querySelector('button');
+const infoEl = fragmentElement.querySelector(`#info-${fragmentEntryLinkNamespace}`);
+const errorEl = fragmentElement.querySelector(`#error-${fragmentEntryLinkNamespace}`);
 
 const addMessage = (content, role) => {
     const msgDiv = document.createElement('div');
@@ -29,6 +31,11 @@ const sendMessage = async () => {
     const query = inputField.value.trim();
     if (!query) return;
 
+    if (!configuration.backendUrl && layoutMode === 'view') {
+        addMessage('System Error: No backend URL configured.', 'assistant');
+        return;
+    }
+
     inputField.value = '';
     addMessage(query, 'user');
     
@@ -50,8 +57,7 @@ const sendMessage = async () => {
         };
 
         const response = await Liferay.Util.fetch(configuration.backendUrl, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            method: 'POST', headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(payload)
         });
 
@@ -61,16 +67,27 @@ const sendMessage = async () => {
             const data = await response.json();
             addMessage(data.answer || 'I could not find an answer.', 'assistant');
         } else {
-            addMessage('Sorry, I encountered an error connecting to my brain.', 'assistant');
+            addMessage('Error: Failed to connect to the backend.', 'assistant');
         }
     } catch (err) {
         hideTyping();
-        console.error('AI Chat failed:', err);
         addMessage('System Error: Connection failed.', 'assistant');
+        console.error('AI Chat Error:', err);
     }
 };
 
-sendBtn.addEventListener('click', sendMessage);
-inputField.addEventListener('keypress', (e) => {
-    if (e.key === 'Enter') sendMessage();
-});
+const initChat = () => {
+    if (layoutMode !== 'view' && !configuration.backendUrl) {
+        if (infoEl) {
+            infoEl.textContent = 'Please configure a Backend URL in the configuration.';
+            infoEl.classList.remove('d-none');
+        }
+    }
+
+    sendBtn.addEventListener('click', sendMessage);
+    inputField.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') sendMessage();
+    });
+};
+
+initChat();

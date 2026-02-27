@@ -126,6 +126,15 @@ For truly dynamic fragments (e.g., auto-generated forms or tables), fragments sh
 
 ### Layout & UI
 - Check `layoutMode` to disable interactive or intrusive logic during page editing.
+    - **Edit Mode Preview & Alerts**: Fragments MUST provide a high-quality WYSIWYG experience in Edit mode while remaining performant:
+        - **User Prompts**: Display an `alert-info` container (namespaced) in Edit mode when critical configuration (e.g., Object ERC, Collection ID, API Path) is missing.
+        - **Error Reporting**: Display an `alert-danger` container (namespaced) in Edit mode for API fetch failures or validation errors.
+        - **Static WYSIWYG**: Render a visual representation that matches the production look, but strictly:
+            - **Disable Events**: No form submissions, click handlers (other than for preview navigation), or complex interactions.
+            - **Disable Motion**: Remove all CSS transitions, JS animations, autoplay, parallax effects, or scroll-triggered behavior.
+            - **Limit Items**: For lists, tables, sliders, or galleries, limit the display to a small representative set (e.g., 3-5 items) to ensure the editor remains responsive.
+        - **HTML Structure**: Include `<div class="alert alert-info d-none mb-3" id="info-${fragmentEntryLinkNamespace}"></div>` and `<div class="alert alert-danger d-none mb-3" id="error-${fragmentEntryLinkNamespace}"></div>` in the markup.
+
 - Use `Liferay.Util.fetch` for API calls to handle authentication automatically.
 - Prefer hardcoded inline SVG icons for performance, unless they must be editable.
 

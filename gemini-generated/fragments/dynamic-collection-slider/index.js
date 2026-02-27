@@ -18,38 +18,22 @@ const isUuidV4 = (str) => {
 
 const buildCollectionUrl = (identifier) => {
     const siteId = Liferay.ThemeDisplay.getSiteGroupId();
-    
     if (!identifier) return null;
-
-    if (!isNaN(identifier)) { // If it is a numeric id
-        return `${COLLECTION_BASE_URL}/content-sets/${identifier}/content-set-elements`;
-    }
-
-    if (isUuidV4(identifier)) {
-        return `${COLLECTION_BASE_URL}/sites/${siteId}/content-sets/by-uuid/${identifier}/content-set-elements`;
-    } else {
-        const collectionKey = collectionName2key(identifier);
-        return `${COLLECTION_BASE_URL}/sites/${siteId}/content-sets/by-key/${collectionKey}/content-set-elements`;
-    }
+    if (!isNaN(identifier)) return `${COLLECTION_BASE_URL}/content-sets/${identifier}/content-set-elements`;
+    if (isUuidV4(identifier)) return `${COLLECTION_BASE_URL}/sites/${siteId}/content-sets/by-uuid/${identifier}/content-set-elements`;
+    return `${COLLECTION_BASE_URL}/sites/${siteId}/content-sets/by-key/${collectionName2key(identifier)}/content-set-elements`;
 };
 
 const fetchCollectionItems = async (identifier) => {
     const url = buildCollectionUrl(identifier);
     if (!url) throw new Error('Invalid collection identifier.');
-
     if (cache.has(url)) return cache.get(url);
-
     const response = await Liferay.Util.fetch(url);
     if (!response.ok) {
-        if (response.status === 401 || response.status === 403) {
-            throw new Error('You do not have permission to access items in this collection.');
-        }
-        if (response.status === 404) {
-            throw new Error(`Collection "${identifier}" not found.`);
-        }
-        throw new Error('Failed to fetch collection items');
+        if (response.status === 401 || response.status === 403) throw new Error('Permission denied.');
+        if (response.status === 404) throw new Error(`Collection "${identifier}" not found.`);
+        throw new Error('Fetch failed.');
     }
-
     const data = await response.json();
     const items = data.items.map(i => i.content || i);
     cache.set(url, items);
@@ -59,46 +43,40 @@ const fetchCollectionItems = async (identifier) => {
 const renderSlides = () => {
     const track = fragmentElement.querySelector(`#track-${fragmentEntryLinkNamespace}`);
     if (!track) return;
-
     if (state.items.length === 0) {
-        track.innerHTML = '<div class="slider-status">No items found in this collection.</div>';
+        track.innerHTML = '<div class="slider-status">No items found.</div>';
         return;
     }
-
     const { displayStyle } = configuration;
-
     track.innerHTML = state.items.map((item, index) => {
-        const imageUrl = item.image?.url || item.featuredImage?.url || item.thumbnail?.url || '';
+        let imageUrl = item.image?.url || item.featuredImage?.url || item.thumbnail?.url || '';
+        if (!imageUrl && item.contentFields) {
+            const imgField = item.contentFields.find(f => f.dataType === 'image');
+            if (imgField?.contentFieldValue?.image?.url) imageUrl = imgField.contentFieldValue.image.url;
+            else {
+                const textField = item.contentFields.find(f => f.dataType === 'string' && f.contentFieldValue?.data?.includes('<img'));
+                if (textField) {
+                    const match = textField.contentFieldValue.data.match(/<img[^>]+src=['"]([^'"]+)['"]/);
+                    if (match) imageUrl = match[1];
+                }
+            }
+        }
         const hasImage = !!imageUrl;
+        let itemUrl = '#';
+        if (item.renderedContents?.length > 0) itemUrl = item.renderedContents[0].renderedContentURL;
+        else if (item.friendlyUrlPath) {
+             const sitePath = Liferay.ThemeDisplay.getPathFriendlyURLPublic() + Liferay.ThemeDisplay.getSiteGroupFriendlyURL();
+             itemUrl = `${sitePath}/w/${item.friendlyUrlPath}`;
+        } else if (item.url) itemUrl = item.url;
 
         let contentHtml = '';
         if (displayStyle === 'background' && hasImage) {
-            contentHtml = `
-                <div class="slide-bg" style="background-image: url('${imageUrl}')"></div>
-                <div class="slide-overlay"></div>
-                <div class="slide-content-top">
-                    <div class="slide-title">${item.title || 'Untitled'}</div>
-                    <div class="slide-content">${item.description || ''}</div>
-                </div>
-            `;
+            contentHtml = `<img class="slide-bg" src="${imageUrl}" alt="${item.title || ''}" loading="lazy" /><div class="slide-overlay"></div><div class="slide-content-top"><div class="slide-title">${item.title || 'Untitled'}</div><div class="slide-content">${item.description || ''}</div></div>`;
         } else {
-            contentHtml = `
-                ${hasImage ? `<div class="slide-image" style="background-image: url('${imageUrl}')"></div>` : ''}
-                <div class="slide-content-top">
-                    <div class="slide-title">${item.title || 'Untitled'}</div>
-                    <div class="slide-content">${item.description || ''}</div>
-                </div>
-            `;
+            contentHtml = `${hasImage ? `<img class="slide-image" src="${imageUrl}" alt="${item.title || ''}" loading="lazy" />` : ''}<div class="slide-content-top"><div class="slide-title">${item.title || 'Untitled'}</div><div class="slide-content">${item.description || ''}</div></div>`;
         }
-
-        return `
-            <div class="slider-slide style-${displayStyle}" role="group" aria-roledescription="slide" aria-label="${index + 1} of ${state.items.length}">
-                ${contentHtml}
-                ${item.url ? `<a href="${item.url}" class="btn btn-sm btn-link p-0 text-left">Read More</a>` : ''}
-            </div>
-        `;
+        return `<div class="slider-slide style-${displayStyle}" role="group" aria-roledescription="slide" aria-label="${index + 1} of ${state.items.length}"><a href="${itemUrl}" class="slide-link">${contentHtml}</a></div>`;
     }).join('');
-
     updatePagination();
     updatePosition();
 };
@@ -106,23 +84,10 @@ const renderSlides = () => {
 const updatePagination = () => {
     const container = fragmentElement.querySelector(`#pagination-${fragmentEntryLinkNamespace}`);
     if (!container) return;
-
     const pageCount = Math.ceil(state.items.length / state.slidesPerView);
-    container.innerHTML = Array.from({ length: pageCount }).map((_, i) => `
-        <button class="dot ${Math.floor(state.currentIndex / state.slidesPerView) === i ? 'active' : ''}" 
-                data-index="${i * state.slidesPerView}"
-                role="tab"
-                aria-selected="${Math.floor(state.currentIndex / state.slidesPerView) === i}"
-                aria-label="Go to slide ${i + 1}"
-                aria-controls="track-${fragmentEntryLinkNamespace}"></button>
-    `).join('');
-
+    container.innerHTML = Array.from({ length: pageCount }).map((_, i) => `<button class="dot ${Math.floor(state.currentIndex / state.slidesPerView) === i ? 'active' : ''}" data-index="${i * state.slidesPerView}" role="tab" aria-selected="${Math.floor(state.currentIndex / state.slidesPerView) === i}" aria-label="Go to slide ${i + 1}" aria-controls="track-${fragmentEntryLinkNamespace}"></button>`).join('');
     container.querySelectorAll('.dot').forEach(dot => {
-        dot.addEventListener('click', () => {
-            state.currentIndex = parseInt(dot.dataset.index);
-            updatePosition();
-            resetAutoplay();
-        });
+        dot.addEventListener('click', () => { state.currentIndex = parseInt(dot.dataset.index); updatePosition(); resetAutoplay(); });
     });
 };
 
@@ -137,91 +102,90 @@ const updatePosition = () => {
     const track = fragmentElement.querySelector(`#track-${fragmentEntryLinkNamespace}`);
     const slide = fragmentElement.querySelector('.slider-slide');
     if (!track || !slide) return;
-
     state.slidesPerView = getSlidesPerView();
     fragmentElement.querySelector('.dynamic-slider-container').style.setProperty('--slides-per-view', state.slidesPerView);
-
     const gap = parseInt(getComputedStyle(fragmentElement.querySelector('.slider-track')).gap) || 0;
-    const slideWidth = slide.offsetWidth;
-    const move = state.currentIndex * (slideWidth + gap);
-
-    track.style.transform = `translateX(-${move}px)`;
+    track.style.transform = `translateX(-${state.currentIndex * (slide.offsetWidth + gap)}px)`;
     updatePagination();
 };
 
 const nextSlide = () => {
     const max = state.items.length - state.slidesPerView;
-    if (state.currentIndex < max) {
-        state.currentIndex++;
-    } else if (configuration.loop) {
-        state.currentIndex = 0;
-    }
+    if (state.currentIndex < max) state.currentIndex++;
+    else if (configuration.loop) state.currentIndex = 0;
     updatePosition();
 };
 
 const prevSlide = () => {
-    if (state.currentIndex > 0) {
-        state.currentIndex--;
-    } else if (configuration.loop) {
-        state.currentIndex = Math.max(0, state.items.length - state.slidesPerView);
-    }
+    if (state.currentIndex > 0) state.currentIndex--;
+    else if (configuration.loop) state.currentIndex = Math.max(0, state.items.length - state.slidesPerView);
     updatePosition();
 };
 
 const startAutoplay = () => {
     if (configuration.autoplay && !state.autoplayInterval) {
-        state.autoplayInterval = setInterval(nextSlide, 5000);
+        state.autoplayInterval = setInterval(nextSlide, parseInt(configuration.autoplayInterval) || 5000);
     }
 };
 
 const resetAutoplay = () => {
-    if (state.autoplayInterval) {
-        clearInterval(state.autoplayInterval);
-        state.autoplayInterval = null;
-        startAutoplay();
-    }
+    if (state.autoplayInterval) { clearInterval(state.autoplayInterval); state.autoplayInterval = null; startAutoplay(); }
 };
 
-const init = async () => {
+const init = async (isEditMode) => {
+    const { collectionId } = configuration;
+    const track = fragmentElement.querySelector(`#track-${fragmentEntryLinkNamespace}`);
+    const sliderControls = fragmentElement.querySelector('.slider-controls');
+    const sliderPagination = fragmentElement.querySelector('.slider-pagination');
+    const errorEl = fragmentElement.querySelector(`#error-${fragmentEntryLinkNamespace}`);
+    const infoEl = fragmentElement.querySelector(`#info-${fragmentEntryLinkNamespace}`);
+
+    const showError = (msg) => {
+        if (isEditMode && errorEl) { errorEl.textContent = msg; errorEl.classList.remove('d-none'); }
+        if (track) track.innerHTML = `<div class="slider-status text-danger">${msg}</div>`;
+    };
+
+    const showInfo = (msg) => {
+        if (isEditMode && infoEl) { infoEl.textContent = msg; infoEl.classList.remove('d-none'); }
+        if (track) track.innerHTML = `<div class="slider-status">${msg}</div>`;
+    };
+
+    if (errorEl) errorEl.classList.add('d-none');
+    if (infoEl) infoEl.classList.add('d-none');
+
     try {
-        const { collectionId } = configuration;
         if (!collectionId) {
-            fragmentElement.querySelector('.slider-status').textContent = 'Please provide a Collection Name, Key, or ID in the configuration.';
+            showInfo('Please provide a Collection Name, Key, or ID.');
+            if (sliderControls) sliderControls.style.display = 'none';
+            if (sliderPagination) sliderPagination.style.display = 'none';
+            return;
+        }
+        
+        state.slidesPerView = getSlidesPerView();
+        state.items = await fetchCollectionItems(collectionId);
+
+        if (state.items.length === 0) {
+            showInfo('No items found in this collection.');
+            if (sliderControls) sliderControls.style.display = 'none';
+            if (sliderPagination) sliderPagination.style.display = 'none';
             return;
         }
 
-        state.slidesPerView = getSlidesPerView();
-        fragmentElement.querySelector('.dynamic-slider-container').style.setProperty('--slides-per-view', state.slidesPerView);
-
-        state.items = await fetchCollectionItems(collectionId);
-        renderSlides();
-
-        fragmentElement.querySelector('.next-btn').addEventListener('click', () => {
-            nextSlide();
-            resetAutoplay();
-        });
-
-        fragmentElement.querySelector('.prev-btn').addEventListener('click', () => {
-            prevSlide();
-            resetAutoplay();
-        });
-
-        window.addEventListener('resize', Liferay.Util.debounce(() => {
-            updatePosition();
-        }, 200));
-
-        startAutoplay();
-
-    } catch (err) {
-        console.error('Slider init failed:', err);
-        const track = fragmentElement.querySelector('.slider-track');
-        if (track) track.innerHTML = `<div class="slider-status text-danger">${err.message}</div>`;
-    }
+        if (isEditMode) {
+            state.items = state.items.slice(0, state.slidesPerView);
+            renderSlides();
+            track.style.transition = `none`;
+            if (sliderControls) sliderControls.style.display = 'none';
+            if (sliderPagination) sliderPagination.style.display = 'none';
+        } else {
+            renderSlides();
+            fragmentElement.querySelector('.next-btn').addEventListener('click', () => { nextSlide(); resetAutoplay(); });
+            fragmentElement.querySelector('.prev-btn').addEventListener('click', () => { prevSlide(); resetAutoplay(); });
+            window.addEventListener('resize', Liferay.Util.debounce(() => updatePosition(), 200));
+            startAutoplay();
+        }
+    } catch (err) { showError(err.message); }
 };
 
-if (layoutMode === 'view') {
-    init();
-} else {
-    // Show static state in edit/preview
-    fragmentElement.querySelector('.slider-status').textContent = 'Collection Slider (Data populated in View mode)';
-}
+if (layoutMode === 'view') init(false);
+else init(true);

@@ -1,4 +1,7 @@
 <div class="radial-gauge-container gauge-container-${fragmentEntryLinkNamespace}" style="--gauge-color: ${configuration.gaugeColor!};">
+    <div class="alert alert-info d-none mb-3" id="info-${fragmentEntryLinkNamespace}"></div>
+    <div class="alert alert-danger d-none mb-3" id="error-${fragmentEntryLinkNamespace}"></div>
+
     <div class="gauge-wrap">
         <svg viewBox="0 0 36 36" class="circular-chart">
             <path class="circle-bg"

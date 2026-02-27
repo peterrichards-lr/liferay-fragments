@@ -1,9 +1,12 @@
 <div class="meta-form-container meta-form-${fragmentEntryLinkNamespace}" style="--btn-color: ${configuration.buttonColor!};">
+    <div class="alert alert-info d-none mb-3" id="info-${fragmentEntryLinkNamespace}"></div>
+    <div class="alert alert-danger d-none mb-3" id="error-${fragmentEntryLinkNamespace}"></div>
+
     <h2 class="object-title mb-4"></h2>
     
     <form class="dynamic-form" id="form-${fragmentEntryLinkNamespace}">
         <div class="form-fields-wrap" id="fields-${fragmentEntryLinkNamespace}">
-            <div class="meta-status">Discovering object fields...</div>
+            <div class="meta-status text-center p-5">Discovering object fields...</div>
         </div>
 
         <div class="form-actions mt-5">

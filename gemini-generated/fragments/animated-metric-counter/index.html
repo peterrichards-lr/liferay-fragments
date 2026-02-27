@@ -1,4 +1,7 @@
 <div class="metric-counter-container metric-container-${fragmentEntryLinkNamespace}" style="--text-color: ${configuration.textColor!};">
+    <div class="alert alert-info d-none mb-3" id="info-${fragmentEntryLinkNamespace}"></div>
+    <div class="alert alert-danger d-none mb-3" id="error-${fragmentEntryLinkNamespace}"></div>
+
     <div class="metric-value-wrap">
         <span class="metric-prefix">${configuration.prefix!}</span>
         <span class="metric-value" id="value-${fragmentEntryLinkNamespace}">0</span>

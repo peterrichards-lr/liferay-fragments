@@ -13,19 +13,29 @@ const animateValue = (obj, start, end, duration) => {
 
 const initCounter = () => {
     const valueEl = fragmentElement.querySelector(`#value-${fragmentEntryLinkNamespace}`);
+    const infoEl = fragmentElement.querySelector(`#info-${fragmentEntryLinkNamespace}`);
+    const errorEl = fragmentElement.querySelector(`#error-${fragmentEntryLinkNamespace}`);
+    
+    if (infoEl) infoEl.classList.add('d-none');
+    if (errorEl) errorEl.classList.add('d-none');
+
     const endValue = parseInt(configuration.endValue || '0');
     const duration = parseInt(configuration.duration || '2000');
 
     if (!valueEl) return;
 
     if (layoutMode !== 'view') {
+        if (!configuration.endValue && infoEl) {
+            infoEl.textContent = 'Please provide an End Value in the configuration.';
+            infoEl.classList.remove('d-none');
+        }
         valueEl.innerHTML = endValue;
         return;
     }
 
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
-            if (entries[0].isIntersecting) {
+            if (entry.isIntersecting) {
                 animateValue(valueEl, 0, endValue, duration);
                 observer.unobserve(valueEl);
             }

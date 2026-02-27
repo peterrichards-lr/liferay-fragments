@@ -1,9 +1,22 @@
 const initParallax = () => {
     const hero = fragmentElement.querySelector('.parallax-hero');
     const bg = fragmentElement.querySelector('.parallax-bg');
+    const infoEl = fragmentElement.querySelector(`#info-${fragmentEntryLinkNamespace}`);
+    const errorEl = fragmentElement.querySelector(`#error-${fragmentEntryLinkNamespace}`);
     const speed = parseFloat(configuration.speed || '0.5');
 
-    if (!hero || !bg || layoutMode !== 'view') return;
+    if (infoEl) infoEl.classList.add('d-none');
+    if (errorEl) errorEl.classList.add('d-none');
+
+    if (layoutMode !== 'view') {
+        if (!configuration.speed && infoEl) {
+            infoEl.textContent = 'Parallax speed is not configured. Using default (0.5).';
+            infoEl.classList.remove('d-none');
+        }
+        return;
+    }
+
+    if (!hero || !bg) return;
 
     window.addEventListener('scroll', () => {
         const scrollY = window.pageYOffset;
