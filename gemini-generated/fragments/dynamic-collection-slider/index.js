@@ -131,18 +131,28 @@ const updatePosition = () => {
     const slideWidth = slide.offsetWidth;
     track.style.transform = `translateX(-${state.currentIndex * (slideWidth + gap)}px)`;
 
-    // Update classes for Coverflow-lite effect
     const slides = fragmentElement.querySelectorAll('.slider-slide');
     const activeMidOffset = Math.floor(state.slidesPerView / 2);
     const activeIndex = state.currentIndex + activeMidOffset;
 
     slides.forEach((s, i) => {
         s.classList.remove('is-active', 'is-visible');
+        
+        // Basic visibility always matters for simple fade if used
         if (i >= state.currentIndex && i < state.currentIndex + state.slidesPerView) {
             s.classList.add('is-visible');
         }
-        if (i === activeIndex || (state.slidesPerView === 1 && i === state.currentIndex)) {
-            s.classList.add('is-active');
+
+        // Only apply 'active' depth if enabled
+        if (configuration.enableDepthEffect) {
+            if (i === activeIndex || (state.slidesPerView === 1 && i === state.currentIndex)) {
+                s.classList.add('is-active');
+            }
+        } else {
+            // If depth effect is disabled, all visible slides are effectively 'active' (flat)
+            if (i >= state.currentIndex && i < state.currentIndex + state.slidesPerView) {
+                s.classList.add('is-active');
+            }
         }
     });
 
@@ -255,9 +265,7 @@ const init = async (isEditMode) => {
 
             // Unified Pointer Interaction (Mouse + Touch)
             fragmentElement.addEventListener('pointerdown', (e) => {
-                // Ignore if clicking a button
                 if (e.target.closest('.slider-btn, .dot')) return;
-                
                 state.isDragging = true;
                 state.pointerStartX = e.pageX;
                 state.pointerCurrentX = e.pageX;
@@ -277,7 +285,6 @@ const init = async (isEditMode) => {
                 handleGesture();
             });
 
-            // Prevent link navigation during drag
             fragmentElement.addEventListener('click', (e) => {
                 const deltaX = Math.abs(state.pointerStartX - state.pointerCurrentX);
                 if (deltaX > state.dragThreshold) {

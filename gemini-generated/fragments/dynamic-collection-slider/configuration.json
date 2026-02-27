@@ -57,6 +57,12 @@
           "type": "checkbox"
         },
         {
+          "defaultValue": true,
+          "label": "enable-depth-effect",
+          "name": "enableDepthEffect",
+          "type": "checkbox"
+        },
+        {
           "defaultValue": "top",
           "label": "display-style",
           "name": "displayStyle",
