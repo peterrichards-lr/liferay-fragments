@@ -2,8 +2,10 @@ const ADMIN_API_BASE = '/o/object-admin/v1.0';
 
 const state = {
     definition: null,
+    fields: [],
     items: [],
-    page: 1
+    page: 1,
+    totalCount: 0
 };
 
 const getLocalizedValue = (value) => {
@@ -67,13 +69,89 @@ const fetchData = async (url) => {
     return await response.json();
 };
 
+const renderPagination = (isEditMode) => {
+    const pagination = fragmentElement.querySelector(`#pagination-${fragmentEntryLinkNamespace}`);
+    const info = fragmentElement.querySelector('.pagination-info');
+    if (!pagination || isEditMode) return;
+
+    const pageSize = parseInt(configuration.pageSize || 10);
+    const totalPages = Math.ceil(state.totalCount / pageSize);
+
+    if (configuration.enablePagination && totalPages > 1) {
+        pagination.classList.remove('d-none');
+        
+        const prevItem = pagination.querySelector('.page-item:first-child');
+        const nextItem = pagination.querySelector('.page-item:last-child');
+        const activeLink = pagination.querySelector('.page-item.active .page-link');
+
+        if (prevItem) {
+            prevItem.classList.toggle('disabled', state.page === 1);
+            prevItem.onclick = (e) => { e.preventDefault(); if (state.page > 1) loadPage(state.page - 1); };
+        }
+
+        if (nextItem) {
+            nextItem.classList.toggle('disabled', state.page === totalPages);
+            nextItem.onclick = (e) => { e.preventDefault(); if (state.page < totalPages) loadPage(state.page + 1); };
+        }
+
+        if (activeLink) activeLink.textContent = state.page;
+    } else {
+        pagination.classList.add('d-none');
+    }
+
+    if (info) {
+        info.textContent = `Showing ${state.items.length} of ${state.totalCount} entries`;
+    }
+};
+
+const loadPage = async (pageNumber, isEditMode = false) => {
+    const tbody = fragmentElement.querySelector(`#tbody-${fragmentEntryLinkNamespace}`);
+    const pageSize = isEditMode ? 3 : parseInt(configuration.pageSize || 10);
+    const { columnsToDisplay, customizeColumns } = configuration;
+
+    state.page = pageNumber;
+
+    try {
+        let dataUrl = `${state.definition.restContextPath}/?pageSize=${pageSize}&page=${state.page}`;
+        if (customizeColumns && columnsToDisplay) {
+            dataUrl += `&fields=${columnsToDisplay}`;
+        }
+
+        const data = await fetchData(dataUrl);
+        state.items = data.items || [];
+        state.totalCount = data.totalCount || 0;
+
+        if (state.items.length === 0) {
+            tbody.innerHTML = `<tr><td colspan="${state.fields.length}" class="text-center p-5">No data found.</td></tr>`;
+            return;
+        }
+
+        tbody.innerHTML = state.items.map(item => `
+            <tr>
+                ${state.fields.map(f => `<td data-label="${getLocalizedValue(f.label)}">${formatCellValue(item, f)}</td>`).join('')}
+            </tr>
+        `).join('');
+
+        if (!isEditMode) {
+            renderPagination(false);
+        } else {
+            const info = fragmentElement.querySelector('.pagination-info');
+            if (info) info.textContent = `Showing ${state.items.length} entries (Editor Preview)`;
+        }
+    } catch (err) {
+        const errorEl = fragmentElement.querySelector(`#error-${fragmentEntryLinkNamespace}`);
+        if (errorEl) {
+            errorEl.textContent = err.message;
+            errorEl.classList.remove('d-none');
+        }
+    }
+};
+
 const initMetaTable = async (isEditMode) => {
     const { objectERC, columnsToDisplay, customizeColumns } = configuration;
-    const tbody = fragmentElement.querySelector(`#tbody-${fragmentEntryLinkNamespace}`);
     const thead = fragmentElement.querySelector(`#thead-${fragmentEntryLinkNamespace}`);
     const titleEl = fragmentElement.querySelector('.object-title');
     const exportBtn = fragmentElement.querySelector(`#export-${fragmentEntryLinkNamespace}`);
-    const pagination = fragmentElement.querySelector(`#pagination-${fragmentEntryLinkNamespace}`);
     const errorEl = fragmentElement.querySelector(`#error-${fragmentEntryLinkNamespace}`);
     const infoEl = fragmentElement.querySelector(`#info-${fragmentEntryLinkNamespace}`);
 
@@ -82,31 +160,15 @@ const initMetaTable = async (isEditMode) => {
         if (infoEl) infoEl.classList.add('d-none');
     };
 
-    const showError = (msg) => {
-        if (isEditMode && errorEl) {
-            errorEl.textContent = msg;
-            errorEl.classList.remove('d-none');
-            if (tbody) tbody.innerHTML = '';
-        } else if (tbody) {
-            tbody.innerHTML = `<tr><td colspan="100" class="text-center p-5 text-danger">${msg}</td></tr>`;
-        }
-    };
-
-    const showInfo = (msg) => {
-        if (isEditMode && infoEl) {
-            infoEl.textContent = msg;
-            infoEl.classList.remove('d-none');
-            if (tbody) tbody.innerHTML = '';
-        } else if (tbody) {
-            tbody.innerHTML = `<tr><td colspan="100" class="text-center p-5 text-muted">${msg}</td></tr>`;
-        }
-    };
-
-    clearAlerts();
+    if (errorEl) errorEl.classList.add('d-none');
+    if (infoEl) infoEl.classList.add('d-none');
 
     if (!objectERC) {
         titleEl.textContent = 'Meta-Object Table';
-        showInfo('Please provide an Object External Reference Code in the configuration.');
+        if (isEditMode && infoEl) {
+            infoEl.textContent = 'Please provide an Object External Reference Code in the configuration.';
+            infoEl.classList.remove('d-none');
+        }
         return;
     }
 
@@ -115,66 +177,38 @@ const initMetaTable = async (isEditMode) => {
         state.definition = await fetchData(defUrl);
         titleEl.textContent = getLocalizedValue(state.definition.name) + (isEditMode ? ' (Preview)' : '');
 
+        // Strict column filtering
         let fields = state.definition.objectFields.filter(f => !['id', 'externalReferenceCode'].includes(f.name));
 
         if (customizeColumns && columnsToDisplay) {
             const desired = columnsToDisplay.split(',').map(col => col.trim());
-            const reordered = [];
-            desired.forEach(name => {
-                const found = fields.find(f => f.name === name || getLocalizedValue(f.label) === name);
-                if (found) reordered.push(found);
-            });
-            fields.forEach(f => { if (!reordered.includes(f)) reordered.push(f); });
-            fields = reordered;
+            fields = desired.map(name => 
+                fields.find(f => f.name === name || getLocalizedValue(f.label) === name)
+            ).filter(Boolean);
         }
+        state.fields = fields;
 
-        thead.innerHTML = fields.map(f => `<th>${getLocalizedValue(f.label)}</th>`).join('');
+        thead.innerHTML = state.fields.map(f => `<th>${getLocalizedValue(f.label)}</th>`).join('');
 
-        const restPath = state.definition.restContextPath; 
-        const pageSize = isEditMode ? 3 : (configuration.pageSize || 10);
-        let dataUrl = `${restPath}/?pageSize=${pageSize}`;
-        if (customizeColumns && columnsToDisplay) {
-            dataUrl += `&fields=${columnsToDisplay}`;
-        }
-        
-        const data = await fetchData(dataUrl);
-        state.items = data.items || [];
+        await loadPage(1, isEditMode);
 
-        if (state.items.length === 0) {
-            tbody.innerHTML = `<tr><td colspan="${fields.length}" class="text-center p-5">No data found.</td></tr>`;
-            return;
-        }
-
-        tbody.innerHTML = state.items.map(item => `
-            <tr>
-                ${fields.map(f => `<td data-label="${getLocalizedValue(f.label)}">${formatCellValue(item, f)}</td>`).join('')}
-            </tr>
-        `).join('');
-
-        if (!isEditMode) {
-            if (exportBtn) {
-                exportBtn.classList.remove('d-none');
-                exportBtn.onclick = () => {
-                    const header = fields.map(f => `"${getLocalizedValue(f.label)}"`).join(',');
-                    const rows = state.items.map(item => fields.map(f => `"${String(formatCellValue(item, f)).replace(/"/g, '""')}"`).join(','));
-                    const blob = new Blob([[header, ...rows].join('\n')], { type: 'text/csv;charset=utf-8;' });
-                    const link = document.createElement('a');
-                    link.href = URL.createObjectURL(blob);
-                    link.setAttribute('download', `${state.definition.restContextPath.replace('/o/c/', '')}.csv`);
-                    link.click();
-                };
-            }
-            const info = fragmentElement.querySelector('.pagination-info');
-            if (info) info.textContent = `Showing ${state.items.length} of ${data.totalCount} entries`;
-            if (configuration.enablePagination && data.totalCount > pageSize) pagination.classList.remove('d-none');
-        } else {
-            if (exportBtn) exportBtn.classList.add('d-none');
-            if (pagination) pagination.classList.add('d-none');
-            const info = fragmentElement.querySelector('.pagination-info');
-            if (info) info.textContent = `Showing ${state.items.length} entries (Editor Preview)`;
+        if (!isEditMode && exportBtn) {
+            exportBtn.classList.remove('d-none');
+            exportBtn.onclick = () => {
+                const header = state.fields.map(f => `"${getLocalizedValue(f.label)}"`).join(',');
+                const rows = state.items.map(item => state.fields.map(f => `"${String(formatCellValue(item, f)).replace(/"/g, '""')}"`).join(','));
+                const blob = new Blob([[header, ...rows].join('\n')], { type: 'text/csv;charset=utf-8;' });
+                const link = document.createElement('a');
+                link.href = URL.createObjectURL(blob);
+                link.setAttribute('download', `${state.definition.restContextPath.replace('/o/c/', '')}.csv`);
+                link.click();
+            };
         }
     } catch (err) {
-        showError(err.message);
+        if (isEditMode && errorEl) {
+            errorEl.textContent = err.message;
+            errorEl.classList.remove('d-none');
+        }
     }
 };
 
