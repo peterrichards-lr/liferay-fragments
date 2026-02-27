@@ -14,53 +14,64 @@
 [/#if]
 [#assign labels = configuration.labelList?split(";") /]
 [#assign totalDigits = configuration.integerDigitCount + configuration.decimalDigitCount /]
-  <div class="meter-reading" style="--meter-reading-integer-color: ${configuration.integerFGColor};--meter-reading-integer-background-color: ${configuration.integerBGColor};--meter-reading-decimal-color: ${configuration.decimalFGColor};;--meter-reading-decimal-background-color: ${configuration.decimalBGColor};--label-color: ${configuration.labelColor};--meter-reading-font-size: ${configuration.digitFontSize};;--label-font-size: ${configuration.labelFontSize};">
-    <form autocomplete="off">
-      <div class="${readingContainerClass}">
-				[#list 1..totalDigits as i]
-				[#assign classList = "digit"/]
-				[#if i<= configuration.integerDigitCount]
-				[#assign classList=classList+" int" /]
-				[#else]
-				[#assign classList=classList+" dec" /]
-				[/#if]
-        <label class="${labelClass}"
-          ><input
-            size="1"
-            maxlength="1"
-            class="${classList}"
-            type="${inputType}"
-            id="meter-reading-digit-${i}-input"
-            name="meter-reading-digit-${i}"
-            digit="${i}"
-            required
-        />
-				[#if i-1<labels?size]
-				${labels[i-1]?trim}
-				[/#if]
-				</label>
-				[/#list]
-      </div>
-			<div class="${dateInputClass}">
-				<label for="meter-reading-date-date-input" id="meter-reading-date-label">Date of Reading[@clay["icon"] className="reference-mark" symbol="asterisk" /]</label>
-				<input class="date" aria-describedby="meter-reading-date-input-help-text" aria-labelledby="meter-reading-date-label" id="meter-reading-date-input" max="9999-12-31" type="date" name="meter-reading-date" required />
-      </div>
-      <div class="control">
-				<span class="status"></span>
-        <button
-          id="meter-reading-submit-button"
-          class="btn btn-${configuration.buttonSize} btn-${configuration.buttonType}"
-          type="submit"
-        >
-          Submit
-        </button>
-        <button
-          id="meter-reading-reset-button"
-          class="btn btn-${configuration.buttonSize} btn-${configuration.buttonType}"
-          type="reset"
-        >
-          Reset
-        </button>
-      </div>
-    </form>
+  <div class="meter-reading" style="--meter-reading-integer-color: ${configuration.integerFGColor!};--meter-reading-integer-background-color: ${configuration.integerBGColor!};--meter-reading-decimal-color: ${configuration.decimalFGColor!};;--meter-reading-decimal-background-color: ${configuration.decimalBGColor!};--label-color: ${configuration.labelColor!};--meter-reading-font-size: ${configuration.digitFontSize!};;--label-font-size: ${configuration.labelFontSize!};">
+    <div class="alert alert-danger d-none error-container mb-3"></div>
+    <div class="alert alert-danger d-none singleton-error">
+        <strong>Error:</strong> Only one instance of the Meter Reading fragment is allowed per page. Please remove the duplicate.
+    </div>
+        <div class="meter-reading-content">
+          <form autocomplete="off">
+            <fieldset>
+                <legend class="sr-only">Meter Reading Input</legend>
+                <div class="${readingContainerClass}">
+                                        [#list 1..totalDigits as i]
+                                        [#assign classList = "digit"/]
+                                        [#if i<= configuration.integerDigitCount]
+                                        [#assign classList=classList+" int" /]
+                                        [#else]
+                                        [#assign classList=classList+" dec" /]
+                                        [/#if]
+                <label class="${labelClass}"
+                  ><input
+                    size="1"
+                    maxlength="1"
+                    class="${classList}"
+                    type="${inputType}"
+                    id="meter-reading-digit-${i}-input-${fragmentEntryLinkNamespace}"
+                    name="meter-reading-digit-${i}"
+                    digit="${i}"
+                    aria-label="Digit ${i} of ${totalDigits}"
+                    required
+                />
+                                        [#if i-1<labels?size]
+                                        <span aria-hidden="true">${labels[i-1]?trim}</span>
+                                        [/#if]
+                                        </label>
+                                        [/#list]
+                </div>
+            </fieldset>
+    
+			  <div class="${dateInputClass}">
+				  <label for="meter-reading-date-input-${fragmentEntryLinkNamespace}" id="meter-reading-date-label-${fragmentEntryLinkNamespace}">Date of Reading[@clay["icon"] className="reference-mark" symbol="asterisk" /]</label>
+				  <input class="date" aria-describedby="meter-reading-date-input-help-text-${fragmentEntryLinkNamespace}" aria-labelledby="meter-reading-date-label-${fragmentEntryLinkNamespace}" id="meter-reading-date-input-${fragmentEntryLinkNamespace}" max="9999-12-31" type="date" name="meter-reading-date" required />
+        </div>
+        <div class="control">
+				  <span class="status"></span>
+          <button
+            id="meter-reading-submit-button-${fragmentEntryLinkNamespace}"
+            class="btn btn-${configuration.buttonSize!} btn-${configuration.buttonType!}"
+            type="submit"
+          >
+            Submit
+          </button>
+          <button
+            id="meter-reading-reset-button-${fragmentEntryLinkNamespace}"
+            class="btn btn-${configuration.buttonSize!} btn-${configuration.buttonType!}"
+            type="reset"
+          >
+            Reset
+          </button>
+        </div>
+      </form>
+    </div>
   </div>

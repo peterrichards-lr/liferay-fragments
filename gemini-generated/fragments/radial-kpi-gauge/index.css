@@ -1,0 +1,50 @@
+.radial-gauge-container {
+    padding: var(--spacer-5, 2rem);
+    background-color: var(--white, #fff);
+    border-radius: var(--border-radius-lg, 0.5rem);
+    text-align: center;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    max-width: 250px;
+    margin: auto;
+}
+
+.radial-gauge-container .gauge-wrap {
+    width: 100%;
+    margin-bottom: var(--spacer-3, 1rem);
+}
+
+.circular-chart {
+    display: block;
+    margin: 10px auto;
+    max-width: 100%;
+    max-height: 250px;
+}
+
+.circle-bg {
+    fill: none;
+    stroke: var(--gray-200, #eee);
+    stroke-width: 3.8;
+}
+
+.circle {
+    fill: none;
+    stroke: var(--gauge-color, var(--primary));
+    stroke-width: 3.8;
+    stroke-linecap: round;
+    transition: stroke-dasharray 1s ease-out;
+}
+
+.percentage {
+    fill: var(--body-color, #333);
+    font-family: var(--font-family-base);
+    font-size: 0.5rem;
+    text-anchor: middle;
+    font-weight: var(--font-weight-bold, 700);
+}
+
+.radial-gauge-container .gauge-label {
+    font-size: var(--font-size-lg, 1.125rem);
+    color: var(--text-secondary-color, #6b6c7e);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}

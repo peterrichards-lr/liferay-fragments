@@ -1,0 +1,26 @@
+{
+  "context": {
+    "fileFiltering": {
+      "respectGeminiIgnore": true,
+      "respectGitIgnore": true
+    },
+    "fileName": ["gemini.md"]
+  },
+  "general": {
+    "checkpointing": {
+      "enabled": true
+    },
+    "preferredEditor": "code"
+  },
+  "ide": {
+    "enabled": true
+  },
+  "privacy": {
+    "usageStatisticsEnabled": false
+  },
+  "ui": {
+    "hideBanner": true,
+    "hideTips": false,
+    "theme": "GitHub"
+  }
+}

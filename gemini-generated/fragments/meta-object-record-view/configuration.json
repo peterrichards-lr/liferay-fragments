@@ -1,0 +1,27 @@
+{
+  "fieldSets": [
+    {
+      "fields": [
+        {
+          "label": "object-external-reference-code",
+          "name": "objectERC",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "label": "fallback-record-id",
+          "name": "recordId",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "defaultValue": "var(--primary)",
+          "label": "accent-color",
+          "name": "accentColor",
+          "type": "colorPicker"
+        }
+      ],
+      "label": "Data Source"
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+.chart-fragment-container {
+    padding: var(--spacer-4, 1.5rem);
+    background-color: var(--white, #fff);
+    border-radius: var(--border-radius-lg, 0.5rem);
+}
+
+.chart-fragment-container .chart-wrapper {
+    position: relative;
+    height: 400px;
+    width: 100%;
+}
+
+.chart-fragment-container .chart-error {
+    margin-bottom: var(--spacer-3, 1rem);
+}

@@ -1,0 +1,88 @@
+.star-rating-container {
+	width: max-content;
+}
+
+.star-rating-container label:not(.star-label) {
+	display: block;
+}
+
+.star-rating-container .star-wrap {
+  position: relative;
+	margin-top: 1rem;
+}
+
+.star-rating-container .star-label.hidden {
+  display: none;
+}
+
+.star-rating-container .star-label {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  width: var(--starSize, 2rem);
+  height: var(--starSize, 2rem);
+}
+
+@media (min-width: 840px) {
+  .star-rating-container .star-label {
+    width: calc(var(--starSize, 2rem) * 1.5);
+    height: calc(var(--starSize, 2rem) * 1.5);
+  }
+}
+
+.star-rating-container .star-shape {
+  background-color: var(--activeStarColor, var(--warning, gold));
+  width: 80%;
+  height: 80%;
+  clip-path: polygon(
+    50% 0%,
+    61% 35%,
+    98% 35%,
+    68% 57%,
+    79% 91%,
+    50% 70%,
+    21% 91%,
+    32% 57%,
+    2% 35%,
+    39% 35%
+  );
+}
+
+.star-rating-container .star:checked + .star-label ~ .star-label .star-shape {
+  background-color: var(--passiveStarColor, var(--gray-300, lightgray));
+}
+
+.star-rating-container .star {
+  position: fixed;
+  opacity: 0;
+  left: -90000px;
+}
+
+.star-rating-container .star:focus + .star-label {
+  outline: 2px dotted black;
+}
+
+.star-rating-container .skip-button {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 1rem;
+  position: absolute;
+  top: -2rem;
+  right: -1rem;
+  text-align: center;
+  line-height: 2rem;
+  font-size:2rem;
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.star-rating-container .skip-button:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+.star-rating-container .star.readonly ~ .skip-button {
+  display: none;
+}
+
+.star-rating-container .star:checked ~ .skip-button {
+  display: none;
+}

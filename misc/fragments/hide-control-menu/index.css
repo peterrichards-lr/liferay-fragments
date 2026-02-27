@@ -1,5 +1,5 @@
 .loading-panel {
-	background-color: #f1f2f5;
+	background-color: var(--gray-200, #f1f2f5);
 	position: fixed;
 	height: 100%;
 	width: 100%;
@@ -24,7 +24,7 @@
     content: "";
     display: block;
     height: 1em;
-    -webkit-mask: conic-gradient(transparent 10%, #000), linear-gradient(#000 0 0) content-box;
+    -webkit-mask: conic-gradient(transparent 10%, var(--black, #000)), linear-gradient(var(--black, #000) 0 0) content-box;
     -webkit-mask-composite: source-out;
     mask-composite: subtract;
     padding: 0.25em;

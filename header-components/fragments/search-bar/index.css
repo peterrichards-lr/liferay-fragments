@@ -7,8 +7,8 @@
 }
 
 .commerce-search .commerce-search__input {
-	background-color: #e0e5ee;
-	background-color: var(--body-bg, #e0e5ee);
+	background-color: var(--gray-200, #e0e5ee);
+	background-color: var(--body-bg, var(--gray-200, #e0e5ee));
 	flex-grow: 1;
 	padding: 20px;
 }

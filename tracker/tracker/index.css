@@ -12,7 +12,7 @@
 	background: 0 0;
   display: inline-block;
   vertical-align: top;
-  color: #fff;
+  color: var(--white, #fff);
   font-size: 1rem;
 }
 
@@ -107,10 +107,10 @@ border-left-color: #017c92
 
 .tracker .tracker-step .tracker-step-content .content.future-step {
     background-color: var(--brand-color-3, #017c92);
-    color: var(--white, #fff);
+    color: var(--white, var(--white, #fff));
 }
 
 .tracker .tracker-step .tracker-step-content .content.past-step {
     background-color: var(--brand-color-2, #001f38);
-    color: var(--white, #fff);
+    color: var(--white, var(--white, #fff));
 }

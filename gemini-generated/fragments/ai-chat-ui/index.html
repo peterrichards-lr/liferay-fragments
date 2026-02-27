@@ -1,0 +1,25 @@
+<div class="ai-chat-fragment ai-chat-${fragmentEntryLinkNamespace}" style="--user-color: ${configuration.userBubbleColor!};">
+    <div class="alert alert-info d-none mb-3" id="info-${fragmentEntryLinkNamespace}"></div>
+    <div class="alert alert-danger d-none mb-3" id="error-${fragmentEntryLinkNamespace}"></div>
+
+    <div class="chat-header">
+        <div class="assistant-name" data-lfr-editable-id="assistant-name" data-lfr-editable-type="text">
+            Meridian AI Assistant
+        </div>
+    </div>
+    
+    <div class="chat-messages" id="messages-${fragmentEntryLinkNamespace}" aria-live="polite">
+        <div class="message assistant">
+            <div class="bubble" data-lfr-editable-id="welcome-msg" data-lfr-editable-type="text" aria-label="Assistant message">
+                Hello! How can I help you today?
+            </div>
+        </div>
+    </div>
+
+    <div class="chat-input-wrap">
+        <input type="text" id="input-${fragmentEntryLinkNamespace}" placeholder="Type your question..." autocomplete="off">
+        <button id="send-${fragmentEntryLinkNamespace}" aria-label="Send Message">
+            [@clay["icon"] symbol="send" /]
+        </button>
+    </div>
+</div>

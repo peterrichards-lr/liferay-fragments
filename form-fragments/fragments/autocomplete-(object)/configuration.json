@@ -100,7 +100,7 @@
           "label": "object-field-localized",
           "localizable": false,
           "name": "isLocalized",
-          "type": "checkbox",
+          "type": "checkbox"
         }
       ],
       "label": "object-options"

@@ -30,7 +30,7 @@
   animation: 1.2s ease-out infinite;
   animation-name: loading-animation;
   border-radius: 50%;
-  color: #6b6c7e;
+  color: var(--text-secondary-color, #6b6c7e);
   content: "";
   display: block;
   height: 1em;
@@ -39,27 +39,27 @@
   top: 0;
   transform: scale(0.33334);
   width: 1em;
-  box-shadow: 0 -1em 0 0em #6b6c7e, 1em -0.5em 0 -0.35em rgba(107, 108, 126, 0.1), 1em 0.5em 0 -0.25em rgba(107, 108, 126, 0.2), 0 1em 0 -0.2em rgba(107, 108, 126, 0.4), -1em 0.5em 0 -0.15em rgba(107, 108, 126, 0.6), -1em -0.5em 0 -0.1em rgba(107, 108, 126, 0.8);
+  box-shadow: 0 -1em 0 0em var(--text-secondary-color, #6b6c7e), 1em -0.5em 0 -0.35em rgba(107, 108, 126, 0.1), 1em 0.5em 0 -0.25em rgba(107, 108, 126, 0.2), 0 1em 0 -0.2em rgba(107, 108, 126, 0.4), -1em 0.5em 0 -0.15em rgba(107, 108, 126, 0.6), -1em -0.5em 0 -0.1em rgba(107, 108, 126, 0.8);
 }
 
 @keyframes loading-animation {
   0%, 100% {
-    box-shadow: 0 -1em 0 0em #6b6c7e, 1em -0.5em 0 -0.35em rgba(107, 108, 126, 0.1), 1em 0.5em 0 -0.25em rgba(107, 108, 126, 0.2), 0 1em 0 -0.2em rgba(107, 108, 126, 0.4), -1em 0.5em 0 -0.15em rgba(107, 108, 126, 0.6), -1em -0.5em 0 -0.1em rgba(107, 108, 126, 0.8);
+    box-shadow: 0 -1em 0 0em var(--text-secondary-color, #6b6c7e), 1em -0.5em 0 -0.35em rgba(107, 108, 126, 0.1), 1em 0.5em 0 -0.25em rgba(107, 108, 126, 0.2), 0 1em 0 -0.2em rgba(107, 108, 126, 0.4), -1em 0.5em 0 -0.15em rgba(107, 108, 126, 0.6), -1em -0.5em 0 -0.1em rgba(107, 108, 126, 0.8);
   }
   16.6% {
-    box-shadow: 0 -1em 0 -0.1em rgba(107, 108, 126, 0.8), 1em -0.5em 0 0em #6b6c7e, 1em 0.5em 0 -0.35em rgba(107, 108, 126, 0.1), 0 1em 0 -0.25em rgba(107, 108, 126, 0.2), -1em 0.5em 0 -0.2em rgba(107, 108, 126, 0.4), -1em -0.5em 0 -0.15em rgba(107, 108, 126, 0.6);
+    box-shadow: 0 -1em 0 -0.1em rgba(107, 108, 126, 0.8), 1em -0.5em 0 0em var(--text-secondary-color, #6b6c7e), 1em 0.5em 0 -0.35em rgba(107, 108, 126, 0.1), 0 1em 0 -0.25em rgba(107, 108, 126, 0.2), -1em 0.5em 0 -0.2em rgba(107, 108, 126, 0.4), -1em -0.5em 0 -0.15em rgba(107, 108, 126, 0.6);
   }
   33.3% {
-    box-shadow: 0 -1em 0 -0.15em rgba(107, 108, 126, 0.6), 1em -0.5em 0 -0.1em rgba(107, 108, 126, 0.8), 1em 0.5em 0 0em #6b6c7e, 0 1em 0 -0.35em rgba(107, 108, 126, 0.1), -1em 0.5em 0 -0.25em rgba(107, 108, 126, 0.2), -1em -0.5em 0 -0.2em rgba(107, 108, 126, 0.4);
+    box-shadow: 0 -1em 0 -0.15em rgba(107, 108, 126, 0.6), 1em -0.5em 0 -0.1em rgba(107, 108, 126, 0.8), 1em 0.5em 0 0em var(--text-secondary-color, #6b6c7e), 0 1em 0 -0.35em rgba(107, 108, 126, 0.1), -1em 0.5em 0 -0.25em rgba(107, 108, 126, 0.2), -1em -0.5em 0 -0.2em rgba(107, 108, 126, 0.4);
   }
   50% {
-    box-shadow: 0 -1em 0 -0.2em rgba(107, 108, 126, 0.4), 1em -0.5em 0 -0.15em rgba(107, 108, 126, 0.6), 1em 0.5em 0 -0.1em rgba(107, 108, 126, 0.8), 0 1em 0 0em #6b6c7e, -1em 0.5em 0 -0.35em rgba(107, 108, 126, 0.1), -1em -0.5em 0 -0.25em rgba(107, 108, 126, 0.2);
+    box-shadow: 0 -1em 0 -0.2em rgba(107, 108, 126, 0.4), 1em -0.5em 0 -0.15em rgba(107, 108, 126, 0.6), 1em 0.5em 0 -0.1em rgba(107, 108, 126, 0.8), 0 1em 0 0em var(--text-secondary-color, #6b6c7e), -1em 0.5em 0 -0.35em rgba(107, 108, 126, 0.1), -1em -0.5em 0 -0.25em rgba(107, 108, 126, 0.2);
   }
   66.6% {
-    box-shadow: 0 -1em 0 -0.25em rgba(107, 108, 126, 0.2), 1em -0.5em 0 -0.2em rgba(107, 108, 126, 0.4), 1em 0.5em 0 -0.15em rgba(107, 108, 126, 0.6), 0 1em 0 -0.1em rgba(107, 108, 126, 0.8), -1em 0.5em 0 0em #6b6c7e, -1em -0.5em 0 -0.35em rgba(107, 108, 126, 0.1);
+    box-shadow: 0 -1em 0 -0.25em rgba(107, 108, 126, 0.2), 1em -0.5em 0 -0.2em rgba(107, 108, 126, 0.4), 1em 0.5em 0 -0.15em rgba(107, 108, 126, 0.6), 0 1em 0 -0.1em rgba(107, 108, 126, 0.8), -1em 0.5em 0 0em var(--text-secondary-color, #6b6c7e), -1em -0.5em 0 -0.35em rgba(107, 108, 126, 0.1);
   }
   83% {
-    box-shadow: 0 -1em 0 -0.35em rgba(107, 108, 126, 0.1), 1em -0.5em 0 -0.25em rgba(107, 108, 126, 0.2), 1em 0.5em 0 -0.2em rgba(107, 108, 126, 0.4), 0 1em 0 -0.15em rgba(107, 108, 126, 0.6), -1em 0.5em 0 -0.1em rgba(107, 108, 126, 0.8), -1em -0.5em 0 0em #6b6c7e;
+    box-shadow: 0 -1em 0 -0.35em rgba(107, 108, 126, 0.1), 1em -0.5em 0 -0.25em rgba(107, 108, 126, 0.2), 1em 0.5em 0 -0.2em rgba(107, 108, 126, 0.4), 0 1em 0 -0.15em rgba(107, 108, 126, 0.6), -1em 0.5em 0 -0.1em rgba(107, 108, 126, 0.8), -1em -0.5em 0 0em var(--text-secondary-color, #6b6c7e);
   }
 }
 

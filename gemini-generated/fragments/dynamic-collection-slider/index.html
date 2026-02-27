@@ -1,0 +1,29 @@
+<div class="dynamic-slider-container slider-${fragmentEntryLinkNamespace}" 
+     style="--theme-color: ${configuration.themeColor!}; --slide-gap: ${configuration.spacing!}; --bg-opacity: ${configuration.bgOpacity!}; --inset-opacity: ${configuration.insetOpacity!'1.0'}; --slide-height: ${configuration.slideHeight!'350px'};"
+     data-display-style="${configuration.displayStyle!}"
+     tabindex="0"
+     role="region" 
+     aria-roledescription="carousel" 
+     aria-label="Collection Content Slider">
+    
+    <div class="alert alert-info d-none mb-3" id="info-${fragmentEntryLinkNamespace}"></div>
+    <div class="alert alert-danger d-none mb-3" id="error-${fragmentEntryLinkNamespace}"></div>
+
+    <div class="slider-controls">
+        <button class="slider-btn prev-btn" aria-label="Previous Slide">
+            [@clay["icon"] symbol="angle-left" /]
+        </button>
+        <button class="slider-btn next-btn" aria-label="Next Slide">
+            [@clay["icon"] symbol="angle-right" /]
+        </button>
+    </div>
+
+    <div class="slider-viewport">
+        <div class="slider-track" id="track-${fragmentEntryLinkNamespace}" aria-live="polite">
+            <!-- Slides dynamically injected here -->
+            <div class="slider-status">Loading collection items...</div>
+        </div>
+    </div>
+
+    <div class="slider-pagination" id="pagination-${fragmentEntryLinkNamespace}" role="tablist" aria-label="Slide Selection"></div>
+</div>

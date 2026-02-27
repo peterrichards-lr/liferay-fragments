@@ -1,0 +1,33 @@
+.metric-counter-container {
+    padding: var(--spacer-5, 2rem);
+    background-color: var(--white, #fff);
+    border-radius: var(--border-radius-lg, 0.5rem);
+    text-align: center;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    transition: transform 0.3s ease;
+}
+
+.metric-counter-container:hover {
+    transform: translateY(-5px);
+}
+
+.metric-counter-container .metric-value-wrap {
+    font-size: 3.5rem;
+    font-weight: var(--font-weight-bold, 700);
+    color: var(--text-color, var(--primary));
+    line-height: 1;
+    margin-bottom: var(--spacer-2, 0.5rem);
+}
+
+.metric-counter-container .metric-label {
+    font-size: var(--font-size-lg, 1.125rem);
+    color: var(--text-secondary-color, #6b6c7e);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+@media (max-width: 768px) {
+    .metric-counter-container .metric-value-wrap {
+        font-size: 2.5rem;
+    }
+}

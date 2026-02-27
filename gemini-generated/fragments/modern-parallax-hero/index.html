@@ -1,0 +1,20 @@
+<div class="parallax-hero hero-container-${fragmentEntryLinkNamespace}" style="--hero-height: ${configuration.height!}; --text-color: ${configuration.textColor!}; --overlay-color: ${configuration.overlayColor!};">
+    <div class="alert alert-info d-none mb-3" id="info-${fragmentEntryLinkNamespace}" style="position: absolute; top: var(--spacer-4); left: var(--spacer-4); z-index: 10; width: calc(100% - 2 * var(--spacer-4));"></div>
+    <div class="alert alert-danger d-none mb-3" id="error-${fragmentEntryLinkNamespace}" style="position: absolute; top: var(--spacer-4); left: var(--spacer-4); z-index: 10; width: calc(100% - 2 * var(--spacer-4));"></div>
+
+    <div class="parallax-bg">
+        <img data-lfr-editable-id="background-image" data-lfr-editable-type="image" src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=2072&auto=format&fit=crop" alt="Background">
+    </div>
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+        <h1 class="hero-title" data-lfr-editable-id="hero-title" data-lfr-editable-type="text">
+            Modern Meridian Experience
+        </h1>
+        <p class="hero-subtitle" data-lfr-editable-id="hero-subtitle" data-lfr-editable-type="text">
+            Discover the future of digital portals with our next-generation components.
+        </p>
+        <div class="hero-actions">
+            <lfr-drop-zone></lfr-drop-zone>
+        </div>
+    </div>
+</div>

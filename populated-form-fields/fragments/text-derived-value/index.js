@@ -1,15 +1,15 @@
-const currentLength = document.getElementById(
-  `${fragmentNamespace}-current-length`
+const currentLength = fragmentElement.querySelector(
+  `#${fragmentNamespace}-current-length`
 );
-const formGroup = document.getElementById(`${fragmentNamespace}-form-group`);
-const lengthInfo = document.getElementById(`${fragmentNamespace}-length-info`);
-const lengthWarning = document.getElementById(
-  `${fragmentNamespace}-length-warning`
+const formGroup = fragmentElement.querySelector(`#${fragmentNamespace}-form-group`);
+const lengthInfo = fragmentElement.querySelector(`#${fragmentNamespace}-length-info`);
+const lengthWarning = fragmentElement.querySelector(
+  `#${fragmentNamespace}-length-warning`
 );
-const lengthWarningText = document.getElementById(
-  `${fragmentNamespace}-length-warning-text`
+const lengthWarningText = fragmentElement.querySelector(
+  `#${fragmentNamespace}-length-warning-text`
 );
-const inputElement = document.getElementById(`${fragmentNamespace}-text-input`);
+const inputElement = fragmentElement.querySelector(`#${fragmentNamespace}-text-input`);
 
 function enableLenghtWarning() {
   formGroup.classList.add('has-error');

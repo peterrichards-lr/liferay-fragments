@@ -1,0 +1,43 @@
+.meta-record-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: var(--spacer-6, 2.5rem) 0;
+}
+
+.record-card {
+    background: var(--white, #fff);
+    border-radius: var(--border-radius-lg, 0.5rem);
+    padding: var(--spacer-8, 4rem);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+    border: 1px solid var(--gray-200, #eee);
+}
+
+.record-row {
+    display: flex;
+    padding: var(--spacer-3, 1rem) 0;
+    border-bottom: 1px solid var(--gray-100, #f7f8f9);
+}
+
+.record-row:last-child { border-bottom: none; }
+
+.field-label {
+    width: 30%;
+    font-weight: var(--font-weight-bold, 700);
+    color: var(--text-secondary-color, #6c757d);
+    text-transform: uppercase;
+    font-size: var(--font-size-xs, 0.75rem);
+}
+
+.field-value {
+    width: 70%;
+    color: var(--body-color, #212529);
+    font-size: var(--font-size-base, 1rem);
+}
+
+@media print {
+    .record-card {
+        box-shadow: none;
+        border: none;
+        padding: 0;
+    }
+}
