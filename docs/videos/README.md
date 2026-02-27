@@ -18,4 +18,4 @@ These two videos demonstrate how to use the fragments to build a top or side men
 
 [Bulding a righthand side menu](Building%20Righthand%20Side%20Menu.mp4)
 
-[Contnet Map](Content%20Map%20Fragment%20-%20Custom%20Markers.mp4)
+[Content Map](Content%20Map%20Fragment%20-%20Custom%20Markers.mp4)

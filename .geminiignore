@@ -1,0 +1,5 @@
+.gradle
+.idea
+/bundles
+.vscode
+zips
