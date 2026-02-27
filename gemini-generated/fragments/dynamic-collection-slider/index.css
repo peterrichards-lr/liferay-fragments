@@ -22,33 +22,36 @@
     border-radius: var(--border-radius-lg, 0.5rem);
     box-shadow: var(--card-box-shadow, 0 2px 8px rgba(0,0,0,0.05));
     border: 1px solid var(--gray-200, #eee);
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
     min-height: 250px;
     overflow: hidden;
     position: relative;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-.slider-slide.style-background {
-    color: var(--white, #fff);
-    border: none;
+.slider-slide:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0,0,0,0.1);
 }
 
-.slide-image {
+.slider-slide .slide-link {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
     width: 100%;
-    height: 150px;
-    background-size: cover;
-    background-position: center;
+    text-decoration: none;
+    color: inherit;
 }
 
-.slide-bg {
-    position: absolute;
-    top: 0; left: 0; width: 100%; height: 100%;
-    background-size: cover;
-    background-position: center;
-    z-index: 1;
+/* Common Image handling */
+.slide-image, .slide-bg {
+    width: 100%;
+    object-fit: cover;
+    object-position: center;
+    display: block;
 }
+
+.slide-image { height: 150px; }
+.slide-bg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
 
 .slide-overlay {
     position: absolute;
@@ -64,14 +67,42 @@
     flex-grow: 1;
 }
 
+/* Style: Background */
+.slider-slide.style-background {
+    color: var(--white, #fff);
+    border: none;
+}
 .style-background .slide-title { color: inherit; }
 .style-background .slide-content { color: rgba(255,255,255,0.8); }
-.style-background .btn-link { color: var(--white); font-weight: bold; }
 
-.slider-slide .btn-link {
-    margin: 0 var(--spacer-4, 1.5rem) var(--spacer-4, 1.5rem);
-    position: relative;
-    z-index: 3;
+/* Style: Split (Editorial) */
+.slider-slide.style-split .slide-link { flex-direction: row; }
+.style-split .slide-image { width: 40%; height: 100%; }
+.style-split .slide-content-top { width: 60%; }
+
+/* Style: Inset Overlay */
+.slider-slide.style-inset { border: none; }
+.style-inset .slide-content-top {
+    position: absolute;
+    bottom: var(--spacer-4, 1.5rem);
+    left: var(--spacer-4, 1.5rem);
+    right: var(--spacer-4, 1.5rem);
+    background: var(--white, #fff);
+    color: var(--body-color);
+    padding: var(--spacer-4, 1.5rem);
+    border-radius: var(--border-radius, 0.25rem);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+    flex-grow: 0;
+}
+
+/* Style: Spotlight */
+.slider-slide.style-spotlight { text-align: center; padding-top: var(--spacer-5, 2rem); }
+.style-spotlight .slide-link { align-items: center; }
+.style-spotlight .slide-image {
+    width: 100px; height: 100px; border-radius: 50%;
+    margin-bottom: var(--spacer-3, 1rem);
+    border: 3px solid var(--theme-color, var(--primary));
+    flex-shrink: 0;
 }
 
 .slide-title {
@@ -94,13 +125,9 @@
     background: var(--white, #fff);
     border: 1px solid var(--gray-300, #ced4da);
     border-radius: 50%;
-    width: 3rem;
-    height: 3rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    z-index: 10;
+    width: 3rem; height: 3rem;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer; z-index: 10;
     color: var(--theme-color, var(--primary));
     transition: all 0.2s ease;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
@@ -116,28 +143,28 @@
 .next-btn { right: var(--spacer-2, 0.5rem); }
 
 .slider-pagination {
-    display: flex;
-    justify-content: center;
+    display: flex; justify-content: center;
     gap: var(--spacer-2, 0.5rem);
     margin-top: var(--spacer-4, 1.5rem);
 }
 
 .dot {
-    width: 0.75rem;
-    height: 0.75rem;
-    border-radius: 50%;
+    width: 0.75rem; height: 0.75rem; border-radius: 50%;
     background: var(--gray-300, #ced4da);
-    cursor: pointer;
-    transition: background 0.3s ease;
+    cursor: pointer; transition: background 0.3s ease;
 }
 
-.dot.active {
-    background: var(--theme-color, var(--primary));
-}
+.dot.active { background: var(--theme-color, var(--primary)); }
 
 .slider-status {
-    width: 100%;
-    text-align: center;
+    width: 100%; text-align: center;
     padding: var(--spacer-5, 2rem);
     color: var(--text-secondary-color);
+}
+
+@media (max-width: 768px) {
+    .slider-slide.style-split .slide-link { flex-direction: column; }
+    .style-split .slide-image { width: 100%; height: 150px; }
+    .style-split .slide-content-top { width: 100%; }
+    .slider-viewport { margin: 0 var(--spacer-4, 2rem); }
 }

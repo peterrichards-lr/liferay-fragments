@@ -4,7 +4,9 @@ let state = {
     items: [],
     currentIndex: 0,
     slidesPerView: 3,
-    autoplayInterval: null
+    autoplayInterval: null,
+    touchStartX: 0,
+    touchEndX: 0
 };
 
 const cache = new Map();
@@ -70,10 +72,23 @@ const renderSlides = () => {
         } else if (item.url) itemUrl = item.url;
 
         let contentHtml = '';
-        if (displayStyle === 'background' && hasImage) {
-            contentHtml = `<img class="slide-bg" src="${imageUrl}" alt="${item.title || ''}" loading="lazy" /><div class="slide-overlay"></div><div class="slide-content-top"><div class="slide-title">${item.title || 'Untitled'}</div><div class="slide-content">${item.description || ''}</div></div>`;
+        if ((displayStyle === 'background' || displayStyle === 'inset') && hasImage) {
+            contentHtml = `
+                <img class="slide-bg" src="${imageUrl}" alt="${item.title || ''}" loading="lazy" />
+                <div class="slide-overlay"></div>
+                <div class="slide-content-top">
+                    <div class="slide-title">${item.title || 'Untitled'}</div>
+                    <div class="slide-content">${item.description || ''}</div>
+                </div>
+            `;
         } else {
-            contentHtml = `${hasImage ? `<img class="slide-image" src="${imageUrl}" alt="${item.title || ''}" loading="lazy" />` : ''}<div class="slide-content-top"><div class="slide-title">${item.title || 'Untitled'}</div><div class="slide-content">${item.description || ''}</div></div>`;
+            contentHtml = `
+                ${hasImage ? `<img class="slide-image" src="${imageUrl}" alt="${item.title || ''}" loading="lazy" />` : ''}
+                <div class="slide-content-top">
+                    <div class="slide-title">${item.title || 'Untitled'}</div>
+                    <div class="slide-content">${item.description || ''}</div>
+                </div>
+            `;
         }
         return `<div class="slider-slide style-${displayStyle}" role="group" aria-roledescription="slide" aria-label="${index + 1} of ${state.items.length}"><a href="${itemUrl}" class="slide-link">${contentHtml}</a></div>`;
     }).join('');
@@ -83,7 +98,11 @@ const renderSlides = () => {
 
 const updatePagination = () => {
     const container = fragmentElement.querySelector(`#pagination-${fragmentEntryLinkNamespace}`);
-    if (!container) return;
+    if (!container || !configuration.showPagination) {
+        if (container) container.classList.add('d-none');
+        return;
+    }
+    container.classList.remove('d-none');
     const pageCount = Math.ceil(state.items.length / state.slidesPerView);
     container.innerHTML = Array.from({ length: pageCount }).map((_, i) => `<button class="dot ${Math.floor(state.currentIndex / state.slidesPerView) === i ? 'active' : ''}" data-index="${i * state.slidesPerView}" role="tab" aria-selected="${Math.floor(state.currentIndex / state.slidesPerView) === i}" aria-label="Go to slide ${i + 1}" aria-controls="track-${fragmentEntryLinkNamespace}"></button>`).join('');
     container.querySelectorAll('.dot').forEach(dot => {
@@ -132,6 +151,17 @@ const resetAutoplay = () => {
     if (state.autoplayInterval) { clearInterval(state.autoplayInterval); state.autoplayInterval = null; startAutoplay(); }
 };
 
+const handleGesture = () => {
+    if (state.touchEndX < state.touchStartX - 50) {
+        nextSlide();
+        resetAutoplay();
+    }
+    if (state.touchEndX > state.touchStartX + 50) {
+        prevSlide();
+        resetAutoplay();
+    }
+};
+
 const init = async (isEditMode) => {
     const { collectionId } = configuration;
     const track = fragmentElement.querySelector(`#track-${fragmentEntryLinkNamespace}`);
@@ -152,6 +182,10 @@ const init = async (isEditMode) => {
 
     if (errorEl) errorEl.classList.add('d-none');
     if (infoEl) infoEl.classList.add('d-none');
+
+    // Handle initial visibility from config
+    if (sliderControls && !configuration.showControls) sliderControls.classList.add('d-none');
+    if (sliderPagination && !configuration.showPagination) sliderPagination.classList.add('d-none');
 
     try {
         if (!collectionId) {
@@ -179,8 +213,26 @@ const init = async (isEditMode) => {
             if (sliderPagination) sliderPagination.style.display = 'none';
         } else {
             renderSlides();
-            fragmentElement.querySelector('.next-btn').addEventListener('click', () => { nextSlide(); resetAutoplay(); });
-            fragmentElement.querySelector('.prev-btn').addEventListener('click', () => { prevSlide(); resetAutoplay(); });
+            
+            if (configuration.showControls) {
+                fragmentElement.querySelector('.next-btn').addEventListener('click', () => { nextSlide(); resetAutoplay(); });
+                fragmentElement.querySelector('.prev-btn').addEventListener('click', () => { prevSlide(); resetAutoplay(); });
+            }
+
+            // Keyboard Navigation
+            fragmentElement.addEventListener('keydown', (e) => {
+                if (e.key === 'ArrowLeft') { prevSlide(); resetAutoplay(); }
+                if (e.key === 'ArrowRight') { nextSlide(); resetAutoplay(); }
+            });
+
+            // Touch / Mouse Swipe
+            const viewport = fragmentElement.querySelector('.slider-viewport');
+            viewport.addEventListener('touchstart', e => { state.touchStartX = e.changedTouches[0].screenX; }, {passive: true});
+            viewport.addEventListener('touchend', e => { state.touchEndX = e.changedTouches[0].screenX; handleGesture(); }, {passive: true});
+            
+            viewport.addEventListener('mousedown', e => { state.touchStartX = e.screenX; });
+            viewport.addEventListener('mouseup', e => { state.touchEndX = e.screenX; handleGesture(); });
+
             window.addEventListener('resize', Liferay.Util.debounce(() => updatePosition(), 200));
             startAutoplay();
         }

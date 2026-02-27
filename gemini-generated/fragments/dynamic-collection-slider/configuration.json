@@ -45,6 +45,18 @@
           "type": "checkbox"
         },
         {
+          "defaultValue": true,
+          "label": "show-controls",
+          "name": "showControls",
+          "type": "checkbox"
+        },
+        {
+          "defaultValue": true,
+          "label": "show-pagination",
+          "name": "showPagination",
+          "type": "checkbox"
+        },
+        {
           "defaultValue": "top",
           "label": "display-style",
           "name": "displayStyle",
@@ -52,7 +64,10 @@
           "typeOptions": {
             "validValues": [
               { "value": "top", "label": "Image at Top" },
-              { "value": "background", "label": "Image as Background" }
+              { "value": "background", "label": "Image as Background" },
+              { "value": "split", "label": "Editorial Split" },
+              { "value": "inset", "label": "Inset Overlay Card" },
+              { "value": "spotlight", "label": "Spotlight Avatar" }
             ]
           }
         },
