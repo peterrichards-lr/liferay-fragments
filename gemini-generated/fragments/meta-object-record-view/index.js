@@ -45,7 +45,7 @@ const initRecordView = async () => {
         fragmentElement.querySelector('.object-name-label').textContent = `${definition.name} Detail`;
 
         // 3. Get Record
-        const dataResponse = await Liferay.Util.fetch(`/o/c/${definition.restContextPath}/${recordId}`);
+        const dataResponse = await Liferay.Util.fetch(`${definition.restContextPath}/${recordId}`);
         if (!dataResponse.ok) {
             if (dataResponse.status === 401 || dataResponse.status === 403) {
                 throw new Error('You do not have permission to view this record.');

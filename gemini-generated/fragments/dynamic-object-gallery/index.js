@@ -21,7 +21,7 @@ const initGallery = async () => {
         const definition = await defResponse.json();
 
         // 2. Get Data
-        const dataResponse = await Liferay.Util.fetch(`/o/c/${definition.restContextPath}/`);
+        const dataResponse = await Liferay.Util.fetch(`${definition.restContextPath}/`); // Fixed: Use restContextPath directly
         if (!dataResponse.ok) {
             if (dataResponse.status === 401 || dataResponse.status === 403) {
                 throw new Error('You do not have permission to view data for this object.');
