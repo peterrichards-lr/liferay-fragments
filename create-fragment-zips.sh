@@ -28,21 +28,22 @@ for COLLECTION in $COLLECTIONS; do
    zip -qr ./zips/"$COLLECTION_NAME"-collection.zip "$COLLECTION_NAME"
    
    # Legacy zip (Pre 2025.Q3 - strip 'dependency' blocks)
+   # We create a nested structure to ensure the zip contains the folder, not just the contents
    echo "Creating pre-2025.Q3 version for $COLLECTION_NAME..."
-   TEMP_DIR="temp_pre2025q3_$COLLECTION_NAME"
-   cp -r "$COLLECTION_NAME" "$TEMP_DIR"
+   BUILD_TEMP="temp_build_${COLLECTION_NAME}"
+   mkdir -p "$BUILD_TEMP/$COLLECTION_NAME"
+   cp -r "$COLLECTION_NAME/." "$BUILD_TEMP/$COLLECTION_NAME/"
    
    # Find all configuration.json files and strip dependency using jq
-   # Note: Liferay 2025.Q3+ supports 'dependency'. Older versions fail to import if present.
-   find "$TEMP_DIR" -name "configuration.json" -exec sh -c '
+   find "$BUILD_TEMP/$COLLECTION_NAME" -name "configuration.json" -exec sh -c '
        jq "del(.fieldSets[].fields[].typeOptions.dependency)" "$1" > "$1.tmp" && mv "$1.tmp" "$1"
    ' -- {} \;
    
-   # Zip pre-2025.Q3 version
-   (cd "$TEMP_DIR" && zip -qr ../zips/"$COLLECTION_NAME"-pre2025q3.zip .)
+   # Zip pre-2025.Q3 version (Including the directory, matching standard structure)
+   (cd "$BUILD_TEMP" && zip -qr ../zips/"$COLLECTION_NAME"-pre2025q3.zip "$COLLECTION_NAME")
    
    # Cleanup
-   rm -rf "$TEMP_DIR"
+   rm -rf "$BUILD_TEMP"
 done
 
 echo "Build complete. Zips located in ./zips/"
