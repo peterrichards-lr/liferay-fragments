@@ -213,46 +213,126 @@ const resetAutoplay = () => {
     }
 };
 
-const init = async () => {
+const init = async (isEditMode) => {
     try {
         const { collectionId } = configuration;
+        const track = fragmentElement.querySelector(`#track-${fragmentEntryLinkNamespace}`);
+        const sliderControls = fragmentElement.querySelector('.slider-controls');
+        const sliderPagination = fragmentElement.querySelector('.slider-pagination');
+
         if (!collectionId) {
-            fragmentElement.querySelector('.slider-status').textContent = 'Please provide a Collection Name, Key, or ID in the configuration.';
+            if (track) track.innerHTML = '<div class="slider-status">Please provide a Collection Name, Key, or ID in the configuration.</div>';
+            // Hide controls if no collection is configured
+            if (sliderControls) sliderControls.style.display = 'none';
+            if (sliderPagination) sliderPagination.style.display = 'none';
             return;
         }
-
+        
+        // Fetch only a limited number of items in edit mode for static preview
+        const fetchLimit = isEditMode ? (parseInt(configuration.slidesPerView) || 3) : 9999; 
+        
         state.slidesPerView = getSlidesPerView();
         fragmentElement.querySelector('.dynamic-slider-container').style.setProperty('--slides-per-view', state.slidesPerView);
 
         state.items = await fetchCollectionItems(collectionId);
-        renderSlides();
 
-        fragmentElement.querySelector('.next-btn').addEventListener('click', () => {
-            nextSlide();
-            resetAutoplay();
-        });
+        if (state.items.length === 0) {
+            if (track) track.innerHTML = '<div class="slider-status">No items found in this collection.</div>';
+            if (sliderControls) sliderControls.style.display = 'none';
+            if (sliderPagination) sliderPagination.style.display = 'none';
+            return;
+        }
 
-        fragmentElement.querySelector('.prev-btn').addEventListener('click', () => {
-            prevSlide();
-            resetAutoplay();
-        });
+        if (isEditMode) {
+            state.items = state.items.slice(0, fetchLimit);
+            // Render only first X items statically, no movement
+            const slidesHtml = state.items.map((item, index) => {
+                const { displayStyle } = configuration;
+                let imageUrl = item.image?.url || item.featuredImage?.url || item.thumbnail?.url || '';
 
-        window.addEventListener('resize', Liferay.Util.debounce(() => {
-            updatePosition();
-        }, 200));
+                if (!imageUrl && item.contentFields) {
+                    const imageField = item.contentFields.find(f => f.dataType === 'image');
+                    if (imageField?.contentFieldValue?.image?.url) {
+                        imageUrl = imageField.contentFieldValue.image.url;
+                    } 
+                    else {
+                        const textField = item.contentFields.find(f => f.dataType === 'string' && f.contentFieldValue?.data?.includes('<img'));
+                        if (textField) {
+                            const match = textField.contentFieldValue.data.match(/<img[^>]+src=['"]([^'"]+)['"]/);
+                            if (match) imageUrl = match[1];
+                        }
+                    }
+                }
+                const hasImage = !!imageUrl;
 
-        startAutoplay();
+                let contentHtml = '';
+                if (displayStyle === 'background' && hasImage) {
+                    contentHtml = `
+                        <img class="slide-bg" src="${imageUrl}" alt="${item.title || 'Slide Image'}" loading="lazy" />
+                        <div class="slide-overlay"></div>
+                        <div class="slide-content-top">
+                            <div class="slide-title">${item.title || 'Untitled'}</div>
+                            <div class="slide-content">${item.description || ''}</div>
+                        </div>
+                    `;
+                } else {
+                    contentHtml = `
+                        ${hasImage ? `<img class="slide-image" src="${imageUrl}" alt="${item.title || 'Slide Image'}" loading="lazy" />` : ''}
+                        <div class="slide-content-top">
+                            <div class="slide-title">${item.title || 'Untitled'}</div>
+                            <div class="slide-content">${item.description || ''}</div>
+                        </div>
+                    `;
+                }
+                return `
+                    <div class="slider-slide style-${displayStyle}" role="group" aria-roledescription="slide" aria-label="${index + 1} of ${state.items.length}">
+                        <a href="#" class="slide-link">
+                            ${contentHtml}
+                        </a>
+                    </div>
+                `;
+            }).join('');
+            
+            track.innerHTML = slidesHtml;
+            track.style.transform = `translateX(0px)`; // No movement
+            track.style.transition = `none`; // No transition
+
+            // Hide controls in edit mode
+            if (sliderControls) sliderControls.style.display = 'none';
+            if (sliderPagination) sliderPagination.style.display = 'none';
+
+        } else { // View mode logic
+            renderSlides();
+
+            fragmentElement.querySelector('.next-btn').addEventListener('click', () => {
+                nextSlide();
+                resetAutoplay();
+            });
+
+            fragmentElement.querySelector('.prev-btn').addEventListener('click', () => {
+                prevSlide();
+                resetAutoplay();
+            });
+
+            window.addEventListener('resize', Liferay.Util.debounce(() => {
+                updatePosition();
+            }, 200));
+
+            startAutoplay();
+        }
 
     } catch (err) {
         console.error('Slider init failed:', err);
         const track = fragmentElement.querySelector('.slider-track');
         if (track) track.innerHTML = `<div class="slider-status text-danger">${err.message}</div>`;
+        // Ensure controls are hidden on error in both modes
+        if (sliderControls) sliderControls.style.display = 'none';
+        if (sliderPagination) sliderPagination.style.display = 'none';
     }
 };
 
 if (layoutMode === 'view') {
-    init();
+    init(false);
 } else {
-    // Show static state in edit/preview
-    fragmentElement.querySelector('.slider-status').textContent = 'Collection Slider (Data populated in View mode)';
+    init(true);
 }
