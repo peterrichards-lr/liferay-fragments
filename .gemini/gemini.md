@@ -121,19 +121,25 @@ Fragments providing AI Chat capabilities expect a backend (typically a Liferay C
 ### Object Metadata Integration
 For truly dynamic fragments (e.g., auto-generated forms or tables), fragments should leverage the Liferay Object Admin API to discover schema information at runtime:
 1. **Definition Fetch**: Use `/o/object-admin/v1.0/object-definitions/by-external-reference-code/{erc}` to get the field list.
-2. **Field Rendering**: Iterate through `objectFields` and use the `type` property (e.g., `String`, `Integer`, `CPLongText`, `DateTime`) to decide which UI component to render.
-3. **Validation**: Use the `required` property from the metadata to enforce client-side validation.
+2. **Strict Filtering**: If a configuration field for "Selected Fields" or "Columns to Display" is provided, the rendering logic MUST strictly follow the user's list. Map through the user's input to select fields from the definition and filter out any metadata fields not explicitly requested.
+3. **Field Rendering**: Iterate through the *filtered* fields and use the `type` property (e.g., `String`, `Integer`, `CPLongText`, `DateTime`) to decide which UI component to render.
+4. **Validation**: Use the `required` property from the metadata to enforce client-side validation.
 
 ### Layout & UI
 - Check `layoutMode` to disable interactive or intrusive logic during page editing.
     - **Edit Mode Preview & Alerts**: Fragments MUST provide a high-quality WYSIWYG experience in Edit mode while remaining performant:
         - **User Prompts**: Display an `alert-info` container (namespaced) in Edit mode when critical configuration (e.g., Object ERC, Collection ID, API Path) is missing.
         - **Error Reporting**: Display an `alert-danger` container (namespaced) in Edit mode for API fetch failures or validation errors.
+        - **Message Hygiene**: If an `alert-info` or `alert-danger` is active in Edit mode, the main component body (or loading status) SHOULD be hidden (e.g., `display: none` or `.innerHTML = ''`) to ensure the alert is the single source of truth and to prevent visual clutter.
         - **Static WYSIWYG**: Render a visual representation that matches the production look, but strictly:
             - **Disable Events**: No form submissions, click handlers (other than for preview navigation), or complex interactions.
             - **Disable Motion**: Remove all CSS transitions, JS animations, autoplay, parallax effects, or scroll-triggered behavior.
             - **Limit Items**: For lists, tables, sliders, or galleries, limit the display to a small representative set (e.g., 3-5 items) to ensure the editor remains responsive.
         - **HTML Structure**: Include `<div class="alert alert-info d-none mb-3" id="info-${fragmentEntryLinkNamespace}"></div>` and `<div class="alert alert-danger d-none mb-3" id="error-${fragmentEntryLinkNamespace}"></div>` in the markup.
+
+### User Interaction & Input
+- **Unified Pointer Events**: For any drag, swipe, or pointer-based interaction (like sliders or gauges), MUST use the **Pointer Events API** (`pointerdown`, `pointermove`, `pointerup`). This is the modern standard that handles mouse, touch, and stylus input reliably with a single code path.
+- **Functional Pagination**: Pagination in data-driven fragments MUST be functional. Implement click handlers for previous/next actions that update a local state and re-fetch the appropriate data subset.
 
 - Use `Liferay.Util.fetch` for API calls to handle authentication automatically.
 - Prefer hardcoded inline SVG icons for performance, unless they must be editable.
