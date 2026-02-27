@@ -42,11 +42,11 @@ setTimeout(() => {
     ? parseBreakpoint(tabletBP, desktopBreakpoint)
     : desktopBreakpoint;
   const landscapePhoneBreakpoint = enableLandscapePhoneBreakpoint
-    ? parseBreakpoint(landscapePhoneBP, desktopBreakpoint)
-    : desktopBreakpoint;
+    ? parseBreakpoint(landscapePhoneBP, tabletBreakpoint)
+    : tabletBreakpoint;
   const portraitPhoneBreakpoint = enablePortraitPhoneBreakpoint
-    ? parseBreakpoint(portraitPhoneBP, desktopBreakpoint)
-    : desktopBreakpoint;
+    ? parseBreakpoint(portraitPhoneBP, landscapePhoneBreakpoint)
+    : landscapePhoneBreakpoint;
 
   const qs = (sel, scope = root) => scope.querySelector(sel);
   const holder = fragmentElement.parentElement;

@@ -102,7 +102,7 @@ Tasks to ensure a high-quality experience across all device sizes (Mobile-First)
 ### Visual Polish
 - [x] **Dynamic Collection Slider**: Add mobile-specific configuration or logic to adjust `slidesPerView` based on screen width (e.g., 1 slide on mobile, 3 on desktop). (Implemented)
 - [x] **Pricing Comparison Grid**: Ensure cards transition from a multi-column desktop layout to a single-column stacked layout on mobile. (Implemented)
-- [x] **Card Components**: Review `primary-card` and `secondary-card` for font-size scaling and padding adjustments on small viewports. (Implemented for primary-card)
+- [x] **Card Components**: Review `primary-card` and `secondary-card` for font-size scaling and padding adjustments on small viewports. (Implemented for both primary and secondary cards)
 - [x] **Parallax Hero**: Ensure text doesn't overlap or become unreadable on small screens when the background image scales. (Implemented)
 
 ## Accessibility Improvements (A11y)
