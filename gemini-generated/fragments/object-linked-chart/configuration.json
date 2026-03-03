@@ -4,8 +4,8 @@
       "fields": [
         {
           "defaultValue": "waterreadings",
-          "label": "object-path",
-          "name": "objectPath",
+          "label": "object-rest-context",
+          "name": "objectRESTContext",
           "type": "text"
         },
         {
@@ -19,7 +19,12 @@
           "label": "value-field",
           "name": "valueField",
           "type": "text"
-        },
+        }
+      ],
+      "label": "data"
+    },
+    {
+      "fields": [
         {
           "defaultValue": "bar",
           "label": "chart-type",
@@ -41,7 +46,7 @@
           "type": "colorPicker"
         }
       ],
-      "label": "General"
+      "label": "display"
     }
   ]
 }

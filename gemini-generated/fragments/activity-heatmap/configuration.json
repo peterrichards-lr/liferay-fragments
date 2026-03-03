@@ -4,8 +4,8 @@
       "fields": [
         {
           "defaultValue": "waterreadings",
-          "label": "object-path",
-          "name": "objectPath",
+          "label": "object-rest-context",
+          "name": "objectRESTContext",
           "type": "text"
         },
         {
@@ -13,7 +13,12 @@
           "label": "date-field",
           "name": "dateField",
           "type": "text"
-        },
+        }
+      ],
+      "label": "data"
+    },
+    {
+      "fields": [
         {
           "defaultValue": "var(--primary)",
           "label": "base-color",
@@ -21,7 +26,7 @@
           "type": "colorPicker"
         }
       ],
-      "label": "General"
+      "label": "style"
     }
   ]
 }

@@ -27,7 +27,12 @@
               }
             }
           }
-        },
+        }
+      ],
+      "label": "data"
+    },
+    {
+      "fields": [
         {
           "defaultValue": true,
           "label": "enable-pagination",
@@ -42,7 +47,7 @@
           "dataType": "int"
         }
       ],
-      "label": "Data Source"
+      "label": "display"
     }
   ]
 }

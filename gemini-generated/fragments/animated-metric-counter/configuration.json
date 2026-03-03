@@ -27,7 +27,12 @@
           "label": "suffix",
           "name": "suffix",
           "type": "text"
-        },
+        }
+      ],
+      "label": "data"
+    },
+    {
+      "fields": [
         {
           "defaultValue": "var(--primary)",
           "label": "text-color",
@@ -35,7 +40,7 @@
           "type": "colorPicker"
         }
       ],
-      "label": "General"
+      "label": "style"
     }
   ]
 }

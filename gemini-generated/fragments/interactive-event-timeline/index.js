@@ -1,12 +1,12 @@
 const fetchData = async () => {
-    const { objectPath } = configuration;
-    if (!objectPath) throw new Error('Object path not configured.');
+    const { objectRESTContext } = configuration;
+    if (!objectRESTContext) throw new Error('Object REST context not configured.');
     const siteId = Liferay.ThemeDisplay.getScopeGroupId();
-    const url = `/o/c/${objectPath}/scopes/${siteId}`;
+    const url = `/o/c/${objectRESTContext}/scopes/${siteId}`;
     const response = await Liferay.Util.fetch(url);
     if (!response.ok) {
         if (response.status === 401 || response.status === 403) throw new Error('Permission denied.');
-        throw new Error(`Failed to fetch from "${objectPath}".`);
+        throw new Error(`Failed to fetch from "${objectRESTContext}".`);
     }
     const data = await response.json();
     return data.items || [];
@@ -70,10 +70,10 @@ const initTimeline = async (isEditMode) => {
     if (errorEl) errorEl.classList.add('d-none');
     if (infoEl) infoEl.classList.add('d-none');
 
-    const { objectPath } = configuration;
+    const { objectRESTContext } = configuration;
 
-    if (!objectPath) {
-        showInfo('Please configure an Object Path.');
+    if (!objectRESTContext) {
+        showInfo('Please configure an Object REST Context.');
         renderTimeline([{ title: 'Placeholder Item 1', date: '2025-01-01', description: 'Sample description.' }]);
         return;
     }
@@ -81,7 +81,7 @@ const initTimeline = async (isEditMode) => {
     try {
         const items = await fetchData();
         if (items.length === 0 && isEditMode) {
-             showInfo(`No items found for "${objectPath}". Rendering placeholder.`);
+             showInfo(`No items found for "${objectRESTContext}". Rendering placeholder.`);
              renderTimeline([{ title: 'Placeholder Item', date: '2025-01-01', description: 'Sample description.' }]);
              return;
         }

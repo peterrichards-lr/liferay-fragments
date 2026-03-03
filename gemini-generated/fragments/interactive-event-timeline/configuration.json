@@ -4,8 +4,8 @@
       "fields": [
         {
           "defaultValue": "milestones",
-          "label": "object-path",
-          "name": "objectPath",
+          "label": "object-rest-context",
+          "name": "objectRESTContext",
           "type": "text"
         },
         {
@@ -25,7 +25,12 @@
           "label": "description-field",
           "name": "descriptionField",
           "type": "text"
-        },
+        }
+      ],
+      "label": "data"
+    },
+    {
+      "fields": [
         {
           "defaultValue": "var(--primary)",
           "label": "timeline-color",
@@ -33,7 +38,7 @@
           "type": "colorPicker"
         }
       ],
-      "label": "General"
+      "label": "style"
     }
   ]
 }

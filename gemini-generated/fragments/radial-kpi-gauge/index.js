@@ -1,12 +1,12 @@
 const fetchData = async () => {
-    const { objectPath } = configuration;
-    if (!objectPath) throw new Error('Object path not configured.');
+    const { objectRESTContext } = configuration;
+    if (!objectRESTContext) throw new Error('Object REST context not configured.');
     const siteId = Liferay.ThemeDisplay.getScopeGroupId();
-    const url = `/o/c/${objectPath}/scopes/${siteId}`;
+    const url = `/o/c/${objectRESTContext}/scopes/${siteId}`;
     const response = await Liferay.Util.fetch(url);
     if (!response.ok) {
         if (response.status === 401 || response.status === 403) throw new Error('Permission denied.');
-        throw new Error(`Failed to fetch from "${objectPath}".`);
+        throw new Error(`Failed to fetch from "${objectRESTContext}".`);
     }
     const data = await response.json();
     return data.items || [];
@@ -48,10 +48,10 @@ const initGauge = async (isEditMode) => {
     if (infoEl) infoEl.classList.add('d-none');
     if (gaugeWrap) gaugeWrap.classList.remove('d-none');
 
-    const { objectPath, valueField, targetValue } = configuration;
+    const { objectRESTContext, valueField, targetValue } = configuration;
 
-    if (!objectPath) {
-        showInfo('Please configure an Object Path in the configuration.');
+    if (!objectRESTContext) {
+        showInfo('Please configure an Object REST Context.');
         updateGauge(75);
         return;
     }
@@ -63,7 +63,7 @@ const initGauge = async (isEditMode) => {
         const percent = Math.min((total / target) * 100, 100);
         
         if (items.length === 0 && isEditMode) {
-             showInfo(`No items found for object "${objectPath}". Rendering 75% as placeholder.`);
+             showInfo(`No items found for object "${objectRESTContext}". Rendering 75% as placeholder.`);
              updateGauge(75);
              return;
         }

@@ -7,7 +7,12 @@
           "label": "plans-data (Format: Name,YearPrice,MonthPrice,Features...;)",
           "name": "plansData",
           "type": "text"
-        },
+        }
+      ],
+      "label": "data"
+    },
+    {
+      "fields": [
         {
           "defaultValue": "var(--primary)",
           "label": "highlight-color",
@@ -15,7 +20,7 @@
           "type": "colorPicker"
         }
       ],
-      "label": "General"
+      "label": "style"
     }
   ]
 }

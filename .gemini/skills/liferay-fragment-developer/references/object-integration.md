@@ -11,6 +11,12 @@ If a fragment provides "Selected Fields" configuration:
 - Filter out any fields NOT explicitly requested.
 - Maintain the user's specified display order.
 
+## API Integrity & Portability
+- **No Hardcoded Paths**: Never hardcode `/o/c/...` paths or absolute URLs in JavaScript.
+- **Configurable Context**: Always provide a configuration field for the user to input the Object's **REST Context Path** (e.g., `heartrates`).
+- **Relationship Portability**: If filtering by relationship, make the **Relationship Field Name** (e.g., `r_ticket_c_ticketId`) configurable, as these can vary between environments.
+- **Batch Endpoints**: Ensure batch endpoints (`/batch`) are constructed dynamically from the configurable base path.
+
 ## API Permissions
 - All fragments making API calls MUST include user-friendly alert messages for 401/403 errors.
 - Construct URLs carefully: `restContextPath` from the definition often includes the `/o/c/` prefix.

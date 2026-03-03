@@ -4,8 +4,8 @@
       "fields": [
         {
           "defaultValue": "waterreadings",
-          "label": "object-path",
-          "name": "objectPath",
+          "label": "object-rest-context",
+          "name": "objectRESTContext",
           "type": "text"
         },
         {
@@ -20,7 +20,12 @@
           "name": "targetValue",
           "type": "text",
           "dataType": "int"
-        },
+        }
+      ],
+      "label": "data"
+    },
+    {
+      "fields": [
         {
           "defaultValue": "var(--primary)",
           "label": "gauge-color",
@@ -28,7 +33,7 @@
           "type": "colorPicker"
         }
       ],
-      "label": "General"
+      "label": "style"
     }
   ]
 }

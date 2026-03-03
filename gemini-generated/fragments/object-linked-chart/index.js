@@ -10,14 +10,14 @@ const loadScript = (url) => {
 };
 
 const fetchData = async () => {
-    const { objectPath } = configuration;
-    if (!objectPath) throw new Error('Object path not configured.');
+    const { objectRESTContext } = configuration;
+    if (!objectRESTContext) throw new Error('Object REST context not configured.');
     const siteId = Liferay.ThemeDisplay.getScopeGroupId();
-    const url = `/o/c/${objectPath}/scopes/${siteId}`;
+    const url = `/o/c/${objectRESTContext}/scopes/${siteId}`;
     const response = await Liferay.Util.fetch(url);
     if (!response.ok) {
         if (response.status === 401 || response.status === 403) throw new Error('Permission denied.');
-        throw new Error(`Failed to fetch data for "${objectPath}".`);
+        throw new Error(`Failed to fetch data for "${objectRESTContext}".`);
     }
     const data = await response.json();
     return data.items || [];
@@ -51,10 +51,10 @@ const initChart = async (isEditMode) => {
     if (errorEl) errorEl.classList.add('d-none');
     if (infoEl) infoEl.classList.add('d-none');
 
-    const { objectPath, labelField, valueField, chartType, chartColor } = configuration;
+    const { objectRESTContext, labelField, valueField, chartType, chartColor } = configuration;
 
-    if (!objectPath) {
-        showInfo('Please configure an Object Path.');
+    if (!objectRESTContext) {
+        showInfo('Please configure an Object REST Context.');
         return;
     }
 
@@ -63,7 +63,7 @@ const initChart = async (isEditMode) => {
         const items = await fetchData();
 
         if (items.length === 0) {
-            showInfo(`No data found for object "${objectPath}".`);
+            showInfo(`No data found for object "${objectRESTContext}".`);
             return;
         }
 
@@ -84,7 +84,7 @@ const initChart = async (isEditMode) => {
             data: {
                 labels: labels,
                 datasets: [{
-                    label: objectPath, data: values,
+                    label: objectRESTContext, data: values,
                     backgroundColor: chartColor || '#007dad', borderColor: chartColor || '#007dad', borderWidth: 1
                 }]
             },
@@ -100,10 +100,10 @@ const initChart = async (isEditMode) => {
 
 if (layoutMode === 'view') initChart(false);
 else {
-    if (configuration.objectPath) initChart(true);
+    if (configuration.objectRESTContext) initChart(true);
     else {
          const chartWrapper = fragmentElement.querySelector('.chart-wrapper');
          if (chartWrapper) chartWrapper.innerHTML = '';
-         showInfo('Please provide an Object Path in the configuration.');
+         showInfo('Please provide an Object REST Context in the configuration.');
     }
 }

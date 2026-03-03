@@ -1,32 +1,53 @@
 const fetchData = async () => {
-    const { objectPath } = configuration;
-    if (!objectPath) throw new Error('Object path not configured.');
+    const { objectRESTContext } = configuration;
+    if (!objectRESTContext) throw new Error('Object REST context not configured.');
+    
     const siteId = Liferay.ThemeDisplay.getScopeGroupId();
-    const url = `/o/c/${objectPath}/scopes/${siteId}`;
-    const response = await Liferay.Util.fetch(url);
-    if (!response.ok) {
-        if (response.status === 401 || response.status === 403) throw new Error('Permission denied.');
-        throw new Error(`Failed to fetch from "${objectPath}".`);
+    const url = `/o/c/${objectRESTContext}/scopes/${siteId}`;
+    
+    try {
+        const response = await Liferay.Util.fetch(url);
+        if (!response.ok) {
+            if (response.status === 401 || response.status === 403) {
+                throw new Error('You do not have permission to view this data.');
+            }
+            throw new Error(`Failed to fetch data from "${objectRESTContext}".`);
+        }
+        const data = await response.json();
+        return data.items || [];
+    } catch (err) {
+        throw err;
     }
-    const data = await response.json();
-    return data.items || [];
 };
 
 const renderHeatmap = (items) => {
     const grid = fragmentElement.querySelector(`#grid-${fragmentEntryLinkNamespace}`);
     if (!grid) return;
+    
     const { dateField } = configuration;
     const today = new Date();
     const daysToShow = 90; 
     const activityMap = {};
-    items.forEach(item => { if (item[dateField]) activityMap[new Date(item[dateField]).toDateString()] = (activityMap[new Date(item[dateField]).toDateString()] || 0) + 1; });
+    
+    items.forEach(item => { 
+        if (item[dateField]) {
+            const dateStr = new Date(item[dateField]).toDateString();
+            activityMap[dateStr] = (activityMap[dateStr] || 0) + 1; 
+        }
+    });
 
     let html = '';
     for (let i = daysToShow; i >= 0; i--) {
-        const d = new Date(); d.setDate(today.getDate() - i);
+        const d = new Date(); 
+        d.setDate(today.getDate() - i);
         const count = activityMap[d.toDateString()] || 0;
+        
         let level = 0;
-        if (count > 0) level = 1; if (count > 2) level = 2; if (count > 5) level = 3; if (count > 10) level = 4;
+        if (count > 0) level = 1; 
+        if (count > 2) level = 2; 
+        if (count > 5) level = 3; 
+        if (count > 10) level = 4;
+        
         html += `<div class="heatmap-cell cell level-${level}" title="${d.toLocaleDateString()}: ${count} entries"></div>`;
     }
     grid.innerHTML = html;
@@ -60,10 +81,10 @@ const initHeatmap = async (isEditMode) => {
     if (errorEl) errorEl.classList.add('d-none');
     if (infoEl) infoEl.classList.add('d-none');
 
-    const { objectPath } = configuration;
+    const { objectRESTContext } = configuration;
 
-    if (!objectPath) {
-        showInfo('Please configure an Object Path.');
+    if (!objectRESTContext) {
+        showInfo('Please configure an Object REST Context.');
         renderHeatmap([]);
         return;
     }
@@ -71,7 +92,7 @@ const initHeatmap = async (isEditMode) => {
     try {
         const items = await fetchData();
         if (items.length === 0 && isEditMode) {
-             showInfo(`No items found for "${objectPath}". Rendering placeholder.`);
+             showInfo(`No items found for "${objectRESTContext}". Rendering placeholder.`);
         }
         renderHeatmap(items);
     } catch (err) {

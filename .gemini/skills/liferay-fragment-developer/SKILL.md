@@ -14,12 +14,19 @@ This skill provides comprehensive procedural knowledge and architectural standar
 - Create `configuration.json` using standard field sets and types.
 - Implement the "Edit Mode Previews & Alerts" pattern in `index.html` and `index.js`.
 - Adhere to the Meridian Theme by using CSS tokens.
+- **Dynamic API Paths**: Never hardcode Object API paths (`/o/c/`). Use configuration fields to allow users to specify the REST context.
 
 ### 2. Auditing Fragments
 - Check for global variable leakage (use `fragmentElement`).
 - Verify null-safety in FreeMarker (`!`).
 - Ensure all icon-only buttons have `aria-label`.
 - Validate that drag/swipe interactions use Pointer Events.
+- **Portability Check**: Flag any hardcoded URLs or environment-specific paths for removal.
+
+### 3. Deprecation Protocol
+- **Naming**: Append `(DEPRECATED)` to the `name` in `fragment.json`.
+- **Description**: Add a clear description explaining why the fragment is deprecated and what the recommended alternative is.
+- **Visual Warning**: Add a conditional alert in `index.html` that is only visible in the Page Editor/Fragment Editor to notify administrators of the deprecation.
 
 ## Reference Guides
 
