@@ -4,6 +4,7 @@
       "fields": [
         {
           "label": "object-external-reference-code",
+          "description": "object-external-reference-code-description",
           "name": "objectERC",
           "type": "text",
           "defaultValue": ""
@@ -11,11 +12,13 @@
         {
           "defaultValue": false,
           "label": "customize-display-columns",
+          "description": "customize-display-columns-description",
           "name": "customizeColumns",
           "type": "checkbox"
         },
         {
           "label": "columns-to-display",
+          "description": "columns-to-display-description",
           "name": "columnsToDisplay",
           "type": "text",
           "defaultValue": "configKey,description,configStatus.name,configValue",
@@ -36,12 +39,14 @@
         {
           "defaultValue": true,
           "label": "enable-pagination",
+          "description": "enable-pagination-description",
           "name": "enablePagination",
           "type": "checkbox"
         },
         {
           "defaultValue": "10",
           "label": "page-size",
+          "description": "page-size-description",
           "name": "pageSize",
           "type": "text",
           "dataType": "int"

@@ -4,24 +4,28 @@
       "fields": [
         {
           "label": "object-external-reference-code",
+          "description": "object-external-reference-code-description",
           "name": "objectERC",
           "type": "text",
           "defaultValue": ""
         },
         {
           "label": "image-field-name",
+          "description": "image-field-name-description",
           "name": "imageField",
           "type": "text",
           "defaultValue": "image"
         },
         {
           "label": "title-field-name",
+          "description": "title-field-description",
           "name": "titleField",
           "type": "text",
           "defaultValue": "title"
         },
         {
           "label": "description-field-name",
+          "description": "description-field-description",
           "name": "descriptionField",
           "type": "text",
           "defaultValue": "description"
@@ -34,6 +38,7 @@
         {
           "defaultValue": "3",
           "label": "columns",
+          "description": "columns-description",
           "name": "columns",
           "type": "select",
           "typeOptions": {

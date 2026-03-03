@@ -4,6 +4,7 @@
       "fields": [
         {
           "label": "object-external-reference-code",
+          "description": "object-external-reference-code-description",
           "name": "objectERC",
           "type": "text",
           "defaultValue": ""
@@ -16,6 +17,7 @@
         {
           "defaultValue": "var(--primary)",
           "label": "submit-button-color",
+          "description": "submit-button-color-description",
           "name": "buttonColor",
           "type": "colorPicker"
         }

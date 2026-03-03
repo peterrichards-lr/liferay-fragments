@@ -4,6 +4,7 @@
       "fields": [
         {
           "label": "collection-name-key-or-id",
+          "description": "collection-name-key-or-id-description",
           "name": "collectionId",
           "type": "text",
           "defaultValue": ""
@@ -15,6 +16,7 @@
       "fields": [
         {
           "defaultValue": "3",
+          "description": "slides-per-view-description",
           "label": "slides-per-view",
           "name": "slidesPerView",
           "type": "text",
@@ -22,12 +24,14 @@
         },
         {
           "defaultValue": true,
+          "description": "autoplay-description",
           "label": "autoplay",
           "name": "autoplay",
           "type": "checkbox"
         },
         {
           "defaultValue": "5000",
+          "description": "autoplay-interval-ms-description",
           "label": "autoplay-interval-ms",
           "name": "autoplayInterval",
           "type": "text",
@@ -45,18 +49,21 @@
         },
         {
           "defaultValue": false,
+          "description": "loop-description",
           "label": "loop",
           "name": "loop",
           "type": "checkbox"
         },
         {
           "defaultValue": true,
+          "description": "show-controls-description",
           "label": "show-controls",
           "name": "showControls",
           "type": "checkbox"
         },
         {
           "defaultValue": true,
+          "description": "show-pagination-description",
           "label": "show-pagination",
           "name": "showPagination",
           "type": "checkbox"
@@ -68,6 +75,7 @@
       "fields": [
         {
           "defaultValue": "top",
+          "description": "display-style-description",
           "label": "display-style",
           "name": "displayStyle",
           "type": "select",
@@ -82,7 +90,41 @@
           }
         },
         {
+          "defaultValue": "350px",
+          "description": "slide-height-description",
+          "label": "slide-height",
+          "name": "slideHeight",
+          "type": "length"
+        },
+        {
+          "defaultValue": "var(--primary)",
+          "description": "theme-color-description",
+          "label": "theme-color",
+          "name": "themeColor",
+          "type": "colorPicker"
+        },
+        {
+          "defaultValue": "var(--spacer-4)",
+          "description": "spacing-description",
+          "label": "spacing",
+          "name": "spacing",
+          "type": "length"
+        },
+        {
+          "defaultValue": true,
+          "description": "enable-depth-effect-description",
+          "label": "enable-depth-effect",
+          "name": "enableDepthEffect",
+          "type": "checkbox"
+        }
+      ],
+      "label": "style"
+    },
+    {
+      "fields": [
+        {
           "defaultValue": "0.5",
+          "description": "background-overlay-opacity-description",
           "label": "background-overlay-opacity",
           "name": "bgOpacity",
           "type": "select",
@@ -103,6 +145,7 @@
         },
         {
           "defaultValue": "0.9",
+          "description": "inset-box-opacity-description",
           "label": "inset-box-opacity",
           "name": "insetOpacity",
           "type": "select",
@@ -127,33 +170,9 @@
               }
             }
           }
-        },
-        {
-          "defaultValue": "350px",
-          "label": "slide-height",
-          "name": "slideHeight",
-          "type": "length"
-        },
-        {
-          "defaultValue": "var(--primary)",
-          "label": "theme-color",
-          "name": "themeColor",
-          "type": "colorPicker"
-        },
-        {
-          "defaultValue": "var(--spacer-4)",
-          "label": "spacing",
-          "name": "spacing",
-          "type": "length"
-        },
-        {
-          "defaultValue": true,
-          "label": "enable-depth-effect",
-          "name": "enableDepthEffect",
-          "type": "checkbox"
         }
       ],
-      "label": "style"
+      "label": "overlay"
     }
   ]
 }

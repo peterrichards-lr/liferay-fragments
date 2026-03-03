@@ -4,12 +4,14 @@
       "fields": [
         {
           "defaultValue": "waterreadings",
+          "description": "object-rest-context-description",
           "label": "object-rest-context",
           "name": "objectRESTContext",
           "type": "text"
         },
         {
           "defaultValue": "readingDate",
+          "description": "date-field-description",
           "label": "date-field",
           "name": "dateField",
           "type": "text"
@@ -21,6 +23,7 @@
       "fields": [
         {
           "defaultValue": "var(--primary)",
+          "description": "base-color-description",
           "label": "base-color",
           "name": "baseColor",
           "type": "colorPicker"

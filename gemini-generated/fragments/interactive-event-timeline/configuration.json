@@ -4,24 +4,28 @@
       "fields": [
         {
           "defaultValue": "milestones",
+          "description": "object-rest-context-description",
           "label": "object-rest-context",
           "name": "objectRESTContext",
           "type": "text"
         },
         {
           "defaultValue": "date",
+          "description": "date-field-description",
           "label": "date-field",
           "name": "dateField",
           "type": "text"
         },
         {
           "defaultValue": "title",
+          "description": "title-field-description",
           "label": "title-field",
           "name": "titleField",
           "type": "text"
         },
         {
           "defaultValue": "description",
+          "description": "description-field-description",
           "label": "description-field",
           "name": "descriptionField",
           "type": "text"
@@ -33,6 +37,7 @@
       "fields": [
         {
           "defaultValue": "var(--primary)",
+          "description": "base-color-description",
           "label": "timeline-color",
           "name": "timelineColor",
           "type": "colorPicker"

@@ -4,12 +4,14 @@
       "fields": [
         {
           "label": "object-external-reference-code",
+          "description": "object-external-reference-code-description",
           "name": "objectERC",
           "type": "text",
           "defaultValue": ""
         },
         {
           "label": "fallback-record-id",
+          "description": "fallback-record-id-description",
           "name": "recordId",
           "type": "text",
           "defaultValue": ""
@@ -22,6 +24,7 @@
         {
           "defaultValue": "var(--primary)",
           "label": "accent-color",
+          "description": "accent-color-description",
           "name": "accentColor",
           "type": "colorPicker"
         }

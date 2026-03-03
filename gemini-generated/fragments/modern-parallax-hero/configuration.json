@@ -5,18 +5,21 @@
         {
           "defaultValue": "80vh",
           "label": "height",
+          "description": "height-description",
           "name": "height",
           "type": "length"
         },
         {
           "defaultValue": "var(--white)",
           "label": "text-color",
+          "description": "text-color-description",
           "name": "textColor",
           "type": "colorPicker"
         },
         {
           "defaultValue": "rgba(0,0,0,0.3)",
           "label": "overlay-color",
+          "description": "overlay-color-description",
           "name": "overlayColor",
           "type": "colorPicker"
         }
@@ -29,6 +32,7 @@
           "dataType": "string",
           "defaultValue": "0.5",
           "label": "parallax-speed",
+          "description": "parallax-speed-description",
           "name": "speed",
           "type": "text"
         }

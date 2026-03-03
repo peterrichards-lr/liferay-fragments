@@ -4,7 +4,8 @@
       "fields": [
         {
           "defaultValue": "Basic,19,9,Unlimited Access,10GB Storage,Email Support;Pro,49,29,Unlimited Access,100GB Storage,Priority Support,Custom Branding;Enterprise,99,79,Unlimited Access,1TB Storage,24/7 Support,SSO Integration",
-          "label": "plans-data (Format: Name,YearPrice,MonthPrice,Features...;)",
+          "label": "plans-data",
+          "description": "plans-data-description",
           "name": "plansData",
           "type": "text"
         }
@@ -16,6 +17,7 @@
         {
           "defaultValue": "var(--primary)",
           "label": "highlight-color",
+          "description": "highlight-color-description",
           "name": "highlightColor",
           "type": "colorPicker"
         }

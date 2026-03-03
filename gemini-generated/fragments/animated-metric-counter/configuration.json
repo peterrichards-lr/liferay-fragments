@@ -4,6 +4,7 @@
       "fields": [
         {
           "defaultValue": "1000",
+          "description": "end-value-description",
           "label": "end-value",
           "name": "endValue",
           "type": "text",
@@ -11,6 +12,7 @@
         },
         {
           "defaultValue": "2000",
+          "description": "animation-duration-ms-description",
           "label": "animation-duration-ms",
           "name": "duration",
           "type": "text",
@@ -18,12 +20,14 @@
         },
         {
           "defaultValue": "",
+          "description": "prefix-description",
           "label": "prefix",
           "name": "prefix",
           "type": "text"
         },
         {
           "defaultValue": "",
+          "description": "suffix-description",
           "label": "suffix",
           "name": "suffix",
           "type": "text"
@@ -35,6 +39,7 @@
       "fields": [
         {
           "defaultValue": "var(--primary)",
+          "description": "text-color-description",
           "label": "text-color",
           "name": "textColor",
           "type": "colorPicker"
