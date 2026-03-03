@@ -16,13 +16,13 @@ A collection of robust, accessible, and responsive Liferay fragments for DXP pla
 
 ### Option 1: Using Pre-built Releases (Quick Start)
 
-The ZIP files provided in the GitHub Releases are pre-configured for Global deployment.
+The assets provided in the GitHub Releases include both Fragment Collections and Language Client Extensions.
 
-Download the desired .zip file.
+1.  **Download** the desired `.zip` files.
+2.  **Deploy Fragments**: Drop the collection ZIPs (e.g., `gemini-generated-collection.zip`) from the `./zips/` directory into your Liferay instance's `/deploy` folder.
+3.  **Deploy Language Overrides**: Drop the corresponding Language Batch ZIPs (e.g., `gemini-generated-language-batch-cx.zip`) from the `./cx/` directory into the same `/deploy` folder.
 
-Drop it into your Liferay instance's /deploy folder.
-
-Liferay will automatically import the fragments into the Global site, making them available to all sites in that instance.
+Liferay will automatically import the fragments into the Global site and register the language overrides as Client Extensions.
 
 ### Option 2: Custom Deployment using create-fragment-zips.sh
 

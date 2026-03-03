@@ -33,4 +33,4 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          asset_paths: '["./zips/*", "./other-resources/*.zip"]'
+          asset_paths: '["./zips/**/*", "./other-resources/*.zip"]'
