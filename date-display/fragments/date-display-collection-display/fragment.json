@@ -1,1 +1,9 @@
-{"configurationPath": "configuration.json","jsPath":"index.js","htmlPath":"index.html","cssPath":"index.css","name":"Date Display (Collection Display)","type":"component"}
+{
+  "configurationPath": "configuration.json",
+  "jsPath": "index.js",
+  "htmlPath": "index.html",
+  "cssPath": "index.css",
+  "name": "Date Display (Collection Display) (DEPRECATED)",
+  "description": "DEPRECATED: Use native Liferay 7.4+ date formatting and collection mapping instead.",
+  "type": "component"
+}

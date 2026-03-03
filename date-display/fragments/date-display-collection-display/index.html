@@ -1,5 +1,10 @@
 [#assign ns = fragmentEntryLinkNamespace /]
 <div class="date-display">
+	[#if themeDisplay.isStateMaximized() == false && (request.getAttribute("LIFERAY_SHARED_VISUAL_STATE_PAGE_EDITOR")?? || request.getAttribute("LIFERAY_SHARED_VISUAL_STATE_FRAGMENT_EDITOR")??)]
+		<div class="alert alert-warning">
+			<strong>DEPRECATED:</strong> This fragment is deprecated. Please use native Liferay 7.4+ date formatting instead.
+		</div>
+	[/#if]
 	<span style="display: none" id="${ns}_startDateInput" data-lfr-editable-id="01-start-date" data-lfr-editable-type="text">Start Date</span>
 	<span style="display: none" id="${ns}_endDateInput" data-lfr-editable-id="02-end date" data-lfr-editable-type="text">End Date</span>
 	<div class="date-display-content">

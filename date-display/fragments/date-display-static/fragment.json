@@ -1,1 +1,9 @@
-{"configurationPath": "configuration.json","jsPath":"index.js","htmlPath":"index.html","cssPath":"index.css","name":"Data Display (Static)","type":"component"}
+{
+  "configurationPath": "configuration.json",
+  "jsPath": "index.js",
+  "htmlPath": "index.html",
+  "cssPath": "index.css",
+  "name": "Data Display (Static) (DEPRECATED)",
+  "description": "DEPRECATED: Use native Liferay 7.4+ date formatting and display capabilities instead.",
+  "type": "component"
+}

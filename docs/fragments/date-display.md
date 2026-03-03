@@ -1,6 +1,9 @@
-# Date Display
+# Date Display (DEPRECATED)
 
-## Date Display (Static)
+> [!WARNING]
+> These fragments are **DEPRECATED**. Liferay DXP 7.4+ now includes native date formatting and display capabilities within the product. It is recommended to use the out-of-the-box features for all new projects.
+
+## Date Display (Static) (DEPRECATED)
 This fragment displays a date or date range via its configuration; hence it can only be used for static dates.
 
 The date format must be yyyy-MM-dd, e.g., 2021-11-01 for the 1st November 2021.
