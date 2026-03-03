@@ -4,74 +4,83 @@
       "fields": [
         {
           "defaultValue": "",
-          "label": "start-date",
+          "label": "lfr.dashboard-components.start-date",
+          "description": "lfr.dashboard-components.start-date-description",
           "name": "startDate",
           "dataType": "string",
           "type": "text"
         },
         {
           "defaultValue": "",
-          "label": "end-date",
+          "label": "lfr.dashboard-components.end-date",
+          "description": "lfr.dashboard-components.end-date-description",
           "name": "endDate",
           "dataType": "string",
           "type": "text"
         },
         {
           "defaultValue": "7",
-          "label": "max-entires",
+          "label": "lfr.dashboard-components.max-entries",
+          "description": "lfr.dashboard-components.max-entries-description",
           "name": "maxEntires",
           "dataType": "int",
           "type": "text"
         },
         {
           "defaultValue": "10000",
-          "label": "target-steps",
+          "label": "lfr.dashboard-components.target-steps",
+          "description": "lfr.dashboard-components.target-steps-description",
           "name": "targetSteps",
           "dataType": "int",
           "type": "text"
         },
         {
           "defaultValue": "healthcare-example",
-          "label": "pubsub-topic",
+          "label": "lfr.dashboard-components.pubsub-topic",
+          "description": "lfr.dashboard-components.pubsub-topic-description",
           "name": "pubsubTopic",
           "dataType": "string",
           "type": "text"
         }
       ],
-      "label": "filter-options"
+      "label": "lfr.dashboard-components.filter-options"
     },
     {
       "fields": [
         {
           "dataType": "string",
           "defaultValue": "/o/c/heartrates",
-          "label": "heart-rate-api-path",
+          "label": "lfr.dashboard-components.heart-rate-api-path",
+          "description": "lfr.dashboard-components.heart-rate-api-path-description",
           "name": "heartRateAPIPath",
           "type": "text"
         },
         {
           "dataType": "string",
           "defaultValue": "/o/c/bloodpressures",
-          "label": "blood-pressure-api-path",
+          "label": "lfr.dashboard-components.blood-pressure-api-path",
+          "description": "lfr.dashboard-components.blood-pressure-api-path-description",
           "name": "bloodPressureAPIPath",
           "type": "text"
         },
         {
           "dataType": "string",
           "defaultValue": "/o/c/stepses",
-          "label": "steps-api-path",
+          "label": "lfr.dashboard-components.steps-api-path",
+          "description": "lfr.dashboard-components.steps-api-path-description",
           "name": "stepsAPIPath",
           "type": "text"
         },
         {
           "dataType": "string",
           "defaultValue": "/o/c/weights",
-          "label": "weight-api-path",
+          "label": "lfr.dashboard-components.weight-api-path",
+          "description": "lfr.dashboard-components.weight-api-path-description",
           "name": "weightAPIPath",
           "type": "text"
         }
       ],
-      "label": "api-configuration"
+      "label": "lfr.dashboard-components.api-configuration"
     }
   ]
 }

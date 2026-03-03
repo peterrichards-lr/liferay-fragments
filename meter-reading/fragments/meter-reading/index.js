@@ -20,7 +20,7 @@ if (window[SINGLETON_KEY]) {
 } else {
 	window[SINGLETON_KEY] = true;
 
-	const debugMode = configuration.enableLogging;
+	const debugMode = configuration.enableDebug;
 
 	const meterReadingContainer = fragmentElement.querySelector('div');
 	const status = meterReadingContainer.querySelector('span.status');

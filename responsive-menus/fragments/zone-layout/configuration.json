@@ -5,21 +5,19 @@
         {
           "dataType": "string",
           "defaultValue": "block",
-          "label": "content-display",
+          "label": "lfr.responsive-menus.content-display",
+          "description": "lfr.responsive-menus.content-display",
           "name": "contentDisplay",
           "type": "select",
           "typeOptions": {
             "validValues": [
               {
-                "label": "Block",
                 "value": "block"
               },
               {
-                "label": "flex-row",
                 "value": "flex-row"
               },
               {
-                "label": "flex-column",
                 "value": "flex-column"
               }
             ]
@@ -28,21 +26,19 @@
         {
           "dataType": "string",
           "defaultValue": "nowrap",
-          "label": "flex-wrap",
+          "label": "lfr.responsive-menus.flex-wrap",
+          "description": "lfr.responsive-menus.flex-wrap",
           "name": "flexWrap",
           "type": "select",
           "typeOptions": {
             "validValues": [
               {
-                "label": "nowrap",
                 "value": "nowrap"
               },
               {
-                "label": "wrap",
                 "value": "wrap"
               },
               {
-                "label": "wrap-reverse",
                 "value": "wrap-reverse"
               }
             ]
@@ -51,29 +47,25 @@
         {
           "dataType": "string",
           "defaultValue": "stretch",
-          "label": "align-items",
+          "label": "lfr.responsive-menus.align-items",
+          "description": "lfr.responsive-menus.align-items",
           "name": "alignItems",
           "type": "select",
           "typeOptions": {
             "validValues": [
               {
-                "label": "start",
                 "value": "start"
               },
               {
-                "label": "center[alignment]",
                 "value": "center"
               },
               {
-                "label": "end",
                 "value": "end"
               },
               {
-                "label": "stretch",
                 "value": "stretch"
               },
               {
-                "label": "baseline",
                 "value": "baseline"
               }
             ]
@@ -82,29 +74,25 @@
         {
           "dataType": "string",
           "defaultValue": "start",
-          "label": "justify-content",
+          "label": "lfr.responsive-menus.justify-content",
+          "description": "lfr.responsive-menus.justify-content",
           "name": "justifyContent",
           "type": "select",
           "typeOptions": {
             "validValues": [
               {
-                "label": "start",
                 "value": "start"
               },
               {
-                "label": "center[alignment]",
                 "value": "center"
               },
               {
-                "label": "end",
                 "value": "end"
               },
               {
-                "label": "between",
                 "value": "between"
               },
               {
-                "label": "around",
                 "value": "around"
               }
             ]
@@ -112,35 +100,39 @@
         },
         {
           "defaultValue": "var(--spacer-2, .5rem)",
-          "label": "flex-gap",
+          "label": "lfr.responsive-menus.flex-gap",
+          "description": "lfr.responsive-menus.flex-gap",
           "name": "flexGap",
           "type": "length"
         },
         {
           "defaultValue": true,
-          "label": "allow-menu-override",
+          "label": "lfr.responsive-menus.allow-menu-override",
+          "description": "lfr.responsive-menus.allow-menu-override",
           "name": "allowMenuOverride",
           "type": "checkbox"
         },
         {
           "defaultValue": "576px",
-          "label": "landscape-phone",
+          "label": "lfr.responsive-menus.landscape-phone",
+          "description": "lfr.responsive-menus.landscape-phone",
           "name": "landscapePhoneBreakpoint",
           "type": "length"
         }
       ],
-      "label": "layout"
+      "label": "lfr.responsive-menus.layout"
     },
     {
       "fields": [
         {
           "defaultValue": true,
-          "label": "zone-layout-header",
+          "label": "lfr.responsive-menus.zone-layout-header",
+          "description": "lfr.responsive-menus.zone-layout-header",
           "name": "zoneLayoutHeader",
           "type": "checkbox"
         }
       ],
-      "label": "editor"
+      "label": "lfr.responsive-menus.editor"
     }
   ]
 }

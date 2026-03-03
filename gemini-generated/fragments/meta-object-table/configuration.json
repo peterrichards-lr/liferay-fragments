@@ -3,22 +3,22 @@
     {
       "fields": [
         {
-          "label": "object-external-reference-code",
-          "description": "object-external-reference-code-description",
+          "label": "lfr.gemini-generated.object-external-reference-code",
+          "description": "lfr.gemini-generated.object-external-reference-code-description",
           "name": "objectERC",
           "type": "text",
           "defaultValue": ""
         },
         {
           "defaultValue": false,
-          "label": "customize-display-columns",
-          "description": "customize-display-columns-description",
+          "label": "lfr.gemini-generated.customize-display-columns",
+          "description": "lfr.gemini-generated.customize-display-columns-description",
           "name": "customizeColumns",
           "type": "checkbox"
         },
         {
-          "label": "columns-to-display",
-          "description": "columns-to-display-description",
+          "label": "lfr.gemini-generated.columns-to-display",
+          "description": "lfr.gemini-generated.columns-to-display-description",
           "name": "columnsToDisplay",
           "type": "text",
           "defaultValue": "configKey,description,configStatus.name,configValue",
@@ -32,27 +32,27 @@
           }
         }
       ],
-      "label": "data"
+      "label": "lfr.gemini-generated.data"
     },
     {
       "fields": [
         {
           "defaultValue": true,
-          "label": "enable-pagination",
-          "description": "enable-pagination-description",
+          "label": "lfr.gemini-generated.enable-pagination",
+          "description": "lfr.gemini-generated.enable-pagination-description",
           "name": "enablePagination",
           "type": "checkbox"
         },
         {
           "defaultValue": "10",
-          "label": "page-size",
-          "description": "page-size-description",
+          "label": "lfr.gemini-generated.page-size",
+          "description": "lfr.gemini-generated.page-size-description",
           "name": "pageSize",
           "type": "text",
           "dataType": "int"
         }
       ],
-      "label": "display"
+      "label": "lfr.gemini-generated.display"
     }
   ]
 }

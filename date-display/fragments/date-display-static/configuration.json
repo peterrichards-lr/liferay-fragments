@@ -1,27 +1,30 @@
 {
-	"fieldSets": [
-		{
-			"fields": [
-				{
-					"defaultValue": true,
-					"label": "show-icon",
-					"name": "showIcon",
-					"type": "checkbox"
-				},
-				{
-					"defaultValue": "",
-					"label": "start-date",
-					"name": "startDate",
-					"type": "text"
-				},
-				{
-					"defaultValue": "",
-					"label": "end-date",
-					"name": "endDate",
-					"type": "text"
-				}
-			],
-			"label": "date-display-options"
-		}
-	]
+  "fieldSets": [
+    {
+      "fields": [
+        {
+          "defaultValue": true,
+          "label": "lfr.date-display.show-icon",
+          "description": "lfr.date-display.show-icon-description",
+          "name": "showIcon",
+          "type": "checkbox"
+        },
+        {
+          "defaultValue": "2021-11-01",
+          "label": "lfr.date-display.start-date",
+          "description": "lfr.date-display.start-date-description",
+          "name": "startDate",
+          "type": "text"
+        },
+        {
+          "defaultValue": "2021-11-30",
+          "label": "lfr.date-display.end-date",
+          "description": "lfr.date-display.end-date-description",
+          "name": "endDate",
+          "type": "text"
+        }
+      ],
+      "label": "lfr.date-display.general"
+    }
+  ]
 }

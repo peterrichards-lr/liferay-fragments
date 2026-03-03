@@ -1,102 +1,68 @@
 {
   "fieldSets": [
     {
-      "configurationRole": "style",
-      "fields": [
-        {
-          "label": "background-image",
-          "name": "backgroundImage",
-          "type": "itemSelector",
-          "typeOptions": {
-            "itemType": "com.liferay.portal.kernel.repository.model.FileEntry",
-            "mimeTypes": [
-              "image/png",
-              "image/webp",
-              "image/jpeg",
-              "image/gif",
-              "image/apng",
-              "image/avif"
-            ]
-          }
-        },
-        {
-          "label": "background-image-alt",
-          "name": "backgroundImageAlt",
-          "type": "text"
-        },
-        {
-          "label": "aria-label",
-          "name": "ariaLabel",
-          "type": "text"
-        },
-        {
-          "dataType": "int",
-          "defaultValue": "50",
-          "label": "Focal X (%)",
-          "name": "focalX",
-          "type": "text",
-          "typeOptions": {
-            "validation": {
-              "max": 100,
-              "min": 0,
-              "type": "number"
-            }
-          }
-        },
-        {
-          "dataType": "int",
-          "defaultValue": "50",
-          "label": "Focal Y (%)",
-          "name": "focalY",
-          "type": "text",
-          "typeOptions": {
-            "validation": {
-              "max": 100,
-              "min": 0,
-              "type": "number"
-            }
-          }
-        }
-      ],
-      "label": "image"
-    },
-    {
-      "configurationRole": "style",
       "fields": [
         {
           "defaultValue": "#000000",
-          "label": "overlay-color",
-          "name": "overlayColor",
+          "label": "lfr.hero-assets.colour",
+          "description": "lfr.hero-assets.colour-description",
+          "name": "colour",
           "type": "colorPicker"
         },
         {
-          "dataType": "int",
-          "defaultValue": "40",
-          "label": "alpha",
-          "name": "alpha",
-          "type": "text",
+          "dataType": "string",
+          "defaultValue": "0.5",
+          "label": "lfr.hero-assets.opacity",
+          "description": "lfr.hero-assets.opacity-description",
+          "name": "opacity",
+          "type": "select",
           "typeOptions": {
-            "validation": {
-              "max": 100,
-              "min": 0,
-              "type": "number"
-            }
+            "validValues": [
+              {
+                "label": "lfr.hero-assets.0-percent",
+                "value": "0"
+              },
+              {
+                "label": "lfr.hero-assets.10-percent",
+                "value": "0.1"
+              },
+              {
+                "label": "lfr.hero-assets.20-percent",
+                "value": "0.2"
+              },
+              {
+                "label": "lfr.hero-assets.30-percent",
+                "value": "0.3"
+              },
+              {
+                "label": "lfr.hero-assets.40-percent",
+                "value": "0.4"
+              },
+              {
+                "label": "lfr.hero-assets.50-percent",
+                "value": "0.5"
+              },
+              {
+                "label": "lfr.hero-assets.60-percent",
+                "value": "0.6"
+              },
+              {
+                "label": "lfr.hero-assets.70-percent",
+                "value": "0.7"
+              },
+              {
+                "label": "lfr.hero-assets.80-percent",
+                "value": "0.8"
+              },
+              {
+                "label": "lfr.hero-assets.90-percent",
+                "value": "0.9"
+              }
+            ]
           }
         }
       ],
-      "label": "overlay"
-    },
-    {
-      "configurationRole": "advanced",
-      "fields": [
-        {
-          "defaultValue": false,
-          "label": "debug-enabled",
-          "name": "enableDebug",
-          "type": "checkbox"
-        }
-      ],
-      "label": "miscellaneous"
+      "label": "lfr.hero-assets.general"
     }
   ]
 }

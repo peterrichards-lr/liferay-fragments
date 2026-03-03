@@ -4,74 +4,74 @@
       "fields": [
         {
           "name": "overrideSiteConfig",
-          "label": "override-site-config",
+          "label": "lfr.header-components.override-site-config",
           "type": "checkbox",
           "defaultValue": false
         }
       ],
-      "label": "general"
+      "label": "lfr.header-components.general"
     },
     {
       "fields": [
         {
           "defaultValue": "120px",
-          "label": "logo-max-width",
+          "label": "lfr.header-components.logo-max-width",
           "name": "logoMaxWidth",
           "type": "length"
         },
         {
           "defaultValue": "60px",
-          "label": "logo-max-height",
+          "label": "lfr.header-components.logo-max-height",
           "name": "logoMaxHeight",
           "type": "length"
         },
         {
           "name": "logoAltText",
-          "label": "logo-alt-text",
+          "label": "lfr.header-components.logo-alt-text",
           "type": "text",
           "dataType": "string"
         },
         {
           "name": "logoTitle",
-          "label": "logo-title",
+          "label": "lfr.header-components.logo-title",
           "type": "text",
           "dataType": "string"
         }
       ],
-      "label": "logo"
+      "label": "lfr.header-components.logo"
     },
     {
       "fields": [
         {
           "name": "showSiteName",
-          "label": "show-site-name",
+          "label": "lfr.header-components.show-site-name",
           "type": "checkbox",
           "defaultValue": false
         },
         {
           "name": "siteName",
-          "label": "site-name",
+          "label": "lfr.header-components.site-name",
           "type": "text",
           "dataType": "string"
         }
       ],
-      "label": "site-name"
+      "label": "lfr.header-components.site-name"
     },
     {
       "fields": [
         {
           "name": "enableLink",
-          "label": "enable-link",
+          "label": "lfr.header-components.enable-link",
           "type": "checkbox",
           "defaultValue": true
         },
         {
           "name": "linkUrl",
-          "label": "link-url",
+          "label": "lfr.header-components.link-url",
           "type": "url"
         }
       ],
-      "label": "link"
+      "label": "lfr.header-components.link"
     }
   ]
 }

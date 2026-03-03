@@ -1,79 +1,90 @@
 {
-	"fieldSets": [
-		{
-			"fields": [
-				{
-					"dataType": "string",
-					"defaultValue": "",
-					"label": "placeholder",
-					"localizable": true,
-					"name": "placeholder",
-					"type": "text"
-				},
-				{
-					"dataType": "string",
-					"defaultValue": false,
-					"label": "custom-range",
-					"name": "customRange",
-					"type": "checkbox"
-				},
-				{
-					"dataType": "int",
-					"defaultValue": "0",
-					"label": "min",
-					"name": "min",
-					"type": "text"
-				},
-				{
-					"dataType": "int",
-					"defaultValue": "10",
-					"label": "max",
-					"name": "max",
-					"type": "text"
-				},
-				{
-					"dataType": "int",
-					"defaultValue": "1",
-					"label": "step",
-					"name": "step",
-					"type": "text"
-				},
-				{
-					"dataType": "string",
-					"defaultValue": true,
-					"label": "display-value",
-					"name": "displayValue",
-					"type": "checkbox"
-				},
-				{
-					"dataType": "string",
-					"defaultValue": "",
-					"label": "value-prefix",
-					"name": "valuePrefix",
-					"type": "text"
-				},
-				{
-					"dataType": "string",
-					"defaultValue": "",
-					"label": "value-suffix",
-					"name": "valueSuffix",
-					"type": "text"
-				},
-				{
-					"dataType": "string",
-					"defaultValue": false,
-					"label": "add-id",
-					"name": "addId",
-					"type": "checkbox"
-				},
-				{
-					"dataType": "string",
-					"defaultValue": "",
-					"label": "id-value",
-					"name": "idValue",
-					"type": "text"
-				}
-			]
-		}
-	]
+  "fieldSets": [
+    {
+      "fields": [
+        {
+          "dataType": "string",
+          "defaultValue": "",
+          "label": "lfr.form-fragments.placeholder",
+          "description": "lfr.form-fragments.placeholder",
+          "localizable": true,
+          "name": "placeholder",
+          "type": "text"
+        },
+        {
+          "dataType": "string",
+          "defaultValue": false,
+          "label": "lfr.form-fragments.custom-range",
+          "description": "lfr.form-fragments.custom-range",
+          "name": "customRange",
+          "type": "checkbox"
+        },
+        {
+          "dataType": "int",
+          "defaultValue": "0",
+          "label": "lfr.form-fragments.min",
+          "description": "lfr.form-fragments.min",
+          "name": "min",
+          "type": "text"
+        },
+        {
+          "dataType": "int",
+          "defaultValue": "10",
+          "label": "lfr.form-fragments.max",
+          "description": "lfr.form-fragments.max",
+          "name": "max",
+          "type": "text"
+        },
+        {
+          "dataType": "int",
+          "defaultValue": "1",
+          "label": "lfr.form-fragments.step",
+          "description": "lfr.form-fragments.step",
+          "name": "step",
+          "type": "text"
+        },
+        {
+          "dataType": "string",
+          "defaultValue": true,
+          "label": "lfr.form-fragments.display-value",
+          "description": "lfr.form-fragments.display-value",
+          "name": "displayValue",
+          "type": "checkbox"
+        },
+        {
+          "dataType": "string",
+          "defaultValue": "",
+          "label": "lfr.form-fragments.value-prefix",
+          "description": "lfr.form-fragments.value-prefix",
+          "name": "valuePrefix",
+          "type": "text"
+        },
+        {
+          "dataType": "string",
+          "defaultValue": "",
+          "label": "lfr.form-fragments.value-suffix",
+          "description": "lfr.form-fragments.value-suffix",
+          "name": "valueSuffix",
+          "type": "text"
+        },
+        {
+          "dataType": "string",
+          "defaultValue": false,
+          "label": "lfr.form-fragments.add-id",
+          "description": "lfr.form-fragments.add-id",
+          "name": "addId",
+          "type": "checkbox"
+        },
+        {
+          "dataType": "string",
+          "defaultValue": "",
+          "label": "lfr.form-fragments.id-value",
+          "description": "lfr.form-fragments.id-value",
+          "name": "idValue",
+          "type": "text"
+        }
+      ],
+      "label": "lfr.form-fragments.general"
+    }
+  ]
 }

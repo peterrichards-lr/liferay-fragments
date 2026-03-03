@@ -1,22 +1,23 @@
 {
-	"fieldSets": [
-		{
-			"fields": [
-				{
-					"defaultValue": "approved,declined",
-					"description": "A comma seperated list of outcomes",
-					"label": "outcomes",
-					"name": "outcomes",
-					"type": "text"
-				},
-				{
-					"defaultValue": false,
-					"label": "display-drop-zones",
-					"name": "displayDropZones",
-					"type": "checkbox"
-				}
-			],
-			"label": "General"
-		}
-	]
+  "fieldSets": [
+    {
+      "fields": [
+        {
+          "defaultValue": "approved,declined",
+          "description": "lfr.conditional-content.outcomes-description",
+          "label": "lfr.conditional-content.outcomes",
+          "name": "outcomes",
+          "type": "text"
+        },
+        {
+          "defaultValue": false,
+          "label": "lfr.conditional-content.display-drop-zones",
+          "description": "lfr.conditional-content.display-drop-zones-description",
+          "name": "displayDropZones",
+          "type": "checkbox"
+        }
+      ],
+      "label": "lfr.conditional-content.general"
+    }
+  ]
 }

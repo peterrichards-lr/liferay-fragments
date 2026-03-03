@@ -5,117 +5,127 @@
         {
           "dataType": "string",
           "defaultValue": "",
-          "label": "placeholder",
+          "label": "lfr.form-fragments.placeholder",
+          "description": "lfr.form-fragments.placeholder",
           "localizable": true,
           "name": "placeholder",
           "type": "text"
         },
-				{
+        {
           "name": "autocompleteColor",
-          "label": "border-color",
-          "description": "border-color-desc",
+          "label": "lfr.form-fragments.border-color",
+          "description": "lfr.form-fragments.border-color-desc",
           "type": "colorPicker",
           "defaultValue": "var(--btn-secondary-color)"
         },
-				{
+        {
           "name": "autocompleteBgColor",
-          "label": "border-bg-color",
-          "description": "border-bg-color-desc",
+          "label": "lfr.form-fragments.border-bg-color",
+          "description": "lfr.form-fragments.border-bg-color-desc",
           "type": "colorPicker",
           "defaultValue": "var(--btn-secondary-background-color)"
         },
-				{
+        {
           "name": "autocompleteBorderColor",
-          "label": "border-color",
-          "description": "border-color-desc",
+          "label": "lfr.form-fragments.border-color",
+          "description": "lfr.form-fragments.border-color-desc",
           "type": "colorPicker",
           "defaultValue": "var(--btn-secondary-border-color)"
         },
         {
           "name": "activeColor",
-          "label": "active-color",
-          "description": "active-color-desc",
+          "label": "lfr.form-fragments.active-color",
+          "description": "lfr.form-fragments.active-color-desc",
           "type": "colorPicker",
           "defaultValue": "var(--btn-primary-color)"
         },
         {
           "name": "activeBgColor",
-          "label": "active-bg-color",
-          "description": "active-bg-color-desc",
+          "label": "lfr.form-fragments.active-bg-color",
+          "description": "lfr.form-fragments.active-bg-color-desc",
           "type": "colorPicker",
           "defaultValue": "var(--btn-primary-background-color)"
         },
         {
           "name": "activeBorderColor",
-          "label": "active-border-color",
-          "description": "active-border-color-desc",
+          "label": "lfr.form-fragments.active-border-color",
+          "description": "lfr.form-fragments.active-border-color-desc",
           "type": "colorPicker",
           "defaultValue": "var(--btn-primary-border-color)"
         },
         {
           "name": "hoverColor",
-          "label": "hover-color",
-          "description": "hover-color-desc",
+          "label": "lfr.form-fragments.hover-color",
+          "description": "lfr.form-fragments.hover-color-desc",
           "type": "colorPicker",
           "defaultValue": "var(--btn-primary-hover-color)"
         },
         {
           "name": "hoverBgColor",
-          "label": "hover--bg-color",
-          "description": "hover-bg-color-desc",
+          "label": "lfr.form-fragments.hover-bg-color",
+          "description": "lfr.form-fragments.hover-bg-color-desc",
           "type": "colorPicker",
           "defaultValue": "var(--btn-primary-hover-background-color)"
         },
         {
           "name": "hoverBorderColor",
-          "label": "hover-border-color",
-          "description": "hover-border-color-desc",
+          "label": "lfr.form-fragments.hover-border-color",
+          "description": "lfr.form-fragments.hover-border-color-desc",
           "type": "colorPicker",
           "defaultValue": "var(--btn-primary-hover-border-color)"
         }
       ],
-      "label": "field-options"
+      "label": "lfr.form-fragments.field-options"
     },
     {
       "fields": [
         {
           "dataType": "string",
           "defaultValue": "",
-          "label": "object-path",
+          "label": "lfr.form-fragments.object-path",
+          "description": "lfr.form-fragments.object-path",
           "localizable": false,
           "name": "objectPath",
           "type": "text"
         },
-				 {
+        {
           "dataType": "string",
           "defaultValue": "",
-          "label": "object-field",
-					"description": "object-field-desc",
+          "label": "lfr.form-fragments.object-field",
+          "description": "lfr.form-fragments.object-field-desc",
           "localizable": false,
           "name": "objectField",
           "type": "text"
         },
-				 {
+        {
           "defaultValue": true,
-          "label": "object-field-localized",
+          "label": "lfr.form-fragments.object-field-localized",
+          "description": "lfr.form-fragments.object-field-localized",
           "localizable": false,
           "name": "isLocalized",
           "type": "checkbox"
         }
       ],
-      "label": "object-options"
+      "label": "lfr.form-fragments.object-options"
     },
     {
       "fields": [
         {
           "name": "matchType",
-          "label": "match-type",
+          "label": "lfr.form-fragments.match-type",
+          "description": "lfr.form-fragments.match-type",
           "type": "select",
           "dataType": "string",
           "typeOptions": {
             "validValues": [
-              { "label": "starts-with", "value": "startsWith" },
-              { "label": "contains", "value": "contains" }
+              {
+                "label": "lfr.form-fragments.starts-with",
+                "value": "startsWith"
+              },
+              {
+                "label": "lfr.form-fragments.contains",
+                "value": "contains"
+              }
             ]
           },
           "defaultValue": "startsWith"
@@ -123,8 +133,8 @@
         {
           "dataType": "string",
           "defaultValue": "<strong>",
-          "label": "start-tag",
-          "description": "start-tag-desc",
+          "label": "lfr.form-fragments.start-tag",
+          "description": "lfr.form-fragments.start-tag-desc",
           "localizable": false,
           "name": "startTag",
           "type": "text"
@@ -132,14 +142,14 @@
         {
           "dataType": "string",
           "defaultValue": "</strong>",
-          "label": "end-tag",
-          "description": "end-tag-desc",
+          "label": "lfr.form-fragments.end-tag",
+          "description": "lfr.form-fragments.end-tag-desc",
           "localizable": false,
           "name": "endTag",
           "type": "text"
         }
       ],
-      "label": "match-options"
+      "label": "lfr.form-fragments.match-options"
     }
   ]
 }

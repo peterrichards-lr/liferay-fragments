@@ -5,24 +5,30 @@
         {
           "dataType": "string",
           "defaultValue": "primary",
-          "label": "type",
+          "label": "lfr.user-account.button-type",
+          "description": "lfr.user-account.button-type",
           "name": "buttonType",
           "type": "select",
           "typeOptions": {
             "validValues": [
               {
+                "label": "lfr.user-account.primary",
                 "value": "primary"
               },
               {
+                "label": "lfr.user-account.secondary",
                 "value": "secondary"
               },
               {
+                "label": "lfr.user-account.link",
                 "value": "link"
               },
               {
+                "label": "lfr.user-account.outline-primary",
                 "value": "outline-primary"
               },
               {
+                "label": "lfr.user-account.outline-secondary",
                 "value": "outline-secondary"
               }
             ]
@@ -31,61 +37,62 @@
         {
           "dataType": "string",
           "defaultValue": "nm",
-          "label": "size",
+          "label": "lfr.user-account.button-size",
+          "description": "lfr.user-account.button-size",
           "name": "buttonSize",
           "type": "select",
           "typeOptions": {
             "validValues": [
               {
-                "label": "small",
+                "label": "lfr.user-account.sm",
                 "value": "sm"
               },
               {
-                "label": "normal",
+                "label": "lfr.user-account.nm",
                 "value": "nm"
               },
               {
-                "label": "large",
+                "label": "lfr.user-account.lg",
                 "value": "lg"
               }
             ]
           }
         }
       ],
-      "label": "button-options"
+      "label": "lfr.user-account.button-options"
     },
     {
       "fields": [
         {
-          "dataType": "string",
-          "defaultValue": "microservice-lctseuk-prd.lfr.cloud/account/api/v1/myroles",
-          "label": "roles-endpoint-url",
+          "defaultValue": "/o/headless-admin-user/v1.0/my-user-account/roles",
+          "label": "lfr.user-account.roles-endpoint-url",
+          "description": "lfr.user-account.roles-endpoint-url",
           "name": "rolesEndpointUrl",
           "type": "text"
         },
         {
-          "dataType": "string",
-          "defaultValue": "microservice-lctseuk-prd.lfr.cloud/account/api/v1/mysites",
-          "label": "sites-endpoint-url",
+          "defaultValue": "/o/headless-admin-user/v1.0/my-user-account/sites",
+          "label": "lfr.user-account.sites-endpoint-url",
+          "description": "lfr.user-account.sites-endpoint-url",
           "name": "sitesEndpointUrl",
           "type": "text"
         },
         {
-          "dataType": "string",
-          "defaultValue": "microservice-lctseuk-prd.lfr.cloud/account/api/v1/myusergroups",
-          "label": "userGroupsEndpoint-url",
+          "defaultValue": "/o/headless-admin-user/v1.0/my-user-account/user-groups",
+          "label": "lfr.user-account.user-groups-endpoint-url",
+          "description": "lfr.user-account.user-groups-endpoint-url",
           "name": "userGroupsEndpointUrl",
           "type": "text"
         },
         {
-          "dataType": "string",
-          "defaultValue": "1451410b-e109-c4a8-e7b2-31eab20e30d2",
-          "label": "user-agent-application-external-reference-code",
-          "name": "userAgentAppExtRefCode",
+          "defaultValue": "LIFERAY_FORRESTER_DEMO_USER_AGENT",
+          "label": "lfr.user-account.user-agent-application-erc",
+          "description": "lfr.user-account.user-agent-application-erc",
+          "name": "userAgentApplicationExternalReferenceCode",
           "type": "text"
         }
       ],
-      "label": "endpoint-options"
+      "label": "lfr.user-account.endpoint-options"
     }
   ]
 }

@@ -1,15 +1,28 @@
 {
-	"fieldSets": [
-		{
-			"fields": [
-				{
-					"defaultValue": true,
-					"label": "Enable Preview Mode",
-					"name": "enablePreviewMode",
-					"type": "checkbox"
-				}
-			],
-			"label": "General"
-		}
-	]
+  "fieldSets": [
+    {
+      "fields": [
+        {
+          "defaultValue": true,
+          "label": "lfr.profile.enable-preview-mode",
+          "description": "lfr.profile.enable-preview-mode-description",
+          "name": "enablePreviewMode",
+          "type": "checkbox"
+        }
+      ],
+      "label": "lfr.profile.general"
+    },
+    {
+      "fields": [
+        {
+          "defaultValue": "var(--primary)",
+          "label": "lfr.profile.accent-color",
+          "description": "lfr.profile.accent-color-description",
+          "name": "accentColor",
+          "type": "colorPicker"
+        }
+      ],
+      "label": "lfr.profile.style"
+    }
+  ]
 }

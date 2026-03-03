@@ -1,86 +1,45 @@
 {
-	"fieldSets": [
-		{
-			"fields": [
-				{
-					"defaultValue": false,
-					"label": "enable-debug",
-					"name": "enableDebug",
-					"type": "checkbox"
-				}
-			],
-			"label": "General"
-		},
-		{
-			"fields": [
-				{
-					"defaultValue": true,
-					"label": "enable-refresh-trigger",
-					"name": "enableRefreshTrigger",
-					"type": "checkbox"
-				},
-				{
-					"defaultValue": "You have already responded.",
-					"label": "refresh-trigger-text",
-					"name": "refreshTriggerText",
-					"type": "text"
-				},
-				{
-					"label": "wait-interval-ms",
-					"name": "waitIntervalMs",
-					"defaultValue": "100",
-					"type": "text",
-					"typeOptions": {
-						"validation": {
-							"min": 100,
-							"type": "number"
-						}
-					}
-				},
-				{
-					"label": "wait-count",
-					"name": "waitCount",
-					"defaultValue": "3",
-					"type": "text",
-					"typeOptions": {
-						"validation": {
-							"min": 1,
-							"type": "number"
-						}
-					}
-				},
-				{
-					"defaultValue": true,
-					"label": "enable-manual-refresh",
-					"name": "enableManualRefresh",
-					"type": "checkbox"
-				},
-				{
-					"defaultValue": true,
-					"label": "enable-auto-refresh",
-					"name": "enableAutoRefresh",
-					"type": "checkbox"
-				},
-				{
-					"label": "refresh-interval-sec",
-					"name": "refreshIntervalSec",
-					"defaultValue": "5",
-					"type": "text",
-					"typeOptions": {
-						"validation": {
-							"min": 5,
-							"type": "number"
-						}
-					}
-				},
-				{
-					"defaultValue": true,
-					"label": "enable-redirect",
-					"name": "enableRedirect",
-					"type": "checkbox"
-				}
-			],
-			"label": "Refresh"
-		}
-	]
+  "fieldSets": [
+    {
+      "fields": [
+        {
+          "defaultValue": "",
+          "label": "lfr.forms.redirect-url",
+          "description": "lfr.forms.redirect-url-description",
+          "name": "redirectUrl",
+          "type": "text"
+        },
+        {
+          "defaultValue": true,
+          "label": "lfr.forms.enable-auto-redirect",
+          "description": "lfr.forms.enable-auto-redirect-description",
+          "name": "enableAutoRedirect",
+          "type": "checkbox"
+        },
+        {
+          "defaultValue": "5",
+          "label": "lfr.forms.redirect-interval-seconds",
+          "description": "lfr.forms.redirect-interval-seconds-description",
+          "name": "redirectIntervalSec",
+          "type": "text",
+          "dataType": "int"
+        },
+        {
+          "defaultValue": true,
+          "label": "lfr.forms.enable-manual-redirect",
+          "description": "lfr.forms.enable-manual-redirect-description",
+          "name": "enableManualRedirect",
+          "type": "checkbox"
+        },
+        {
+          "defaultValue": "click here",
+          "label": "lfr.forms.redirect-link-text",
+          "description": "lfr.forms.redirect-link-text-description",
+          "name": "manualRedirectText",
+          "type": "text"
+        }
+      ],
+      "label": "lfr.forms.behaviour"
+    }
+  ]
 }

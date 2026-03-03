@@ -3,26 +3,28 @@
     {
       "fields": [
         {
-          "description": "collection-description",
-          "label": "collection",
+          "description": "lfr.content.collection-description",
+          "label": "lfr.content.collection",
           "name": "collectionIdentier",
           "type": "text"
         }
       ],
-      "label": "collection"
+      "label": "lfr.content.collection"
     },
     {
       "fields": [
         {
           "defaultValue": true,
-          "label": "auto-fit-bounds",
+          "label": "lfr.content.auto-fit-bounds",
+          "description": "lfr.content.auto-fit-bounds",
           "name": "autoFitBounds",
           "type": "checkbox"
         },
         {
           "dataType": "int",
           "defaultValue": "20",
-          "label": "map-center-latitude",
+          "label": "lfr.content.map-center-latitude",
+          "description": "lfr.content.map-center-latitude",
           "name": "mapCenterLat",
           "type": "text",
           "typeOptions": {
@@ -37,7 +39,8 @@
         {
           "dataType": "int",
           "defaultValue": "0",
-          "label": "map-center-longitude",
+          "label": "lfr.content.map-center-longitude",
+          "description": "lfr.content.map-center-longitude",
           "name": "mapCenterLong",
           "type": "text",
           "typeOptions": {
@@ -52,7 +55,8 @@
         {
           "dataType": "int",
           "defaultValue": "2",
-          "label": "map-zoom",
+          "label": "lfr.content.map-zoom",
+          "description": "lfr.content.map-zoom",
           "name": "mapZoom",
           "type": "text",
           "typeOptions": {
@@ -65,31 +69,33 @@
           }
         }
       ],
-      "label": "map-config"
+      "label": "lfr.content.map-config"
     },
     {
       "fields": [
         {
           "dataType": "string",
           "defaultValue": "osm",
-          "label": "map-provider",
+          "label": "lfr.content.map-provider",
+          "description": "lfr.content.map-provider",
           "name": "mapProvider",
           "type": "select",
           "typeOptions": {
             "validValues": [
               {
-                "label": "google-maps",
+                "label": "lfr.content.google-maps",
                 "value": "google"
               },
               {
-                "label": "openstreetmap",
+                "label": "lfr.content.openstreetmap",
                 "value": "osm"
               }
             ]
           }
         },
         {
-          "label": "api-key",
+          "label": "lfr.content.api-key",
+          "description": "lfr.content.api-key",
           "name": "googleApiKey",
           "type": "text",
           "typeOptions": {
@@ -103,8 +109,8 @@
         },
         {
           "defaultValue": "DEMO_MAP_ID",
-          "description": "google-map-id-description",
-          "label": "google-map-id",
+          "description": "lfr.content.google-map-id-description",
+          "label": "lfr.content.google-map-id",
           "name": "googleMapId",
           "type": "text",
           "typeOptions": {
@@ -117,19 +123,20 @@
           }
         }
       ],
-      "label": "map-provider"
+      "label": "lfr.content.map-provider"
     },
     {
       "fields": [
         {
           "defaultValue": false,
-          "label": "use-custom-markers",
+          "label": "lfr.content.use-custom-markers",
+          "description": "lfr.content.use-custom-markers",
           "name": "useCustomMarkers",
           "type": "checkbox"
         },
         {
-          "description": "vocabulary-id-description",
-          "label": "vocabulary-id",
+          "description": "lfr.content.vocabulary-id-description",
+          "label": "lfr.content.vocabulary-id",
           "name": "vocabularyId",
           "type": "text",
           "typeOptions": {
@@ -143,8 +150,8 @@
         },
         {
           "defaultValue": true,
-          "description": "marker-fallback-description",
-          "label": "marker-fallback",
+          "description": "lfr.content.marker-fallback-description",
+          "label": "lfr.content.marker-fallback",
           "name": "markerFallback",
           "type": "checkbox",
           "typeOptions": {
@@ -157,28 +164,28 @@
           }
         }
       ],
-      "label": "custom-markers"
+      "label": "lfr.content.custom-markers"
     },
     {
       "fields": [
         {
           "defaultValue": "click",
-          "description": "info-window-trigger-description",
-          "label": "info-window-trigger",
+          "description": "lfr.content.info-window-trigger-description",
+          "label": "lfr.content.info-window-trigger",
           "name": "infoWindowTrigger",
           "type": "select",
           "typeOptions": {
             "validValues": [
               {
-                "label": "hover",
+                "label": "lfr.content.hover",
                 "value": "hover"
               },
               {
-                "label": "click",
+                "label": "lfr.content.click",
                 "value": "click"
               },
               {
-                "label": "none",
+                "label": "lfr.content.none",
                 "value": "none"
               }
             ]
@@ -187,20 +194,21 @@
         {
           "dataType": "int",
           "defaultValue": "200",
-          "description": "info-window-close-delay-description",
-          "label": "info-window-close-delay",
+          "description": "lfr.content.info-window-close-delay-description",
+          "label": "lfr.content.info-window-close-delay",
           "name": "infoWindowCloseDelay",
           "type": "text"
         },
         {
           "defaultValue": false,
-          "label": "use-custom-info-template",
+          "label": "lfr.content.use-custom-info-template",
+          "description": "lfr.content.use-custom-info-template",
           "name": "useCustomInfoTemplate",
           "type": "checkbox"
         },
         {
-          "description": "info-template-id-description",
-          "label": "info-template-id",
+          "description": "lfr.content.info-template-id-description",
+          "label": "lfr.content.info-template-id",
           "name": "contentTemplateId",
           "type": "text",
           "typeOptions": {
@@ -214,8 +222,8 @@
         },
         {
           "defaultValue": true,
-          "description": "template-fallback-description",
-          "label": "template-fallback",
+          "description": "lfr.content.template-fallback-description",
+          "label": "lfr.content.template-fallback",
           "name": "templateFallback",
           "type": "checkbox",
           "typeOptions": {
@@ -228,21 +236,21 @@
           }
         }
       ],
-      "label": "info-window"
+      "label": "lfr.content.info-window"
     },
     {
       "fields": [
         {
           "defaultValue": false,
-          "description": "navigate-on-click-description",
-          "label": "navigate-on-click",
+          "description": "lfr.content.navigate-on-click-description",
+          "label": "lfr.content.navigate-on-click",
           "name": "navigateOnClick",
           "type": "checkbox"
         },
         {
           "defaultValue": false,
-          "description": "open-in-new-tab-description",
-          "label": "open-in-new-tab",
+          "description": "lfr.content.open-in-new-tab-description",
+          "label": "lfr.content.open-in-new-tab",
           "name": "openInNewTab",
           "type": "checkbox",
           "typeOptions": {
@@ -256,13 +264,14 @@
         },
         {
           "defaultValue": false,
-          "label": "use-custom-display-page",
+          "label": "lfr.content.use-custom-display-page",
+          "description": "lfr.content.use-custom-display-page",
           "name": "useCustomDisplayPage",
           "type": "checkbox"
         },
         {
-          "description": "display-page-url-description",
-          "label": "display-page-url",
+          "description": "lfr.content.display-page-url-description",
+          "label": "lfr.content.display-page-url",
           "name": "displayPageTemplateUrl",
           "type": "text",
           "typeOptions": {
@@ -275,25 +284,26 @@
           }
         }
       ],
-      "label": "display-page-navigation"
+      "label": "lfr.content.display-page-navigation"
     },
     {
       "fields": [
         {
           "defaultValue": false,
-          "label": "debug-enabled",
+          "label": "lfr.content.debug-enabled",
+          "description": "lfr.content.debug-enabled",
           "name": "enableDebug",
           "type": "checkbox"
         },
         {
           "defaultValue": false,
-          "description": "debug-in-error-handler-description",
-          "label": "debug-in-error-handler",
+          "description": "lfr.content.debug-in-error-handler-description",
+          "label": "lfr.content.debug-in-error-handler",
           "name": "debugInErrorHandler",
           "type": "checkbox"
         }
       ],
-      "label": "miscellaneous"
+      "label": "lfr.content.miscellaneous"
     }
   ]
 }

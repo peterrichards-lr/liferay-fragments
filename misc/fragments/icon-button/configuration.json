@@ -1,93 +1,105 @@
 {
-	"fieldSets": [
-		{
-			"fields": [
-				{
-					"dataType": "string",
-					"defaultValue": "link",
-					"label": "type",
-					"name": "type",
-					"type": "select",
-					"typeOptions": {
-						"validValues": [
-							{
-								"value": "link"
-							},
-							{
-								"value": "action"
-							}
-						]
-					}
-				},
-				{
-					"dataType": "string",
-					"defaultValue": "primary",
-					"label": "style",
-					"name": "buttonType",
-					"type": "select",
-					"typeOptions": {
-						"validValues": [
-							{
-								"value": "primary"
-							},
-							{
-								"value": "secondary"
-							},
-							{
-								"value": "link"
-							},
-							{
-								"value": "outline-primary"
-							},
-							{
-								"value": "outline-secondary"
-							}
-						]
-					}
-				},
-				{
-					"dataType": "string",
-					"defaultValue": "nm",
-					"label": "size",
-					"name": "buttonSize",
-					"type": "select",
-					"typeOptions": {
-						"validValues": [
-							{
-								"label": "small",
-								"value": "sm"
-							},
-							{
-								"label": "normal",
-								"value": "nm"
-							},
-							{
-								"label": "large",
-								"value": "lg"
-							}
-						]
-					}
-				},
-				{
-					"dataType": "string",
-					"defaultValue": "check-circle",
-					"label": "icon-name",
-					"name": "iconName",
-					"type": "text"
-				}
-			],
-			"label": "button-options"
-		},
-		{
+  "fieldSets": [
+    {
+      "fields": [
+        {
+          "dataType": "string",
+          "defaultValue": "link",
+          "label": "lfr.misc.type",
+          "description": "lfr.misc.type",
+          "name": "type",
+          "type": "select",
+          "typeOptions": {
+            "validValues": [
+              {
+                "label": "lfr.misc.link",
+                "value": "link"
+              },
+              {
+                "label": "lfr.misc.action",
+                "value": "action"
+              }
+            ]
+          }
+        },
+        {
+          "dataType": "string",
+          "defaultValue": "primary",
+          "label": "lfr.misc.style",
+          "description": "lfr.misc.style",
+          "name": "buttonType",
+          "type": "select",
+          "typeOptions": {
+            "validValues": [
+              {
+                "label": "lfr.misc.primary",
+                "value": "primary"
+              },
+              {
+                "label": "lfr.misc.secondary",
+                "value": "secondary"
+              },
+              {
+                "label": "lfr.misc.link",
+                "value": "link"
+              },
+              {
+                "label": "lfr.misc.outline-primary",
+                "value": "outline-primary"
+              },
+              {
+                "label": "lfr.misc.outline-secondary",
+                "value": "outline-secondary"
+              }
+            ]
+          }
+        },
+        {
+          "dataType": "string",
+          "defaultValue": "nm",
+          "label": "lfr.misc.size",
+          "description": "lfr.misc.size",
+          "name": "buttonSize",
+          "type": "select",
+          "typeOptions": {
+            "validValues": [
+              {
+                "label": "lfr.misc.small",
+                "value": "sm"
+              },
+              {
+                "label": "lfr.misc.normal",
+                "value": "nm"
+              },
+              {
+                "label": "lfr.misc.large",
+                "value": "lg"
+              }
+            ]
+          }
+        },
+        {
+          "dataType": "string",
+          "defaultValue": "check-circle",
+          "label": "lfr.misc.icon-name",
+          "description": "lfr.misc.icon-name",
+          "name": "iconName",
+          "type": "text"
+        }
+      ],
+      "label": "lfr.misc.button-options"
+    },
+    {
       "fields": [
         {
           "defaultValue": false,
-          "label": "Enable Debug Logging",
+          "label": "lfr.misc.enable-debug",
+          "description": "lfr.misc.enable-debug",
           "name": "enableDebug",
           "type": "checkbox"
         }
       ],
-      "label": "Debugging"
+      "label": "lfr.misc.debugging"
     }
-	]
+  ]
 }

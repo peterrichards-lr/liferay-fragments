@@ -5,25 +5,25 @@
         {
           "dataType": "string",
           "defaultValue": "solid",
-          "label": "type",
-          "name": "type",
+          "label": "lfr.misc.type",
+          "name": "buttonType",
           "type": "select",
           "typeOptions": {
             "validValues": [
               {
-                "label": "solid",
+                "label": "lfr.misc.solid",
                 "value": "solid"
               },
               {
-                "label": "ghost",
+                "label": "lfr.misc.ghost",
                 "value": "ghost"
               },
               {
-                "label": "borderless",
+                "label": "lfr.misc.borderless",
                 "value": "borderless"
               },
               {
-                "label": "rounded",
+                "label": "lfr.misc.rounded",
                 "value": "rounded"
               }
             ]
@@ -32,18 +32,21 @@
         {
           "dataType": "string",
           "defaultValue": "primary",
-          "label": "style",
+          "label": "lfr.misc.style",
           "name": "style",
           "type": "select",
           "typeOptions": {
             "validValues": [
               {
+                "label": "lfr.misc.primary",
                 "value": "primary"
               },
               {
+                "label": "lfr.misc.secondary",
                 "value": "secondary"
               },
               {
+                "label": "lfr.misc.neutral",
                 "value": "neutral"
               }
             ]
@@ -52,21 +55,21 @@
         {
           "dataType": "string",
           "defaultValue": "",
-          "label": "size",
+          "label": "lfr.misc.size",
           "name": "buttonSize",
           "type": "select",
           "typeOptions": {
             "validValues": [
               {
-                "label": "small",
+                "label": "lfr.misc.small",
                 "value": "btn-sm"
               },
               {
-                "label": "medium",
+                "label": "lfr.misc.medium",
                 "value": ""
               },
               {
-                "label": "large",
+                "label": "lfr.misc.large",
                 "value": "btn-lg"
               }
             ]
@@ -75,18 +78,19 @@
         {
           "dataType": "string",
           "defaultValue": false,
-          "label": "inverted",
+          "label": "lfr.misc.inverted",
           "name": "inverted",
           "type": "checkbox"
         },
         {
           "dataType": "string",
           "defaultValue": false,
-          "label": "uppercase",
+          "label": "lfr.misc.uppercase",
           "name": "uppercase",
           "type": "checkbox"
         }
-      ]
+      ],
+      "label": "lfr.misc.general"
     }
   ]
 }

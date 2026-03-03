@@ -4,51 +4,53 @@
       "fields": [
         {
           "dataType": "int",
-          "description": "destination-site-id-description",
-          "label": "destination-site-id",
+          "description": "lfr.content.destination-site-id-description",
+          "label": "lfr.content.destination-site-id",
           "name": "destinationSiteId",
           "type": "text"
         },
         {
           "dataType": "int",
-          "label": "content-structure-id",
+          "label": "lfr.content.content-structure-id",
+          "description": "lfr.content.content-structure-id",
           "name": "contentStructureId",
           "type": "text"
         },
         {
           "defaultValue": false,
-          "label": "asset-library-collection",
+          "label": "lfr.content.asset-library-collection",
+          "description": "lfr.content.asset-library-collection",
           "name": "assetLibraryCollection",
           "type": "checkbox"
         },
         {
           "dataType": "int",
-          "description": "asset-library-id-description",
-          "label": "asset-library-id",
+          "description": "lfr.content.asset-library-id-description",
+          "label": "lfr.content.asset-library-id",
           "name": "assetLibraryId",
           "type": "text"
         }
       ],
-      "label": "content"
+      "label": "lfr.content.content"
     },
     {
       "configurationRole": "advanced",
       "fields": [
         {
           "defaultValue": false,
-          "description": "use-default-page-url-description",
-          "label": "use-default-page-url",
+          "description": "lfr.content.use-default-page-url-description",
+          "label": "lfr.content.use-default-page-url",
           "name": "useDefaultPageUrl",
           "type": "checkbox"
         },
         {
-          "description": "default-page-url-description",
-          "label": "default-page-url",
+          "description": "lfr.content.default-page-url-description",
+          "label": "lfr.content.default-page-url",
           "name": "defaultPageUrl",
           "type": "text"
         }
       ],
-      "label": "page-url"
+      "label": "lfr.content.page-url"
     },
     {
       "configurationRole": "style",
@@ -56,15 +58,18 @@
         {
           "dataType": "string",
           "defaultValue": "link",
-          "label": "type",
+          "label": "lfr.content.type",
+          "description": "lfr.content.type",
           "name": "type",
           "type": "select",
           "typeOptions": {
             "validValues": [
               {
+                "label": "lfr.content.link",
                 "value": "link"
               },
               {
+                "label": "lfr.content.action",
                 "value": "action"
               }
             ]
@@ -73,24 +78,30 @@
         {
           "dataType": "string",
           "defaultValue": "primary",
-          "label": "style",
+          "label": "lfr.content.style",
+          "description": "lfr.content.style",
           "name": "buttonType",
           "type": "select",
           "typeOptions": {
             "validValues": [
               {
+                "label": "lfr.content.primary",
                 "value": "primary"
               },
               {
+                "label": "lfr.content.secondary",
                 "value": "secondary"
               },
               {
+                "label": "lfr.content.link",
                 "value": "link"
               },
               {
+                "label": "lfr.content.outline-primary",
                 "value": "outline-primary"
               },
               {
+                "label": "lfr.content.outline-secondary",
                 "value": "outline-secondary"
               }
             ]
@@ -99,47 +110,49 @@
         {
           "dataType": "string",
           "defaultValue": "nm",
-          "label": "size",
+          "label": "lfr.content.size",
+          "description": "lfr.content.size",
           "name": "buttonSize",
           "type": "select",
           "typeOptions": {
             "validValues": [
               {
-                "label": "small",
+                "label": "lfr.content.small",
                 "value": "sm"
               },
               {
-                "label": "normal",
+                "label": "lfr.content.normal",
                 "value": "nm"
               },
               {
-                "label": "large",
+                "label": "lfr.content.large",
                 "value": "lg"
               }
             ]
           }
         }
       ],
-      "label": "button-options"
+      "label": "lfr.content.button-options"
     },
     {
       "configurationRole": "advanced",
       "fields": [
         {
           "defaultValue": false,
-          "label": "debug-enabled",
+          "label": "lfr.content.debug-enabled",
+          "description": "lfr.content.debug-enabled",
           "name": "enableDebug",
           "type": "checkbox"
         },
         {
           "defaultValue": false,
-          "description": "debug-in-error-handler-description",
-          "label": "debug-in-error-handler",
+          "description": "lfr.content.debug-in-error-handler-description",
+          "label": "lfr.content.debug-in-error-handler",
           "name": "debugInErrorHandler",
           "type": "checkbox"
         }
       ],
-      "label": "miscellaneous"
+      "label": "lfr.content.miscellaneous"
     }
   ]
 }

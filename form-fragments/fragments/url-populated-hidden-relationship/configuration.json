@@ -5,15 +5,18 @@
         {
           "dataType": "string",
           "defaultValue": "path",
-          "label": "source-method",
+          "label": "lfr.form-fragments.source-method",
+          "description": "lfr.form-fragments.source-method",
           "name": "sourceMethod",
           "type": "select",
           "typeOptions": {
             "validValues": [
               {
+                "label": "lfr.form-fragments.path",
                 "value": "path"
               },
               {
+                "label": "lfr.form-fragments.query-string",
                 "value": "queryString"
               }
             ]
@@ -21,25 +24,28 @@
         },
         {
           "defaultValue": "-1",
-          "label": "path-position",
-          "description": "-1 will take the value from the last path token",
+          "label": "lfr.form-fragments.path-position",
+          "description": "lfr.form-fragments.path-position",
           "name": "pathPosition",
           "type": "text",
           "dataType": "int"
         },
         {
           "defaultValue": "id",
-          "label": "id-parameter",
+          "label": "lfr.form-fragments.id-parameter",
+          "description": "lfr.form-fragments.id-parameter",
           "name": "idParameter",
           "type": "text"
         },
         {
           "defaultValue": "",
-          "label": "label-parameter",
+          "label": "lfr.form-fragments.label-parameter",
+          "description": "lfr.form-fragments.label-parameter",
           "name": "labelParameter",
           "type": "text"
         }
-      ]
+      ],
+      "label": "lfr.form-fragments.general"
     }
   ]
 }

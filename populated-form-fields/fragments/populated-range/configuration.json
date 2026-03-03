@@ -5,7 +5,8 @@
         {
           "dataType": "string",
           "defaultValue": "",
-          "label": "placeholder",
+          "label": "lfr.populated-form-fields.placeholder",
+          "description": "lfr.populated-form-fields.placeholder",
           "localizable": true,
           "name": "placeholder",
           "type": "text"
@@ -13,98 +14,110 @@
         {
           "dataType": "string",
           "defaultValue": false,
-          "label": "custom-range",
+          "label": "lfr.populated-form-fields.custom-range",
+          "description": "lfr.populated-form-fields.custom-range",
           "name": "customRange",
           "type": "checkbox"
         },
         {
           "dataType": "int",
           "defaultValue": "0",
-          "label": "min",
+          "label": "lfr.populated-form-fields.min",
+          "description": "lfr.populated-form-fields.min",
           "name": "min",
           "type": "text"
         },
         {
           "dataType": "int",
           "defaultValue": "10",
-          "label": "max",
+          "label": "lfr.populated-form-fields.max",
+          "description": "lfr.populated-form-fields.max",
           "name": "max",
           "type": "text"
         },
         {
           "dataType": "int",
           "defaultValue": "1",
-          "label": "step",
+          "label": "lfr.populated-form-fields.step",
+          "description": "lfr.populated-form-fields.step",
           "name": "step",
           "type": "text"
         },
         {
           "dataType": "string",
           "defaultValue": true,
-          "label": "display-value",
+          "label": "lfr.populated-form-fields.display-value",
+          "description": "lfr.populated-form-fields.display-value",
           "name": "displayValue",
           "type": "checkbox"
         },
         {
           "dataType": "string",
           "defaultValue": "",
-          "label": "value-prefix",
+          "label": "lfr.populated-form-fields.value-prefix",
+          "description": "lfr.populated-form-fields.value-prefix",
           "name": "valuePrefix",
           "type": "text"
         },
         {
           "dataType": "string",
           "defaultValue": "",
-          "label": "value-suffix",
+          "label": "lfr.populated-form-fields.value-suffix",
+          "description": "lfr.populated-form-fields.value-suffix",
           "name": "valueSuffix",
           "type": "text"
         },
         {
           "dataType": "string",
           "defaultValue": false,
-          "label": "add-id",
+          "label": "lfr.populated-form-fields.add-id",
+          "description": "lfr.populated-form-fields.add-id",
           "name": "addId",
           "type": "checkbox"
         },
         {
           "dataType": "string",
           "defaultValue": "",
-          "label": "id-value",
+          "label": "lfr.populated-form-fields.id-value",
+          "description": "lfr.populated-form-fields.id-value",
           "name": "idValue",
           "type": "text"
         }
-      ]
+      ],
+      "label": "lfr.populated-form-fields.general"
     },
     {
       "fields": [
         {
-          "defaultValue": true,
-          "label": "use-storage-value",
+          "defaultValue": false,
+          "label": "lfr.populated-form-fields.use-storage-value",
+          "description": "lfr.populated-form-fields.use-storage-value",
           "name": "useStorageValue",
           "type": "checkbox"
         },
         {
-          "dataType": "string",
-          "description": "storage-key-prefix-description",
-          "label": "storage-key-prefix",
+          "defaultValue": "LFR_APP",
+          "label": "lfr.populated-form-fields.storage-key-prefix",
+          "description": "lfr.populated-form-fields.storage-key-prefix",
           "name": "storageKeyPrefix",
           "type": "text"
         },
         {
           "defaultValue": false,
-          "label": "use-specific-storage-key",
+          "label": "lfr.populated-form-fields.use-specific-storage-key",
+          "description": "lfr.populated-form-fields.use-specific-storage-key",
           "name": "useSpecificStorageKey",
           "type": "checkbox"
         },
         {
-          "dataType": "string",
-          "description": "specific-storage-key-description",
-          "label": "specific-storage-key",
-          					"name": "specificStorageKey",
-          					"type": "text"
-          				}
-          			]
-          		}
-          	]
-          }
-          
+          "defaultValue": "",
+          "label": "lfr.populated-form-fields.specific-storage-key",
+          "description": "lfr.populated-form-fields.specific-storage-key",
+          "name": "specificStorageKey",
+          "type": "text"
+        }
+      ],
+      "label": "lfr.populated-form-fields.storage"
+    }
+  ]
+}

@@ -1,45 +1,45 @@
 {
-	"fieldSets": [
-		{
-			"fields": [
-				{
-					"defaultValue": true,
-					"label": "Enable Notification Indicator",
-					"name": "enableNotificationIndicator",
-					"type": "checkbox"
-				},
-				{
-					"dataType": "int",
-					"defaultValue": "0",
-					"label": "Notification Count",
-					"name": "notificationCount",
-					"type": "text"
-				},
-				{
-					"defaultValue": true,
-					"label": "Enable Custom Link",
-					"name": "enableCustomLink",
-					"type": "checkbox"
-				},
-				{
-					"defaultValue": "/notifications",
-					"label": "Custom Notification Link",
-					"name": "customNotificationLink",
-					"type": "text"
-				}
-			],
-			"label": "Notifications"
-		},
-		{
-			"fields": [
-				{
-					"defaultValue": false,
-					"label": "Enable Sign-in Link",
-					"name": "enableSignInLink",
-					"type": "checkbox"
-				}
-			],
-			"label": "Notifications"
-		}
-	]
+  "fieldSets": [
+    {
+      "fields": [
+        {
+          "defaultValue": true,
+          "label": "lfr.header-components.enable-notification-indicator",
+          "name": "enableNotificationIndicator",
+          "type": "checkbox"
+        },
+        {
+          "dataType": "int",
+          "defaultValue": "0",
+          "label": "lfr.header-components.notification-count",
+          "name": "notificationCount",
+          "type": "text"
+        },
+        {
+          "defaultValue": true,
+          "label": "lfr.header-components.enable-custom-link",
+          "name": "enableCustomLink",
+          "type": "checkbox"
+        },
+        {
+          "defaultValue": "/notifications",
+          "label": "lfr.header-components.custom-notification-link",
+          "name": "customNotificationLink",
+          "type": "text"
+        }
+      ],
+      "label": "lfr.header-components.notifications"
+    },
+    {
+      "fields": [
+        {
+          "defaultValue": false,
+          "label": "lfr.header-components.enable-sign-in-link",
+          "name": "enableSignInLink",
+          "type": "checkbox"
+        }
+      ],
+      "label": "lfr.header-components.notifications"
+    }
+  ]
 }

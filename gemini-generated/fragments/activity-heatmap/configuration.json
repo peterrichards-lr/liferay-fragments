@@ -4,32 +4,32 @@
       "fields": [
         {
           "defaultValue": "waterreadings",
-          "description": "object-rest-context-description",
-          "label": "object-rest-context",
+          "description": "lfr.gemini-generated.object-rest-context-description",
+          "label": "lfr.gemini-generated.object-rest-context",
           "name": "objectRESTContext",
           "type": "text"
         },
         {
           "defaultValue": "readingDate",
-          "description": "date-field-description",
-          "label": "date-field",
+          "description": "lfr.gemini-generated.date-field-description",
+          "label": "lfr.gemini-generated.date-field",
           "name": "dateField",
           "type": "text"
         }
       ],
-      "label": "data"
+      "label": "lfr.gemini-generated.data"
     },
     {
       "fields": [
         {
           "defaultValue": "var(--primary)",
-          "description": "base-color-description",
-          "label": "base-color",
+          "description": "lfr.gemini-generated.base-color-description",
+          "label": "lfr.gemini-generated.base-color",
           "name": "baseColor",
           "type": "colorPicker"
         }
       ],
-      "label": "style"
+      "label": "lfr.gemini-generated.style"
     }
   ]
 }

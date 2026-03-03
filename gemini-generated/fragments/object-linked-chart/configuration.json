@@ -4,54 +4,66 @@
       "fields": [
         {
           "defaultValue": "waterreadings",
-          "label": "object-rest-context",
-          "description": "object-rest-context-description",
+          "label": "lfr.gemini-generated.object-rest-context",
+          "description": "lfr.gemini-generated.object-rest-context-description",
           "name": "objectRESTContext",
           "type": "text"
         },
         {
           "defaultValue": "readingDate",
-          "label": "label-field",
-          "description": "label-field-description",
+          "label": "lfr.gemini-generated.label-field",
+          "description": "lfr.gemini-generated.label-field-description",
           "name": "labelField",
           "type": "text"
         },
         {
           "defaultValue": "reading",
-          "label": "value-field",
-          "description": "value-field-description",
+          "label": "lfr.gemini-generated.value-field",
+          "description": "lfr.gemini-generated.value-field-description",
           "name": "valueField",
           "type": "text"
         }
       ],
-      "label": "data"
+      "label": "lfr.gemini-generated.data"
     },
     {
       "fields": [
         {
           "defaultValue": "bar",
-          "label": "chart-type",
-          "description": "chart-type-description",
+          "label": "lfr.gemini-generated.chart-type",
+          "description": "lfr.gemini-generated.chart-type-description",
           "name": "chartType",
           "type": "select",
           "typeOptions": {
             "validValues": [
-              { "value": "bar", "label": "Bar" },
-              { "value": "line", "label": "Line" },
-              { "value": "pie", "label": "Pie" },
-              { "value": "doughnut", "label": "Doughnut" }
+              {
+                "label": "lfr.gemini-generated.bar",
+                "value": "bar"
+              },
+              {
+                "label": "lfr.gemini-generated.line",
+                "value": "line"
+              },
+              {
+                "label": "lfr.gemini-generated.pie",
+                "value": "pie"
+              },
+              {
+                "label": "lfr.gemini-generated.doughnut",
+                "value": "doughnut"
+              }
             ]
           }
         },
         {
           "defaultValue": "var(--primary)",
-          "label": "chart-color",
-          "description": "chart-color-description",
+          "label": "lfr.gemini-generated.chart-color",
+          "description": "lfr.gemini-generated.chart-color-description",
           "name": "chartColor",
           "type": "colorPicker"
         }
       ],
-      "label": "display"
+      "label": "lfr.gemini-generated.display"
     }
   ]
 }

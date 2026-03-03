@@ -5,7 +5,8 @@
         {
           "dataType": "int",
           "defaultValue": "4",
-          "label": "number-of-tabs",
+          "label": "lfr.misc.number-of-tabs",
+          "description": "lfr.misc.number-of-tabs",
           "name": "numberOfTabs",
           "type": "text",
           "typeOptions": {
@@ -17,13 +18,13 @@
         },
         {
           "defaultValue": "true",
-          "description": "selected-tab-will-be-persisted-when-users-reload-the-page-or-navigate-through-the-site",
-          "label": "persist-selected-tab",
+          "description": "lfr.misc.persist-selected-tab-description",
+          "label": "lfr.misc.persist-selected-tab",
           "name": "persistSelectedTab",
           "type": "checkbox"
         }
       ],
-      "label": "tabs-options"
+      "label": "lfr.misc.tabs-options"
     }
   ]
 }

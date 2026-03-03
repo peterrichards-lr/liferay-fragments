@@ -1,29 +1,28 @@
 {
-	"fieldSets": [
-				{
-			"fields": [
-				{
-					"label": "Start",
-					"name": "start",
-					"type": "colorPicker",
-					"defaultValue": "#000000"
-				},
-				{
-					"label": "End",
-					"name": "end",
-					"type": "colorPicker",
-					"defaultValue": "#ffffff"
-				},
-				{
-					"name": "direction",
-					"label": "Direction",
-					"description": "Write any valid CSS angle.",
-					"type": "text",
-					"dataType": "string",
-					"defaultValue": "90deg"
-				}
-			],
-			"label": "Linear Gradient"
-		}
-	]
+  "fieldSets": [
+    {
+      "fields": [
+        {
+          "label": "lfr.header-components.start",
+          "name": "start",
+          "type": "colorPicker",
+          "defaultValue": "#000000"
+        },
+        {
+          "label": "lfr.header-components.end",
+          "name": "end",
+          "type": "colorPicker",
+          "defaultValue": "#ffffff"
+        },
+        {
+          "name": "direction",
+          "label": "lfr.header-components.direction",
+          "type": "text",
+          "dataType": "string",
+          "defaultValue": "90deg"
+        }
+      ],
+      "label": "lfr.header-components.linear-gradient"
+    }
+  ]
 }

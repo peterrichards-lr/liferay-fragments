@@ -4,126 +4,126 @@
       "fields": [
         {
           "defaultValue": "waterreadings",
-          "label": "object-path",
-          "description": "object-path-desc",
+          "label": "lfr.meter-reading.object-path",
+          "description": "lfr.meter-reading.object-path-description",
           "name": "objectPath",
           "type": "text"
         },
         {
           "defaultValue": false,
-          "label": "show-date-selector",
-          "description": "show-date-selector-desc",
+          "label": "lfr.meter-reading.show-date-selector",
+          "description": "lfr.meter-reading.show-date-selector-description",
           "name": "showDateSelector",
           "type": "checkbox"
         },
         {
           "defaultValue": false,
-          "label": "integer-reading",
-          "description": "integer-reading-desc",
+          "label": "lfr.meter-reading.integer-reading",
+          "description": "lfr.meter-reading.integer-reading-description",
           "name": "integerReading",
           "type": "checkbox"
         },
         {
           "defaultValue": true,
-          "label": "allow-partial-paste",
-          "description": "allow-partial-paste-desc",
+          "label": "lfr.meter-reading.allow-partial-paste",
+          "description": "lfr.meter-reading.allow-partial-paste-description",
           "name": "allowPartialPaste",
           "type": "checkbox"
         }
       ],
-      "label": "General"
+      "label": "lfr.meter-reading.general"
     },
     {
       "fields": [
         {
           "defaultValue": false,
-          "label": "enable-spinner",
+          "label": "lfr.meter-reading.enable-spinner",
           "name": "enableSpinner",
           "type": "checkbox"
         },
         {
           "defaultValue": "4rem",
-          "label": "digit-font-size",
+          "label": "lfr.meter-reading.digit-font-size",
           "name": "digitFontSize",
           "type": "length"
         },
-				{
+        {
           "defaultValue": "5",
-          "label": "integer-digit-count",
+          "label": "lfr.meter-reading.integer-digit-count",
           "name": "integerDigitCount",
           "type": "text",
           "dataType": "int"
         },
-				{
-          "label": "integer-fg-color",
+        {
+          "label": "lfr.meter-reading.integer-fg-color",
           "name": "integerFGColor",
           "type": "colorPicker",
           "defaultValue": "var(--white)"
         },
         {
-          "label": "integer-bg-color",
+          "label": "lfr.meter-reading.integer-bg-color",
           "name": "integerBGColor",
           "type": "colorPicker",
           "defaultValue": "var(--black)"
         },
         {
           "defaultValue": "3",
-          "label": "decimal-digit-count",
+          "label": "lfr.meter-reading.decimal-digit-count",
           "name": "decimalDigitCount",
           "type": "text",
           "dataType": "int"
         },
-				{
-          "label": "decimal-fg-color",
+        {
+          "label": "lfr.meter-reading.decimal-fg-color",
           "name": "decimalFGColor",
           "type": "colorPicker",
           "defaultValue": "var(--white)"
         },
         {
-          "label": "decimal-bg-color",
+          "label": "lfr.meter-reading.decimal-bg-color",
           "name": "decimalBGColor",
           "type": "colorPicker",
           "defaultValue": "var(--danger)"
         }
       ],
-      "label": "Digits"
+      "label": "lfr.meter-reading.digits"
     },
     {
       "fields": [
-				{
+        {
           "defaultValue": true,
-          "label": "show-labels",
+          "label": "lfr.meter-reading.show-labels",
           "name": "showLabels",
           "type": "checkbox"
         },
         {
-          "label": "label-color",
+          "label": "lfr.meter-reading.label-color",
           "name": "labelColor",
           "type": "colorPicker",
           "defaultValue": "var(--primary)"
         },
         {
           "defaultValue": "0.8rem",
-          "label": "label-font-size",
+          "label": "lfr.meter-reading.label-font-size",
           "name": "labelFontSize",
           "type": "length"
         },
         {
           "defaultValue": ";;;;1,000 litres;100 litres;10 litres; 1 litre ",
-          "label": "label-list",
-          "description": "label-list-desc",
+          "label": "lfr.meter-reading.label-list",
+          "description": "lfr.meter-reading.label-list-description",
           "name": "labelList",
           "type": "text"
         }
       ],
-      "label": "Labels"
+      "label": "lfr.meter-reading.labels"
     },
     {
       "fields": [
         {
           "dataType": "string",
           "defaultValue": "primary",
-          "label": "style",
+          "label": "lfr.meter-reading.button-type",
           "name": "buttonType",
           "type": "select",
           "typeOptions": {
@@ -149,7 +149,7 @@
         {
           "dataType": "string",
           "defaultValue": "nm",
-          "label": "size",
+          "label": "lfr.meter-reading.button-size",
           "name": "buttonSize",
           "type": "select",
           "typeOptions": {
@@ -170,52 +170,52 @@
           }
         }
       ],
-      "label": "Buttons"
+      "label": "lfr.meter-reading.buttons"
     },
     {
       "fields": [
         {
           "defaultValue": false,
-          "label": "use-pubsub",
-          "description": "use-pubsub-desc",
+          "label": "lfr.meter-reading.use-pubsub",
+          "description": "lfr.meter-reading.use-pubsub-description",
           "name": "usePubSub",
           "type": "checkbox"
         },
         {
           "defaultValue": "new-meter-reading",
-          "label": "pubsub-topic",
-          "description": "pubsub-topic-desc",
+          "label": "lfr.meter-reading.pubsub-topic",
+          "description": "lfr.meter-reading.pubsub-topic-description",
           "name": "pubSubTopic",
           "type": "text"
         }
       ],
-      "label": "PubSub"
+      "label": "lfr.meter-reading.pubsub"
     },
-		{
+    {
       "fields": [
         {
           "defaultValue": false,
-          "label": "enable-logging",
-          "name": "enableLogging",
+          "label": "lfr.meter-reading.enable-debug",
+          "name": "enableDebug",
           "type": "checkbox"
         },
         {
           "defaultValue": true,
-          "label": "use-test-account",
-          "description": "use-test-account-desc",
+          "label": "lfr.meter-reading.use-test-account",
+          "description": "lfr.meter-reading.use-test-account-description",
           "name": "useTestAccount",
           "type": "checkbox"
         },
         {
           "defaultValue": "0",
-          "label": "test-account",
-          "description": "test-account-desc",
-          "name": "testAcccount",
+          "label": "lfr.meter-reading.test-account",
+          "description": "lfr.meter-reading.test-account-description",
+          "name": "testAccount",
           "type": "text",
           "dataType": "int"
         }
       ],
-      "label": "Debugging"
+      "label": "lfr.meter-reading.debugging"
     }
   ]
 }

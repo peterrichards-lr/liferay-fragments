@@ -1,37 +1,36 @@
 {
-	"fieldSets": [
-				{
-			"fields": [
-				{
-					"name": "start",
-					"label": "Start",
-					"type": "colorPalette",
-					"dataType": "object",
-					"defaultValue": {
-						"cssClass": "black",
-						"rgbValue": "rgb(0,0,0)"
-					}
-				},
-				{
-					"name": "end",
-					"label": "End",
-					"type": "colorPalette",
-					"dataType": "object",
-					"defaultValue": {
-						"cssClass": "white",
-						"rgbValue": "rgb(255,255,255)"
-					}
-				},
-				{
-					"name": "direction",
-					"label": "Direction",
-					"description": "Write any valid CSS angle.",
-					"type": "text",
-					"dataType": "string",
-					"defaultValue": "90deg"
-				}
-			],
-			"label": "Linear Gradient"
-		}
-	]
+  "fieldSets": [
+    {
+      "fields": [
+        {
+          "name": "start",
+          "label": "lfr.header-components.start",
+          "type": "colorPalette",
+          "dataType": "object",
+          "defaultValue": {
+            "cssClass": "black",
+            "rgbValue": "rgb(0,0,0)"
+          }
+        },
+        {
+          "name": "end",
+          "label": "lfr.header-components.end",
+          "type": "colorPalette",
+          "dataType": "object",
+          "defaultValue": {
+            "cssClass": "white",
+            "rgbValue": "rgb(255,255,255)"
+          }
+        },
+        {
+          "name": "direction",
+          "label": "lfr.header-components.direction",
+          "type": "text",
+          "dataType": "string",
+          "defaultValue": "90deg"
+        }
+      ],
+      "label": "lfr.header-components.linear-gradient"
+    }
+  ]
 }

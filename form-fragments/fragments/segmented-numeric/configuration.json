@@ -4,116 +4,128 @@
       "fields": [
         {
           "defaultValue": false,
-          "label": "integer-number",
-          "description": "integer-number-desc",
+          "label": "lfr.form-fragments.integer-number",
+          "description": "lfr.form-fragments.integer-number-desc",
           "name": "integerNumber",
           "type": "checkbox"
         },
         {
           "defaultValue": true,
-          "label": "allow-partial-paste",
-          "description": "allow-partial-paste-desc",
+          "label": "lfr.form-fragments.allow-partial-paste",
+          "description": "lfr.form-fragments.allow-partial-paste-desc",
           "name": "allowPartialPaste",
           "type": "checkbox"
         }
       ],
-      "label": "General"
+      "label": "lfr.form-fragments.general"
     },
     {
       "fields": [
         {
           "defaultValue": false,
-          "label": "enable-spinner",
+          "label": "lfr.form-fragments.enable-spinner",
+          "description": "lfr.form-fragments.enable-spinner",
           "name": "enableSpinner",
           "type": "checkbox"
         },
         {
           "defaultValue": "4rem",
-          "label": "digit-font-size",
+          "label": "lfr.form-fragments.digit-font-size",
+          "description": "lfr.form-fragments.digit-font-size",
           "name": "digitFontSize",
           "type": "length"
         },
-				{
+        {
           "defaultValue": "5",
-          "label": "integer-digit-count",
+          "label": "lfr.form-fragments.integer-digit-count",
+          "description": "lfr.form-fragments.integer-digit-count",
           "name": "integerDigitCount",
           "type": "text",
           "dataType": "int"
         },
-				{
-          "label": "integer-fg-color",
+        {
+          "label": "lfr.form-fragments.integer-fg-color",
+          "description": "lfr.form-fragments.integer-fg-color",
           "name": "integerFGColor",
           "type": "colorPicker",
           "defaultValue": "#FFFFFF"
         },
         {
-          "label": "integer-bg-color",
+          "label": "lfr.form-fragments.integer-bg-color",
+          "description": "lfr.form-fragments.integer-bg-color",
           "name": "integerBGColor",
           "type": "colorPicker",
           "defaultValue": "#000000"
         },
         {
           "defaultValue": "3",
-          "label": "decimal-digit-count",
+          "label": "lfr.form-fragments.decimal-digit-count",
+          "description": "lfr.form-fragments.decimal-digit-count",
           "name": "decimalDigitCount",
           "type": "text",
           "dataType": "int"
         },
-				{
-          "label": "decimal-fg-color",
+        {
+          "label": "lfr.form-fragments.decimal-fg-color",
+          "description": "lfr.form-fragments.decimal-fg-color",
           "name": "decimalFGColor",
           "type": "colorPicker",
           "defaultValue": "#FFFFFF"
         },
         {
-          "label": "decimal-bg-color",
+          "label": "lfr.form-fragments.decimal-bg-color",
+          "description": "lfr.form-fragments.decimal-bg-color",
           "name": "decimalBGColor",
           "type": "colorPicker",
           "defaultValue": "#FF0000"
         }
       ],
-      "label": "Digits"
+      "label": "lfr.form-fragments.digits"
     },
     {
       "fields": [
-				{
+        {
           "defaultValue": true,
-          "label": "show-labels",
+          "label": "lfr.form-fragments.show-labels",
+          "description": "lfr.form-fragments.show-labels",
           "name": "showLabels",
           "type": "checkbox"
         },
         {
-          "label": "label-color",
+          "label": "lfr.form-fragments.label-color",
+          "description": "lfr.form-fragments.label-color",
           "name": "labelColor",
           "type": "colorPicker",
           "defaultValue": "#008000"
         },
         {
           "defaultValue": "0.8rem",
-          "label": "label-font-size",
+          "label": "lfr.form-fragments.label-font-size",
+          "description": "lfr.form-fragments.label-font-size",
           "name": "labelFontSize",
           "type": "length"
         },
         {
           "defaultValue": ";;;;1,000 litres;100 litres;10 litres; 1 litre ",
-          "label": "label-list",
-          "description": "label-list-desc",
+          "label": "lfr.form-fragments.label-list",
+          "description": "lfr.form-fragments.label-list-desc",
           "name": "labelList",
           "type": "text"
         }
       ],
-      "label": "Labels"
+      "label": "lfr.form-fragments.labels"
     },
-		{
+    {
       "fields": [
         {
           "defaultValue": false,
-          "label": "debug-enabled",
+          "label": "lfr.form-fragments.debug-enabled",
+          "description": "lfr.form-fragments.debug-enabled",
           "name": "enableDebug",
           "type": "checkbox"
         }
       ],
-      "label": "miscellaneous-section"
+      "label": "lfr.form-fragments.miscellaneous"
     }
   ]
 }

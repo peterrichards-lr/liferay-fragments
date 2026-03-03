@@ -1,0 +1,17 @@
+{
+  "fieldSets": [
+    {
+      "fields": [
+        {
+          "defaultValue": "6",
+          "label": "lfr.layout-components.column-size",
+          "description": "lfr.layout-components.column-size-description",
+          "name": "columnSize",
+          "type": "text",
+          "dataType": "int"
+        }
+      ],
+      "label": "lfr.layout-components.general"
+    }
+  ]
+}

@@ -4,12 +4,14 @@
       "fields": [
         {
           "defaultValue": true,
-          "label": "use-commerce-context",
+          "label": "lfr.commerce.use-commerce-context",
+          "description": "lfr.commerce.use-commerce-context-description",
           "name": "useCommerceContext",
           "type": "checkbox"
         },
         {
-          "label": "account-id",
+          "label": "lfr.commerce.account-id",
+          "description": "lfr.commerce.account-id-description",
           "name": "accountId",
           "defaultValue": "",
           "type": "text",
@@ -20,7 +22,8 @@
           }
         },
         {
-          "label": "channel-id",
+          "label": "lfr.commerce.channel-id",
+          "description": "lfr.commerce.channel-id-description",
           "name": "channelId",
           "defaultValue": "",
           "type": "text",
@@ -32,12 +35,14 @@
         },
         {
           "defaultValue": true,
-          "label": "emable-cookie",
+          "label": "lfr.commerce.enable-cookie",
+          "description": "lfr.commerce.enable-cookie-description",
           "name": "enableCookie",
           "type": "checkbox"
         },
         {
-          "label": "cookie-expiry-seconds",
+          "label": "lfr.commerce.cookie-expiry-seconds",
+          "description": "lfr.commerce.cookie-expiry-seconds-description",
           "name": "cookieExpirySections",
           "defaultValue": "10",
           "type": "text",
@@ -49,18 +54,19 @@
           }
         }
       ],
-      "label": "Behaviour"
+      "label": "lfr.commerce.behaviour"
     },
     {
       "fields": [
         {
           "defaultValue": "You currently have no purchased products",
-          "label": "not-found-message",
+          "label": "lfr.commerce.not-found-message",
+          "description": "lfr.commerce.not-found-message-description",
           "name": "notfoundMessage",
           "type": "text"
         }
       ],
-      "label": "General"
+      "label": "lfr.commerce.general"
     }
   ]
 }

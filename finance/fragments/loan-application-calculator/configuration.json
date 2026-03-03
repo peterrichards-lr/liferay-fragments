@@ -1,4 +1,109 @@
 {
-	"fieldSets": [
-	]
+  "fieldSets": [
+    {
+      "fields": [
+        {
+          "dataType": "string",
+          "defaultValue": false,
+          "label": "lfr.finance.show",
+          "description": "lfr.finance.show-description",
+          "name": "show",
+          "type": "checkbox"
+        },
+        {
+          "dataType": "string",
+          "defaultValue": "solid",
+          "label": "lfr.finance.type",
+          "description": "lfr.finance.type-description",
+          "name": "type",
+          "type": "select",
+          "typeOptions": {
+            "validValues": [
+              {
+                "label": "lfr.finance.solid",
+                "value": "solid"
+              },
+              {
+                "label": "lfr.finance.ghost",
+                "value": "ghost"
+              },
+              {
+                "label": "lfr.finance.borderless",
+                "value": "borderless"
+              },
+              {
+                "label": "lfr.finance.rounded",
+                "value": "rounded"
+              }
+            ]
+          }
+        },
+        {
+          "dataType": "string",
+          "defaultValue": "primary",
+          "label": "lfr.finance.style",
+          "description": "lfr.finance.style-description",
+          "name": "style",
+          "type": "select",
+          "typeOptions": {
+            "validValues": [
+              {
+                "label": "lfr.finance.primary",
+                "value": "primary"
+              },
+              {
+                "label": "lfr.finance.secondary",
+                "value": "secondary"
+              },
+              {
+                "label": "lfr.finance.neutral",
+                "value": "neutral"
+              }
+            ]
+          }
+        },
+        {
+          "dataType": "string",
+          "defaultValue": "",
+          "label": "lfr.finance.size",
+          "description": "lfr.finance.size-description",
+          "name": "buttonSize",
+          "type": "select",
+          "typeOptions": {
+            "validValues": [
+              {
+                "label": "lfr.finance.small",
+                "value": "btn-sm"
+              },
+              {
+                "label": "lfr.finance.medium",
+                "value": ""
+              },
+              {
+                "label": "lfr.finance.large",
+                "value": "btn-lg"
+              }
+            ]
+          }
+        },
+        {
+          "dataType": "string",
+          "defaultValue": false,
+          "label": "lfr.finance.inverted",
+          "description": "lfr.finance.inverted-description",
+          "name": "inverted",
+          "type": "checkbox"
+        },
+        {
+          "dataType": "string",
+          "defaultValue": false,
+          "label": "lfr.finance.uppercase",
+          "description": "lfr.finance.uppercase-description",
+          "name": "uppercase",
+          "type": "checkbox"
+        }
+      ],
+      "label": "lfr.finance.general"
+    }
+  ]
 }

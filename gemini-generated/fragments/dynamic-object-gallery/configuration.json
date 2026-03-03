@@ -3,54 +3,63 @@
     {
       "fields": [
         {
-          "label": "object-external-reference-code",
-          "description": "object-external-reference-code-description",
+          "label": "lfr.gemini-generated.object-external-reference-code",
+          "description": "lfr.gemini-generated.object-external-reference-code-description",
           "name": "objectERC",
           "type": "text",
           "defaultValue": ""
         },
         {
-          "label": "image-field-name",
-          "description": "image-field-name-description",
+          "label": "lfr.gemini-generated.image-field-name",
+          "description": "lfr.gemini-generated.image-field-name-description",
           "name": "imageField",
           "type": "text",
           "defaultValue": "image"
         },
         {
-          "label": "title-field-name",
-          "description": "title-field-description",
+          "label": "lfr.gemini-generated.title-field",
+          "description": "lfr.gemini-generated.title-field-description",
           "name": "titleField",
           "type": "text",
           "defaultValue": "title"
         },
         {
-          "label": "description-field-name",
-          "description": "description-field-description",
+          "label": "lfr.gemini-generated.description-field",
+          "description": "lfr.gemini-generated.description-field-description",
           "name": "descriptionField",
           "type": "text",
           "defaultValue": "description"
         }
       ],
-      "label": "data"
+      "label": "lfr.gemini-generated.data"
     },
     {
       "fields": [
         {
           "defaultValue": "3",
-          "label": "columns",
-          "description": "columns-description",
+          "label": "lfr.gemini-generated.columns",
+          "description": "lfr.gemini-generated.columns-description",
           "name": "columns",
           "type": "select",
           "typeOptions": {
             "validValues": [
-              { "value": "2", "label": "2 Columns" },
-              { "value": "3", "label": "3 Columns" },
-              { "value": "4", "label": "4 Columns" }
+              {
+                "label": "lfr.gemini-generated.2-columns",
+                "value": "2"
+              },
+              {
+                "label": "lfr.gemini-generated.3-columns",
+                "value": "3"
+              },
+              {
+                "label": "lfr.gemini-generated.4-columns",
+                "value": "4"
+              }
             ]
           }
         }
       ],
-      "label": "display"
+      "label": "lfr.gemini-generated.display"
     }
   ]
 }

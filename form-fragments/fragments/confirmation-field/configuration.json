@@ -2,112 +2,120 @@
   "fieldSets": [
     {
       "fields": [
-				{
-					"dataType": "string",
-					"defaultValue": "",
-					"label": "placeholder",
-					"localizable": true,
-					"name": "placeholder",
-					"type": "text"
-				},
+        {
+          "dataType": "string",
+          "defaultValue": "",
+          "label": "lfr.form-fragments.placeholder",
+          "description": "lfr.form-fragments.placeholder",
+          "localizable": true,
+          "name": "placeholder",
+          "type": "text"
+        },
         {
           "dataType": "string",
           "defaultValue": "flex-column-direction",
-          "label": "Direction",
+          "label": "lfr.form-fragments.direction",
+          "description": "lfr.form-fragments.direction",
           "name": "direction",
           "type": "select",
           "typeOptions": {
             "validValues": [
               {
                 "value": "flex-column-direction",
-                "label": "Horizontal"
+                "label": "lfr.form-fragments.horizontal"
               },
               {
                 "value": "flex-row-direction",
-                "label": "Vertical"
+                "label": "lfr.form-fragments.vertical"
               }
             ]
           }
-        },{
-					"dataType": "string",
-					"defaultValue": "",
-					"label": "Horizontal Spacer",
-					"name": "horizontalSpacerWidth",
-					"type": "select",
-					"typeOptions": {
-						"validValues": [
-							{
-								"label": "0",
-								"value": ""
-							},
-							{
-								"label": "1",
-								"value": "px-1"
-							},
-							{
-								"label": "2",
-								"value": "px-2"
-							},
-							{
-								"label": "3",
-								"value": "px-3"
-							},
-							{
-								"label": "4",
-								"value": "px-4"
-							},
-							{
-								"label": "5",
-								"value": "px-5"
-							}
-						]
-					}
+        },
+        {
+          "dataType": "string",
+          "defaultValue": "",
+          "label": "lfr.form-fragments.horizontal-spacer",
+          "description": "lfr.form-fragments.horizontal-spacer",
+          "name": "horizontalSpacerWidth",
+          "type": "select",
+          "typeOptions": {
+            "validValues": [
+              {
+                "label": "lfr.form-fragments.0",
+                "value": ""
+              },
+              {
+                "label": "lfr.form-fragments.1",
+                "value": "px-1"
+              },
+              {
+                "label": "lfr.form-fragments.2",
+                "value": "px-2"
+              },
+              {
+                "label": "lfr.form-fragments.3",
+                "value": "px-3"
+              },
+              {
+                "label": "lfr.form-fragments.4",
+                "value": "px-4"
+              },
+              {
+                "label": "lfr.form-fragments.5",
+                "value": "px-5"
+              }
+            ]
+          }
         },
         {
           "dataType": "string",
           "defaultValue": "Confirm",
-          "label": "Label",
+          "label": "lfr.form-fragments.label",
+          "description": "lfr.form-fragments.label",
           "name": "label",
           "type": "text"
         },
-				{
-					"defaultValue": true,
-					"label": "Convert Label Text to Lowercase",
-					"name": "convertLabelToLowercase",
-					"type": "checkbox"
-				},
+        {
+          "defaultValue": true,
+          "label": "lfr.form-fragments.convert-label-to-lowercase",
+          "description": "lfr.form-fragments.convert-label-to-lowercase",
+          "name": "convertLabelToLowercase",
+          "type": "checkbox"
+        },
         {
           "dataType": "string",
           "defaultValue": "The information does not match.",
-          "label": "Error Message",
+          "label": "lfr.form-fragments.error-message",
+          "description": "lfr.form-fragments.error-message",
           "name": "errorMessage",
           "type": "text"
         },
         {
           "dataType": "string",
           "defaultValue": "cssdisplay",
-          "label": "Error Display Method",
+          "label": "lfr.form-fragments.error-display-method",
+          "description": "lfr.form-fragments.error-display-method",
           "name": "errorDisplayMethod",
           "type": "select",
           "typeOptions": {
             "validValues": [
               {
                 "value": "cssdisplay",
-                "label": "Display"
+                "label": "lfr.form-fragments.display"
               },
               {
                 "value": "cssvisibility",
-                "label": "Visibility"
+                "label": "lfr.form-fragments.visibility"
               },
               {
                 "value": "clientside",
-                "label": "Client-side Validation"
+                "label": "lfr.form-fragments.client-side-validation"
               }
             ]
           }
         }
       ],
-      "label": "Configuration"
+      "label": "lfr.form-fragments.configuration"
     }
   ]
 }

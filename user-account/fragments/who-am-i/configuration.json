@@ -4,74 +4,62 @@
       "fields": [
         {
           "dataType": "string",
-          "defaultValue": "primary",
-          "label": "type",
-          "name": "buttonType",
-          "type": "select",
-          "typeOptions": {
-            "validValues": [
-              {
-                "value": "primary"
-              },
-              {
-                "value": "secondary"
-              },
-              {
-                "value": "link"
-              },
-              {
-                "value": "outline-primary"
-              },
-              {
-                "value": "outline-secondary"
-              }
-            ]
-          }
-        },
-        {
-          "dataType": "string",
           "defaultValue": "nm",
-          "label": "size",
+          "label": "lfr.user-account.button-size",
+          "description": "lfr.user-account.button-size",
           "name": "buttonSize",
           "type": "select",
           "typeOptions": {
             "validValues": [
               {
-                "label": "small",
+                "label": "lfr.user-account.sm",
                 "value": "sm"
               },
               {
-                "label": "normal",
+                "label": "lfr.user-account.nm",
                 "value": "nm"
               },
               {
-                "label": "large",
+                "label": "lfr.user-account.lg",
                 "value": "lg"
+              }
+            ]
+          }
+        },
+        {
+          "dataType": "string",
+          "defaultValue": "primary",
+          "label": "lfr.user-account.button-type",
+          "description": "lfr.user-account.button-type",
+          "name": "buttonType",
+          "type": "select",
+          "typeOptions": {
+            "validValues": [
+              {
+                "label": "lfr.user-account.primary",
+                "value": "primary"
+              },
+              {
+                "label": "lfr.user-account.secondary",
+                "value": "secondary"
+              },
+              {
+                "label": "lfr.user-account.link",
+                "value": "link"
+              },
+              {
+                "label": "lfr.user-account.outline-primary",
+                "value": "outline-primary"
+              },
+              {
+                "label": "lfr.user-account.outline-secondary",
+                "value": "outline-secondary"
               }
             ]
           }
         }
       ],
-      "label": "button-options"
-    },
-    {
-      "fields": [
-        {
-          "dataType": "string",
-          "defaultValue": "microservice-lctseuk-prd.lfr.cloud/account/api/v1/whoami",
-          "label": "endpoint-url",
-          "name": "endpointUrl",
-          "type": "text"
-        },
-        {
-          "dataType": "string",
-          "defaultValue": "1451410b-e109-c4a8-e7b2-31eab20e30d2",
-          "label": "user-agent-application-external-reference-code",
-          "name": "userAgentAppExtRefCode",
-          "type": "text"
-        }
-      ],
-      "label": "endpoint-options"
+      "label": "lfr.user-account.button-options"
     }
   ]
 }

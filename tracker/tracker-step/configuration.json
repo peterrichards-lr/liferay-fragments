@@ -3,33 +3,49 @@
     {
       "fields": [
         {
-          "name": "stepState",
-          "label": "step-state",
-          "type": "select",
           "dataType": "string",
+          "defaultValue": "complete",
+          "label": "lfr.tracker.step-state",
+          "description": "lfr.tracker.step-state-description",
+          "name": "stepState",
+          "type": "select",
           "typeOptions": {
             "validValues": [
-              { "label": "Active", "value": "" },
-              { "label": "Past", "value": "past-step" },
-              { "label": "Future", "value": "future-step" }
+              {
+                "label": "lfr.tracker.complete",
+                "value": "complete"
+              },
+              {
+                "label": "lfr.tracker.active",
+                "value": "active"
+              },
+              {
+                "label": "lfr.tracker.pending",
+                "value": "pending"
+              },
+              {
+                "label": "lfr.tracker.error",
+                "value": "error"
+              }
             ]
-          },
-          "defaultValue": "future-step"
+          }
         },
-				{
-          "defaultValue": false,
-          "label": "left-arrow",
+        {
+          "defaultValue": true,
+          "label": "lfr.tracker.left-arrow",
+          "description": "lfr.tracker.left-arrow-description",
           "name": "leftArrow",
           "type": "checkbox"
         },
-				{
-          "defaultValue": false,
-          "label": "right-arrow",
+        {
+          "defaultValue": true,
+          "label": "lfr.tracker.right-arrow",
+          "description": "lfr.tracker.right-arrow-description",
           "name": "rightArrow",
           "type": "checkbox"
         }
       ],
-      "label": "Step"
+      "label": "lfr.tracker.general"
     }
   ]
 }

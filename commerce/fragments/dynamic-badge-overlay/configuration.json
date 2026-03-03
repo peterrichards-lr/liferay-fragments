@@ -4,59 +4,61 @@
       "fields": [
         {
           "defaultValue": "var(--font-family-base, Arial)",
-          "label": "font-family",
+          "label": "lfr.commerce.font-family",
+          "description": "lfr.commerce.font-family",
           "name": "badgeFont",
           "type": "text"
         },
         {
           "defaultValue": "limited-stock",
-          "description": "badge-type-priority-description",
-          "label": "badge-type-priority",
+          "description": "lfr.commerce.badge-type-priority-description",
+          "label": "lfr.commerce.badge-type-priority",
           "name": "badgeTypePriority",
           "type": "select",
           "typeOptions": {
             "validValues": [
               {
-                "label": "badge-type-limited-stock",
+                "label": "lfr.commerce.badge-type-limited-stock",
                 "value": "limited-stock"
               },
               {
-                "label": "badge-type-offer",
+                "label": "lfr.commerce.badge-type-offer",
                 "value": "offer"
               },
               {
-                "label": "badge-type-new-product",
+                "label": "lfr.commerce.badge-type-new-product",
                 "value": "new-product"
               }
             ]
           }
         }
       ],
-      "label": "common"
+      "label": "lfr.commerce.common"
     },
     {
       "fields": [
         {
           "defaultValue": "top-left",
-          "label": "position",
+          "label": "lfr.commerce.position",
+          "description": "lfr.commerce.position",
           "name": "offerBadgePosition",
           "type": "select",
           "typeOptions": {
             "validValues": [
               {
-                "label": "badge-position-top-left",
+                "label": "lfr.commerce.badge-position-top-left",
                 "value": "top-left"
               },
               {
-                "label": "badge-position-top-right",
+                "label": "lfr.commerce.badge-position-top-right",
                 "value": "top-right"
               },
               {
-                "label": "badge-position-bottom-right",
+                "label": "lfr.commerce.badge-position-bottom-right",
                 "value": "bottom-right"
               },
               {
-                "label": "badge-position-bottom-left",
+                "label": "lfr.commerce.badge-position-bottom-left",
                 "value": "bottom-left"
               }
             ]
@@ -64,58 +66,64 @@
         },
         {
           "defaultValue": "var(--font-size-lg, 1.125rem)",
-          "label": "font-size",
+          "label": "lfr.commerce.font-size",
+          "description": "lfr.commerce.font-size",
           "name": "offerFontSize",
           "type": "length"
         },
         {
           "defaultValue": "var(--font-weight-bold, 700)",
-          "label": "font-weight",
+          "label": "lfr.commerce.font-weight",
+          "description": "lfr.commerce.font-weight",
           "name": "offerFontWeight",
           "type": "text"
         },
         {
           "defaultValue": "0px",
-          "label": "offset",
+          "label": "lfr.commerce.offset",
+          "description": "lfr.commerce.offset",
           "name": "offerBadgeOffset",
           "type": "length"
         },
         {
           "defaultValue": "150px",
-          "label": "width",
+          "label": "lfr.commerce.width",
+          "description": "lfr.commerce.width",
           "name": "offerBadgeWidth",
           "type": "length"
         },
         {
           "defaultValue": "150px",
-          "label": "height",
+          "label": "lfr.commerce.height",
+          "description": "lfr.commerce.height",
           "name": "offerBadgeHeight",
           "type": "length"
         },
         {
           "defaultValue": "{discount} off!",
-          "description": "offer-text-template-description",
-          "label": "text-template",
+          "description": "lfr.commerce.offer-text-template-description",
+          "label": "lfr.commerce.text-template",
           "name": "offerTextTemplate",
           "type": "text"
         },
         {
           "defaultValue": "discount-percentage",
-          "label": "offer-type",
+          "label": "lfr.commerce.offer-type",
+          "description": "lfr.commerce.offer-type",
           "name": "offerType",
           "type": "select",
           "typeOptions": {
             "validValues": [
               {
-                "label": "discount-percentage",
+                "label": "lfr.commerce.discount-percentage",
                 "value": "discount-percentage"
               },
               {
-                "label": "discount-value",
+                "label": "lfr.commerce.discount-value",
                 "value": "discount-value"
               },
               {
-                "label": "discount-currency",
+                "label": "lfr.commerce.discount-currency",
                 "value": "discount-currency"
               }
             ]
@@ -123,25 +131,26 @@
         },
         {
           "defaultValue": "corner-ribbon",
-          "label": "badge-shape",
+          "label": "lfr.commerce.badge-shape",
+          "description": "lfr.commerce.badge-shape",
           "name": "offerBadgeShape",
           "type": "select",
           "typeOptions": {
             "validValues": [
               {
-                "label": "circle",
+                "label": "lfr.commerce.circle",
                 "value": "circle"
               },
               {
-                "label": "badge-shape-corner-ribbon",
+                "label": "lfr.commerce.badge-shape-corner-ribbon",
                 "value": "corner-ribbon"
               },
               {
-                "label": "pill",
+                "label": "lfr.commerce.pill",
                 "value": "pill"
               },
               {
-                "label": "badge-shape-rectangle",
+                "label": "lfr.commerce.badge-shape-rectangle",
                 "value": "rectangle"
               }
             ]
@@ -149,48 +158,52 @@
         },
         {
           "defaultValue": "red",
-          "label": "color",
+          "label": "lfr.commerce.color",
+          "description": "lfr.commerce.color",
           "name": "offerBadgeColor",
           "type": "colorPicker"
         },
         {
           "defaultValue": "white",
-          "label": "text-color",
+          "label": "lfr.commerce.text-color",
+          "description": "lfr.commerce.text-color",
           "name": "offerBadgeTextColor",
           "type": "colorPicker"
         },
         {
           "defaultValue": false,
-          "label": "shadow",
+          "label": "lfr.commerce.shadow",
+          "description": "lfr.commerce.shadow",
           "name": "offerBadgeShadow",
           "type": "checkbox"
         }
       ],
-      "label": "offer-section"
+      "label": "lfr.commerce.offer-section"
     },
     {
       "fields": [
         {
           "defaultValue": "top-right",
-          "label": "position",
+          "label": "lfr.commerce.position",
+          "description": "lfr.commerce.position",
           "name": "newProductBadgePosition",
           "type": "select",
           "typeOptions": {
             "validValues": [
               {
-                "label": "top-left",
+                "label": "lfr.commerce.badge-position-top-left",
                 "value": "top-left"
               },
               {
-                "label": "top-right",
+                "label": "lfr.commerce.badge-position-top-right",
                 "value": "top-right"
               },
               {
-                "label": "bottom-right",
+                "label": "lfr.commerce.badge-position-bottom-right",
                 "value": "bottom-right"
               },
               {
-                "label": "bottom-left",
+                "label": "lfr.commerce.badge-position-bottom-left",
                 "value": "bottom-left"
               }
             ]
@@ -198,59 +211,64 @@
         },
         {
           "defaultValue": "18px",
-          "label": "font-size",
+          "label": "lfr.commerce.font-size",
+          "description": "lfr.commerce.font-size",
           "name": "newProductFontSize",
           "type": "length"
         },
         {
           "defaultValue": "var(--font-weight-semi-bold, 600)",
-          "label": "font-weight",
+          "label": "lfr.commerce.font-weight",
+          "description": "lfr.commerce.font-weight",
           "name": "newProductFontWeight",
           "type": "text"
         },
         {
           "defaultValue": "10px",
-          "label": "offset",
+          "label": "lfr.commerce.offset",
+          "description": "lfr.commerce.offset",
           "name": "newProductBadgeOffset",
           "type": "length"
         },
         {
           "defaultValue": "80px",
-          "label": "width",
+          "label": "lfr.commerce.width",
+          "description": "lfr.commerce.width",
           "name": "newProductBadgeWidth",
           "type": "length"
         },
         {
           "defaultValue": "40px",
-          "label": "height",
+          "label": "lfr.commerce.height",
+          "description": "lfr.commerce.height",
           "name": "newProductBadgeHeight",
           "type": "length"
         },
         {
           "defaultValue": "New!",
-          "description": "new-product-text-template-description",
-          "label": "text-template",
+          "description": "lfr.commerce.new-product-text-template-description",
+          "label": "lfr.commerce.text-template",
           "name": "newProductTextTemplate",
           "type": "text"
         },
         {
           "dataType": "int",
           "defaultValue": "14",
-          "description": "new-product-freshness-description",
-          "label": "new-product-freshness",
+          "description": "lfr.commerce.new-product-freshness-description",
+          "label": "lfr.commerce.new-product-freshness",
           "name": "newProductFreshness",
           "type": "text"
         },
         {
           "defaultValue": "displayDate",
-          "description": "new-product-date-field-description",
-          "label": "new-product-date-field",
+          "description": "lfr.commerce.new-product-date-field-description",
+          "label": "lfr.commerce.new-product-date-field",
           "name": "newProductDateField",
           "type": "select",
           "typeOptions": {
             "validValues": [
               {
-                "label": "display-date",
+                "label": "lfr.commerce.display-date",
                 "value": "displayDate"
               }
             ]
@@ -258,25 +276,26 @@
         },
         {
           "defaultValue": "pill",
-          "label": "badge-shape",
+          "label": "lfr.commerce.badge-shape",
+          "description": "lfr.commerce.badge-shape",
           "name": "newProductBadgeShape",
           "type": "select",
           "typeOptions": {
             "validValues": [
               {
-                "label": "circle",
+                "label": "lfr.commerce.circle",
                 "value": "circle"
               },
               {
-                "label": "badge-shape-corner-ribbon",
+                "label": "lfr.commerce.badge-shape-corner-ribbon",
                 "value": "corner-ribbon"
               },
               {
-                "label": "pill",
+                "label": "lfr.commerce.pill",
                 "value": "pill"
               },
               {
-                "label": "badge-shape-rectangle",
+                "label": "lfr.commerce.badge-shape-rectangle",
                 "value": "rectangle"
               }
             ]
@@ -284,48 +303,52 @@
         },
         {
           "defaultValue": "#2a9d8f",
-          "label": "color",
+          "label": "lfr.commerce.color",
+          "description": "lfr.commerce.color",
           "name": "newProductBadgeColor",
           "type": "colorPicker"
         },
         {
           "defaultValue": "#ffffff",
-          "label": "text-color",
+          "label": "lfr.commerce.text-color",
+          "description": "lfr.commerce.text-color",
           "name": "newProductBadgeTextColor",
           "type": "colorPicker"
         },
         {
           "defaultValue": true,
-          "label": "shadow",
+          "label": "lfr.commerce.shadow",
+          "description": "lfr.commerce.shadow",
           "name": "newProductBadgeShadow",
           "type": "checkbox"
         }
       ],
-      "label": "new-product-section"
+      "label": "lfr.commerce.new-product-section"
     },
     {
       "fields": [
         {
           "defaultValue": "bottom-right",
-          "label": "position",
+          "label": "lfr.commerce.position",
+          "description": "lfr.commerce.position",
           "name": "limitedStockBadgePosition",
           "type": "select",
           "typeOptions": {
             "validValues": [
               {
-                "label": "top-left",
+                "label": "lfr.commerce.badge-position-top-left",
                 "value": "top-left"
               },
               {
-                "label": "top-right",
+                "label": "lfr.commerce.badge-position-top-right",
                 "value": "top-right"
               },
               {
-                "label": "bottom-right",
+                "label": "lfr.commerce.badge-position-bottom-right",
                 "value": "bottom-right"
               },
               {
-                "label": "bottom-left",
+                "label": "lfr.commerce.badge-position-bottom-left",
                 "value": "bottom-left"
               }
             ]
@@ -333,70 +356,76 @@
         },
         {
           "defaultValue": "var(--font-size-base, 0.875rem)",
-          "label": "font-size",
+          "label": "lfr.commerce.font-size",
+          "description": "lfr.commerce.font-size",
           "name": "limitedStockFontSize",
           "type": "length"
         },
         {
           "defaultValue": "var(--font-weight-bolder, 900)",
-          "label": "font-weight",
+          "label": "lfr.commerce.font-weight",
+          "description": "lfr.commerce.font-weight",
           "name": "limitedStockFontWeight",
           "type": "text"
         },
         {
           "defaultValue": "10px",
-          "label": "offset",
+          "label": "lfr.commerce.offset",
+          "description": "lfr.commerce.offset",
           "name": "limitedStockBadgeOffset",
           "type": "length"
         },
         {
           "defaultValue": "140px",
-          "label": "width",
+          "label": "lfr.commerce.width",
+          "description": "lfr.commerce.width",
           "name": "limitedStockBadgeWidth",
           "type": "length"
         },
         {
           "defaultValue": "40px",
-          "label": "height",
+          "label": "lfr.commerce.height",
+          "description": "lfr.commerce.height",
           "name": "limitedStockBadgeHeight",
           "type": "length"
         },
         {
           "defaultValue": "Limited Stock!",
-          "description": "limtied-stock-text-template-description",
-          "label": "text-template",
+          "description": "lfr.commerce.limtied-stock-text-template-description",
+          "label": "lfr.commerce.text-template",
           "name": "limitedStockTextTemplate",
           "type": "text"
         },
         {
           "dataType": "int",
           "defaultValue": "10",
-          "description": "stock-level-threshold-description",
-          "label": "stock-level-threshold",
+          "description": "lfr.commerce.stock-level-threshold-description",
+          "label": "lfr.commerce.stock-level-threshold",
           "name": "limitedStockLevelThreshold",
           "type": "text"
         },
         {
           "defaultValue": "rectangle",
-          "label": "badge-shape",
+          "label": "lfr.commerce.badge-shape",
+          "description": "lfr.commerce.badge-shape",
           "name": "limitedStockBadgeShape",
           "type": "select",
           "typeOptions": {
             "validValues": [
               {
-                "label": "circle",
+                "label": "lfr.commerce.circle",
                 "value": "circle"
               },
               {
-                "label": "badge-shape-corner-ribbon",
+                "label": "lfr.commerce.badge-shape-corner-ribbon",
                 "value": "corner-ribbon"
               },
               {
-                "label": "pill",
+                "label": "lfr.commerce.pill",
                 "value": "pill"
               },
               {
-                "label": "badge-shape-rectangle",
+                "label": "lfr.commerce.badge-shape-rectangle",
                 "value": "rectangle"
               }
             ]
@@ -404,57 +433,61 @@
         },
         {
           "defaultValue": "var(--primary, var(--color-brand-primary, #f4a261))",
-          "label": "color",
+          "label": "lfr.commerce.color",
+          "description": "lfr.commerce.color",
           "name": "limitedStockBadgeColor",
           "type": "colorPicker"
         },
         {
           "defaultValue": "var(--body-bg, (var(--white, #ffffff))",
-          "label": "text-color",
+          "label": "lfr.commerce.text-color",
+          "description": "lfr.commerce.text-color",
           "name": "limitedStockBadgeTextColor",
           "type": "colorPicker"
         },
         {
           "defaultValue": true,
-          "label": "shadow",
+          "label": "lfr.commerce.shadow",
+          "description": "lfr.commerce.shadow",
           "name": "limitedStockBadgeShadow",
           "type": "checkbox"
         }
       ],
-      "label": "limited-stock-section"
+      "label": "lfr.commerce.limited-stock-section"
     },
     {
       "fields": [
         {
           "defaultValue": false,
-          "label": "debug-enabled",
+          "label": "lfr.commerce.debug-enabled",
+          "description": "lfr.commerce.debug-enabled",
           "name": "enableDebug",
           "type": "checkbox"
         },
         {
           "defaultValue": true,
-          "description": "fragment-header-description",
-          "label": "fragment-header",
+          "description": "lfr.commerce.fragment-header-description",
+          "label": "lfr.commerce.fragment-header",
           "name": "fragmentHeader",
           "type": "checkbox"
         },
         {
           "defaultValue": true,
-          "description": "all-portlets-ready-description",
-          "label": "all-portlets-ready",
+          "description": "lfr.commerce.all-portlets-ready-description",
+          "label": "lfr.commerce.all-portlets-ready",
           "name": "allPortletsReady",
           "type": "checkbox"
         },
         {
           "dataType": "int",
           "defaultValue": "1000",
-          "description": "initialize-delay-description",
-          "label": "initialize-delay",
+          "description": "lfr.commerce.initialize-delay-description",
+          "label": "lfr.commerce.initialize-delay",
           "name": "initializeDelay",
           "type": "text"
         }
       ],
-      "label": "miscellaneous-section"
+      "label": "lfr.commerce.miscellaneous-section"
     }
   ]
 }

@@ -4,140 +4,68 @@
       "fields": [
         {
           "defaultValue": "true",
-          "description": "The default Read / Unread tabs will be displayed if this option is checked",
-          "label": "Show Read / Unread tabs",
-          "name": "showRead",
+          "label": "lfr.widget-modifiers.show-tabs",
+          "description": "lfr.widget-modifiers.show-tabs-description",
+          "name": "showTabs",
           "type": "checkbox"
         },
         {
           "defaultValue": "true",
-          "description": "The default button, such as Add, will be displayed if this option is checked",
-          "label": "Show buttons",
-          "name": "showButtons",
+          "label": "lfr.widget-modifiers.hide-anonymous-read",
+          "description": "lfr.widget-modifiers.hide-anonymous-read-description",
+          "name": "hideAnonymousRead",
           "type": "checkbox"
         },
         {
           "defaultValue": "true",
-          "description": "The context menu is displayed, such as Mark as Read, will be displayed if this option is checked",
-          "label": "Show the context menu",
-          "name": "showContextMenu",
-          "type": "checkbox"
-        },
-        {
-          "defaultValue": "true",
-          "description": "The avatar and name of the creator will be displayed if this option is checked",
-          "label": "Show creator information",
-          "name": "showCreatorInfo",
-          "type": "checkbox"
-        },
-        {
-          "defaultValue": "false",
-          "description": "The alerts / announcements will be modified to reflect Clay alerts if this option is checked. The Clay styles will not fully apply within the page editor",
-          "label": "Use Clay alerts",
-          "name": "useClayAlerts",
-          "type": "checkbox"
-        },
-        {
-          "defaultValue": "false",
-          "description": "The user will be able to expand and collape the body of the alter / announcement if this option is checked",
-          "label": "Use accordion",
-          "name": "useAccordion",
-          "type": "checkbox"
-        },
-        {
-          "defaultValue": "\\2295",
-          "description": "The CSS unicode hex symbol that is used when the message body is collapsed. Alternative icons can be found here: https://www.w3schools.com/charsets",
-          "label": "Accordion closed icon",
-          "name": "accordionClosedIcon",
-          "type": "text"
-        },
-        {
-          "defaultValue": "\\2296",
-          "description": "The CSS unicode hex symbol that is used when the message body is expanded. Alternative icons can be found here: https://www.w3schools.com/charsets",
-          "label": "Accordion open icon",
-          "name": "accordionOpenIcon",
-          "type": "text"
-        },
-        {
-          "defaultValue": "true",
-          "description": "The accordion icon will be placed on the left of the heading if this option is checked",
-          "label": "Left accordion icon",
-          "name": "accordionIconLeft",
-          "type": "checkbox"
-        },
-        {
-          "defaultValue": "false",
-          "description": "The message body will be intially be expanded if this option is checked",
-          "label": "Show accordion expanded",
-          "name": "showAlertOpen",
-          "type": "checkbox"
-        },
-        {
-          "defaultValue": "true",
-          "description": "A Mark as Read button will be added to the message body if this option is checked",
-          "label": "Add Mark as Read button",
+          "label": "lfr.widget-modifiers.add-mark-as-read",
+          "description": "lfr.widget-modifiers.add-mark-as-read",
           "name": "addMarkAsRead",
           "type": "checkbox"
         },
-				{
-					"dataType": "string",
-					"defaultValue": "primary",
-					"label": "Mark as Read button type",
-					"name": "addMarkAsReadButtonType",
-          "description": "The type which will be applied to the Mark as Read button",
-					"type": "select",
-					"typeOptions": {
-						"validValues": [
-							{
-								"value": "primary"
-							},
-							{
-								"value": "secondary"
-							},
-							{
-								"value": "link"
-							},
-							{
-								"value": "outline-primary"
-							},
-							{
-								"value": "outline-secondary"
-							}
-						]
-					}
-				},
-				{
-					"dataType": "string",
-					"defaultValue": "sm",
-					"label": "Mark as Read button size",
-					"name": "addMarkAsReadButtonSize",
-          "description": "The size of the Mark as Read button",
-					"type": "select",
-					"typeOptions": {
-						"validValues": [
-							{
-								"label": "small",
-								"value": "sm"
-							},
-							{
-								"label": "normal",
-								"value": "nm"
-							},
-							{
-								"label": "large",
-								"value": "lg"
-							}
-						]
-					}
-				},
         {
           "defaultValue": "true",
-          "description": "The default behaviour of showing the Read / Unread tabs to anonymous users will be corrected if this option is checked",
-          "label": "Hide Read / Unread tabs when anonymous",
-          "name": "hideAnonymousRead",
+          "label": "lfr.widget-modifiers.accordion-mode",
+          "description": "lfr.widget-modifiers.accordion-mode-description",
+          "name": "accordionMode",
           "type": "checkbox"
+        },
+        {
+          "dataType": "string",
+          "defaultValue": "collapsed",
+          "label": "lfr.widget-modifiers.accordion-initial-state",
+          "description": "lfr.widget-modifiers.accordion-initial-state-description",
+          "name": "accordionInitialState",
+          "type": "select",
+          "typeOptions": {
+            "validValues": [
+              {
+                "label": "lfr.widget-modifiers.expanded",
+                "value": "expanded"
+              },
+              {
+                "label": "lfr.widget-modifiers.collapsed",
+                "value": "collapsed"
+              }
+            ]
+          }
+        },
+        {
+          "defaultValue": "angle-down",
+          "label": "lfr.widget-modifiers.expand-icon",
+          "description": "lfr.widget-modifiers.expand-icon",
+          "name": "expandIcon",
+          "type": "text"
+        },
+        {
+          "defaultValue": "angle-up",
+          "label": "lfr.widget-modifiers.collapse-icon",
+          "description": "lfr.widget-modifiers.collapse-icon",
+          "name": "collapseIcon",
+          "type": "text"
         }
-      ]
+      ],
+      "label": "lfr.widget-modifiers.general"
     }
   ]
 }

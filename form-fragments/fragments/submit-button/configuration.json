@@ -1,55 +1,61 @@
 {
-	"fieldSets": [
-		{
-			"fields": [
-				{
-					"dataType": "string",
-					"defaultValue": "primary",
-					"label": "type",
-					"name": "buttonType",
-					"type": "select",
-					"typeOptions": {
-						"validValues": [
-							{
-								"value": "primary"
-							},
-							{
-								"value": "secondary"
-							},
-							{
-								"value": "outline-primary"
-							},
-							{
-								"value": "outline-secondary"
-							}
-						]
-					}
-				},
-				{
-					"dataType": "string",
-					"defaultValue": "nm",
-					"label": "size",
-					"name": "buttonSize",
-					"type": "select",
-					"typeOptions": {
-						"validValues": [
-							{
-								"label": "small",
-								"value": "sm"
-							},
-							{
-								"label": "normal",
-								"value": "nm"
-							},
-							{
-								"label": "large",
-								"value": "lg"
-							}
-						]
-					}
-				}
-			],
-			"label": "submit-button-options"
-		}
-	]
+  "fieldSets": [
+    {
+      "fields": [
+        {
+          "dataType": "string",
+          "defaultValue": "primary",
+          "label": "lfr.form-fragments.type",
+          "description": "lfr.form-fragments.type",
+          "name": "buttonType",
+          "type": "select",
+          "typeOptions": {
+            "validValues": [
+              {
+                "label": "lfr.form-fragments.primary",
+                "value": "primary"
+              },
+              {
+                "label": "lfr.form-fragments.secondary",
+                "value": "secondary"
+              },
+              {
+                "label": "lfr.form-fragments.outline-primary",
+                "value": "outline-primary"
+              },
+              {
+                "label": "lfr.form-fragments.outline-secondary",
+                "value": "outline-secondary"
+              }
+            ]
+          }
+        },
+        {
+          "dataType": "string",
+          "defaultValue": "nm",
+          "label": "lfr.form-fragments.size",
+          "description": "lfr.form-fragments.size",
+          "name": "buttonSize",
+          "type": "select",
+          "typeOptions": {
+            "validValues": [
+              {
+                "label": "lfr.form-fragments.small",
+                "value": "sm"
+              },
+              {
+                "label": "lfr.form-fragments.normal",
+                "value": "nm"
+              },
+              {
+                "label": "lfr.form-fragments.large",
+                "value": "lg"
+              }
+            ]
+          }
+        }
+      ],
+      "label": "lfr.form-fragments.submit-button-options"
+    }
+  ]
 }

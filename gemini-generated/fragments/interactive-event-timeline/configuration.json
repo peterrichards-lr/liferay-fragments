@@ -4,46 +4,46 @@
       "fields": [
         {
           "defaultValue": "milestones",
-          "description": "object-rest-context-description",
-          "label": "object-rest-context",
+          "description": "lfr.gemini-generated.object-rest-context-description",
+          "label": "lfr.gemini-generated.object-rest-context",
           "name": "objectRESTContext",
           "type": "text"
         },
         {
           "defaultValue": "date",
-          "description": "date-field-description",
-          "label": "date-field",
+          "description": "lfr.gemini-generated.date-field-description",
+          "label": "lfr.gemini-generated.date-field",
           "name": "dateField",
           "type": "text"
         },
         {
           "defaultValue": "title",
-          "description": "title-field-description",
-          "label": "title-field",
+          "description": "lfr.gemini-generated.title-field-description",
+          "label": "lfr.gemini-generated.title-field",
           "name": "titleField",
           "type": "text"
         },
         {
           "defaultValue": "description",
-          "description": "description-field-description",
-          "label": "description-field",
+          "description": "lfr.gemini-generated.description-field-description",
+          "label": "lfr.gemini-generated.description-field",
           "name": "descriptionField",
           "type": "text"
         }
       ],
-      "label": "data"
+      "label": "lfr.gemini-generated.data"
     },
     {
       "fields": [
         {
           "defaultValue": "var(--primary)",
-          "description": "base-color-description",
-          "label": "timeline-color",
+          "description": "lfr.gemini-generated.base-color-description",
+          "label": "lfr.gemini-generated.timeline-color",
           "name": "timelineColor",
           "type": "colorPicker"
         }
       ],
-      "label": "style"
+      "label": "lfr.gemini-generated.style"
     }
   ]
 }

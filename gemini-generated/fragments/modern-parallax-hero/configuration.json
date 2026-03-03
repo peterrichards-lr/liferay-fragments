@@ -4,40 +4,40 @@
       "fields": [
         {
           "defaultValue": "80vh",
-          "label": "height",
-          "description": "height-description",
+          "label": "lfr.gemini-generated.height",
+          "description": "lfr.gemini-generated.height-description",
           "name": "height",
           "type": "length"
         },
         {
           "defaultValue": "var(--white)",
-          "label": "text-color",
-          "description": "text-color-description",
+          "label": "lfr.gemini-generated.text-color",
+          "description": "lfr.gemini-generated.text-color-description",
           "name": "textColor",
           "type": "colorPicker"
         },
         {
           "defaultValue": "rgba(0,0,0,0.3)",
-          "label": "overlay-color",
-          "description": "overlay-color-description",
+          "label": "lfr.gemini-generated.overlay-color",
+          "description": "lfr.gemini-generated.overlay-color-description",
           "name": "overlayColor",
           "type": "colorPicker"
         }
       ],
-      "label": "style"
+      "label": "lfr.gemini-generated.style"
     },
     {
       "fields": [
         {
           "dataType": "string",
           "defaultValue": "0.5",
-          "label": "parallax-speed",
-          "description": "parallax-speed-description",
+          "label": "lfr.gemini-generated.parallax-speed",
+          "description": "lfr.gemini-generated.parallax-speed-description",
           "name": "speed",
           "type": "text"
         }
       ],
-      "label": "behavior"
+      "label": "lfr.gemini-generated.behavior"
     }
   ]
 }

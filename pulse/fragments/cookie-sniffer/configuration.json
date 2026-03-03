@@ -1,4 +1,16 @@
 {
-	"fieldSets": [
-	]
+  "fieldSets": [
+    {
+      "fields": [
+        {
+          "defaultValue": false,
+          "label": "lfr.pulse.enable-debug",
+          "description": "lfr.pulse.enable-debug",
+          "name": "enableDebug",
+          "type": "checkbox"
+        }
+      ],
+      "label": "lfr.pulse.general"
+    }
+  ]
 }

@@ -3,98 +3,103 @@
     {
       "fields": [
         {
+          "dataType": "string",
           "defaultValue": "string",
-          "label": "data-lfr-js-type",
+          "label": "lfr.populated-form-fields.data-lfr-js-type",
+          "description": "lfr.populated-form-fields.data-lfr-js-type",
           "name": "dataLfrJsType",
           "type": "select",
           "typeOptions": {
             "validValues": [
               {
-                "label": "string",
+                "label": "lfr.populated-form-fields.string",
                 "value": "string"
               },
               {
-                "label": "integer",
-                "value": "int"
+                "label": "lfr.populated-form-fields.integer",
+                "value": "integer"
               },
               {
-                "label": "boolean",
-                "value": "bool"
+                "label": "lfr.populated-form-fields.boolean",
+                "value": "boolean"
               }
             ]
           }
         },
         {
-          "defaultValue": true,
-          "label": "use-condition-field",
+          "defaultValue": false,
+          "label": "lfr.populated-form-fields.use-condition-field",
+          "description": "lfr.populated-form-fields.use-condition-field",
           "name": "useConditionField",
           "type": "checkbox"
         },
         {
-          "dataType": "string",
-          "description": "condition-value-description",
-          "label": "condition-value",
+          "defaultValue": "",
+          "label": "lfr.populated-form-fields.condition-value",
+          "description": "lfr.populated-form-fields.condition-value",
           "name": "conditionValue",
           "type": "text"
         },
         {
+          "dataType": "string",
           "defaultValue": "string",
-          "description": "condition-value-type-description",
-          "label": "condition-value-type",
+          "label": "lfr.populated-form-fields.condition-value-type",
+          "description": "lfr.populated-form-fields.condition-value-type",
           "name": "conditionValueType",
           "type": "select",
           "typeOptions": {
             "validValues": [
               {
-                "label": "string",
+                "label": "lfr.populated-form-fields.string",
                 "value": "string"
               },
               {
-                "label": "integer",
-                "value": "int"
+                "label": "lfr.populated-form-fields.integer",
+                "value": "integer"
               },
               {
-                "label": "boolean",
-                "value": "bool"
+                "label": "lfr.populated-form-fields.boolean",
+                "value": "boolean"
               }
             ]
           }
         }
       ],
-      "label": "data-mapping"
+      "label": "lfr.populated-form-fields.data-mapping"
     },
     {
       "fields": [
         {
-          "defaultValue": true,
-          "label": "debug-enabled",
+          "defaultValue": false,
+          "label": "lfr.populated-form-fields.debug-enabled",
+          "description": "lfr.populated-form-fields.debug-enabled",
           "name": "enableDebug",
           "type": "checkbox"
         },
         {
           "defaultValue": true,
-          "description": "fragment-header-description",
-          "label": "fragment-header",
+          "label": "lfr.populated-form-fields.fragment-header",
+          "description": "lfr.populated-form-fields.fragment-header",
           "name": "fragmentHeader",
           "type": "checkbox"
         },
         {
           "defaultValue": true,
-          "description": "all-portlets-ready-description",
-          "label": "all-portlets-ready",
+          "label": "lfr.populated-form-fields.all-portlets-ready",
+          "description": "lfr.populated-form-fields.all-portlets-ready",
           "name": "allPortletsReady",
           "type": "checkbox"
         },
         {
           "dataType": "int",
           "defaultValue": "1000",
-          "description": "initialize-delay-description",
-          "label": "initialize-delay",
+          "label": "lfr.populated-form-fields.initialize-delay",
+          "description": "lfr.populated-form-fields.initialize-delay",
           "name": "initializeDelay",
           "type": "text"
         }
       ],
-      "label": "miscellaneous-section"
+      "label": "lfr.populated-form-fields.miscellaneous-section"
     }
   ]
 }

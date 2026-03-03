@@ -1,169 +1,179 @@
 {
-	"fieldSets": [
-		{
-			"fields": [
-				{
-					"dataType": "string",
-					"defaultValue": "h1",
-					"label": "text-type",
-					"name": "textType",
-					"type": "select",
-					"typeOptions": {
-						"validValues": [
-							{
-								"value": "display-1"
-							},
-							{
-								"value": "display-2"
-							},
-							{
-								"value": "display-3"
-							},
-							{
-								"value": "display-4"
-							},
-							{
-								"value": "h1"
-							},
-							{
-								"value": "h2"
-							},
-							{
-								"value": "h3"
-							},
-							{
-								"value": "h4"
-							},
-							{
-								"value": "h5"
-							},
-							{
-								"value": "h6"
-							},
-							{
-								"label": "paragraph-large",
-								"value": "text-paragraph-lg"
-							},
-							{
-								"label": "paragraph-medium",
-								"value": "text-paragraph"
-							},
-							{
-								"label": "paragraph-small",
-								"value": "text-paragraph-sm"
-							},
-							{
-								"label": "paragraph-xsmall",
-								"value": "text-paragraph-xs"
-							},
-							{
-								"label": "paragraph-xxsmall",
-								"value": "text-paragraph-xxs"
-							},
-							{
-								"label": "small-caps",
-								"value": "text-small-caps"
-							},
-							{
-								"label": "link-large",
-								"value": "text-link-lg"
-							},
-							{
-								"label": "link-medium",
-								"value": "text-link-md"
-							},
-							{
-								"label": "link-small",
-								"value": "text-link-sm"
-							}
-						]
-					}
-				},
-				{
-					"dataType": "string",
-					"defaultValue": "solid",
-					"label": "type",
-					"name": "type",
-					"type": "select",
-					"typeOptions": {
-						"validValues": [
-							{
-								"label": "solid",
-								"value": "solid"
-							},
-							{
-								"label": "ghost",
-								"value": "ghost"
-							},
-							{
-								"label": "borderless",
-								"value": "borderless"
-							},
-							{
-								"label": "rounded",
-								"value": "rounded"
-							}
-						]
-					}
-				},
-				{
-					"dataType": "string",
-					"defaultValue": "primary",
-					"label": "style",
-					"name": "style",
-					"type": "select",
-					"typeOptions": {
-						"validValues": [
-							{
-								"value": "primary"
-							},
-							{
-								"value": "secondary"
-							},
-							{
-								"value": "neutral"
-							}
-						]
-					}
-				},
-				{
-					"dataType": "string",
-					"defaultValue": "",
-					"label": "size",
-					"name": "buttonSize",
-					"type": "select",
-					"typeOptions": {
-						"validValues": [
-							{
-								"label": "small",
-								"value": "btn-sm"
-							},
-							{
-								"label": "medium",
-								"value": ""
-							},
-							{
-								"label": "large",
-								"value": "btn-lg"
-							}
-						]
-					}
-				},
-				{
-					"dataType": "string",
-					"defaultValue": false,
-					"label": "inverted",
-					"name": "inverted",
-					"type": "checkbox"
-				},
-				{
-					"dataType": "string",
-					"defaultValue": false,
-					"label": "uppercase",
-					"name": "uppercase",
-					"type": "checkbox"
-				}
-			]
-		}
-	]
+  "fieldSets": [
+    {
+      "fields": [
+        {
+          "dataType": "string",
+          "defaultValue": "h1",
+          "label": "lfr.layout-components.text-type",
+          "description": "lfr.layout-components.text-type-description",
+          "name": "textType",
+          "type": "select",
+          "typeOptions": {
+            "validValues": [
+              {
+                "value": "display-1"
+              },
+              {
+                "value": "display-2"
+              },
+              {
+                "value": "display-3"
+              },
+              {
+                "value": "display-4"
+              },
+              {
+                "value": "h1"
+              },
+              {
+                "value": "h2"
+              },
+              {
+                "value": "h3"
+              },
+              {
+                "value": "h4"
+              },
+              {
+                "value": "h5"
+              },
+              {
+                "value": "h6"
+              },
+              {
+                "label": "lfr.layout-components.paragraph-large",
+                "value": "text-paragraph-lg"
+              },
+              {
+                "label": "lfr.layout-components.paragraph-medium",
+                "value": "text-paragraph"
+              },
+              {
+                "label": "lfr.layout-components.paragraph-small",
+                "value": "text-paragraph-sm"
+              },
+              {
+                "label": "lfr.layout-components.paragraph-xsmall",
+                "value": "text-paragraph-xs"
+              },
+              {
+                "label": "lfr.layout-components.paragraph-xxsmall",
+                "value": "text-paragraph-xxs"
+              },
+              {
+                "label": "lfr.layout-components.small-caps",
+                "value": "text-small-caps"
+              },
+              {
+                "label": "lfr.layout-components.link-large",
+                "value": "text-link-lg"
+              },
+              {
+                "label": "lfr.layout-components.link-medium",
+                "value": "text-link-md"
+              },
+              {
+                "label": "lfr.layout-components.link-small",
+                "value": "text-link-sm"
+              }
+            ]
+          }
+        },
+        {
+          "dataType": "string",
+          "defaultValue": "solid",
+          "label": "lfr.layout-components.type",
+          "description": "lfr.layout-components.type-description",
+          "name": "type",
+          "type": "select",
+          "typeOptions": {
+            "validValues": [
+              {
+                "label": "lfr.layout-components.solid",
+                "value": "solid"
+              },
+              {
+                "label": "lfr.layout-components.ghost",
+                "value": "ghost"
+              },
+              {
+                "label": "lfr.layout-components.borderless",
+                "value": "borderless"
+              },
+              {
+                "label": "lfr.layout-components.rounded",
+                "value": "rounded"
+              }
+            ]
+          }
+        },
+        {
+          "dataType": "string",
+          "defaultValue": "primary",
+          "label": "lfr.layout-components.style",
+          "description": "lfr.layout-components.style-description",
+          "name": "style",
+          "type": "select",
+          "typeOptions": {
+            "validValues": [
+              {
+                "label": "lfr.layout-components.primary",
+                "value": "primary"
+              },
+              {
+                "label": "lfr.layout-components.secondary",
+                "value": "secondary"
+              },
+              {
+                "label": "lfr.layout-components.neutral",
+                "value": "neutral"
+              }
+            ]
+          }
+        },
+        {
+          "dataType": "string",
+          "defaultValue": "",
+          "label": "lfr.layout-components.size",
+          "description": "lfr.layout-components.size-description",
+          "name": "buttonSize",
+          "type": "select",
+          "typeOptions": {
+            "validValues": [
+              {
+                "label": "lfr.layout-components.small",
+                "value": "btn-sm"
+              },
+              {
+                "label": "lfr.layout-components.medium",
+                "value": ""
+              },
+              {
+                "label": "lfr.layout-components.large",
+                "value": "btn-lg"
+              }
+            ]
+          }
+        },
+        {
+          "dataType": "string",
+          "defaultValue": false,
+          "label": "lfr.layout-components.inverted",
+          "description": "lfr.layout-components.inverted-description",
+          "name": "inverted",
+          "type": "checkbox"
+        },
+        {
+          "dataType": "string",
+          "defaultValue": false,
+          "label": "lfr.layout-components.uppercase",
+          "description": "lfr.layout-components.uppercase-description",
+          "name": "uppercase",
+          "type": "checkbox"
+        }
+      ],
+      "label": "lfr.layout-components.general"
+    }
+  ]
 }

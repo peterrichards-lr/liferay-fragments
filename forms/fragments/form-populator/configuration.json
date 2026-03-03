@@ -1,55 +1,44 @@
 {
-	"fieldSets": [
-		{
-			"fields": [
-				{
-					"label": "field-mapping",
-					"name": "fieldMapping",
-					"type": "text"
-				},
-				{
-					"defaultValue": false,
-					"label": "enable-debug",
-					"name": "enableDebug",
-					"type": "checkbox"
-				},
-				{
-					"label": "wait-interval-ms",
-					"name": "waitIntervalMs",
-					"defaultValue": "100",
-					"type": "text",
-					"typeOptions": {
-						"validation": {
-							"min": 100,
-							"type": "number"
-						}
-					}
-				},
-				{
-					"label": "wait-count",
-					"name": "waitCount",
-					"defaultValue": "3",
-					"type": "text",
-					"typeOptions": {
-						"validation": {
-							"min": 1,
-							"type": "number"
-						}
-					}
-				},
-				{
-					"label": "type-text-delay-ms",
-					"name": "typeTextDelay",
-					"defaultValue": "100",
-					"type": "text",
-					"typeOptions": {
-						"validation": {
-							"min": 100,
-							"type": "number"
-						}
-					}
-				}
-			]
-		}
-	]
+  "fieldSets": [
+    {
+      "fields": [
+        {
+          "defaultValue": "[]",
+          "label": "lfr.forms.form-populator-mapping",
+          "description": "lfr.forms.form-populator-mapping-description",
+          "name": "mapping",
+          "type": "text"
+        },
+        {
+          "defaultValue": "5",
+          "label": "lfr.forms.retry-count",
+          "description": "lfr.forms.retry-count-description",
+          "name": "retryCount",
+          "type": "text",
+          "dataType": "int"
+        },
+        {
+          "defaultValue": "500",
+          "label": "lfr.forms.retry-interval",
+          "description": "lfr.forms.retry-interval-description",
+          "name": "retryInterval",
+          "type": "text",
+          "dataType": "int"
+        }
+      ],
+      "label": "lfr.forms.mapping"
+    },
+    {
+      "fields": [
+        {
+          "defaultValue": false,
+          "label": "lfr.forms.debug-enabled",
+          "description": "lfr.forms.debug-enabled-description",
+          "name": "enableDebug",
+          "type": "checkbox"
+        }
+      ],
+      "label": "lfr.forms.debug"
+    }
+  ]
 }

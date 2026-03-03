@@ -1,91 +1,96 @@
 {
-	"fieldSets": [
-		{
-			"fields": [
-				{
-					"dataType": "string",
-					"defaultValue": "emailAddress",
-					"label": "user-attribute",
-					"name": "userAttribute",
-					"type": "select",
-					"typeOptions": {
-						"validValues": [
-							{
-								"label": "Full Name",
-								"value": "name"
-							},
-							{
-								"label": "Email",
-								"value": "emailAddress"
-							},
-							{
-								"label": "ERC",
-								"value": "externalReferenceCode"
-							},
-							{
-								"label": "Language",
-								"value": "languageDisplayName"
-							},
-							{
-								"label": "Job Title",
-								"value": "jobTitle"
-							},
-							{
-								"label": "Family Name",
-								"value": "familyName"
-							},
-							{
-								"label": "Given Name",
-								"value": "givenName"
-							},
-							{
-								"label": "Additional Name",
-								"value": "additionalName"
-							},
-							{
-								"label": "Screen Name",
-								"value": "alternativeName"
-							},
-							{
-								"label": "User Id",
-								"value": "id"
-							},
-							{
-								"label": "Language Id",
-								"value": "languageId"
-							},
-							{
-								"label": "Custom Field",
-								"value": "customField"
-							}
-						]
-					}
-				},
-				{
-					"dataType": "string",
-					"defaultValue": "",
-					"label": "custom-field",
-					"name": "customFieldName",
-					"type": "text"
-				},
-				{
-					"dataType": "string",
-					"defaultValue": "",
-					"label": "placeholder",
-					"localizable": true,
-					"name": "placeholder",
-					"type": "text"
-				},
-				{
-					"defaultValue": false,
-					"label": "show-characters-count",
-					"name": "showCharactersCount",
-					"type": "checkbox",
-					"typeOptions": {
-						"displayType": "toggle"
-					}
-				}
-			]
-		}
-	]
+  "fieldSets": [
+    {
+      "fields": [
+        {
+          "dataType": "string",
+          "defaultValue": "emailAddress",
+          "label": "lfr.form-fragments.user-attribute",
+          "description": "lfr.form-fragments.user-attribute",
+          "name": "userAttribute",
+          "type": "select",
+          "typeOptions": {
+            "validValues": [
+              {
+                "label": "lfr.form-fragments.full-name",
+                "value": "name"
+              },
+              {
+                "label": "lfr.form-fragments.email",
+                "value": "emailAddress"
+              },
+              {
+                "label": "lfr.form-fragments.erc",
+                "value": "externalReferenceCode"
+              },
+              {
+                "label": "lfr.form-fragments.language",
+                "value": "languageDisplayName"
+              },
+              {
+                "label": "lfr.form-fragments.job-title",
+                "value": "jobTitle"
+              },
+              {
+                "label": "lfr.form-fragments.family-name",
+                "value": "familyName"
+              },
+              {
+                "label": "lfr.form-fragments.given-name",
+                "value": "givenName"
+              },
+              {
+                "label": "lfr.form-fragments.additional-name",
+                "value": "additionalName"
+              },
+              {
+                "label": "lfr.form-fragments.screen-name",
+                "value": "alternativeName"
+              },
+              {
+                "label": "lfr.form-fragments.user-id",
+                "value": "id"
+              },
+              {
+                "label": "lfr.form-fragments.language-id",
+                "value": "languageId"
+              },
+              {
+                "label": "lfr.form-fragments.custom-field-val",
+                "value": "customField"
+              }
+            ]
+          }
+        },
+        {
+          "dataType": "string",
+          "defaultValue": "",
+          "label": "lfr.form-fragments.custom-field",
+          "description": "lfr.form-fragments.custom-field",
+          "name": "customFieldName",
+          "type": "text"
+        },
+        {
+          "dataType": "string",
+          "defaultValue": "",
+          "label": "lfr.form-fragments.placeholder",
+          "description": "lfr.form-fragments.placeholder",
+          "localizable": true,
+          "name": "placeholder",
+          "type": "text"
+        },
+        {
+          "defaultValue": false,
+          "label": "lfr.form-fragments.show-characters-count",
+          "description": "lfr.form-fragments.show-characters-count",
+          "name": "showCharactersCount",
+          "type": "checkbox",
+          "typeOptions": {
+            "displayType": "toggle"
+          }
+        }
+      ],
+      "label": "lfr.form-fragments.general"
+    }
+  ]
 }

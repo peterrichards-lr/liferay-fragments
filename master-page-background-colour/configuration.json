@@ -4,37 +4,49 @@
       "fields": [
         {
           "name": "colour",
-          "label": "Colour",
+          "label": "lfr.master-page-background-colour.colour",
+          "description": "lfr.master-page-background-colour.colour",
           "type": "colorPicker",
           "defaultValue": "#3C1053"
         },
         {
           "name": "tint",
-          "label": "Tint",
+          "label": "lfr.master-page-background-colour.tint",
+          "description": "lfr.master-page-background-colour.tint",
           "type": "select",
           "dataType": "string",
           "typeOptions": {
             "validValues": [
-              { "label": "30%", "value": "0.3" },
-              { "label": "50%", "value": "0.5" },
-              { "label": "70%", "value": "0.7" }
+              {
+                "label": "lfr.master-page-background-colour.30-percent",
+                "value": "0.3"
+              },
+              {
+                "label": "lfr.master-page-background-colour.50-percent",
+                "value": "0.5"
+              },
+              {
+                "label": "lfr.master-page-background-colour.70-percent",
+                "value": "0.7"
+              }
             ]
           },
           "defaultValue": "0.3"
         }
       ],
-      "label": "General"
+      "label": "lfr.master-page-background-colour.general"
     },
     {
       "fields": [
         {
           "defaultValue": false,
-          "label": "Enable Debug Logging",
+          "label": "lfr.master-page-background-colour.enable-debug",
+          "description": "lfr.master-page-background-colour.enable-debug",
           "name": "enableDebug",
           "type": "checkbox"
         }
       ],
-      "label": "Debugging"
+      "label": "lfr.master-page-background-colour.debugging"
     }
   ]
 }

@@ -14,50 +14,47 @@ A collection of robust, accessible, and responsive Liferay fragments for DXP pla
 
 ## 🚀 Deployment
 
-### Option 1: Using Pre-built Releases (Quick Start)
+### Option 1: Automated Deployment (Recommended)
 
-The assets provided in the GitHub Releases include both Fragment Collections and Language Client Extensions.
+Use the provided `deploy-fragment-zips.sh` script to automate the deployment of your fragment and Language ZIPs.
 
-1.  **Download** the desired `.zip` files.
-2.  **Deploy Fragments**: Drop the collection ZIPs (e.g., `gemini-generated-collection.zip`) from the `./zips/` directory into your Liferay instance's `/deploy` folder.
-3.  **Deploy Language Overrides**: Drop the corresponding Language Batch ZIPs (e.g., `gemini-generated-language-batch-cx.zip`) from the `./cx/` directory into the same `/deploy` folder.
-
-Liferay will automatically import the fragments into the Global site and register the language overrides as Client Extensions.
-
-### Option 2: Custom Deployment using create-fragment-zips.sh
-
-If you want to target a specific Virtual Instance or a specific Site (instead of Global), you can use the provided build script. This script automatically generates a liferay-deploy-fragments.json descriptor during the build process and cleans it up afterward.
-
-#### Prerequisites
-
-- bash
-- jq (required for JSON processing)
-
-#### Steps
-
-1. Open a terminal in the project root.
-2. Set the environment variables for your target:
-   - COMPANY_WEB_ID: The Web ID of the Virtual Instance (e.g., liferay.com). Defaults to \* (Global).
-   - GROUP_KEY: The Site Friendly URL or Name (e.g., Guest). This is ignored if COMPANY_WEB_ID is \*.
-
-3. Run the script:
-
+#### Usage
 ```bash
-# Example: Deploy to a specific site on a specific instance
-COMPANY_WEB_ID="mycompany.com" GROUP_KEY="Marketing" ./create-fragment-zips.sh
-
-# Example: Deploy globally (default)
-./create-fragment-zips.sh
+./deploy-fragment-zips.sh [TARGET_PATH] [--all | folder_name1 folder_name2 ...]
 ```
 
-The generated ZIPs will be located in the ./zips/ directory. Each ZIP will contain the necessary liferay-deploy-fragments.json configured with your provided variables.
+*   **TARGET_PATH**: The root of a Liferay Workspace or a standalone Liferay bundle.
+*   **--all**: Deploys all ZIPs found in the `/zips` directory.
+*   **folder_name**: Space-separated list of specific fragment or collection folder names to deploy.
+
+#### Example
+```bash
+./deploy-fragment-zips.sh ~/liferay-workspace --all
+./deploy-fragment-zips.sh /opt/liferay gemini-generated master-page-background-colour
+```
+
+### Option 2: Manual Deployment
+
+1.  **Build the assets**: Run `./create-fragment-zips.sh` to generate the ZIP files.
+2.  **Deploy Fragments**: Copy the `.zip` files from `./zips/fragments/` to your Liferay instance's `/deploy` folder.
+3.  **Deploy Language Overrides**: Copy the `-language-batch-cx.zip` files from `./zips/language/` to your Liferay instance's `/deploy` folder.
+
+Liferay will automatically import the fragments and register the language overrides as Client Extensions.
+
+### Custom Build Options
+
+If you want to target a specific Virtual Instance or Site, set these environment variables before running `./create-fragment-zips.sh`:
+- `COMPANY_WEB_ID`: The Web ID of the Virtual Instance (Defaults to `*` / Global).
+- `GROUP_KEY`: The Site Friendly URL or Name (Ignored if `COMPANY_WEB_ID` is `*`).
+
+---
 
 ## Core Fragments
 
 These fragments provide foundational utility and data display capabilities.
 
-- [Meter Reading](./fragments/meter-reading.md)
-- [Date Display](./fragments/date-display.md)
+- [Meter Reading](./fragments/meter-reading.md) (DEPRECATED)
+- [Date Display](./fragments/date-display.md) (DEPRECATED)
 - [Form Utilities](./fragments/forms.md) (Populator, Session ID, Refresh, Redirect)
 - [Form Field Enhancements](./fragments/form-fragments.md) (Autocomplete, Star Rating, Toggle)
 - [Populated Form Fields](./fragments/populated-form-fields.md) (Persistence, Derived Values)
@@ -110,7 +107,7 @@ A suite of high-fidelity, data-driven fragments designed for modern Liferay port
 
 ### User & Account
 
-- [Profile Fragments](./fragments/profile.md)
+- [Profile Fragments](./fragments/profile.md) (DEPRECATED)
 - [Commerce Fragments](./fragments/commerce.md)
 - [User & Account Fragments](./fragments/user-account.md) (OAuth2, Connectivity Testing)
 

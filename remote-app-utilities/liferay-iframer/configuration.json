@@ -1,4 +1,50 @@
 {
-	"fieldSets": [
-	]
+  "fieldSets": [
+    {
+      "fields": [
+        {
+          "defaultValue": "https://www.liferay.com",
+          "label": "lfr.remote-app-utilities.iframe-url",
+          "description": "lfr.remote-app-utilities.iframe-url-description",
+          "name": "iframeUrl",
+          "type": "text"
+        },
+        {
+          "defaultValue": "500px",
+          "label": "lfr.remote-app-utilities.height",
+          "description": "lfr.remote-app-utilities.height-description",
+          "name": "height",
+          "type": "length"
+        },
+        {
+          "defaultValue": "100%",
+          "label": "lfr.remote-app-utilities.width",
+          "description": "lfr.remote-app-utilities.width-description",
+          "name": "width",
+          "type": "text"
+        }
+      ],
+      "label": "lfr.remote-app-utilities.general"
+    },
+    {
+      "fields": [
+        {
+          "defaultValue": true,
+          "label": "lfr.remote-app-utilities.enable-resize",
+          "description": "lfr.remote-app-utilities.enable-resize-description",
+          "name": "enableResize",
+          "type": "checkbox"
+        },
+        {
+          "dataType": "int",
+          "defaultValue": "100",
+          "label": "lfr.remote-app-utilities.resize-interval",
+          "description": "lfr.remote-app-utilities.resize-interval-description",
+          "name": "resizeInterval",
+          "type": "text"
+        }
+      ],
+      "label": "lfr.remote-app-utilities.style"
+    }
+  ]
 }

@@ -3,33 +3,33 @@
     {
       "fields": [
         {
-          "label": "object-external-reference-code",
-          "description": "object-external-reference-code-description",
+          "label": "lfr.gemini-generated.object-external-reference-code",
+          "description": "lfr.gemini-generated.object-external-reference-code-description",
           "name": "objectERC",
           "type": "text",
           "defaultValue": ""
         },
         {
-          "label": "fallback-record-id",
-          "description": "fallback-record-id-description",
+          "label": "lfr.gemini-generated.fallback-record-id",
+          "description": "lfr.gemini-generated.fallback-record-id-description",
           "name": "recordId",
           "type": "text",
           "defaultValue": ""
         }
       ],
-      "label": "data"
+      "label": "lfr.gemini-generated.data"
     },
     {
       "fields": [
         {
           "defaultValue": "var(--primary)",
-          "label": "accent-color",
-          "description": "accent-color-description",
+          "label": "lfr.gemini-generated.accent-color",
+          "description": "lfr.gemini-generated.accent-color-description",
           "name": "accentColor",
           "type": "colorPicker"
         }
       ],
-      "label": "style"
+      "label": "lfr.gemini-generated.style"
     }
   ]
 }

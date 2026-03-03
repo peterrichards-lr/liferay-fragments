@@ -3,26 +3,26 @@
     {
       "fields": [
         {
-          "label": "object-external-reference-code",
-          "description": "object-external-reference-code-description",
+          "label": "lfr.gemini-generated.object-external-reference-code",
+          "description": "lfr.gemini-generated.object-external-reference-code-description",
           "name": "objectERC",
           "type": "text",
           "defaultValue": ""
         }
       ],
-      "label": "data"
+      "label": "lfr.gemini-generated.data"
     },
     {
       "fields": [
         {
           "defaultValue": "var(--primary)",
-          "label": "submit-button-color",
-          "description": "submit-button-color-description",
+          "label": "lfr.gemini-generated.submit-button-color",
+          "description": "lfr.gemini-generated.submit-button-color-description",
           "name": "buttonColor",
           "type": "colorPicker"
         }
       ],
-      "label": "style"
+      "label": "lfr.gemini-generated.style"
     }
   ]
 }

@@ -5,24 +5,30 @@
         {
           "dataType": "string",
           "defaultValue": "primary",
-          "label": "type",
+          "label": "lfr.user-account.button-type",
+          "description": "lfr.user-account.button-type",
           "name": "buttonType",
           "type": "select",
           "typeOptions": {
             "validValues": [
               {
+                "label": "lfr.user-account.primary",
                 "value": "primary"
               },
               {
+                "label": "lfr.user-account.secondary",
                 "value": "secondary"
               },
               {
+                "label": "lfr.user-account.link",
                 "value": "link"
               },
               {
+                "label": "lfr.user-account.outline-primary",
                 "value": "outline-primary"
               },
               {
+                "label": "lfr.user-account.outline-secondary",
                 "value": "outline-secondary"
               }
             ]
@@ -31,40 +37,41 @@
         {
           "dataType": "string",
           "defaultValue": "nm",
-          "label": "size",
+          "label": "lfr.user-account.button-size",
+          "description": "lfr.user-account.button-size",
           "name": "buttonSize",
           "type": "select",
           "typeOptions": {
             "validValues": [
               {
-                "label": "small",
+                "label": "lfr.user-account.sm",
                 "value": "sm"
               },
               {
-                "label": "normal",
+                "label": "lfr.user-account.nm",
                 "value": "nm"
               },
               {
-                "label": "large",
+                "label": "lfr.user-account.lg",
                 "value": "lg"
               }
             ]
           }
         }
       ],
-      "label": "button-options"
+      "label": "lfr.user-account.button-options"
     },
     {
       "fields": [
         {
-          "dataType": "string",
-          "defaultValue": "microservice-lctseuk-prd.lfr.cloud/account/api/v1/ping",
-          "label": "endpoint-url",
+          "defaultValue": "/o/headless-admin-user/v1.0/my-user-account",
+          "label": "lfr.user-account.endpoint-url",
+          "description": "lfr.user-account.endpoint-url",
           "name": "endpointUrl",
           "type": "text"
         }
       ],
-      "label": "endpoint-options"
+      "label": "lfr.user-account.endpoint-options"
     }
   ]
 }

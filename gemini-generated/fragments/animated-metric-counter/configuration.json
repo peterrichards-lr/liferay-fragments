@@ -4,48 +4,48 @@
       "fields": [
         {
           "defaultValue": "1000",
-          "description": "end-value-description",
-          "label": "end-value",
+          "description": "lfr.gemini-generated.end-value-description",
+          "label": "lfr.gemini-generated.end-value",
           "name": "endValue",
           "type": "text",
           "dataType": "int"
         },
         {
           "defaultValue": "2000",
-          "description": "animation-duration-ms-description",
-          "label": "animation-duration-ms",
+          "description": "lfr.gemini-generated.animation-duration-ms-description",
+          "label": "lfr.gemini-generated.animation-duration-ms",
           "name": "duration",
           "type": "text",
           "dataType": "int"
         },
         {
           "defaultValue": "",
-          "description": "prefix-description",
-          "label": "prefix",
+          "description": "lfr.gemini-generated.prefix-description",
+          "label": "lfr.gemini-generated.prefix",
           "name": "prefix",
           "type": "text"
         },
         {
           "defaultValue": "",
-          "description": "suffix-description",
-          "label": "suffix",
+          "description": "lfr.gemini-generated.suffix-description",
+          "label": "lfr.gemini-generated.suffix",
           "name": "suffix",
           "type": "text"
         }
       ],
-      "label": "data"
+      "label": "lfr.gemini-generated.data"
     },
     {
       "fields": [
         {
           "defaultValue": "var(--primary)",
-          "description": "text-color-description",
-          "label": "text-color",
+          "description": "lfr.gemini-generated.text-color-description",
+          "label": "lfr.gemini-generated.text-color",
           "name": "textColor",
           "type": "colorPicker"
         }
       ],
-      "label": "style"
+      "label": "lfr.gemini-generated.style"
     }
   ]
 }

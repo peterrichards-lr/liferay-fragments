@@ -5,24 +5,29 @@
         {
           "dataType": "string",
           "defaultValue": "iframe",
-          "label": "execute-mode",
+          "label": "lfr.misc.execute-mode",
+          "description": "lfr.misc.execute-mode",
           "name": "executeMode",
           "type": "select",
           "typeOptions": {
             "validValues": [
               {
+                "label": "lfr.misc.iframe",
                 "value": "iframe"
               },
               {
+                "label": "lfr.misc.page",
                 "value": "page"
               },
               {
+                "label": "lfr.misc.both",
                 "value": "both"
               }
             ]
           }
         }
-      ]
+      ],
+      "label": "lfr.misc.general"
     }
   ]
 }

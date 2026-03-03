@@ -1,93 +1,71 @@
 {
-	"fieldSets": [
-		{
-			"fields": [
-				{
-					"dataType": "string",
-					"defaultValue": "primary",
-					"label": "type",
-					"name": "buttonType",
-					"type": "select",
-					"typeOptions": {
-						"validValues": [
-							{
-								"value": "primary"
-							},
-							{
-								"value": "secondary"
-							},
-							{
-								"value": "link"
-							},
-							{
-								"value": "outline-primary"
-							},
-							{
-								"value": "outline-secondary"
-							}
-						]
-					}
-				},
-				{
-					"dataType": "string",
-					"defaultValue": "nm",
-					"label": "size",
-					"name": "buttonSize",
-					"type": "select",
-					"typeOptions": {
-						"validValues": [
-							{
-								"label": "small",
-								"value": "sm"
-							},
-							{
-								"label": "normal",
-								"value": "nm"
-							},
-							{
-								"label": "large",
-								"value": "lg"
-							}
-						]
-					}
-				},
-				{
-					"defaultValue": true,
-					"description": "Determines if the button test is used rather than the editible text",
-					"label": "Use button text",
-					"name": "useButtonText",
-					"type": "checkbox"
-				},
-				{
-					"defaultValue": true,
-					"description": "Determines if the prefix and suffix are added to the action text",
-					"label": "Use prefix and suffix text",
-					"name": "usePrefixSuffix",
-					"type": "checkbox"
-				},
-				{
-					"defaultValue": false,
-					"description": "Determines if a space is inserted between the prefix suffix and are added to the action text",
-					"label": "Add Space",
-					"name": "addSpace",
-					"type": "checkbox"
-				},
-				{
-					"dataType": "string",
-					"defaultValue": "Clicked '",
-					"label": "audit-action-prefix",
-					"name": "auditActionPrefix",
-					"type": "text"
-				},
-				{
-					"dataType": "string",
-					"defaultValue": "' button",
-					"label": "audit-action-suffix",
-					"name": "auditActionSuffix",
-					"type": "text"
-				}
-			],
-			"label": "button-options"
-		}
-	]
+  "fieldSets": [
+    {
+      "fields": [
+        {
+          "dataType": "string",
+          "defaultValue": "NM",
+          "label": "lfr.objects.type",
+          "name": "type",
+          "type": "text"
+        },
+        {
+          "dataType": "string",
+          "defaultValue": "NM",
+          "label": "lfr.objects.size",
+          "name": "buttonSize",
+          "type": "select",
+          "typeOptions": {
+            "validValues": [
+              {
+                "label": "lfr.objects.small",
+                "value": "SM"
+              },
+              {
+                "label": "lfr.objects.normal",
+                "value": "NM"
+              },
+              {
+                "label": "lfr.objects.large",
+                "value": "LG"
+              }
+            ]
+          }
+        },
+        {
+          "defaultValue": false,
+          "label": "lfr.objects.use-button-text",
+          "name": "useButtonText",
+          "type": "checkbox"
+        },
+        {
+          "defaultValue": false,
+          "label": "lfr.objects.use-prefix-suffix",
+          "name": "usePrefixAndSuffix",
+          "type": "checkbox"
+        },
+        {
+          "defaultValue": true,
+          "label": "lfr.objects.add-space",
+          "name": "addSpace",
+          "type": "checkbox"
+        },
+        {
+          "dataType": "string",
+          "defaultValue": "",
+          "label": "lfr.objects.audit-action-prefix",
+          "name": "auditActionPrefix",
+          "type": "text"
+        },
+        {
+          "dataType": "string",
+          "defaultValue": "",
+          "label": "lfr.objects.audit-action-suffix",
+          "name": "auditActionSuffix",
+          "type": "text"
+        }
+      ],
+      "label": "lfr.objects.button-options"
+    }
+  ]
 }

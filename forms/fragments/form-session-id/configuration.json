@@ -1,32 +1,35 @@
 {
-	"fieldSets": [
-		{
+  "fieldSets": [
+    {
       "fields": [
         {
-          "defaultValue": "formsessionid",
-          "label": "Cookie Name",
+          "defaultValue": "LFR_FORM_SESSION_ID",
+          "label": "lfr.forms.cookie-name",
+          "description": "lfr.forms.cookie-name-description",
           "name": "cookieName",
           "type": "text"
         },
-				{
-          "defaultValue": "r_applicant_c_applicantId",
-          "label": "Applicant Relationship Id",
-          "name": "applicantRelationshipId",
+        {
+          "defaultValue": "formSessionId",
+          "label": "lfr.forms.target-field-name",
+          "description": "lfr.forms.target-field-name-description",
+          "name": "inputTagName",
           "type": "text"
         }
       ],
-      "label": "General"
+      "label": "lfr.forms.form-session-management"
     },
-		{
+    {
       "fields": [
         {
           "defaultValue": false,
-          "label": "Enable Debug Logging",
+          "label": "lfr.forms.debug-enabled",
+          "description": "lfr.forms.debug-enabled-description",
           "name": "enableDebug",
           "type": "checkbox"
         }
       ],
-      "label": "Debugging"
+      "label": "lfr.forms.debug"
     }
-	]
+  ]
 }

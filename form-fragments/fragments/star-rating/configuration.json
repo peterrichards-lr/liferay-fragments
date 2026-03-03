@@ -5,9 +5,9 @@
         {
           "dataType": "int",
           "defaultValue": "5",
-          "label": "number-of-stars",
+          "label": "lfr.form-fragments.number-of-stars",
           "name": "numberOfStars",
-          "description": "this-only-applies-to-integer-types",
+          "description": "lfr.form-fragments.number-of-stars",
           "type": "text",
           "typeOptions": {
             "validation": {
@@ -18,26 +18,27 @@
         },
         {
           "defaultValue": "4rem",
-          "label": "star-size",
+          "label": "lfr.form-fragments.star-size",
+          "description": "lfr.form-fragments.star-size",
           "name": "starSize",
           "type": "length"
         },
         {
           "name": "activeStarColor",
-          "label": "Active Star Color",
-          "description": "active-star-color",
+          "label": "lfr.form-fragments.active-star-color",
+          "description": "lfr.form-fragments.active-star-color",
           "type": "colorPicker",
           "defaultValue": "var(--warning)"
         },
         {
           "name": "passiveStarColor",
-          "label": "Passive Star Color",
-          "description": "passive-star-color",
+          "label": "lfr.form-fragments.passive-star-color",
+          "description": "lfr.form-fragments.passive-star-color",
           "type": "colorPicker",
           "defaultValue": "var(--gray-300)"
         }
       ],
-      "label": "star-options"
+      "label": "lfr.form-fragments.star-options"
     }
   ]
 }

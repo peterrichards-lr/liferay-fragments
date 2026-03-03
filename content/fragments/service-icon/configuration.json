@@ -4,93 +4,100 @@
       "fields": [
         {
           "dataType": "int",
-          "label": "content-structure-id",
+          "label": "lfr.content.content-structure-id",
+          "description": "lfr.content.content-structure-id",
           "name": "contentStructureId",
           "type": "text"
         },
         {
           "defaultValue": false,
-          "label": "asset-library-collection",
+          "label": "lfr.content.asset-library-collection",
+          "description": "lfr.content.asset-library-collection",
           "name": "assetLibraryCollection",
           "type": "checkbox"
         },
         {
           "dataType": "int",
-          "description": "asset-library-id-description",
-          "label": "asset-library-id",
+          "description": "lfr.content.asset-library-id-description",
+          "label": "lfr.content.asset-library-id",
           "name": "assetLibraryId",
           "type": "text"
         }
       ],
-      "label": "content"
+      "label": "lfr.content.content"
     },
     {
       "fields": [
         {
           "defaultValue": false,
-          "description": "use-default-page-url-description",
-          "label": "use-default-page-url",
+          "description": "lfr.content.use-default-page-url-description",
+          "label": "lfr.content.use-default-page-url",
           "name": "useDefaultPageUrl",
           "type": "checkbox"
         },
         {
-          "description": "default-page-url-description",
-          "label": "default-page-url",
+          "description": "lfr.content.default-page-url-description",
+          "label": "lfr.content.default-page-url",
           "name": "defaultPageUrl",
           "type": "text"
         }
       ],
-      "label": "page-url"
+      "label": "lfr.content.page-url"
     },
     {
       "configurationRole": "style",
       "fields": [
         {
           "defaultValue": "#d7e5ff",
-          "label": "Background Color",
+          "label": "lfr.content.background-color",
+          "description": "lfr.content.background-color",
           "name": "backgroundColor",
           "type": "colorPicker"
         },
         {
           "dataType": "string",
           "defaultValue": "coin",
-          "label": "Default Symbol",
+          "label": "lfr.content.default-symbol",
+          "description": "lfr.content.default-symbol",
           "name": "defaultIcon",
           "type": "text"
         },
         {
           "defaultValue": "#0960ff",
-          "label": "Icon Color",
+          "label": "lfr.content.icon-color",
+          "description": "lfr.content.icon-color",
           "name": "iconColor",
           "type": "colorPicker"
         },
         {
           "defaultValue": "72px",
-          "label": "size",
+          "label": "lfr.content.size",
+          "description": "lfr.content.size",
           "name": "size",
           "type": "length"
         }
       ],
-      "label": "icon"
+      "label": "lfr.content.icon"
     },
     {
       "configurationRole": "advanced",
       "fields": [
         {
           "defaultValue": false,
-          "label": "debug-enabled",
+          "label": "lfr.content.debug-enabled",
+          "description": "lfr.content.debug-enabled",
           "name": "enableDebug",
           "type": "checkbox"
         },
         {
           "defaultValue": false,
-          "description": "debug-in-error-handler-description",
-          "label": "debug-in-error-handler",
+          "description": "lfr.content.debug-in-error-handler-description",
+          "label": "lfr.content.debug-in-error-handler",
           "name": "debugInErrorHandler",
           "type": "checkbox"
         }
       ],
-      "label": "miscellaneous"
+      "label": "lfr.content.miscellaneous"
     }
   ]
 }

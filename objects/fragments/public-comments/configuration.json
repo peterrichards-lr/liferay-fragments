@@ -5,29 +5,34 @@
         {
           "dataType": "string",
           "defaultValue": "/o/c/j3y7comments/",
-          "label": "object-api-path",
+          "label": "lfr.objects.object-api-path",
+          "description": "lfr.objects.object-api-path-description",
           "name": "objectAPIPath",
           "type": "text"
         },
         {
           "dataType": "string",
           "defaultValue": "r_ticket_c_j3y7TicketId",
-          "label": "relationship-field-name",
+          "label": "lfr.objects.relationship-field-name",
+          "description": "lfr.objects.relationship-field-name-description",
           "name": "relationshipFieldName",
           "type": "text"
         },
         {
           "dataType": "string",
           "defaultValue": "path",
-          "label": "source-method",
+          "label": "lfr.objects.source-method",
+          "description": "lfr.objects.source-method-description",
           "name": "sourceMethod",
           "type": "select",
           "typeOptions": {
             "validValues": [
               {
+                "label": "lfr.objects.path",
                 "value": "path"
               },
               {
+                "label": "lfr.objects.query-string",
                 "value": "queryString"
               }
             ]
@@ -35,31 +40,35 @@
         },
         {
           "defaultValue": "-1",
-          "label": "path-position",
-          "description": "-1 will take the value from the last path token",
+          "label": "lfr.objects.path-position",
+          "description": "lfr.objects.path-position-description",
           "name": "pathPosition",
           "type": "text",
           "dataType": "int"
         },
         {
           "defaultValue": "id",
-          "label": "id-parameter",
+          "label": "lfr.objects.id-parameter",
+          "description": "lfr.objects.id-parameter-description",
           "name": "idParameter",
           "type": "text"
         },
         {
           "defaultValue": true,
-          "label": "use-dummy-id",
+          "label": "lfr.objects.use-dummy-id",
+          "description": "lfr.objects.use-dummy-id-description",
           "name": "useDummyId",
           "type": "checkbox"
         },
         {
           "defaultValue": "91133",
-          "label": "dummy-id",
+          "label": "lfr.objects.dummy-id",
+          "description": "lfr.objects.dummy-id-description",
           "name": "dummyId",
           "type": "text"
         }
-      ]
+      ],
+      "label": "lfr.objects.general"
     }
   ]
 }

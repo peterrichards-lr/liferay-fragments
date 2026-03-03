@@ -3,61 +3,33 @@
     {
       "fields": [
         {
-          "dataType": "string",
-          "description": "fields-list-description",
-          "label": "fields-list",
-          "name": "fieldsList",
-          "type": "text"
-        },
-        {
-          "dataType": "string",
-          "description": "storage-key-prefix-description",
-          "label": "storage-key-prefix",
+          "defaultValue": "LFR_APP",
+          "label": "lfr.populated-form-fields.storage-key-prefix",
+          "description": "lfr.populated-form-fields.storage-key-prefix-description",
           "name": "storageKeyPrefix",
           "type": "text"
         },
         {
-          "defaultValue": true,
-          "description": "update-target-field-only-description",
-          "label": "update-target-field-only",
-          "name": "updateTargetFieldOnly",
-          "type": "checkbox"
+          "defaultValue": "",
+          "label": "lfr.populated-form-fields.fields-list",
+          "description": "lfr.populated-form-fields.fields-list-description",
+          "name": "fieldsList",
+          "type": "text"
         }
       ],
-      "label": "data-mapping"
+      "label": "lfr.populated-form-fields.general"
     },
     {
       "fields": [
         {
-          "defaultValue": true,
-          "label": "debug-enabled",
+          "defaultValue": false,
+          "label": "lfr.populated-form-fields.enable-debug",
+          "description": "lfr.populated-form-fields.enable-debug",
           "name": "enableDebug",
           "type": "checkbox"
-        },
-        {
-          "defaultValue": true,
-          "description": "fragment-header-description",
-          "label": "fragment-header",
-          "name": "fragmentHeader",
-          "type": "checkbox"
-        },
-        {
-          "defaultValue": true,
-          "description": "all-portlets-ready-description",
-          "label": "all-portlets-ready",
-          "name": "allPortletsReady",
-          "type": "checkbox"
-        },
-        {
-          "dataType": "int",
-          "defaultValue": "1000",
-          "description": "initialize-delay-description",
-          "label": "initialize-delay",
-          "name": "initializeDelay",
-          "type": "text"
         }
       ],
-      "label": "miscellaneous-section"
+      "label": "lfr.populated-form-fields.debugging"
     }
   ]
 }

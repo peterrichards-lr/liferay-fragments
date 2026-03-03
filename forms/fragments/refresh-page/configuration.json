@@ -1,80 +1,45 @@
 {
-	"fieldSets": [
-		{
-			"fields": [
-				{
-					"defaultValue": false,
-					"label": "enable-debug",
-					"name": "enableDebug",
-					"type": "checkbox"
-				}
-			],
-			"label": "General"
-		},
-		{
-			"fields": [
-				{
-					"defaultValue": true,
-					"label": "enable-refresh-trigger",
-					"name": "enableRefreshTrigger",
-					"type": "checkbox"
-				},
-				{
-					"defaultValue": "You have already responded.",
-					"label": "refresh-trigger-text",
-					"name": "refreshTriggerText",
-					"type": "text"
-				},
-				{
-					"label": "wait-interval-ms",
-					"name": "waitIntervalMs",
-					"defaultValue": "100",
-					"type": "text",
-					"typeOptions": {
-						"validation": {
-							"min": 100,
-							"type": "number"
-						}
-					}
-				},
-				{
-					"label": "wait-count",
-					"name": "waitCount",
-					"defaultValue": "3",
-					"type": "text",
-					"typeOptions": {
-						"validation": {
-							"min": 1,
-							"type": "number"
-						}
-					}
-				},
-				{
-					"defaultValue": true,
-					"label": "enable-manual-refresh",
-					"name": "enableManualRefresh",
-					"type": "checkbox"
-				},
-				{
-					"defaultValue": true,
-					"label": "enable-auto-refresh",
-					"name": "enableAutoRefresh",
-					"type": "checkbox"
-				},
-				{
-					"label": "refresh-interval-sec",
-					"name": "refreshIntervalSec",
-					"defaultValue": "5",
-					"type": "text",
-					"typeOptions": {
-						"validation": {
-							"min": 5,
-							"type": "number"
-						}
-					}
-				}
-			],
-			"label": "Refresh"
-		}
-	]
+  "fieldSets": [
+    {
+      "fields": [
+        {
+          "defaultValue": true,
+          "label": "lfr.forms.enable-auto-refresh",
+          "description": "lfr.forms.enable-auto-refresh-description",
+          "name": "enableAutoRefresh",
+          "type": "checkbox"
+        },
+        {
+          "defaultValue": "5",
+          "label": "lfr.forms.refresh-interval-seconds",
+          "description": "lfr.forms.refresh-interval-seconds-description",
+          "name": "refreshIntervalSec",
+          "type": "text",
+          "dataType": "int"
+        },
+        {
+          "defaultValue": true,
+          "label": "lfr.forms.enable-manual-refresh",
+          "description": "lfr.forms.enable-manual-refresh-description",
+          "name": "enableManualRefresh",
+          "type": "checkbox"
+        },
+        {
+          "defaultValue": "click here",
+          "label": "lfr.forms.refresh-link-text",
+          "description": "lfr.forms.refresh-link-text-description",
+          "name": "manualRefreshText",
+          "type": "text"
+        },
+        {
+          "defaultValue": ".lfr-message-success",
+          "label": "lfr.forms.refresh-condition-element",
+          "description": "lfr.forms.refresh-condition-element-description",
+          "name": "conditionElement",
+          "type": "text"
+        }
+      ],
+      "label": "lfr.forms.behaviour"
+    }
+  ]
 }

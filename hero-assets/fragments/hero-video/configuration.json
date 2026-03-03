@@ -3,124 +3,136 @@
     {
       "fields": [
         {
-          "label": "Video",
+          "label": "lfr.hero-assets.video",
           "name": "video",
-          "type": "videoSelector"
+          "type": "itemSelector",
+          "typeOptions": {
+            "itemType": "com.liferay.portal.kernel.repository.model.FileEntry"
+          }
         },
         {
           "defaultValue": true,
-          "label": "Autoplay",
+          "label": "lfr.hero-assets.autoplay",
           "name": "autoplay",
           "type": "checkbox"
         },
         {
           "defaultValue": true,
-          "label": "Muted",
+          "label": "lfr.hero-assets.muted",
           "name": "muted",
           "type": "checkbox"
         },
         {
           "defaultValue": true,
-          "label": "Loop ",
+          "label": "lfr.hero-assets.loop",
           "name": "loop",
           "type": "checkbox"
         },
         {
           "defaultValue": true,
-          "label": "Controls ",
+          "label": "lfr.hero-assets.controls-label",
           "name": "controls",
           "type": "checkbox"
         },
         {
-          "name": "preload",
-          "label": "Preload",
-          "type": "select",
           "dataType": "string",
+          "defaultValue": "auto",
+          "label": "lfr.hero-assets.preload",
+          "name": "preload",
+          "type": "select",
           "typeOptions": {
             "validValues": [
-              { "label": "Auto", "value": "auto" },
-              { "label": "Metadata", "value": "metadata" },
-              { "label": "None", "value": "none" }
+              {
+                "label": "lfr.hero-assets.auto",
+                "value": "auto"
+              },
+              {
+                "label": "lfr.hero-assets.metadata",
+                "value": "metadata"
+              },
+              {
+                "label": "lfr.hero-assets.none",
+                "value": "none"
+              }
             ]
-          },
-          "defaultValue": "metadata"
+          }
         }
       ],
-      "label": "General"
-    },
-    {
-      "fields": [
-        {
-          "defaultValue": true,
-          "label": "Use Custom Control",
-          "name": "useCustomControl",
-          "type": "checkbox"
-        },
-        {
-          "name": "controlColour",
-          "label": "Control Colour",
-          "type": "colorPicker",
-          "defaultValue": "#ffffff"
-        }
-      ],
-      "label": "Controls"
-    },
-    {
-      "fields": [
-        {
-          "defaultValue": "100%",
-          "label": "Width",
-          "name": "width",
-          "type": "length"
-        },
-        {
-          "defaultValue": "450px",
-          "label": "Height",
-          "name": "height",
-          "type": "length"
-        }
-      ],
-      "label": "Size"
-    },
-    {
-      "fields": [
-        {
-          "defaultValue": "-20px",
-          "label": "Margin (Left)",
-          "name": "marginLeft",
-          "type": "length"
-        },
-        {
-          "defaultValue": "-20px",
-          "label": "Margin (Right)",
-          "name": "marginRight",
-          "type": "length"
-        },
-        {
-          "defaultValue": "-20px",
-          "label": "Margin (Top)",
-          "name": "marginTop",
-          "type": "length"
-        },
-        {
-          "defaultValue": "-20px",
-          "label": "Margin (Bottom)",
-          "name": "marginBottom",
-          "type": "length"
-        }
-      ],
-      "label": "Margins"
+      "label": "lfr.hero-assets.general"
     },
     {
       "fields": [
         {
           "defaultValue": false,
-          "label": "Enable Debug Logging",
+          "label": "lfr.hero-assets.use-custom-control",
+          "name": "useCustomControls",
+          "type": "checkbox"
+        },
+        {
+          "defaultValue": "var(--primary)",
+          "label": "lfr.hero-assets.control-colour",
+          "name": "controlColor",
+          "type": "colorPicker"
+        }
+      ],
+      "label": "lfr.hero-assets.controls"
+    },
+    {
+      "fields": [
+        {
+          "defaultValue": "100%",
+          "label": "lfr.hero-assets.width",
+          "name": "width",
+          "type": "length"
+        },
+        {
+          "defaultValue": "auto",
+          "label": "lfr.hero-assets.height",
+          "name": "height",
+          "type": "length"
+        }
+      ],
+      "label": "lfr.hero-assets.size"
+    },
+    {
+      "fields": [
+        {
+          "defaultValue": "0px",
+          "label": "lfr.hero-assets.margin-left",
+          "name": "marginLeft",
+          "type": "length"
+        },
+        {
+          "defaultValue": "0px",
+          "label": "lfr.hero-assets.margin-right",
+          "name": "marginRight",
+          "type": "length"
+        },
+        {
+          "defaultValue": "0px",
+          "label": "lfr.hero-assets.margin-top",
+          "name": "marginTop",
+          "type": "length"
+        },
+        {
+          "defaultValue": "0px",
+          "label": "lfr.hero-assets.margin-bottom",
+          "name": "marginBottom",
+          "type": "length"
+        }
+      ],
+      "label": "lfr.hero-assets.margins"
+    },
+    {
+      "fields": [
+        {
+          "defaultValue": false,
+          "label": "lfr.hero-assets.enable-debug",
           "name": "enableDebug",
           "type": "checkbox"
         }
       ],
-      "label": "Debugging"
+      "label": "lfr.hero-assets.debugging"
     }
   ]
 }

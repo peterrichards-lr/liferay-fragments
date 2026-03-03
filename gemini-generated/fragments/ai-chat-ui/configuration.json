@@ -4,25 +4,25 @@
       "fields": [
         {
           "defaultValue": "http://localhost:8080/o/ai-backend",
-          "description": "backend-url-description",
-          "label": "backend-url",
+          "description": "lfr.gemini-generated.backend-url-description",
+          "label": "lfr.gemini-generated.backend-url",
           "name": "backendUrl",
           "type": "text"
         }
       ],
-      "label": "integration"
+      "label": "lfr.gemini-generated.integration"
     },
     {
       "fields": [
         {
           "defaultValue": "var(--primary)",
-          "description": "user-bubble-color-description",
-          "label": "user-bubble-color",
+          "description": "lfr.gemini-generated.user-bubble-color-description",
+          "label": "lfr.gemini-generated.user-bubble-color",
           "name": "userBubbleColor",
           "type": "colorPicker"
         }
       ],
-      "label": "style"
+      "label": "lfr.gemini-generated.style"
     }
   ]
 }

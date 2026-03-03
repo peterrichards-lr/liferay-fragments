@@ -5,21 +5,19 @@
         {
           "dataType": "string",
           "defaultValue": "block",
-          "label": "content-display",
+          "label": "lfr.responsive-menus.content-display",
+          "description": "lfr.responsive-menus.content-display",
           "name": "contentDisplay",
           "type": "select",
           "typeOptions": {
             "validValues": [
               {
-                "label": "Block",
                 "value": "block"
               },
               {
-                "label": "flex-row",
                 "value": "flex-row"
               },
               {
-                "label": "flex-column",
                 "value": "flex-column"
               }
             ]
@@ -28,21 +26,19 @@
         {
           "dataType": "string",
           "defaultValue": "nowrap",
-          "label": "flex-wrap",
+          "label": "lfr.responsive-menus.flex-wrap",
+          "description": "lfr.responsive-menus.flex-wrap",
           "name": "flexWrap",
           "type": "select",
           "typeOptions": {
             "validValues": [
               {
-                "label": "nowrap",
                 "value": "nowrap"
               },
               {
-                "label": "wrap",
                 "value": "wrap"
               },
               {
-                "label": "wrap-reverse",
                 "value": "wrap-reverse"
               }
             ]
@@ -51,29 +47,25 @@
         {
           "dataType": "string",
           "defaultValue": "stretch",
-          "label": "align-items",
+          "label": "lfr.responsive-menus.align-items",
+          "description": "lfr.responsive-menus.align-items",
           "name": "alignItems",
           "type": "select",
           "typeOptions": {
             "validValues": [
               {
-                "label": "start",
                 "value": "start"
               },
               {
-                "label": "center[alignment]",
                 "value": "center"
               },
               {
-                "label": "end",
                 "value": "end"
               },
               {
-                "label": "stretch",
                 "value": "stretch"
               },
               {
-                "label": "baseline",
                 "value": "baseline"
               }
             ]
@@ -82,29 +74,25 @@
         {
           "dataType": "string",
           "defaultValue": "start",
-          "label": "justify-content",
+          "label": "lfr.responsive-menus.justify-content",
+          "description": "lfr.responsive-menus.justify-content",
           "name": "justifyContent",
           "type": "select",
           "typeOptions": {
             "validValues": [
               {
-                "label": "start",
                 "value": "start"
               },
               {
-                "label": "center[alignment]",
                 "value": "center"
               },
               {
-                "label": "end",
                 "value": "end"
               },
               {
-                "label": "between",
                 "value": "between"
               },
               {
-                "label": "around",
                 "value": "around"
               }
             ]
@@ -112,35 +100,36 @@
         },
         {
           "defaultValue": "var(--spacer-2, .5rem)",
-          "label": "flex-gap",
+          "label": "lfr.responsive-menus.flex-gap",
+          "description": "lfr.responsive-menus.flex-gap",
           "name": "flexGap",
           "type": "length"
         },
         {
           "name": "allowMenuOverride",
-          "label": "allow-menu-override",
+          "label": "lfr.responsive-menus.allow-menu-override",
+          "description": "lfr.responsive-menus.allow-menu-override",
           "type": "checkbox",
           "defaultValue": true
         }
       ],
-      "label": "layout"
+      "label": "lfr.responsive-menus.layout"
     },
     {
       "fields": [
         {
           "dataType": "string",
           "defaultValue": "increase-hamburger",
-          "label": "logo-adaption",
+          "label": "lfr.responsive-menus.logo-adaption",
+          "description": "lfr.responsive-menus.logo-adaption",
           "name": "logoAdaption",
           "type": "select",
           "typeOptions": {
             "validValues": [
               {
-                "label": "reduce-logo",
                 "value": "reduce-logo"
               },
               {
-                "label": "increase-hamburger",
                 "value": "increase-hamburger"
               }
             ]
@@ -148,23 +137,25 @@
         },
         {
           "name": "alwaysDisplayLogo",
-          "label": "always-display-logo",
+          "label": "lfr.responsive-menus.always-display-logo",
+          "description": "lfr.responsive-menus.always-display-logo",
           "type": "checkbox",
           "defaultValue": false
         }
       ],
-      "label": "logo"
+      "label": "lfr.responsive-menus.logo"
     },
     {
       "fields": [
         {
           "defaultValue": true,
-          "label": "logo-zone-header",
+          "label": "lfr.responsive-menus.logo-zone-header",
+          "description": "lfr.responsive-menus.logo-zone-header",
           "name": "logoZoneHeader",
           "type": "checkbox"
         }
       ],
-      "label": "editor"
+      "label": "lfr.responsive-menus.editor"
     }
   ]
 }

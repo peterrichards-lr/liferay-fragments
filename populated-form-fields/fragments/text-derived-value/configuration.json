@@ -5,35 +5,35 @@
         {
           "dataType": "string",
           "defaultValue": "",
-          "label": "placeholder",
+          "label": "lfr.populated-form-fields.placeholder",
+          "description": "lfr.populated-form-fields.placeholder",
           "localizable": true,
           "name": "placeholder",
           "type": "text"
         },
         {
           "defaultValue": false,
-          "label": "show-characters-count",
+          "label": "lfr.populated-form-fields.show-characters-count",
+          "description": "lfr.populated-form-fields.show-characters-count",
           "name": "showCharactersCount",
-          "type": "checkbox",
-          "typeOptions": {
-            "displayType": "toggle"
-          }
+          "type": "checkbox"
         },
         {
-          "defaultValue": false,
-          "label": "derive-value",
+          "defaultValue": true,
+          "label": "lfr.populated-form-fields.derive-value",
+          "description": "lfr.populated-form-fields.derive-value",
           "name": "deriveValue",
           "type": "checkbox"
         },
         {
-          "dataType": "string",
-          "description": "derive-value-template-description",
           "defaultValue": "",
-          "label": "derive-value-template",
+          "label": "lfr.populated-form-fields.derive-value-template",
+          "description": "lfr.populated-form-fields.derive-value-template",
           "name": "deriveValueTemplate",
           "type": "text"
         }
-      ]
+      ],
+      "label": "lfr.populated-form-fields.general"
     }
   ]
 }

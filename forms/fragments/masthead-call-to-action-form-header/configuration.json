@@ -1,4 +1,78 @@
 {
-	"fieldSets": [
-	]
+  "fieldSets": [
+    {
+      "fields": [
+        {
+          "label": "lfr.forms.background-image",
+          "description": "lfr.forms.background-image-description",
+          "name": "backgroundImage",
+          "type": "itemSelector",
+          "typeOptions": {
+            "itemType": "com.liferay.portal.kernel.repository.model.FileEntry",
+            "mimeTypes": [
+              "image/png",
+              "image/webp",
+              "image/jpeg",
+              "image/gif",
+              "image/apng",
+              "image/avif"
+            ]
+          }
+        },
+        {
+          "dataType": "string",
+          "defaultValue": "0.5",
+          "label": "lfr.forms.overlay-opacity",
+          "description": "lfr.forms.overlay-opacity-description",
+          "name": "overlayOpacity",
+          "type": "select",
+          "typeOptions": {
+            "validValues": [
+              {
+                "label": "lfr.forms.0-percent",
+                "value": "0"
+              },
+              {
+                "label": "lfr.forms.10-percent",
+                "value": "0.1"
+              },
+              {
+                "label": "lfr.forms.20-percent",
+                "value": "0.2"
+              },
+              {
+                "label": "lfr.forms.30-percent",
+                "value": "0.3"
+              },
+              {
+                "label": "lfr.forms.40-percent",
+                "value": "0.4"
+              },
+              {
+                "label": "lfr.forms.50-percent",
+                "value": "0.5"
+              },
+              {
+                "label": "lfr.forms.60-percent",
+                "value": "0.6"
+              },
+              {
+                "label": "lfr.forms.70-percent",
+                "value": "0.7"
+              },
+              {
+                "label": "lfr.forms.80-percent",
+                "value": "0.8"
+              },
+              {
+                "label": "lfr.forms.90-percent",
+                "value": "0.9"
+              }
+            ]
+          }
+        }
+      ],
+      "label": "lfr.forms.ui-components"
+    }
+  ]
 }

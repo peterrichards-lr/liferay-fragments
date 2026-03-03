@@ -4,40 +4,40 @@
       "fields": [
         {
           "defaultValue": "waterreadings",
-          "label": "object-rest-context",
-          "description": "object-rest-context-description",
+          "label": "lfr.gemini-generated.object-rest-context",
+          "description": "lfr.gemini-generated.object-rest-context-description",
           "name": "objectRESTContext",
           "type": "text"
         },
         {
           "defaultValue": "reading",
-          "label": "value-field",
-          "description": "value-field-description",
+          "label": "lfr.gemini-generated.value-field",
+          "description": "lfr.gemini-generated.value-field-description",
           "name": "valueField",
           "type": "text"
         },
         {
           "defaultValue": "5000",
-          "label": "target-value",
-          "description": "target-value-description",
+          "label": "lfr.gemini-generated.target-value",
+          "description": "lfr.gemini-generated.target-value-description",
           "name": "targetValue",
           "type": "text",
           "dataType": "int"
         }
       ],
-      "label": "data"
+      "label": "lfr.gemini-generated.data"
     },
     {
       "fields": [
         {
           "defaultValue": "var(--primary)",
-          "label": "gauge-color",
-          "description": "gauge-color-description",
+          "label": "lfr.gemini-generated.gauge-color",
+          "description": "lfr.gemini-generated.gauge-color-description",
           "name": "gaugeColor",
           "type": "colorPicker"
         }
       ],
-      "label": "style"
+      "label": "lfr.gemini-generated.style"
     }
   ]
 }

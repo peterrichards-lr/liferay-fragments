@@ -1,0 +1,23 @@
+{
+  "fieldSets": [
+    {
+      "fields": [
+        {
+          "defaultValue": "var(--white)",
+          "label": "lfr.layout-components.background-color",
+          "description": "lfr.layout-components.background-color-description",
+          "name": "backgroundColor",
+          "type": "colorPicker"
+        },
+        {
+          "defaultValue": "var(--border-radius-lg)",
+          "label": "lfr.layout-components.border-radius",
+          "description": "lfr.layout-components.border-radius",
+          "name": "borderRadius",
+          "type": "length"
+        }
+      ],
+      "label": "lfr.layout-components.style"
+    }
+  ]
+}

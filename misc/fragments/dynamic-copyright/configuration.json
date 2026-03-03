@@ -1,36 +1,41 @@
 {
-	"fieldSets": [
-		{
-			"fields": [
-				{
-					"dataType": "string",
-					"defaultValue": "legal-name",
-					"label": "entity-source",
-					"name": "entitySource",
-					"type": "select",
-					"typeOptions": {
-						"validValues": [
-							{
-								"value": "legal-name"
-							},
-							{
-								"value": "site-name"
-							},
-							{
-								"value": "custom"
-							}
-						]
-					}
-				}, 
-				{
-					"dataType": "string",
-					"defaultValue": "",
-					"label": "custom-entity-name",
-										"name": "customEntityName",
-										"type": "text"
-									}
-								]
-							}
-						]
-					}
-					
+  "fieldSets": [
+    {
+      "fields": [
+        {
+          "dataType": "string",
+          "defaultValue": "legal-name",
+          "label": "lfr.misc.entity-source",
+          "description": "lfr.misc.entity-source",
+          "name": "entitySource",
+          "type": "select",
+          "typeOptions": {
+            "validValues": [
+              {
+                "label": "lfr.misc.legal-name",
+                "value": "legal-name"
+              },
+              {
+                "label": "lfr.misc.site-name",
+                "value": "site-name"
+              },
+              {
+                "label": "lfr.misc.custom",
+                "value": "custom"
+              }
+            ]
+          }
+        },
+        {
+          "dataType": "string",
+          "defaultValue": "",
+          "label": "lfr.misc.custom-entity-name",
+          "description": "lfr.misc.custom-entity-name",
+          "name": "customEntityName",
+          "type": "text"
+        }
+      ],
+      "label": "lfr.misc.general"
+    }
+  ]
+}
