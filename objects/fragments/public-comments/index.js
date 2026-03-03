@@ -75,8 +75,27 @@ if (ticketId) {
     viewComments.appendChild(commentEL);
   };
 
-  const filter = `r_ticket_c_j3y7TicketId eq '${ticketId}' and visibility eq 'Public'`;
-  Liferay.Util.fetch(`https://webserver-lctlcapforresterdemo-uat.lfr.cloud/o/c/j3y7comments/?filter=${filter}`)
-    .then((response) => response.json())
-    .then((data) => renderComments(data["items"]));
+  const objectAPIPath = configuration.objectAPIPath || '/o/c/j3y7comments/';
+  const relationshipFieldName = configuration.relationshipFieldName || 'r_ticket_c_j3y7TicketId';
+  const filter = `${relationshipFieldName} eq '${ticketId}' and visibility eq 'Public'`;
+  
+  Liferay.Util.fetch(`${objectAPIPath}?filter=${filter}`)
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error(`Failed to fetch comments: ${response.status} ${response.statusText}`);
+      }
+      return response.json();
+    })
+    .then((data) => {
+      if (data && data.items) {
+        renderComments(data.items);
+      }
+    })
+    .catch((error) => {
+      console.error('Error fetching comments:', error);
+      const viewComments = fragmentElement.querySelector('.view-comments');
+      if (viewComments && document.body.classList.contains('has-edit-mode-menu')) {
+        viewComments.innerHTML = `<div class="alert alert-danger">Error fetching comments. Check configuration and permissions.</div>`;
+      }
+    });
 }

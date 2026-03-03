@@ -39,6 +39,39 @@
         }
       ],
       "label": "filter-options"
+    },
+    {
+      "fields": [
+        {
+          "dataType": "string",
+          "defaultValue": "/o/c/heartrates",
+          "label": "heart-rate-api-path",
+          "name": "heartRateAPIPath",
+          "type": "text"
+        },
+        {
+          "dataType": "string",
+          "defaultValue": "/o/c/bloodpressures",
+          "label": "blood-pressure-api-path",
+          "name": "bloodPressureAPIPath",
+          "type": "text"
+        },
+        {
+          "dataType": "string",
+          "defaultValue": "/o/c/stepses",
+          "label": "steps-api-path",
+          "name": "stepsAPIPath",
+          "type": "text"
+        },
+        {
+          "dataType": "string",
+          "defaultValue": "/o/c/weights",
+          "label": "weight-api-path",
+          "name": "weightAPIPath",
+          "type": "text"
+        }
+      ],
+      "label": "api-configuration"
     }
   ]
 }

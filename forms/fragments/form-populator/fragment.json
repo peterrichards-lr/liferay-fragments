@@ -1,1 +1,9 @@
-{"configurationPath": "configuration.json","jsPath":"index.js","htmlPath":"index.html","cssPath":"index.css","name":"Form Populator","type":"component"}
+{
+  "configurationPath": "configuration.json",
+  "jsPath": "index.js",
+  "htmlPath": "index.html",
+  "cssPath": "index.css",
+  "name": "Form Populator (DEPRECATED)",
+  "description": "DEPRECATED: Use native Liferay 7.4+ form mapping or the 'Populated Form Fields' collection instead.",
+  "type": "component"
+}

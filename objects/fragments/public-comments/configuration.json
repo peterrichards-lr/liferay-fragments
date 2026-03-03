@@ -4,6 +4,20 @@
       "fields": [
         {
           "dataType": "string",
+          "defaultValue": "/o/c/j3y7comments/",
+          "label": "object-api-path",
+          "name": "objectAPIPath",
+          "type": "text"
+        },
+        {
+          "dataType": "string",
+          "defaultValue": "r_ticket_c_j3y7TicketId",
+          "label": "relationship-field-name",
+          "name": "relationshipFieldName",
+          "type": "text"
+        },
+        {
+          "dataType": "string",
           "defaultValue": "path",
           "label": "source-method",
           "name": "sourceMethod",

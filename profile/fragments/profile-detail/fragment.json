@@ -1,1 +1,10 @@
-{"configurationPath": "configuration.json","jsPath":"index.js","htmlPath":"index.html","cssPath":"index.css","icon":"code","name":"Profile Detail","type":"component"}
+{
+  "configurationPath": "configuration.json",
+  "jsPath": "index.js",
+  "htmlPath": "index.html",
+  "cssPath": "index.css",
+  "icon": "code",
+  "name": "Profile Detail (DEPRECATED)",
+  "description": "DEPRECATED: This fragment relies on legacy serviceLocator patterns. Use modern Data Providers instead.",
+  "type": "component"
+}

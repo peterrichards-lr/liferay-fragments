@@ -146,9 +146,14 @@ if (configuration) {
         });
     };
 
+    const heartRateAPIPath = configuration.heartRateAPIPath || '/o/c/heartrates';
+    const bloodPressureAPIPath = configuration.bloodPressureAPIPath || '/o/c/bloodpressures';
+    const stepsAPIPath = configuration.stepsAPIPath || '/o/c/stepses';
+    const weightAPIPath = configuration.weightAPIPath || '/o/c/weights';
+
     const getLastHeartRate = (userId) => {
       const lastReading = getSync(
-        `/o/c/heartrates?filter=r_heartRate_userId%20eq%20%27${userId}%27&page=1&pageSize=1&sort=readingDate%3Adesc`
+        `${heartRateAPIPath}?filter=r_heartRate_userId%20eq%20%27${userId}%27&page=1&pageSize=1&sort=readingDate%3Adesc`
       );
       if (lastReading && lastReading.items) {
         const { lowest, highest } = lastReading.items[0];
@@ -176,7 +181,7 @@ if (configuration) {
 
     const getLastBloodPressure = (userId) => {
       const lastReading = getSync(
-        `/o/c/bloodpressures?filter=r_bloodPressure_userId%20eq%20%27${userId}%27&page=1&pageSize=1&sort=readingDate%3Adesc`
+        `${bloodPressureAPIPath}?filter=r_bloodPressure_userId%20eq%20%27${userId}%27&page=1&pageSize=1&sort=readingDate%3Adesc`
       );
       if (lastReading && lastReading.items) {
         const { diastolic, systolic } = lastReading.items[0];
@@ -208,7 +213,7 @@ if (configuration) {
 
     const getLastStepsCount = (userId) => {
       const lastReading = getSync(
-        `/o/c/stepses?filter=r_steps_userId%20eq%20%27${userId}%27&page=1&pageSize=1&sort=readingDate%3Adesc`
+        `${stepsAPIPath}?filter=r_steps_userId%20eq%20%27${userId}%27&page=1&pageSize=1&sort=readingDate%3Adesc`
       );
       if (lastReading && lastReading.items) {
         const { stepCount } = lastReading.items[0];
@@ -231,7 +236,7 @@ if (configuration) {
 
     const getLastWeight = (userId) => {
       const lastReading = getSync(
-        `/o/c/weights?filter=r_weight_userId%20eq%20%27${userId}%27&page=1&pageSize=1&sort=readingDate%3Adesc`
+        `${weightAPIPath}?filter=r_weight_userId%20eq%20%27${userId}%27&page=1&pageSize=1&sort=readingDate%3Adesc`
       );
       if (lastReading && lastReading.items) {
         const { weight } = lastReading.items[0];
@@ -303,11 +308,11 @@ if (configuration) {
       }
 
       if (heartRateData) {
-        submitData('/o/c/heartrates/batch', heartRateData).then(() => {
-          submitData('/o/c/bloodpressures/batch', bloodPressureData).then(
+        submitData(`${heartRateAPIPath}/batch`, heartRateData).then(() => {
+          submitData(`${bloodPressureAPIPath}/batch`, bloodPressureData).then(
             () => {
-              submitData('/o/c/stepses/batch', stepsData).then(() => {
-                submitData('/o/c/weights/batch', weightData).then(() => {
+              submitData(`${stepsAPIPath}/batch`, stepsData).then(() => {
+                submitData(`${weightAPIPath}/batch`, weightData).then(() => {
                   if (!PubSub) {
                     console.warn('PubSub is not available');
                     return;
