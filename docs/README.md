@@ -2,6 +2,16 @@
 
 A collection of robust, accessible, and responsive Liferay fragments for DXP platforms.
 
+## 📋 Table of Contents
+
+- [🚀 Deployment](#-deployment)
+- [Core Fragments](#core-fragments)
+- [Specialized Collections](#specialized-collections)
+- [🖼️ Visual Gallery](./gallery.md)
+- [📖 Recipes & Workflows](./recipes.md)
+- [⚙️ Prerequisites & Setup](./setup.md)
+- [❓ Troubleshooting & FAQ](./troubleshooting.md)
+
 ## 🚀 Deployment
 
 ### Option 1: Using Pre-built Releases (Quick Start)
@@ -48,8 +58,9 @@ These fragments provide foundational utility and data display capabilities.
 
 - [Meter Reading](./fragments/meter-reading.md)
 - [Date Display](./fragments/date-display.md)
-- [Form Populator](./fragments/form-populator.md)
-- [Refresh Page](./fragments/refresh-page.md)
+- [Form Utilities](./fragments/forms.md) (Populator, Session ID, Refresh, Redirect)
+- [Form Field Enhancements](./fragments/form-fragments.md) (Autocomplete, Star Rating, Toggle)
+- [Populated Form Fields](./fragments/populated-form-fields.md) (Persistence, Derived Values)
 - [Liferay Iframer](./fragments/liferay-iframer.md)
 
 ## Specialized Collections
@@ -75,17 +86,39 @@ A suite of high-fidelity, data-driven fragments designed for modern Liferay port
   - [Pricing Comparison Grid](./fragments/pricing-comparison-grid.md)
   - [AI Assistant Chat UI](./fragments/ai-chat-ui.md)
 
+### Integration & Data
+
+- [Content Fragments](./fragments/content.md) (Content Map, Service Cards)
+- [Object Fragments](./fragments/objects.md) (Audit Buttons, Comments)
+- [Pulse Integration Fragments](./fragments/pulse.md) (Campaign Tracking)
+- [Finance Fragments](./fragments/finance.md) (Loan Calculators)
+
+### Advanced UI & Interactivity
+
+- [Conditional Content](./fragments/conditional-content.md) (Outcome-based Drop Zones)
+- [Tracker Fragments](./fragments/tracker.md) (Multi-step Process Indicators)
+- [Dashboard Components](./fragments/dashboard-components.md) (Healthcare/Activity Dashboards)
+- [Widget Modifiers](./fragments/widget-modifiers.md) (Alerts/Announcements Enhancements)
+
 ### Layout & Theme
 
 - [Layout Components](./fragments/layout-components.md)
 - [Header Components](./fragments/header-components.md)
+- [Responsive Menu Fragments](./fragments/responsive-menus.md) (Mega Menus, Side Menus)
+- [Hero Assets](./fragments/hero-assets.md) (Video Backgrounds, Overlays)
+- [Master Page Utilities](./fragments/master-page-background-colour.md) (Global BG Control)
 
 ### User & Account
 
 - [Profile Fragments](./fragments/profile.md)
 - [Commerce Fragments](./fragments/commerce.md)
+- [User & Account Fragments](./fragments/user-account.md) (OAuth2, Connectivity Testing)
 
-## Resources
+## 📚 Resources
 
-- [Videos](./videos/README.md)
+- [🖼️ Visual Gallery](./gallery.md) - A screenshot-first guide to every fragment.
+- [📖 Recipes & Workflows](./recipes.md) - Step-by-step guides for common fragment combinations.
+- [⚙️ Prerequisites & Setup](./setup.md) - Mandatory Liferay configurations (SAP, FreeMarker).
+- [❓ Troubleshooting & FAQ](./troubleshooting.md) - Common issues and solutions.
+- [🎬 Videos](./videos/README.md) - Video tutorials and walkthroughs.
 - [Miscellaneous Fragments](./fragments/miscellaneous.md)
