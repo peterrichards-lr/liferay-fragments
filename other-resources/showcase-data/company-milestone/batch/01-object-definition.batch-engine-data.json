@@ -1,0 +1,63 @@
+{
+  "configuration": {
+    "className": "com.liferay.object.admin.rest.dto.v1_0.ObjectDefinition",
+    "parameters": {
+      "containsHeaders": "true",
+      "createStrategy": "UPSERT",
+      "importStrategy": "ON_ERROR_CONTINUE",
+      "updateStrategy": "UPDATE"
+    }
+  },
+  "items": [
+    {
+      "active": true,
+      "defaultLanguageId": "en_US",
+      "externalReferenceCode": "COMPANY_MILESTONE",
+      "label": {
+        "en_US": "Company Milestone"
+      },
+      "name": "CompanyMilestone",
+      "objectFields": [
+        {
+          "businessType": "Date",
+          "externalReferenceCode": "DATE",
+          "label": {
+            "en_US": "Date"
+          },
+          "name": "date",
+          "required": true,
+          "type": "Date"
+        },
+        {
+          "businessType": "Text",
+          "externalReferenceCode": "TITLE",
+          "label": {
+            "en_US": "Title"
+          },
+          "name": "title",
+          "required": true,
+          "type": "String"
+        },
+        {
+          "businessType": "Text",
+          "externalReferenceCode": "DESCRIPTION",
+          "label": {
+            "en_US": "Description"
+          },
+          "name": "description",
+          "required": false,
+          "type": "String"
+        }
+      ],
+      "pluralLabel": {
+        "en_US": "Company Milestones"
+      },
+      "restContextPath": "/o/c/companymilestones",
+      "scope": "company",
+      "status": {
+        "code": 0,
+        "label": "approved"
+      }
+    }
+  ]
+}

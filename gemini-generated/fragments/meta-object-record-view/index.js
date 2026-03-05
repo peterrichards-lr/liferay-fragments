@@ -6,6 +6,53 @@ const loadScript = (url) => new Promise((res, rej) => {
     const s = document.createElement('script'); s.src = url; s.onload = res; s.onerror = rej; document.head.appendChild(s);
 });
 
+const getLocalizedValue = (value) => {
+    if (typeof value === 'object' && value !== null && !Array.isArray(value)) {
+        const languageId = typeof Liferay !== 'undefined' ? Liferay.ThemeDisplay.getLanguageId() : 'en_US';
+        return value[languageId] || value['en_US'] || '';
+    }
+    return value || '';
+};
+
+const formatCellValue = (item, field) => {
+    let value = item[field.name];
+
+    if (value === undefined || value === null) {
+        if (field.name === 'createDate') value = item['dateCreated'];
+        if (field.name === 'modifiedDate') value = item['dateModified'];
+    }
+
+    if (value === null || value === undefined || value === '') return '-';
+
+    if (field.businessType === 'Date' || field.type === 'Date' || field.businessType === 'DateTime') {
+        try {
+            const languageId = typeof Liferay !== 'undefined' ? Liferay.ThemeDisplay.getLanguageId() : 'en_US';
+            const locale = languageId.replace('_', '-');
+            const dateObj = new Date(value);
+            if (isNaN(dateObj.getTime())) return value;
+            return dateObj.toLocaleString(locale, {
+                year: 'numeric', month: 'short', day: 'numeric',
+                hour: '2-digit', minute: '2-digit'
+            });
+        } catch (e) { return value; }
+    }
+
+    if (field.businessType === 'Picklist') return value.name || value.key || String(value);
+
+    if (field.name === 'status' && typeof value === 'object') return value.label_i18n || value.label || String(value.code);
+    
+    if (field.name === 'creator' && typeof value === 'object') return value.name || value.givenName || String(value);
+
+    if (field.localized) return getLocalizedValue(value);
+
+    if (typeof value === 'object') {
+        if (Array.isArray(value)) return value.map(v => v.name || v.title || String(v)).join(', ');
+        return value.name || value.title || JSON.stringify(value);
+    }
+
+    return String(value);
+};
+
 const getRecordId = () => {
     const params = new URLSearchParams(window.location.search);
     return params.get('entryId') || params.get('id') || configuration.recordId;
@@ -56,11 +103,17 @@ const initRecordView = async (isEditMode) => {
         const defRes = await Liferay.Util.fetch(`${ADMIN_API_BASE}/object-definitions/by-external-reference-code/${objectERC}`);
         if (!defRes.ok) throw new Error('Failed to fetch definition.');
         const definition = await defRes.json();
-        titleEl.textContent = `${definition.name} Detail` + (isEditMode ? ' (Preview)' : '');
+        titleEl.textContent = getLocalizedValue(definition.name) + (isEditMode ? ' (Preview)' : '');
+
+        let url = definition.restContextPath;
+        if (definition.scope === 'site') {
+            const siteId = Liferay.ThemeDisplay.getScopeGroupId();
+            url += `/scopes/${siteId}`;
+        }
 
         let record = {};
         if (recordId) {
-            const dataRes = await Liferay.Util.fetch(`${definition.restContextPath}/${recordId}`);
+            const dataRes = await Liferay.Util.fetch(`${url}/${recordId}`);
             if (!dataRes.ok) {
                 if (dataRes.status === 401 || dataRes.status === 403) {
                     throw new Error('You do not have permission to view this record.');
@@ -69,13 +122,18 @@ const initRecordView = async (isEditMode) => {
             }
             record = await dataRes.json();
         } else if (isEditMode) {
-            const listRes = await Liferay.Util.fetch(`${definition.restContextPath}/?pageSize=1`);
+            const listRes = await Liferay.Util.fetch(`${url}/?pageSize=1`);
             const data = await listRes.json();
             record = data.items?.[0] || {};
         }
 
         const displayFields = definition.objectFields.filter(f => !['id', 'externalReferenceCode'].includes(f.name));
-        fieldsWrap.innerHTML = displayFields.map(f => `<div class="record-row"><div class="field-label">${f.label}</div><div class="field-value">${record[f.name] || '-'}</div></div>`).join('');
+        fieldsWrap.innerHTML = displayFields.map(f => `
+            <div class="record-row">
+                <div class="field-label">${getLocalizedValue(f.label)}</div>
+                <div class="field-value">${formatCellValue(record, f)}</div>
+            </div>
+        `).join('');
 
         const pdfBtn = fragmentElement.querySelector(`#pdf-${fragmentEntryLinkNamespace}`);
         if (pdfBtn && !isEditMode && recordId) {
@@ -83,7 +141,7 @@ const initRecordView = async (isEditMode) => {
             pdfBtn.onclick = async () => {
                 const doc = new window.jspdf.jsPDF('p', 'pt', 'a4');
                 await doc.html(fragmentElement.querySelector(`#capture-${fragmentEntryLinkNamespace}`), {
-                    callback: (pdf) => pdf.save(`${definition.restContextPath}_${recordId}.pdf`),
+                    callback: (pdf) => pdf.save(`${definition.restContextPath.replace('/o/c/', '')}_${recordId}.pdf`),
                     x: 40, y: 40, width: 515, windowWidth: 800
                 });
             };

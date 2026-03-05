@@ -1,0 +1,79 @@
+{
+  "configuration": {
+    "className": "com.liferay.object.rest.dto.v1_0.ObjectEntry",
+    "parameters": {
+      "containsHeaders": "true",
+      "createStrategy": "UPSERT",
+      "importStrategy": "ON_ERROR_CONTINUE",
+      "updateStrategy": "UPDATE"
+    },
+    "taskItemDelegateName": "C_ActivityLog"
+  },
+  "items": [
+    {
+      "externalReferenceCode": "AL-01",
+      "logDate": "2026-03-05T10:00:00Z",
+      "type": "Check-in"
+    },
+    {
+      "externalReferenceCode": "AL-02",
+      "logDate": "2026-03-05T11:00:00Z",
+      "type": "Sync"
+    },
+    {
+      "externalReferenceCode": "AL-03",
+      "logDate": "2026-03-04T09:00:00Z",
+      "type": "Check-in"
+    },
+    {
+      "externalReferenceCode": "AL-04",
+      "logDate": "2026-03-04T15:00:00Z",
+      "type": "Upload"
+    },
+    {
+      "externalReferenceCode": "AL-05",
+      "logDate": "2026-03-04T16:00:00Z",
+      "type": "Sync"
+    },
+    {
+      "externalReferenceCode": "AL-06",
+      "logDate": "2026-03-03T08:00:00Z",
+      "type": "Check-in"
+    },
+    {
+      "externalReferenceCode": "AL-07",
+      "logDate": "2026-03-01T12:00:00Z",
+      "type": "Check-in"
+    },
+    {
+      "externalReferenceCode": "AL-08",
+      "logDate": "2026-02-28T14:00:00Z",
+      "type": "Check-in"
+    },
+    {
+      "externalReferenceCode": "AL-09",
+      "logDate": "2026-02-28T15:00:00Z",
+      "type": "Sync"
+    },
+    {
+      "externalReferenceCode": "AL-10",
+      "logDate": "2026-02-28T16:00:00Z",
+      "type": "Upload"
+    },
+    {
+      "externalReferenceCode": "AL-11",
+      "logDate": "2026-02-27T10:00:00Z",
+      "type": "Check-in"
+    },
+    {
+      "externalReferenceCode": "AL-12",
+      "logDate": "2026-02-25T09:00:00Z",
+      "type": "Check-in"
+    },
+    {
+      "externalReferenceCode": "AL-13",
+      "logDate": "2026-02-25T10:00:00Z",
+      "type": "Upload"
+    }
+  ]
+}

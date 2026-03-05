@@ -112,7 +112,13 @@ const loadPage = async (pageNumber, isEditMode = false) => {
     state.page = pageNumber;
 
     try {
-        let dataUrl = `${state.definition.restContextPath}/?pageSize=${pageSize}&page=${state.page}`;
+        let url = state.definition.restContextPath;
+        if (state.definition.scope === 'site') {
+            const siteId = Liferay.ThemeDisplay.getScopeGroupId();
+            url += `/scopes/${siteId}`;
+        }
+
+        let dataUrl = `${url}/?pageSize=${pageSize}&page=${state.page}`;
         if (customizeColumns && columnsToDisplay) {
             dataUrl += `&fields=${columnsToDisplay}`;
         }

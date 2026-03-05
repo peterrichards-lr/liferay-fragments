@@ -10,6 +10,9 @@ fi
 COMPANY_WEB_ID="${COMPANY_WEB_ID:-*}"
 GROUP_KEY="${GROUP_KEY:-}"
 
+# Robust timestamp for both macOS and Linux (numeric)
+TIMESTAMP=$(date +%s)000
+
 COLLECTIONS=$(find . -type d -maxdepth 1 -exec test -e '{}'/collection.json \; -print)
 FRAGMENTS=$(find . -type d -maxdepth 1 -exec test -e '{}'/fragment.json \; -print)
 
@@ -69,13 +72,13 @@ for COLLECTION in $COLLECTIONS; do
          split("\n") | map(select(length > 0)) | map(
            split("=") | {
              key: .[0], 
-             languageId: "en-US", 
+             languageId: "en_US", 
              value: (.[1:] | join("="))
            }
          )
        ')
        
-       echo "{\"configuration\":{\"className\":\"com.liferay.portal.language.rest.dto.v1_0.Message\",\"parameters\":{\"containsHeaders\":\"true\",\"importStrategy\":\"ON_ERROR_CONTINUE\",\"updateStrategy\":\"UPDATE\"},\"taskItemDelegateName\":\"DEFAULT\"},\"items\":$ITEMS_JSON}" | jq -c . > "$CX_ROOT/batch/language.batch-engine-data.json"
+       echo "{\"configuration\":{\"className\":\"com.liferay.portal.language.rest.dto.v1_0.Message\",\"parameters\":{\"containsHeaders\":\"true\",\"importStrategy\":\"ON_ERROR_CONTINUE\",\"updateStrategy\":\"UPDATE\"},\"taskItemDelegateName\":\"DEFAULT\"},\"items\":$ITEMS_JSON}" | jq -c . > "$CX_ROOT/batch/${COLLECTION_NAME}-language.batch-engine-data.json"
 
        # Create Dockerfile
        echo "FROM liferay/batch:latest" > "$CX_ROOT/Dockerfile"
@@ -95,16 +98,15 @@ for COLLECTION in $COLLECTIONS; do
        echo "name=$COLLECTION_NAME Language Overrides" >> "$CX_ROOT/WEB-INF/liferay-plugin-package.properties"
 
        # Create client-extension-config.json
-       TIMESTAMP=$(date +%s%3N)
        CONFIG_KEY="com.liferay.oauth2.provider.configuration.OAuth2ProviderApplicationHeadlessServerConfiguration~$COLLECTION_NAME-language-batch-oauth"
        
-       jq -n \
+       jq -n -c \
          --arg key "$CONFIG_KEY" \
          --arg name "$COLLECTION_NAME Language Batch OAuth" \
          --arg proj "$COLLECTION_NAME-language" \
-         --arg ts "$TIMESTAMP" \
+         --argjson ts "$TIMESTAMP" \
          '{($key): {".serviceAddress": "localhost:8080", ".serviceScheme": "http", ":configurator:policy": "force", baseURL: "${portalURL}/o/language", buildTimestamp: $ts, description: "", "dxp.lxc.liferay.com.virtualInstanceId": "default", homePageURL: "$[conf:.serviceScheme]://$[conf:.serviceAddress]", name: $name, projectId: $proj, projectName: $proj, properties: [], scopes: ["Liferay.Headless.Admin.Workflow.everything", "Liferay.Headless.Batch.Engine.everything", "Liferay.Message.Admin.REST.everything"], sourceCodeURL: "", type: "oAuthApplicationHeadlessServer", typeSettings: [".serviceAddress=localhost:8080", ".serviceScheme=http", "scopes=Liferay.Headless.Admin.Workflow.everything\nLiferay.Headless.Batch.Engine.everything\nLiferay.Message.Admin.REST.everything"], webContextPath: ("/" + $proj)}}' \
-         > "$CX_ROOT/$COLLECTION_NAME-language.client-extension-config.json"
+         > "$CX_ROOT/client-extension-config.json"
 
        # Zip the CX structure
        (cd "$CX_ROOT" && zip -qr ../zips/language/"$COLLECTION_NAME"-language-batch-cx.zip .)
@@ -134,6 +136,65 @@ for COLLECTION in $COLLECTIONS; do
    
    [[ $CREATED -eq 0 ]] && rm "$COLLECTION_NAME/liferay-deploy-fragments.json"
 done
+
+# 3. Showcase Resources (in other-resources/showcase-data/)
+if [ -d "other-resources/showcase-data" ]; then
+    SHOWCASE_RESOURCES=$(find other-resources/showcase-data -type d -maxdepth 1 -mindepth 1)
+
+    for RESOURCE in $SHOWCASE_RESOURCES; do
+        RESOURCE_NAME=$(basename "$RESOURCE")
+        
+        if [ -d "$RESOURCE/batch" ]; then
+            echo "Processing showcase resource: $RESOURCE_NAME"
+            
+            # Clean old zip
+            rm -f "$RESOURCE/dist/$RESOURCE_NAME-batch-cx.zip"
+            mkdir -p "$RESOURCE/dist"
+
+            CX_ROOT="temp_cx_$RESOURCE_NAME"
+            mkdir -p "$CX_ROOT/batch"
+            mkdir -p "$CX_ROOT/WEB-INF"
+            
+            # Copy and MINIFY all batch engine data files with UNIQUE names
+            for f in "$RESOURCE/batch"/*.json; do
+                BASE_F=$(basename "$f")
+                jq -c . "$f" > "$CX_ROOT/batch/${RESOURCE_NAME}-${BASE_F}"
+            done
+            
+            # Create Dockerfile
+            echo "FROM liferay/batch:latest" > "$CX_ROOT/Dockerfile"
+            echo "COPY --chown=liferay:liferay /batch /opt/liferay/batch" >> "$CX_ROOT/Dockerfile"
+
+            # Create LCP.json
+            jq -n \
+              --arg id "$RESOURCE_NAME" \
+              --arg erc "$RESOURCE_NAME-batch-oauth" \
+              '{cpu: 0.2, env: {LIFERAY_BATCH_OAUTH_APP_ERC: $erc, LIFERAY_ROUTES_CLIENT_EXTENSION: "/etc/liferay/lxc/ext-init-metadata", LIFERAY_ROUTES_DXP: "/etc/liferay/lxc/dxp-metadata"}, environments: {infra: {deploy: false}}, id: $id, kind: "Job", memory: 300, scale: 1}' \
+              > "$CX_ROOT/LCP.json"
+
+            # Create liferay-plugin-package.properties
+            echo "Bundle-SymbolicName=$RESOURCE_NAME" > "$CX_ROOT/WEB-INF/liferay-plugin-package.properties"
+            echo "Liferay-Client-Extension-Batch=batch/" >> "$CX_ROOT/WEB-INF/liferay-plugin-package.properties"
+            echo "module-group-id=liferay" >> "$CX_ROOT/WEB-INF/liferay-plugin-package.properties"
+            echo "name=$RESOURCE_NAME Showcase Object" >> "$CX_ROOT/WEB-INF/liferay-plugin-package.properties"
+
+            # Create client-extension-config.json
+            CONFIG_KEY="com.liferay.oauth2.provider.configuration.OAuth2ProviderApplicationHeadlessServerConfiguration~$RESOURCE_NAME-batch-oauth"
+            
+            jq -n -c \
+              --arg key "$CONFIG_KEY" \
+              --arg name "$RESOURCE_NAME Batch OAuth" \
+              --arg proj "$RESOURCE_NAME" \
+              --argjson ts "$TIMESTAMP" \
+              '{($key): {".serviceAddress": "localhost:8080", ".serviceScheme": "http", ":configurator:policy": "force", baseURL: ("${portalURL}/o/" + $proj), buildTimestamp: $ts, description: "", "dxp.lxc.liferay.com.virtualInstanceId": "default", homePageURL: "$[conf:.serviceScheme]://$[conf:.serviceAddress]", name: $name, projectId: $proj, projectName: $proj, properties: [], scopes: ["Liferay.Headless.Batch.Engine.everything", "Liferay.Object.Admin.REST.everything"], sourceCodeURL: "", type: "oAuthApplicationHeadlessServer", typeSettings: [".serviceAddress=localhost:8080", ".serviceScheme=http", "scopes=Liferay.Headless.Admin.Workflow.everything\nLiferay.Headless.Batch.Engine.everything\nLiferay.Message.Admin.REST.everything"], webContextPath: ("/" + $proj)}}' \
+              > "$CX_ROOT/client-extension-config.json"
+
+            # Zip the CX structure into the dist folder
+            (cd "$CX_ROOT" && zip -qr "../$RESOURCE/dist/$RESOURCE_NAME-batch-cx.zip" .)
+            rm -rf "$CX_ROOT"
+        fi
+    done
+fi
 
 echo "Build complete."
 echo "Fragment Zips: ./zips/fragments/"

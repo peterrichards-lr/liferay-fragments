@@ -39,8 +39,14 @@ const initGallery = async (isEditMode) => {
         if (!defRes.ok) throw new Error('Definition fetch failed.');
         const definition = await defRes.json();
 
+        let url = definition.restContextPath;
+        if (definition.scope === 'site') {
+            const siteId = Liferay.ThemeDisplay.getScopeGroupId();
+            url += `/scopes/${siteId}`;
+        }
+
         const pageSize = isEditMode ? 4 : 20;
-        const dataRes = await Liferay.Util.fetch(`${definition.restContextPath}/?pageSize=${pageSize}`);
+        const dataRes = await Liferay.Util.fetch(`${url}/?pageSize=${pageSize}`);
         if (!dataRes.ok) {
             if (dataRes.status === 401 || dataRes.status === 403) {
                 throw new Error('You do not have permission to view data for this object.');

@@ -3,10 +3,10 @@
     {
       "fields": [
         {
-          "defaultValue": "waterreadings",
-          "label": "lfr.gemini-generated.object-rest-context",
-          "description": "lfr.gemini-generated.object-rest-context-description",
-          "name": "objectRESTContext",
+          "defaultValue": "C_WATER_READINGS",
+          "label": "lfr.gemini-generated.object-external-reference-code",
+          "description": "lfr.gemini-generated.object-external-reference-code-description",
+          "name": "objectERC",
           "type": "text"
         },
         {
@@ -18,9 +18,9 @@
         },
         {
           "defaultValue": "reading",
-          "label": "lfr.gemini-generated.value-field",
-          "description": "lfr.gemini-generated.value-field-description",
-          "name": "valueField",
+          "label": "lfr.gemini-generated.value-fields",
+          "description": "lfr.gemini-generated.value-fields-description",
+          "name": "valueFields",
           "type": "text"
         }
       ],
@@ -56,11 +56,11 @@
           }
         },
         {
-          "defaultValue": "var(--primary)",
-          "label": "lfr.gemini-generated.chart-color",
-          "description": "lfr.gemini-generated.chart-color-description",
-          "name": "chartColor",
-          "type": "colorPicker"
+          "defaultValue": "brightness(85%)",
+          "label": "lfr.gemini-generated.border-filter",
+          "description": "lfr.gemini-generated.border-filter-description",
+          "name": "borderFilter",
+          "type": "text"
         }
       ],
       "label": "lfr.gemini-generated.display"

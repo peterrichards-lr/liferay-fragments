@@ -3,14 +3,14 @@
     {
       "fields": [
         {
-          "defaultValue": "waterreadings",
-          "description": "lfr.gemini-generated.object-rest-context-description",
-          "label": "lfr.gemini-generated.object-rest-context",
-          "name": "objectRESTContext",
+          "defaultValue": "C_ACTIVITY_LOGS",
+          "description": "lfr.gemini-generated.object-external-reference-code-description",
+          "label": "lfr.gemini-generated.object-external-reference-code",
+          "name": "objectERC",
           "type": "text"
         },
         {
-          "defaultValue": "readingDate",
+          "defaultValue": "logDate",
           "description": "lfr.gemini-generated.date-field-description",
           "label": "lfr.gemini-generated.date-field",
           "name": "dateField",

@@ -3,10 +3,10 @@
     {
       "fields": [
         {
-          "defaultValue": "milestones",
-          "description": "lfr.gemini-generated.object-rest-context-description",
-          "label": "lfr.gemini-generated.object-rest-context",
-          "name": "objectRESTContext",
+          "defaultValue": "C_COMPANY_MILESTONES",
+          "description": "lfr.gemini-generated.object-external-reference-code-description",
+          "label": "lfr.gemini-generated.object-external-reference-code",
+          "name": "objectERC",
           "type": "text"
         },
         {

@@ -33,11 +33,24 @@ Use the provided `deploy-fragment-zips.sh` script to automate the deployment of 
 ./deploy-fragment-zips.sh /opt/liferay gemini-generated master-page-background-colour
 ```
 
-### Option 2: Manual Deployment
+### Option 3: Showcase Data Deployment
+
+To demonstrate the data-driven capabilities of fragments like `Activity Heatmap` or `Object-Linked Chart`, you can deploy the sample showcase datasets.
+
+**Note: Liferay 2025.Q4.10 or later is required for these datasets to function correctly due to site-scoping requirements.**
+
+```bash
+./deploy-fragment-zips.sh [TARGET_PATH] --showcase
+```
+
+This will deploy all showcase resources found in `other-resources/showcase-data/`.
+
+### Option 4: Manual Deployment
 
 1.  **Build the assets**: Run `./create-fragment-zips.sh` to generate the ZIP files.
 2.  **Deploy Fragments**: Copy the `.zip` files from `./zips/fragments/` to your Liferay instance's `/deploy` folder.
-3.  **Deploy Language Overrides**: Copy the `-language-batch-cx.zip` files from `./zips/language/` to your Liferay instance's `/deploy` folder.
+3.  **Deploy Language Overrides**: Copy the `-language-batch-cx.zip` files from `./zips/language/` to your Liferay instance's `/osgi/client-extensions/` folder.
+4.  **Deploy Special Resources**: Copy any `.zip` files from `/other-resources/*/dist/` to your Liferay instance's `/osgi/client-extensions/` folder.
 
 Liferay will automatically import the fragments and register the language overrides as Client Extensions.
 

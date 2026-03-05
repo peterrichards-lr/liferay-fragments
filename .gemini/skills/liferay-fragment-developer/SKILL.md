@@ -14,7 +14,9 @@ This skill provides comprehensive procedural knowledge and architectural standar
 - Create `configuration.json` using standard field sets and types.
 - Implement the "Edit Mode Previews & Alerts" pattern in `index.html` and `index.js`.
 - Adhere to the Meridian Theme by using CSS tokens.
-- **Dynamic API Paths**: Never hardcode Object API paths (`/o/c/`). Use configuration fields to allow users to specify the REST context.
+- **Dynamic Object Discovery**: Never hardcode Object API paths (e.g., `/o/c/waterreadings`). Always use a configuration field for the **Object External Reference Code (ERC)**.
+  - Since there is no "by-rest-context-path" endpoint in the Object Admin API, fetch the definition via `/o/object-admin/v1.0/object-definitions/by-external-reference-code/{ERC}`.
+  - Use the returned `restContextPath` and `scope` to construct the correct data URL (e.g., append `/scopes/{siteId}` if scope is `site`).
 
 ### 2. Auditing Fragments
 - Check for global variable leakage (use `fragmentElement`).

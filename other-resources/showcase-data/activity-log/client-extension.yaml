@@ -1,0 +1,17 @@
+assemble:
+    - from: batch
+      into: batch
+
+activity-log:
+    name: Activity Log Object
+    oAuthApplicationHeadlessServer: activity-log-oauth
+    type: batch
+
+activity-log-oauth:
+    .serviceAddress: localhost:8080
+    .serviceScheme: http
+    name: Activity Log OAuth
+    scopes:
+        - Liferay.Headless.Batch.Engine.everything
+        - Liferay.Object.Admin.REST.everything
+    type: oAuthApplicationHeadlessServer

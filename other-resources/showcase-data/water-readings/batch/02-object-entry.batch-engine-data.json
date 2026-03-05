@@ -1,0 +1,45 @@
+{
+  "configuration": {
+    "className": "com.liferay.object.rest.dto.v1_0.ObjectEntry",
+    "parameters": {
+      "containsHeaders": "true",
+      "createStrategy": "UPSERT",
+      "siteExternalReferenceCode": "L_GUEST",
+      "importStrategy": "ON_ERROR_CONTINUE",
+      "updateStrategy": "UPDATE"
+    },
+    "taskItemDelegateName": "C_WaterReading"
+  },
+  "items": [
+    {
+      "accountIdentifier": 10001,
+      "externalReferenceCode": "READING-10001-01",
+      "reading": 124.5,
+      "readingDate": "2026-03-01T09:00:00Z"
+    },
+    {
+      "accountIdentifier": 10001,
+      "externalReferenceCode": "READING-10001-02",
+      "reading": 135.2,
+      "readingDate": "2026-03-02T09:00:00Z"
+    },
+    {
+      "accountIdentifier": 10002,
+      "externalReferenceCode": "READING-10002-01",
+      "reading": 89.1,
+      "readingDate": "2026-03-01T10:30:00Z"
+    },
+    {
+      "accountIdentifier": 10003,
+      "externalReferenceCode": "READING-10003-01",
+      "reading": 210.7,
+      "readingDate": "2026-03-01T08:15:00Z"
+    },
+    {
+      "accountIdentifier": 10001,
+      "externalReferenceCode": "READING-10001-03",
+      "reading": 142.8,
+      "readingDate": "2026-03-03T09:00:00Z"
+    }
+  ]
+}

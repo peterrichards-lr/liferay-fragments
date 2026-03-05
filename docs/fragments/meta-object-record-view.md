@@ -9,6 +9,6 @@ A single-entry detail view that dynamically discovers fields and provides a high
 - Clean, label-value pair layout optimized for reports.
 
 ## Configuration
-- **Object ERC**: The source Object definition.
+- **Object ERC**: The source Object definition (e.g., `COMPANY_MILESTONE`). By repository convention for showcase samples, this is the Object name in uppercase with underscores.
 - **Fallback Record ID**: Used if no ID is found in the page URL.
 - **Accent Color**: Custom theme color for labels and headers.

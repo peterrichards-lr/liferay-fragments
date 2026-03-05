@@ -1,0 +1,6244 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "Object",
+    "description": "A Java client JAR is available for use with the group ID 'com.liferay', artifact ID 'com.liferay.object.admin.rest.client', and version '1.0.83'.",
+    "license": {
+      "name": "Apache 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+    },
+    "version": "v1.0"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:8080/o/object-admin/"
+    }
+  ],
+  "paths": {
+    "/v1.0/object-actions/{objectActionId}": {
+      "get": {
+        "tags": [
+          "ObjectAction"
+        ],
+        "operationId": "getObjectAction",
+        "parameters": [
+          {
+            "name": "objectActionId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "default response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ObjectAction"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/ObjectAction"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "ObjectAction"
+        ],
+        "operationId": "putObjectAction",
+        "parameters": [
+          {
+            "name": "objectActionId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ObjectAction"
+              }
+            },
+            "application/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/ObjectAction"
+              }
+            }
+          }
+        },
+        "responses": {
+          "default": {
+            "description": "default response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ObjectAction"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/ObjectAction"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "ObjectAction"
+        ],
+        "operationId": "deleteObjectAction",
+        "parameters": [
+          {
+            "name": "objectActionId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "default response",
+            "content": {
+              "application/json": {},
+              "application/xml": {}
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "ObjectAction"
+        ],
+        "operationId": "patchObjectAction",
+        "parameters": [
+          {
+            "name": "objectActionId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ObjectAction"
+              }
+            },
+            "application/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/ObjectAction"
+              }
+            }
+          }
+        },
+        "responses": {
+          "default": {
+            "description": "default response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ObjectAction"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/ObjectAction"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1.0/object-actions/batch": {
+      "put": {
+        "tags": [
+          "ObjectAction"
+        ],
+        "operationId": "putObjectActionBatch",
+        "parameters": [
+          {
+            "name": "callbackURL",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
+        },
+        "responses": {
+          "default": {
+            "description": "default response",
+            "content": {
+              "application/json": {}
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "ObjectAction"
+        ],
+        "operationId": "deleteObjectActionBatch",
+        "parameters": [
+          {
+            "name": "callbackURL",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
+        },
+        "responses": {
+          "default": {
+            "description": "default response",
+            "content": {
+              "application/json": {}
+            }
+          }
+        }
+      }
+    },
+    "/v1.0/object-definitions/by-external-reference-code/{externalReferenceCode}/object-actions": {
+      "get": {
+        "tags": [
+          "ObjectAction"
+        ],
+        "operationId": "getObjectDefinitionByExternalReferenceCodeObjectActionsPage",
+        "parameters": [
+          {
+            "name": "externalReferenceCode",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "search",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "default response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PageObjectAction"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/PageObjectAction"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "ObjectAction"
+        ],
+        "operationId": "postObjectDefinitionByExternalReferenceCodeObjectAction",
+        "parameters": [
+          {
+            "name": "externalReferenceCode",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ObjectAction"
+              }
+            },
+            "application/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/ObjectAction"
+              }
+            }
+          }
+        },
+        "responses": {
+          "default": {
+            "description": "default response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ObjectAction"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/ObjectAction"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1.0/object-definitions/{objectDefinitionId}/object-actions": {
+      "get": {
+        "tags": [
+          "ObjectAction"
+        ],
+        "operationId": "getObjectDefinitionObjectActionsPage",
+        "parameters": [
+          {
+            "name": "objectDefinitionId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "search",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "default response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PageObjectAction"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/PageObjectAction"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "ObjectAction"
+        ],
+        "operationId": "postObjectDefinitionObjectAction",
+        "parameters": [
+          {
+            "name": "objectDefinitionId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ObjectAction"
+              }
+            },
+            "application/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/ObjectAction"
+              }
+            }
+          }
+        },
+        "responses": {
+          "default": {
+            "description": "default response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ObjectAction"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/ObjectAction"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1.0/object-definitions/{objectDefinitionId}/object-actions/batch": {
+      "post": {
+        "tags": [
+          "ObjectAction"
+        ],
+        "operationId": "postObjectDefinitionObjectActionBatch",
+        "parameters": [
+          {
+            "name": "objectDefinitionId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "callbackURL",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
+        },
+        "responses": {
+          "default": {
+            "description": "default response",
+            "content": {
+              "application/json": {}
+            }
+          }
+        }
+      }
+    },
+    "/v1.0/object-definitions/{objectDefinitionId}/object-actions/export-batch": {
+      "post": {
+        "tags": [
+          "ObjectAction"
+        ],
+        "operationId": "postObjectDefinitionObjectActionsPageExportBatch",
+        "parameters": [
+          {
+            "name": "objectDefinitionId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "search",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "callbackURL",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "contentType",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "fieldNames",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "default response",
+            "content": {
+              "application/json": {}
+            }
+          }
+        }
+      }
+    },
+    "/v1.0/object-definitions/{objectDefinitionId}": {
+      "get": {
+        "tags": [
+          "ObjectDefinition"
+        ],
+        "operationId": "getObjectDefinition",
+        "parameters": [
+          {
+            "name": "objectDefinitionId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "default response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ObjectDefinition"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/ObjectDefinition"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "ObjectDefinition"
+        ],
+        "operationId": "putObjectDefinition",
+        "parameters": [
+          {
+            "name": "objectDefinitionId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ObjectDefinition"
+              }
+            },
+            "application/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/ObjectDefinition"
+              }
+            }
+          }
+        },
+        "responses": {
+          "default": {
+            "description": "default response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ObjectDefinition"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/ObjectDefinition"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "ObjectDefinition"
+        ],
+        "operationId": "deleteObjectDefinition",
+        "parameters": [
+          {
+            "name": "objectDefinitionId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "default response",
+            "content": {
+              "application/json": {},
+              "application/xml": {}
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "ObjectDefinition"
+        ],
+        "operationId": "patchObjectDefinition",
+        "parameters": [
+          {
+            "name": "objectDefinitionId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ObjectDefinition"
+              }
+            },
+            "application/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/ObjectDefinition"
+              }
+            }
+          }
+        },
+        "responses": {
+          "default": {
+            "description": "default response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ObjectDefinition"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/ObjectDefinition"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1.0/object-definitions/batch": {
+      "put": {
+        "tags": [
+          "ObjectDefinition"
+        ],
+        "operationId": "putObjectDefinitionBatch",
+        "parameters": [
+          {
+            "name": "callbackURL",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
+        },
+        "responses": {
+          "default": {
+            "description": "default response",
+            "content": {
+              "application/json": {}
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "ObjectDefinition"
+        ],
+        "operationId": "postObjectDefinitionBatch",
+        "parameters": [
+          {
+            "name": "callbackURL",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
+        },
+        "responses": {
+          "default": {
+            "description": "default response",
+            "content": {
+              "application/json": {}
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "ObjectDefinition"
+        ],
+        "operationId": "deleteObjectDefinitionBatch",
+        "parameters": [
+          {
+            "name": "callbackURL",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
+        },
+        "responses": {
+          "default": {
+            "description": "default response",
+            "content": {
+              "application/json": {}
+            }
+          }
+        }
+      }
+    },
+    "/v1.0/object-definitions/by-external-reference-code/{externalReferenceCode}": {
+      "get": {
+        "tags": [
+          "ObjectDefinition"
+        ],
+        "operationId": "getObjectDefinitionByExternalReferenceCode",
+        "parameters": [
+          {
+            "name": "externalReferenceCode",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "default response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ObjectDefinition"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/ObjectDefinition"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "ObjectDefinition"
+        ],
+        "operationId": "putObjectDefinitionByExternalReferenceCode",
+        "parameters": [
+          {
+            "name": "externalReferenceCode",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "accumulateError",
+            "in": "query",
+            "schema": {
+              "type": "boolean",
+              "default": false
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ObjectDefinition"
+              }
+            },
+            "application/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/ObjectDefinition"
+              }
+            }
+          }
+        },
+        "responses": {
+          "default": {
+            "description": "default response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ObjectDefinition"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/ObjectDefinition"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1.0/object-definitions": {
+      "get": {
+        "tags": [
+          "ObjectDefinition"
+        ],
+        "operationId": "getObjectDefinitionsPage",
+        "parameters": [
+          {
+            "name": "aggregationTerms",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "filter",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "x-filterable": {
+                "dateCreated": {
+                  "type": "date_time"
+                },
+                "dateModified": {
+                  "type": "date_time"
+                },
+                "hidden": {
+                  "type": "boolean"
+                },
+                "label": {
+                  "type": "string"
+                },
+                "name": {
+                  "type": "string"
+                },
+                "objectFolderExternalReferenceCode": {
+                  "type": "string"
+                },
+                "rootObjectDefinitionExternalReferenceCode": {
+                  "type": "string"
+                },
+                "status": {
+                  "type": "array",
+                  "items": "integer"
+                },
+                "userId": {
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "search",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "default response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PageObjectDefinition"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/PageObjectDefinition"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "ObjectDefinition"
+        ],
+        "operationId": "postObjectDefinition",
+        "parameters": [
+          {
+            "name": "accumulateError",
+            "in": "query",
+            "schema": {
+              "type": "boolean",
+              "default": false
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ObjectDefinition"
+              }
+            },
+            "application/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/ObjectDefinition"
+              }
+            }
+          }
+        },
+        "responses": {
+          "default": {
+            "description": "default response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ObjectDefinition"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/ObjectDefinition"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1.0/object-definitions/{objectDefinitionId}/publish": {
+      "post": {
+        "tags": [
+          "ObjectDefinition"
+        ],
+        "operationId": "postObjectDefinitionPublish",
+        "parameters": [
+          {
+            "name": "objectDefinitionId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "default response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ObjectDefinition"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/ObjectDefinition"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1.0/object-definitions/export-batch": {
+      "post": {
+        "tags": [
+          "ObjectDefinition"
+        ],
+        "operationId": "postObjectDefinitionsPageExportBatch",
+        "parameters": [
+          {
+            "name": "filter",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "x-filterable": {
+                "dateCreated": {
+                  "type": "date_time"
+                },
+                "dateModified": {
+                  "type": "date_time"
+                },
+                "hidden": {
+                  "type": "boolean"
+                },
+                "label": {
+                  "type": "string"
+                },
+                "name": {
+                  "type": "string"
+                },
+                "objectFolderExternalReferenceCode": {
+                  "type": "string"
+                },
+                "rootObjectDefinitionExternalReferenceCode": {
+                  "type": "string"
+                },
+                "status": {
+                  "type": "array",
+                  "items": "integer"
+                },
+                "userId": {
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          {
+            "name": "search",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "callbackURL",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "contentType",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "fieldNames",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "default response",
+            "content": {
+              "application/json": {}
+            }
+          }
+        }
+      }
+    },
+    "/v1.0/object-fields/{objectFieldId}": {
+      "get": {
+        "tags": [
+          "ObjectField"
+        ],
+        "operationId": "getObjectField",
+        "parameters": [
+          {
+            "name": "objectFieldId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "default response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ObjectField"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/ObjectField"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "ObjectField"
+        ],
+        "operationId": "putObjectField",
+        "parameters": [
+          {
+            "name": "objectFieldId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ObjectField"
+              }
+            },
+            "application/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/ObjectField"
+              }
+            }
+          }
+        },
+        "responses": {
+          "default": {
+            "description": "default response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ObjectField"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/ObjectField"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "ObjectField"
+        ],
+        "operationId": "deleteObjectField",
+        "parameters": [
+          {
+            "name": "objectFieldId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "default response",
+            "content": {
+              "application/json": {},
+              "application/xml": {}
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "ObjectField"
+        ],
+        "operationId": "patchObjectField",
+        "parameters": [
+          {
+            "name": "objectFieldId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ObjectField"
+              }
+            },
+            "application/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/ObjectField"
+              }
+            }
+          }
+        },
+        "responses": {
+          "default": {
+            "description": "default response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ObjectField"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/ObjectField"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1.0/object-fields/batch": {
+      "put": {
+        "tags": [
+          "ObjectField"
+        ],
+        "operationId": "putObjectFieldBatch",
+        "parameters": [
+          {
+            "name": "callbackURL",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
+        },
+        "responses": {
+          "default": {
+            "description": "default response",
+            "content": {
+              "application/json": {}
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "ObjectField"
+        ],
+        "operationId": "deleteObjectFieldBatch",
+        "parameters": [
+          {
+            "name": "callbackURL",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
+        },
+        "responses": {
+          "default": {
+            "description": "default response",
+            "content": {
+              "application/json": {}
+            }
+          }
+        }
+      }
+    },
+    "/v1.0/object-definitions/by-external-reference-code/{externalReferenceCode}/object-fields": {
+      "get": {
+        "tags": [
+          "ObjectField"
+        ],
+        "operationId": "getObjectDefinitionByExternalReferenceCodeObjectFieldsPage",
+        "parameters": [
+          {
+            "name": "externalReferenceCode",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "filter",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "x-filterable": {
+                "label": {
+                  "type": "string"
+                },
+                "state": {
+                  "type": "boolean"
+                },
+                "unique": {
+                  "type": "boolean"
+                }
+              }
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "search",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "default response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PageObjectField"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/PageObjectField"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "ObjectField"
+        ],
+        "operationId": "postObjectDefinitionByExternalReferenceCodeObjectField",
+        "parameters": [
+          {
+            "name": "externalReferenceCode",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ObjectField"
+              }
+            },
+            "application/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/ObjectField"
+              }
+            }
+          }
+        },
+        "responses": {
+          "default": {
+            "description": "default response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ObjectField"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/ObjectField"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1.0/object-definitions/{objectDefinitionId}/object-fields": {
+      "get": {
+        "tags": [
+          "ObjectField"
+        ],
+        "operationId": "getObjectDefinitionObjectFieldsPage",
+        "parameters": [
+          {
+            "name": "objectDefinitionId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "filter",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "x-filterable": {
+                "label": {
+                  "type": "string"
+                },
+                "state": {
+                  "type": "boolean"
+                },
+                "unique": {
+                  "type": "boolean"
+                }
+              }
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "search",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "default response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PageObjectField"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/PageObjectField"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "ObjectField"
+        ],
+        "operationId": "postObjectDefinitionObjectField",
+        "parameters": [
+          {
+            "name": "objectDefinitionId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ObjectField"
+              }
+            },
+            "application/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/ObjectField"
+              }
+            }
+          }
+        },
+        "responses": {
+          "default": {
+            "description": "default response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ObjectField"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/ObjectField"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1.0/object-definitions/{objectDefinitionId}/object-fields/batch": {
+      "post": {
+        "tags": [
+          "ObjectField"
+        ],
+        "operationId": "postObjectDefinitionObjectFieldBatch",
+        "parameters": [
+          {
+            "name": "objectDefinitionId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "callbackURL",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
+        },
+        "responses": {
+          "default": {
+            "description": "default response",
+            "content": {
+              "application/json": {}
+            }
+          }
+        }
+      }
+    },
+    "/v1.0/object-definitions/{objectDefinitionId}/object-fields/export-batch": {
+      "post": {
+        "tags": [
+          "ObjectField"
+        ],
+        "operationId": "postObjectDefinitionObjectFieldsPageExportBatch",
+        "parameters": [
+          {
+            "name": "objectDefinitionId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "filter",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "x-filterable": {
+                "label": {
+                  "type": "string"
+                },
+                "state": {
+                  "type": "boolean"
+                },
+                "unique": {
+                  "type": "boolean"
+                }
+              }
+            }
+          },
+          {
+            "name": "search",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "callbackURL",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "contentType",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "fieldNames",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "default response",
+            "content": {
+              "application/json": {}
+            }
+          }
+        }
+      }
+    },
+    "/v1.0/object-folders/{objectFolderId}": {
+      "get": {
+        "tags": [
+          "ObjectFolder"
+        ],
+        "operationId": "getObjectFolder",
+        "parameters": [
+          {
+            "name": "objectFolderId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "default response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ObjectFolder"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/ObjectFolder"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "ObjectFolder"
+        ],
+        "operationId": "putObjectFolder",
+        "parameters": [
+          {
+            "name": "objectFolderId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ObjectFolder"
+              }
+            },
+            "application/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/ObjectFolder"
+              }
+            }
+          }
+        },
+        "responses": {
+          "default": {
+            "description": "default response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ObjectFolder"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/ObjectFolder"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "ObjectFolder"
+        ],
+        "operationId": "deleteObjectFolder",
+        "parameters": [
+          {
+            "name": "objectFolderId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "default response",
+            "content": {
+              "application/json": {},
+              "application/xml": {}
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "ObjectFolder"
+        ],
+        "operationId": "patchObjectFolder",
+        "parameters": [
+          {
+            "name": "objectFolderId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ObjectFolder"
+              }
+            },
+            "application/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/ObjectFolder"
+              }
+            }
+          }
+        },
+        "responses": {
+          "default": {
+            "description": "default response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ObjectFolder"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/ObjectFolder"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1.0/object-folders/batch": {
+      "put": {
+        "tags": [
+          "ObjectFolder"
+        ],
+        "operationId": "putObjectFolderBatch",
+        "parameters": [
+          {
+            "name": "callbackURL",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
+        },
+        "responses": {
+          "default": {
+            "description": "default response",
+            "content": {
+              "application/json": {}
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "ObjectFolder"
+        ],
+        "operationId": "postObjectFolderBatch",
+        "parameters": [
+          {
+            "name": "callbackURL",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
+        },
+        "responses": {
+          "default": {
+            "description": "default response",
+            "content": {
+              "application/json": {}
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "ObjectFolder"
+        ],
+        "operationId": "deleteObjectFolderBatch",
+        "parameters": [
+          {
+            "name": "callbackURL",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
+        },
+        "responses": {
+          "default": {
+            "description": "default response",
+            "content": {
+              "application/json": {}
+            }
+          }
+        }
+      }
+    },
+    "/v1.0/object-folders/by-external-reference-code/{externalReferenceCode}": {
+      "get": {
+        "tags": [
+          "ObjectFolder"
+        ],
+        "operationId": "getObjectFolderByExternalReferenceCode",
+        "parameters": [
+          {
+            "name": "externalReferenceCode",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "default response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ObjectFolder"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/ObjectFolder"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "ObjectFolder"
+        ],
+        "operationId": "putObjectFolderByExternalReferenceCode",
+        "parameters": [
+          {
+            "name": "externalReferenceCode",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ObjectFolder"
+              }
+            },
+            "application/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/ObjectFolder"
+              }
+            }
+          }
+        },
+        "responses": {
+          "default": {
+            "description": "default response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ObjectFolder"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/ObjectFolder"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1.0/object-folders": {
+      "get": {
+        "tags": [
+          "ObjectFolder"
+        ],
+        "operationId": "getObjectFoldersPage",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "search",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "default response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PageObjectFolder"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/PageObjectFolder"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "ObjectFolder"
+        ],
+        "operationId": "postObjectFolder",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ObjectFolder"
+              }
+            },
+            "application/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/ObjectFolder"
+              }
+            }
+          }
+        },
+        "responses": {
+          "default": {
+            "description": "default response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ObjectFolder"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/ObjectFolder"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1.0/object-folders/export-batch": {
+      "post": {
+        "tags": [
+          "ObjectFolder"
+        ],
+        "operationId": "postObjectFoldersPageExportBatch",
+        "parameters": [
+          {
+            "name": "search",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "callbackURL",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "contentType",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "fieldNames",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "default response",
+            "content": {
+              "application/json": {}
+            }
+          }
+        }
+      }
+    },
+    "/v1.0/object-layouts/{objectLayoutId}": {
+      "get": {
+        "tags": [
+          "ObjectLayout"
+        ],
+        "operationId": "getObjectLayout",
+        "parameters": [
+          {
+            "name": "objectLayoutId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "default response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ObjectLayout"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/ObjectLayout"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "ObjectLayout"
+        ],
+        "operationId": "putObjectLayout",
+        "parameters": [
+          {
+            "name": "objectLayoutId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ObjectLayout"
+              }
+            },
+            "application/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/ObjectLayout"
+              }
+            }
+          }
+        },
+        "responses": {
+          "default": {
+            "description": "default response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ObjectLayout"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/ObjectLayout"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "ObjectLayout"
+        ],
+        "operationId": "deleteObjectLayout",
+        "parameters": [
+          {
+            "name": "objectLayoutId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "default response",
+            "content": {
+              "application/json": {},
+              "application/xml": {}
+            }
+          }
+        }
+      }
+    },
+    "/v1.0/object-layouts/batch": {
+      "put": {
+        "tags": [
+          "ObjectLayout"
+        ],
+        "operationId": "putObjectLayoutBatch",
+        "parameters": [
+          {
+            "name": "callbackURL",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
+        },
+        "responses": {
+          "default": {
+            "description": "default response",
+            "content": {
+              "application/json": {}
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "ObjectLayout"
+        ],
+        "operationId": "deleteObjectLayoutBatch",
+        "parameters": [
+          {
+            "name": "callbackURL",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
+        },
+        "responses": {
+          "default": {
+            "description": "default response",
+            "content": {
+              "application/json": {}
+            }
+          }
+        }
+      }
+    },
+    "/v1.0/object-definitions/by-external-reference-code/{externalReferenceCode}/object-layouts": {
+      "get": {
+        "tags": [
+          "ObjectLayout"
+        ],
+        "operationId": "getObjectDefinitionByExternalReferenceCodeObjectLayoutsPage",
+        "parameters": [
+          {
+            "name": "externalReferenceCode",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "search",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "default response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PageObjectLayout"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/PageObjectLayout"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "ObjectLayout"
+        ],
+        "operationId": "postObjectDefinitionByExternalReferenceCodeObjectLayout",
+        "parameters": [
+          {
+            "name": "externalReferenceCode",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ObjectLayout"
+              }
+            },
+            "application/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/ObjectLayout"
+              }
+            }
+          }
+        },
+        "responses": {
+          "default": {
+            "description": "default response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ObjectLayout"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/ObjectLayout"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1.0/object-definitions/{objectDefinitionId}/object-layouts": {
+      "get": {
+        "tags": [
+          "ObjectLayout"
+        ],
+        "operationId": "getObjectDefinitionObjectLayoutsPage",
+        "parameters": [
+          {
+            "name": "objectDefinitionId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "search",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "default response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PageObjectLayout"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/PageObjectLayout"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "ObjectLayout"
+        ],
+        "operationId": "postObjectDefinitionObjectLayout",
+        "parameters": [
+          {
+            "name": "objectDefinitionId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ObjectLayout"
+              }
+            },
+            "application/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/ObjectLayout"
+              }
+            }
+          }
+        },
+        "responses": {
+          "default": {
+            "description": "default response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ObjectLayout"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/ObjectLayout"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1.0/object-definitions/{objectDefinitionId}/object-layouts/batch": {
+      "post": {
+        "tags": [
+          "ObjectLayout"
+        ],
+        "operationId": "postObjectDefinitionObjectLayoutBatch",
+        "parameters": [
+          {
+            "name": "objectDefinitionId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "callbackURL",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
+        },
+        "responses": {
+          "default": {
+            "description": "default response",
+            "content": {
+              "application/json": {}
+            }
+          }
+        }
+      }
+    },
+    "/v1.0/object-definitions/{objectDefinitionId}/object-layouts/export-batch": {
+      "post": {
+        "tags": [
+          "ObjectLayout"
+        ],
+        "operationId": "postObjectDefinitionObjectLayoutsPageExportBatch",
+        "parameters": [
+          {
+            "name": "objectDefinitionId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "search",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "callbackURL",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "contentType",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "fieldNames",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "default response",
+            "content": {
+              "application/json": {}
+            }
+          }
+        }
+      }
+    },
+    "/v1.0/object-relationships/{objectRelationshipId}": {
+      "get": {
+        "tags": [
+          "ObjectRelationship"
+        ],
+        "operationId": "getObjectRelationship",
+        "parameters": [
+          {
+            "name": "objectRelationshipId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "default response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ObjectRelationship"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/ObjectRelationship"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "ObjectRelationship"
+        ],
+        "operationId": "putObjectRelationship",
+        "parameters": [
+          {
+            "name": "objectRelationshipId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ObjectRelationship"
+              }
+            },
+            "application/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/ObjectRelationship"
+              }
+            }
+          }
+        },
+        "responses": {
+          "default": {
+            "description": "default response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ObjectRelationship"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/ObjectRelationship"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "ObjectRelationship"
+        ],
+        "operationId": "deleteObjectRelationship",
+        "parameters": [
+          {
+            "name": "objectRelationshipId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "default response",
+            "content": {
+              "application/json": {},
+              "application/xml": {}
+            }
+          }
+        }
+      }
+    },
+    "/v1.0/object-relationships/batch": {
+      "put": {
+        "tags": [
+          "ObjectRelationship"
+        ],
+        "operationId": "putObjectRelationshipBatch",
+        "parameters": [
+          {
+            "name": "callbackURL",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
+        },
+        "responses": {
+          "default": {
+            "description": "default response",
+            "content": {
+              "application/json": {}
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "ObjectRelationship"
+        ],
+        "operationId": "deleteObjectRelationshipBatch",
+        "parameters": [
+          {
+            "name": "callbackURL",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
+        },
+        "responses": {
+          "default": {
+            "description": "default response",
+            "content": {
+              "application/json": {}
+            }
+          }
+        }
+      }
+    },
+    "/v1.0/object-definitions/by-external-reference-code/{externalReferenceCode}/object-relationships": {
+      "get": {
+        "tags": [
+          "ObjectRelationship"
+        ],
+        "operationId": "getObjectDefinitionByExternalReferenceCodeObjectRelationshipsPage",
+        "parameters": [
+          {
+            "name": "externalReferenceCode",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "filter",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "x-filterable": {
+                "dateCreated": {
+                  "type": "date_time"
+                },
+                "dateModified": {
+                  "type": "date_time"
+                },
+                "edge": {
+                  "type": "boolean"
+                },
+                "label": {
+                  "type": "string"
+                },
+                "name": {
+                  "type": "string"
+                },
+                "system": {
+                  "type": "boolean"
+                },
+                "userId": {
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "search",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "default response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PageObjectRelationship"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/PageObjectRelationship"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "ObjectRelationship"
+        ],
+        "operationId": "postObjectDefinitionByExternalReferenceCodeObjectRelationship",
+        "parameters": [
+          {
+            "name": "externalReferenceCode",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ObjectRelationship"
+              }
+            },
+            "application/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/ObjectRelationship"
+              }
+            }
+          }
+        },
+        "responses": {
+          "default": {
+            "description": "default response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ObjectRelationship"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/ObjectRelationship"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1.0/object-definitions/{objectDefinitionId}/object-relationships": {
+      "get": {
+        "tags": [
+          "ObjectRelationship"
+        ],
+        "operationId": "getObjectDefinitionObjectRelationshipsPage",
+        "parameters": [
+          {
+            "name": "objectDefinitionId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "filter",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "x-filterable": {
+                "dateCreated": {
+                  "type": "date_time"
+                },
+                "dateModified": {
+                  "type": "date_time"
+                },
+                "edge": {
+                  "type": "boolean"
+                },
+                "label": {
+                  "type": "string"
+                },
+                "name": {
+                  "type": "string"
+                },
+                "system": {
+                  "type": "boolean"
+                },
+                "userId": {
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "search",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "default response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PageObjectRelationship"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/PageObjectRelationship"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "ObjectRelationship"
+        ],
+        "operationId": "postObjectDefinitionObjectRelationship",
+        "parameters": [
+          {
+            "name": "objectDefinitionId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ObjectRelationship"
+              }
+            },
+            "application/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/ObjectRelationship"
+              }
+            }
+          }
+        },
+        "responses": {
+          "default": {
+            "description": "default response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ObjectRelationship"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/ObjectRelationship"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1.0/object-definitions/{objectDefinitionId}/object-relationships/batch": {
+      "post": {
+        "tags": [
+          "ObjectRelationship"
+        ],
+        "operationId": "postObjectDefinitionObjectRelationshipBatch",
+        "parameters": [
+          {
+            "name": "objectDefinitionId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "callbackURL",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
+        },
+        "responses": {
+          "default": {
+            "description": "default response",
+            "content": {
+              "application/json": {}
+            }
+          }
+        }
+      }
+    },
+    "/v1.0/object-definitions/{objectDefinitionId}/object-relationships/export-batch": {
+      "post": {
+        "tags": [
+          "ObjectRelationship"
+        ],
+        "operationId": "postObjectDefinitionObjectRelationshipsPageExportBatch",
+        "parameters": [
+          {
+            "name": "objectDefinitionId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "filter",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "x-filterable": {
+                "dateCreated": {
+                  "type": "date_time"
+                },
+                "dateModified": {
+                  "type": "date_time"
+                },
+                "edge": {
+                  "type": "boolean"
+                },
+                "label": {
+                  "type": "string"
+                },
+                "name": {
+                  "type": "string"
+                },
+                "system": {
+                  "type": "boolean"
+                },
+                "userId": {
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          {
+            "name": "search",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "callbackURL",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "contentType",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "fieldNames",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "default response",
+            "content": {
+              "application/json": {}
+            }
+          }
+        }
+      }
+    },
+    "/v1.0/object-relationships/by-external-reference-code/{externalReferenceCode}": {
+      "put": {
+        "tags": [
+          "ObjectRelationship"
+        ],
+        "operationId": "putObjectRelationshipByExternalReferenceCode",
+        "parameters": [
+          {
+            "name": "externalReferenceCode",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ObjectRelationship"
+              }
+            },
+            "application/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/ObjectRelationship"
+              }
+            }
+          }
+        },
+        "responses": {
+          "default": {
+            "description": "default response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ObjectRelationship"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/ObjectRelationship"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1.0/object-validation-rules/{objectValidationRuleId}": {
+      "get": {
+        "tags": [
+          "ObjectValidationRule"
+        ],
+        "operationId": "getObjectValidationRule",
+        "parameters": [
+          {
+            "name": "objectValidationRuleId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "default response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ObjectValidationRule"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/ObjectValidationRule"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "ObjectValidationRule"
+        ],
+        "operationId": "putObjectValidationRule",
+        "parameters": [
+          {
+            "name": "objectValidationRuleId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ObjectValidationRule"
+              }
+            },
+            "application/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/ObjectValidationRule"
+              }
+            }
+          }
+        },
+        "responses": {
+          "default": {
+            "description": "default response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ObjectValidationRule"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/ObjectValidationRule"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "ObjectValidationRule"
+        ],
+        "operationId": "deleteObjectValidationRule",
+        "parameters": [
+          {
+            "name": "objectValidationRuleId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "default response",
+            "content": {
+              "application/json": {},
+              "application/xml": {}
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "ObjectValidationRule"
+        ],
+        "operationId": "patchObjectValidationRule",
+        "parameters": [
+          {
+            "name": "objectValidationRuleId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ObjectValidationRule"
+              }
+            },
+            "application/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/ObjectValidationRule"
+              }
+            }
+          }
+        },
+        "responses": {
+          "default": {
+            "description": "default response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ObjectValidationRule"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/ObjectValidationRule"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1.0/object-validation-rules/batch": {
+      "put": {
+        "tags": [
+          "ObjectValidationRule"
+        ],
+        "operationId": "putObjectValidationRuleBatch",
+        "parameters": [
+          {
+            "name": "callbackURL",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
+        },
+        "responses": {
+          "default": {
+            "description": "default response",
+            "content": {
+              "application/json": {}
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "ObjectValidationRule"
+        ],
+        "operationId": "deleteObjectValidationRuleBatch",
+        "parameters": [
+          {
+            "name": "callbackURL",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
+        },
+        "responses": {
+          "default": {
+            "description": "default response",
+            "content": {
+              "application/json": {}
+            }
+          }
+        }
+      }
+    },
+    "/v1.0/object-definitions/by-external-reference-code/{externalReferenceCode}/object-validation-rules": {
+      "get": {
+        "tags": [
+          "ObjectValidationRule"
+        ],
+        "operationId": "getObjectDefinitionByExternalReferenceCodeObjectValidationRulesPage",
+        "parameters": [
+          {
+            "name": "externalReferenceCode",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "search",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "default response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PageObjectValidationRule"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/PageObjectValidationRule"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "ObjectValidationRule"
+        ],
+        "operationId": "postObjectDefinitionByExternalReferenceCodeObjectValidationRule",
+        "parameters": [
+          {
+            "name": "externalReferenceCode",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ObjectValidationRule"
+              }
+            },
+            "application/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/ObjectValidationRule"
+              }
+            }
+          }
+        },
+        "responses": {
+          "default": {
+            "description": "default response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ObjectValidationRule"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/ObjectValidationRule"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1.0/object-definitions/{objectDefinitionId}/object-validation-rules": {
+      "get": {
+        "tags": [
+          "ObjectValidationRule"
+        ],
+        "operationId": "getObjectDefinitionObjectValidationRulesPage",
+        "parameters": [
+          {
+            "name": "objectDefinitionId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "search",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "default response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PageObjectValidationRule"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/PageObjectValidationRule"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "ObjectValidationRule"
+        ],
+        "operationId": "postObjectDefinitionObjectValidationRule",
+        "parameters": [
+          {
+            "name": "objectDefinitionId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ObjectValidationRule"
+              }
+            },
+            "application/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/ObjectValidationRule"
+              }
+            }
+          }
+        },
+        "responses": {
+          "default": {
+            "description": "default response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ObjectValidationRule"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/ObjectValidationRule"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1.0/object-definitions/{objectDefinitionId}/object-validation-rules/batch": {
+      "post": {
+        "tags": [
+          "ObjectValidationRule"
+        ],
+        "operationId": "postObjectDefinitionObjectValidationRuleBatch",
+        "parameters": [
+          {
+            "name": "objectDefinitionId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "callbackURL",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
+        },
+        "responses": {
+          "default": {
+            "description": "default response",
+            "content": {
+              "application/json": {}
+            }
+          }
+        }
+      }
+    },
+    "/v1.0/object-definitions/{objectDefinitionId}/object-validation-rules/export-batch": {
+      "post": {
+        "tags": [
+          "ObjectValidationRule"
+        ],
+        "operationId": "postObjectDefinitionObjectValidationRulesPageExportBatch",
+        "parameters": [
+          {
+            "name": "objectDefinitionId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "search",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "callbackURL",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "contentType",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "fieldNames",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "default response",
+            "content": {
+              "application/json": {}
+            }
+          }
+        }
+      }
+    },
+    "/v1.0/object-views/{objectViewId}": {
+      "get": {
+        "tags": [
+          "ObjectView"
+        ],
+        "operationId": "getObjectView",
+        "parameters": [
+          {
+            "name": "objectViewId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "default response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ObjectView"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/ObjectView"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "ObjectView"
+        ],
+        "operationId": "putObjectView",
+        "parameters": [
+          {
+            "name": "objectViewId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ObjectView"
+              }
+            },
+            "application/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/ObjectView"
+              }
+            }
+          }
+        },
+        "responses": {
+          "default": {
+            "description": "default response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ObjectView"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/ObjectView"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "ObjectView"
+        ],
+        "operationId": "deleteObjectView",
+        "parameters": [
+          {
+            "name": "objectViewId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "default response",
+            "content": {
+              "application/json": {},
+              "application/xml": {}
+            }
+          }
+        }
+      }
+    },
+    "/v1.0/object-views/batch": {
+      "put": {
+        "tags": [
+          "ObjectView"
+        ],
+        "operationId": "putObjectViewBatch",
+        "parameters": [
+          {
+            "name": "callbackURL",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
+        },
+        "responses": {
+          "default": {
+            "description": "default response",
+            "content": {
+              "application/json": {}
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "ObjectView"
+        ],
+        "operationId": "deleteObjectViewBatch",
+        "parameters": [
+          {
+            "name": "callbackURL",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
+        },
+        "responses": {
+          "default": {
+            "description": "default response",
+            "content": {
+              "application/json": {}
+            }
+          }
+        }
+      }
+    },
+    "/v1.0/object-definitions/by-external-reference-code/{externalReferenceCode}/object-views": {
+      "get": {
+        "tags": [
+          "ObjectView"
+        ],
+        "operationId": "getObjectDefinitionByExternalReferenceCodeObjectViewsPage",
+        "parameters": [
+          {
+            "name": "externalReferenceCode",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "search",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "default response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PageObjectView"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/PageObjectView"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "ObjectView"
+        ],
+        "operationId": "postObjectDefinitionByExternalReferenceCodeObjectView",
+        "parameters": [
+          {
+            "name": "externalReferenceCode",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ObjectView"
+              }
+            },
+            "application/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/ObjectView"
+              }
+            }
+          }
+        },
+        "responses": {
+          "default": {
+            "description": "default response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ObjectView"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/ObjectView"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1.0/object-definitions/{objectDefinitionId}/object-views": {
+      "get": {
+        "tags": [
+          "ObjectView"
+        ],
+        "operationId": "getObjectDefinitionObjectViewsPage",
+        "parameters": [
+          {
+            "name": "objectDefinitionId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "search",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "default response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PageObjectView"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/PageObjectView"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "ObjectView"
+        ],
+        "operationId": "postObjectDefinitionObjectView",
+        "parameters": [
+          {
+            "name": "objectDefinitionId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ObjectView"
+              }
+            },
+            "application/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/ObjectView"
+              }
+            }
+          }
+        },
+        "responses": {
+          "default": {
+            "description": "default response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ObjectView"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/ObjectView"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1.0/object-definitions/{objectDefinitionId}/object-views/batch": {
+      "post": {
+        "tags": [
+          "ObjectView"
+        ],
+        "operationId": "postObjectDefinitionObjectViewBatch",
+        "parameters": [
+          {
+            "name": "objectDefinitionId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "callbackURL",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
+        },
+        "responses": {
+          "default": {
+            "description": "default response",
+            "content": {
+              "application/json": {}
+            }
+          }
+        }
+      }
+    },
+    "/v1.0/object-definitions/{objectDefinitionId}/object-views/export-batch": {
+      "post": {
+        "tags": [
+          "ObjectView"
+        ],
+        "operationId": "postObjectDefinitionObjectViewsPageExportBatch",
+        "parameters": [
+          {
+            "name": "objectDefinitionId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "search",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "callbackURL",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "contentType",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "fieldNames",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "default response",
+            "content": {
+              "application/json": {}
+            }
+          }
+        }
+      }
+    },
+    "/v1.0/object-views/{objectViewId}/copy": {
+      "post": {
+        "tags": [
+          "ObjectView"
+        ],
+        "operationId": "postObjectViewCopy",
+        "parameters": [
+          {
+            "name": "objectViewId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "default response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ObjectView"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/ObjectView"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1.0/openapi.{type}": {
+      "get": {
+        "operationId": "getOpenAPI",
+        "parameters": [
+          {
+            "name": "type",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "pattern": "json|yaml",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "default response",
+            "content": {
+              "application/json": {},
+              "application/yaml": {}
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "ObjectAction": {
+        "type": "object",
+        "properties": {
+          "actions": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "object",
+              "additionalProperties": {
+                "type": "string"
+              }
+            },
+            "readOnly": true
+          },
+          "active": {
+            "type": "boolean"
+          },
+          "conditionExpression": {
+            "type": "string"
+          },
+          "dateCreated": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "dateModified": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "description": {
+            "type": "string"
+          },
+          "errorMessage": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            }
+          },
+          "externalReferenceCode": {
+            "type": "string"
+          },
+          "id": {
+            "type": "integer",
+            "format": "int64",
+            "readOnly": true
+          },
+          "label": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            }
+          },
+          "name": {
+            "type": "string"
+          },
+          "objectActionExecutorKey": {
+            "type": "string"
+          },
+          "objectActionTriggerKey": {
+            "type": "string"
+          },
+          "parameters": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "object"
+            }
+          },
+          "status": {
+            "$ref": "#/components/schemas/Status"
+          },
+          "system": {
+            "type": "boolean"
+          },
+          "x-class-name": {
+            "type": "string",
+            "readOnly": true,
+            "default": "com.liferay.object.admin.rest.dto.v1_0.ObjectAction"
+          }
+        },
+        "xml": {
+          "name": "ObjectAction"
+        },
+        "x-filterable": {
+          "label": {
+            "type": "string"
+          }
+        }
+      },
+      "Status": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "label": {
+            "type": "string"
+          },
+          "label_i18n": {
+            "type": "string"
+          },
+          "x-class-name": {
+            "type": "string",
+            "readOnly": true,
+            "default": "com.liferay.object.admin.rest.dto.v1_0.Status"
+          }
+        },
+        "xml": {
+          "name": "Status"
+        },
+        "x-filterable": {}
+      },
+      "Facet": {
+        "type": "object",
+        "properties": {
+          "facetCriteria": {
+            "type": "string"
+          },
+          "facetValues": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/FacetValue"
+            }
+          }
+        },
+        "x-filterable": {}
+      },
+      "FacetValue": {
+        "type": "object",
+        "properties": {
+          "numberOfOccurrences": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "term": {
+            "type": "string"
+          }
+        },
+        "x-filterable": {}
+      },
+      "PageObjectAction": {
+        "type": "object",
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ObjectAction"
+            }
+          },
+          "lastPage": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "totalCount": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "actions": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "object",
+              "additionalProperties": {
+                "type": "string"
+              }
+            }
+          },
+          "pageSize": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "facets": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Facet"
+            }
+          },
+          "page": {
+            "type": "integer",
+            "format": "int64"
+          }
+        },
+        "x-filterable": {}
+      },
+      "Creator": {
+        "type": "object",
+        "properties": {
+          "additionalName": {
+            "type": "string",
+            "description": "The author's additional name (e.g., middle name).",
+            "readOnly": true
+          },
+          "contentType": {
+            "type": "string",
+            "description": "The type of the content.",
+            "readOnly": true
+          },
+          "externalReferenceCode": {
+            "type": "string",
+            "description": "The external reference code of the author.",
+            "readOnly": true
+          },
+          "familyName": {
+            "type": "string",
+            "description": "The author's surname.",
+            "readOnly": true
+          },
+          "givenName": {
+            "type": "string",
+            "description": "The author's first name.",
+            "readOnly": true
+          },
+          "id": {
+            "type": "integer",
+            "description": "The author's ID.",
+            "format": "int64",
+            "readOnly": true
+          },
+          "image": {
+            "type": "string",
+            "description": "A relative URL to the author's profile image.",
+            "readOnly": true
+          },
+          "name": {
+            "type": "string",
+            "description": "The author's full name.",
+            "readOnly": true
+          },
+          "profileURL": {
+            "type": "string",
+            "description": "A relative URL to the author's user profile. Optional field, can be embedded with nestedFields.",
+            "readOnly": true
+          },
+          "userGroupBriefs": {
+            "type": "array",
+            "description": "A list of userGroups information.",
+            "items": {
+              "$ref": "#/components/schemas/UserGroupBrief"
+            }
+          },
+          "x-class-name": {
+            "type": "string",
+            "readOnly": true,
+            "default": "com.liferay.headless.delivery.dto.v1_0.Creator"
+          }
+        },
+        "xml": {
+          "name": "Creator"
+        },
+        "x-filterable": {}
+      },
+      "ObjectDefinition": {
+        "type": "object",
+        "properties": {
+          "accountEntryRestricted": {
+            "type": "boolean"
+          },
+          "accountEntryRestrictedObjectFieldName": {
+            "type": "string"
+          },
+          "actions": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "object",
+              "additionalProperties": {
+                "type": "string"
+              }
+            },
+            "readOnly": true
+          },
+          "active": {
+            "type": "boolean"
+          },
+          "className": {
+            "type": "string"
+          },
+          "creator": {
+            "$ref": "#/components/schemas/Creator"
+          },
+          "dateCreated": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "dateModified": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "defaultLanguageId": {
+            "type": "string"
+          },
+          "enableCategorization": {
+            "type": "boolean"
+          },
+          "enableComments": {
+            "type": "boolean"
+          },
+          "enableFormContainer": {
+            "type": "boolean"
+          },
+          "enableFriendlyURLCustomization": {
+            "type": "boolean"
+          },
+          "enableIndexSearch": {
+            "type": "boolean"
+          },
+          "enableLocalization": {
+            "type": "boolean"
+          },
+          "enableObjectEntryDraft": {
+            "type": "boolean"
+          },
+          "enableObjectEntryHistory": {
+            "type": "boolean"
+          },
+          "enableObjectEntrySchedule": {
+            "type": "boolean"
+          },
+          "enableObjectEntrySubscription": {
+            "type": "boolean"
+          },
+          "enableObjectEntryVersioning": {
+            "type": "boolean"
+          },
+          "externalReferenceCode": {
+            "type": "string"
+          },
+          "friendlyURLSeparator": {
+            "type": "string"
+          },
+          "id": {
+            "type": "integer",
+            "format": "int64",
+            "readOnly": true
+          },
+          "label": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            }
+          },
+          "modifiable": {
+            "type": "boolean"
+          },
+          "name": {
+            "type": "string"
+          },
+          "objectActions": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ObjectAction"
+            }
+          },
+          "objectDefinitionSettings": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ObjectDefinitionSetting"
+            }
+          },
+          "objectFields": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ObjectField"
+            }
+          },
+          "objectFolderExternalReferenceCode": {
+            "type": "string"
+          },
+          "objectLayouts": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ObjectLayout"
+            }
+          },
+          "objectRelationships": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ObjectRelationship"
+            }
+          },
+          "objectValidationRules": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ObjectValidationRule"
+            }
+          },
+          "objectViews": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ObjectView"
+            }
+          },
+          "panelAppOrder": {
+            "type": "string"
+          },
+          "panelCategoryKey": {
+            "type": "string"
+          },
+          "parameterRequired": {
+            "type": "boolean",
+            "readOnly": true
+          },
+          "pluralLabel": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            }
+          },
+          "portlet": {
+            "type": "boolean"
+          },
+          "restContextPath": {
+            "type": "string",
+            "readOnly": true
+          },
+          "rootObjectDefinitionExternalReferenceCode": {
+            "type": "string",
+            "readOnly": true
+          },
+          "scope": {
+            "type": "string"
+          },
+          "status": {
+            "$ref": "#/components/schemas/Status"
+          },
+          "storageType": {
+            "type": "string"
+          },
+          "system": {
+            "type": "boolean"
+          },
+          "titleObjectFieldName": {
+            "type": "string"
+          },
+          "workflowDefinitionLinks": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/WorkflowDefinitionLink"
+            }
+          },
+          "x-class-name": {
+            "type": "string",
+            "readOnly": true,
+            "default": "com.liferay.object.admin.rest.dto.v1_0.ObjectDefinition"
+          }
+        },
+        "xml": {
+          "name": "ObjectDefinition"
+        },
+        "x-filterable": {
+          "dateCreated": {
+            "type": "date_time"
+          },
+          "dateModified": {
+            "type": "date_time"
+          },
+          "hidden": {
+            "type": "boolean"
+          },
+          "label": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "objectFolderExternalReferenceCode": {
+            "type": "string"
+          },
+          "rootObjectDefinitionExternalReferenceCode": {
+            "type": "string"
+          },
+          "status": {
+            "type": "array",
+            "items": "integer"
+          },
+          "userId": {
+            "type": "integer"
+          }
+        }
+      },
+      "ObjectDefinitionSetting": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64",
+            "readOnly": true
+          },
+          "name": {
+            "type": "string"
+          },
+          "objectDefinitionId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "value": {
+            "type": "object"
+          },
+          "x-class-name": {
+            "type": "string",
+            "readOnly": true,
+            "default": "com.liferay.object.admin.rest.dto.v1_0.ObjectDefinitionSetting"
+          }
+        },
+        "xml": {
+          "name": "ObjectDefinitionSetting"
+        },
+        "x-filterable": {}
+      },
+      "ObjectField": {
+        "type": "object",
+        "properties": {
+          "DBType": {
+            "type": "string",
+            "enum": [
+              "BigDecimal",
+              "Boolean",
+              "Clob",
+              "Date",
+              "DateTime",
+              "Double",
+              "Integer",
+              "Long",
+              "String"
+            ]
+          },
+          "actions": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "object",
+              "additionalProperties": {
+                "type": "string"
+              }
+            },
+            "readOnly": true
+          },
+          "defaultValue": {
+            "type": "string",
+            "deprecated": true
+          },
+          "externalReferenceCode": {
+            "type": "string"
+          },
+          "id": {
+            "type": "integer",
+            "format": "int64",
+            "readOnly": true
+          },
+          "indexed": {
+            "type": "boolean"
+          },
+          "indexedAsKeyword": {
+            "type": "boolean"
+          },
+          "indexedLanguageId": {
+            "type": "string"
+          },
+          "label": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            }
+          },
+          "listTypeDefinitionExternalReferenceCode": {
+            "type": "string"
+          },
+          "listTypeDefinitionId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "localized": {
+            "type": "boolean"
+          },
+          "name": {
+            "type": "string"
+          },
+          "objectDefinitionExternalReferenceCode1": {
+            "type": "string"
+          },
+          "objectFieldSettings": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ObjectFieldSetting"
+            }
+          },
+          "objectRelationshipExternalReferenceCode": {
+            "type": "string"
+          },
+          "readOnlyConditionExpression": {
+            "type": "string"
+          },
+          "required": {
+            "type": "boolean"
+          },
+          "state": {
+            "type": "boolean"
+          },
+          "system": {
+            "type": "boolean"
+          },
+          "unique": {
+            "type": "boolean",
+            "readOnly": true
+          },
+          "x-class-name": {
+            "type": "string",
+            "readOnly": true,
+            "default": "com.liferay.object.admin.rest.dto.v1_0.ObjectField"
+          },
+          "businessType": {
+            "type": "string",
+            "enum": [
+              "Aggregation",
+              "Assignee",
+              "Attachment",
+              "AutoIncrement",
+              "Boolean",
+              "Date",
+              "DateTime",
+              "Decimal",
+              "Encrypted",
+              "Formula",
+              "Integer",
+              "LongInteger",
+              "LongText",
+              "MultiselectPicklist",
+              "Picklist",
+              "PrecisionDecimal",
+              "Relationship",
+              "RichText",
+              "Text"
+            ]
+          },
+          "readOnly": {
+            "type": "string",
+            "enum": [
+              "conditional",
+              "false",
+              "true"
+            ]
+          },
+          "relationshipType": {
+            "type": "string",
+            "readOnly": true,
+            "enum": [
+              "oneToMany",
+              "oneToOne"
+            ]
+          },
+          "type": {
+            "type": "string",
+            "deprecated": true,
+            "enum": [
+              "BigDecimal",
+              "Boolean",
+              "Clob",
+              "Date",
+              "DateTime",
+              "Double",
+              "Integer",
+              "Long",
+              "String"
+            ]
+          }
+        },
+        "xml": {
+          "name": "ObjectField"
+        },
+        "x-filterable": {
+          "label": {
+            "type": "string"
+          },
+          "state": {
+            "type": "boolean"
+          },
+          "unique": {
+            "type": "boolean"
+          }
+        }
+      },
+      "ObjectFieldSetting": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64",
+            "readOnly": true
+          },
+          "name": {
+            "type": "string"
+          },
+          "objectFieldId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "value": {
+            "type": "object"
+          },
+          "x-class-name": {
+            "type": "string",
+            "readOnly": true,
+            "default": "com.liferay.object.admin.rest.dto.v1_0.ObjectFieldSetting"
+          }
+        },
+        "xml": {
+          "name": "ObjectFieldSetting"
+        },
+        "x-filterable": {}
+      },
+      "ObjectLayout": {
+        "type": "object",
+        "properties": {
+          "actions": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "object",
+              "additionalProperties": {
+                "type": "string"
+              }
+            },
+            "readOnly": true
+          },
+          "dateCreated": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "dateModified": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "defaultObjectLayout": {
+            "type": "boolean"
+          },
+          "id": {
+            "type": "integer",
+            "format": "int64",
+            "readOnly": true
+          },
+          "name": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            }
+          },
+          "objectDefinitionExternalReferenceCode": {
+            "type": "string"
+          },
+          "objectDefinitionId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "objectLayoutTabs": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ObjectLayoutTab"
+            }
+          },
+          "x-class-name": {
+            "type": "string",
+            "readOnly": true,
+            "default": "com.liferay.object.admin.rest.dto.v1_0.ObjectLayout"
+          }
+        },
+        "xml": {
+          "name": "ObjectLayout"
+        },
+        "x-filterable": {
+          "name": {
+            "type": "string"
+          }
+        }
+      },
+      "ObjectLayoutBox": {
+        "type": "object",
+        "properties": {
+          "collapsable": {
+            "type": "boolean"
+          },
+          "id": {
+            "type": "integer",
+            "format": "int64",
+            "readOnly": true
+          },
+          "name": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            }
+          },
+          "objectLayoutRows": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ObjectLayoutRow"
+            }
+          },
+          "priority": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "x-class-name": {
+            "type": "string",
+            "readOnly": true,
+            "default": "com.liferay.object.admin.rest.dto.v1_0.ObjectLayoutBox"
+          },
+          "type": {
+            "type": "string",
+            "enum": [
+              "categorization",
+              "regular",
+              "seo"
+            ]
+          }
+        },
+        "xml": {
+          "name": "ObjectLayoutBox"
+        },
+        "x-filterable": {}
+      },
+      "ObjectLayoutColumn": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64",
+            "readOnly": true
+          },
+          "objectFieldName": {
+            "type": "string"
+          },
+          "priority": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "size": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "x-class-name": {
+            "type": "string",
+            "readOnly": true,
+            "default": "com.liferay.object.admin.rest.dto.v1_0.ObjectLayoutColumn"
+          }
+        },
+        "xml": {
+          "name": "ObjectLayoutColumn"
+        },
+        "x-filterable": {}
+      },
+      "ObjectLayoutRow": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64",
+            "readOnly": true
+          },
+          "objectLayoutColumns": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ObjectLayoutColumn"
+            }
+          },
+          "priority": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "x-class-name": {
+            "type": "string",
+            "readOnly": true,
+            "default": "com.liferay.object.admin.rest.dto.v1_0.ObjectLayoutRow"
+          }
+        },
+        "xml": {
+          "name": "ObjectLayoutRow"
+        },
+        "x-filterable": {}
+      },
+      "ObjectLayoutTab": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64",
+            "readOnly": true
+          },
+          "name": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            }
+          },
+          "objectLayoutBoxes": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ObjectLayoutBox"
+            }
+          },
+          "objectRelationshipExternalReferenceCode": {
+            "type": "string"
+          },
+          "objectRelationshipId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "priority": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "x-class-name": {
+            "type": "string",
+            "readOnly": true,
+            "default": "com.liferay.object.admin.rest.dto.v1_0.ObjectLayoutTab"
+          }
+        },
+        "xml": {
+          "name": "ObjectLayoutTab"
+        },
+        "x-filterable": {}
+      },
+      "ObjectRelationship": {
+        "type": "object",
+        "properties": {
+          "actions": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "object",
+              "additionalProperties": {
+                "type": "string"
+              }
+            },
+            "readOnly": true
+          },
+          "edge": {
+            "type": "boolean"
+          },
+          "externalReferenceCode": {
+            "type": "string"
+          },
+          "id": {
+            "type": "integer",
+            "format": "int64",
+            "readOnly": true
+          },
+          "label": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            }
+          },
+          "name": {
+            "type": "string"
+          },
+          "objectDefinitionExternalReferenceCode1": {
+            "type": "string"
+          },
+          "objectDefinitionExternalReferenceCode2": {
+            "type": "string"
+          },
+          "objectDefinitionId1": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "objectDefinitionId2": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "objectDefinitionModifiable2": {
+            "type": "boolean"
+          },
+          "objectDefinitionName2": {
+            "type": "string"
+          },
+          "objectDefinitionScope2": {
+            "type": "string"
+          },
+          "objectDefinitionSystem2": {
+            "type": "boolean"
+          },
+          "objectField": {
+            "$ref": "#/components/schemas/ObjectField"
+          },
+          "parameterObjectFieldId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "parameterObjectFieldName": {
+            "type": "string"
+          },
+          "reverse": {
+            "type": "boolean",
+            "readOnly": true
+          },
+          "system": {
+            "type": "boolean"
+          },
+          "x-class-name": {
+            "type": "string",
+            "readOnly": true,
+            "default": "com.liferay.object.admin.rest.dto.v1_0.ObjectRelationship"
+          },
+          "deletionType": {
+            "type": "string",
+            "enum": [
+              "cascade",
+              "disassociate",
+              "prevent"
+            ]
+          },
+          "type": {
+            "type": "string",
+            "enum": [
+              "oneToMany",
+              "oneToOne",
+              "manyToMany"
+            ]
+          }
+        },
+        "xml": {
+          "name": "ObjectRelationship"
+        },
+        "x-filterable": {
+          "dateCreated": {
+            "type": "date_time"
+          },
+          "dateModified": {
+            "type": "date_time"
+          },
+          "edge": {
+            "type": "boolean"
+          },
+          "label": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "system": {
+            "type": "boolean"
+          },
+          "userId": {
+            "type": "integer"
+          }
+        }
+      },
+      "ObjectValidationRule": {
+        "type": "object",
+        "properties": {
+          "actions": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "object",
+              "additionalProperties": {
+                "type": "string"
+              }
+            },
+            "readOnly": true
+          },
+          "active": {
+            "type": "boolean"
+          },
+          "dateCreated": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "dateModified": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "engine": {
+            "type": "string"
+          },
+          "engineLabel": {
+            "type": "string",
+            "readOnly": true
+          },
+          "errorLabel": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            }
+          },
+          "externalReferenceCode": {
+            "type": "string"
+          },
+          "id": {
+            "type": "integer",
+            "format": "int64",
+            "readOnly": true
+          },
+          "name": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            }
+          },
+          "objectDefinitionExternalReferenceCode": {
+            "type": "string"
+          },
+          "objectDefinitionId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "objectValidationRuleSettings": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ObjectValidationRuleSetting"
+            }
+          },
+          "script": {
+            "type": "string"
+          },
+          "system": {
+            "type": "boolean"
+          },
+          "x-class-name": {
+            "type": "string",
+            "readOnly": true,
+            "default": "com.liferay.object.admin.rest.dto.v1_0.ObjectValidationRule"
+          },
+          "outputType": {
+            "type": "string",
+            "enum": [
+              "fullValidation",
+              "partialValidation"
+            ]
+          }
+        },
+        "xml": {
+          "name": "ObjectValidationRule"
+        },
+        "x-filterable": {
+          "name": {
+            "type": "string"
+          }
+        }
+      },
+      "ObjectValidationRuleSetting": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "value": {
+            "type": "object"
+          },
+          "x-class-name": {
+            "type": "string",
+            "readOnly": true,
+            "default": "com.liferay.object.admin.rest.dto.v1_0.ObjectValidationRuleSetting"
+          }
+        },
+        "xml": {
+          "name": "ObjectValidationRuleSetting"
+        },
+        "x-filterable": {}
+      },
+      "ObjectView": {
+        "type": "object",
+        "properties": {
+          "actions": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "object",
+              "additionalProperties": {
+                "type": "string"
+              }
+            },
+            "readOnly": true
+          },
+          "dateCreated": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "dateModified": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "defaultObjectView": {
+            "type": "boolean"
+          },
+          "id": {
+            "type": "integer",
+            "format": "int64",
+            "readOnly": true
+          },
+          "name": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            }
+          },
+          "objectDefinitionExternalReferenceCode": {
+            "type": "string"
+          },
+          "objectDefinitionId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "objectViewColumns": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ObjectViewColumn"
+            }
+          },
+          "objectViewFilterColumns": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ObjectViewFilterColumn"
+            }
+          },
+          "objectViewSortColumns": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ObjectViewSortColumn"
+            }
+          },
+          "x-class-name": {
+            "type": "string",
+            "readOnly": true,
+            "default": "com.liferay.object.admin.rest.dto.v1_0.ObjectView"
+          }
+        },
+        "xml": {
+          "name": "ObjectView"
+        },
+        "x-filterable": {
+          "name": {
+            "type": "string"
+          }
+        }
+      },
+      "ObjectViewColumn": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64",
+            "readOnly": true
+          },
+          "label": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            }
+          },
+          "objectFieldName": {
+            "type": "string"
+          },
+          "priority": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "x-class-name": {
+            "type": "string",
+            "readOnly": true,
+            "default": "com.liferay.object.admin.rest.dto.v1_0.ObjectViewColumn"
+          }
+        },
+        "xml": {
+          "name": "ObjectViewColumn"
+        },
+        "x-filterable": {}
+      },
+      "ObjectViewFilterColumn": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64",
+            "readOnly": true
+          },
+          "json": {
+            "type": "string"
+          },
+          "objectFieldName": {
+            "type": "string"
+          },
+          "valueSummary": {
+            "type": "string",
+            "readOnly": true
+          },
+          "x-class-name": {
+            "type": "string",
+            "readOnly": true,
+            "default": "com.liferay.object.admin.rest.dto.v1_0.ObjectViewFilterColumn"
+          },
+          "filterType": {
+            "type": "string",
+            "enum": [
+              "excludes",
+              "includes"
+            ]
+          }
+        },
+        "xml": {
+          "name": "ObjectViewFilterColumn"
+        },
+        "x-filterable": {}
+      },
+      "ObjectViewSortColumn": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64",
+            "readOnly": true
+          },
+          "objectFieldName": {
+            "type": "string"
+          },
+          "priority": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "x-class-name": {
+            "type": "string",
+            "readOnly": true,
+            "default": "com.liferay.object.admin.rest.dto.v1_0.ObjectViewSortColumn"
+          },
+          "sortOrder": {
+            "type": "string",
+            "enum": [
+              "asc",
+              "desc"
+            ]
+          }
+        },
+        "xml": {
+          "name": "ObjectViewSortColumn"
+        },
+        "x-filterable": {}
+      },
+      "UserGroupBrief": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "The ID of the user group.",
+            "format": "int64",
+            "readOnly": true
+          },
+          "name": {
+            "type": "string",
+            "description": "The name of the user group.",
+            "readOnly": true
+          },
+          "x-class-name": {
+            "type": "string",
+            "readOnly": true,
+            "default": "com.liferay.headless.delivery.dto.v1_0.UserGroupBrief"
+          }
+        },
+        "description": "A list of userGroups information.",
+        "xml": {
+          "name": "UserGroupBrief"
+        },
+        "x-filterable": {}
+      },
+      "WorkflowDefinitionLink": {
+        "type": "object",
+        "properties": {
+          "groupExternalReferenceCode": {
+            "type": "string"
+          },
+          "workflowDefinitionName": {
+            "type": "string"
+          },
+          "x-class-name": {
+            "type": "string",
+            "readOnly": true,
+            "default": "com.liferay.object.admin.rest.dto.v1_0.WorkflowDefinitionLink"
+          }
+        },
+        "xml": {
+          "name": "WorkflowDefinitionLink"
+        },
+        "x-filterable": {}
+      },
+      "PageObjectDefinition": {
+        "type": "object",
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ObjectDefinition"
+            }
+          },
+          "lastPage": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "totalCount": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "actions": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "object",
+              "additionalProperties": {
+                "type": "string"
+              }
+            }
+          },
+          "pageSize": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "facets": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Facet"
+            }
+          },
+          "page": {
+            "type": "integer",
+            "format": "int64"
+          }
+        },
+        "x-filterable": {}
+      },
+      "PageObjectField": {
+        "type": "object",
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ObjectField"
+            }
+          },
+          "lastPage": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "totalCount": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "actions": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "object",
+              "additionalProperties": {
+                "type": "string"
+              }
+            }
+          },
+          "pageSize": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "facets": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Facet"
+            }
+          },
+          "page": {
+            "type": "integer",
+            "format": "int64"
+          }
+        },
+        "x-filterable": {}
+      },
+      "ObjectFolder": {
+        "type": "object",
+        "properties": {
+          "actions": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "object",
+              "additionalProperties": {
+                "type": "string"
+              }
+            },
+            "readOnly": true
+          },
+          "dateCreated": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "dateModified": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "externalReferenceCode": {
+            "type": "string"
+          },
+          "id": {
+            "type": "integer",
+            "format": "int64",
+            "readOnly": true
+          },
+          "label": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            }
+          },
+          "name": {
+            "type": "string"
+          },
+          "objectFolderItems": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ObjectFolderItem"
+            }
+          },
+          "x-class-name": {
+            "type": "string",
+            "readOnly": true,
+            "default": "com.liferay.object.admin.rest.dto.v1_0.ObjectFolder"
+          }
+        },
+        "xml": {
+          "name": "ObjectFolder"
+        },
+        "x-filterable": {}
+      },
+      "ObjectFolderItem": {
+        "type": "object",
+        "properties": {
+          "linkedObjectDefinition": {
+            "type": "boolean"
+          },
+          "objectDefinition": {
+            "$ref": "#/components/schemas/ObjectDefinition"
+          },
+          "objectDefinitionExternalReferenceCode": {
+            "type": "string"
+          },
+          "positionX": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "positionY": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "x-class-name": {
+            "type": "string",
+            "readOnly": true,
+            "default": "com.liferay.object.admin.rest.dto.v1_0.ObjectFolderItem"
+          }
+        },
+        "xml": {
+          "name": "ObjectFolderItem"
+        },
+        "x-filterable": {}
+      },
+      "PageObjectFolder": {
+        "type": "object",
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ObjectFolder"
+            }
+          },
+          "lastPage": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "totalCount": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "actions": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "object",
+              "additionalProperties": {
+                "type": "string"
+              }
+            }
+          },
+          "pageSize": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "facets": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Facet"
+            }
+          },
+          "page": {
+            "type": "integer",
+            "format": "int64"
+          }
+        },
+        "x-filterable": {}
+      },
+      "PageObjectLayout": {
+        "type": "object",
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ObjectLayout"
+            }
+          },
+          "lastPage": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "totalCount": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "actions": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "object",
+              "additionalProperties": {
+                "type": "string"
+              }
+            }
+          },
+          "pageSize": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "facets": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Facet"
+            }
+          },
+          "page": {
+            "type": "integer",
+            "format": "int64"
+          }
+        },
+        "x-filterable": {}
+      },
+      "PageObjectRelationship": {
+        "type": "object",
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ObjectRelationship"
+            }
+          },
+          "lastPage": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "totalCount": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "actions": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "object",
+              "additionalProperties": {
+                "type": "string"
+              }
+            }
+          },
+          "pageSize": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "facets": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Facet"
+            }
+          },
+          "page": {
+            "type": "integer",
+            "format": "int64"
+          }
+        },
+        "x-filterable": {}
+      },
+      "PageObjectValidationRule": {
+        "type": "object",
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ObjectValidationRule"
+            }
+          },
+          "lastPage": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "totalCount": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "actions": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "object",
+              "additionalProperties": {
+                "type": "string"
+              }
+            }
+          },
+          "pageSize": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "facets": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Facet"
+            }
+          },
+          "page": {
+            "type": "integer",
+            "format": "int64"
+          }
+        },
+        "x-filterable": {}
+      },
+      "PageObjectView": {
+        "type": "object",
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ObjectView"
+            }
+          },
+          "lastPage": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "totalCount": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "actions": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "object",
+              "additionalProperties": {
+                "type": "string"
+              }
+            }
+          },
+          "pageSize": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "facets": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Facet"
+            }
+          },
+          "page": {
+            "type": "integer",
+            "format": "int64"
+          }
+        },
+        "x-filterable": {}
+      }
+    }
+  }
+}

@@ -1,0 +1,17 @@
+assemble:
+    - from: batch
+      into: batch
+
+product-showcase:
+    name: Product Showcase Object
+    oAuthApplicationHeadlessServer: product-showcase-oauth
+    type: batch
+
+product-showcase-oauth:
+    .serviceAddress: localhost:8080
+    .serviceScheme: http
+    name: Product Showcase OAuth
+    scopes:
+        - Liferay.Headless.Batch.Engine.everything
+        - Liferay.Object.Admin.REST.everything
+    type: oAuthApplicationHeadlessServer

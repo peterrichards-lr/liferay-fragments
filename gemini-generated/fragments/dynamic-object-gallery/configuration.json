@@ -7,14 +7,14 @@
           "description": "lfr.gemini-generated.object-external-reference-code-description",
           "name": "objectERC",
           "type": "text",
-          "defaultValue": ""
+          "defaultValue": "C_PRODUCT_SHOWCASE"
         },
         {
           "label": "lfr.gemini-generated.image-field-name",
           "description": "lfr.gemini-generated.image-field-name-description",
           "name": "imageField",
           "type": "text",
-          "defaultValue": "image"
+          "defaultValue": "imageUrl"
         },
         {
           "label": "lfr.gemini-generated.title-field",

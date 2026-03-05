@@ -4,8 +4,17 @@ const state = {
     definition: null
 };
 
+const getLocalizedValue = (value) => {
+    if (typeof value === 'object' && value !== null && !Array.isArray(value)) {
+        const languageId = typeof Liferay !== 'undefined' ? Liferay.ThemeDisplay.getLanguageId() : 'en_US';
+        return value[languageId] || value['en_US'] || '';
+    }
+    return value || '';
+};
+
 const mapFieldToInput = (field) => {
-    const { type, name, label, required } = field;
+    const { type, name, required } = field;
+    const label = getLocalizedValue(field.label);
     const commonAttrs = `name="${name}" id="${name}-${fragmentEntryLinkNamespace}" class="form-control" ${required ? 'required' : ''}`;
 
     switch (type) {
@@ -67,10 +76,15 @@ const initMetaForm = async (isEditMode) => {
         }
         
         state.definition = await response.json();
-        titleEl.textContent = state.definition.name + (isEditMode ? ' (Preview)' : '');
+        titleEl.textContent = getLocalizedValue(state.definition.name) + (isEditMode ? ' (Preview)' : '');
 
         const fields = state.definition.objectFields.filter(f => !['id', 'externalReferenceCode'].includes(f.name) && !f.readOnly);
-        fieldsWrap.innerHTML = fields.map(mapFieldToInput).join('');
+        
+        if (fields.length === 0) {
+            fieldsWrap.innerHTML = '<div class="text-center p-5 text-muted">No editable fields found for this object.</div>';
+        } else {
+            fieldsWrap.innerHTML = fields.map(mapFieldToInput).join('');
+        }
 
         if (!isEditMode) {
             form.addEventListener('submit', async (e) => {
@@ -83,7 +97,13 @@ const initMetaForm = async (isEditMode) => {
                 statusMsg.classList.add('d-none');
 
                 try {
-                    const saveRes = await Liferay.Util.fetch(`${state.definition.restContextPath}/`, {
+                    let url = state.definition.restContextPath;
+                    if (state.definition.scope === 'site') {
+                        const siteId = Liferay.ThemeDisplay.getScopeGroupId();
+                        url += `/scopes/${siteId}`;
+                    }
+
+                    const saveRes = await Liferay.Util.fetch(`${url}/`, {
                         method: 'POST', headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify(payload)
                     });
@@ -96,7 +116,8 @@ const initMetaForm = async (isEditMode) => {
                         if (saveRes.status === 401 || saveRes.status === 403) {
                             throw new Error('You do not have permission to save entries to this object.');
                         }
-                        throw new Error('Failed to save entry.');
+                        const errData = await saveRes.json();
+                        throw new Error(errData.title || 'Failed to save entry.');
                     }
                 } catch (err) {
                     statusMsg.textContent = err.message;

@@ -1,0 +1,63 @@
+{
+  "configuration": {
+    "className": "com.liferay.object.admin.rest.dto.v1_0.ObjectDefinition",
+    "parameters": {
+      "containsHeaders": "true",
+      "createStrategy": "UPSERT",
+      "importStrategy": "ON_ERROR_CONTINUE",
+      "updateStrategy": "UPDATE"
+    }
+  },
+  "items": [
+    {
+      "active": true,
+      "defaultLanguageId": "en_US",
+      "externalReferenceCode": "PRODUCT_SHOWCASE",
+      "label": {
+        "en_US": "Product Showcase"
+      },
+      "name": "ProductShowcase",
+      "objectFields": [
+        {
+          "businessType": "Text",
+          "externalReferenceCode": "TITLE",
+          "label": {
+            "en_US": "Title"
+          },
+          "name": "title",
+          "required": true,
+          "type": "String"
+        },
+        {
+          "businessType": "Text",
+          "externalReferenceCode": "DESCRIPTION",
+          "label": {
+            "en_US": "Description"
+          },
+          "name": "description",
+          "required": false,
+          "type": "String"
+        },
+        {
+          "businessType": "Text",
+          "externalReferenceCode": "IMAGE_URL",
+          "label": {
+            "en_US": "Image URL"
+          },
+          "name": "imageUrl",
+          "required": false,
+          "type": "String"
+        }
+      ],
+      "pluralLabel": {
+        "en_US": "Product Showcases"
+      },
+      "restContextPath": "/o/c/productshowcases",
+      "scope": "company",
+      "status": {
+        "code": 0,
+        "label": "approved"
+      }
+    }
+  ]
+}

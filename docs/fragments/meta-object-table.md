@@ -10,7 +10,7 @@ A powerful data table that dynamically discovers fields and renders Object data 
 - **Responsive**: Stacks into a card-like view on mobile devices using data-labels.
 
 ## Configuration
-- **Object ERC**: The source Object.
+- **Object ERC**: The source Object (e.g., `WATER_READING`). By repository convention for showcase samples, this is the Object name in uppercase with underscores.
 - **Columns to Display**: Comma-separated list of field names to show.
 - **Page Size**: Number of entries per page.
 - **Enable Pagination**: Toggle visibility of navigation controls.

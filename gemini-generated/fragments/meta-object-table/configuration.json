@@ -26,7 +26,7 @@
             "dependency": {
               "customizeColumns": {
                 "type": "equal",
-                "value": true
+                "value": "true"
               }
             }
           }

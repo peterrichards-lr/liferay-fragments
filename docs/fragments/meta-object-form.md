@@ -9,5 +9,5 @@ A truly dynamic form that auto-generates inputs based on a Liferay Object's defi
 - **Production-Ready**: Supports submitting new entries directly to the Custom Object API.
 
 ## Configuration
-- **Object ERC**: The source Object to generate the form from.
+- **Object ERC**: The source Object to generate the form from (e.g., `ACTIVITY_LOG`). By repository convention for showcase samples, this is the Object name in uppercase with underscores.
 - **Submit Button Color**: Custom theme color for the action button.

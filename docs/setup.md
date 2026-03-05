@@ -43,3 +43,27 @@ Fragments in the `Pulse` and `OAuth2` collections depend on JavaScript Client Ex
 
 *   **Pulse Integration**: Requires the `pulse-helper` JS client extension to be present on the page or included in the site's global JS.
 *   **OAuth2 / User Accounts**: Requires a **User Agent Application** to be configured in Liferay (under OAuth2 Administration) and its "Reference Code" provided in the fragment configuration.
+
+---
+
+## 4. Showcase Data
+
+To showcase data-driven fragments like the `Object-Linked Chart`, `Activity Heatmap`, and `Interactive Event Timeline`, multiple sample Object definitions and datasets are provided.
+
+**Note: Liferay 2025.Q4.10 or later is required for the showcase data to work correctly, as it utilizes site-scoping (`siteExternalReferenceCode: L_GUEST`).**
+
+### Deployment:
+1.  **Direct Deployment**: Build the showcase ZIPs using `./create-fragment-zips.sh` and deploy them using `./deploy-fragment-zips.sh [TARGET_PATH] --showcase`.
+2.  **Organization**: All showcase datasets are located in `/other-resources/showcase-data/`, including:
+    *   **Activity Log**: For the `Activity Heatmap`.
+    *   **Product Showcase**: For the `Dynamic Object Gallery`.
+    *   **Company Milestones**: For the `Interactive Event Timeline`.
+    *   **Water Readings**: For the `Meter Reading` and `Object-Linked Chart`.
+
+### Showcase Data & Liferay CX Conventions
+
+To ensure the showcase datasets are correctly imported by the Liferay Batch Engine and compatible with the automated deployment scripts, please observe the following:
+
+1.  **Showcase ERC Convention (Project-Specific)**: Within this repository, the External Reference Code (ERC) for sample Objects follows a naming convention: uppercase with underscores (e.g., `COMPANY_MILESTONE`). This is for internal consistency and is not a Liferay platform requirement.
+2.  **`taskItemDelegateName` (Liferay CX Mandatory Rule)**: For the Liferay Batch Engine to process Object entry imports, the `taskItemDelegateName` property must be explicitly defined within the `configuration` object of the JSON batch file. It must be set to the Object's name with a `C_` prefix (e.g., `"taskItemDelegateName": "C_CompanyMilestone"`).
+

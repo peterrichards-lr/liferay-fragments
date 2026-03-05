@@ -1,0 +1,38 @@
+{
+  "configuration": {
+    "className": "com.liferay.object.rest.dto.v1_0.ObjectEntry",
+    "parameters": {
+      "containsHeaders": "true",
+      "createStrategy": "UPSERT",
+      "importStrategy": "ON_ERROR_CONTINUE",
+      "updateStrategy": "UPDATE"
+    },
+    "taskItemDelegateName": "C_CompanyMilestone"
+  },
+  "items": [
+    {
+      "externalReferenceCode": "MS-01",
+      "date": "2020-01-15",
+      "title": "Company Founded",
+      "description": "Meridian Digital was established with a vision to revolutionize portal experiences."
+    },
+    {
+      "externalReferenceCode": "MS-02",
+      "date": "2021-06-10",
+      "title": "Series A Funding",
+      "description": "Secured $10M in funding to accelerate product development and expand the team."
+    },
+    {
+      "externalReferenceCode": "MS-03",
+      "date": "2022-11-20",
+      "title": "Global Expansion",
+      "description": "Opened new offices in London and Singapore to serve our growing international client base."
+    },
+    {
+      "externalReferenceCode": "MS-04",
+      "date": "2024-03-01",
+      "title": "AI Integration Launch",
+      "description": "Released our next-generation AI-powered component suite for enterprise users."
+    }
+  ]
+}

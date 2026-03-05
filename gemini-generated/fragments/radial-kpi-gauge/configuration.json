@@ -3,10 +3,10 @@
     {
       "fields": [
         {
-          "defaultValue": "waterreadings",
-          "label": "lfr.gemini-generated.object-rest-context",
-          "description": "lfr.gemini-generated.object-rest-context-description",
-          "name": "objectRESTContext",
+          "defaultValue": "C_WATER_READINGS",
+          "label": "lfr.gemini-generated.object-external-reference-code",
+          "description": "lfr.gemini-generated.object-external-reference-code-description",
+          "name": "objectERC",
           "type": "text"
         },
         {

@@ -42,7 +42,7 @@
             "dependency": {
               "autoplay": {
                 "type": "equal",
-                "value": true
+                "value": "true"
               }
             }
           }

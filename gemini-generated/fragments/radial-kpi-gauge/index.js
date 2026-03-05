@@ -1,15 +1,32 @@
 const fetchData = async () => {
-    const { objectRESTContext } = configuration;
-    if (!objectRESTContext) throw new Error('Object REST context not configured.');
-    const siteId = Liferay.ThemeDisplay.getScopeGroupId();
-    const url = `/o/c/${objectRESTContext}/scopes/${siteId}`;
-    const response = await Liferay.Util.fetch(url);
-    if (!response.ok) {
-        if (response.status === 401 || response.status === 403) throw new Error('Permission denied.');
-        throw new Error(`Failed to fetch from "${objectRESTContext}".`);
+    const { objectERC } = configuration;
+    if (!objectERC) throw new Error('Object ERC not configured.');
+    
+    try {
+        // Fetch definition by ERC
+        const adminUrl = `/o/object-admin/v1.0/object-definitions/by-external-reference-code/${objectERC}`;
+        const defRes = await Liferay.Util.fetch(adminUrl);
+        if (!defRes.ok) throw new Error(`Could not find object with ERC "${objectERC}".`);
+        const definition = await defRes.json();
+
+        let url = definition.restContextPath;
+        if (definition.scope === 'site') {
+            const siteId = Liferay.ThemeDisplay.getScopeGroupId();
+            url += `/scopes/${siteId}`;
+        }
+
+        const response = await Liferay.Util.fetch(url);
+        if (!response.ok) {
+            if (response.status === 401 || response.status === 403) {
+                throw new Error('You do not have permission to view this data.');
+            }
+            throw new Error(`Failed to fetch data from "${definition.restContextPath}".`);
+        }
+        const data = await response.json();
+        return data.items || [];
+    } catch (err) {
+        throw err;
     }
-    const data = await response.json();
-    return data.items || [];
 };
 
 const updateGauge = (percent) => {
@@ -48,10 +65,10 @@ const initGauge = async (isEditMode) => {
     if (infoEl) infoEl.classList.add('d-none');
     if (gaugeWrap) gaugeWrap.classList.remove('d-none');
 
-    const { objectRESTContext, valueField, targetValue } = configuration;
+    const { objectERC, valueField, targetValue } = configuration;
 
-    if (!objectRESTContext) {
-        showInfo('Please configure an Object REST Context.');
+    if (!objectERC) {
+        showInfo('Please configure an Object ERC.');
         updateGauge(75);
         return;
     }
@@ -63,7 +80,7 @@ const initGauge = async (isEditMode) => {
         const percent = Math.min((total / target) * 100, 100);
         
         if (items.length === 0 && isEditMode) {
-             showInfo(`No items found for object "${objectRESTContext}". Rendering 75% as placeholder.`);
+             showInfo(`No items found for object. Rendering 75% as placeholder.`);
              updateGauge(75);
              return;
         }

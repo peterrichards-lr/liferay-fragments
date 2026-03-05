@@ -1,0 +1,69 @@
+{
+  "configuration": {
+    "className": "com.liferay.object.admin.rest.dto.v1_0.ObjectDefinition",
+    "parameters": {
+      "containsHeaders": "true",
+      "createStrategy": "UPSERT",
+      "importStrategy": "ON_ERROR_CONTINUE",
+      "updateStrategy": "UPDATE"
+    }
+  },
+  "items": [
+    {
+      "active": true,
+      "defaultLanguageId": "en_US",
+      "externalReferenceCode": "WATER_READING",
+      "label": {
+        "en_US": "Water Reading"
+      },
+      "name": "WaterReading",
+      "objectFields": [
+        {
+          "businessType": "Integer",
+          "externalReferenceCode": "ACCOUNT_IDENTIFIER",
+          "label": {
+            "en_US": "Account Identifier"
+          },
+          "name": "accountIdentifier",
+          "required": false,
+          "type": "Integer"
+        },
+        {
+          "businessType": "Decimal",
+          "externalReferenceCode": "READING",
+          "label": {
+            "en_US": "Reading"
+          },
+          "name": "reading",
+          "required": false,
+          "type": "Double"
+        },
+        {
+          "businessType": "DateTime",
+          "externalReferenceCode": "READING_DATE",
+          "label": {
+            "en_US": "Reading Date"
+          },
+          "name": "readingDate",
+          "required": false,
+          "type": "DateTime",
+          "objectFieldSettings": [
+            {
+              "name": "timeStorage",
+              "value": "convertToUTC"
+            }
+          ]
+        }
+      ],
+      "pluralLabel": {
+        "en_US": "Water Readings"
+      },
+      "restContextPath": "/o/c/waterreadings",
+      "scope": "site",
+      "status": {
+        "code": 0,
+        "label": "approved"
+      }
+    }
+  ]
+}

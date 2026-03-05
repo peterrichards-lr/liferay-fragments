@@ -1,0 +1,38 @@
+{
+  "configuration": {
+    "className": "com.liferay.object.rest.dto.v1_0.ObjectEntry",
+    "parameters": {
+      "containsHeaders": "true",
+      "createStrategy": "UPSERT",
+      "importStrategy": "ON_ERROR_CONTINUE",
+      "updateStrategy": "UPDATE"
+    },
+    "taskItemDelegateName": "C_ProductShowcase"
+  },
+  "items": [
+    {
+      "externalReferenceCode": "PS-01",
+      "title": "Smart Watch Pro",
+      "description": "Next-generation wearable with advanced health tracking and 5-day battery life.",
+      "imageUrl": "https://images.unsplash.com/photo-1579586337278-3befd40fd17a?q=80&w=800&auto=format&fit=crop"
+    },
+    {
+      "externalReferenceCode": "PS-02",
+      "title": "Wireless Audio Max",
+      "description": "Studio-quality sound with active noise cancellation and ergonomic design.",
+      "imageUrl": "https://images.unsplash.com/photo-1546435770-a3e426bf472b?q=80&w=800&auto=format&fit=crop"
+    },
+    {
+      "externalReferenceCode": "PS-03",
+      "title": "Smart Home Hub",
+      "description": "The central nervous system for your modern automated home environment.",
+      "imageUrl": "https://images.unsplash.com/photo-1589156229687-496a31ad1d1f?q=80&w=800&auto=format&fit=crop"
+    },
+    {
+      "externalReferenceCode": "PS-04",
+      "title": "Eco-Friendly Laptop",
+      "description": "Sustainably sourced materials meet cutting-edge performance for the conscious professional.",
+      "imageUrl": "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?q=80&w=800&auto=format&fit=crop"
+    }
+  ]
+}

@@ -9,6 +9,6 @@ A flexible grid/masonry view that maps Object fields to image, title, and descri
 - Hover effects and visual depth using Meridian theme standards.
 
 ## Configuration
-- **Object ERC**: The External Reference Code of the source Object.
+- **Object ERC**: The External Reference Code of the source Object (e.g., `PRODUCT_SHOWCASE`). By repository convention for showcase samples, this is the Object name in uppercase with underscores.
 - **Field Mappings**: Specify which fields should serve as the Image URL, Title, and Description.
 - **Columns**: Choose between 2, 3, or 4 column grid layouts.
