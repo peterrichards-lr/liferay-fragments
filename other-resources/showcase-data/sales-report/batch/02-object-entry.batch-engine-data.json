@@ -1,0 +1,85 @@
+{
+  "configuration": {
+    "className": "com.liferay.object.rest.dto.v1_0.ObjectEntry",
+    "parameters": {
+      "containsHeaders": "true",
+      "createStrategy": "UPSERT",
+      "siteExternalReferenceCode": "L_GUEST",
+      "importStrategy": "ON_ERROR_CONTINUE",
+      "updateStrategy": "UPDATE"
+    },
+    "taskItemDelegateName": "C_SalesReport"
+  },
+  "items": [
+    {
+      "externalReferenceCode": "SALE-001",
+      "salesRegion": "North America",
+      "revenue": 1500.50,
+      "unitsSold": 10,
+      "saleDate": "2024-01-10"
+    },
+    {
+      "externalReferenceCode": "SALE-002",
+      "salesRegion": "North America",
+      "revenue": 2200.00,
+      "unitsSold": 15,
+      "saleDate": "2024-01-15"
+    },
+    {
+      "externalReferenceCode": "SALE-003",
+      "salesRegion": "Europe",
+      "revenue": 1800.75,
+      "unitsSold": 12,
+      "saleDate": "2024-01-12"
+    },
+    {
+      "externalReferenceCode": "SALE-004",
+      "salesRegion": "Europe",
+      "revenue": 1200.00,
+      "unitsSold": 8,
+      "saleDate": "2024-01-18"
+    },
+    {
+      "externalReferenceCode": "SALE-005",
+      "salesRegion": "Asia",
+      "revenue": 3500.00,
+      "unitsSold": 25,
+      "saleDate": "2024-01-20"
+    },
+    {
+      "externalReferenceCode": "SALE-006",
+      "salesRegion": "Asia",
+      "revenue": 2800.25,
+      "unitsSold": 20,
+      "saleDate": "2024-01-22"
+    },
+    {
+      "externalReferenceCode": "SALE-007",
+      "salesRegion": "South America",
+      "revenue": 950.00,
+      "unitsSold": 5,
+      "saleDate": "2024-01-25"
+    },
+    {
+      "externalReferenceCode": "SALE-008",
+      "salesRegion": "North America",
+      "revenue": 1100.00,
+      "unitsSold": 7,
+      "saleDate": "2024-02-01"
+    },
+    {
+      "externalReferenceCode": "SALE-009",
+      "salesRegion": "Europe",
+      "revenue": 2500.00,
+      "unitsSold": 18,
+      "saleDate": "2024-02-05"
+    },
+    {
+      "externalReferenceCode": "SALE-010",
+      "salesRegion": "Asia",
+      "revenue": 4200.50,
+      "unitsSold": 30,
+      "saleDate": "2024-02-10"
+    }
+  ]
+}

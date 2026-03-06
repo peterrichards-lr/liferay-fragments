@@ -47,6 +47,20 @@
           "description": "lfr.gemini-generated.accent-color-description",
           "name": "accentColor",
           "type": "colorPicker"
+        },
+        {
+          "defaultValue": "var(--text-secondary-color)",
+          "label": "lfr.gemini-generated.label-color",
+          "description": "lfr.gemini-generated.label-color-description",
+          "name": "labelColor",
+          "type": "colorPicker"
+        },
+        {
+          "defaultValue": "var(--body-color)",
+          "label": "lfr.gemini-generated.value-color",
+          "description": "lfr.gemini-generated.value-color-description",
+          "name": "valueColor",
+          "type": "colorPicker"
         }
       ],
       "label": "lfr.gemini-generated.style"

@@ -33,6 +33,11 @@
   - **Markdown & JavaScript**: Formatted using `npx prettier`.
   - **Exclusions**: HTML (Freemarker) and CSS files are strictly excluded from automated formatting.
 
+### 7. Site-Scoped Batch Data Rule
+
+- **Requirement**: Batch data entries for Site-scoped Objects **must** include the `siteExternalReferenceCode` parameter in the `configuration.parameters` block (e.g., `"siteExternalReferenceCode": "L_GUEST"`).
+- **Reason**: The Batch Engine requires a target site identifier to correctly scope the imported entries.
+
 ## Current Tasks
 
 - [x] Update documentation with showcase data conventions (`docs/setup.md` and fragment docs).

@@ -3,28 +3,28 @@
     {
       "fields": [
         {
-          "defaultValue": "WATER_READING",
+          "defaultValue": "SALES_REPORT",
           "label": "lfr.gemini-generated.object-external-reference-code",
           "description": "lfr.gemini-generated.object-external-reference-code-description",
           "name": "objectERC",
           "type": "text"
         },
         {
-          "defaultValue": "readingDate",
+          "defaultValue": "salesRegion",
           "label": "lfr.gemini-generated.label-field",
           "description": "lfr.gemini-generated.label-field-description",
           "name": "labelField",
           "type": "text"
         },
         {
-          "defaultValue": "reading",
+          "defaultValue": "revenue,unitsSold",
           "label": "lfr.gemini-generated.value-fields",
           "description": "lfr.gemini-generated.value-fields-description",
           "name": "valueFields",
           "type": "text"
         },
         {
-          "defaultValue": "none",
+          "defaultValue": "sum",
           "label": "lfr.gemini-generated.aggregation-type",
           "description": "lfr.gemini-generated.aggregation-type-description",
           "name": "aggregationType",
@@ -56,10 +56,24 @@
     {
       "fields": [
         {
-          "defaultValue": "Object Data Chart",
+          "defaultValue": "Regional Sales Performance",
           "label": "lfr.gemini-generated.chart-title",
           "description": "lfr.gemini-generated.chart-title-description",
           "name": "chartTitle",
+          "type": "text"
+        },
+        {
+          "defaultValue": "Region",
+          "label": "lfr.gemini-generated.x-axis-label",
+          "description": "lfr.gemini-generated.x-axis-label-description",
+          "name": "xAxisLabel",
+          "type": "text"
+        },
+        {
+          "defaultValue": "Values",
+          "label": "lfr.gemini-generated.y-axis-label",
+          "description": "lfr.gemini-generated.y-axis-label-description",
+          "name": "yAxisLabel",
           "type": "text"
         },
         {

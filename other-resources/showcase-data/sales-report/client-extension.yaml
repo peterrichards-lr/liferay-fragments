@@ -1,0 +1,17 @@
+assemble:
+    - from: batch
+      into: batch
+
+sales-report:
+    name: Sales Report Object
+    oAuthApplicationHeadlessServer: sales-report-oauth
+    type: batch
+
+sales-report-oauth:
+    .serviceAddress: localhost:8080
+    .serviceScheme: http
+    name: Sales Report OAuth
+    scopes:
+        - Liferay.Headless.Batch.Engine.everything
+        - Liferay.Object.Admin.REST.everything
+    type: oAuthApplicationHeadlessServer

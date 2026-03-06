@@ -1,0 +1,73 @@
+{
+  "configuration": {
+    "className": "com.liferay.object.admin.rest.dto.v1_0.ObjectDefinition",
+    "parameters": {
+      "containsHeaders": "true",
+      "createStrategy": "UPSERT",
+      "importStrategy": "ON_ERROR_CONTINUE",
+      "updateStrategy": "UPDATE"
+    }
+  },
+  "items": [
+    {
+      "active": true,
+      "defaultLanguageId": "en_US",
+      "externalReferenceCode": "SALES_REPORT",
+      "label": {
+        "en_US": "Sales Report"
+      },
+      "name": "SalesReport",
+      "objectFields": [
+        {
+          "businessType": "Text",
+          "externalReferenceCode": "SALES_REGION",
+          "label": {
+            "en_US": "Sales Region"
+          },
+          "name": "salesRegion",
+          "required": true,
+          "type": "String"
+        },
+        {
+          "businessType": "Decimal",
+          "externalReferenceCode": "REVENUE",
+          "label": {
+            "en_US": "Revenue"
+          },
+          "name": "revenue",
+          "required": true,
+          "type": "Double"
+        },
+        {
+          "businessType": "Integer",
+          "externalReferenceCode": "UNITS_SOLD",
+          "label": {
+            "en_US": "Units Sold"
+          },
+          "name": "unitsSold",
+          "required": true,
+          "type": "Integer"
+        },
+        {
+          "businessType": "Date",
+          "externalReferenceCode": "SALE_DATE",
+          "label": {
+            "en_US": "Sale Date"
+          },
+          "name": "saleDate",
+          "required": true,
+          "type": "Date"
+        }
+      ],
+      "pluralLabel": {
+        "en_US": "Sales Reports"
+      },
+      "restContextPath": "/o/c/salesreports",
+      "scope": "site",
+      "status": {
+        "code": 0,
+        "label": "approved"
+      }
+    }
+  ]
+}

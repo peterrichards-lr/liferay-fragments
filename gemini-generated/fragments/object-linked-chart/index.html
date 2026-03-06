@@ -3,7 +3,11 @@
     <div class="alert alert-danger d-none mb-3" id="error-${fragmentEntryLinkNamespace}"></div>
     
     <div class="chart-header mb-4 text-center">
-        <h3 class="chart-title">${configuration.chartTitle!}</h3>
+        <h3 class="chart-title" data-lfr-editable-id="chart-title" data-lfr-editable-type="text">Regional Sales Performance</h3>
+        <div class="d-none">
+            <span data-lfr-editable-id="x-axis-label" data-lfr-editable-type="text">${configuration.xAxisLabel!}</span>
+            <span data-lfr-editable-id="y-axis-label" data-lfr-editable-type="text">${configuration.yAxisLabel!}</span>
+        </div>
     </div>
 
     <div class="chart-wrapper">

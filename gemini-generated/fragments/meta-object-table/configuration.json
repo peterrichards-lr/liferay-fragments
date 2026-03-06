@@ -57,6 +57,133 @@
     {
       "fields": [
         {
+          "defaultValue": "var(--gray-900)",
+          "label": "lfr.gemini-generated.header-text-color",
+          "name": "headerTextColor",
+          "type": "colorPicker"
+        },
+        {
+          "defaultValue": "var(--gray-100)",
+          "label": "lfr.gemini-generated.header-background-color",
+          "name": "headerBgColor",
+          "type": "colorPicker"
+        },
+        {
+          "defaultValue": "var(--body-color)",
+          "label": "lfr.gemini-generated.body-text-color",
+          "name": "bodyTextColor",
+          "type": "colorPicker"
+        },
+        {
+          "defaultValue": "var(--gray-600)",
+          "label": "lfr.gemini-generated.action-icon-color",
+          "name": "actionIconColor",
+          "type": "colorPicker"
+        },
+        {
+          "defaultValue": false,
+          "label": "lfr.gemini-generated.enable-striped",
+          "description": "lfr.gemini-generated.enable-striped-description",
+          "name": "enableStriped",
+          "type": "checkbox"
+        },
+        {
+          "defaultValue": "var(--gray-100)",
+          "label": "lfr.gemini-generated.striped-background-color",
+          "description": "lfr.gemini-generated.striped-background-color-description",
+          "name": "stripedBgColor",
+          "type": "colorPicker",
+          "typeOptions": {
+            "dependency": {
+              "enableStriped": {
+                "type": "equal",
+                "value": "true"
+              }
+            }
+          }
+        }
+      ],
+      "label": "lfr.gemini-generated.style"
+    },
+    {
+      "fields": [
+        {
+          "defaultValue": false,
+          "label": "lfr.gemini-generated.enable-add-action",
+          "description": "lfr.gemini-generated.enable-add-action-description",
+          "name": "enableAdd",
+          "type": "checkbox"
+        },
+        {
+          "defaultValue": "modal",
+          "label": "lfr.gemini-generated.add-action-mode",
+          "description": "lfr.gemini-generated.view-action-mode-description",
+          "name": "addMode",
+          "type": "select",
+          "typeOptions": {
+            "validValues": [
+              {
+                "label": "lfr.gemini-generated.modal-window",
+                "value": "modal"
+              },
+              {
+                "label": "lfr.gemini-generated.page-redirect",
+                "value": "redirect"
+              }
+            ],
+            "dependency": {
+              "enableAdd": {
+                "type": "equal",
+                "value": "true"
+              }
+            }
+          }
+        },
+        {
+          "dataType": "string",
+          "defaultValue": "lg",
+          "label": "lfr.gemini-generated.add-modal-size",
+          "description": "lfr.gemini-generated.modal-size-description",
+          "name": "addModalSize",
+          "type": "select",
+          "typeOptions": {
+            "dependency": {
+              "addMode": {
+                "type": "equal",
+                "value": "modal"
+              }
+            },
+            "validValues": [
+              {
+                "label": "lfr.gemini-generated.small",
+                "value": "sm"
+              },
+              {
+                "label": "lfr.gemini-generated.medium",
+                "value": "md"
+              },
+              {
+                "label": "lfr.gemini-generated.large",
+                "value": "lg"
+              }
+            ]
+          }
+        },
+        {
+          "label": "lfr.gemini-generated.add-target-url",
+          "description": "lfr.gemini-generated.edit-target-url-description",
+          "name": "addUrl",
+          "type": "text",
+          "typeOptions": {
+            "dependency": {
+              "enableAdd": {
+                "type": "equal",
+                "value": "true"
+              }
+            }
+          }
+        },
+        {
           "defaultValue": false,
           "label": "lfr.gemini-generated.enable-view-action",
           "description": "lfr.gemini-generated.enable-view-action-description",
@@ -76,6 +203,10 @@
                 "value": "event"
               },
               {
+                "label": "lfr.gemini-generated.modal-window",
+                "value": "modal"
+              },
+              {
                 "label": "lfr.gemini-generated.page-redirect",
                 "value": "redirect"
               },
@@ -90,6 +221,36 @@
                 "value": "true"
               }
             }
+          }
+        },
+        {
+          "dataType": "string",
+          "defaultValue": "md",
+          "label": "lfr.gemini-generated.view-modal-size",
+          "description": "lfr.gemini-generated.modal-size-description",
+          "name": "viewModalSize",
+          "type": "select",
+          "typeOptions": {
+            "dependency": {
+              "viewMode": {
+                "type": "equal",
+                "value": "modal"
+              }
+            },
+            "validValues": [
+              {
+                "label": "lfr.gemini-generated.small",
+                "value": "sm"
+              },
+              {
+                "label": "lfr.gemini-generated.medium",
+                "value": "md"
+              },
+              {
+                "label": "lfr.gemini-generated.large",
+                "value": "lg"
+              }
+            ]
           }
         },
         {
@@ -126,6 +287,10 @@
                 "value": "event"
               },
               {
+                "label": "lfr.gemini-generated.modal-window",
+                "value": "modal"
+              },
+              {
                 "label": "lfr.gemini-generated.page-redirect",
                 "value": "redirect"
               },
@@ -140,6 +305,36 @@
                 "value": "true"
               }
             }
+          }
+        },
+        {
+          "dataType": "string",
+          "defaultValue": "lg",
+          "label": "lfr.gemini-generated.edit-modal-size",
+          "description": "lfr.gemini-generated.modal-size-description",
+          "name": "editModalSize",
+          "type": "select",
+          "typeOptions": {
+            "dependency": {
+              "editMode": {
+                "type": "equal",
+                "value": "modal"
+              }
+            },
+            "validValues": [
+              {
+                "label": "lfr.gemini-generated.small",
+                "value": "sm"
+              },
+              {
+                "label": "lfr.gemini-generated.medium",
+                "value": "md"
+              },
+              {
+                "label": "lfr.gemini-generated.large",
+                "value": "lg"
+              }
+            ]
           }
         },
         {

@@ -12,25 +12,102 @@
 }
 
 .meta-table-container .table thead th {
-    background-color: var(--gray-100, #f7f8f9);
+    background-color: var(--header-bg-color, var(--gray-100, #f7f8f9));
+    color: var(--header-text-color, var(--text-secondary-color));
     border-top: none;
     font-weight: var(--font-weight-semi-bold, 600);
     text-transform: uppercase;
     font-size: var(--font-size-xs, 0.75rem);
     letter-spacing: 0.05em;
-    color: var(--text-secondary-color);
     padding: var(--spacer-3, 1rem);
 }
 
 .meta-table-container .table tbody td {
     padding: var(--spacer-3, 1rem);
     vertical-align: middle;
-    color: var(--body-color);
+    color: var(--body-text-color, var(--body-color));
     border-bottom: 1px solid var(--gray-200, #eee);
+}
+
+.btn-group .lexicon-icon {
+    color: var(--action-icon-color, var(--gray-600));
 }
 
 .meta-table-container .table-hover tbody tr:hover {
     background-color: var(--primary-l3, #effaff);
+}
+
+.meta-table-container .table-striped tbody tr:nth-of-type(odd) {
+    background-color: var(--striped-bg-color, var(--gray-100, #f7f8f9));
+}
+
+/* Modal Styles */
+.meta-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1050;
+    backdrop-filter: blur(4px);
+}
+
+.meta-modal-container {
+    background: var(--white, #fff);
+    border-radius: var(--border-radius-lg, 0.5rem);
+    box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+    display: flex;
+    flex-direction: column;
+    max-height: 90vh;
+    overflow: hidden;
+}
+
+.modal-sm { width: 400px; }
+.modal-md { width: 600px; }
+.modal-lg { width: 900px; }
+
+@media (max-width: 992px) {
+    .meta-modal-container {
+        width: 95% !important;
+    }
+}
+
+.meta-modal-header {
+    padding: var(--spacer-4, 1.5rem);
+    border-bottom: 1px solid var(--gray-200, #eee);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.meta-modal-header .modal-title {
+    font-size: var(--font-size-lg, 1.25rem);
+    font-weight: var(--font-weight-bold, 700);
+}
+
+.close-modal-btn {
+    background: none;
+    border: none;
+    padding: 0.5rem;
+    cursor: pointer;
+    color: var(--gray-600, #6b6c7e);
+    border-radius: 50%;
+    transition: background 0.2s;
+}
+
+.close-modal-btn:hover {
+    background: var(--gray-100, #f7f8f9);
+    color: var(--body-color);
+}
+
+.meta-modal-body {
+    padding: var(--spacer-4, 1.5rem);
+    overflow-y: auto;
+    flex: 1;
 }
 
 @media (max-width: 768px) {

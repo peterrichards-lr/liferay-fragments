@@ -15,65 +15,6 @@
     {
       "fields": [
         {
-          "defaultValue": "3",
-          "description": "lfr.gemini-generated.slides-per-view-description",
-          "label": "lfr.gemini-generated.slides-per-view",
-          "name": "slidesPerView",
-          "type": "text",
-          "dataType": "int"
-        },
-        {
-          "defaultValue": true,
-          "description": "lfr.gemini-generated.autoplay-description",
-          "label": "lfr.gemini-generated.autoplay",
-          "name": "autoplay",
-          "type": "checkbox"
-        },
-        {
-          "defaultValue": "5000",
-          "description": "lfr.gemini-generated.autoplay-interval-ms-description",
-          "label": "lfr.gemini-generated.autoplay-interval-ms",
-          "name": "autoplayInterval",
-          "type": "text",
-          "typeOptions": {
-            "validation": {
-              "type": "number"
-            },
-            "dependency": {
-              "autoplay": {
-                "type": "equal",
-                "value": "true"
-              }
-            }
-          }
-        },
-        {
-          "defaultValue": false,
-          "description": "lfr.gemini-generated.loop-description",
-          "label": "lfr.gemini-generated.loop",
-          "name": "loop",
-          "type": "checkbox"
-        },
-        {
-          "defaultValue": true,
-          "description": "lfr.gemini-generated.show-controls-description",
-          "label": "lfr.gemini-generated.show-controls",
-          "name": "showControls",
-          "type": "checkbox"
-        },
-        {
-          "defaultValue": true,
-          "description": "lfr.gemini-generated.show-pagination-description",
-          "label": "lfr.gemini-generated.show-pagination",
-          "name": "showPagination",
-          "type": "checkbox"
-        }
-      ],
-      "label": "lfr.gemini-generated.behavior"
-    },
-    {
-      "fields": [
-        {
           "defaultValue": "top",
           "description": "lfr.gemini-generated.display-style-description",
           "label": "lfr.gemini-generated.display-style",
@@ -134,6 +75,65 @@
         }
       ],
       "label": "lfr.gemini-generated.style"
+    },
+    {
+      "fields": [
+        {
+          "defaultValue": "3",
+          "description": "lfr.gemini-generated.slides-per-view-description",
+          "label": "lfr.gemini-generated.slides-per-view",
+          "name": "slidesPerView",
+          "type": "text",
+          "dataType": "int"
+        },
+        {
+          "defaultValue": true,
+          "description": "lfr.gemini-generated.autoplay-description",
+          "label": "lfr.gemini-generated.autoplay",
+          "name": "autoplay",
+          "type": "checkbox"
+        },
+        {
+          "defaultValue": "5000",
+          "description": "lfr.gemini-generated.autoplay-interval-ms-description",
+          "label": "lfr.gemini-generated.autoplay-interval-ms",
+          "name": "autoplayInterval",
+          "type": "text",
+          "typeOptions": {
+            "validation": {
+              "type": "number"
+            },
+            "dependency": {
+              "autoplay": {
+                "type": "equal",
+                "value": "true"
+              }
+            }
+          }
+        },
+        {
+          "defaultValue": false,
+          "description": "lfr.gemini-generated.loop-description",
+          "label": "lfr.gemini-generated.loop",
+          "name": "loop",
+          "type": "checkbox"
+        },
+        {
+          "defaultValue": true,
+          "description": "lfr.gemini-generated.show-controls-description",
+          "label": "lfr.gemini-generated.show-controls",
+          "name": "showControls",
+          "type": "checkbox"
+        },
+        {
+          "defaultValue": true,
+          "description": "lfr.gemini-generated.show-pagination-description",
+          "label": "lfr.gemini-generated.show-pagination",
+          "name": "showPagination",
+          "type": "checkbox"
+        }
+      ],
+      "label": "lfr.gemini-generated.behavior"
     },
     {
       "fields": [

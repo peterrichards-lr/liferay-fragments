@@ -64,7 +64,7 @@ const fetchData = async () => {
     );
   }
   const data = await response.json();
-  return data.items || [];
+  return { items: data.items || [], definition };
 };
 
 const aggregateData = (items, labelField, valueFields, type) => {
@@ -112,6 +112,7 @@ const initChart = async (isEditMode) => {
     `#info-${fragmentEntryLinkNamespace}`,
   );
   const chartWrapper = fragmentElement.querySelector(".chart-wrapper");
+  const titleEl = fragmentElement.querySelector(".chart-title");
 
   const showError = (msg) => {
     if (isEditMode && errorEl) {
@@ -143,6 +144,8 @@ const initChart = async (isEditMode) => {
     aggregationType,
     chartType,
     borderFilter,
+    xAxisLabel: configXLabel,
+    yAxisLabel: configYLabel,
   } = configuration;
 
   if (!objectERC) {
@@ -152,11 +155,23 @@ const initChart = async (isEditMode) => {
 
   try {
     await loadScript(CHART_JS_URL);
-    const items = await fetchData();
+    const { items, definition } = await fetchData();
 
     if (items.length === 0) {
       showInfo(`No data found for object "${objectERC}".`);
       return;
+    }
+
+    // Smart Title defaulting
+    const currentTitle = titleEl.innerText.trim();
+    if (
+      currentTitle === "Object-Linked Chart" ||
+      currentTitle === "Regional Sales Performance" ||
+      currentTitle === "" ||
+      currentTitle === "Object Data Chart"
+    ) {
+      const objectLabel = getLocalizedValue(definition.name);
+      titleEl.innerText = `${objectLabel} (${aggregationType !== "none" ? aggregationType : "Raw Data"})`;
     }
 
     const fields = (valueFields || "")
@@ -228,6 +243,16 @@ const initChart = async (isEditMode) => {
     );
     if (!canvas) return;
 
+    // Resolve labels from editable spans if present, otherwise config
+    const xLabelEl = fragmentElement.querySelector(
+      '[data-lfr-editable-id="x-axis-label"]',
+    );
+    const yLabelEl = fragmentElement.querySelector(
+      '[data-lfr-editable-id="y-axis-label"]',
+    );
+    const resolvedXLabel = xLabelEl ? xLabelEl.innerText : configXLabel;
+    const resolvedYLabel = yLabelEl ? yLabelEl.innerText : configYLabel;
+
     // Destroy existing chart if it exists
     const existingChart = Chart.getChart(canvas);
     if (existingChart) existingChart.destroy();
@@ -257,9 +282,19 @@ const initChart = async (isEditMode) => {
           y: {
             beginAtZero: true,
             display: !["pie", "doughnut"].includes(chartType),
+            title: {
+              display:
+                !["pie", "doughnut"].includes(chartType) && !!resolvedYLabel,
+              text: resolvedYLabel,
+            },
           },
           x: {
             display: !["pie", "doughnut"].includes(chartType),
+            title: {
+              display:
+                !["pie", "doughnut"].includes(chartType) && !!resolvedXLabel,
+              text: resolvedXLabel,
+            },
           },
         },
       },

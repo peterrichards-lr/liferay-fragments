@@ -127,17 +127,59 @@ const renderPagination = (isEditMode) => {
   }
 };
 
-const handleAction = (type, recordId, recordERC) => {
-  const { objectERC, viewMode, viewUrl, editMode, editUrl } = configuration;
-  const mode = type === "view" ? viewMode : editMode;
-  const targetUrl = type === "view" ? viewUrl : editUrl;
-  const eventName =
-    type === "view" ? "lfr-object-view-select" : "lfr-object-form-select";
+const toggleModal = (type, show) => {
+  let suffix = "view";
+  if (type === "edit") suffix = "edit";
+  if (type === "add") suffix = "add";
 
-  if (mode === "event") {
+  const overlay = fragmentElement.querySelector(
+    `#overlay-${suffix}-${fragmentEntryLinkNamespace}`,
+  );
+  if (!overlay) return;
+
+  if (show) {
+    overlay.classList.remove("d-none");
+    document.body.style.overflow = "hidden"; // Prevent background scroll
+  } else {
+    overlay.classList.add("d-none");
+    document.body.style.overflow = "";
+  }
+};
+
+const handleAction = (type, recordId, recordERC) => {
+  const { objectERC, viewMode, viewUrl, editMode, editUrl, addMode, addUrl } =
+    configuration;
+
+  let mode = "event";
+  let targetUrl = "";
+  let eventName = "lfr-object-form-select";
+
+  if (type === "view") {
+    mode = viewMode;
+    targetUrl = viewUrl;
+    eventName = "lfr-object-view-select";
+  } else if (type === "edit") {
+    mode = editMode;
+    targetUrl = editUrl;
+    eventName = "lfr-object-form-select";
+  } else if (type === "add") {
+    mode = addMode;
+    targetUrl = addUrl;
+    eventName = "lfr-object-form-select";
+  }
+
+  if (mode === "event" || mode === "modal") {
+    if (mode === "modal") {
+      toggleModal(type, true);
+    }
+
     window.dispatchEvent(
       new CustomEvent(eventName, {
-        detail: { objectERC, recordId, recordERC },
+        detail: {
+          objectERC,
+          recordId: type === "add" ? null : recordId,
+          recordERC: type === "add" ? null : recordERC,
+        },
       }),
     );
   } else if (mode === "redirect" || mode === "tab") {
@@ -145,8 +187,10 @@ const handleAction = (type, recordId, recordERC) => {
       targetUrl || window.location.href,
       window.location.origin,
     );
-    url.searchParams.set("entryId", recordId);
-    url.searchParams.set("entryERC", recordERC);
+    if (type !== "add") {
+      url.searchParams.set("entryId", recordId);
+      url.searchParams.set("entryERC", recordERC);
+    }
     if (mode === "tab") window.open(url.toString(), "_blank");
     else window.location.href = url.toString();
   }
@@ -159,6 +203,11 @@ const loadPage = async (pageNumber, isEditMode = false) => {
   const pageSize = isEditMode ? 3 : parseInt(configuration.pageSize || 10);
   const { columnsToDisplay, customizeColumns, enableView, enableEdit } =
     configuration;
+
+  const spritemap =
+    typeof Liferay !== "undefined" && Liferay.Icons
+      ? Liferay.Icons.spritemap
+      : "/o/classic-theme/images/lexicon/icons.svg";
 
   state.page = pageNumber;
 
@@ -189,8 +238,8 @@ const loadPage = async (pageNumber, isEditMode = false) => {
         if (enableView || enableEdit) {
           actionsHtml = `<td class="text-right">
                     <div class="btn-group">
-                        ${enableView ? `<button class="btn btn-monospaced btn-sm btn-secondary view-btn" data-id="${item.id}" data-erc="${item.externalReferenceCode || ""}" title="View"><svg class="lexicon-icon"><use xlink:href="/o/classic-theme/images/lexicon/icons.svg#view"></use></svg></button>` : ""}
-                        ${enableEdit ? `<button class="btn btn-monospaced btn-sm btn-secondary edit-btn" data-id="${item.id}" data-erc="${item.externalReferenceCode || ""}" title="Edit"><svg class="lexicon-icon"><use xlink:href="/o/classic-theme/images/lexicon/icons.svg#pencil"></use></svg></button>` : ""}
+                        ${enableView ? `<button class="btn btn-monospaced btn-sm btn-secondary view-btn" data-id="${item.id}" data-erc="${item.externalReferenceCode || ""}" title="View"><svg class="lexicon-icon"><use xlink:href="${spritemap}#view"></use></svg></button>` : ""}
+                        ${enableEdit ? `<button class="btn btn-monospaced btn-sm btn-secondary edit-btn" data-id="${item.id}" data-erc="${item.externalReferenceCode || ""}" title="Edit"><svg class="lexicon-icon"><use xlink:href="${spritemap}#pencil"></use></svg></button>` : ""}
                     </div>
                 </td>`;
         }
@@ -237,6 +286,7 @@ const initMetaTable = async (isEditMode) => {
     customizeColumns,
     enableView,
     enableEdit,
+    enableAdd,
   } = configuration;
   const thead = fragmentElement.querySelector(
     `#thead-${fragmentEntryLinkNamespace}`,
@@ -245,6 +295,9 @@ const initMetaTable = async (isEditMode) => {
   const exportBtn = fragmentElement.querySelector(
     `#export-${fragmentEntryLinkNamespace}`,
   );
+  const addBtn = fragmentElement.querySelector(
+    `#add-${fragmentEntryLinkNamespace}`,
+  );
   const errorEl = fragmentElement.querySelector(
     `#error-${fragmentEntryLinkNamespace}`,
   );
@@ -252,8 +305,35 @@ const initMetaTable = async (isEditMode) => {
     `#info-${fragmentEntryLinkNamespace}`,
   );
 
+  // Modal setup helper
+  const setupModal = (type) => {
+    const suffix = type;
+    const closeBtn = fragmentElement.querySelector(
+      `#close-${suffix}-${fragmentEntryLinkNamespace}`,
+    );
+    const overlay = fragmentElement.querySelector(
+      `#overlay-${suffix}-${fragmentEntryLinkNamespace}`,
+    );
+
+    if (closeBtn) closeBtn.onclick = () => toggleModal(type, false);
+    if (overlay) {
+      overlay.onclick = (e) => {
+        if (e.target === overlay) toggleModal(type, false);
+      };
+    }
+  };
+
   if (errorEl) errorEl.classList.add("d-none");
   if (infoEl) infoEl.classList.add("d-none");
+
+  // Initialize modals
+  setupModal("view");
+  setupModal("edit");
+  setupModal("add");
+
+  if (addBtn) {
+    addBtn.onclick = () => handleAction("add");
+  }
 
   if (!objectERC) {
     titleEl.textContent = "Meta-Object Table";

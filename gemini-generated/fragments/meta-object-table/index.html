@@ -1,10 +1,15 @@
-<div class="meta-table-container meta-table-${fragmentEntryLinkNamespace}">
+<div class="meta-table-container meta-table-${fragmentEntryLinkNamespace}" style="--header-text-color: ${configuration.headerTextColor!}; --header-bg-color: ${configuration.headerBgColor!}; --body-text-color: ${configuration.bodyTextColor!}; --action-icon-color: ${configuration.actionIconColor!}; --striped-bg-color: ${configuration.stripedBgColor!};">
     <div class="alert alert-info d-none mb-3" id="info-${fragmentEntryLinkNamespace}"></div>
     <div class="alert alert-danger d-none mb-3" id="error-${fragmentEntryLinkNamespace}"></div>
 
     <div class="meta-table-header d-flex justify-content-between align-items-center mb-4">
         <h2 class="object-title mb-0"></h2>
-        <div class="table-actions">
+        <div class="table-actions d-flex gap-2">
+            [#if configuration.enableAdd]
+                <button class="btn btn-primary btn-sm" id="add-${fragmentEntryLinkNamespace}">
+                    [@clay["icon"] symbol="plus" /] Add Entry
+                </button>
+            [/#if]
             <button class="btn btn-secondary btn-sm d-none" id="export-${fragmentEntryLinkNamespace}">
                 [@clay["icon"] symbol="download" /] Export CSV
             </button>
@@ -12,7 +17,7 @@
     </div>
 
     <div class="table-responsive">
-        <table class="table table-autofit show-quick-actions-on-hover table-hover table-list" id="table-${fragmentEntryLinkNamespace}">
+        <table class="table table-autofit show-quick-actions-on-hover table-hover table-list [#if configuration.enableStriped]table-striped[/#if]" id="table-${fragmentEntryLinkNamespace}">
             <thead>
                 <tr id="thead-${fragmentEntryLinkNamespace}">
                     <!-- Headers injected here -->
@@ -38,4 +43,55 @@
             </ul>
         </nav>
     </div>
+
+    <!-- Add Modal Structure -->
+    [#if configuration.enableAdd && configuration.addMode == 'modal']
+    <div class="meta-modal-overlay d-none" id="overlay-add-${fragmentEntryLinkNamespace}">
+        <div class="meta-modal-container modal-${configuration.addModalSize!}" id="modal-add-${fragmentEntryLinkNamespace}">
+            <div class="meta-modal-header">
+                <h3 class="modal-title mb-0" data-lfr-editable-id="modal-add-title" data-lfr-editable-type="text">Add New Record</h3>
+                <button class="close-modal-btn" id="close-add-${fragmentEntryLinkNamespace}" aria-label="Close">
+                    [@clay["icon"] symbol="times" /]
+                </button>
+            </div>
+            <div class="meta-modal-body">
+                <lfr-dropzone id="dropzone-add-${fragmentEntryLinkNamespace}"></lfr-dropzone>
+            </div>
+        </div>
+    </div>
+    [/#if]
+
+    <!-- View Modal Structure -->
+    [#if configuration.enableView && configuration.viewMode == 'modal']
+    <div class="meta-modal-overlay d-none" id="overlay-view-${fragmentEntryLinkNamespace}">
+        <div class="meta-modal-container modal-${configuration.viewModalSize!}" id="modal-view-${fragmentEntryLinkNamespace}">
+            <div class="meta-modal-header">
+                <h3 class="modal-title mb-0" data-lfr-editable-id="modal-view-title" data-lfr-editable-type="text">View Record</h3>
+                <button class="close-modal-btn" id="close-view-${fragmentEntryLinkNamespace}" aria-label="Close">
+                    [@clay["icon"] symbol="times" /]
+                </button>
+            </div>
+            <div class="meta-modal-body">
+                <lfr-dropzone id="dropzone-view-${fragmentEntryLinkNamespace}"></lfr-dropzone>
+            </div>
+        </div>
+    </div>
+    [/#if]
+
+    <!-- Edit Modal Structure -->
+    [#if configuration.enableEdit && configuration.editMode == 'modal']
+    <div class="meta-modal-overlay d-none" id="overlay-edit-${fragmentEntryLinkNamespace}">
+        <div class="meta-modal-container modal-${configuration.editModalSize!}" id="modal-edit-${fragmentEntryLinkNamespace}">
+            <div class="meta-modal-header">
+                <h3 class="modal-title mb-0" data-lfr-editable-id="modal-edit-title" data-lfr-editable-type="text">Edit Record</h3>
+                <button class="close-modal-btn" id="close-edit-${fragmentEntryLinkNamespace}" aria-label="Close">
+                    [@clay["icon"] symbol="times" /]
+                </button>
+            </div>
+            <div class="meta-modal-body">
+                <lfr-dropzone id="dropzone-edit-${fragmentEntryLinkNamespace}"></lfr-dropzone>
+            </div>
+        </div>
+    </div>
+    [/#if]
 </div>
