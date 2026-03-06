@@ -38,6 +38,21 @@
 - **Requirement**: Batch data entries for Site-scoped Objects **must** include the `siteExternalReferenceCode` parameter in the `configuration.parameters` block (e.g., `"siteExternalReferenceCode": "L_GUEST"`).
 - **Reason**: The Batch Engine requires a target site identifier to correctly scope the imported entries.
 
+### 8. Dropzone Tagging Convention
+
+- **Requirement**: Always use the hyphenated `<lfr-drop-zone>` tag instead of the non-hyphenated variant.
+- **Reason**: Ensures full compatibility with Liferay Page Editor's fragment placement and discovery logic.
+
+### 9. Robust Table Striping
+
+- **Requirement**: When implementing alternate row shading (zebra striping), always apply `background-color: transparent !important` to the nested `td` elements.
+- **Reason**: Overrides Liferay's default Clay/Bootstrap table styles which often apply opaque backgrounds to cells, masking row-level styling.
+
+### 10. Editor-Accessible Modals
+
+- **Requirement**: Hidden UI elements (like Modals) containing dropzones MUST be styled to be visible and stackable in the Page Editor (e.g., using `[data-layout-mode="edit"]` or FreeMarker `[#if layoutMode == 'edit']`).
+- **Reason**: Allows Page Editors to discover and populate embedded dropzones without needing to trigger the element's runtime visibility.
+
 ## Current Tasks
 
 - [x] Update documentation with showcase data conventions (`docs/setup.md` and fragment docs).
@@ -48,4 +63,6 @@
 - [x] Update Animated Metric Counter to support decimal numbers and configurable precision.
 - [x] Enhance Meta-Object Form with "Add New", record selection dropdown, and external URL/Event integration.
 - [x] Fix Meta-Object Form field display (string-based 'readOnly' and 'businessType' refactoring).
-- [x] Upgrade Object-Linked Chart with dynamic data grouping and aggregation (Sum, Average, Count).
+- [x] Upgrade Object-Linked Chart with dynamic data grouping, aggregation, dual-axis support, and theme palettes.
+- [x] Refactor Meta-Object Table with triple-modal architecture, robust striping, and embedded dropzones.
+- [x] Implement mappable and smart-defaulting titles across all Meta-Object fragments.

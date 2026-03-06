@@ -19,6 +19,7 @@ FRAGMENTS=$(find . -type d -maxdepth 1 -exec test -e '{}'/fragment.json \; -prin
 rm -rf zips
 mkdir -p zips/fragments
 mkdir -p zips/language
+mkdir -p zips/showcase
 
 # Helper function to generate fragment deployment descriptor
 ensure_descriptor() {
@@ -147,10 +148,6 @@ if [ -d "other-resources/showcase-data" ]; then
         if [ -d "$RESOURCE/batch" ]; then
             echo "Processing showcase resource: $RESOURCE_NAME"
             
-            # Clean old zip
-            rm -f "$RESOURCE/dist/$RESOURCE_NAME-batch-cx.zip"
-            mkdir -p "$RESOURCE/dist"
-
             CX_ROOT="temp_cx_$RESOURCE_NAME"
             mkdir -p "$CX_ROOT/batch"
             mkdir -p "$CX_ROOT/WEB-INF"
@@ -189,8 +186,8 @@ if [ -d "other-resources/showcase-data" ]; then
               '{($key): {".serviceAddress": "localhost:8080", ".serviceScheme": "http", ":configurator:policy": "force", baseURL: ("${portalURL}/o/" + $proj), buildTimestamp: $ts, description: "", "dxp.lxc.liferay.com.virtualInstanceId": "default", homePageURL: "$[conf:.serviceScheme]://$[conf:.serviceAddress]", name: $name, projectId: $proj, projectName: $proj, properties: [], scopes: ["Liferay.Headless.Batch.Engine.everything", "Liferay.Object.Admin.REST.everything"], sourceCodeURL: "", type: "oAuthApplicationHeadlessServer", typeSettings: [".serviceAddress=localhost:8080", ".serviceScheme=http", "scopes=Liferay.Headless.Admin.Workflow.everything\nLiferay.Headless.Batch.Engine.everything\nLiferay.Message.Admin.REST.everything"], webContextPath: ("/" + $proj)}}' \
               > "$CX_ROOT/client-extension-config.json"
 
-            # Zip the CX structure into the dist folder
-            (cd "$CX_ROOT" && zip -qr "../$RESOURCE/dist/$RESOURCE_NAME-batch-cx.zip" .)
+            # Zip the CX structure into the zips/showcase folder
+            (cd "$CX_ROOT" && zip -qr "../zips/showcase/$RESOURCE_NAME-batch-cx.zip" .)
             rm -rf "$CX_ROOT"
         fi
     done
@@ -199,3 +196,4 @@ fi
 echo "Build complete."
 echo "Fragment Zips: ./zips/fragments/"
 echo "Language Batch CX: ./zips/language/"
+echo "Showcase Data Zips: ./zips/showcase/"

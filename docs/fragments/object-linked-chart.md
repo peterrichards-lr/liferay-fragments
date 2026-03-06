@@ -4,12 +4,14 @@ Data visualization fragment that integrates Chart.js to render Liferay Object da
 
 ## Features
 
-- **Multiple Types**: Support for Bar, Line, Pie, and Doughnut charts.
+- **Multiple Types**: Support for Bar, Line, Pie, Doughnut, **Radar**, and **Polar Area** charts.
 - **Dynamic Grouping & Aggregation**: Automatically group records by a label field and calculate **Sum**, **Average**, or **Count** for numeric values.
-- **Multi-Field Support**: Plot multiple numeric fields (e.g., Revenue vs. Units Sold) in a single chart.
-- **Dynamic Mapping**: Map X-axis labels and Y-axis values to specific Object fields.
+- **Dual-Axis Support**: Introducing a secondary Y-axis for comparing two value sets with different scales (e.g., Revenue vs. Units Sold).
+- **Theme-Integrated Palettes**: Predefined color themes (**Rainbow**, **Cool**, **Warm**) that dynamically reference Meridian's CSS variables (`var(--red)`, `var(--blue)`, etc.).
+- **Advanced Sorting**: Sort categories alphabetically or by value (ascending/descending).
+- **Localized Labels**: Automatically uses human-readable labels from the Object field definitions for legends and tooltips.
 - **Accessibility**: Automatically generates a visually-hidden HTML table fallback for screen readers.
-- **Meridian Integration**: Defaults to theme colors for data series.
+- **Smart Defaults**: Automatic color mapping based on data structure (category-based for single series, series-based for multiple).
 
 ## Configuration
 
@@ -17,9 +19,13 @@ Data visualization fragment that integrates Chart.js to render Liferay Object da
 - **Label Field**: The field used for the X-axis or category labels.
 - **Value Fields**: Comma-separated list of numeric fields to plot.
 - **Aggregation Type**: Choose how to summarize data (None, Sum, Average, Count).
-- **Chart Title**: Heading displayed above the chart.
+- **Data Sort Order**: Choose how categories on the X-axis should be sorted.
+- **Chart Title**: Heading displayed above the chart (mappable/editable).
 - **Chart Type**: Select the visualization style.
-- **Border Filter**: CSS filter for data series borders (e.g., `brightness(85%)`).
+- **Show Legend**: Toggle visibility of the data series legend.
+- **Enable Secondary Y-Axis**: Map second+ series to a right-hand vertical axis.
+- **Color Mapping**: Switch between category-based or series-based coloring.
+- **Color Palette**: Select a theme that matches your site's branding.
 
 ## Showcase Data: Sales Report
 
@@ -30,5 +36,6 @@ The repository includes a `SALES_REPORT` object definition designed specifically
 - **Object ERC**: `SALES_REPORT`
 - **Label Field**: `salesRegion`
 - **Value Fields**: `revenue,unitsSold`
-- **Aggregation Type**: `Sum` (for total performance) or `Average` (for efficiency)
+- **Aggregation Type**: `Sum`
+- **Enable Secondary Y-Axis**: `Checked`
 - **Chart Title**: `Regional Sales Performance`

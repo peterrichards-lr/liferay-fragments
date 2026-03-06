@@ -38,6 +38,13 @@
       "fields": [
         {
           "defaultValue": true,
+          "label": "lfr.gemini-generated.show-fragment-header",
+          "description": "lfr.gemini-generated.show-fragment-header-description",
+          "name": "showFragmentHeader",
+          "type": "checkbox"
+        },
+        {
+          "defaultValue": true,
           "label": "lfr.gemini-generated.enable-pagination",
           "description": "lfr.gemini-generated.enable-pagination-description",
           "name": "enablePagination",
@@ -166,6 +173,20 @@
           }
         },
         {
+          "defaultValue": true,
+          "label": "lfr.gemini-generated.show-modal-title",
+          "name": "addShowTitle",
+          "type": "checkbox",
+          "typeOptions": {
+            "dependency": {
+              "addMode": {
+                "type": "equal",
+                "value": "modal"
+              }
+            }
+          }
+        },
+        {
           "dataType": "string",
           "defaultValue": "lg",
           "label": "lfr.gemini-generated.add-modal-size",
@@ -250,6 +271,20 @@
           }
         },
         {
+          "defaultValue": true,
+          "label": "lfr.gemini-generated.show-modal-title",
+          "name": "viewShowTitle",
+          "type": "checkbox",
+          "typeOptions": {
+            "dependency": {
+              "viewMode": {
+                "type": "equal",
+                "value": "modal"
+              }
+            }
+          }
+        },
+        {
           "dataType": "string",
           "defaultValue": "md",
           "label": "lfr.gemini-generated.view-modal-size",
@@ -329,6 +364,20 @@
               "enableEdit": {
                 "type": "equal",
                 "value": "true"
+              }
+            }
+          }
+        },
+        {
+          "defaultValue": true,
+          "label": "lfr.gemini-generated.show-modal-title",
+          "name": "editShowTitle",
+          "type": "checkbox",
+          "typeOptions": {
+            "dependency": {
+              "editMode": {
+                "type": "equal",
+                "value": "modal"
               }
             }
           }

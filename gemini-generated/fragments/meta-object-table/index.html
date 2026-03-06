@@ -1,4 +1,12 @@
+[#assign
+    showFragmentHeader = configuration.showFragmentHeader!true
+    fragmentHeaderClass = "meta-table-editor-header" + (showFragmentHeader?then(" show", ""))
+/]
+
+<div class="${fragmentHeaderClass}">${fragmentName}</div>
+
 <div class="meta-table-container meta-table-${fragmentEntryLinkNamespace}" 
+    data-layout-mode="${layoutMode}"
     data-striped-row-type="${configuration.stripedRowType!'even'}"
     style="--header-text-color: ${configuration.headerTextColor!}; --header-bg-color: ${configuration.headerBgColor!}; --body-text-color: ${configuration.bodyTextColor!}; --action-icon-color: ${configuration.actionIconColor!}; --striped-bg-color: ${configuration.stripedBgColor!};">
     <div class="alert alert-info d-none mb-3" id="info-${fragmentEntryLinkNamespace}"></div>
@@ -48,8 +56,11 @@
 
     <!-- Add Modal Structure -->
     [#if configuration.enableAdd && configuration.addMode == 'modal']
-    <div class="meta-modal-overlay d-none" id="overlay-add-${fragmentEntryLinkNamespace}">
-        <div class="meta-modal-container modal-${configuration.addModalSize!}" id="modal-add-${fragmentEntryLinkNamespace}">
+    <div class="meta-modal-overlay [#if layoutMode == 'view']d-none[/#if]" id="overlay-add-${fragmentEntryLinkNamespace}">
+        [#if layoutMode == 'edit']
+            <div class="meta-dropzone-editor-label">Add Record Dropzone</div>
+        [/#if]
+        <div class="meta-modal-container modal-${configuration.addModalSize!}" id="modal-add-${fragmentEntryLinkNamespace}" data-show-title="${configuration.addShowTitle?c}">
             <div class="meta-modal-header">
                 <h3 class="modal-title mb-0" data-lfr-editable-id="modal-add-title" data-lfr-editable-type="text">Add New Record</h3>
                 <button class="close-modal-btn" id="close-add-${fragmentEntryLinkNamespace}" aria-label="Close">
@@ -57,7 +68,7 @@
                 </button>
             </div>
             <div class="meta-modal-body">
-                <lfr-dropzone id="dropzone-add-${fragmentEntryLinkNamespace}"></lfr-dropzone>
+                <lfr-drop-zone id="dropzone-add-${fragmentEntryLinkNamespace}"></lfr-drop-zone>
             </div>
         </div>
     </div>
@@ -65,8 +76,11 @@
 
     <!-- View Modal Structure -->
     [#if configuration.enableView && configuration.viewMode == 'modal']
-    <div class="meta-modal-overlay d-none" id="overlay-view-${fragmentEntryLinkNamespace}">
-        <div class="meta-modal-container modal-${configuration.viewModalSize!}" id="modal-view-${fragmentEntryLinkNamespace}">
+    <div class="meta-modal-overlay [#if layoutMode == 'view']d-none[/#if]" id="overlay-view-${fragmentEntryLinkNamespace}">
+        [#if layoutMode == 'edit']
+            <div class="meta-dropzone-editor-label">View Record Dropzone</div>
+        [/#if]
+        <div class="meta-modal-container modal-${configuration.viewModalSize!}" id="modal-view-${fragmentEntryLinkNamespace}" data-show-title="${configuration.viewShowTitle?c}">
             <div class="meta-modal-header">
                 <h3 class="modal-title mb-0" data-lfr-editable-id="modal-view-title" data-lfr-editable-type="text">View Record</h3>
                 <button class="close-modal-btn" id="close-view-${fragmentEntryLinkNamespace}" aria-label="Close">
@@ -74,7 +88,7 @@
                 </button>
             </div>
             <div class="meta-modal-body">
-                <lfr-dropzone id="dropzone-view-${fragmentEntryLinkNamespace}"></lfr-dropzone>
+                <lfr-drop-zone id="dropzone-view-${fragmentEntryLinkNamespace}"></lfr-drop-zone>
             </div>
         </div>
     </div>
@@ -82,8 +96,11 @@
 
     <!-- Edit Modal Structure -->
     [#if configuration.enableEdit && configuration.editMode == 'modal']
-    <div class="meta-modal-overlay d-none" id="overlay-edit-${fragmentEntryLinkNamespace}">
-        <div class="meta-modal-container modal-${configuration.editModalSize!}" id="modal-edit-${fragmentEntryLinkNamespace}">
+    <div class="meta-modal-overlay [#if layoutMode == 'view']d-none[/#if]" id="overlay-edit-${fragmentEntryLinkNamespace}">
+        [#if layoutMode == 'edit']
+            <div class="meta-dropzone-editor-label">Edit Record Dropzone</div>
+        [/#if]
+        <div class="meta-modal-container modal-${configuration.editModalSize!}" id="modal-edit-${fragmentEntryLinkNamespace}" data-show-title="${configuration.editShowTitle?c}">
             <div class="meta-modal-header">
                 <h3 class="modal-title mb-0" data-lfr-editable-id="modal-edit-title" data-lfr-editable-type="text">Edit Record</h3>
                 <button class="close-modal-btn" id="close-edit-${fragmentEntryLinkNamespace}" aria-label="Close">
@@ -91,7 +108,7 @@
                 </button>
             </div>
             <div class="meta-modal-body">
-                <lfr-dropzone id="dropzone-edit-${fragmentEntryLinkNamespace}"></lfr-dropzone>
+                <lfr-drop-zone id="dropzone-edit-${fragmentEntryLinkNamespace}"></lfr-drop-zone>
             </div>
         </div>
     </div>

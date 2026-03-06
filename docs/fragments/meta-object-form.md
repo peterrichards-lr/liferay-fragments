@@ -6,6 +6,7 @@ A truly dynamic form that auto-generates inputs based on a Liferay Object's defi
 
 - **Self-Discovering**: Fetches field metadata (type, required, label, read-only) at runtime via Object Admin API.
 - **Dynamic Record Selection**: Optional dropdown to select existing records to edit, using the Object's "Entry Title Field".
+- **Mappable Title**: The form title is fully mappable and editable in the Page Editor. It intelligently defaults to the Object's localized name if not customized.
 - **Multiple Modes**: Support for "Add New", "Edit Specific", and "Select to Edit" workflows.
 - **External Integration**: Automatically picks up record identifiers from URL parameters (`id`, `entryId`, `erc`, `entryERC`) or listens for the `lfr-object-form-select` JavaScript event.
 - **Hybrid Identification**: Supports identifying records by numeric **Record ID** or string **External Reference Code (ERC)**.

@@ -5,6 +5,7 @@ A single-entry detail view that dynamically discovers fields and provides a high
 ## Features
 
 - **Self-Discovering**: Renders all fields for a specific Object entry via the Object Admin API.
+- **Mappable Title**: The record title is fully mappable and editable in the Page Editor. It intelligently defaults to the Object's localized name if not customized.
 - **Hybrid Identification**: Supports identifying records by numeric **Record ID** or string **External Reference Code (ERC)**.
 - **PDF Export**: Integrated jsPDF and html2canvas support for downloading high-quality reports.
 - **Integration**: Automatically picks up record identifiers from URL parameters (`id`, `entryId`, `erc`, `entryERC`) or listens for the `lfr-object-view-select` JavaScript event.
@@ -21,7 +22,7 @@ A single-entry detail view that dynamically discovers fields and provides a high
 - **Object ERC**: The source Object definition (e.g., `COMPANY_MILESTONE`).
 - **Fallback Record Identifier**: A specific record value to display if none is found in the page URL or via events.
 - **Identifier Type**: Specify if the fallback identifier is a numeric **ID** or a string **ERC**.
-- **Accent Color**: Custom theme color for labels and headers.
+- **Colors**: Pick custom colors for field labels and values to match your theme.
 
 ## External Selection (JS Event)
 

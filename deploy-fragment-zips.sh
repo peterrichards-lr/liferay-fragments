@@ -103,10 +103,10 @@ deploy_item() {
         FOUND=true
     fi
 
-    # Check for Special Resource ZIP (in other-resources/showcase-data/)
-    if [ -f "other-resources/showcase-data/${NAME}/dist/${NAME}-batch-cx.zip" ]; then
+    # Check for Special Resource ZIP (in zips/showcase/)
+    if [ -f "zips/showcase/${NAME}-batch-cx.zip" ]; then
         echo "  -> Deploying Showcase Resource to osgi/client-extensions/: ${NAME}-batch-cx.zip"
-        cp "other-resources/showcase-data/${NAME}/dist/${NAME}-batch-cx.zip" "$CX_DIR/"
+        cp "zips/showcase/${NAME}-batch-cx.zip" "$CX_DIR/"
         FOUND=true
     fi
 
@@ -154,12 +154,16 @@ fi
 
 if [ "$DEPLOY_SHOWCASE" == "true" ]; then
     # Deploy all Showcase Resources
-    echo "Deploying all showcase resources..."
-    SHOWCASE_ZIPS=$(find other-resources/showcase-data -name "*-batch-cx.zip")
-    for sz in $SHOWCASE_ZIPS; do
-        echo "  -> Deploying Showcase Resource $(basename "$sz") to osgi/client-extensions/"
-        cp "$sz" "$CX_DIR/"
-    done
+    if [ -d "zips/showcase" ]; then
+        echo "Deploying all showcase resources from zips/showcase/..."
+        for sz in zips/showcase/*.zip; do
+            [ -e "$sz" ] || continue
+            echo "  -> Deploying Showcase Resource $(basename "$sz") to osgi/client-extensions/"
+            cp "$sz" "$CX_DIR/"
+        done
+    else
+        echo "Warning: zips/showcase/ directory not found. Skipping showcase deployment."
+    fi
 fi
 
 # Deploy specific items

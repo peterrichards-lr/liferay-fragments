@@ -5,6 +5,39 @@
     box-shadow: 0 4px 20px rgba(0,0,0,0.05);
 }
 
+/* Editor Header Styles */
+.meta-table-editor-header { height: 0; overflow: hidden; }
+body.has-edit-mode-menu .page-editor .meta-table-editor-header.show {
+   height: 26px;
+   min-height: 26px;
+   box-sizing: border-box;
+   background-color: var(--gray-100, #f7f8f9);
+   text-align: right;
+   font-size: 12px;
+   line-height: 26px;
+   border-radius: 2px 2px 0 0;
+   padding: 0 8px;
+   font-weight: 600;
+   display: block;
+}
+
+.meta-dropzone-editor-label {
+    display: none;
+    background: var(--gray-200, #e7e8eb);
+    padding: 4px 12px;
+    font-size: 11px;
+    font-weight: bold;
+    text-transform: uppercase;
+    color: var(--gray-700, #4b4c5e);
+    border-radius: 4px 4px 0 0;
+    margin-bottom: -2px;
+    margin-top: var(--spacer-4, 1.5rem);
+}
+
+body.has-edit-mode-menu .meta-dropzone-editor-label {
+    display: inline-block;
+}
+
 .meta-table-container .object-title {
     font-size: var(--h2-font-size);
     color: var(--body-color);
@@ -77,6 +110,50 @@
     backdrop-filter: blur(4px);
 }
 
+/* Editor-specific overrides for modals and dropzones */
+[data-layout-mode="edit"] .meta-modal-overlay {
+    position: relative; /* Ensure stacking one below each other */
+    background: none;
+    padding: 0;
+    height: auto;
+    display: block;
+    backdrop-filter: none;
+    z-index: 1;
+}
+
+[data-layout-mode="edit"] .meta-modal-container {
+    width: 100% !important;
+    max-height: none;
+    box-shadow: none;
+    position: static;
+    border: 2px dashed var(--gray-400, #b1b2b5);
+}
+
+[data-layout-mode="edit"] .close-modal-btn {
+    display: none; /* Hide close button in editor */
+}
+
+[data-layout-mode="edit"] .meta-modal-body {
+    min-height: 150px;
+    display: flex;
+    flex-direction: column;
+}
+
+[data-layout-mode="edit"] .meta-modal-body lfr-drop-zone {
+    flex-grow: 1;
+    min-height: 100px;
+    display: block;
+}
+
+/* Modal Title Hiding Logic */
+.meta-modal-container[data-show-title="false"] .meta-modal-header {
+    display: none;
+}
+
+.meta-modal-container[data-show-title="false"] .meta-modal-body {
+    padding: 0;
+}
+
 .meta-modal-container {
     background: var(--white, #fff);
     border-radius: var(--border-radius-lg, 0.5rem);
@@ -85,6 +162,17 @@
     flex-direction: column;
     max-height: 90vh;
     overflow: hidden;
+    position: relative; /* For close button positioning if title is hidden */
+}
+
+/* Add a way to close the modal if the header is hidden */
+.meta-modal-container[data-show-title="false"] .close-modal-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 10;
+    background: rgba(255, 255, 255, 0.8);
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }
 
 .modal-sm { width: 400px; }

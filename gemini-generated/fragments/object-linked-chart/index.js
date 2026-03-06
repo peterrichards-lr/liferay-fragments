@@ -104,41 +104,62 @@ const fetchData = async () => {
   return { items: data.items || [], definition };
 };
 
-const aggregateData = (items, labelField, valueFields, type) => {
-  if (type === "none")
-    return {
-      labels: items.map((item) => item[labelField] || "N/A"),
-      datasets: valueFields.map((field) =>
-        items.map((item) => item[field] || 0),
-      ),
-    };
+const aggregateData = (items, labelField, valueFields, type, sortOrder) => {
+  let processedLabels = [];
+  let processedDatasets = [];
 
-  const groups = {};
-  items.forEach((item) => {
-    const key = item[labelField] || "N/A";
-    if (!groups[key]) {
-      groups[key] = { count: 0 };
-      valueFields.forEach((f) => (groups[key][f] = 0));
+  if (type === "none") {
+    processedLabels = items.map((item) => item[labelField] || "N/A");
+    processedDatasets = valueFields.map((field) =>
+      items.map((item) => item[field] || 0),
+    );
+  } else {
+    const groups = {};
+    items.forEach((item) => {
+      const key = item[labelField] || "N/A";
+      if (!groups[key]) {
+        groups[key] = { count: 0, label: key };
+        valueFields.forEach((f) => (groups[key][f] = 0));
+      }
+      groups[key].count++;
+      valueFields.forEach((f) => {
+        const val = parseFloat(item[f]) || 0;
+        groups[key][f] += val;
+      });
+    });
+
+    const sortedGroups = Object.values(groups);
+
+    // Apply Sorting Logic
+    if (sortOrder === "label-asc") {
+      sortedGroups.sort((a, b) =>
+        String(a.label).localeCompare(String(b.label)),
+      );
+    } else if (sortOrder === "label-desc") {
+      sortedGroups.sort((a, b) =>
+        String(b.label).localeCompare(String(a.label)),
+      );
+    } else if (sortOrder === "value-asc" || sortOrder === "value-desc") {
+      const primaryField = valueFields[0];
+      sortedGroups.sort((a, b) => {
+        const valA = type === "count" ? a.count : a[primaryField];
+        const valB = type === "count" ? b.count : b[primaryField];
+        return sortOrder === "value-asc" ? valA - valB : valB - valA;
+      });
     }
-    groups[key].count++;
-    valueFields.forEach((f) => {
-      const val = parseFloat(item[f]) || 0;
-      groups[key][f] += val;
-    });
-  });
 
-  const labels = Object.keys(groups);
-  const datasets = valueFields.map((field) => {
-    return labels.map((label) => {
-      const group = groups[label];
-      if (type === "sum") return group[field];
-      if (type === "avg") return group[field] / group.count;
-      if (type === "count") return group.count;
-      return 0;
+    processedLabels = sortedGroups.map((g) => g.label);
+    processedDatasets = valueFields.map((field) => {
+      return sortedGroups.map((group) => {
+        if (type === "sum") return group[field];
+        if (type === "avg") return group[field] / group.count;
+        if (type === "count") return group.count;
+        return 0;
+      });
     });
-  });
+  }
 
-  return { labels, datasets };
+  return { labels: processedLabels, datasets: processedDatasets };
 };
 
 const initChart = async (isEditMode) => {
@@ -180,6 +201,7 @@ const initChart = async (isEditMode) => {
     valueFields,
     aggregationType,
     chartType,
+    sortOrder,
     borderFilter,
     colorMapping,
     colorPalette,
@@ -203,6 +225,12 @@ const initChart = async (isEditMode) => {
       showInfo(`No data found for object "${objectERC}".`);
       return;
     }
+
+    // Create field name to localized label map
+    const fieldNameMap = {};
+    definition.objectFields.forEach((f) => {
+      fieldNameMap[f.name] = getLocalizedValue(f.label);
+    });
 
     // Smart Title defaulting
     const currentTitle = titleEl.innerText.trim();
@@ -230,12 +258,12 @@ const initChart = async (isEditMode) => {
       labelField,
       fields,
       aggregationType,
+      sortOrder,
     );
 
     // Resolve effective color mapping mode
     let effectiveMapping = colorMapping || "auto";
     if (effectiveMapping === "auto") {
-      // If only one value field, multi-color by category by default
       if (fields.length === 1) {
         effectiveMapping = "label";
       } else {
@@ -271,9 +299,13 @@ const initChart = async (isEditMode) => {
         borderColors = resolveColor(baseColor, fragmentElement, borderFilter);
       }
 
+      const localizedFieldLabel = fieldNameMap[field] || field;
+
       const ds = {
         label:
-          aggregationType !== "none" ? `${field} (${aggregationType})` : field,
+          aggregationType !== "none"
+            ? `${localizedFieldLabel} (${aggregationType})`
+            : localizedFieldLabel,
         data: dataValues[index],
         backgroundColor: bgColors,
         borderColor: borderColors,
@@ -281,7 +313,6 @@ const initChart = async (isEditMode) => {
         fill: chartType === "line" ? false : true,
       };
 
-      // Assign to secondary Y axis if enabled and this is the second+ series
       if (
         enableSecondaryYAxis &&
         index > 0 &&

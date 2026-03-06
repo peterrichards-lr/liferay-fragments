@@ -49,6 +49,37 @@
               }
             ]
           }
+        },
+        {
+          "defaultValue": "none",
+          "label": "lfr.gemini-generated.sort-order",
+          "description": "lfr.gemini-generated.sort-order-description",
+          "name": "sortOrder",
+          "type": "select",
+          "typeOptions": {
+            "validValues": [
+              {
+                "label": "lfr.gemini-generated.none",
+                "value": "none"
+              },
+              {
+                "label": "lfr.gemini-generated.label-asc",
+                "value": "label-asc"
+              },
+              {
+                "label": "lfr.gemini-generated.label-desc",
+                "value": "label-desc"
+              },
+              {
+                "label": "lfr.gemini-generated.value-asc",
+                "value": "value-asc"
+              },
+              {
+                "label": "lfr.gemini-generated.value-desc",
+                "value": "value-desc"
+              }
+            ]
+          }
         }
       ],
       "label": "lfr.gemini-generated.data"
