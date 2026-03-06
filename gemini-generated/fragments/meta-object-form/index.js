@@ -214,6 +214,7 @@ const fetchOptionsForField = async (field, term = "") => {
 const loadRecord = async (identifier) => {
   const fieldsWrap = fragmentElement.querySelector(".form-fields-wrap");
   const form = fragmentElement.querySelector("form");
+  const { enableAddNew } = configuration;
 
   try {
     let record = {};
@@ -231,6 +232,23 @@ const loadRecord = async (identifier) => {
     } else {
       state.currentRecordId = null;
       state.currentRecordERC = null;
+    }
+
+    const submitBtn = form.querySelector('button[type="submit"]');
+    const statusMsg = fragmentElement.querySelector(".form-status-msg");
+    if (statusMsg) statusMsg.classList.add("d-none");
+
+    if (!state.currentRecordId && !enableAddNew) {
+      submitBtn.classList.add("d-none");
+      if (!identifier) {
+        fieldsWrap.innerHTML = `<div class="alert alert-info">${Liferay.Language.get("lfr.gemini-generated.please-select-a-record") || "Please select a record to edit."}</div>`;
+        return;
+      }
+    } else {
+      submitBtn.classList.remove("d-none");
+      submitBtn.textContent = state.currentRecordId
+        ? "Update Entry"
+        : "Add New Entry";
     }
 
     const fields = state.definition.objectFields.filter(
@@ -276,11 +294,6 @@ const loadRecord = async (identifier) => {
         wrap.appendChild(hidden);
       }
     });
-
-    const submitBtn = form.querySelector('button[type="submit"]');
-    submitBtn.textContent = state.currentRecordId
-      ? "Update Entry"
-      : "Add New Entry";
   } catch (err) {
     fieldsWrap.innerHTML = `<div class="alert alert-danger">${err.message}</div>`;
   }
@@ -313,8 +326,8 @@ const initSelector = async () => {
 const initMetaForm = async (isEditMode) => {
   const {
     objectERC,
-    fixedRecordId,
-    fixedRecordERC,
+    fixedRecordIdentifier,
+    fixedRecordIdentifierType,
     enableAddNew,
     enableRecordSelection,
   } = configuration;
@@ -358,18 +371,29 @@ const initMetaForm = async (isEditMode) => {
     if (!response.ok) throw new Error("Object not found.");
 
     state.definition = await response.json();
-    titleEl.textContent =
-      getLocalizedValue(state.definition.name) +
-      (isEditMode ? " (Preview)" : "");
+    const objectLabel = getLocalizedValue(state.definition.name);
+    const currentTitle = titleEl.innerText.trim();
+
+    if (
+      currentTitle === "Meta-Object Form" ||
+      currentTitle === "" ||
+      currentTitle === "Meta-Object Form (Preview)"
+    ) {
+      titleEl.innerText = objectLabel + (isEditMode ? " (Preview)" : "");
+    }
 
     const params = new URLSearchParams(window.location.search);
-    let startIdentifier =
-      fixedRecordId ||
-      params.get("entryId") ||
-      params.get("id") ||
-      fixedRecordERC ||
-      params.get("entryERC") ||
-      params.get("erc");
+    let startIdentifier = null;
+
+    if (fixedRecordIdentifier) {
+      startIdentifier = fixedRecordIdentifier;
+    } else {
+      startIdentifier =
+        params.get("entryId") ||
+        params.get("id") ||
+        params.get("entryERC") ||
+        params.get("erc");
+    }
 
     if (!startIdentifier && !enableAddNew && !enableRecordSelection) {
       showError('Record ID not specified and "Add New" is disabled.');

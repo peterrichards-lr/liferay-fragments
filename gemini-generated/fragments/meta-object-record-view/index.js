@@ -168,7 +168,7 @@ const loadRecordData = async (identifier, isEditMode) => {
 };
 
 const initRecordView = async (isEditMode) => {
-  const { objectERC, recordId, recordERC } = configuration;
+  const { objectERC, fallbackRecordIdentifier } = configuration;
   const fieldsWrap = fragmentElement.querySelector(
     `#fields-${fragmentEntryLinkNamespace}`,
   );
@@ -221,13 +221,17 @@ const initRecordView = async (isEditMode) => {
       (isEditMode ? " (Preview)" : "");
 
     const params = new URLSearchParams(window.location.search);
-    const identifier =
-      params.get("entryId") ||
-      params.get("id") ||
-      recordId ||
-      params.get("entryERC") ||
-      params.get("erc") ||
-      recordERC;
+    let identifier = null;
+
+    if (fallbackRecordIdentifier) {
+      identifier = fallbackRecordIdentifier;
+    } else {
+      identifier =
+        params.get("entryId") ||
+        params.get("id") ||
+        params.get("entryERC") ||
+        params.get("erc");
+    }
 
     if (identifier || isEditMode) {
       await loadRecordData(identifier, isEditMode);

@@ -10,18 +10,31 @@
           "defaultValue": "COMPANY_MILESTONE"
         },
         {
-          "label": "lfr.gemini-generated.fallback-record-id",
-          "description": "lfr.gemini-generated.fallback-record-id-description",
-          "name": "recordId",
+          "label": "lfr.gemini-generated.fallback-record-identifier",
+          "description": "lfr.gemini-generated.fallback-record-identifier-description",
+          "name": "fallbackRecordIdentifier",
           "type": "text",
           "defaultValue": ""
         },
         {
-          "label": "lfr.gemini-generated.fallback-record-erc",
-          "description": "lfr.gemini-generated.fallback-record-erc-description",
-          "name": "recordERC",
-          "type": "text",
-          "defaultValue": ""
+          "dataType": "string",
+          "defaultValue": "id",
+          "label": "lfr.gemini-generated.identifier-type",
+          "description": "lfr.gemini-generated.identifier-type-description",
+          "name": "fallbackRecordIdentifierType",
+          "type": "select",
+          "typeOptions": {
+            "validValues": [
+              {
+                "label": "lfr.gemini-generated.id",
+                "value": "id"
+              },
+              {
+                "label": "lfr.gemini-generated.erc",
+                "value": "erc"
+              }
+            ]
+          }
         }
       ],
       "label": "lfr.gemini-generated.data"

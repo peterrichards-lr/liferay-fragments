@@ -14,10 +14,10 @@ A truly dynamic form that auto-generates inputs based on a Liferay Object's defi
 ## Configuration
 
 - **Object ERC**: The source Object definition (e.g., `COMPANY_MILESTONE`).
-- **Enable Add New**: Allow creating new records (shows a blank form by default).
+- **Enable Add New**: Allow creating new records. If disabled and no record is loaded, the form displays a "Please select a record" prompt.
 - **Enable Record Selection**: Display a dropdown at runtime to choose which record to edit.
-- **Fixed Record ID**: Hardcode a specific record ID to always edit (overrides URL/Events).
-- **Fixed Record ERC**: Hardcode a specific record External Reference Code to always edit (overrides URL/Events).
+- **Fixed Record Identifier**: A specific record value to always edit (overrides URL/Events).
+- **Identifier Type**: Specify if the fixed identifier is a numeric **ID** or a string **ERC**.
 - **Submit Button Color**: Custom theme color for the action button.
 
 ## External Selection (JS Event)

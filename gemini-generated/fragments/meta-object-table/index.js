@@ -127,7 +127,7 @@ const renderPagination = (isEditMode) => {
   }
 };
 
-const handleAction = (type, recordId) => {
+const handleAction = (type, recordId, recordERC) => {
   const { objectERC, viewMode, viewUrl, editMode, editUrl } = configuration;
   const mode = type === "view" ? viewMode : editMode;
   const targetUrl = type === "view" ? viewUrl : editUrl;
@@ -137,7 +137,7 @@ const handleAction = (type, recordId) => {
   if (mode === "event") {
     window.dispatchEvent(
       new CustomEvent(eventName, {
-        detail: { objectERC, recordId },
+        detail: { objectERC, recordId, recordERC },
       }),
     );
   } else if (mode === "redirect" || mode === "tab") {
@@ -146,6 +146,7 @@ const handleAction = (type, recordId) => {
       window.location.origin,
     );
     url.searchParams.set("entryId", recordId);
+    url.searchParams.set("entryERC", recordERC);
     if (mode === "tab") window.open(url.toString(), "_blank");
     else window.location.href = url.toString();
   }
@@ -188,8 +189,8 @@ const loadPage = async (pageNumber, isEditMode = false) => {
         if (enableView || enableEdit) {
           actionsHtml = `<td class="text-right">
                     <div class="btn-group">
-                        ${enableView ? `<button class="btn btn-monospaced btn-sm btn-secondary view-btn" data-id="${item.id}" title="View"><svg class="lexicon-icon"><use xlink:href="/o/classic-theme/images/lexicon/icons.svg#view"></use></svg></button>` : ""}
-                        ${enableEdit ? `<button class="btn btn-monospaced btn-sm btn-secondary edit-btn" data-id="${item.id}" title="Edit"><svg class="lexicon-icon"><use xlink:href="/o/classic-theme/images/lexicon/icons.svg#pencil"></use></svg></button>` : ""}
+                        ${enableView ? `<button class="btn btn-monospaced btn-sm btn-secondary view-btn" data-id="${item.id}" data-erc="${item.externalReferenceCode || ""}" title="View"><svg class="lexicon-icon"><use xlink:href="/o/classic-theme/images/lexicon/icons.svg#view"></use></svg></button>` : ""}
+                        ${enableEdit ? `<button class="btn btn-monospaced btn-sm btn-secondary edit-btn" data-id="${item.id}" data-erc="${item.externalReferenceCode || ""}" title="Edit"><svg class="lexicon-icon"><use xlink:href="/o/classic-theme/images/lexicon/icons.svg#pencil"></use></svg></button>` : ""}
                     </div>
                 </td>`;
         }
@@ -205,10 +206,10 @@ const loadPage = async (pageNumber, isEditMode = false) => {
 
     // Attach action listeners
     tbody.querySelectorAll(".view-btn").forEach((btn) => {
-      btn.onclick = () => handleAction("view", btn.dataset.id);
+      btn.onclick = () => handleAction("view", btn.dataset.id, btn.dataset.erc);
     });
     tbody.querySelectorAll(".edit-btn").forEach((btn) => {
-      btn.onclick = () => handleAction("edit", btn.dataset.id);
+      btn.onclick = () => handleAction("edit", btn.dataset.id, btn.dataset.erc);
     });
 
     if (!isEditMode) {

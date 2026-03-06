@@ -24,18 +24,31 @@
           "defaultValue": false
         },
         {
-          "label": "lfr.gemini-generated.fixed-record-id",
-          "description": "lfr.gemini-generated.fixed-record-id-description",
-          "name": "fixedRecordId",
+          "label": "lfr.gemini-generated.fixed-record-identifier",
+          "description": "lfr.gemini-generated.fixed-record-identifier-description",
+          "name": "fixedRecordIdentifier",
           "type": "text",
           "defaultValue": ""
         },
         {
-          "label": "lfr.gemini-generated.fixed-record-erc",
-          "description": "lfr.gemini-generated.fixed-record-erc-description",
-          "name": "fixedRecordERC",
-          "type": "text",
-          "defaultValue": ""
+          "dataType": "string",
+          "defaultValue": "id",
+          "label": "lfr.gemini-generated.identifier-type",
+          "description": "lfr.gemini-generated.identifier-type-description",
+          "name": "fixedRecordIdentifierType",
+          "type": "select",
+          "typeOptions": {
+            "validValues": [
+              {
+                "label": "lfr.gemini-generated.id",
+                "value": "id"
+              },
+              {
+                "label": "lfr.gemini-generated.erc",
+                "value": "erc"
+              }
+            ]
+          }
         }
       ],
       "label": "lfr.gemini-generated.data"

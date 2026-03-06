@@ -19,8 +19,8 @@ A single-entry detail view that dynamically discovers fields and provides a high
 ## Configuration
 
 - **Object ERC**: The source Object definition (e.g., `COMPANY_MILESTONE`).
-- **Fallback Record ID**: Used if no ID is found in the page URL or via events.
-- **Fallback Record ERC**: Used if no ERC is found in the page URL or via events.
+- **Fallback Record Identifier**: A specific record value to display if none is found in the page URL or via events.
+- **Identifier Type**: Specify if the fallback identifier is a numeric **ID** or a string **ERC**.
 - **Accent Color**: Custom theme color for labels and headers.
 
 ## External Selection (JS Event)
