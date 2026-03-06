@@ -1,59 +1,45 @@
-const animateValue = (obj, start, end, duration, decimalPlaces) => {
-  let startTimestamp = null;
-  const step = (timestamp) => {
-    if (!startTimestamp) startTimestamp = timestamp;
-    const progress = Math.min((timestamp - startTimestamp) / duration, 1);
-    const current = progress * (end - start) + start;
-    obj.innerHTML = current.toFixed(decimalPlaces);
-    if (progress < 1) {
-      window.requestAnimationFrame(step);
-    }
-  };
-  window.requestAnimationFrame(step);
-};
-
 const initCounter = () => {
   const valueEl = fragmentElement.querySelector(
     `#value-${fragmentEntryLinkNamespace}`,
   );
-  const infoEl = fragmentElement.querySelector(
-    `#info-${fragmentEntryLinkNamespace}`,
-  );
-  const errorEl = fragmentElement.querySelector(
-    `#error-${fragmentEntryLinkNamespace}`,
-  );
+  if (valueEl) {
+    const startValue = parseFloat(configuration.startValue || "0");
+    const endValue = parseFloat(configuration.endValue || "100");
+    const duration = parseInt(configuration.duration || "2000");
+    const decimals = parseInt(configuration.decimalPrecision || "0");
 
-  if (infoEl) infoEl.classList.add("d-none");
-  if (errorEl) errorEl.classList.add("d-none");
+    const animate = () => {
+      let startTimestamp = null;
+      const step = (timestamp) => {
+        if (!startTimestamp) startTimestamp = timestamp;
+        const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+        const current = progress * (endValue - startValue) + startValue;
 
-  const endValue = parseFloat(configuration.endValue || "0");
-  const duration = parseInt(configuration.duration || "2000");
-  const decimalPlaces = parseInt(configuration.decimalPlaces || "0");
+        valueEl.textContent = current.toFixed(decimals);
 
-  if (!valueEl) return;
-
-  if (layoutMode !== "view") {
-    if (!configuration.endValue && infoEl) {
-      infoEl.textContent = "Please provide an End Value in the configuration.";
-      infoEl.classList.remove("d-none");
-    }
-    valueEl.innerHTML = endValue.toFixed(decimalPlaces);
-    return;
-  }
-
-  const observer = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          animateValue(valueEl, 0, endValue, duration, decimalPlaces);
-          observer.unobserve(valueEl);
+        if (progress < 1) {
+          window.requestAnimationFrame(step);
         }
-      });
-    },
-    { threshold: 0.5 },
-  );
+      };
+      window.requestAnimationFrame(step);
+    };
 
-  observer.observe(valueEl);
+    if (layoutMode === "view") {
+      const observer = new IntersectionObserver(
+        (entries) => {
+          if (entries[0].isIntersecting) {
+            animate();
+            observer.disconnect();
+          }
+        },
+        { threshold: 0.1 },
+      );
+
+      observer.observe(valueEl);
+    } else {
+      valueEl.textContent = endValue.toFixed(decimals);
+    }
+  }
 };
 
 initCounter();

@@ -12,6 +12,7 @@ Data visualization fragment that integrates Chart.js to render Liferay Object da
 - **Localized Labels**: Automatically uses human-readable labels from the Object field definitions for legends and tooltips.
 - **Accessibility**: Automatically generates a visually-hidden HTML table fallback for screen readers.
 - **Smart Defaults**: Automatic color mapping based on data structure (category-based for single series, series-based for multiple).
+- **Mappable Axis Labels**: Customize X, Y, and Secondary Y axis labels directly in the Page Editor.
 
 ## Configuration
 
@@ -26,6 +27,10 @@ Data visualization fragment that integrates Chart.js to render Liferay Object da
 - **Enable Secondary Y-Axis**: Map second+ series to a right-hand vertical axis.
 - **Color Mapping**: Switch between category-based or series-based coloring.
 - **Color Palette**: Select a theme that matches your site's branding.
+
+## Editor Ergonomics
+
+In the Page Editor, the **X-Axis Label**, **Y-Axis Label**, and **Secondary Y-Axis Label** configuration fields are displayed in a styled container (`.meta-editor-mappable-fields`) at the bottom of the fragment. This allows editors to map dynamic text or manually override labels directly within the fragment body.
 
 ## Showcase Data: Sales Report
 

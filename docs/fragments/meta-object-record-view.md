@@ -6,6 +6,7 @@ A single-entry detail view that dynamically discovers fields and provides a high
 
 - **Self-Discovering**: Renders all fields for a specific Object entry via the Object Admin API.
 - **Mappable Title**: The record title is fully mappable and editable in the Page Editor. It intelligently defaults to the Object's localized name if not customized.
+- **Mappable Configuration**: Key configuration values like **Object ERC** are mappable directly in the fragment body. These values take priority over the sidebar configuration, enabling visual page assembly.
 - **Hybrid Identification**: Supports identifying records by numeric **Record ID** or string **External Reference Code (ERC)**.
 - **PDF Export**: Integrated jsPDF and html2canvas support for downloading high-quality reports.
 - **Integration**: Automatically picks up record identifiers from URL parameters (`id`, `entryId`, `erc`, `entryERC`) or listens for the `lfr-object-view-select` JavaScript event.
@@ -23,6 +24,10 @@ A single-entry detail view that dynamically discovers fields and provides a high
 - **Fallback Record Identifier**: A specific record value to display if none is found in the page URL or via events.
 - **Identifier Type**: Specify if the fallback identifier is a numeric **ID** or a string **ERC**.
 - **Colors**: Pick custom colors for field labels and values to match your theme.
+
+## Editor Ergonomics
+
+In the Page Editor, the **Object ERC** configuration field is displayed in a styled container (`.meta-editor-mappable-fields`) at the bottom of the fragment. This allows editors to map dynamic data (like an ERC from a collection) directly to the fragment without using the sidebar.
 
 ## External Selection (JS Event)
 

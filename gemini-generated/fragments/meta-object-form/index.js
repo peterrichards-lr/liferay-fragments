@@ -51,8 +51,7 @@ const createSearchableSelect = (container, options = {}) => {
 
   const renderResults = (items) => {
     if (!items || items.length === 0) {
-      results.innerHTML =
-        '<div class="search-result-item no-results">No results found</div>';
+      results.innerHTML = `<div class="search-result-item no-results">No results found</div>`;
     } else {
       results.innerHTML = items
         .map(
@@ -211,22 +210,49 @@ const fetchOptionsForField = async (field, term = "") => {
   return [];
 };
 
-const loadRecord = async (identifier) => {
+const isValidIdentifier = (val) => {
+  if (val === undefined || val === null) return false;
+  const s = String(val).trim();
+  return (
+    s !== "" && s !== "undefined" && s !== "null" && s !== "[object Object]"
+  );
+};
+
+const loadRecord = async (recordId, recordERC) => {
   const fieldsWrap = fragmentElement.querySelector(".form-fields-wrap");
   const form = fragmentElement.querySelector("form");
   const { enableAddNew } = configuration;
 
+  // Ensure definition is loaded
+  if (!state.definition) {
+    const timer = setInterval(() => {
+      if (state.definition) {
+        clearInterval(timer);
+        loadRecord(recordId, recordERC);
+      }
+    }, 100);
+    return;
+  }
+
   try {
     let record = {};
-    if (identifier) {
-      const isERC = isNaN(identifier);
-      const url = isERC
-        ? `${getBaseUrl()}/by-external-reference-code/${identifier}`
-        : `${getBaseUrl()}/${identifier}`;
+    let hasIdentifier = false;
 
+    if (isValidIdentifier(recordERC)) {
+      const url = `${getBaseUrl()}/by-external-reference-code/${recordERC}`;
       const response = await Liferay.Util.fetch(url);
-      if (!response.ok) throw new Error("Failed to fetch record.");
+      if (!response.ok) throw new Error(`Record not found (ERC: ${recordERC})`);
       record = await response.json();
+      hasIdentifier = true;
+    } else if (isValidIdentifier(recordId)) {
+      const url = `${getBaseUrl()}/${recordId}`;
+      const response = await Liferay.Util.fetch(url);
+      if (!response.ok) throw new Error(`Record not found (ID: ${recordId})`);
+      record = await response.json();
+      hasIdentifier = true;
+    }
+
+    if (hasIdentifier) {
       state.currentRecordId = record.id;
       state.currentRecordERC = record.externalReferenceCode;
     } else {
@@ -239,61 +265,60 @@ const loadRecord = async (identifier) => {
     if (statusMsg) statusMsg.classList.add("d-none");
 
     if (!state.currentRecordId && !enableAddNew) {
-      submitBtn.classList.add("d-none");
-      if (!identifier) {
+      if (submitBtn) submitBtn.classList.add("d-none");
+      if (!hasIdentifier) {
         fieldsWrap.innerHTML = `<div class="alert alert-info">${Liferay.Language.get("lfr.gemini-generated.please-select-a-record") || "Please select a record to edit."}</div>`;
-        return;
       }
     } else {
-      submitBtn.classList.remove("d-none");
-      submitBtn.textContent = state.currentRecordId
-        ? "Update Entry"
-        : "Add New Entry";
+      if (submitBtn) submitBtn.classList.remove("d-none");
+
+      const fields = state.definition.objectFields.filter(
+        (f) =>
+          !["id", "externalReferenceCode", "status"].includes(f.name) &&
+          f.readOnly !== "true" &&
+          f.readOnly !== "conditional",
+      );
+      fieldsWrap.innerHTML = fields
+        .map((f) => mapFieldToInput(f, record[f.name] || ""))
+        .join("");
+
+      // Initialize searchable fields
+      fields.forEach((f) => {
+        if (
+          f.businessType === "Picklist" ||
+          f.businessType === "Relationship"
+        ) {
+          const wrap = fieldsWrap.querySelector(
+            `.searchable-field-wrap[data-field-name="${f.name}"]`,
+          );
+          const val = wrap.dataset.value;
+          const label = wrap.dataset.label;
+
+          createSearchableSelect(wrap, {
+            placeholder: `Select ${getLocalizedValue(f.label)}...`,
+            defaultValue: label,
+            fetchFn: (term) => fetchOptionsForField(f, term),
+            onSelect: (v) => {
+              const hidden = document.createElement("input");
+              hidden.type = "hidden";
+              hidden.name = f.name;
+              hidden.value = v;
+              // Replace existing hidden input if any
+              const old = wrap.querySelector(`input[name="${f.name}"]`);
+              if (old) old.remove();
+              wrap.appendChild(hidden);
+            },
+          }).setValue(val, label);
+
+          // Initial hidden input for form submission
+          const hidden = document.createElement("input");
+          hidden.type = "hidden";
+          hidden.name = f.name;
+          hidden.value = val;
+          wrap.appendChild(hidden);
+        }
+      });
     }
-
-    const fields = state.definition.objectFields.filter(
-      (f) =>
-        !["id", "externalReferenceCode", "status"].includes(f.name) &&
-        f.readOnly !== "true" &&
-        f.readOnly !== "conditional",
-    );
-    fieldsWrap.innerHTML = fields
-      .map((f) => mapFieldToInput(f, record[f.name] || ""))
-      .join("");
-
-    // Initialize searchable fields
-    fields.forEach((f) => {
-      if (f.businessType === "Picklist" || f.businessType === "Relationship") {
-        const wrap = fieldsWrap.querySelector(
-          `.searchable-field-wrap[data-field-name="${f.name}"]`,
-        );
-        const val = wrap.dataset.value;
-        const label = wrap.dataset.label;
-
-        createSearchableSelect(wrap, {
-          placeholder: `Select ${getLocalizedValue(f.label)}...`,
-          defaultValue: label,
-          fetchFn: (term) => fetchOptionsForField(f, term),
-          onSelect: (v) => {
-            const hidden = document.createElement("input");
-            hidden.type = "hidden";
-            hidden.name = f.name;
-            hidden.value = v;
-            // Replace existing hidden input if any
-            const old = wrap.querySelector(`input[name="${f.name}"]`);
-            if (old) old.remove();
-            wrap.appendChild(hidden);
-          },
-        }).setValue(val, label);
-
-        // Initial hidden input for form submission
-        const hidden = document.createElement("input");
-        hidden.type = "hidden";
-        hidden.name = f.name;
-        hidden.value = val;
-        wrap.appendChild(hidden);
-      }
-    });
   } catch (err) {
     fieldsWrap.innerHTML = `<div class="alert alert-danger">${err.message}</div>`;
   }
@@ -304,32 +329,33 @@ const initSelector = async () => {
   const container = fragmentElement.querySelector(
     `#selector-${fragmentEntryLinkNamespace}`,
   );
-  if (!container || !enableRecordSelection) return;
-
-  createSearchableSelect(container, {
-    placeholder: "Search records to edit...",
-    fetchFn: async (term) => {
-      const response = await Liferay.Util.fetch(
-        `${getBaseUrl()}/?search=${term}&pageSize=20`,
-      );
-      const data = await response.json();
-      const titleField = state.definition.titleObjectFieldName || "id";
-      return (data.items || []).map((r) => ({
-        label: r[titleField] || r.id,
-        value: r.id,
-      }));
-    },
-    onSelect: (id) => loadRecord(id),
-  });
+  if (container && enableRecordSelection) {
+    createSearchableSelect(container, {
+      placeholder: "Search records to edit...",
+      fetchFn: async (term) => {
+        const response = await Liferay.Util.fetch(
+          `${getBaseUrl()}/?search=${term}&pageSize=20`,
+        );
+        const data = await response.json();
+        const titleField = state.definition.titleObjectFieldName || "id";
+        return (data.items || []).map((r) => ({
+          label: r[titleField] || r.id,
+          value: r.id,
+        }));
+      },
+      onSelect: (id) => loadRecord(id, null),
+    });
+  }
 };
 
 const initMetaForm = async (isEditMode) => {
   const {
-    objectERC,
+    objectERC: configERC,
     fixedRecordIdentifier,
     fixedRecordIdentifierType,
     enableAddNew,
     enableRecordSelection,
+    formTitle: configTitle,
   } = configuration;
   const fieldsWrap = fragmentElement.querySelector(".form-fields-wrap");
   const titleEl = fragmentElement.querySelector(".object-title");
@@ -354,112 +380,156 @@ const initMetaForm = async (isEditMode) => {
   if (errorEl) errorEl.classList.add("d-none");
   if (infoEl) infoEl.classList.add("d-none");
 
+  // Resolve effective ERC (Prioritize mappable field)
+  const mappableERCEl = fragmentElement.querySelector(
+    '[data-lfr-editable-id="object-erc"]',
+  );
+  let objectERC = configERC;
+  if (mappableERCEl) {
+    const mappedVal = mappableERCEl.innerText.trim();
+    if (
+      mappedVal &&
+      mappedVal !== configERC &&
+      mappedVal !== "COMPANY_MILESTONE"
+    ) {
+      objectERC = mappedVal;
+    }
+  }
+
+  // Register event listener IMMEDIATELY to avoid race conditions
+  window.addEventListener("lfr-object-form-select", (e) => {
+    if (e.detail && e.detail.objectERC === objectERC) {
+      const eventId =
+        e.detail.recordId ||
+        (e.detail.identifier && !e.detail.recordERC
+          ? e.detail.identifier
+          : null);
+      const eventERC =
+        e.detail.recordERC ||
+        e.detail.erc ||
+        (e.detail.identifier && e.detail.recordERC
+          ? e.detail.identifier
+          : null);
+
+      // If the identifier was sent, but we don't know if it's ID or ERC, use it appropriately
+      // Usually the table sends both recordId and recordERC if available.
+      loadRecord(eventId || null, eventERC || null);
+    }
+  });
+
   if (!objectERC) {
     titleEl.textContent = "Meta-Object Form";
-    if (infoEl) {
+    if (isEditMode && infoEl) {
       infoEl.textContent =
         "Please provide an Object External Reference Code in the configuration.";
       infoEl.classList.remove("d-none");
     }
-    return;
-  }
+  } else {
+    try {
+      const response = await Liferay.Util.fetch(
+        `${ADMIN_API_BASE}/object-definitions/by-external-reference-code/${objectERC}`,
+      );
+      if (!response.ok)
+        throw new Error(`Object not found (ERC: ${objectERC}).`);
 
-  try {
-    const response = await Liferay.Util.fetch(
-      `${ADMIN_API_BASE}/object-definitions/by-external-reference-code/${objectERC}`,
-    );
-    if (!response.ok) throw new Error("Object not found.");
+      state.definition = await response.json();
 
-    state.definition = await response.json();
-    const objectLabel = getLocalizedValue(
-      state.definition.label || state.definition.name,
-    );
-    const currentTitle = titleEl.innerText.trim();
+      // Smart Title Logic
+      const objectLabel = getLocalizedValue(
+        state.definition.label || state.definition.name,
+      );
+      const currentTitle = titleEl.innerText.trim();
+      const defaultFragmentName =
+        fragmentElement.dataset.fragmentName || "Meta-Object Form";
 
-    if (
-      currentTitle === "Meta-Object Form" ||
-      currentTitle === "" ||
-      currentTitle === "Meta-Object Form (Preview)"
-    ) {
-      titleEl.innerText = objectLabel + (isEditMode ? " (Preview)" : "");
-    }
+      // Precedence: Configuration (configTitle) > Evaluated Value (objectLabel)
+      const preferredTitle = configTitle || objectLabel;
 
-    const params = new URLSearchParams(window.location.search);
-    let startIdentifier = null;
-
-    if (fixedRecordIdentifier) {
-      startIdentifier = fixedRecordIdentifier;
-    } else {
-      startIdentifier =
-        params.get("entryId") ||
-        params.get("id") ||
-        params.get("entryERC") ||
-        params.get("erc");
-    }
-
-    if (!startIdentifier && !enableAddNew && !enableRecordSelection) {
-      showError('Record ID not specified and "Add New" is disabled.');
-      return;
-    }
-
-    await loadRecord(startIdentifier);
-    if (!isEditMode && enableRecordSelection) await initSelector();
-
-    window.addEventListener("lfr-object-form-select", (e) => {
-      if (e.detail && e.detail.objectERC === objectERC) {
-        const eventIdentifier =
-          e.detail.recordId || e.detail.recordERC || e.detail.erc;
-        if (eventIdentifier) loadRecord(eventIdentifier);
+      if (
+        currentTitle === "Meta-Object Form" ||
+        currentTitle === defaultFragmentName ||
+        currentTitle === "" ||
+        currentTitle === "Update Entry" || // Previous default
+        currentTitle === `${defaultFragmentName} (Preview)`
+      ) {
+        titleEl.innerText = preferredTitle + (isEditMode ? " (Preview)" : "");
       }
-    });
 
-    if (!isEditMode) {
-      form.addEventListener("submit", async (e) => {
-        e.preventDefault();
-        const formData = new FormData(form);
-        const payload = Object.fromEntries(formData.entries());
+      const params = new URLSearchParams(window.location.search);
+      let startId = params.get("entryId") || params.get("id");
+      let startERC = params.get("entryERC") || params.get("erc");
 
-        state.definition.objectFields.forEach((f) => {
-          if (f.type === "Boolean") payload[f.name] = formData.has(f.name);
-        });
+      if (isValidIdentifier(fixedRecordIdentifier)) {
+        if (fixedRecordIdentifierType === "erc")
+          startERC = fixedRecordIdentifier;
+        else startId = fixedRecordIdentifier;
+      }
 
-        const statusMsg = fragmentElement.querySelector(".form-status-msg");
-        statusMsg.classList.add("d-none");
+      // Standardize URL identifiers
+      if (!isValidIdentifier(startId)) startId = null;
+      if (!isValidIdentifier(startERC)) startERC = null;
 
-        try {
-          const method = state.currentRecordId ? "PATCH" : "POST";
-          const url = state.currentRecordId
-            ? `${getBaseUrl()}/${state.currentRecordId}`
-            : `${getBaseUrl()}/`;
+      if (!startId && !startERC && !enableAddNew && !enableRecordSelection) {
+        // Initial state: nothing to load, show info
+        fieldsWrap.innerHTML = `<div class="alert alert-info">${Liferay.Language.get("lfr.gemini-generated.please-select-a-record") || "Please select a record to edit."}</div>`;
+      } else {
+        await loadRecord(startId, startERC);
+        if (!isEditMode && enableRecordSelection) await initSelector();
+      }
 
-          const saveRes = await Liferay.Util.fetch(url, {
-            method: method,
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(payload),
+      if (!isEditMode) {
+        form.addEventListener("submit", async (e) => {
+          e.preventDefault();
+          const formData = new FormData(form);
+          const payload = Object.fromEntries(formData.entries());
+
+          state.definition.objectFields.forEach((f) => {
+            if (f.type === "Boolean") payload[f.name] = formData.has(f.name);
           });
 
-          if (saveRes.ok) {
-            statusMsg.textContent = state.currentRecordId
-              ? "Entry updated successfully!"
-              : "Entry saved successfully!";
-            statusMsg.className = "form-status-msg mt-3 alert alert-success";
-            statusMsg.classList.remove("d-none");
-            if (!state.currentRecordId) form.reset();
-          } else {
-            const errData = await saveRes.json();
-            throw new Error(errData.title || "Failed to save entry.");
+          const statusMsg = fragmentElement.querySelector(".form-status-msg");
+          if (statusMsg) statusMsg.classList.add("d-none");
+
+          try {
+            const method = state.currentRecordId ? "PATCH" : "POST";
+            const url = state.currentRecordId
+              ? `${getBaseUrl()}/${state.currentRecordId}`
+              : `${getBaseUrl()}/`;
+
+            const saveRes = await Liferay.Util.fetch(url, {
+              method: method,
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify(payload),
+            });
+
+            if (saveRes.ok) {
+              if (statusMsg) {
+                statusMsg.textContent = state.currentRecordId
+                  ? "Entry updated successfully!"
+                  : "Entry saved successfully!";
+                statusMsg.className =
+                  "form-status-msg mt-3 alert alert-success";
+                statusMsg.classList.remove("d-none");
+              }
+              if (!state.currentRecordId) form.reset();
+            } else {
+              const errData = await saveRes.json();
+              throw new Error(errData.title || "Failed to save entry.");
+            }
+          } catch (err) {
+            if (statusMsg) {
+              statusMsg.textContent = err.message;
+              statusMsg.className = "form-status-msg mt-3 alert alert-danger";
+              statusMsg.classList.remove("d-none");
+            }
           }
-        } catch (err) {
-          statusMsg.textContent = err.message;
-          statusMsg.className = "form-status-msg mt-3 alert alert-danger";
-          statusMsg.classList.remove("d-none");
-        }
-      });
-    } else {
-      form.onsubmit = (e) => e.preventDefault();
+        });
+      } else {
+        form.onsubmit = (e) => e.preventDefault();
+      }
+    } catch (err) {
+      showError(err.message);
     }
-  } catch (err) {
-    showError(err.message);
   }
 };
 

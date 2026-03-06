@@ -95,71 +95,102 @@ const getBaseUrl = () => {
   return url;
 };
 
-const loadRecordData = async (identifier, isEditMode) => {
+const isValidIdentifier = (val) => {
+  if (val === undefined || val === null) return false;
+  const s = String(val).trim();
+  return (
+    s !== "" && s !== "undefined" && s !== "null" && s !== "[object Object]"
+  );
+};
+
+const loadRecordData = async (recordId, recordERC, isEditMode) => {
   const fieldsWrap = fragmentElement.querySelector(
     `#fields-${fragmentEntryLinkNamespace}`,
   );
-  const titleEl = fragmentElement.querySelector(".object-name-label");
   const pdfBtn = fragmentElement.querySelector(
     `#pdf-${fragmentEntryLinkNamespace}`,
   );
 
+  // Ensure definition is loaded
+  if (!state.definition) {
+    const timer = setInterval(() => {
+      if (state.definition) {
+        clearInterval(timer);
+        loadRecordData(recordId, recordERC, isEditMode);
+      }
+    }, 100);
+    return;
+  }
+
   try {
     let record = {};
-    if (identifier) {
-      const isERC = isNaN(identifier);
-      const url = isERC
-        ? `${getBaseUrl()}/by-external-reference-code/${identifier}`
-        : `${getBaseUrl()}/${identifier}`;
+    let hasIdentifier = false;
 
-      const dataRes = await Liferay.Util.fetch(url);
-      if (!dataRes.ok) throw new Error("Record not found.");
-      record = await dataRes.json();
-      state.currentRecordId = record.id;
+    if (isValidIdentifier(recordERC)) {
+      const url = `${getBaseUrl()}/by-external-reference-code/${recordERC}`;
+      const response = await Liferay.Util.fetch(url);
+      if (!response.ok) throw new Error(`Record not found (ERC: ${recordERC})`);
+      record = await response.json();
+      hasIdentifier = true;
+    } else if (isValidIdentifier(recordId)) {
+      const url = `${getBaseUrl()}/${recordId}`;
+      const response = await Liferay.Util.fetch(url);
+      if (!response.ok) throw new Error(`Record not found (ID: ${recordId})`);
+      record = await response.json();
+      hasIdentifier = true;
     } else if (isEditMode) {
       const listRes = await Liferay.Util.fetch(`${getBaseUrl()}/?pageSize=1`);
       const data = await listRes.json();
       record = data.items?.[0] || {};
-      state.currentRecordId = record.id || null;
+      hasIdentifier = !!record.id;
     }
 
-    const displayFields = state.definition.objectFields.filter(
-      (f) => !["id", "externalReferenceCode"].includes(f.name),
-    );
-    fieldsWrap.innerHTML = displayFields
-      .map(
-        (f) => `
+    if (hasIdentifier) {
+      state.currentRecordId = record.id;
+
+      const displayFields = state.definition.objectFields.filter(
+        (f) => !["id", "externalReferenceCode"].includes(f.name),
+      );
+      fieldsWrap.innerHTML = displayFields
+        .map(
+          (f) => `
             <div class="record-row">
                 <div class="field-label">${getLocalizedValue(f.label)}</div>
                 <div class="field-value">${formatCellValue(record, f)}</div>
             </div>
         `,
-      )
-      .join("");
+        )
+        .join("");
 
-    if (pdfBtn) {
-      if (!isEditMode && state.currentRecordId) {
-        pdfBtn.classList.remove("d-none");
-        pdfBtn.onclick = async () => {
-          const doc = new window.jspdf.jsPDF("p", "pt", "a4");
-          await doc.html(
-            fragmentElement.querySelector(
-              `#capture-${fragmentEntryLinkNamespace}`,
-            ),
-            {
-              callback: (pdf) =>
-                pdf.save(
-                  `${state.definition.restContextPath.replace("/o/c/", "")}_${state.currentRecordId}.pdf`,
-                ),
-              x: 40,
-              y: 40,
-              width: 515,
-              windowWidth: 800,
-            },
-          );
-        };
-      } else {
-        pdfBtn.classList.add("d-none");
+      if (pdfBtn) {
+        if (!isEditMode && state.currentRecordId) {
+          pdfBtn.classList.remove("d-none");
+          pdfBtn.onclick = async () => {
+            const doc = new window.jspdf.jsPDF("p", "pt", "a4");
+            await doc.html(
+              fragmentElement.querySelector(
+                `#capture-${fragmentEntryLinkNamespace}`,
+              ),
+              {
+                callback: (pdf) =>
+                  pdf.save(
+                    `${state.definition.restContextPath.replace("/o/c/", "")}_${state.currentRecordId}.pdf`,
+                  ),
+                x: 40,
+                y: 40,
+                width: 515,
+                windowWidth: 800,
+              },
+            );
+          };
+        } else {
+          pdfBtn.classList.add("d-none");
+        }
+      }
+    } else {
+      state.currentRecordId = null;
+      if (!isEditMode) {
+        fieldsWrap.innerHTML = `<div class="alert alert-info">No record specified.</div>`;
       }
     }
   } catch (err) {
@@ -168,7 +199,12 @@ const loadRecordData = async (identifier, isEditMode) => {
 };
 
 const initRecordView = async (isEditMode) => {
-  const { objectERC, fallbackRecordIdentifier } = configuration;
+  const {
+    objectERC: configERC,
+    fallbackRecordIdentifier,
+    fallbackRecordIdentifierType,
+    viewTitle: configTitle,
+  } = configuration;
   const fieldsWrap = fragmentElement.querySelector(
     `#fields-${fragmentEntryLinkNamespace}`,
   );
@@ -203,62 +239,96 @@ const initRecordView = async (isEditMode) => {
   if (errorEl) errorEl.classList.add("d-none");
   if (infoEl) infoEl.classList.add("d-none");
 
+  // Resolve effective ERC (Prioritize mappable field)
+  const mappableERCEl = fragmentElement.querySelector(
+    '[data-lfr-editable-id="object-erc"]',
+  );
+  let objectERC = configERC;
+  if (mappableERCEl) {
+    const mappedVal = mappableERCEl.innerText.trim();
+    if (
+      mappedVal &&
+      mappedVal !== configERC &&
+      mappedVal !== "COMPANY_MILESTONE"
+    ) {
+      objectERC = mappedVal;
+    }
+  }
+
+  // Register event listener IMMEDIATELY
+  window.addEventListener("lfr-object-view-select", (e) => {
+    if (e.detail && e.detail.objectERC === objectERC) {
+      const eventId =
+        e.detail.recordId ||
+        (e.detail.identifier && !e.detail.recordERC
+          ? e.detail.identifier
+          : null);
+      const eventERC =
+        e.detail.recordERC ||
+        e.detail.erc ||
+        (e.detail.identifier && e.detail.recordERC
+          ? e.detail.identifier
+          : null);
+      loadRecordData(eventId || null, eventERC || null, false);
+    }
+  });
+
   if (!objectERC) {
     titleEl.textContent = "Meta-Object Record View";
     showInfo("Please configure an Object External Reference Code.");
-    return;
-  }
+  } else {
+    try {
+      await Promise.all([loadScript(JSPDF_URL), loadScript(HTML2CANVAS_URL)]);
+      const defRes = await Liferay.Util.fetch(
+        `${ADMIN_API_BASE}/object-definitions/by-external-reference-code/${objectERC}`,
+      );
+      if (!defRes.ok)
+        throw new Error(`Failed to fetch definition (ERC: ${objectERC}).`);
+      state.definition = await defRes.json();
 
-  try {
-    await Promise.all([loadScript(JSPDF_URL), loadScript(HTML2CANVAS_URL)]);
-    const defRes = await Liferay.Util.fetch(
-      `${ADMIN_API_BASE}/object-definitions/by-external-reference-code/${objectERC}`,
-    );
-    if (!defRes.ok) throw new Error("Failed to fetch definition.");
-    state.definition = await defRes.json();
+      // Smart Title Logic
+      const currentTitle = titleEl.innerText.trim();
+      const defaultFragmentName =
+        fragmentElement.dataset.fragmentName || "Meta-Object Record View";
 
-    const objectLabel = getLocalizedValue(
-      state.definition.label || state.definition.name,
-    );
-    const currentTitle = titleEl.innerText.trim();
+      const objectLabel = getLocalizedValue(
+        state.definition.label || state.definition.name,
+      );
 
-    if (
-      currentTitle === "Record Detail" ||
-      currentTitle === "" ||
-      currentTitle === "Record Detail (Preview)"
-    ) {
-      titleEl.innerText = objectLabel + (isEditMode ? " (Preview)" : "");
-    }
+      // Precedence: Configuration (configTitle) > Evaluated Value (objectLabel)
+      const preferredTitle = configTitle || objectLabel;
 
-    const params = new URLSearchParams(window.location.search);
-    let identifier = null;
-
-    if (fallbackRecordIdentifier) {
-      identifier = fallbackRecordIdentifier;
-    } else {
-      identifier =
-        params.get("entryId") ||
-        params.get("id") ||
-        params.get("entryERC") ||
-        params.get("erc");
-    }
-
-    if (identifier || isEditMode) {
-      await loadRecordData(identifier, isEditMode);
-    } else {
-      showInfo("No record ID found in URL or configuration.");
-    }
-
-    // Listen for external record requests
-    window.addEventListener("lfr-object-view-select", (e) => {
-      if (e.detail && e.detail.objectERC === objectERC) {
-        const eventIdentifier =
-          e.detail.recordId || e.detail.recordERC || e.detail.erc;
-        if (eventIdentifier) loadRecordData(eventIdentifier, false);
+      if (
+        currentTitle === "Record Detail" ||
+        currentTitle === defaultFragmentName ||
+        currentTitle === "" ||
+        currentTitle === `${defaultFragmentName} (Preview)`
+      ) {
+        titleEl.innerText = preferredTitle + (isEditMode ? " (Preview)" : "");
       }
-    });
-  } catch (err) {
-    showError(err.message);
+
+      const params = new URLSearchParams(window.location.search);
+      let startId = params.get("entryId") || params.get("id");
+      let startERC = params.get("entryERC") || params.get("erc");
+
+      if (isValidIdentifier(fallbackRecordIdentifier)) {
+        if (fallbackRecordIdentifierType === "erc")
+          startERC = fallbackRecordIdentifier;
+        else startId = fallbackRecordIdentifier;
+      }
+
+      if (
+        isValidIdentifier(startId) ||
+        isValidIdentifier(startERC) ||
+        isEditMode
+      ) {
+        await loadRecordData(startId, startERC, isEditMode);
+      } else {
+        showInfo("No record ID found in URL or configuration.");
+      }
+    } catch (err) {
+      showError(err.message);
+    }
   }
 };
 

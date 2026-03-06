@@ -1,43 +1,94 @@
-.meta-record-container {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: var(--spacer-6, 2.5rem) 0;
-}
-
-.record-card {
+.meta-record-view {
+    padding: var(--spacer-6, 2.5rem);
     background: var(--white, #fff);
     border-radius: var(--border-radius-lg, 0.5rem);
-    padding: var(--spacer-8, 4rem);
     box-shadow: 0 4px 20px rgba(0,0,0,0.05);
-    border: 1px solid var(--gray-200, #eee);
+}
+
+/* Editor Header Styles */
+.meta-view-editor-header { height: 0; overflow: hidden; display: none; }
+body.has-edit-mode-menu .meta-view-editor-header.show {
+   height: 26px;
+   min-height: 26px;
+   box-sizing: border-box;
+   background-color: var(--gray-100, #f7f8f9);
+   text-align: right;
+   font-size: 12px;
+   line-height: 26px;
+   border-radius: 2px 2px 0 0;
+   padding: 0 8px;
+   font-weight: 600;
+   display: block;
+}
+
+/* Mappable Fields Formatting */
+.meta-editor-mappable-fields {
+    display: none;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    padding: 1.5rem;
+    background: var(--gray-100, #f7f8f9);
+    border: 1px solid var(--gray-200, #e7e8eb);
+    border-radius: 0.5rem;
+    margin-bottom: 2rem;
+}
+
+body.has-edit-mode-menu .meta-editor-mappable-fields {
+    display: flex;
+}
+
+.mappable-field-item {
+    flex: 1 1 200px;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.mappable-field-item label {
+    font-size: 10px;
+    font-weight: bold;
+    text-transform: uppercase;
+    color: var(--gray-600, #6b6c7e);
+    margin-bottom: 0;
+}
+
+.meta-record-view .object-name-label {
+    font-size: var(--h2-font-size);
+    color: var(--accent-color, var(--primary));
+    font-weight: var(--font-weight-bold, 700);
+}
+
+.record-fields-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
 }
 
 .record-row {
-    display: flex;
-    padding: var(--spacer-3, 1rem) 0;
-    border-bottom: 1px solid var(--gray-100, #f7f8f9);
+    border-bottom: 1px solid var(--gray-200, #eee);
+    padding-bottom: 1rem;
 }
 
-.record-row:last-child { border-bottom: none; }
+.record-row:last-child {
+    border-bottom: none;
+}
 
 .field-label {
-    width: 30%;
-    font-weight: var(--font-weight-bold, 700);
-    color: var(--label-color, var(--text-secondary-color, #6c757d));
-    text-transform: uppercase;
     font-size: var(--font-size-xs, 0.75rem);
+    text-transform: uppercase;
+    font-weight: var(--font-weight-semi-bold, 600);
+    color: var(--label-color, var(--text-secondary-color));
+    margin-bottom: 0.25rem;
+    letter-spacing: 0.05em;
 }
 
 .field-value {
-    width: 70%;
-    color: var(--value-color, var(--body-color, #212529));
     font-size: var(--font-size-base, 1rem);
+    color: var(--value-color, var(--body-color));
+    word-break: break-word;
 }
 
-@media print {
-    .record-card {
-        box-shadow: none;
-        border: none;
-        padding: 0;
-    }
+.meta-status {
+    font-style: italic;
+    color: var(--text-secondary-color);
 }

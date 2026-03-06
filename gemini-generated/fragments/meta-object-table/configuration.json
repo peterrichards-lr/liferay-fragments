@@ -44,6 +44,12 @@
           "type": "checkbox"
         },
         {
+          "defaultValue": "Milestones",
+          "label": "lfr.gemini-generated.table-title",
+          "name": "tableTitle",
+          "type": "text"
+        },
+        {
           "defaultValue": true,
           "label": "lfr.gemini-generated.enable-pagination",
           "description": "lfr.gemini-generated.enable-pagination-description",
@@ -174,6 +180,20 @@
         },
         {
           "defaultValue": true,
+          "label": "lfr.gemini-generated.show-drop-zone-header",
+          "name": "addShowHeader",
+          "type": "checkbox",
+          "typeOptions": {
+            "dependency": {
+              "addMode": {
+                "type": "equal",
+                "value": "modal"
+              }
+            }
+          }
+        },
+        {
+          "defaultValue": true,
           "label": "lfr.gemini-generated.show-modal-title",
           "name": "addShowTitle",
           "type": "checkbox",
@@ -266,6 +286,46 @@
               "enableView": {
                 "type": "equal",
                 "value": "true"
+              }
+            }
+          }
+        },
+        {
+          "dataType": "string",
+          "defaultValue": "id",
+          "label": "lfr.gemini-generated.identifier-type",
+          "description": "lfr.gemini-generated.identifier-type-description",
+          "name": "viewIdentifierType",
+          "type": "select",
+          "typeOptions": {
+            "dependency": {
+              "enableView": {
+                "type": "equal",
+                "value": "true"
+              }
+            },
+            "validValues": [
+              {
+                "label": "lfr.gemini-generated.id",
+                "value": "id"
+              },
+              {
+                "label": "lfr.gemini-generated.erc",
+                "value": "erc"
+              }
+            ]
+          }
+        },
+        {
+          "defaultValue": true,
+          "label": "lfr.gemini-generated.show-drop-zone-header",
+          "name": "viewShowHeader",
+          "type": "checkbox",
+          "typeOptions": {
+            "dependency": {
+              "viewMode": {
+                "type": "equal",
+                "value": "modal"
               }
             }
           }
@@ -364,6 +424,46 @@
               "enableEdit": {
                 "type": "equal",
                 "value": "true"
+              }
+            }
+          }
+        },
+        {
+          "dataType": "string",
+          "defaultValue": "id",
+          "label": "lfr.gemini-generated.identifier-type",
+          "description": "lfr.gemini-generated.identifier-type-description",
+          "name": "editIdentifierType",
+          "type": "select",
+          "typeOptions": {
+            "dependency": {
+              "enableEdit": {
+                "type": "equal",
+                "value": "true"
+              }
+            },
+            "validValues": [
+              {
+                "label": "lfr.gemini-generated.id",
+                "value": "id"
+              },
+              {
+                "label": "lfr.gemini-generated.erc",
+                "value": "erc"
+              }
+            ]
+          }
+        },
+        {
+          "defaultValue": true,
+          "label": "lfr.gemini-generated.show-drop-zone-header",
+          "name": "editShowHeader",
+          "type": "checkbox",
+          "typeOptions": {
+            "dependency": {
+              "editMode": {
+                "type": "equal",
+                "value": "modal"
               }
             }
           }

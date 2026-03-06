@@ -56,6 +56,24 @@
     {
       "fields": [
         {
+          "defaultValue": true,
+          "label": "lfr.gemini-generated.show-fragment-header",
+          "description": "lfr.gemini-generated.show-fragment-header-description",
+          "name": "showFragmentHeader",
+          "type": "checkbox"
+        },
+        {
+          "defaultValue": "Update Entry",
+          "label": "lfr.gemini-generated.form-title",
+          "name": "formTitle",
+          "type": "text"
+        }
+      ],
+      "label": "lfr.gemini-generated.display"
+    },
+    {
+      "fields": [
+        {
           "defaultValue": "var(--primary)",
           "label": "lfr.gemini-generated.submit-button-color",
           "description": "lfr.gemini-generated.submit-button-color-description",

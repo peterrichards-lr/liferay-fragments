@@ -3,13 +3,53 @@
     background: var(--white, #fff);
     border-radius: var(--border-radius-lg, 0.5rem);
     box-shadow: 0 4px 20px rgba(0,0,0,0.05);
-    max-width: 600px;
-    margin: 0 auto;
 }
 
-.meta-form-header {
-    border-bottom: 1px solid var(--gray-200, #eee);
-    padding-bottom: var(--spacer-3, 1rem);
+/* Editor Header Styles */
+.meta-form-editor-header { height: 0; overflow: hidden; display: none; }
+body.has-edit-mode-menu .meta-form-editor-header.show {
+   height: 26px;
+   min-height: 26px;
+   box-sizing: border-box;
+   background-color: var(--gray-100, #f7f8f9);
+   text-align: right;
+   font-size: 12px;
+   line-height: 26px;
+   border-radius: 2px 2px 0 0;
+   padding: 0 8px;
+   font-weight: 600;
+   display: block;
+}
+
+/* Mappable Fields Formatting */
+.meta-editor-mappable-fields {
+    display: none;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    padding: 1.5rem;
+    background: var(--gray-100, #f7f8f9);
+    border: 1px solid var(--gray-200, #e7e8eb);
+    border-radius: 0.5rem;
+    margin-bottom: 2rem;
+}
+
+body.has-edit-mode-menu .meta-editor-mappable-fields {
+    display: flex;
+}
+
+.mappable-field-item {
+    flex: 1 1 200px;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.mappable-field-item label {
+    font-size: 10px;
+    font-weight: bold;
+    text-transform: uppercase;
+    color: var(--gray-600, #6b6c7e);
+    margin-bottom: 0;
 }
 
 .meta-form-container .object-title {
@@ -18,56 +58,33 @@
     font-weight: var(--font-weight-bold, 700);
 }
 
-.record-selector-wrap select {
-    width: auto;
-    min-width: 200px;
-    height: auto;
-    padding: 0.375rem 0.75rem;
-    font-size: var(--font-size-sm, 0.875rem);
+.meta-status {
+    font-style: italic;
+    color: var(--text-secondary-color);
 }
 
-.dynamic-form .form-group label {
-    font-weight: var(--font-weight-semi-bold, 600);
-    color: var(--body-color);
-    margin-bottom: var(--spacer-2, 0.5rem);
+.record-selector-wrap .searchable-select-container {
+    max-width: 400px;
 }
 
-.dynamic-form .form-control {
-    background-color: var(--gray-100, #f7f8f9);
-    border: 1px solid var(--gray-200, #eee);
-    padding: var(--spacer-3, 1rem);
-    border-radius: var(--border-radius, 0.25rem);
-}
-
-.dynamic-form .form-control:focus {
-    border-color: var(--primary);
-    background-color: var(--white);
-}
-
-.dynamic-form .btn-primary {
-    background-color: var(--btn-color, var(--primary));
-    border: none;
-    font-weight: var(--font-weight-bold);
-    border-radius: var(--border-radius-lg);
-}
-
-/* Searchable Select Styles */
+/* Searchable Select Shared Styles */
 .searchable-select-container {
     position: relative;
+    width: 100%;
 }
 
 .searchable-select-results {
     position: absolute;
     top: 100%;
     left: 0;
-    right: 0;
-    background: var(--white);
+    width: 100%;
+    background: white;
     border: 1px solid var(--gray-300, #ced4da);
-    border-radius: var(--border-radius, 0.25rem);
-    box-shadow: var(--dropdown-box-shadow, 0 0.5rem 1rem rgba(0,0,0,0.15));
+    border-radius: 0 0 4px 4px;
     z-index: 1000;
-    max-height: 250px;
+    max-height: 200px;
     overflow-y: auto;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
     display: none;
 }
 
@@ -76,22 +93,23 @@
 }
 
 .search-result-item {
-    padding: 0.75rem 1rem;
+    padding: 8px 12px;
     cursor: pointer;
-    border-bottom: 1px solid var(--gray-100, #f7f8f9);
-    font-size: var(--font-size-sm, 0.875rem);
+    transition: background 0.2s;
+    font-size: 0.9rem;
 }
 
-.search-result-item:last-child {
-    border-bottom: none;
-}
-
-.search-result-item:hover, .search-result-item.active {
-    background-color: var(--gray-100, #f7f8f9);
-    color: var(--primary);
+.search-result-item:hover {
+    background: var(--gray-100, #f7f8f9);
 }
 
 .search-result-item.no-results {
-    color: var(--text-muted, #6b6c7e);
+    color: var(--gray-500);
+    font-style: italic;
     cursor: default;
+}
+
+.form-status-msg {
+    padding: 1rem;
+    border-radius: 0.25rem;
 }

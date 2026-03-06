@@ -89,41 +89,43 @@ const renderPagination = (isEditMode) => {
     `#pagination-${fragmentEntryLinkNamespace}`,
   );
   const info = fragmentElement.querySelector(".pagination-info");
-  if (!pagination || isEditMode) return;
+  if (pagination && !isEditMode) {
+    const pageSize = parseInt(configuration.pageSize || 10);
+    const totalPages = Math.ceil(state.totalCount / pageSize);
 
-  const pageSize = parseInt(configuration.pageSize || 10);
-  const totalPages = Math.ceil(state.totalCount / pageSize);
+    if (configuration.enablePagination && totalPages > 1) {
+      pagination.classList.remove("d-none");
 
-  if (configuration.enablePagination && totalPages > 1) {
-    pagination.classList.remove("d-none");
+      const prevItem = pagination.querySelector(".page-item:first-child");
+      const nextItem = pagination.querySelector(".page-item:last-child");
+      const activeLink = pagination.querySelector(
+        ".page-item.active .page-link",
+      );
 
-    const prevItem = pagination.querySelector(".page-item:first-child");
-    const nextItem = pagination.querySelector(".page-item:last-child");
-    const activeLink = pagination.querySelector(".page-item.active .page-link");
+      if (prevItem) {
+        prevItem.classList.toggle("disabled", state.page === 1);
+        prevItem.onclick = (e) => {
+          e.preventDefault();
+          if (state.page > 1) loadPage(state.page - 1);
+        };
+      }
 
-    if (prevItem) {
-      prevItem.classList.toggle("disabled", state.page === 1);
-      prevItem.onclick = (e) => {
-        e.preventDefault();
-        if (state.page > 1) loadPage(state.page - 1);
-      };
+      if (nextItem) {
+        nextItem.classList.toggle("disabled", state.page === totalPages);
+        nextItem.onclick = (e) => {
+          e.preventDefault();
+          if (state.page < totalPages) loadPage(state.page + 1);
+        };
+      }
+
+      if (activeLink) activeLink.textContent = state.page;
+    } else {
+      pagination.classList.add("d-none");
     }
 
-    if (nextItem) {
-      nextItem.classList.toggle("disabled", state.page === totalPages);
-      nextItem.onclick = (e) => {
-        e.preventDefault();
-        if (state.page < totalPages) loadPage(state.page + 1);
-      };
+    if (info) {
+      info.textContent = `Showing ${state.items.length} of ${state.totalCount} entries`;
     }
-
-    if (activeLink) activeLink.textContent = state.page;
-  } else {
-    pagination.classList.add("d-none");
-  }
-
-  if (info) {
-    info.textContent = `Showing ${state.items.length} of ${state.totalCount} entries`;
   }
 };
 
@@ -135,64 +137,14 @@ const toggleModal = (type, show) => {
   const overlay = fragmentElement.querySelector(
     `#overlay-${suffix}-${fragmentEntryLinkNamespace}`,
   );
-  if (!overlay) return;
-
-  if (show) {
-    overlay.classList.remove("d-none");
-    document.body.style.overflow = "hidden"; // Prevent background scroll
-  } else {
-    overlay.classList.add("d-none");
-    document.body.style.overflow = "";
-  }
-};
-
-const handleAction = (type, recordId, recordERC) => {
-  const { objectERC, viewMode, viewUrl, editMode, editUrl, addMode, addUrl } =
-    configuration;
-
-  let mode = "event";
-  let targetUrl = "";
-  let eventName = "lfr-object-form-select";
-
-  if (type === "view") {
-    mode = viewMode;
-    targetUrl = viewUrl;
-    eventName = "lfr-object-view-select";
-  } else if (type === "edit") {
-    mode = editMode;
-    targetUrl = editUrl;
-    eventName = "lfr-object-form-select";
-  } else if (type === "add") {
-    mode = addMode;
-    targetUrl = addUrl;
-    eventName = "lfr-object-form-select";
-  }
-
-  if (mode === "event" || mode === "modal") {
-    if (mode === "modal") {
-      toggleModal(type, true);
+  if (overlay) {
+    if (show) {
+      overlay.classList.remove("d-none");
+      document.body.style.overflow = "hidden"; // Prevent background scroll
+    } else {
+      overlay.classList.add("d-none");
+      document.body.style.overflow = "";
     }
-
-    window.dispatchEvent(
-      new CustomEvent(eventName, {
-        detail: {
-          objectERC,
-          recordId: type === "add" ? null : recordId,
-          recordERC: type === "add" ? null : recordERC,
-        },
-      }),
-    );
-  } else if (mode === "redirect" || mode === "tab") {
-    const url = new URL(
-      targetUrl || window.location.href,
-      window.location.origin,
-    );
-    if (type !== "add") {
-      url.searchParams.set("entryId", recordId);
-      url.searchParams.set("entryERC", recordERC);
-    }
-    if (mode === "tab") window.open(url.toString(), "_blank");
-    else window.location.href = url.toString();
   }
 };
 
@@ -229,44 +181,45 @@ const loadPage = async (pageNumber, isEditMode = false) => {
 
     if (state.items.length === 0) {
       tbody.innerHTML = `<tr><td colspan="${state.fields.length + (enableView || enableEdit ? 1 : 0)}" class="text-center p-5">No data found.</td></tr>`;
-      return;
-    }
-
-    tbody.innerHTML = state.items
-      .map((item) => {
-        let actionsHtml = "";
-        if (enableView || enableEdit) {
-          actionsHtml = `<td class="text-right">
+    } else {
+      tbody.innerHTML = state.items
+        .map((item) => {
+          let actionsHtml = "";
+          if (enableView || enableEdit) {
+            actionsHtml = `<td class="text-right">
                     <div class="btn-group">
                         ${enableView ? `<button class="btn btn-monospaced btn-sm btn-secondary view-btn" data-id="${item.id}" data-erc="${item.externalReferenceCode || ""}" title="View"><svg class="lexicon-icon"><use xlink:href="${spritemap}#view"></use></svg></button>` : ""}
                         ${enableEdit ? `<button class="btn btn-monospaced btn-sm btn-secondary edit-btn" data-id="${item.id}" data-erc="${item.externalReferenceCode || ""}" title="Edit"><svg class="lexicon-icon"><use xlink:href="${spritemap}#pencil"></use></svg></button>` : ""}
                     </div>
                 </td>`;
-        }
+          }
 
-        return `
+          return `
                 <tr>
                     ${state.fields.map((f) => `<td data-label="${getLocalizedValue(f.label)}">${formatCellValue(item, f)}</td>`).join("")}
                     ${actionsHtml}
                 </tr>
             `;
-      })
-      .join("");
+        })
+        .join("");
 
-    // Attach action listeners
-    tbody.querySelectorAll(".view-btn").forEach((btn) => {
-      btn.onclick = () => handleAction("view", btn.dataset.id, btn.dataset.erc);
-    });
-    tbody.querySelectorAll(".edit-btn").forEach((btn) => {
-      btn.onclick = () => handleAction("edit", btn.dataset.id, btn.dataset.erc);
-    });
+      // Attach action listeners
+      tbody.querySelectorAll(".view-btn").forEach((btn) => {
+        btn.onclick = () =>
+          fragmentElement.handleAction("view", btn.dataset.id, btn.dataset.erc);
+      });
+      tbody.querySelectorAll(".edit-btn").forEach((btn) => {
+        btn.onclick = () =>
+          fragmentElement.handleAction("edit", btn.dataset.id, btn.dataset.erc);
+      });
 
-    if (!isEditMode) {
-      renderPagination(false);
-    } else {
-      const info = fragmentElement.querySelector(".pagination-info");
-      if (info)
-        info.textContent = `Showing ${state.items.length} entries (Editor Preview)`;
+      if (!isEditMode) {
+        renderPagination(false);
+      } else {
+        const info = fragmentElement.querySelector(".pagination-info");
+        if (info)
+          info.textContent = `Showing ${state.items.length} entries (Editor Preview)`;
+      }
     }
   } catch (err) {
     const errorEl = fragmentElement.querySelector(
@@ -281,12 +234,13 @@ const loadPage = async (pageNumber, isEditMode = false) => {
 
 const initMetaTable = async (isEditMode) => {
   const {
-    objectERC,
+    objectERC: configERC,
     columnsToDisplay,
     customizeColumns,
     enableView,
     enableEdit,
     enableAdd,
+    tableTitle: configTitle,
   } = configuration;
   const thead = fragmentElement.querySelector(
     `#thead-${fragmentEntryLinkNamespace}`,
@@ -305,6 +259,22 @@ const initMetaTable = async (isEditMode) => {
     `#info-${fragmentEntryLinkNamespace}`,
   );
 
+  // Resolve effective ERC (Prioritize mappable field)
+  const mappableERCEl = fragmentElement.querySelector(
+    '[data-lfr-editable-id="object-erc"]',
+  );
+  let objectERC = configERC;
+  if (mappableERCEl) {
+    const mappedVal = mappableERCEl.innerText.trim();
+    if (
+      mappedVal &&
+      mappedVal !== configERC &&
+      mappedVal !== "COMPANY_MILESTONE"
+    ) {
+      objectERC = mappedVal;
+    }
+  }
+
   // Modal setup helper
   const setupModal = (type) => {
     const suffix = type;
@@ -322,6 +292,82 @@ const initMetaTable = async (isEditMode) => {
       };
     }
   };
+
+  const handleAction = (type, recordId, recordERC) => {
+    const {
+      viewMode,
+      viewUrl,
+      viewIdentifierType,
+      editMode,
+      editUrl,
+      editIdentifierType,
+      addMode,
+      addUrl,
+    } = configuration;
+
+    let mode = "event";
+    let targetUrl = "";
+    let eventName = "lfr-object-form-select";
+    let idType = "id";
+
+    if (type === "view") {
+      mode = viewMode;
+      targetUrl = viewUrl;
+      eventName = "lfr-object-view-select";
+      idType = viewIdentifierType || "id";
+    } else if (type === "edit") {
+      mode = editMode;
+      targetUrl = editUrl;
+      eventName = "lfr-object-form-select";
+      idType = editIdentifierType || "id";
+    } else if (type === "add") {
+      mode = addMode;
+      targetUrl = addUrl;
+      eventName = "lfr-object-form-select";
+    }
+
+    if (mode === "event" || mode === "modal") {
+      if (mode === "modal") {
+        toggleModal(type, true);
+      }
+
+      // Use a slightly larger delay to ensure receiver fragments are ready
+      setTimeout(() => {
+        const detail = {
+          objectERC,
+          recordId: type === "add" ? null : recordId,
+          recordERC: type === "add" ? null : recordERC,
+          erc: type === "add" ? null : recordERC, // Backward compatibility
+        };
+
+        // Explicitly set primary 'identifier' based on config
+        if (type !== "add") {
+          detail.identifier = idType === "erc" ? recordERC : recordId;
+        }
+
+        window.dispatchEvent(new CustomEvent(eventName, { detail }));
+      }, 100);
+    } else if (mode === "redirect" || mode === "tab") {
+      const url = new URL(
+        targetUrl || window.location.href,
+        window.location.origin,
+      );
+      if (type !== "add") {
+        const val = idType === "erc" ? recordERC : recordId;
+        const key = idType === "erc" ? "entryERC" : "entryId";
+        url.searchParams.set(key, val);
+
+        // Also set legacy/alt params for maximum compatibility
+        url.searchParams.set("id", recordId);
+        if (recordERC) url.searchParams.set("erc", recordERC);
+      }
+      if (mode === "tab") window.open(url.toString(), "_blank");
+      else window.location.href = url.toString();
+    }
+  };
+
+  // Expose handleAction for loadPage to use
+  fragmentElement.handleAction = handleAction;
 
   if (errorEl) errorEl.classList.add("d-none");
   if (infoEl) infoEl.classList.add("d-none");
@@ -342,84 +388,92 @@ const initMetaTable = async (isEditMode) => {
         "Please provide an Object External Reference Code in the configuration.";
       infoEl.classList.remove("d-none");
     }
-    return;
-  }
+  } else {
+    try {
+      const defUrl = `${ADMIN_API_BASE}/object-definitions/by-external-reference-code/${objectERC}`;
+      state.definition = await fetchData(defUrl);
 
-  try {
-    const defUrl = `${ADMIN_API_BASE}/object-definitions/by-external-reference-code/${objectERC}`;
-    state.definition = await fetchData(defUrl);
+      // Smart Title Logic
+      const currentTitle = titleEl.innerText.trim();
+      const defaultFragmentName =
+        fragmentElement.dataset.fragmentName || "Meta-Object Table";
 
-    const objectLabel = getLocalizedValue(
-      state.definition.pluralLabel ||
-        state.definition.label ||
-        state.definition.name,
-    );
-    const currentTitle = titleEl.innerText.trim();
+      const objectLabel = getLocalizedValue(
+        state.definition.pluralLabel ||
+          state.definition.label ||
+          state.definition.name,
+      );
 
-    if (
-      currentTitle === "Meta-Object Table" ||
-      currentTitle === "" ||
-      currentTitle === "Meta-Object Table (Preview)"
-    ) {
-      titleEl.innerText = objectLabel + (isEditMode ? " (Preview)" : "");
-    }
+      // Precedence: Configuration (configTitle) > Evaluated Value (objectLabel)
+      const preferredTitle = configTitle || objectLabel;
 
-    // Strict column filtering
-    let fields = state.definition.objectFields.filter(
-      (f) => !["id", "externalReferenceCode"].includes(f.name),
-    );
+      if (
+        currentTitle === "Meta-Object Table" ||
+        currentTitle === defaultFragmentName ||
+        currentTitle === "" ||
+        currentTitle === "Milestones" || // Previous default
+        currentTitle === `${defaultFragmentName} (Preview)`
+      ) {
+        titleEl.innerText = preferredTitle + (isEditMode ? " (Preview)" : "");
+      }
 
-    if (customizeColumns && columnsToDisplay) {
-      const desired = columnsToDisplay.split(",").map((col) => col.trim());
-      fields = desired
-        .map((name) =>
-          fields.find(
-            (f) => f.name === name || getLocalizedValue(f.label) === name,
-          ),
-        )
-        .filter(Boolean);
-    }
-    state.fields = fields;
+      // Strict column filtering
+      let fields = state.definition.objectFields.filter(
+        (f) => !["id", "externalReferenceCode"].includes(f.name),
+      );
 
-    let headerHtml = state.fields
-      .map((f) => `<th>${getLocalizedValue(f.label)}</th>`)
-      .join("");
-    if (enableView || enableEdit)
-      headerHtml += '<th class="text-right">Actions</th>';
-    thead.innerHTML = headerHtml;
+      if (customizeColumns && columnsToDisplay) {
+        const desired = columnsToDisplay.split(",").map((col) => col.trim());
+        fields = desired
+          .map((name) =>
+            fields.find(
+              (f) => f.name === name || getLocalizedValue(f.label) === name,
+            ),
+          )
+          .filter(Boolean);
+      }
+      state.fields = fields;
 
-    await loadPage(1, isEditMode);
+      let headerHtml = state.fields
+        .map((f) => `<th>${getLocalizedValue(f.label)}</th>`)
+        .join("");
+      if (enableView || enableEdit)
+        headerHtml += '<th class="text-right">Actions</th>';
+      thead.innerHTML = headerHtml;
 
-    if (!isEditMode && exportBtn) {
-      exportBtn.classList.remove("d-none");
-      exportBtn.onclick = () => {
-        const header = state.fields
-          .map((f) => `"${getLocalizedValue(f.label)}"`)
-          .join(",");
-        const rows = state.items.map((item) =>
-          state.fields
-            .map(
-              (f) =>
-                `"${String(formatCellValue(item, f)).replace(/"/g, '""')}"`,
-            )
-            .join(","),
-        );
-        const blob = new Blob([[header, ...rows].join("\n")], {
-          type: "text/csv;charset=utf-8;",
-        });
-        const link = document.createElement("a");
-        link.href = URL.createObjectURL(blob);
-        link.setAttribute(
-          "download",
-          `${state.definition.restContextPath.replace("/o/c/", "")}.csv`,
-        );
-        link.click();
-      };
-    }
-  } catch (err) {
-    if (isEditMode && errorEl) {
-      errorEl.textContent = err.message;
-      errorEl.classList.remove("d-none");
+      await loadPage(1, isEditMode);
+
+      if (!isEditMode && exportBtn) {
+        exportBtn.classList.remove("d-none");
+        exportBtn.onclick = () => {
+          const header = state.fields
+            .map((f) => `"${getLocalizedValue(f.label)}"`)
+            .join(",");
+          const rows = state.items.map((item) =>
+            state.fields
+              .map(
+                (f) =>
+                  `"${String(formatCellValue(item, f)).replace(/"/g, '""')}"`,
+              )
+              .join(","),
+          );
+          const blob = new Blob([[header, ...rows].join("\n")], {
+            type: "text/csv;charset=utf-8;",
+          });
+          const link = document.createElement("a");
+          link.href = URL.createObjectURL(blob);
+          link.setAttribute(
+            "download",
+            `${state.definition.restContextPath.replace("/o/c/", "")}.csv`,
+          );
+          link.click();
+        };
+      }
+    } catch (err) {
+      if (isEditMode && errorEl) {
+        errorEl.textContent = err.message;
+        errorEl.classList.remove("d-none");
+      }
     }
   }
 };

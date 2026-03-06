@@ -42,23 +42,32 @@
     {
       "fields": [
         {
-          "defaultValue": "var(--primary)",
-          "label": "lfr.gemini-generated.accent-color",
-          "description": "lfr.gemini-generated.accent-color-description",
-          "name": "accentColor",
-          "type": "colorPicker"
+          "defaultValue": true,
+          "label": "lfr.gemini-generated.show-fragment-header",
+          "description": "lfr.gemini-generated.show-fragment-header-description",
+          "name": "showFragmentHeader",
+          "type": "checkbox"
         },
         {
-          "defaultValue": "var(--text-secondary-color)",
+          "defaultValue": "Record Detail",
+          "label": "lfr.gemini-generated.view-title",
+          "name": "viewTitle",
+          "type": "text"
+        }
+      ],
+      "label": "lfr.gemini-generated.display"
+    },
+    {
+      "fields": [
+        {
+          "defaultValue": "var(--primary)",
           "label": "lfr.gemini-generated.label-color",
-          "description": "lfr.gemini-generated.label-color-description",
           "name": "labelColor",
           "type": "colorPicker"
         },
         {
           "defaultValue": "var(--body-color)",
           "label": "lfr.gemini-generated.value-color",
-          "description": "lfr.gemini-generated.value-color-description",
           "name": "valueColor",
           "type": "colorPicker"
         }

@@ -87,6 +87,13 @@
     {
       "fields": [
         {
+          "defaultValue": true,
+          "label": "lfr.gemini-generated.show-fragment-header",
+          "description": "lfr.gemini-generated.show-fragment-header-description",
+          "name": "showFragmentHeader",
+          "type": "checkbox"
+        },
+        {
           "defaultValue": "Regional Sales Performance",
           "label": "lfr.gemini-generated.chart-title",
           "description": "lfr.gemini-generated.chart-title-description",

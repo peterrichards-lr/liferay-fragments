@@ -5,3 +5,5 @@
 language.zip
 .idea
 /.gradle
+temp_*
+temp

@@ -1,221 +1,226 @@
-if (!fragmentNamespace)
-  // If it is not set then we are in fragment editor
-  return;
+const initAlerts = () => {
+  if (layoutMode === "view") {
+    const entries = fragmentElement.querySelectorAll("div.entries > div");
+    if (entries) {
+      const actionText = "Mark as Read";
+      const queryInnerTextAll = function (root, selector, regex) {
+        if (typeof regex === "string") {
+          regex = new RegExp(regex, "i");
+        }
+        const elements = [...root.querySelectorAll(selector)];
+        const rtn = elements.filter((element) => {
+          return element.innerText.match(regex);
+        });
+        return rtn.length === 0 ? null : rtn;
+      };
 
-if (document.body.classList.contains('has-edit-mode-menu'))
-  // If present then we are in content page editor
-  return;
-
-const entries = fragmentElement.querySelectorAll('div.entries > div');
-if (entries) {
-  const actionText = 'Mark as Read';
-  const queryInnerTextAll = function (root, selector, regex) {
-    if (typeof regex === 'string') {
-      regex = new RegExp(regex, 'i');
-    }
-    const elements = [...root.querySelectorAll(selector)];
-    const rtn = elements.filter((element) => {
-      return element.innerText.match(regex);
-    });
-    return rtn.length === 0 ? null : rtn;
-  };
-
-  const queryInnerText = function (root, selector, text) {
-    try {
-      const result = queryInnerTextAll(root, selector, text);
-      if (Array.isArray(result)) {
-        return result[0];
-      } else {
-        return result;
-      }
-    } catch (error) {
-      console.log(error);
-      return null;
-    }
-  };
-
-  const getJsonDate = () => {
-    return new Date().toJSON();
-  };
-
-  const getEntryId = (link) => {
-    var text;
-    if (link.hasAttribute('href')) {
-      text = link.getAttribute('href');
-    } else if (link.hasAttribute('onclick')) {
-      text = link.getAttribute('onclick');
-    }
-    if (text.startsWith('javascript:')) {
-      const markEntryRegEx = /markEntry\(([0-9]+)\)/;
-      const match = text.match(markEntryRegEx);
-      return match
-        ? isNaN(match[1]) == false
-          ? parseInt(match[1])
-          : match[1]
-        : undefined;
-    }
-    return undefined;
-  };
-
-  const setPriority = (entry) => {
-    const badge = entry.querySelector('.badge');
-    const important = badge !== null;
-    if (important) {
-      entry.classList.add('important');
-    } else {
-      entry.classList.add('normal');
-    }
-  };
-
-  const getAncestor = (el, gen) => {
-    var parent = el.parentElement;
-    var i = 0;
-    while (i < gen - 1) {
-      parent = parent.parentElement;
-      i++;
-    }
-    return parent;
-  };
-
-  const getMarkAsReadMenuItem = (entry) => {
-    const contextMenu = entry.querySelector(
-      '.dropdown-menu.dropdown-menu-right'
-    );
-    if (!contextMenu) {
-      console.error("Unable to find the entry's context menu");
-      return;
-    }
-    const markAsReadMenuItem = queryInnerText(contextMenu, 'span', actionText);
-    if (markAsReadMenuItem) return markAsReadMenuItem;
-    return null;
-  };
-
-  const buildAnalyticsEventData = (entryId, entry, entryTitle) => {
-    const userIdStr = themeDisplay.getUserId();
-    const userId = isNaN(userIdStr) ? userIdStr : parseInt(userIdStr);
-    return {
-      userId: userId,
-      actionAt: getJsonDate(),
-      entryId: entryId,
-      entryTitle: entryTitle ? entryTitle.innerText : 'Unknown',
-      entryPrioirty: entry.classList.contains('important')
-        ? 'Important'
-        : 'Normal',
-    };
-  };
-
-  const clickHandler = (evt) => {
-    const entryTitle = evt.target;
-    const entry = getAncestor(entryTitle, 7);
-    if (!entry) {
-      console.warn('Unable to find the entry from the event');
-      return;
-    }
-
-    if (!themeDisplay.isSignedIn()) {
-      console.log('The user is anonymous. Context menu will be unavailable');
-      entry.classList.toggle('alert-close');
-      return;
-    }
-
-    if (configuration.enableAcCustomEvent) {
-      if (window.Analytics) {
-        if (entry.classList.contains('alert-close')) {
-          const action = 'Viewed alert / announcement';
-          const markAsReadMenuItem = getMarkAsReadMenuItem(entry);
-          if (markAsReadMenuItem) {
-            const markAsReadMenuItemLink = markAsReadMenuItem.parentElement;
-            const entryId = getEntryId(markAsReadMenuItemLink);
-            const eventData = buildAnalyticsEventData(
-              entryId,
-              entry,
-              entryTitle
-            );
-            Analytics.track(action, eventData);
+      const queryInnerText = function (root, selector, text) {
+        try {
+          const result = queryInnerTextAll(root, selector, text);
+          if (Array.isArray(result)) {
+            return result[0];
           } else {
+            return result;
+          }
+        } catch (error) {
+          console.log(error);
+          return null;
+        }
+      };
+
+      const getJsonDate = () => {
+        return new Date().toJSON();
+      };
+
+      const getEntryId = (link) => {
+        var text;
+        if (link.hasAttribute("href")) {
+          text = link.getAttribute("href");
+        } else if (link.hasAttribute("onclick")) {
+          text = link.getAttribute("onclick");
+        }
+        if (text && text.startsWith("javascript:")) {
+          const markEntryRegEx = /markEntry\(([0-9]+)\)/;
+          const match = text.match(markEntryRegEx);
+          return match
+            ? isNaN(match[1]) == false
+              ? parseInt(match[1])
+              : match[1]
+            : undefined;
+        }
+        return undefined;
+      };
+
+      const setPriority = (entry) => {
+        const badge = entry.querySelector(".badge");
+        const important = badge !== null;
+        if (important) {
+          entry.classList.add("important");
+        } else {
+          entry.classList.add("normal");
+        }
+      };
+
+      const getAncestor = (el, gen) => {
+        var parent = el.parentElement;
+        var i = 0;
+        while (i < gen - 1) {
+          parent = parent.parentElement;
+          i++;
+        }
+        return parent;
+      };
+
+      const getMarkAsReadMenuItem = (entry) => {
+        const contextMenu = entry.querySelector(
+          ".dropdown-menu.dropdown-menu-right",
+        );
+        if (contextMenu) {
+          const markAsReadMenuItem = queryInnerText(
+            contextMenu,
+            "span",
+            actionText,
+          );
+          if (markAsReadMenuItem) return markAsReadMenuItem;
+        } else {
+          console.error("Unable to find the entry's context menu");
+        }
+        return null;
+      };
+
+      const buildAnalyticsEventData = (entryId, entry, entryTitle) => {
+        const userIdStr = themeDisplay.getUserId();
+        const userId = isNaN(userIdStr) ? userIdStr : parseInt(userIdStr);
+        return {
+          userId: userId,
+          actionAt: getJsonDate(),
+          entryId: entryId,
+          entryTitle: entryTitle ? entryTitle.innerText : "Unknown",
+          entryPrioirty: entry.classList.contains("important")
+            ? "Important"
+            : "Normal",
+        };
+      };
+
+      const clickHandler = (evt) => {
+        const entryTitle = evt.target;
+        const entry = getAncestor(entryTitle, 7);
+        if (entry) {
+          if (!themeDisplay.isSignedIn()) {
+            console.log(
+              "The user is anonymous. Context menu will be unavailable",
+            );
+            entry.classList.toggle("alert-close");
+          } else {
+            if (configuration.enableAcCustomEvent) {
+              if (window.Analytics) {
+                if (entry.classList.contains("alert-close")) {
+                  const action = "Viewed alert / announcement";
+                  const markAsReadMenuItem = getMarkAsReadMenuItem(entry);
+                  if (markAsReadMenuItem) {
+                    const markAsReadMenuItemLink =
+                      markAsReadMenuItem.parentElement;
+                    const entryId = getEntryId(markAsReadMenuItemLink);
+                    const eventData = buildAnalyticsEventData(
+                      entryId,
+                      entry,
+                      entryTitle,
+                    );
+                    Analytics.track(action, eventData);
+                  } else {
+                    console.error(
+                      "Unable to find the entry's '" + actionText + "' menu",
+                    );
+                  }
+                }
+              } else {
+                console.error("Liferay Analytics unavailable");
+              }
+            }
+            entry.classList.toggle("alert-close");
+          }
+        } else {
+          console.warn("Unable to find the entry from the event");
+        }
+      };
+
+      const createAccordion = (entry) => {
+        const entryTitle = entry.querySelector(".entry-title");
+        if (entryTitle) {
+          entryTitle.addEventListener("click", clickHandler);
+          if (!configuration.showAlertOpen) {
+            entry.classList.add("alert-close");
+          }
+        } else {
+          console.warn("Unable to find the entry's header");
+        }
+      };
+
+      const addMarkAsRead = (entry) => {
+        const entryContent = entry.querySelector(".entry-content");
+        const entryTitle = entry.querySelector(".entry-title");
+        const markAsReadMenuItem = getMarkAsReadMenuItem(entry);
+
+        if (entryContent && entryTitle && markAsReadMenuItem) {
+          const markAsReadMenuItemLink = markAsReadMenuItem.parentElement;
+          const markAsReadButton = document.createElement("a");
+          markAsReadButton.innerText = actionText;
+          markAsReadButton.classList.add("btn");
+          markAsReadButton.classList.add(
+            "btn-" + configuration.addMarkAsReadButtonSize,
+          );
+          markAsReadButton.classList.add(
+            "btn-" + configuration.addMarkAsReadButtonType,
+          );
+          markAsReadButton.addEventListener("click", (evt) => {
+            if (configuration.enableAcCustomEvent) {
+              if (window.Analytics) {
+                const action = "Read alert / announcement";
+                const entryId = getEntryId(markAsReadMenuItemLink);
+                const eventData = buildAnalyticsEventData(
+                  entryId,
+                  entry,
+                  entryTitle,
+                );
+                Analytics.track(action, eventData);
+              } else {
+                console.error("Liferay Analytics unavailable");
+              }
+            }
+            markAsReadMenuItemLink.click();
+          });
+          entryContent.appendChild(markAsReadButton);
+        } else {
+          if (!entryContent)
+            console.error("Unable to find the entry's message body");
+          if (!entryTitle) console.error("Unable to find the entry's header");
+          if (!markAsReadMenuItem)
             console.error(
-              "Unable to find the entry's '" + actionText + "' menu"
+              "Unable to find the entry's '" + actionText + "' menu",
+            );
+        }
+      };
+
+      for (var i = 0; i < entries.length; i++) {
+        const entry = entries[i];
+        setPriority(entry);
+        if (configuration.useAccordion) {
+          createAccordion(entry);
+        }
+        if (!themeDisplay.isSignedIn()) {
+          if (i == 0) {
+            console.log(
+              "The user is anonymous. The '" +
+                actionText +
+                "' button will not be added",
             );
           }
-        }
-      } else {
-        console.error('Liferay Analytics unavailable');
-      }
-    }
-    entry.classList.toggle('alert-close');
-  };
-
-  const createAccordion = (entry) => {
-    const entryTitle = entry.querySelector('.entry-title');
-    if (!entryTitle) {
-      console.warn("Unable to find the entry's header");
-    }
-    entryTitle.addEventListener('click', clickHandler);
-    if (!configuration.showAlertOpen) {
-      entry.classList.add('alert-close');
-    }
-  };
-
-  const addMarkAsRead = (entry) => {
-    const entryContent = entry.querySelector('.entry-content');
-    if (!entryContent) {
-      console.error("Unable to find the entry's message body");
-      return;
-    }
-    const entryTitle = entry.querySelector('.entry-title');
-    if (!entryTitle) {
-      console.error("Unable to find the entry's header");
-      return;
-    }
-    const markAsReadMenuItem = getMarkAsReadMenuItem(entry);
-    if (!markAsReadMenuItem) {
-      console.error("Unable to find the entry's '" + actionText + "' menu");
-      return;
-    }
-    const markAsReadMenuItemLink = markAsReadMenuItem.parentElement;
-    const markAsReadButton = document.createElement('a');
-    markAsReadButton.innerText = actionText;
-    markAsReadButton.classList.add('btn');
-    markAsReadButton.classList.add(
-      'btn-' + configuration.addMarkAsReadButtonSize
-    );
-    markAsReadButton.classList.add(
-      'btn-' + configuration.addMarkAsReadButtonType
-    );
-    markAsReadButton.addEventListener('click', (evt) => {
-      if (configuration.enableAcCustomEvent) {
-        if (window.Analytics) {
-          const action = 'Read alert / announcement';
-          const entryId = getEntryId(markAsReadMenuItemLink);
-          const eventData = buildAnalyticsEventData(entryId, entry, entryTitle);
-          Analytics.track(action, eventData);
-        } else {
-          console.error('Liferay Analytics unavailable');
+        } else if (configuration.addMarkAsRead) {
+          addMarkAsRead(entry);
         }
       }
-      markAsReadMenuItemLink.click();
-    });
-    entryContent.appendChild(markAsReadButton);
-  };
-
-  for (var i = 0; i < entries.length; i++) {
-    const entry = entries[i];
-    setPriority(entry);
-    if (configuration.useAccordion) {
-      createAccordion(entry);
-    }
-    if (!themeDisplay.isSignedIn()) {
-      if (i == 0) {
-        console.log(
-          "The user is anonymous. The '" +
-            actionText +
-            "' button will not be added"
-        );
-      }
-      continue;
-    }
-    if (configuration.addMarkAsRead) {
-      addMarkAsRead(entry);
     }
   }
-}
+};
+
+initAlerts();

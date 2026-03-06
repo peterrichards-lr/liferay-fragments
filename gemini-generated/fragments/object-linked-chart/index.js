@@ -54,13 +54,13 @@ const loadScript = (url) => {
   return new Promise((resolve, reject) => {
     if (window.Chart) {
       resolve();
-      return;
+    } else {
+      const script = document.createElement("script");
+      script.src = url;
+      script.onload = resolve;
+      script.onerror = reject;
+      document.head.appendChild(script);
     }
-    const script = document.createElement("script");
-    script.src = url;
-    script.onload = resolve;
-    script.onerror = reject;
-    document.head.appendChild(script);
   });
 };
 
@@ -207,6 +207,7 @@ const initChart = async (isEditMode) => {
     colorPalette,
     showLegend,
     enableSecondaryYAxis,
+    chartTitle: configTitle,
     xAxisLabel: configXLabel,
     yAxisLabel: configYLabel,
     secondaryYAxisLabel: configYLabel2,
@@ -214,207 +215,224 @@ const initChart = async (isEditMode) => {
 
   if (!objectERC) {
     showInfo("Please configure an Object External Reference Code.");
-    return;
-  }
+  } else {
+    try {
+      await loadScript(CHART_JS_URL);
+      const { items, definition } = await fetchData();
 
-  try {
-    await loadScript(CHART_JS_URL);
-    const { items, definition } = await fetchData();
-
-    if (items.length === 0) {
-      showInfo(`No data found for object "${objectERC}".`);
-      return;
-    }
-
-    // Create field name to localized label map
-    const fieldNameMap = {};
-    definition.objectFields.forEach((f) => {
-      fieldNameMap[f.name] = getLocalizedValue(f.label);
-    });
-
-    // Smart Title defaulting
-    const currentTitle = titleEl.innerText.trim();
-    if (
-      currentTitle === "Object-Linked Chart" ||
-      currentTitle === "Regional Sales Performance" ||
-      currentTitle === "" ||
-      currentTitle === "Object Data Chart"
-    ) {
-      const objectLabel = getLocalizedValue(
-        definition.pluralLabel || definition.label || definition.name,
-      );
-      titleEl.innerText = `${objectLabel} (${aggregationType !== "none" ? aggregationType : "Raw Data"})`;
-    }
-
-    const fields = (valueFields || "")
-      .split(",")
-      .map((f) => f.trim())
-      .filter(Boolean);
-    if (fields.length === 0) {
-      showInfo("Please configure at least one value field.");
-      return;
-    }
-
-    const { labels, datasets: dataValues } = aggregateData(
-      items,
-      labelField,
-      fields,
-      aggregationType,
-      sortOrder,
-    );
-
-    // Resolve effective color mapping mode
-    let effectiveMapping = colorMapping || "auto";
-    if (effectiveMapping === "auto") {
-      if (fields.length === 1) {
-        effectiveMapping = "label";
+      if (items.length === 0) {
+        showInfo(`No data found for object "${objectERC}".`);
       } else {
-        effectiveMapping = ["pie", "doughnut", "polarArea"].includes(chartType)
-          ? "label"
-          : "series";
-      }
-    }
+        // Create field name to localized label map
+        const fieldNameMap = {};
+        definition.objectFields.forEach((f) => {
+          fieldNameMap[f.name] = getLocalizedValue(f.label);
+        });
 
-    // Determine color palette
-    let palette = THEME_COLORS;
-    if (colorPalette === "rainbow") palette = RAINBOW_COLORS;
-    else if (colorPalette === "cool") palette = COOL_COLORS;
-    else if (colorPalette === "warm") palette = WARM_COLORS;
+        // Smart Title Logic
+        const currentTitle = titleEl.innerText.trim();
+        const defaultFragmentName =
+          fragmentElement.dataset.fragmentName || "Object-Linked Chart";
 
-    const datasets = fields.map((field, index) => {
-      let bgColors, borderColors;
-
-      if (effectiveMapping === "label") {
-        bgColors = labels.map((_, i) =>
-          resolveColor(palette[i % palette.length], fragmentElement),
+        // "Evaluated Value" based on data
+        const objectLabel = getLocalizedValue(
+          definition.pluralLabel || definition.label || definition.name,
         );
-        borderColors = labels.map((_, i) =>
-          resolveColor(
-            palette[i % palette.length],
-            fragmentElement,
-            borderFilter,
-          ),
-        );
-      } else {
-        const baseColor = palette[index % palette.length];
-        bgColors = resolveColor(baseColor, fragmentElement);
-        borderColors = resolveColor(baseColor, fragmentElement, borderFilter);
+        const evaluatedTitle = `${objectLabel} (${aggregationType !== "none" ? aggregationType : "Raw Data"})`;
+
+        // Precedence: Configuration (configTitle) > Evaluated Value
+        const preferredTitle = configTitle || evaluatedTitle;
+
+        if (
+          currentTitle === "Object-Linked Chart" ||
+          currentTitle === "Object Data Chart" ||
+          currentTitle === defaultFragmentName ||
+          currentTitle === "" ||
+          currentTitle === "Regional Sales Performance" || // Previous default
+          currentTitle === `${defaultFragmentName} (Preview)`
+        ) {
+          titleEl.innerText = preferredTitle + (isEditMode ? " (Preview)" : "");
+        }
+
+        const fields = (valueFields || "")
+          .split(",")
+          .map((f) => f.trim())
+          .filter(Boolean);
+
+        if (fields.length === 0) {
+          showInfo("Please configure at least one value field.");
+        } else {
+          const { labels, datasets: dataValues } = aggregateData(
+            items,
+            labelField,
+            fields,
+            aggregationType,
+            sortOrder,
+          );
+
+          // Resolve effective color mapping mode
+          let effectiveMapping = colorMapping || "auto";
+          if (effectiveMapping === "auto") {
+            if (fields.length === 1) {
+              effectiveMapping = "label";
+            } else {
+              effectiveMapping = ["pie", "doughnut", "polarArea"].includes(
+                chartType,
+              )
+                ? "label"
+                : "series";
+            }
+          }
+
+          // Determine color palette
+          let palette = THEME_COLORS;
+          if (colorPalette === "rainbow") palette = RAINBOW_COLORS;
+          else if (colorPalette === "cool") palette = COOL_COLORS;
+          else if (colorPalette === "warm") palette = WARM_COLORS;
+
+          const datasets = fields.map((field, index) => {
+            let bgColors, borderColors;
+
+            if (effectiveMapping === "label") {
+              bgColors = labels.map((_, i) =>
+                resolveColor(palette[i % palette.length], fragmentElement),
+              );
+              borderColors = labels.map((_, i) =>
+                resolveColor(
+                  palette[i % palette.length],
+                  fragmentElement,
+                  borderFilter,
+                ),
+              );
+            } else {
+              const baseColor = palette[index % palette.length];
+              bgColors = resolveColor(baseColor, fragmentElement);
+              borderColors = resolveColor(
+                baseColor,
+                fragmentElement,
+                borderFilter,
+              );
+            }
+
+            const localizedFieldLabel = fieldNameMap[field] || field;
+
+            const ds = {
+              label:
+                aggregationType !== "none"
+                  ? `${localizedFieldLabel} (${aggregationType})`
+                  : localizedFieldLabel,
+              data: dataValues[index],
+              backgroundColor: bgColors,
+              borderColor: borderColors,
+              borderWidth: 2,
+              fill: chartType === "line" ? false : true,
+            };
+
+            if (
+              enableSecondaryYAxis &&
+              index > 0 &&
+              ["bar", "line"].includes(chartType)
+            ) {
+              ds.yAxisID = "y1";
+            }
+
+            return ds;
+          });
+
+          const canvas = fragmentElement.querySelector(
+            `#chart-${fragmentEntryLinkNamespace}`,
+          );
+          if (canvas) {
+            const xLabelEl = fragmentElement.querySelector(
+              '[data-lfr-editable-id="x-axis-label"]',
+            );
+            const yLabelEl = fragmentElement.querySelector(
+              '[data-lfr-editable-id="y-axis-label"]',
+            );
+            const yLabelEl2 = fragmentElement.querySelector(
+              '[data-lfr-editable-id="y-axis-label-2"]',
+            );
+            const resolvedXLabel = xLabelEl ? xLabelEl.innerText : configXLabel;
+            const resolvedYLabel = yLabelEl ? yLabelEl.innerText : configYLabel;
+            const resolvedYLabel2 = yLabelEl2
+              ? yLabelEl2.innerText
+              : configYLabel2;
+
+            const existingChart = Chart.getChart(canvas);
+            if (existingChart) existingChart.destroy();
+
+            const isCartesian = ["bar", "line"].includes(chartType);
+            const isRadial = ["radar", "polarArea"].includes(chartType);
+
+            const chartOptions = {
+              responsive: true,
+              maintainAspectRatio: false,
+              animation: isEditMode ? false : { duration: 1000 },
+              plugins: {
+                legend: {
+                  display: showLegend !== false,
+                  position: "top",
+                },
+                tooltip: { mode: "index", intersect: false },
+              },
+            };
+
+            if (isCartesian) {
+              chartOptions.scales = {
+                x: {
+                  display: true,
+                  title: {
+                    display: !!resolvedXLabel,
+                    text: resolvedXLabel,
+                  },
+                },
+                y: {
+                  beginAtZero: true,
+                  display: true,
+                  title: {
+                    display: !!resolvedYLabel,
+                    text: resolvedYLabel,
+                  },
+                },
+              };
+
+              if (enableSecondaryYAxis && datasets.length > 1) {
+                chartOptions.scales.y1 = {
+                  beginAtZero: true,
+                  display: true,
+                  position: "right",
+                  grid: { drawOnChartArea: false },
+                  title: {
+                    display: !!resolvedYLabel2,
+                    text: resolvedYLabel2,
+                  },
+                };
+              }
+            } else if (isRadial) {
+              chartOptions.scales = {
+                r: {
+                  beginAtZero: true,
+                  angleLines: { display: true },
+                  suggestedMin: 0,
+                },
+              };
+            }
+
+            const ctx = canvas.getContext("2d");
+            new Chart(ctx, {
+              type: chartType || "bar",
+              data: {
+                labels: labels,
+                datasets: datasets,
+              },
+              options: chartOptions,
+            });
+          }
+        }
       }
-
-      const localizedFieldLabel = fieldNameMap[field] || field;
-
-      const ds = {
-        label:
-          aggregationType !== "none"
-            ? `${localizedFieldLabel} (${aggregationType})`
-            : localizedFieldLabel,
-        data: dataValues[index],
-        backgroundColor: bgColors,
-        borderColor: borderColors,
-        borderWidth: 2,
-        fill: chartType === "line" ? false : true,
-      };
-
-      if (
-        enableSecondaryYAxis &&
-        index > 0 &&
-        ["bar", "line"].includes(chartType)
-      ) {
-        ds.yAxisID = "y1";
-      }
-
-      return ds;
-    });
-
-    const canvas = fragmentElement.querySelector(
-      `#chart-${fragmentEntryLinkNamespace}`,
-    );
-    if (!canvas) return;
-
-    const xLabelEl = fragmentElement.querySelector(
-      '[data-lfr-editable-id="x-axis-label"]',
-    );
-    const yLabelEl = fragmentElement.querySelector(
-      '[data-lfr-editable-id="y-axis-label"]',
-    );
-    const yLabelEl2 = fragmentElement.querySelector(
-      '[data-lfr-editable-id="y-axis-label-2"]',
-    );
-    const resolvedXLabel = xLabelEl ? xLabelEl.innerText : configXLabel;
-    const resolvedYLabel = yLabelEl ? yLabelEl.innerText : configYLabel;
-    const resolvedYLabel2 = yLabelEl2 ? yLabelEl2.innerText : configYLabel2;
-
-    const existingChart = Chart.getChart(canvas);
-    if (existingChart) existingChart.destroy();
-
-    const isCartesian = ["bar", "line"].includes(chartType);
-    const isRadial = ["radar", "polarArea"].includes(chartType);
-
-    const chartOptions = {
-      responsive: true,
-      maintainAspectRatio: false,
-      animation: isEditMode ? false : { duration: 1000 },
-      plugins: {
-        legend: {
-          display: showLegend !== false,
-          position: "top",
-        },
-        tooltip: { mode: "index", intersect: false },
-      },
-    };
-
-    if (isCartesian) {
-      chartOptions.scales = {
-        x: {
-          display: true,
-          title: {
-            display: !!resolvedXLabel,
-            text: resolvedXLabel,
-          },
-        },
-        y: {
-          beginAtZero: true,
-          display: true,
-          title: {
-            display: !!resolvedYLabel,
-            text: resolvedYLabel,
-          },
-        },
-      };
-
-      if (enableSecondaryYAxis && datasets.length > 1) {
-        chartOptions.scales.y1 = {
-          beginAtZero: true,
-          display: true,
-          position: "right",
-          grid: { drawOnChartArea: false },
-          title: {
-            display: !!resolvedYLabel2,
-            text: resolvedYLabel2,
-          },
-        };
-      }
-    } else if (isRadial) {
-      chartOptions.scales = {
-        r: {
-          beginAtZero: true,
-          angleLines: { display: true },
-          suggestedMin: 0,
-        },
-      };
+    } catch (err) {
+      showError(err.message);
     }
-
-    const ctx = canvas.getContext("2d");
-    new Chart(ctx, {
-      type: chartType || "bar",
-      data: {
-        labels: labels,
-        datasets: datasets,
-      },
-      options: chartOptions,
-    });
-  } catch (err) {
-    showError(err.message);
   }
 };
 

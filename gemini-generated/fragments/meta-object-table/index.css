@@ -6,8 +6,8 @@
 }
 
 /* Editor Header Styles */
-.meta-table-editor-header { height: 0; overflow: hidden; }
-body.has-edit-mode-menu .page-editor .meta-table-editor-header.show {
+.meta-table-editor-header { height: 0; overflow: hidden; display: none; }
+body.has-edit-mode-menu .meta-table-editor-header.show {
    height: 26px;
    min-height: 26px;
    box-sizing: border-box;
@@ -19,6 +19,37 @@ body.has-edit-mode-menu .page-editor .meta-table-editor-header.show {
    padding: 0 8px;
    font-weight: 600;
    display: block;
+}
+
+/* Mappable Fields Formatting */
+.meta-editor-mappable-fields {
+    display: none;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    padding: 1.5rem;
+    background: var(--gray-100, #f7f8f9);
+    border: 1px solid var(--gray-200, #e7e8eb);
+    border-radius: 0.5rem;
+    margin-bottom: 2rem;
+}
+
+body.has-edit-mode-menu .meta-editor-mappable-fields {
+    display: flex;
+}
+
+.mappable-field-item {
+    flex: 1 1 200px;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.mappable-field-item label {
+    font-size: 10px;
+    font-weight: bold;
+    text-transform: uppercase;
+    color: var(--gray-600, #6b6c7e);
+    margin-bottom: 0;
 }
 
 .meta-dropzone-editor-label {
@@ -34,7 +65,7 @@ body.has-edit-mode-menu .page-editor .meta-table-editor-header.show {
     margin-top: var(--spacer-4, 1.5rem);
 }
 
-body.has-edit-mode-menu .meta-dropzone-editor-label {
+body.has-edit-mode-menu .meta-dropzone-editor-label.show {
     display: inline-block;
 }
 
@@ -110,39 +141,42 @@ body.has-edit-mode-menu .meta-dropzone-editor-label {
     backdrop-filter: blur(4px);
 }
 
-/* Editor-specific overrides for modals and dropzones */
-[data-layout-mode="edit"] .meta-modal-overlay {
-    position: relative; /* Ensure stacking one below each other */
-    background: none;
-    padding: 0;
-    height: auto;
-    display: block;
-    backdrop-filter: none;
-    z-index: 1;
-}
-
-[data-layout-mode="edit"] .meta-modal-container {
+/* Robust Editor Overrides for Modal Stacking */
+body.has-edit-mode-menu .meta-table-container .meta-modal-overlay {
+    position: relative !important;
+    top: auto !important;
+    left: auto !important;
     width: 100% !important;
-    max-height: none;
-    box-shadow: none;
-    position: static;
-    border: 2px dashed var(--gray-400, #b1b2b5);
+    height: auto !important;
+    display: block !important;
+    background: transparent !important;
+    backdrop-filter: none !important;
+    z-index: 1 !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    padding: 0 !important;
 }
 
-[data-layout-mode="edit"] .close-modal-btn {
-    display: none; /* Hide close button in editor */
+body.has-edit-mode-menu .meta-table-container .meta-modal-container {
+    position: relative !important;
+    width: 100% !important;
+    max-width: none !important;
+    max-height: none !important;
+    box-shadow: none !important;
+    border: 2px dashed var(--gray-400, #b1b2b5) !important;
+    margin: 0 0 2rem 0 !important;
+    transform: none !important;
+    display: flex !important;
 }
 
-[data-layout-mode="edit"] .meta-modal-body {
+body.has-edit-mode-menu .meta-table-container .close-modal-btn {
+    display: none !important;
+}
+
+body.has-edit-mode-menu .meta-table-container .meta-modal-body {
     min-height: 150px;
     display: flex;
     flex-direction: column;
-}
-
-[data-layout-mode="edit"] .meta-modal-body lfr-drop-zone {
-    flex-grow: 1;
-    min-height: 100px;
-    display: block;
 }
 
 /* Modal Title Hiding Logic */

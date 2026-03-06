@@ -1,162 +1,176 @@
+const ADMIN_API_BASE = "/o/object-admin/v1.0";
+
 const state = {
+  definition: null,
   items: [],
-  daysToShow: 90,
+  daysToDisplay: parseInt(configuration.daysToDisplay || "365"),
+};
+
+const getLocalizedValue = (value) => {
+  if (typeof value === "object" && value !== null && !Array.isArray(value)) {
+    const languageId =
+      typeof Liferay !== "undefined"
+        ? Liferay.ThemeDisplay.getLanguageId()
+        : "en_US";
+    return value[languageId] || value["en_US"] || "";
+  }
+  return value || "";
 };
 
 const fetchData = async () => {
   const { objectERC } = configuration;
   if (!objectERC) throw new Error("Object ERC not configured.");
 
-  try {
-    // Fetch definition by ERC
-    const adminUrl = `/o/object-admin/v1.0/object-definitions/by-external-reference-code/${objectERC}`;
-    const defRes = await Liferay.Util.fetch(adminUrl);
-    if (!defRes.ok)
-      throw new Error(`Could not find object with ERC "${objectERC}".`);
-    const definition = await defRes.json();
+  const adminUrl = `${ADMIN_API_BASE}/object-definitions/by-external-reference-code/${objectERC}`;
+  const defRes = await Liferay.Util.fetch(adminUrl);
+  if (!defRes.ok) throw new Error("Object definition not found.");
+  state.definition = await defRes.json();
 
-    let url = definition.restContextPath;
-    if (definition.scope === "site") {
-      const siteId = Liferay.ThemeDisplay.getScopeGroupId();
-      url += `/scopes/${siteId}`;
-    }
-
-    const response = await Liferay.Util.fetch(url);
-    if (!response.ok) {
-      if (response.status === 401 || response.status === 403) {
-        throw new Error("You do not have permission to view this data.");
-      }
-      throw new Error(
-        `Failed to fetch data from "${definition.restContextPath}".`,
-      );
-    }
-    const data = await response.json();
-    state.items = data.items || [];
-    return state.items;
-  } catch (err) {
-    throw err;
+  let url = state.definition.restContextPath;
+  if (state.definition.scope === "site") {
+    url += `/scopes/${Liferay.ThemeDisplay.getScopeGroupId()}`;
   }
+
+  const response = await Liferay.Util.fetch(`${url}/?pageSize=1000`);
+  const data = await response.json();
+  state.items = data.items || [];
+  return state.items;
 };
 
 const renderHeatmap = () => {
   const grid = fragmentElement.querySelector(
-    `#grid-${fragmentEntryLinkNamespace}`,
+    `#heatmap-grid-${fragmentEntryLinkNamespace}`,
   );
-  if (!grid) return;
+  const legend = fragmentElement.querySelector(
+    `#heatmap-legend-${fragmentEntryLinkNamespace}`,
+  );
 
-  const { dateField } = configuration;
-  const today = new Date();
-  const activityMap = {};
+  if (grid) {
+    const now = new Date();
+    const startDate = new Date();
+    startDate.setDate(now.getDate() - state.daysToDisplay);
 
-  state.items.forEach((item) => {
-    if (item[dateField]) {
-      const dateStr = new Date(item[dateField]).toDateString();
-      activityMap[dateStr] = (activityMap[dateStr] || 0) + 1;
+    // Group items by date (YYYY-MM-DD)
+    const counts = {};
+    state.items.forEach((item) => {
+      const dateStr = new Date(item.createDate || item.dateCreated)
+        .toISOString()
+        .split("T")[0];
+      counts[dateStr] = (counts[dateStr] || 0) + 1;
+    });
+
+    let html = "";
+    const tempDate = new Date(startDate);
+
+    while (tempDate <= now) {
+      const dateStr = tempDate.toISOString().split("T")[0];
+      const count = counts[dateStr] || 0;
+      let level = 0;
+      if (count > 0) level = Math.min(Math.ceil(count / 2), 4);
+
+      html += `<div class="heatmap-cell level-${level}" title="${dateStr}: ${count} activities"></div>`;
+      tempDate.setDate(tempDate.getDate() + 1);
     }
-  });
 
-  let html = "";
-  for (let i = state.daysToShow; i >= 0; i--) {
-    const d = new Date();
-    d.setDate(today.getDate() - i);
-    const count = activityMap[d.toDateString()] || 0;
+    grid.innerHTML = html;
 
-    let level = 0;
-    if (count > 0) level = 1;
-    if (count > 2) level = 2;
-    if (count > 5) level = 3;
-    if (count > 10) level = 4;
-
-    html += `<div class="heatmap-cell cell level-${level}" title="${d.toLocaleDateString()}: ${count} entries"></div>`;
+    if (legend) {
+      legend.innerHTML = `
+            <span>Less</span>
+            <div class="heatmap-cell level-0"></div>
+            <div class="heatmap-cell level-1"></div>
+            <div class="heatmap-cell level-2"></div>
+            <div class="heatmap-cell level-3"></div>
+            <div class="heatmap-cell level-4"></div>
+            <span>More</span>
+        `;
+    }
   }
-  grid.innerHTML = html;
 };
 
-const initSelector = () => {
-  const { showSizeSelector, availableSizes, daysToDisplay } = configuration;
+const initSizeSelector = () => {
+  const { showSizeSelector } = configuration;
   const container = fragmentElement.querySelector(
-    `#selector-${fragmentEntryLinkNamespace}`,
+    `#size-selector-${fragmentEntryLinkNamespace}`,
   );
-  if (!container || !showSizeSelector) return;
 
-  const sizes = (availableSizes || "5, 7, 14, 28, 30, 60, 90")
-    .split(",")
-    .map((s) => s.trim())
-    .filter(Boolean);
-  const defaultValue = daysToDisplay || "90";
+  if (container && showSizeSelector) {
+    container.innerHTML = `
+        <select class="form-control form-control-sm w-auto">
+            <option value="30">Last 30 Days</option>
+            <option value="90">Last 90 Days</option>
+            <option value="180">Last 180 Days</option>
+            <option value="365" selected>Last Year</option>
+        </select>
+    `;
 
-  const select = document.createElement("select");
-  select.className = "form-control form-control-sm";
-  select.innerHTML = sizes
-    .map(
-      (size) =>
-        `<option value="${size}" ${size === defaultValue ? "selected" : ""}>Last ${size} days</option>`,
-    )
-    .join("");
-
-  select.addEventListener("change", (e) => {
-    state.daysToShow = parseInt(e.target.value, 10);
-    renderHeatmap();
-  });
-
-  container.appendChild(select);
+    container.querySelector("select").onchange = (e) => {
+      state.daysToDisplay = parseInt(e.target.value);
+      renderHeatmap();
+    };
+  }
 };
 
-const initHeatmap = async (isEditMode) => {
+const initActivityHeatmap = async (isEditMode) => {
   const errorEl = fragmentElement.querySelector(
     `#error-${fragmentEntryLinkNamespace}`,
   );
   const infoEl = fragmentElement.querySelector(
     `#info-${fragmentEntryLinkNamespace}`,
   );
-  const grid = fragmentElement.querySelector(
-    `#grid-${fragmentEntryLinkNamespace}`,
-  );
+  const titleEl = fragmentElement.querySelector(".heatmap-title");
 
   const showError = (msg) => {
     if (isEditMode && errorEl) {
       errorEl.textContent = msg;
       errorEl.classList.remove("d-none");
-      if (grid) grid.innerHTML = "";
-    } else if (grid) {
-      grid.innerHTML = `<div class="heatmap-status text-danger">${msg}</div>`;
-    }
-  };
-
-  const showInfo = (msg) => {
-    if (isEditMode && infoEl) {
-      infoEl.textContent = msg;
-      infoEl.classList.remove("d-none");
-      if (grid) grid.innerHTML = "";
-    } else if (grid) {
-      grid.innerHTML = `<div class="heatmap-status">${msg}</div>`;
     }
   };
 
   if (errorEl) errorEl.classList.add("d-none");
   if (infoEl) infoEl.classList.add("d-none");
 
-  const { objectERC, daysToDisplay } = configuration;
-  state.daysToShow = parseInt(daysToDisplay || "90", 10);
+  const { objectERC } = configuration;
 
   if (!objectERC) {
-    showInfo("Please configure an Object External Reference Code.");
-    state.items = [];
-    renderHeatmap();
-    return;
-  }
-
-  try {
-    await fetchData();
-    if (state.items.length === 0 && isEditMode) {
-      showInfo(`No items found for "${objectERC}". Rendering placeholder.`);
+    if (titleEl) titleEl.textContent = "Activity Heatmap";
+    if (isEditMode && infoEl) {
+      infoEl.textContent = "Please configure an Object ERC.";
+      infoEl.classList.remove("d-none");
     }
-    initSelector();
-    renderHeatmap();
-  } catch (err) {
-    showError(err.message);
+  } else {
+    try {
+      await fetchData();
+
+      // Smart Title defaulting
+      const currentTitle = titleEl.innerText.trim();
+      const defaultFragmentName =
+        fragmentElement.dataset.fragmentName || "Activity Heatmap";
+
+      if (
+        currentTitle === "Activity Heatmap" ||
+        currentTitle === defaultFragmentName ||
+        currentTitle === "" ||
+        currentTitle === `${defaultFragmentName} (Preview)`
+      ) {
+        const objectLabel = getLocalizedValue(
+          state.definition.pluralLabel ||
+            state.definition.label ||
+            state.definition.name,
+        );
+        titleEl.innerText = objectLabel + (isEditMode ? " (Preview)" : "");
+      }
+
+      renderHeatmap();
+      initSizeSelector();
+    } catch (err) {
+      showError(err.message);
+    }
   }
 };
 
-if (layoutMode === "view") initHeatmap(false);
-else initHeatmap(true);
+if (layoutMode === "view") {
+  initActivityHeatmap(false);
+} else {
+  initActivityHeatmap(true);
+}

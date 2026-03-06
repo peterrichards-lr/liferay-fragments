@@ -1,23 +1,58 @@
-<div class="meta-form-container meta-form-${fragmentEntryLinkNamespace}" style="--btn-color: ${configuration.buttonColor!};">
-    <div class="alert alert-info d-none mb-3" id="info-${fragmentEntryLinkNamespace}"></div>
-    <div class="alert alert-danger d-none mb-3" id="error-${fragmentEntryLinkNamespace}"></div>
+[#attempt]
+    [#assign displayFragmentName = fragmentName /]
+[#recover]
+    [#assign displayFragmentName = "" /]
+[/#attempt]
 
-    <div class="meta-form-header mb-4 d-flex align-items-center justify-content-between flex-wrap gap-3">
-        <h2 class="object-title mb-0" data-lfr-editable-id="form-title" data-lfr-editable-type="text">Meta-Object Form</h2>
-        <div class="record-selector-wrap" id="selector-${fragmentEntryLinkNamespace}"></div>
-    </div>
+[#if !displayFragmentName?has_content]
+    [#assign displayFragmentName = "Meta-Object Form" /]
+[/#if]
+
+[#assign showFragmentHeader = configuration.showFragmentHeader!true /]
+
+[#if layoutMode == 'edit']
+    <div class="meta-form-editor-header ${showFragmentHeader?then('show', '')}">${displayFragmentName}</div>
+[/#if]
+
+<div class="meta-form-container meta-form-${fragmentEntryLinkNamespace}" 
+    data-layout-mode="${layoutMode}"
+    data-fragment-name="${displayFragmentName}">
     
-    <form class="dynamic-form" id="form-${fragmentEntryLinkNamespace}">
-        <div class="form-fields-wrap" id="fields-${fragmentEntryLinkNamespace}">
-            <div class="meta-status text-center p-5">Discovering object fields...</div>
-        </div>
+    <div class="alert alert-danger d-none" id="error-${fragmentEntryLinkNamespace}"></div>
+    <div class="alert alert-info d-none" id="info-${fragmentEntryLinkNamespace}"></div>
 
-        <div class="form-actions mt-5">
-            <button type="submit" class="btn btn-primary btn-block p-3">
-                Save Entry
+    <div class="meta-form-header mb-4">
+        <h2 class="object-title mb-0" data-lfr-editable-id="form-title" data-lfr-editable-type="text">Meta-Object Form</h2>
+    </div>
+
+    [#if configuration.enableRecordSelection && layoutMode == 'view']
+        <div class="record-selector-wrap mb-4" id="selector-${fragmentEntryLinkNamespace}">
+            <div class="meta-status small text-muted">Loading records...</div>
+        </div>
+    [/#if]
+
+    <form id="form-${fragmentEntryLinkNamespace}">
+        <div class="form-fields-wrap">
+            <div class="text-center p-5">
+                <div class="meta-status">Initializing form fields...</div>
+            </div>
+        </div>
+        
+        <div class="form-status-msg d-none mt-3"></div>
+
+        <div class="form-actions mt-4">
+            <button type="submit" class="btn btn-primary" style="background-color: ${configuration.buttonColor!}; border-color: ${configuration.buttonColor!};">
+                <span data-lfr-editable-id="submit-label" data-lfr-editable-type="text">Submit</span>
             </button>
         </div>
     </form>
 
-    <div class="form-status-msg mt-3 d-none alert"></div>
+    <div class="meta-editor-mappable-fields mt-4">
+        <div class="mappable-field-item">
+            <label>Object ERC</label>
+            <div class="small text-muted" data-lfr-editable-id="object-erc" data-lfr-editable-type="text">
+                ${configuration.objectERC!}
+            </div>
+        </div>
+    </div>
 </div>

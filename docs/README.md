@@ -11,6 +11,7 @@ A collection of robust, accessible, and responsive Liferay fragments for DXP pla
 - [📖 Recipes & Workflows](./recipes.md)
 - [⚙️ Prerequisites & Setup](./setup.md)
 - [❓ Troubleshooting & FAQ](./troubleshooting.md)
+- [🛠️ Developer Resources](#-developer-resources)
 
 ## 🚀 Deployment
 
@@ -19,15 +20,17 @@ A collection of robust, accessible, and responsive Liferay fragments for DXP pla
 Use the provided `deploy-fragment-zips.sh` script to automate the deployment of your fragment and Language ZIPs.
 
 #### Usage
+
 ```bash
 ./deploy-fragment-zips.sh [TARGET_PATH] [--all | folder_name1 folder_name2 ...]
 ```
 
-*   **TARGET_PATH**: The root of a Liferay Workspace or a standalone Liferay bundle.
-*   **--all**: Deploys all ZIPs found in the `/zips` directory.
-*   **folder_name**: Space-separated list of specific fragment or collection folder names to deploy.
+- **TARGET_PATH**: The root of a Liferay Workspace or a standalone Liferay bundle.
+- **--all**: Deploys all ZIPs found in the `/zips` directory.
+- **folder_name**: Space-separated list of specific fragment or collection folder names to deploy.
 
 #### Example
+
 ```bash
 ./deploy-fragment-zips.sh ~/liferay-workspace --all
 ./deploy-fragment-zips.sh /opt/liferay gemini-generated master-page-background-colour
@@ -57,6 +60,7 @@ Liferay will automatically import the fragments and register the language overri
 ### Custom Build Options
 
 If you want to target a specific Virtual Instance or Site, set these environment variables before running `./create-fragment-zips.sh`:
+
 - `COMPANY_WEB_ID`: The Web ID of the Virtual Instance (Defaults to `*` / Global).
 - `GROUP_KEY`: The Site Friendly URL or Name (Ignored if `COMPANY_WEB_ID` is `*`).
 
@@ -123,6 +127,18 @@ A suite of high-fidelity, data-driven fragments designed for modern Liferay port
 - [Profile Fragments](./fragments/profile.md) (DEPRECATED)
 - [Commerce Fragments](./fragments/commerce.md)
 - [User & Account Fragments](./fragments/user-account.md) (OAuth2, Connectivity Testing)
+
+---
+
+## 🛠️ Developer Resources
+
+For more information on developing Liferay fragments, refer to the following official Liferay Learn guides:
+
+- **[Fragment-Specific Tags and Attributes Reference](https://learn.liferay.com/w/dxp/development/developing-page-fragments/reference/fragment-specific-tags-and-attributes-reference)**: A comprehensive guide to the `data-lfr` attributes and FreeMarker variables available within fragments.
+- **[Fragment Configuration Types Reference](https://learn.liferay.com/w/dxp/development/developing-page-fragments/reference/fragment-configuration-types-reference)**: Details on all available configuration field types (text, checkbox, select, etc.) for `configuration.json`.
+- **[Page Fragment Editor Interface Reference](https://learn.liferay.com/w/dxp/development/developing-page-fragments/reference/page-fragment-editor-interface-reference)**: An overview of the built-in Page Editor interface and how it interacts with your fragment code.
+
+---
 
 ## 📚 Resources
 
