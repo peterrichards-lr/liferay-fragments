@@ -3,6 +3,7 @@ const ADMIN_API_BASE = "/o/object-admin/v1.0";
 const state = {
   definition: null,
   currentRecordId: null,
+  currentRecordERC: null,
   records: [],
   fieldOptions: {}, // Cache for picklist/relationship options
 };
@@ -119,7 +120,7 @@ const createSearchableSelect = (container, options = {}) => {
 };
 
 const mapFieldToInput = (field, value = "") => {
-  const { type, businessType, name, required } = field;
+  const { businessType, name, required } = field;
   const label = getLocalizedValue(field.label);
   const commonAttrs = `name="${name}" id="${name}-${fragmentEntryLinkNamespace}" class="form-control" ${required ? "required" : ""}`;
 
@@ -137,19 +138,24 @@ const mapFieldToInput = (field, value = "") => {
         `;
   }
 
-  switch (type) {
+  switch (businessType) {
     case "Integer":
+    case "LongInteger":
     case "Decimal":
-    case "Double":
+    case "PrecisionDecimal":
       return `<div class="form-group mb-4"><label for="${name}-${fragmentEntryLinkNamespace}">${label}${required ? " *" : ""}</label><input type="number" ${commonAttrs} value="${value}"></div>`;
-    case "DateTime":
     case "Date": {
       const dateValue = value
         ? new Date(value).toISOString().split("T")[0]
         : "";
       return `<div class="form-group mb-4"><label for="${name}-${fragmentEntryLinkNamespace}">${label}${required ? " *" : ""}</label><input type="date" ${commonAttrs} value="${dateValue}"></div>`;
     }
-    case "CPLongText":
+    case "DateTime": {
+      const dateValue = value ? new Date(value).toISOString().slice(0, 16) : "";
+      return `<div class="form-group mb-4"><label for="${name}-${fragmentEntryLinkNamespace}">${label}${required ? " *" : ""}</label><input type="datetime-local" ${commonAttrs} value="${dateValue}"></div>`;
+    }
+    case "LongText":
+    case "RichText":
       return `<div class="form-group mb-4"><label for="${name}-${fragmentEntryLinkNamespace}">${label}${required ? " *" : ""}</label><textarea ${commonAttrs} rows="4">${value}</textarea></div>`;
     case "Boolean":
       return `<div class="form-group mb-4"><div class="custom-control custom-checkbox"><input type="checkbox" class="custom-control-input" name="${name}" id="${name}-${fragmentEntryLinkNamespace}" ${value ? "checked" : ""}><label class="custom-control-label" for="${name}-${fragmentEntryLinkNamespace}">${label}</label></div></div>`;
@@ -205,23 +211,33 @@ const fetchOptionsForField = async (field, term = "") => {
   return [];
 };
 
-const loadRecord = async (id) => {
+const loadRecord = async (identifier) => {
   const fieldsWrap = fragmentElement.querySelector(".form-fields-wrap");
   const form = fragmentElement.querySelector("form");
 
   try {
     let record = {};
-    if (id) {
-      const response = await Liferay.Util.fetch(`${getBaseUrl()}/${id}`);
+    if (identifier) {
+      const isERC = isNaN(identifier);
+      const url = isERC
+        ? `${getBaseUrl()}/by-external-reference-code/${identifier}`
+        : `${getBaseUrl()}/${identifier}`;
+
+      const response = await Liferay.Util.fetch(url);
       if (!response.ok) throw new Error("Failed to fetch record.");
       record = await response.json();
-      state.currentRecordId = id;
+      state.currentRecordId = record.id;
+      state.currentRecordERC = record.externalReferenceCode;
     } else {
       state.currentRecordId = null;
+      state.currentRecordERC = null;
     }
 
     const fields = state.definition.objectFields.filter(
-      (f) => !["id", "externalReferenceCode"].includes(f.name) && !f.readOnly,
+      (f) =>
+        !["id", "externalReferenceCode", "status"].includes(f.name) &&
+        f.readOnly !== "true" &&
+        f.readOnly !== "conditional",
     );
     fieldsWrap.innerHTML = fields
       .map((f) => mapFieldToInput(f, record[f.name] || ""))
@@ -295,8 +311,13 @@ const initSelector = async () => {
 };
 
 const initMetaForm = async (isEditMode) => {
-  const { objectERC, fixedRecordId, enableAddNew, enableRecordSelection } =
-    configuration;
+  const {
+    objectERC,
+    fixedRecordId,
+    fixedRecordERC,
+    enableAddNew,
+    enableRecordSelection,
+  } = configuration;
   const fieldsWrap = fragmentElement.querySelector(".form-fields-wrap");
   const titleEl = fragmentElement.querySelector(".object-title");
   const form = fragmentElement.querySelector("form");
@@ -342,19 +363,28 @@ const initMetaForm = async (isEditMode) => {
       (isEditMode ? " (Preview)" : "");
 
     const params = new URLSearchParams(window.location.search);
-    let startId = fixedRecordId || params.get("entryId") || params.get("id");
+    let startIdentifier =
+      fixedRecordId ||
+      params.get("entryId") ||
+      params.get("id") ||
+      fixedRecordERC ||
+      params.get("entryERC") ||
+      params.get("erc");
 
-    if (!startId && !enableAddNew && !enableRecordSelection) {
+    if (!startIdentifier && !enableAddNew && !enableRecordSelection) {
       showError('Record ID not specified and "Add New" is disabled.');
       return;
     }
 
-    await loadRecord(startId);
+    await loadRecord(startIdentifier);
     if (!isEditMode && enableRecordSelection) await initSelector();
 
     window.addEventListener("lfr-object-form-select", (e) => {
-      if (e.detail && e.detail.objectERC === objectERC)
-        loadRecord(e.detail.recordId);
+      if (e.detail && e.detail.objectERC === objectERC) {
+        const eventIdentifier =
+          e.detail.recordId || e.detail.recordERC || e.detail.erc;
+        if (eventIdentifier) loadRecord(eventIdentifier);
+      }
     });
 
     if (!isEditMode) {

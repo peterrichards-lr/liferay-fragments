@@ -29,6 +29,13 @@
           "name": "fixedRecordId",
           "type": "text",
           "defaultValue": ""
+        },
+        {
+          "label": "lfr.gemini-generated.fixed-record-erc",
+          "description": "lfr.gemini-generated.fixed-record-erc-description",
+          "name": "fixedRecordERC",
+          "type": "text",
+          "defaultValue": ""
         }
       ],
       "label": "lfr.gemini-generated.data"

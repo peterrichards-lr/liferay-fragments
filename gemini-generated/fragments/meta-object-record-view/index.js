@@ -95,7 +95,7 @@ const getBaseUrl = () => {
   return url;
 };
 
-const loadRecordData = async (id, isEditMode) => {
+const loadRecordData = async (identifier, isEditMode) => {
   const fieldsWrap = fragmentElement.querySelector(
     `#fields-${fragmentEntryLinkNamespace}`,
   );
@@ -106,16 +106,21 @@ const loadRecordData = async (id, isEditMode) => {
 
   try {
     let record = {};
-    if (id) {
-      const dataRes = await Liferay.Util.fetch(`${getBaseUrl()}/${id}`);
+    if (identifier) {
+      const isERC = isNaN(identifier);
+      const url = isERC
+        ? `${getBaseUrl()}/by-external-reference-code/${identifier}`
+        : `${getBaseUrl()}/${identifier}`;
+
+      const dataRes = await Liferay.Util.fetch(url);
       if (!dataRes.ok) throw new Error("Record not found.");
       record = await dataRes.json();
-      state.currentRecordId = id;
+      state.currentRecordId = record.id;
     } else if (isEditMode) {
       const listRes = await Liferay.Util.fetch(`${getBaseUrl()}/?pageSize=1`);
       const data = await listRes.json();
       record = data.items?.[0] || {};
-      state.currentRecordId = null;
+      state.currentRecordId = record.id || null;
     }
 
     const displayFields = state.definition.objectFields.filter(
@@ -163,7 +168,7 @@ const loadRecordData = async (id, isEditMode) => {
 };
 
 const initRecordView = async (isEditMode) => {
-  const { objectERC } = configuration;
+  const { objectERC, recordId, recordERC } = configuration;
   const fieldsWrap = fragmentElement.querySelector(
     `#fields-${fragmentEntryLinkNamespace}`,
   );
@@ -216,11 +221,16 @@ const initRecordView = async (isEditMode) => {
       (isEditMode ? " (Preview)" : "");
 
     const params = new URLSearchParams(window.location.search);
-    const recordId =
-      params.get("entryId") || params.get("id") || configuration.recordId;
+    const identifier =
+      params.get("entryId") ||
+      params.get("id") ||
+      recordId ||
+      params.get("entryERC") ||
+      params.get("erc") ||
+      recordERC;
 
-    if (recordId || isEditMode) {
-      await loadRecordData(recordId, isEditMode);
+    if (identifier || isEditMode) {
+      await loadRecordData(identifier, isEditMode);
     } else {
       showInfo("No record ID found in URL or configuration.");
     }
@@ -228,7 +238,9 @@ const initRecordView = async (isEditMode) => {
     // Listen for external record requests
     window.addEventListener("lfr-object-view-select", (e) => {
       if (e.detail && e.detail.objectERC === objectERC) {
-        loadRecordData(e.detail.recordId, false);
+        const eventIdentifier =
+          e.detail.recordId || e.detail.recordERC || e.detail.erc;
+        if (eventIdentifier) loadRecordData(eventIdentifier, false);
       }
     });
   } catch (err) {

@@ -42,4 +42,5 @@
 - [x] Implement runtime size selector for Activity Heatmap with full localization and documentation.
 - [x] Update Animated Metric Counter to support decimal numbers and configurable precision.
 - [x] Enhance Meta-Object Form with "Add New", record selection dropdown, and external URL/Event integration.
+- [x] Fix Meta-Object Form field display (string-based 'readOnly' and 'businessType' refactoring).
 - [x] Upgrade Object-Linked Chart with dynamic data grouping and aggregation (Sum, Average, Count).

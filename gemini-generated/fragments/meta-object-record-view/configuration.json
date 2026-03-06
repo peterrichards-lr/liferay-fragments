@@ -15,6 +15,13 @@
           "name": "recordId",
           "type": "text",
           "defaultValue": ""
+        },
+        {
+          "label": "lfr.gemini-generated.fallback-record-erc",
+          "description": "lfr.gemini-generated.fallback-record-erc-description",
+          "name": "recordERC",
+          "type": "text",
+          "defaultValue": ""
         }
       ],
       "label": "lfr.gemini-generated.data"
