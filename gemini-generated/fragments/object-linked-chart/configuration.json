@@ -3,7 +3,7 @@
     {
       "fields": [
         {
-          "defaultValue": "C_WATER_READINGS",
+          "defaultValue": "WATER_READING",
           "label": "lfr.gemini-generated.object-external-reference-code",
           "description": "lfr.gemini-generated.object-external-reference-code-description",
           "name": "objectERC",
@@ -22,12 +22,46 @@
           "description": "lfr.gemini-generated.value-fields-description",
           "name": "valueFields",
           "type": "text"
+        },
+        {
+          "defaultValue": "none",
+          "label": "lfr.gemini-generated.aggregation-type",
+          "description": "lfr.gemini-generated.aggregation-type-description",
+          "name": "aggregationType",
+          "type": "select",
+          "typeOptions": {
+            "validValues": [
+              {
+                "label": "lfr.gemini-generated.none",
+                "value": "none"
+              },
+              {
+                "label": "lfr.gemini-generated.sum",
+                "value": "sum"
+              },
+              {
+                "label": "lfr.gemini-generated.average",
+                "value": "avg"
+              },
+              {
+                "label": "lfr.gemini-generated.count",
+                "value": "count"
+              }
+            ]
+          }
         }
       ],
       "label": "lfr.gemini-generated.data"
     },
     {
       "fields": [
+        {
+          "defaultValue": "Object Data Chart",
+          "label": "lfr.gemini-generated.chart-title",
+          "description": "lfr.gemini-generated.chart-title-description",
+          "name": "chartTitle",
+          "type": "text"
+        },
         {
           "defaultValue": "bar",
           "label": "lfr.gemini-generated.chart-type",

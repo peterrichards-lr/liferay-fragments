@@ -2,13 +2,16 @@
     <div class="alert alert-info d-none mb-3" id="info-${fragmentEntryLinkNamespace}"></div>
     <div class="alert alert-danger d-none mb-3" id="error-${fragmentEntryLinkNamespace}"></div>
 
-    <div class="heatmap-header mb-3">
-        <h3 class="heatmap-title" data-lfr-editable-id="heatmap-title" data-lfr-editable-type="text">Activity Heatmap</h3>
+    <div class="heatmap-header mb-3 d-flex align-items-center justify-content-between">
+        <h3 class="heatmap-title mb-0" data-lfr-editable-id="heatmap-title" data-lfr-editable-type="text">Activity Heatmap</h3>
+        <div class="size-selector-wrap" id="selector-${fragmentEntryLinkNamespace}"></div>
     </div>
+    
     <div class="heatmap-grid" id="grid-${fragmentEntryLinkNamespace}">
         <div class="heatmap-status text-center p-4">Initializing heatmap...</div>
     </div>
-    <div class="heatmap-legend mt-3 d-flex align-items-center gap-2 small text-muted">
+
+    <div class="heatmap-legend">
         <span>Less</span>
         <div class="cell level-0"></div>
         <div class="cell level-1"></div>

@@ -1,17 +1,45 @@
 # Gemini Project State - Liferay Fragments
 
-## Showcase Data & Liferay CX Conventions
+## Mandatory Rules & Conventions
 
-### 1. Object External Reference Code (ERC)
+### 1. Localization Rule
+
+- **Requirement**: Whenever a fragment's `configuration.json` is modified (e.g., adding/changing fields), the corresponding `Language_en_US.properties` file **must** be updated with the new labels and descriptions.
+
+### 2. Documentation Rule
+
+- **Requirement**: Whenever a fragment's features, configurations, or logic are updated, the corresponding markdown file in `docs/fragments/` (or `docs/setup.md`) **must** be synchronized to reflect these changes.
+
+### 3. Site-Scoping Compliance
+
+- **Requirement**: Fragments interacting with Liferay Objects **must** support Site-scoped data. This involves fetching the object definition via the Admin API to determine its scope and conditionally appending `/scopes/${siteId}` to API endpoints.
+
+### 4. Showcase Data ERC Convention
+
 - **Scope**: Repository-specific convention for showcase data.
 - **Convention**: The ERC of an Object is its name in uppercase with underscores separating words (e.g., `COMPANY_MILESTONE`).
-- **Note**: This is not a Liferay requirement, but a standard followed within this project for consistency across sample datasets.
+- **Note**: This is for internal consistency across sample datasets.
 
-### 2. `taskItemDelegateName` (Liferay CX Rule)
+### 5. `taskItemDelegateName` (Liferay CX Rule)
+
 - **Scope**: Mandatory Liferay Client Extension / Batch Engine rule.
-- **Convention**: When importing Object entries via Batch Engine, the `taskItemDelegateName` must be the Object's name with a `C_` prefix (e.g., `"taskItemDelegateName": "C_CompanyMilestone"`).
+- **Convention**: The `taskItemDelegateName` must be the Object's name with a `C_` prefix (e.g., `"taskItemDelegateName": "C_CompanyMilestone"`).
 - **Position**: Must be positioned within the `configuration` object, alongside the `parameters` block.
 
+### 6. Pre-commit Hook (Formatting)
+
+- **Requirement**: A git pre-commit hook is active to automatically format changed files:
+  - **JSON**: Formatted using `jq`.
+  - **Markdown & JavaScript**: Formatted using `npx prettier`.
+  - **Exclusions**: HTML (Freemarker) and CSS files are strictly excluded from automated formatting.
+
 ## Current Tasks
+
 - [x] Update documentation with showcase data conventions (`docs/setup.md` and fragment docs).
 - [x] Synchronize project state in `gemini.md`.
+- [x] Enhance Activity Heatmap with configurable `daysToDisplay` and improved legend styling.
+- [x] Standardize all fragment `objectERC` defaults to reflect actual showcase data.
+- [x] Implement runtime size selector for Activity Heatmap with full localization and documentation.
+- [x] Update Animated Metric Counter to support decimal numbers and configurable precision.
+- [x] Enhance Meta-Object Form with "Add New", record selection dropdown, and external URL/Event integration.
+- [x] Upgrade Object-Linked Chart with dynamic data grouping and aggregation (Sum, Average, Count).

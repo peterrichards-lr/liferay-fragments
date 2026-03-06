@@ -2,6 +2,10 @@
     <div class="alert alert-info d-none mb-3" id="info-${fragmentEntryLinkNamespace}"></div>
     <div class="alert alert-danger d-none mb-3" id="error-${fragmentEntryLinkNamespace}"></div>
     
+    <div class="chart-header mb-4 text-center">
+        <h3 class="chart-title">${configuration.chartTitle!}</h3>
+    </div>
+
     <div class="chart-wrapper">
         <canvas id="chart-${fragmentEntryLinkNamespace}" aria-hidden="true"></canvas>
         <div class="sr-only" id="fallback-table-${fragmentEntryLinkNamespace}">

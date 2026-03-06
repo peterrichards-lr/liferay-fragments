@@ -3,7 +3,7 @@
     {
       "fields": [
         {
-          "defaultValue": "C_WATER_READINGS",
+          "defaultValue": "WATER_READING",
           "label": "lfr.gemini-generated.object-external-reference-code",
           "description": "lfr.gemini-generated.object-external-reference-code-description",
           "name": "objectERC",

@@ -3,7 +3,7 @@
     {
       "fields": [
         {
-          "defaultValue": "C_COMPANY_MILESTONES",
+          "defaultValue": "COMPANY_MILESTONE",
           "description": "lfr.gemini-generated.object-external-reference-code-description",
           "label": "lfr.gemini-generated.object-external-reference-code",
           "name": "objectERC",

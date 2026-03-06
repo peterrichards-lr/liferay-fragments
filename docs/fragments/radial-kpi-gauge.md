@@ -3,13 +3,21 @@
 A high-fidelity radial progress indicator for showing single metrics derived from Object data.
 
 ## Features
+
 - **Live Aggregation**: Sums values from a Liferay Object to show progress against a goal.
 - **Smooth Animations**: SVG-based stroke transitions.
 - **Dynamic Text**: Centers the percentage value automatically.
 - **Responsive**: Scalable SVG design that fits small sidebars or large dashboard slots.
 
+## Visuals
+
+![Radial KPI Gauge - Running View](../images/radial-kpi-gauge.png)
+
+![Radial KPI Gauge - Configuration](../images/radial-kpi-gauge-config.png)
+
 ## Configuration
-- **Object Path**: Source for the metric data.
+
+- **Object ERC**: Source for the metric data.
 - **Target Value**: The goal number representing 100% completion.
 - **Value Field**: The field to aggregate from the Object.
 - **Gauge Color**: Custom color for the progress ring.

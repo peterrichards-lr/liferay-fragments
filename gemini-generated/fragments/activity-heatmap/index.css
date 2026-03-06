@@ -3,7 +3,8 @@
     background: var(--white, #fff);
     border-radius: var(--border-radius-lg, 0.5rem);
     border: 1px solid var(--gray-200, #eee);
-    display: inline-block;
+    display: block;
+    width: 100%;
 }
 
 .heatmap-header {
@@ -12,11 +13,19 @@
     color: var(--body-color);
 }
 
+.size-selector-wrap select {
+    width: auto;
+    padding-top: 2px;
+    padding-bottom: 2px;
+    height: auto;
+    font-size: var(--font-size-xs, 0.75rem);
+}
+
 .heatmap-grid {
-    display: grid;
-    grid-template-columns: repeat(12, 1fr); /* Monthly grouping for simplicity */
-    grid-auto-flow: column;
+    display: flex;
+    flex-wrap: wrap;
     gap: 4px;
+    min-height: 12px;
 }
 
 .heatmap-cell {
@@ -24,16 +33,17 @@
     height: 12px;
     border-radius: 2px;
     background: var(--gray-100, #f7f8f9);
+    flex-shrink: 0;
 }
 
-/* Color levels using rgb relative color syntax if supported, or fallback */
+/* Color levels */
 .cell.level-0 { background: var(--gray-100, #f7f8f9); }
 .cell.level-1 { background: color-mix(in srgb, var(--base-color), white 70%); }
 .cell.level-2 { background: color-mix(in srgb, var(--base-color), white 40%); }
 .cell.level-3 { background: color-mix(in srgb, var(--base-color), white 10%); }
 .cell.level-4 { background: var(--base-color); }
 
-.heatmap-footer {
+.heatmap-legend {
     display: flex;
     align-items: center;
     gap: 8px;
@@ -42,13 +52,9 @@
     color: var(--text-secondary-color);
 }
 
-.legend {
-    display: flex;
-    gap: 4px;
-}
-
-.legend .cell {
+.heatmap-legend .cell {
     width: 10px;
     height: 10px;
     border-radius: 2px;
+    flex-shrink: 0;
 }

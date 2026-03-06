@@ -3,7 +3,7 @@
     {
       "fields": [
         {
-          "defaultValue": "C_ACTIVITY_LOGS",
+          "defaultValue": "ACTIVITY_LOG",
           "description": "lfr.gemini-generated.object-external-reference-code-description",
           "label": "lfr.gemini-generated.object-external-reference-code",
           "name": "objectERC",
@@ -15,6 +15,35 @@
           "label": "lfr.gemini-generated.date-field",
           "name": "dateField",
           "type": "text"
+        },
+        {
+          "defaultValue": "90",
+          "description": "lfr.gemini-generated.days-to-display-description",
+          "label": "lfr.gemini-generated.days-to-display",
+          "name": "daysToDisplay",
+          "type": "text"
+        },
+        {
+          "defaultValue": false,
+          "description": "lfr.gemini-generated.show-size-selector-description",
+          "label": "lfr.gemini-generated.show-size-selector",
+          "name": "showSizeSelector",
+          "type": "checkbox"
+        },
+        {
+          "defaultValue": "5, 7, 14, 28, 30, 60, 90",
+          "description": "lfr.gemini-generated.available-sizes-description",
+          "label": "lfr.gemini-generated.available-sizes",
+          "name": "availableSizes",
+          "type": "text",
+          "typeOptions": {
+            "dependency": {
+              "showSizeSelector": {
+                "type": "equal",
+                "value": "true"
+              }
+            }
+          }
         }
       ],
       "label": "lfr.gemini-generated.data"

@@ -7,7 +7,7 @@
           "description": "lfr.gemini-generated.object-external-reference-code-description",
           "name": "objectERC",
           "type": "text",
-          "defaultValue": ""
+          "defaultValue": "COMPANY_MILESTONE"
         },
         {
           "label": "lfr.gemini-generated.fallback-record-id",

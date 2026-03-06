@@ -7,6 +7,13 @@
           "description": "lfr.gemini-generated.end-value-description",
           "label": "lfr.gemini-generated.end-value",
           "name": "endValue",
+          "type": "text"
+        },
+        {
+          "defaultValue": "0",
+          "description": "lfr.gemini-generated.decimal-places-description",
+          "label": "lfr.gemini-generated.decimal-places",
+          "name": "decimalPlaces",
           "type": "text",
           "dataType": "int"
         },

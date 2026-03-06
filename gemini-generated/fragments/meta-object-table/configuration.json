@@ -7,7 +7,7 @@
           "description": "lfr.gemini-generated.object-external-reference-code-description",
           "name": "objectERC",
           "type": "text",
-          "defaultValue": ""
+          "defaultValue": "COMPANY_MILESTONE"
         },
         {
           "defaultValue": false,
@@ -21,7 +21,7 @@
           "description": "lfr.gemini-generated.columns-to-display-description",
           "name": "columnsToDisplay",
           "type": "text",
-          "defaultValue": "configKey,description,configStatus.name,configValue",
+          "defaultValue": "date,title,description",
           "typeOptions": {
             "dependency": {
               "customizeColumns": {
@@ -53,6 +53,111 @@
         }
       ],
       "label": "lfr.gemini-generated.display"
+    },
+    {
+      "fields": [
+        {
+          "defaultValue": false,
+          "label": "lfr.gemini-generated.enable-view-action",
+          "description": "lfr.gemini-generated.enable-view-action-description",
+          "name": "enableView",
+          "type": "checkbox"
+        },
+        {
+          "defaultValue": "event",
+          "label": "lfr.gemini-generated.view-action-mode",
+          "description": "lfr.gemini-generated.view-action-mode-description",
+          "name": "viewMode",
+          "type": "select",
+          "typeOptions": {
+            "validValues": [
+              {
+                "label": "lfr.gemini-generated.js-event",
+                "value": "event"
+              },
+              {
+                "label": "lfr.gemini-generated.page-redirect",
+                "value": "redirect"
+              },
+              {
+                "label": "lfr.gemini-generated.new-tab",
+                "value": "tab"
+              }
+            ],
+            "dependency": {
+              "enableView": {
+                "type": "equal",
+                "value": "true"
+              }
+            }
+          }
+        },
+        {
+          "label": "lfr.gemini-generated.view-target-url",
+          "description": "lfr.gemini-generated.view-target-url-description",
+          "name": "viewUrl",
+          "type": "text",
+          "typeOptions": {
+            "dependency": {
+              "enableView": {
+                "type": "equal",
+                "value": "true"
+              }
+            }
+          }
+        },
+        {
+          "defaultValue": false,
+          "label": "lfr.gemini-generated.enable-edit-action",
+          "description": "lfr.gemini-generated.enable-edit-action-description",
+          "name": "enableEdit",
+          "type": "checkbox"
+        },
+        {
+          "defaultValue": "event",
+          "label": "lfr.gemini-generated.edit-action-mode",
+          "description": "lfr.gemini-generated.edit-action-mode-description",
+          "name": "editMode",
+          "type": "select",
+          "typeOptions": {
+            "validValues": [
+              {
+                "label": "lfr.gemini-generated.js-event",
+                "value": "event"
+              },
+              {
+                "label": "lfr.gemini-generated.page-redirect",
+                "value": "redirect"
+              },
+              {
+                "label": "lfr.gemini-generated.new-tab",
+                "value": "tab"
+              }
+            ],
+            "dependency": {
+              "enableEdit": {
+                "type": "equal",
+                "value": "true"
+              }
+            }
+          }
+        },
+        {
+          "label": "lfr.gemini-generated.edit-target-url",
+          "description": "lfr.gemini-generated.edit-target-url-description",
+          "name": "editUrl",
+          "type": "text",
+          "typeOptions": {
+            "dependency": {
+              "enableEdit": {
+                "type": "equal",
+                "value": "true"
+              }
+            }
+          }
+        }
+      ],
+      "label": "lfr.gemini-generated.actions"
     }
   ]
 }

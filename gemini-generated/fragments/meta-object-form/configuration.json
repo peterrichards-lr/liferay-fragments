@@ -7,6 +7,27 @@
           "description": "lfr.gemini-generated.object-external-reference-code-description",
           "name": "objectERC",
           "type": "text",
+          "defaultValue": "COMPANY_MILESTONE"
+        },
+        {
+          "label": "lfr.gemini-generated.enable-add-new",
+          "description": "lfr.gemini-generated.enable-add-new-description",
+          "name": "enableAddNew",
+          "type": "checkbox",
+          "defaultValue": true
+        },
+        {
+          "label": "lfr.gemini-generated.enable-record-selection",
+          "description": "lfr.gemini-generated.enable-record-selection-description",
+          "name": "enableRecordSelection",
+          "type": "checkbox",
+          "defaultValue": false
+        },
+        {
+          "label": "lfr.gemini-generated.fixed-record-id",
+          "description": "lfr.gemini-generated.fixed-record-id-description",
+          "name": "fixedRecordId",
+          "type": "text",
           "defaultValue": ""
         }
       ],

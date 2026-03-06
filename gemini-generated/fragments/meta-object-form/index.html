@@ -2,7 +2,10 @@
     <div class="alert alert-info d-none mb-3" id="info-${fragmentEntryLinkNamespace}"></div>
     <div class="alert alert-danger d-none mb-3" id="error-${fragmentEntryLinkNamespace}"></div>
 
-    <h2 class="object-title mb-4"></h2>
+    <div class="meta-form-header mb-4 d-flex align-items-center justify-content-between flex-wrap gap-3">
+        <h2 class="object-title mb-0"></h2>
+        <div class="record-selector-wrap" id="selector-${fragmentEntryLinkNamespace}"></div>
+    </div>
     
     <form class="dynamic-form" id="form-${fragmentEntryLinkNamespace}">
         <div class="form-fields-wrap" id="fields-${fragmentEntryLinkNamespace}">
@@ -11,7 +14,7 @@
 
         <div class="form-actions mt-5">
             <button type="submit" class="btn btn-primary btn-block p-3">
-                Submit Entry
+                Save Entry
             </button>
         </div>
     </form>

@@ -7,7 +7,7 @@
           "description": "lfr.gemini-generated.object-external-reference-code-description",
           "name": "objectERC",
           "type": "text",
-          "defaultValue": "C_PRODUCT_SHOWCASE"
+          "defaultValue": "PRODUCT_SHOWCASE"
         },
         {
           "label": "lfr.gemini-generated.image-field-name",
