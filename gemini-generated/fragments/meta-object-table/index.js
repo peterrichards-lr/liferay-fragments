@@ -349,7 +349,11 @@ const initMetaTable = async (isEditMode) => {
     const defUrl = `${ADMIN_API_BASE}/object-definitions/by-external-reference-code/${objectERC}`;
     state.definition = await fetchData(defUrl);
 
-    const objectLabel = getLocalizedValue(state.definition.name);
+    const objectLabel = getLocalizedValue(
+      state.definition.pluralLabel ||
+        state.definition.label ||
+        state.definition.name,
+    );
     const currentTitle = titleEl.innerText.trim();
 
     if (

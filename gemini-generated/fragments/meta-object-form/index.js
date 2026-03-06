@@ -371,7 +371,9 @@ const initMetaForm = async (isEditMode) => {
     if (!response.ok) throw new Error("Object not found.");
 
     state.definition = await response.json();
-    const objectLabel = getLocalizedValue(state.definition.name);
+    const objectLabel = getLocalizedValue(
+      state.definition.label || state.definition.name,
+    );
     const currentTitle = titleEl.innerText.trim();
 
     if (

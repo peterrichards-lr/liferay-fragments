@@ -240,7 +240,9 @@ const initChart = async (isEditMode) => {
       currentTitle === "" ||
       currentTitle === "Object Data Chart"
     ) {
-      const objectLabel = getLocalizedValue(definition.name);
+      const objectLabel = getLocalizedValue(
+        definition.pluralLabel || definition.label || definition.name,
+      );
       titleEl.innerText = `${objectLabel} (${aggregationType !== "none" ? aggregationType : "Raw Data"})`;
     }
 

@@ -217,7 +217,9 @@ const initRecordView = async (isEditMode) => {
     if (!defRes.ok) throw new Error("Failed to fetch definition.");
     state.definition = await defRes.json();
 
-    const objectLabel = getLocalizedValue(state.definition.name);
+    const objectLabel = getLocalizedValue(
+      state.definition.label || state.definition.name,
+    );
     const currentTitle = titleEl.innerText.trim();
 
     if (
