@@ -13,6 +13,17 @@ const THEME_COLORS = [
   "var(--yellow, #ffbb00)",
 ];
 
+const getLocalizedValue = (value) => {
+  if (typeof value === "object" && value !== null && !Array.isArray(value)) {
+    const languageId =
+      typeof Liferay !== "undefined"
+        ? Liferay.ThemeDisplay.getLanguageId()
+        : "en_US";
+    return value[languageId] || value["en_US"] || "";
+  }
+  return value || "";
+};
+
 const loadScript = (url) => {
   return new Promise((resolve, reject) => {
     if (window.Chart) {

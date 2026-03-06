@@ -216,9 +216,17 @@ const initRecordView = async (isEditMode) => {
     );
     if (!defRes.ok) throw new Error("Failed to fetch definition.");
     state.definition = await defRes.json();
-    titleEl.textContent =
-      getLocalizedValue(state.definition.name) +
-      (isEditMode ? " (Preview)" : "");
+
+    const objectLabel = getLocalizedValue(state.definition.name);
+    const currentTitle = titleEl.innerText.trim();
+
+    if (
+      currentTitle === "Record Detail" ||
+      currentTitle === "" ||
+      currentTitle === "Record Detail (Preview)"
+    ) {
+      titleEl.innerText = objectLabel + (isEditMode ? " (Preview)" : "");
+    }
 
     const params = new URLSearchParams(window.location.search);
     let identifier = null;

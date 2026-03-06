@@ -88,6 +88,32 @@
           "type": "checkbox"
         },
         {
+          "dataType": "string",
+          "defaultValue": "even",
+          "label": "lfr.gemini-generated.striped-row-type",
+          "description": "lfr.gemini-generated.striped-row-type-description",
+          "name": "stripedRowType",
+          "type": "select",
+          "typeOptions": {
+            "dependency": {
+              "enableStriped": {
+                "type": "equal",
+                "value": "true"
+              }
+            },
+            "validValues": [
+              {
+                "label": "lfr.gemini-generated.even-rows",
+                "value": "even"
+              },
+              {
+                "label": "lfr.gemini-generated.odd-rows",
+                "value": "odd"
+              }
+            ]
+          }
+        },
+        {
           "defaultValue": "var(--gray-100)",
           "label": "lfr.gemini-generated.striped-background-color",
           "description": "lfr.gemini-generated.striped-background-color-description",

@@ -1,4 +1,6 @@
-<div class="meta-table-container meta-table-${fragmentEntryLinkNamespace}" style="--header-text-color: ${configuration.headerTextColor!}; --header-bg-color: ${configuration.headerBgColor!}; --body-text-color: ${configuration.bodyTextColor!}; --action-icon-color: ${configuration.actionIconColor!}; --striped-bg-color: ${configuration.stripedBgColor!};">
+<div class="meta-table-container meta-table-${fragmentEntryLinkNamespace}" 
+    data-striped-row-type="${configuration.stripedRowType!'even'}"
+    style="--header-text-color: ${configuration.headerTextColor!}; --header-bg-color: ${configuration.headerBgColor!}; --body-text-color: ${configuration.bodyTextColor!}; --action-icon-color: ${configuration.actionIconColor!}; --striped-bg-color: ${configuration.stripedBgColor!};">
     <div class="alert alert-info d-none mb-3" id="info-${fragmentEntryLinkNamespace}"></div>
     <div class="alert alert-danger d-none mb-3" id="error-${fragmentEntryLinkNamespace}"></div>
 

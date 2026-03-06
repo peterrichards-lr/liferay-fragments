@@ -47,13 +47,19 @@ fi
 
 # 3. Process Flags
 LEGACY_MODE="false"
-REM_ARGS=()
+DEPLOY_ALL="false"
+DEPLOY_SHOWCASE="false"
+ITEMS=()
 
 for arg in "$@"; do
     if [ "$arg" == "--legacy" ]; then
         LEGACY_MODE="true"
+    elif [ "$arg" == "--all" ]; then
+        DEPLOY_ALL="true"
+    elif [ "$arg" == "--showcase" ]; then
+        DEPLOY_SHOWCASE="true"
     else
-        REM_ARGS+=("$arg")
+        ITEMS+=("$arg")
     fi
 done
 
@@ -99,7 +105,7 @@ deploy_item() {
 
     # Check for Special Resource ZIP (in other-resources/showcase-data/)
     if [ -f "other-resources/showcase-data/${NAME}/dist/${NAME}-batch-cx.zip" ]; then
-        echo "  -> Deploying Special Resource to osgi/client-extensions/: ${NAME}-batch-cx.zip"
+        echo "  -> Deploying Showcase Resource to osgi/client-extensions/: ${NAME}-batch-cx.zip"
         cp "other-resources/showcase-data/${NAME}/dist/${NAME}-batch-cx.zip" "$CX_DIR/"
         FOUND=true
     fi
@@ -110,41 +116,43 @@ deploy_item() {
 }
 
 # 5. Execution logic
-# We use the filtered arguments from REM_ARGS
-if [ "${REM_ARGS[0]}" == "--all" ] || [ "${REM_ARGS[0]}" == "--showcase" ]; then
-    if [ "${REM_ARGS[0]}" == "--all" ]; then
-        echo "Deploying all assets..."
-        
-        # Fragments/Collections
-        if [ -d "zips/fragments" ]; then
-            for f in zips/fragments/*.zip; do
-                [ -e "$f" ] || continue
-                FILENAME=$(basename "$f")
-                
-                if [[ "$LEGACY_MODE" == "true" ]]; then
-                    if [[ "$FILENAME" == *"-pre2025q3.zip" ]]; then
-                        echo "  -> Deploying Legacy Fragment $FILENAME to deploy/"
-                        cp "$f" "$DEPLOY_DIR/"
-                    fi
-                else
-                    if [[ "$FILENAME" != *"-pre2025q3.zip" ]]; then
-                        echo "  -> Deploying Fragment $FILENAME to deploy/"
-                        cp "$f" "$DEPLOY_DIR/"
-                    fi
+if [ "$DEPLOY_ALL" == "true" ]; then
+    echo "Deploying all assets..."
+    
+    # Fragments/Collections
+    if [ -d "zips/fragments" ]; then
+        for f in zips/fragments/*.zip; do
+            [ -e "$f" ] || continue
+            FILENAME=$(basename "$f")
+            
+            if [[ "$LEGACY_MODE" == "true" ]]; then
+                if [[ "$FILENAME" == *"-pre2025q3.zip" ]]; then
+                    echo "  -> Deploying Legacy Fragment $FILENAME to deploy/"
+                    cp "$f" "$DEPLOY_DIR/"
                 fi
-            done
-        fi
-
-        # Language CX
-        if [ -d "zips/language" ]; then
-            for l in zips/language/*.zip; do
-                [ -e "$l" ] || continue
-                echo "  -> Deploying Language CX $(basename "$l") to osgi/client-extensions/"
-                cp "$l" "$CX_DIR/"
-            done
-        fi
+            else
+                if [[ "$FILENAME" != *"-pre2025q3.zip" ]]; then
+                    echo "  -> Deploying Fragment $FILENAME to deploy/"
+                    cp "$f" "$DEPLOY_DIR/"
+                fi
+            fi
+        done
     fi
 
+    # Language CX
+    if [ -d "zips/language" ]; then
+        for l in zips/language/*.zip; do
+            [ -e "$l" ] || continue
+            echo "  -> Deploying Language CX $(basename "$l") to osgi/client-extensions/"
+            cp "$l" "$CX_DIR/"
+        done
+    fi
+    
+    # Enable showcase deployment if --all is used
+    DEPLOY_SHOWCASE="true"
+fi
+
+if [ "$DEPLOY_SHOWCASE" == "true" ]; then
     # Deploy all Showcase Resources
     echo "Deploying all showcase resources..."
     SHOWCASE_ZIPS=$(find other-resources/showcase-data -name "*-batch-cx.zip")
@@ -152,12 +160,12 @@ if [ "${REM_ARGS[0]}" == "--all" ] || [ "${REM_ARGS[0]}" == "--showcase" ]; then
         echo "  -> Deploying Showcase Resource $(basename "$sz") to osgi/client-extensions/"
         cp "$sz" "$CX_DIR/"
     done
-else
-    # Individual items or flags
-    for ITEM in "${REM_ARGS[@]}"; do
-        deploy_item "$ITEM"
-    done
 fi
+
+# Deploy specific items
+for ITEM in "${ITEMS[@]}"; do
+    deploy_item "$ITEM"
+done
 
 echo "--------------------------------------------------------"
 echo "Deployment operations completed."
