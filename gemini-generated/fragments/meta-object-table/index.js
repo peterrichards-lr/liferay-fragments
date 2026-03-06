@@ -348,9 +348,17 @@ const initMetaTable = async (isEditMode) => {
   try {
     const defUrl = `${ADMIN_API_BASE}/object-definitions/by-external-reference-code/${objectERC}`;
     state.definition = await fetchData(defUrl);
-    titleEl.textContent =
-      getLocalizedValue(state.definition.name) +
-      (isEditMode ? " (Preview)" : "");
+
+    const objectLabel = getLocalizedValue(state.definition.name);
+    const currentTitle = titleEl.innerText.trim();
+
+    if (
+      currentTitle === "Meta-Object Table" ||
+      currentTitle === "" ||
+      currentTitle === "Meta-Object Table (Preview)"
+    ) {
+      titleEl.innerText = objectLabel + (isEditMode ? " (Preview)" : "");
+    }
 
     // Strict column filtering
     let fields = state.definition.objectFields.filter(

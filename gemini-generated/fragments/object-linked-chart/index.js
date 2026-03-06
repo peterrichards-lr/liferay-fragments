@@ -13,6 +13,32 @@ const THEME_COLORS = [
   "var(--yellow, #ffbb00)",
 ];
 
+const RAINBOW_COLORS = [
+  "var(--red, #ff0000)",
+  "var(--orange, #ff7f00)",
+  "var(--yellow, #ffff00)",
+  "var(--green, #00ff00)",
+  "var(--blue, #0000ff)",
+  "var(--indigo, #4b0082)",
+  "var(--purple, #8b00ff)",
+];
+
+const COOL_COLORS = [
+  "var(--cyan, #0077b3)",
+  "var(--teal, #1b7e6e)",
+  "var(--blue, #006eff)",
+  "var(--indigo, #4d5fff)",
+  "var(--purple, #aa33ff)",
+];
+
+const WARM_COLORS = [
+  "var(--red, #e60000)",
+  "var(--orange, #cc4e00)",
+  "var(--yellow, #ffbb00)",
+  "var(--pink, #e50082)",
+  "var(--warning, #ffcc00)",
+];
+
 const getLocalizedValue = (value) => {
   if (typeof value === "object" && value !== null && !Array.isArray(value)) {
     const languageId =
@@ -155,8 +181,13 @@ const initChart = async (isEditMode) => {
     aggregationType,
     chartType,
     borderFilter,
+    colorMapping,
+    colorPalette,
+    showLegend,
+    enableSecondaryYAxis,
     xAxisLabel: configXLabel,
     yAxisLabel: configYLabel,
+    secondaryYAxisLabel: configYLabel2,
   } = configuration;
 
   if (!objectERC) {
@@ -201,72 +232,144 @@ const initChart = async (isEditMode) => {
       aggregationType,
     );
 
-    const datasets = fields.map((field, index) => {
-      const baseColor = THEME_COLORS[index % THEME_COLORS.length];
-      const resolvedBg = resolveColor(baseColor, fragmentElement);
-      const resolvedBorder = resolveColor(
-        baseColor,
-        fragmentElement,
-        borderFilter,
-      );
+    // Resolve effective color mapping mode
+    let effectiveMapping = colorMapping || "auto";
+    if (effectiveMapping === "auto") {
+      // If only one value field, multi-color by category by default
+      if (fields.length === 1) {
+        effectiveMapping = "label";
+      } else {
+        effectiveMapping = ["pie", "doughnut", "polarArea"].includes(chartType)
+          ? "label"
+          : "series";
+      }
+    }
 
-      return {
+    // Determine color palette
+    let palette = THEME_COLORS;
+    if (colorPalette === "rainbow") palette = RAINBOW_COLORS;
+    else if (colorPalette === "cool") palette = COOL_COLORS;
+    else if (colorPalette === "warm") palette = WARM_COLORS;
+
+    const datasets = fields.map((field, index) => {
+      let bgColors, borderColors;
+
+      if (effectiveMapping === "label") {
+        bgColors = labels.map((_, i) =>
+          resolveColor(palette[i % palette.length], fragmentElement),
+        );
+        borderColors = labels.map((_, i) =>
+          resolveColor(
+            palette[i % palette.length],
+            fragmentElement,
+            borderFilter,
+          ),
+        );
+      } else {
+        const baseColor = palette[index % palette.length];
+        bgColors = resolveColor(baseColor, fragmentElement);
+        borderColors = resolveColor(baseColor, fragmentElement, borderFilter);
+      }
+
+      const ds = {
         label:
           aggregationType !== "none" ? `${field} (${aggregationType})` : field,
         data: dataValues[index],
-        backgroundColor: resolvedBg,
-        borderColor: resolvedBorder,
+        backgroundColor: bgColors,
+        borderColor: borderColors,
         borderWidth: 2,
         fill: chartType === "line" ? false : true,
       };
-    });
 
-    const fallbackTable = fragmentElement.querySelector(
-      `#fallback-table-${fragmentEntryLinkNamespace}`,
-    );
-    if (fallbackTable) {
-      fallbackTable.innerHTML = `
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th>${labelField}</th>
-                            ${fields.map((f) => `<th>${f}</th>`).join("")}
-                        </tr>
-                    </thead>
-                    <tbody>
-                        ${labels
-                          .map(
-                            (label, i) => `
-                            <tr>
-                                <td>${label}</td>
-                                ${fields.map((f, j) => `<td>${dataValues[j][i]}</td>`).join("")}
-                            </tr>
-                        `,
-                          )
-                          .join("")}
-                    </tbody>
-                </table>
-            `;
-    }
+      // Assign to secondary Y axis if enabled and this is the second+ series
+      if (
+        enableSecondaryYAxis &&
+        index > 0 &&
+        ["bar", "line"].includes(chartType)
+      ) {
+        ds.yAxisID = "y1";
+      }
+
+      return ds;
+    });
 
     const canvas = fragmentElement.querySelector(
       `#chart-${fragmentEntryLinkNamespace}`,
     );
     if (!canvas) return;
 
-    // Resolve labels from editable spans if present, otherwise config
     const xLabelEl = fragmentElement.querySelector(
       '[data-lfr-editable-id="x-axis-label"]',
     );
     const yLabelEl = fragmentElement.querySelector(
       '[data-lfr-editable-id="y-axis-label"]',
     );
+    const yLabelEl2 = fragmentElement.querySelector(
+      '[data-lfr-editable-id="y-axis-label-2"]',
+    );
     const resolvedXLabel = xLabelEl ? xLabelEl.innerText : configXLabel;
     const resolvedYLabel = yLabelEl ? yLabelEl.innerText : configYLabel;
+    const resolvedYLabel2 = yLabelEl2 ? yLabelEl2.innerText : configYLabel2;
 
-    // Destroy existing chart if it exists
     const existingChart = Chart.getChart(canvas);
     if (existingChart) existingChart.destroy();
+
+    const isCartesian = ["bar", "line"].includes(chartType);
+    const isRadial = ["radar", "polarArea"].includes(chartType);
+
+    const chartOptions = {
+      responsive: true,
+      maintainAspectRatio: false,
+      animation: isEditMode ? false : { duration: 1000 },
+      plugins: {
+        legend: {
+          display: showLegend !== false,
+          position: "top",
+        },
+        tooltip: { mode: "index", intersect: false },
+      },
+    };
+
+    if (isCartesian) {
+      chartOptions.scales = {
+        x: {
+          display: true,
+          title: {
+            display: !!resolvedXLabel,
+            text: resolvedXLabel,
+          },
+        },
+        y: {
+          beginAtZero: true,
+          display: true,
+          title: {
+            display: !!resolvedYLabel,
+            text: resolvedYLabel,
+          },
+        },
+      };
+
+      if (enableSecondaryYAxis && datasets.length > 1) {
+        chartOptions.scales.y1 = {
+          beginAtZero: true,
+          display: true,
+          position: "right",
+          grid: { drawOnChartArea: false },
+          title: {
+            display: !!resolvedYLabel2,
+            text: resolvedYLabel2,
+          },
+        };
+      }
+    } else if (isRadial) {
+      chartOptions.scales = {
+        r: {
+          beginAtZero: true,
+          angleLines: { display: true },
+          suggestedMin: 0,
+        },
+      };
+    }
 
     const ctx = canvas.getContext("2d");
     new Chart(ctx, {
@@ -275,40 +378,7 @@ const initChart = async (isEditMode) => {
         labels: labels,
         datasets: datasets,
       },
-      options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        animation: isEditMode ? false : { duration: 1000 },
-        plugins: {
-          legend: {
-            display: true,
-            position: "top",
-          },
-          tooltip: {
-            mode: "index",
-            intersect: false,
-          },
-        },
-        scales: {
-          y: {
-            beginAtZero: true,
-            display: !["pie", "doughnut"].includes(chartType),
-            title: {
-              display:
-                !["pie", "doughnut"].includes(chartType) && !!resolvedYLabel,
-              text: resolvedYLabel,
-            },
-          },
-          x: {
-            display: !["pie", "doughnut"].includes(chartType),
-            title: {
-              display:
-                !["pie", "doughnut"].includes(chartType) && !!resolvedXLabel,
-              text: resolvedXLabel,
-            },
-          },
-        },
-      },
+      options: chartOptions,
     });
   } catch (err) {
     showError(err.message);

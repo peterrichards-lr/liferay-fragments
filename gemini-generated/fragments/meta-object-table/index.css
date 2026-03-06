@@ -33,20 +33,17 @@
     color: var(--action-icon-color, var(--gray-600));
 }
 
-.meta-table-container .table-hover tbody tr:hover {
-    background-color: var(--primary-l3, #effaff);
-}
-
-.meta-table-container .table-striped tbody tr {
-    background-color: transparent;
+/* Custom Striping Logic */
+.meta-table-container .table-striped tbody tr td {
+    background-color: transparent !important; /* Force transparent cells to show row background */
 }
 
 .meta-table-container .table-striped tbody tr:nth-of-type(even) {
-    background-color: var(--row-even-bg, transparent);
+    background-color: var(--row-even-bg, transparent) !important;
 }
 
 .meta-table-container .table-striped tbody tr:nth-of-type(odd) {
-    background-color: var(--row-odd-bg, transparent);
+    background-color: var(--row-odd-bg, transparent) !important;
 }
 
 .meta-table-container[data-striped-row-type="even"] {
@@ -57,6 +54,12 @@
 .meta-table-container[data-striped-row-type="odd"] {
     --row-odd-bg: var(--striped-bg-color, var(--gray-100, #f7f8f9));
     --row-even-bg: transparent;
+}
+
+/* Hover override */
+.meta-table-container .table-hover tbody tr:hover td,
+.meta-table-container .table-hover tbody tr:hover {
+    background-color: var(--primary-l3, #effaff) !important;
 }
 
 /* Modal Styles */

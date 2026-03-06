@@ -77,6 +77,28 @@
           "type": "text"
         },
         {
+          "defaultValue": false,
+          "label": "lfr.gemini-generated.enable-secondary-y-axis",
+          "description": "lfr.gemini-generated.enable-secondary-y-axis-description",
+          "name": "enableSecondaryYAxis",
+          "type": "checkbox"
+        },
+        {
+          "defaultValue": "Secondary Values",
+          "label": "lfr.gemini-generated.secondary-y-axis-label",
+          "description": "lfr.gemini-generated.secondary-y-axis-label-description",
+          "name": "secondaryYAxisLabel",
+          "type": "text",
+          "typeOptions": {
+            "dependency": {
+              "enableSecondaryYAxis": {
+                "type": "equal",
+                "value": "true"
+              }
+            }
+          }
+        },
+        {
           "defaultValue": "bar",
           "label": "lfr.gemini-generated.chart-type",
           "description": "lfr.gemini-generated.chart-type-description",
@@ -99,9 +121,24 @@
               {
                 "label": "lfr.gemini-generated.doughnut",
                 "value": "doughnut"
+              },
+              {
+                "label": "lfr.gemini-generated.polar-area",
+                "value": "polarArea"
+              },
+              {
+                "label": "lfr.gemini-generated.radar",
+                "value": "radar"
               }
             ]
           }
+        },
+        {
+          "defaultValue": true,
+          "label": "lfr.gemini-generated.show-legend",
+          "description": "lfr.gemini-generated.show-legend-description",
+          "name": "showLegend",
+          "type": "checkbox"
         },
         {
           "defaultValue": "brightness(85%)",
@@ -109,6 +146,56 @@
           "description": "lfr.gemini-generated.border-filter-description",
           "name": "borderFilter",
           "type": "text"
+        },
+        {
+          "defaultValue": "auto",
+          "label": "lfr.gemini-generated.color-mapping",
+          "description": "lfr.gemini-generated.color-mapping-description",
+          "name": "colorMapping",
+          "type": "select",
+          "typeOptions": {
+            "validValues": [
+              {
+                "label": "lfr.gemini-generated.automatic",
+                "value": "auto"
+              },
+              {
+                "label": "lfr.gemini-generated.by-data-series",
+                "value": "series"
+              },
+              {
+                "label": "lfr.gemini-generated.by-category-label",
+                "value": "label"
+              }
+            ]
+          }
+        },
+        {
+          "defaultValue": "standard",
+          "label": "lfr.gemini-generated.color-palette",
+          "description": "lfr.gemini-generated.color-palette-description",
+          "name": "colorPalette",
+          "type": "select",
+          "typeOptions": {
+            "validValues": [
+              {
+                "label": "lfr.gemini-generated.standard-theme",
+                "value": "standard"
+              },
+              {
+                "label": "lfr.gemini-generated.rainbow",
+                "value": "rainbow"
+              },
+              {
+                "label": "lfr.gemini-generated.cool",
+                "value": "cool"
+              },
+              {
+                "label": "lfr.gemini-generated.warm",
+                "value": "warm"
+              }
+            ]
+          }
         }
       ],
       "label": "lfr.gemini-generated.display"
