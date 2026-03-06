@@ -14,6 +14,12 @@ Data visualization fragment that integrates Chart.js to render Liferay Object da
 - **Smart Defaults**: Automatic color mapping based on data structure (category-based for single series, series-based for multiple).
 - **Mappable Axis Labels**: Customize X, Y, and Secondary Y axis labels directly in the Page Editor.
 
+## Visuals
+
+![Object-Linked Chart - Running View](../images/object-linked-chart.png)
+
+![Object-Linked Chart - Configuration](../images/object-linked-chart-config.png)
+
 ## Configuration
 
 - **Object ERC**: The External Reference Code of the source Object.

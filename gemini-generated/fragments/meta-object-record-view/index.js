@@ -31,6 +31,105 @@ const getLocalizedValue = (value) => {
   return value || "";
 };
 
+const debounce = (func, wait) => {
+  let timeout;
+  return (...args) => {
+    clearTimeout(timeout);
+    timeout = setTimeout(() => func.apply(this, args), wait);
+  };
+};
+
+const createSearchableSelect = (container, options = {}) => {
+  const {
+    placeholder = "Search...",
+    defaultValue = "",
+    onSelect = () => {},
+    fetchFn = null,
+    initialOptions = [],
+  } = options;
+
+  container.innerHTML = `
+        <div class="searchable-select-container">
+            <input type="text" class="form-control form-control-sm" placeholder="${placeholder}" value="${defaultValue}">
+            <input type="hidden" value="${defaultValue}">
+            <div class="searchable-select-results"></div>
+        </div>
+    `;
+
+  const input = container.querySelector('input[type="text"]');
+  const hidden = container.querySelector('input[type="hidden"]');
+  const results = container.querySelector(".searchable-select-results");
+  let currentOptions = initialOptions;
+
+  const renderResults = (items) => {
+    if (!items || items.length === 0) {
+      results.innerHTML = `<div class="search-result-item no-results">No results found</div>`;
+    } else {
+      results.innerHTML = items
+        .map(
+          (item) => `
+                <div class="search-result-item" data-value="${item.value}">${item.label}</div>
+            `,
+        )
+        .join("");
+    }
+    results.classList.add("show");
+  };
+
+  const handleSearch = debounce(async (term) => {
+    if (fetchFn) {
+      const items = await fetchFn(term);
+      currentOptions = items;
+      renderResults(items);
+    } else {
+      const filtered = initialOptions.filter((opt) =>
+        opt.label.toLowerCase().includes(term.toLowerCase()),
+      );
+      renderResults(filtered);
+    }
+  }, 300);
+
+  input.addEventListener("input", (e) => {
+    const term = e.target.value;
+    if (term.length >= 0) {
+      handleSearch(term);
+    } else {
+      results.classList.remove("show");
+    }
+  });
+
+  input.addEventListener("focus", () => {
+    if (currentOptions.length > 0 || input.value.length === 0) {
+      renderResults(currentOptions);
+    }
+  });
+
+  document.addEventListener("click", (e) => {
+    if (!container.contains(e.target)) {
+      results.classList.remove("show");
+    }
+  });
+
+  results.addEventListener("click", (e) => {
+    const item = e.target.closest(".search-result-item");
+    if (item && !item.classList.contains("no-results")) {
+      const val = item.dataset.value;
+      const label = item.textContent;
+      input.value = label;
+      hidden.value = val;
+      results.classList.remove("show");
+      onSelect(val, label);
+    }
+  });
+
+  return {
+    setValue: (val, label) => {
+      input.value = label || "";
+      hidden.value = val || "";
+    },
+  };
+};
+
 const formatCellValue = (item, field) => {
   let value = item[field.name];
 
@@ -198,11 +297,36 @@ const loadRecordData = async (recordId, recordERC, isEditMode) => {
   }
 };
 
+const initSelector = async () => {
+  const { enableRecordSelection } = configuration;
+  const container = fragmentElement.querySelector(
+    `#selector-${fragmentEntryLinkNamespace}`,
+  );
+  if (container && enableRecordSelection) {
+    createSearchableSelect(container, {
+      placeholder: "Search records to view...",
+      fetchFn: async (term) => {
+        const response = await Liferay.Util.fetch(
+          `${getBaseUrl()}/?search=${term}&pageSize=20`,
+        );
+        const data = await response.json();
+        const titleField = state.definition.titleObjectFieldName || "id";
+        return (data.items || []).map((r) => ({
+          label: r[titleField] || r.id,
+          value: r.id,
+        }));
+      },
+      onSelect: (id) => loadRecordData(id, null, false),
+    });
+  }
+};
+
 const initRecordView = async (isEditMode) => {
   const {
     objectERC: configERC,
     fallbackRecordIdentifier,
     fallbackRecordIdentifierType,
+    enableRecordSelection,
     viewTitle: configTitle,
   } = configuration;
   const fieldsWrap = fragmentElement.querySelector(
@@ -320,9 +444,11 @@ const initRecordView = async (isEditMode) => {
       if (
         isValidIdentifier(startId) ||
         isValidIdentifier(startERC) ||
-        isEditMode
+        isEditMode ||
+        enableRecordSelection
       ) {
         await loadRecordData(startId, startERC, isEditMode);
+        if (!isEditMode && enableRecordSelection) await initSelector();
       } else {
         showInfo("No record ID found in URL or configuration.");
       }

@@ -92,3 +92,49 @@ body.has-edit-mode-menu .meta-editor-mappable-fields {
     font-style: italic;
     color: var(--text-secondary-color);
 }
+
+.record-selector-wrap .searchable-select-container {
+    max-width: 400px;
+}
+
+/* Searchable Select Shared Styles */
+.searchable-select-container {
+    position: relative;
+    width: 100%;
+}
+
+.searchable-select-results {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    background: white;
+    border: 1px solid var(--gray-300, #ced4da);
+    border-radius: 0 0 4px 4px;
+    z-index: 1000;
+    max-height: 200px;
+    overflow-y: auto;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    display: none;
+}
+
+.searchable-select-results.show {
+    display: block;
+}
+
+.search-result-item {
+    padding: 8px 12px;
+    cursor: pointer;
+    transition: background 0.2s;
+    font-size: 0.9rem;
+}
+
+.search-result-item:hover {
+    background: var(--gray-100, #f7f8f9);
+}
+
+.search-result-item.no-results {
+    color: var(--gray-500);
+    font-style: italic;
+    cursor: default;
+}

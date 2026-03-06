@@ -94,20 +94,27 @@ deploy_item() {
 
     echo "Checking for assets related to '$NAME'..."
 
+    # Determine primary and secondary suffixes for fallback
+    local ALT_SUFFIX="-debug"
+    [[ "$BUILD_SUFFIX" == "-debug" ]] && ALT_SUFFIX="-min"
+
     # Check for Fragment ZIP (Individual or Collection)
     # Pattern: name[-pre2025q3][-min|-debug].zip
-    if [ -f "zips/fragments/${NAME}${LEGACY_SUFFIX}${BUILD_SUFFIX}.zip" ]; then
-        echo "  -> Deploying Fragment: ${NAME}${LEGACY_SUFFIX}${BUILD_SUFFIX}.zip"
-        cp "zips/fragments/${NAME}${LEGACY_SUFFIX}${BUILD_SUFFIX}.zip" "$DEPLOY_DIR/"
-        FOUND=true
-    fi
-    
-    # Check for Collection
-    if [ -f "zips/fragments/${NAME}-collection${BUILD_SUFFIX}.zip" ]; then
-        echo "  -> Deploying Collection: ${NAME}-collection${BUILD_SUFFIX}.zip"
-        cp "zips/fragments/${NAME}-collection${BUILD_SUFFIX}.zip" "$DEPLOY_DIR/"
-        FOUND=true
-    fi
+    for sfx in "$BUILD_SUFFIX" "$ALT_SUFFIX"; do
+        if [ -f "zips/fragments/${NAME}${LEGACY_SUFFIX}${sfx}.zip" ]; then
+            echo "  -> Deploying Fragment: ${NAME}${LEGACY_SUFFIX}${sfx}.zip"
+            cp "zips/fragments/${NAME}${LEGACY_SUFFIX}${sfx}.zip" "$DEPLOY_DIR/"
+            FOUND=true
+            break
+        fi
+        
+        if [ -f "zips/fragments/${NAME}-collection${sfx}.zip" ]; then
+            echo "  -> Deploying Collection: ${NAME}-collection${sfx}.zip"
+            cp "zips/fragments/${NAME}-collection${sfx}.zip" "$DEPLOY_DIR/"
+            FOUND=true
+            break
+        fi
+    done
 
     # Check for Language CX ZIP
     if [ -f "zips/language/${NAME}-language-batch-cx.zip" ]; then

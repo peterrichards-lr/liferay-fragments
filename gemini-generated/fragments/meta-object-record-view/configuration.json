@@ -17,6 +17,13 @@
           "defaultValue": ""
         },
         {
+          "label": "lfr.gemini-generated.enable-record-selection",
+          "description": "lfr.gemini-generated.enable-record-selection-description",
+          "name": "enableRecordSelection",
+          "type": "checkbox",
+          "defaultValue": false
+        },
+        {
           "dataType": "string",
           "defaultValue": "id",
           "label": "lfr.gemini-generated.identifier-type",

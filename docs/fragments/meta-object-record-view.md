@@ -5,6 +5,7 @@ A single-entry detail view that dynamically discovers fields and provides a high
 ## Features
 
 - **Self-Discovering**: Renders all fields for a specific Object entry via the Object Admin API.
+- **Dynamic Record Selection**: Optional dropdown to select different records to view at runtime.
 - **Mappable Title**: The record title is fully mappable and editable in the Page Editor. It intelligently defaults to the Object's localized name if not customized.
 - **Mappable Configuration**: Key configuration values like **Object ERC** are mappable directly in the fragment body. These values take priority over the sidebar configuration, enabling visual page assembly.
 - **Hybrid Identification**: Supports identifying records by numeric **Record ID** or string **External Reference Code (ERC)**.
@@ -21,6 +22,7 @@ A single-entry detail view that dynamically discovers fields and provides a high
 ## Configuration
 
 - **Object ERC**: The source Object definition (e.g., `COMPANY_MILESTONE`).
+- **Enable Record Selection**: Display a dropdown at runtime to choose which record to view.
 - **Fallback Record Identifier**: A specific record value to display if none is found in the page URL or via events.
 - **Identifier Type**: Specify if the fallback identifier is a numeric **ID** or a string **ERC**.
 - **Colors**: Pick custom colors for field labels and values to match your theme.

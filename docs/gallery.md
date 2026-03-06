@@ -9,6 +9,11 @@ A visual reference for the high-fidelity fragments available in this Liferay DXP
 ![Liferay DXP Activity Heatmap with GitHub-style data density visualization](./images/activity-heatmap.png)
 Flexible, data-driven heatmap for visualizing activity frequency from Liferay Objects.
 
+### Object-Linked Chart
+
+![Liferay DXP Object-Linked Chart with Chart.js integration](./images/object-linked-chart.png)
+Data visualization fragment that integrates Chart.js to render Liferay Object data with support for multiple chart types and aggregations.
+
 ### Animated Metric Counter
 
 ![Animated Metric Counter with count-up animation and decimal support](./images/animated-metric-counter.png)
@@ -47,6 +52,11 @@ Vertical/horizontal timeline that dynamically renders and animates milestones fr
 
 ![Meta-Object Record View showing a detailed record with PDF export](./images/meta-object-record-view.png)
 A single-entry detail view that dynamically discovers fields and provides a high-fidelity PDF export feature.
+
+### Meta-Object Form
+
+![Meta-Object Form showing a dynamic form with field discovery and record selection](./images/meta-object-form.png)
+A truly dynamic form that auto-generates inputs based on a Liferay Object's definition, supporting "Add New" and "Edit" modes.
 
 ### Meta-Object Table
 

@@ -13,6 +13,12 @@ A truly dynamic form that auto-generates inputs based on a Liferay Object's defi
 - **Hybrid Identification**: Supports identifying records by numeric **Record ID** or string **External Reference Code (ERC)**.
 - **Production-Ready**: Supports submitting new entries or updating existing ones directly to the Custom Object API.
 
+## Visuals
+
+![Meta-Object Form - Running View](../images/meta-object-form.png)
+
+![Meta-Object Form - Configuration](../images/meta-object-form-config.png)
+
 ## Configuration
 
 - **Object ERC**: The source Object definition (e.g., `COMPANY_MILESTONE`).

@@ -22,6 +22,12 @@
     <div class="alert alert-danger d-none" id="error-${fragmentEntryLinkNamespace}"></div>
     <div class="alert alert-info d-none" id="info-${fragmentEntryLinkNamespace}"></div>
 
+    [#if configuration.enableRecordSelection && layoutMode == 'view']
+        <div class="record-selector-wrap mb-4" id="selector-${fragmentEntryLinkNamespace}">
+            <div class="meta-status small text-muted">Loading records...</div>
+        </div>
+    [/#if]
+
     <div id="capture-${fragmentEntryLinkNamespace}">
         <div class="meta-view-header mb-4 d-flex justify-content-between align-items-center">
             <h2 class="object-name-label mb-0" data-lfr-editable-id="view-title" data-lfr-editable-type="text">Record Detail</h2>
