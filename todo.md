@@ -277,18 +277,18 @@ Additional tasks identified during a second review of the repository architectur
 
 - [x] **Refactor Top-Level Returns**: Systematically eliminate top-level `return` statements to comply with Requirement 8.
   - **Fragments**: `dynamic-badge-overlay`, `ai-chat-ui`, `meta-object-form`, `populate-select`, `responsive-menu`.
-- [ ] **LayoutMode API Migration**: Audit all remaining fragments for `has-edit-mode-menu` usage and migrate to the `layoutMode` API (Requirement 11).
-- [ ] **Robust Identifier Implementation**: Roll out `isValidIdentifier()` validation to all fragments performing network requests (Requirement 10).
+- [x] **LayoutMode API Migration**: Audit all remaining fragments for `has-edit-mode-menu` usage and migrate to the `layoutMode` API (Requirement 11).
+- [x] **Robust Identifier Implementation**: Roll out `isValidIdentifier()` validation to all fragments performing network requests (Requirement 10).
   - **Fragments**: `purchased-products`, `dashboard-filter`, `autocomplete-(object)`, `activity-heatmap`, `object-linked-chart`.
 
 ### 2. User & Editor Experience (UX/EX)
 
-- [ ] **Complete Configuration Descriptions**: Add informative `description` fields to all `configuration.json` files missing them.
+- [x] **Complete Configuration Descriptions**: Add informative `description` fields to all `configuration.json` files missing them.
   - **Impact**: Provides essential guidance to Page Editors within the fragment configuration panel.
   - **Collections**: `misc`, `header-components`, `layout-components`, `objects`, `profile`.
-- [ ] **Implement Mappable Field Ergonomics**: Apply the `.meta-editor-mappable-fields` pattern (Requirement 7) to all fragments with dynamic field mapping.
+- [x] **Implement Mappable Field Ergonomics**: Apply the `.meta-editor-mappable-fields` pattern (Requirement 7) to all fragments with dynamic field mapping.
   - **Fragments**: `service-card`, `service-icon`, `dynamic-object-gallery`, `date-display-collection-display`.
-- [ ] **Standardize Smart Title Precedence**: Implement Requirement 12 (Config > Evaluated Default) in all fragments featuring dynamic headers.
+- [x] **Standardize Smart Title Precedence**: Implement Requirement 12 (Config > Evaluated Default) in all fragments featuring dynamic headers.
   - **Fragments**: `loan-calculator`, `service-card`, `activity-heatmap`, `object-linked-chart`.
 
 ### 3. Localization (i18n) Maintenance

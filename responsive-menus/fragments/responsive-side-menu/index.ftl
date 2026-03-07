@@ -184,11 +184,13 @@
   }
   .lfr-layout-structure-item-responsive-side-menu > div { height: 100%; }
 
-  body.has-control-menu:not(.has-edit-mode-menu) .lfr-layout-structure-item-responsive-side-menu {
+  body.has-control-menu:not(.has-edit-mode-menu) .lfr-layout-structure-item-responsive-side-menu,
+  .fragment-root[data-layout-mode="view"] .lfr-layout-structure-item-responsive-side-menu {
     top: var(--control-menu-container-height, 0);
     height: calc(100dvh - var(--control-menu-container-height, 0));
   }
-  body.has-control-menu.has-edit-mode-menu .lfr-layout-structure-item-responsive-side-menu {
+  body.has-control-menu.has-edit-mode-menu .lfr-layout-structure-item-responsive-side-menu,
+  .fragment-root[data-layout-mode="edit"] .lfr-layout-structure-item-responsive-side-menu {
     height: calc(100dvh - var(--control-menu-container-height, 0) - var(--toolbar-height, 64px) - var(--page-editor-breadcrumb-height, 29px));
   }
 

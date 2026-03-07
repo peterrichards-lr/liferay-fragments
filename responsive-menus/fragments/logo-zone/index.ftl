@@ -14,6 +14,7 @@ logoZoneHeaderClass = "logo-zone-editor-padding" + (configuration.logoZoneHeader
   data-lock="${lockStyles?c}"
   data-display="${displayValue}"
   data-direction="${flexDirection}"
+  data-layout-mode="${layoutMode}"
   style="
     --lz-display: ${displayValue};
     --lz-flex-direction: ${flexDirection?has_content?then(flexDirection, 'initial')};
