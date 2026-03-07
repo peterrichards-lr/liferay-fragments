@@ -1,4 +1,16 @@
 const initAutocomplete = () => {
+  const isValidIdentifier = (val) => {
+    if (val === undefined || val === null) return false;
+    const s = String(val).trim().toLowerCase();
+    return (
+      s !== "" &&
+      s !== "undefined" &&
+      s !== "null" &&
+      s !== "0" &&
+      s !== "[object object]"
+    );
+  };
+
   if (layoutMode !== "preview") {
     const apiPath = configuration.apiPath;
     const searchParam = configuration.searchParam;
@@ -11,6 +23,8 @@ const initAutocomplete = () => {
 
     if (input && list) {
       const getItems = async (searchValue) => {
+        if (!isValidIdentifier(searchValue)) return [];
+
         const response = await Liferay.Util.fetch(
           `${apiPath}?${searchParam}=${searchValue}`,
         );

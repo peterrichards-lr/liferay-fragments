@@ -39,6 +39,18 @@ const WARM_COLORS = [
   "var(--warning, #ffcc00)",
 ];
 
+const isValidIdentifier = (val) => {
+  if (val === undefined || val === null) return false;
+  const s = String(val).trim().toLowerCase();
+  return (
+    s !== "" &&
+    s !== "undefined" &&
+    s !== "null" &&
+    s !== "0" &&
+    s !== "[object object]"
+  );
+};
+
 const getLocalizedValue = (value) => {
   if (typeof value === "object" && value !== null && !Array.isArray(value)) {
     const languageId =
@@ -85,19 +97,15 @@ const fetchData = async () => {
   let objectERC = configERC;
   if (mappableERCEl) {
     const mappedVal = mappableERCEl.innerText.trim();
-    if (
-      mappedVal &&
-      mappedVal !== configERC &&
-      mappedVal !== "SALES_REPORT" // Default value check
-    ) {
+    if (mappedVal && mappedVal !== configERC && mappedVal !== "SALES_REPORT") {
       objectERC = mappedVal;
     }
   }
 
-  if (!objectERC) throw new Error("Object ERC not configured.");
+  if (!isValidIdentifier(objectERC))
+    throw new Error("Object ERC not configured.");
 
   // Fetch definition by ERC
-
   const adminUrl = `/o/object-admin/v1.0/object-definitions/by-external-reference-code/${objectERC}`;
   const defRes = await Liferay.Util.fetch(adminUrl);
   if (!defRes.ok)
@@ -214,7 +222,7 @@ const initChart = async (isEditMode) => {
   if (infoEl) infoEl.classList.add("d-none");
 
   const {
-    objectERC,
+    objectERC: configERC,
     labelField,
     valueFields,
     aggregationType,
@@ -231,7 +239,19 @@ const initChart = async (isEditMode) => {
     secondaryYAxisLabel: configYLabel2,
   } = configuration;
 
-  if (!objectERC) {
+  // Resolve effective ERC (Prioritize mappable field)
+  const mappableERCEl = fragmentElement.querySelector(
+    "[data-lfr-editable-id='object-erc']",
+  );
+  let objectERC = configERC;
+  if (mappableERCEl) {
+    const mappedVal = mappableERCEl.innerText.trim();
+    if (mappedVal && mappedVal !== configERC && mappedVal !== "SALES_REPORT") {
+      objectERC = mappedVal;
+    }
+  }
+
+  if (!isValidIdentifier(objectERC)) {
     showInfo("Please configure an Object External Reference Code.");
   } else {
     try {
@@ -456,12 +476,5 @@ const initChart = async (isEditMode) => {
 
 if (layoutMode === "view") initChart(false);
 else {
-  if (configuration.objectERC) initChart(true);
-  else {
-    const chartWrapper = fragmentElement.querySelector(".chart-wrapper");
-    if (chartWrapper) chartWrapper.innerHTML = "";
-    showInfo(
-      "Please provide an Object External Reference Code in the configuration.",
-    );
-  }
+  initChart(true);
 }

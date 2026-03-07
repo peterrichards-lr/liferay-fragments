@@ -1,4 +1,16 @@
 const initDashboardFilter = () => {
+  const isValidIdentifier = (val) => {
+    if (val === undefined || val === null) return false;
+    const s = String(val).trim().toLowerCase();
+    return (
+      s !== "" &&
+      s !== "undefined" &&
+      s !== "null" &&
+      s !== "0" &&
+      s !== "[object object]"
+    );
+  };
+
   if (layoutMode === "view") {
     Date.prototype.addDays = function (days) {
       var date = new Date(this.valueOf());
@@ -8,7 +20,7 @@ const initDashboardFilter = () => {
 
     if (configuration) {
       const defaultMaxEntires = configuration.maxEntries
-        ? configuration.maxEntires
+        ? configuration.maxEntries
         : 7;
       const defaultStartDate = configuration.startDate
         ? new Date(configuration.startDate)
@@ -23,32 +35,28 @@ const initDashboardFilter = () => {
         ? configuration.pubsubTopic
         : "healthcare-example";
 
-      const startDateEl = document.querySelector(
+      const startDateEl = fragmentElement.querySelector(
         `#${fragmentNamespace}_startDate`,
-        fragmentElement,
       );
       if (startDateEl) {
         startDateEl.valueAsDate = defaultStartDate;
       }
-      const endDateEl = document.querySelector(
+      const endDateEl = fragmentElement.querySelector(
         `#${fragmentNamespace}_endDate`,
-        fragmentElement,
       );
       if (endDateEl) {
         endDateEl.valueAsDate = defaultEndDate;
       }
 
-      const maxEntriesEl = document.querySelector(
+      const maxEntriesEl = fragmentElement.querySelector(
         `#${fragmentNamespace}_maxEntries`,
-        fragmentElement,
       );
       if (maxEntriesEl) {
         maxEntriesEl.value = defaultMaxEntires;
       }
 
-      const targetStepsEl = document.querySelector(
+      const targetStepsEl = fragmentElement.querySelector(
         `#${fragmentNamespace}_targetSteps`,
-        fragmentElement,
       );
       if (targetStepsEl) {
         targetStepsEl.value = defaultStepsTarget;
@@ -59,7 +67,7 @@ const initDashboardFilter = () => {
 
         var charts;
         if (dashboard) {
-          charts = document.querySelectorAll("healthcare-component", dashboard);
+          charts = dashboard.querySelectorAll("healthcare-component");
         } else {
           console.warn("Unable to find dashboard, search full DOM");
           charts = document.querySelectorAll("healthcare-component");
@@ -92,9 +100,8 @@ const initDashboardFilter = () => {
         }
       };
 
-      const refreshDashboardBtn = document.querySelector(
+      const refreshDashboardBtn = fragmentElement.querySelector(
         `#${fragmentNamespace}_refreshDashboard`,
-        fragmentElement,
       );
       if (refreshDashboardBtn && refreshDashboard) {
         refreshDashboardBtn.addEventListener("click", refreshDashboard);
@@ -257,13 +264,20 @@ const initDashboardFilter = () => {
       };
 
       const syncData = (e) => {
+        const userId = Liferay.ThemeDisplay.getUserId();
+
+        if (!isValidIdentifier(userId)) {
+          console.error("Invalid User ID for sync data.");
+          return;
+        }
+
         const startDate = new Date(startDateEl.value);
         const endDate = new Date(endDateEl.value);
         var heartRateData = [];
         var bloodPressureData = [];
         var stepsData = [];
         var weightData = [];
-        const userId = Liferay.ThemeDisplay.getUserId();
+
         var lastHeartRate = getLastHeartRate(userId);
         var lastBloodPressure = getLastBloodPressure(userId);
         var lastStepsCount = getLastStepsCount(userId);
@@ -331,9 +345,8 @@ const initDashboardFilter = () => {
         }
       };
 
-      const syncDataBtn = document.querySelector(
+      const syncDataBtn = fragmentElement.querySelector(
         `#${fragmentNamespace}_syncData`,
-        fragmentElement,
       );
       if (syncDataBtn && syncData) {
         syncDataBtn.addEventListener("click", syncData);

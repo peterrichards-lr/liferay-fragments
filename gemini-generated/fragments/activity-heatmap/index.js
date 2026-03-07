@@ -6,6 +6,18 @@ const state = {
   daysToDisplay: parseInt(configuration.daysToDisplay || "365"),
 };
 
+const isValidIdentifier = (val) => {
+  if (val === undefined || val === null) return false;
+  const s = String(val).trim().toLowerCase();
+  return (
+    s !== "" &&
+    s !== "undefined" &&
+    s !== "null" &&
+    s !== "0" &&
+    s !== "[object object]"
+  );
+};
+
 const getLocalizedValue = (value) => {
   if (typeof value === "object" && value !== null && !Array.isArray(value)) {
     const languageId =
@@ -36,7 +48,8 @@ const fetchData = async () => {
     }
   }
 
-  if (!objectERC) throw new Error("Object ERC not configured.");
+  if (!isValidIdentifier(objectERC))
+    throw new Error("Object ERC not configured.");
 
   const adminUrl = `${ADMIN_API_BASE}/object-definitions/by-external-reference-code/${objectERC}`;
   const defRes = await Liferay.Util.fetch(adminUrl);
@@ -147,9 +160,21 @@ const initActivityHeatmap = async (isEditMode) => {
   if (errorEl) errorEl.classList.add("d-none");
   if (infoEl) infoEl.classList.add("d-none");
 
-  const { objectERC, chartTitle: configTitle } = configuration;
+  const { objectERC: configERC, chartTitle: configTitle } = configuration;
 
-  if (!objectERC) {
+  // Resolve effective ERC (Prioritize mappable field)
+  const mappableERCEl = fragmentElement.querySelector(
+    "[data-lfr-editable-id='object-erc']",
+  );
+  let objectERC = configERC;
+  if (mappableERCEl) {
+    const mappedVal = mappableERCEl.innerText.trim();
+    if (mappedVal && mappedVal !== configERC && mappedVal !== "ACTIVITY_LOG") {
+      objectERC = mappedVal;
+    }
+  }
+
+  if (!isValidIdentifier(objectERC)) {
     if (titleEl) titleEl.textContent = configTitle || "Activity Heatmap";
     if (isEditMode && infoEl) {
       infoEl.textContent = "Please configure an Object ERC.";
