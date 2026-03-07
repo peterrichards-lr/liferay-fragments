@@ -293,5 +293,5 @@ Additional tasks identified during a second review of the repository architectur
 
 ### 3. Localization (i18n) Maintenance
 
-- [ ] **Language Properties Deduplication**: Perform a final pass on all `Language_en_US.properties` to ensure no literal "lfr." keys were accidentally duplicated as values.
+- [x] **Language Properties Deduplication**: Perform a final pass on all `Language_en_US.properties` to ensure no literal "lfr." keys were accidentally duplicated as values.
 - [ ] **Dangling Property Audit**: Identify and remove any property keys that are no longer referenced by any `configuration.json` or JS files.

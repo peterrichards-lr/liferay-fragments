@@ -85,3 +85,4 @@
 - [x] Robust Identifier Implementation: Roll out `isValidIdentifier()` validation to all fragments performing network requests (Requirement 10).
 - [x] LayoutMode API Migration: Audit all remaining fragments for `has-edit-mode-menu` usage and migrate to the `layoutMode` API (Requirement 11).
 - [x] Language Properties Deduplication: Perform a final pass on all `Language_en_US.properties` to ensure no literal "lfr." keys were accidentally duplicated as values.
+- [x] Dangling Property Audit: Identify and remove any property keys that are no longer referenced by any `configuration.json` or JS files.
