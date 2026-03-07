@@ -84,3 +84,4 @@
 - [x] Standardize Smart Title Precedence: Implement Requirement 12 (Config > Evaluated Default) in all fragments featuring dynamic headers.
 - [x] Robust Identifier Implementation: Roll out `isValidIdentifier()` validation to all fragments performing network requests (Requirement 10).
 - [x] LayoutMode API Migration: Audit all remaining fragments for `has-edit-mode-menu` usage and migrate to the `layoutMode` API (Requirement 11).
+- [x] Language Properties Deduplication: Perform a final pass on all `Language_en_US.properties` to ensure no literal "lfr." keys were accidentally duplicated as values.
