@@ -1,0 +1,78 @@
+.interactive-wizard {
+    --active-color: var(--primary, #007bff);
+    --inactive-color: var(--gray-300, #dee2e6);
+}
+
+.wizard-steps {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    margin-bottom: 2rem;
+    padding: 0 1rem;
+}
+
+.wizard-steps::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background-color: var(--inactive-color);
+    z-index: 1;
+}
+
+.step-item {
+    position: relative;
+    z-index: 2;
+    background-color: #fff;
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 50%;
+    border: 2px solid var(--inactive-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    color: var(--inactive-color);
+    transition: all 0.3s ease;
+}
+
+.step-item.active {
+    border-color: var(--active-color);
+    background-color: var(--active-color);
+    color: #fff;
+}
+
+.step-item.completed {
+    border-color: var(--active-color);
+    color: var(--active-color);
+}
+
+.wizard-content {
+    min-height: 200px;
+    padding: 1rem;
+    background-color: var(--white);
+    border-radius: var(--border-radius);
+}
+
+/* Page Editor specific - show all steps in edit mode for ease of drop-zone access */
+body.has-edit-mode-menu .step-panel {
+    display: block !important;
+    border: 1px dashed var(--gray-300);
+    margin-bottom: 1rem;
+    padding: 1rem;
+}
+
+body.has-edit-mode-menu .step-panel::before {
+    content: "Step " attr(id);
+    display: block;
+    font-size: 10px;
+    color: var(--gray-500);
+    margin-bottom: 0.5rem;
+}
+
+body.has-edit-mode-menu .wizard-actions {
+    display: none !important;
+}

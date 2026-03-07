@@ -29,30 +29,12 @@
     {
       "fields": [
         {
-          "defaultValue": false,
-          "description": "lfr.content.use-default-page-url-description",
-          "label": "lfr.content.use-default-page-url",
-          "name": "useDefaultPageUrl",
-          "type": "checkbox"
-        },
-        {
-          "description": "lfr.content.default-page-url-description",
-          "label": "lfr.content.default-page-url",
-          "name": "defaultPageUrl",
+          "dataType": "string",
+          "defaultValue": "",
+          "label": "lfr.content.link-url",
+          "description": "lfr.content.link-url",
+          "name": "linkUrl",
           "type": "text"
-        }
-      ],
-      "label": "lfr.content.page-url"
-    },
-    {
-      "configurationRole": "style",
-      "fields": [
-        {
-          "defaultValue": "#d7e5ff",
-          "label": "lfr.content.background-color",
-          "description": "lfr.content.background-color",
-          "name": "backgroundColor",
-          "type": "colorPicker"
         },
         {
           "dataType": "string",
@@ -61,9 +43,21 @@
           "description": "lfr.content.default-symbol",
           "name": "defaultIcon",
           "type": "text"
+        }
+      ],
+      "label": "lfr.content.metadata-options"
+    },
+    {
+      "fields": [
+        {
+          "defaultValue": "var(--primary-l3, #d7e5ff)",
+          "label": "lfr.content.background-color",
+          "description": "lfr.content.background-color",
+          "name": "backgroundColor",
+          "type": "colorPicker"
         },
         {
-          "defaultValue": "#0960ff",
+          "defaultValue": "var(--primary, #0b5fff)",
           "label": "lfr.content.icon-color",
           "description": "lfr.content.icon-color",
           "name": "iconColor",
@@ -77,23 +71,15 @@
           "type": "length"
         }
       ],
-      "label": "lfr.content.icon"
+      "label": "lfr.content.icon-styling"
     },
     {
-      "configurationRole": "advanced",
       "fields": [
         {
           "defaultValue": false,
           "label": "lfr.content.debug-enabled",
           "description": "lfr.content.debug-enabled",
           "name": "enableDebug",
-          "type": "checkbox"
-        },
-        {
-          "defaultValue": false,
-          "description": "lfr.content.debug-in-error-handler-description",
-          "label": "lfr.content.debug-in-error-handler",
-          "name": "debugInErrorHandler",
           "type": "checkbox"
         }
       ],

@@ -1,174 +1,137 @@
-const debugMode = configuration.enableLogging;
+const initSegmentedNumeric = () => {
+  const segmentedNumericContainer =
+    fragmentElement.querySelector(".segmented-numeric");
+  if (!segmentedNumericContainer) return;
 
-const segmentedNumericContainer = fragmentElement.querySelector('div');
-const errorMessage = segmentedNumericContainer.querySelector('span.error-message');
-const errorMessageContainer = errorMessage.closest('p');
-
-const digits = segmentedNumericContainer.querySelectorAll('input.digit');
-const digitCount = digits.length;
-
-const numericInput = segmentedNumericContainer.querySelector(`#${fragmentEntryLinkNamespace}-numeric-input`);
-
-if (layoutMode !== 'view') {
-  if (digits && digitCount > 0) {
-    for (let i = 0; i < digitCount; i++) {
-      const digit = digits[i];
-      digit.setAttribute('disabled', true);
-    }
-  }
-}
-else {
-  const messages = {
-    invalidValue: {
-      text: 'The clipboard content is not a valid number',
-    },
-    valueTooLong: {
-      text: 'The value has too many digits',
-    },
-    valueTooShort: {
-      text: 'The value does not have enough digits',
-    },
-  };
+  const errorMessage =
+    segmentedNumericContainer.querySelector("span.error-message");
+  const errorMessageContainer = errorMessage ? errorMessage.closest("p") : null;
+  const digits = Array.from(
+    segmentedNumericContainer.querySelectorAll("input.digit"),
+  );
+  const digitCount = digits.length;
+  const numericInput =
+    segmentedNumericContainer.querySelector(`input[type="hidden"]`);
 
   const resetErrorMessage = () => {
-    errorMessage.textContent = '';
-    errorMessageContainer.style.display = 'none';
+    if (errorMessage) errorMessage.textContent = "";
+    if (errorMessageContainer) errorMessageContainer.style.display = "none";
   };
 
-  const setErrorMessage = (message) => {
-    resetErrorMessage();
-    errorMessage.textContent = message.text;
-    errorMessageContainer.style.display = 'block';
+  const setErrorMessage = (text) => {
+    if (errorMessage) errorMessage.textContent = text;
+    if (errorMessageContainer) errorMessageContainer.style.display = "block";
   };
 
-  if (digits && digitCount > 0) {
-    const form = segmentedNumericContainer.closest('form');
-    const integerDigitCount = configuration.integerDigitCount;
+  const updateHiddenInput = () => {
+    if (!numericInput) return;
+    let numberStr = "";
+    const integerDigitCount = configuration.integerDigitCount || 0;
 
-    form.addEventListener('submit', (event) => {
-      let numberStr = '';
-      for (let i = 0; i < digitCount; i++) {
-        const digit = digits[i];
-        if (!configuration.integerNumber && i == integerDigitCount)
-          numberStr += '.';
-        numberStr += digit.value;
+    digits.forEach((digit, i) => {
+      if (!configuration.integerNumber && i === integerDigitCount) {
+        numberStr += ".";
       }
-      const number = configuration.integerNumber
-        ? parseInt(numberStr)
-        : parseFloat(numberStr);
-
-      numericInput.value = number;
+      numberStr += digit.value || "0";
     });
 
-    segmentedNumericContainer.addEventListener('paste', (event) => {
-      event.preventDefault();
-      resetErrorMessage();
-      let clipboardData = (event.clipboardData || window.clipboardData).getData(
-        'text'
-      )?.trim();
-      if (!isNaN(parseFloat(clipboardData)) && isFinite(clipboardData)) {
-        const numberDigits = clipboardData.split('');
-        const numberOfDigits = numberDigits.length;
-        const startDigit = digitCount - numberOfDigits;
-        const activeEl = document.activeElement;
+    numericInput.value = configuration.integerNumber
+      ? parseInt(numberStr, 10)
+      : parseFloat(numberStr);
 
-        if (
-          numberOfDigits === digitCount ||
-          (configuration.allowPartialPaste && numberOfDigits < digitCount)
-        ) {
-          if (activeEl.tagName === 'BODY' && numberOfDigits === digitCount) {
-            let digitIndex = startDigit;
-            for (let i = 0; i < numberOfDigits; i++) {
-              const digit = digits[digitIndex];
-              digit.value = numberDigits[i];
-              digitIndex++;
-            }
-          } else if (
-            activeEl.tagName === 'INPUT' &&
-            activeEl.classList.contains('digit')
-          ) {
-            const digitPosition = parseInt(activeEl.getAttribute('data-digit'));
-            const correctPlacement =
-              numberOfDigits + (digitPosition - 1) === digitCount;
-            if (correctPlacement) {
-              let digitIndex = 0;
-              for (let i = 0; i < digitCount; i++) {
-                const digit = digits[i];
-                if (i < startDigit) {
-                  if (!digit.value) digit.value = '0';
-                } else {
-                  digit.value = numberDigits[digitIndex];
-                  digitIndex++;
-                }
-              }
-              activeEl.blur();
-            } else {
-              if (numberOfDigits + (digitPosition - 1) < digitCount)
-                setErrorMessage(messages['valueTooShort']);
-              else setErrorMessage(messages['valueTooLong']);
-            }
-          } else {
-            if (numberOfDigits < digitCount)
-              setErrorMessage(messages['valueTooShort']);
-            else setErrorMessage(messages['valueTooLong']);
-          }
-        } else {
-          if (numberOfDigits < digitCount)
-            setErrorMessage(messages['valueTooShort']);
-          else setErrorMessage(messages['valueTooLong']);
-        }
-      } else {
-        setErrorMessage(messages['invalidValue']);
-      }
-    });
+    // Trigger change event for Liferay form validation
+    numericInput.dispatchEvent(new Event("change", { bubbles: true }));
+  };
 
-    for (let i = 0; i < digitCount; i++) {
-      const digit = digits[i];
-      const previousDigit = i - 1 >= 0 ? digits[i - 1] : null;
-      const nextDigit = i + 1 < digitCount ? digits[i + 1] : null;
-
-      digit.addEventListener('input', (event) => {
-        const digit = event.target;
-        digit.value = digit.value.replace(/[^0-9]/g, '').charAt(0);
-        resetErrorMessage();
-      });
-
-      if (previousDigit && nextDigit) {
-        digit.addEventListener('keyup', (event) => {
-          const digit = event.target;
-          const sizeAttr = digit.getAttribute('size');
-          const size = parseInt(sizeAttr ? sizeAttr : '0');
-          if (digit.value.length == size) nextDigit.focus();
-        });
-
-        digit.addEventListener('keydown', (event) => {
-          const digit = event.target;
-          const key = event.keyCode || event.charCode;
-          if (key == 8 || key == 46) {
-            digit.value = '';
-            previousDigit.focus();
-          }
-        });
-      } else if (previousDigit) {
-        digit.addEventListener('keydown', (event) => {
-          const digit = event.target;
-          const key = event.keyCode || event.charCode;
-          if (key == 8 || key == 46) {
-            if (digit.value != '') {
-              digit.value = '';
-            } else {
-              previousDigit.focus();
-            }
-          }
-        });
-      } else if (nextDigit) {
-        digit.addEventListener('keyup', (event) => {
-          const digit = event.target;
-          const sizeAttr = digit.getAttribute('size');
-          const size = parseInt(sizeAttr ? sizeAttr : '0');
-          if (digit.value.length == size) nextDigit.focus();
-        });
-      }
-    }
+  if (layoutMode !== "view") {
+    digits.forEach((digit) => digit.setAttribute("disabled", true));
+    return;
   }
-}
+
+  // Handle Form Submit
+  const form = segmentedNumericContainer.closest("form");
+  if (form) {
+    form.addEventListener("submit", updateHiddenInput);
+  }
+
+  // Handle Paste
+  segmentedNumericContainer.addEventListener("paste", (event) => {
+    event.preventDefault();
+    resetErrorMessage();
+
+    const clipboardData = (event.clipboardData || window.clipboardData)
+      .getData("text")
+      ?.trim();
+
+    if (
+      clipboardData &&
+      !isNaN(parseFloat(clipboardData)) &&
+      isFinite(clipboardData)
+    ) {
+      const numberDigits = clipboardData.replace(/[^0-9]/g, "").split("");
+      const numberOfDigits = numberDigits.length;
+
+      if (numberOfDigits > digitCount) {
+        setErrorMessage("Value too long.");
+        return;
+      }
+
+      // Fill from right to left (standard for numbers)
+      const startAt = digitCount - numberOfDigits;
+      digits.forEach((digit, i) => {
+        if (i < startAt) {
+          digit.value = "0";
+        } else {
+          digit.value = numberDigits[i - startAt];
+        }
+      });
+      updateHiddenInput();
+    } else {
+      setErrorMessage("Invalid numeric value.");
+    }
+  });
+
+  digits.forEach((digit, i) => {
+    digit.addEventListener("input", (e) => {
+      e.target.value = e.target.value.replace(/[^0-9]/g, "").charAt(0);
+      resetErrorMessage();
+      updateHiddenInput();
+
+      // Auto-tab to next
+      if (e.target.value.length === 1 && i < digitCount - 1) {
+        digits[i + 1].focus();
+      }
+    });
+
+    digit.addEventListener("keydown", (e) => {
+      if (e.key === "Backspace") {
+        if (digit.value === "" && i > 0) {
+          digits[i - 1].focus();
+          digits[i - 1].value = "";
+        } else {
+          digit.value = "";
+        }
+        updateHiddenInput();
+      } else if (e.key === "ArrowLeft" && i > 0) {
+        digits[i - 1].focus();
+      } else if (e.key === "ArrowRight" && i < digitCount - 1) {
+        digits[i + 1].focus();
+      } else if (e.key === "ArrowUp") {
+        e.preventDefault();
+        let val = parseInt(digit.value || "0", 10);
+        digit.value = (val + 1) % 10;
+        updateHiddenInput();
+      } else if (e.key === "ArrowDown") {
+        e.preventDefault();
+        let val = parseInt(digit.value || "0", 10);
+        digit.value = (val - 1 + 10) % 10;
+        updateHiddenInput();
+      }
+    });
+
+    // Select on focus for easier editing
+    digit.addEventListener("focus", () => digit.select());
+  });
+};
+
+initSegmentedNumeric();

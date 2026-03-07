@@ -3,491 +3,145 @@
     {
       "fields": [
         {
-          "defaultValue": "var(--font-family-base, Arial)",
-          "label": "lfr.commerce.font-family",
-          "description": "lfr.commerce.font-family",
-          "name": "badgeFont",
+          "dataType": "string",
+          "defaultValue": "PRODUCT_SHOWCASE",
+          "label": "lfr.commerce.object-erc",
+          "description": "lfr.commerce.object-erc-desc",
+          "name": "objectERC",
           "type": "text"
         },
         {
-          "defaultValue": "limited-stock",
-          "description": "lfr.commerce.badge-type-priority-description",
-          "label": "lfr.commerce.badge-type-priority",
-          "name": "badgeTypePriority",
-          "type": "select",
-          "typeOptions": {
-            "validValues": [
-              {
-                "label": "lfr.commerce.badge-type-limited-stock",
-                "value": "limited-stock"
-              },
-              {
-                "label": "lfr.commerce.badge-type-offer",
-                "value": "offer"
-              },
-              {
-                "label": "lfr.commerce.badge-type-new-product",
-                "value": "new-product"
-              }
-            ]
-          }
+          "dataType": "string",
+          "defaultValue": "id",
+          "label": "lfr.commerce.object-id-field",
+          "description": "lfr.commerce.object-id-field-desc",
+          "name": "objectIdField",
+          "type": "text"
+        },
+        {
+          "dataType": "string",
+          "defaultValue": "sku",
+          "label": "lfr.commerce.object-sku-field",
+          "description": "lfr.commerce.object-sku-field-desc",
+          "name": "objectSkuField",
+          "type": "text"
+        },
+        {
+          "dataType": "string",
+          "defaultValue": "badgeText",
+          "label": "lfr.commerce.object-badge-field",
+          "description": "lfr.commerce.object-badge-field-desc",
+          "name": "objectBadgeField",
+          "type": "text"
         }
       ],
-      "label": "lfr.commerce.common"
+      "label": "lfr.commerce.object-options"
     },
     {
       "fields": [
         {
-          "defaultValue": "top-left",
-          "label": "lfr.commerce.position",
-          "description": "lfr.commerce.position",
-          "name": "offerBadgePosition",
-          "type": "select",
-          "typeOptions": {
-            "validValues": [
-              {
-                "label": "lfr.commerce.badge-position-top-left",
-                "value": "top-left"
-              },
-              {
-                "label": "lfr.commerce.badge-position-top-right",
-                "value": "top-right"
-              },
-              {
-                "label": "lfr.commerce.badge-position-bottom-right",
-                "value": "bottom-right"
-              },
-              {
-                "label": "lfr.commerce.badge-position-bottom-left",
-                "value": "bottom-left"
-              }
-            ]
-          }
-        },
-        {
-          "defaultValue": "var(--font-size-lg, 1.125rem)",
-          "label": "lfr.commerce.font-size",
-          "description": "lfr.commerce.font-size",
-          "name": "offerFontSize",
-          "type": "length"
-        },
-        {
-          "defaultValue": "var(--font-weight-bold, 700)",
-          "label": "lfr.commerce.font-weight",
-          "description": "lfr.commerce.font-weight",
-          "name": "offerFontWeight",
-          "type": "text"
-        },
-        {
-          "defaultValue": "0px",
-          "label": "lfr.commerce.offset",
-          "description": "lfr.commerce.offset",
-          "name": "offerBadgeOffset",
-          "type": "length"
-        },
-        {
-          "defaultValue": "150px",
-          "label": "lfr.commerce.width",
-          "description": "lfr.commerce.width",
-          "name": "offerBadgeWidth",
-          "type": "length"
-        },
-        {
-          "defaultValue": "150px",
-          "label": "lfr.commerce.height",
-          "description": "lfr.commerce.height",
-          "name": "offerBadgeHeight",
-          "type": "length"
-        },
-        {
-          "defaultValue": "{discount} off!",
-          "description": "lfr.commerce.offer-text-template-description",
-          "label": "lfr.commerce.text-template",
-          "name": "offerTextTemplate",
-          "type": "text"
-        },
-        {
-          "defaultValue": "discount-percentage",
-          "label": "lfr.commerce.offer-type",
-          "description": "lfr.commerce.offer-type",
-          "name": "offerType",
-          "type": "select",
-          "typeOptions": {
-            "validValues": [
-              {
-                "label": "lfr.commerce.discount-percentage",
-                "value": "discount-percentage"
-              },
-              {
-                "label": "lfr.commerce.discount-value",
-                "value": "discount-value"
-              },
-              {
-                "label": "lfr.commerce.discount-currency",
-                "value": "discount-currency"
-              }
-            ]
-          }
-        },
-        {
-          "defaultValue": "corner-ribbon",
-          "label": "lfr.commerce.badge-shape",
-          "description": "lfr.commerce.badge-shape",
-          "name": "offerBadgeShape",
-          "type": "select",
-          "typeOptions": {
-            "validValues": [
-              {
-                "label": "lfr.commerce.circle",
-                "value": "circle"
-              },
-              {
-                "label": "lfr.commerce.badge-shape-corner-ribbon",
-                "value": "corner-ribbon"
-              },
-              {
-                "label": "lfr.commerce.pill",
-                "value": "pill"
-              },
-              {
-                "label": "lfr.commerce.badge-shape-rectangle",
-                "value": "rectangle"
-              }
-            ]
-          }
-        },
-        {
-          "defaultValue": "red",
-          "label": "lfr.commerce.color",
-          "description": "lfr.commerce.color",
-          "name": "offerBadgeColor",
-          "type": "colorPicker"
-        },
-        {
-          "defaultValue": "white",
-          "label": "lfr.commerce.text-color",
-          "description": "lfr.commerce.text-color",
-          "name": "offerBadgeTextColor",
-          "type": "colorPicker"
-        },
-        {
-          "defaultValue": false,
-          "label": "lfr.commerce.shadow",
-          "description": "lfr.commerce.shadow",
-          "name": "offerBadgeShadow",
-          "type": "checkbox"
-        }
-      ],
-      "label": "lfr.commerce.offer-section"
-    },
-    {
-      "fields": [
-        {
+          "dataType": "string",
           "defaultValue": "top-right",
-          "label": "lfr.commerce.position",
-          "description": "lfr.commerce.position",
-          "name": "newProductBadgePosition",
+          "label": "lfr.commerce.badge-position",
+          "description": "lfr.commerce.badge-position-desc",
+          "name": "badgePosition",
           "type": "select",
           "typeOptions": {
             "validValues": [
               {
-                "label": "lfr.commerce.badge-position-top-left",
+                "label": "lfr.commerce.top-left",
                 "value": "top-left"
               },
               {
-                "label": "lfr.commerce.badge-position-top-right",
+                "label": "lfr.commerce.top-right",
                 "value": "top-right"
               },
               {
-                "label": "lfr.commerce.badge-position-bottom-right",
-                "value": "bottom-right"
-              },
-              {
-                "label": "lfr.commerce.badge-position-bottom-left",
+                "label": "lfr.commerce.bottom-left",
                 "value": "bottom-left"
-              }
-            ]
-          }
-        },
-        {
-          "defaultValue": "18px",
-          "label": "lfr.commerce.font-size",
-          "description": "lfr.commerce.font-size",
-          "name": "newProductFontSize",
-          "type": "length"
-        },
-        {
-          "defaultValue": "var(--font-weight-semi-bold, 600)",
-          "label": "lfr.commerce.font-weight",
-          "description": "lfr.commerce.font-weight",
-          "name": "newProductFontWeight",
-          "type": "text"
-        },
-        {
-          "defaultValue": "10px",
-          "label": "lfr.commerce.offset",
-          "description": "lfr.commerce.offset",
-          "name": "newProductBadgeOffset",
-          "type": "length"
-        },
-        {
-          "defaultValue": "80px",
-          "label": "lfr.commerce.width",
-          "description": "lfr.commerce.width",
-          "name": "newProductBadgeWidth",
-          "type": "length"
-        },
-        {
-          "defaultValue": "40px",
-          "label": "lfr.commerce.height",
-          "description": "lfr.commerce.height",
-          "name": "newProductBadgeHeight",
-          "type": "length"
-        },
-        {
-          "defaultValue": "New!",
-          "description": "lfr.commerce.new-product-text-template-description",
-          "label": "lfr.commerce.text-template",
-          "name": "newProductTextTemplate",
-          "type": "text"
-        },
-        {
-          "dataType": "int",
-          "defaultValue": "14",
-          "description": "lfr.commerce.new-product-freshness-description",
-          "label": "lfr.commerce.new-product-freshness",
-          "name": "newProductFreshness",
-          "type": "text"
-        },
-        {
-          "defaultValue": "displayDate",
-          "description": "lfr.commerce.new-product-date-field-description",
-          "label": "lfr.commerce.new-product-date-field",
-          "name": "newProductDateField",
-          "type": "select",
-          "typeOptions": {
-            "validValues": [
-              {
-                "label": "lfr.commerce.display-date",
-                "value": "displayDate"
-              }
-            ]
-          }
-        },
-        {
-          "defaultValue": "pill",
-          "label": "lfr.commerce.badge-shape",
-          "description": "lfr.commerce.badge-shape",
-          "name": "newProductBadgeShape",
-          "type": "select",
-          "typeOptions": {
-            "validValues": [
-              {
-                "label": "lfr.commerce.circle",
-                "value": "circle"
               },
               {
-                "label": "lfr.commerce.badge-shape-corner-ribbon",
-                "value": "corner-ribbon"
-              },
-              {
-                "label": "lfr.commerce.pill",
-                "value": "pill"
-              },
-              {
-                "label": "lfr.commerce.badge-shape-rectangle",
-                "value": "rectangle"
-              }
-            ]
-          }
-        },
-        {
-          "defaultValue": "#2a9d8f",
-          "label": "lfr.commerce.color",
-          "description": "lfr.commerce.color",
-          "name": "newProductBadgeColor",
-          "type": "colorPicker"
-        },
-        {
-          "defaultValue": "#ffffff",
-          "label": "lfr.commerce.text-color",
-          "description": "lfr.commerce.text-color",
-          "name": "newProductBadgeTextColor",
-          "type": "colorPicker"
-        },
-        {
-          "defaultValue": true,
-          "label": "lfr.commerce.shadow",
-          "description": "lfr.commerce.shadow",
-          "name": "newProductBadgeShadow",
-          "type": "checkbox"
-        }
-      ],
-      "label": "lfr.commerce.new-product-section"
-    },
-    {
-      "fields": [
-        {
-          "defaultValue": "bottom-right",
-          "label": "lfr.commerce.position",
-          "description": "lfr.commerce.position",
-          "name": "limitedStockBadgePosition",
-          "type": "select",
-          "typeOptions": {
-            "validValues": [
-              {
-                "label": "lfr.commerce.badge-position-top-left",
-                "value": "top-left"
-              },
-              {
-                "label": "lfr.commerce.badge-position-top-right",
-                "value": "top-right"
-              },
-              {
-                "label": "lfr.commerce.badge-position-bottom-right",
+                "label": "lfr.commerce.bottom-right",
                 "value": "bottom-right"
-              },
-              {
-                "label": "lfr.commerce.badge-position-bottom-left",
-                "value": "bottom-left"
               }
             ]
           }
         },
         {
-          "defaultValue": "var(--font-size-base, 0.875rem)",
-          "label": "lfr.commerce.font-size",
-          "description": "lfr.commerce.font-size",
-          "name": "limitedStockFontSize",
-          "type": "length"
-        },
-        {
-          "defaultValue": "var(--font-weight-bolder, 900)",
-          "label": "lfr.commerce.font-weight",
-          "description": "lfr.commerce.font-weight",
-          "name": "limitedStockFontWeight",
-          "type": "text"
-        },
-        {
+          "dataType": "string",
           "defaultValue": "10px",
-          "label": "lfr.commerce.offset",
-          "description": "lfr.commerce.offset",
-          "name": "limitedStockBadgeOffset",
-          "type": "length"
-        },
-        {
-          "defaultValue": "140px",
-          "label": "lfr.commerce.width",
-          "description": "lfr.commerce.width",
-          "name": "limitedStockBadgeWidth",
-          "type": "length"
-        },
-        {
-          "defaultValue": "40px",
-          "label": "lfr.commerce.height",
-          "description": "lfr.commerce.height",
-          "name": "limitedStockBadgeHeight",
-          "type": "length"
-        },
-        {
-          "defaultValue": "Limited Stock!",
-          "description": "lfr.commerce.limtied-stock-text-template-description",
-          "label": "lfr.commerce.text-template",
-          "name": "limitedStockTextTemplate",
+          "label": "lfr.commerce.badge-margin",
+          "description": "lfr.commerce.badge-margin-desc",
+          "name": "badgeMargin",
           "type": "text"
         },
         {
-          "dataType": "int",
-          "defaultValue": "10",
-          "description": "lfr.commerce.stock-level-threshold-description",
-          "label": "lfr.commerce.stock-level-threshold",
-          "name": "limitedStockLevelThreshold",
-          "type": "text"
-        },
-        {
+          "dataType": "string",
           "defaultValue": "rectangle",
           "label": "lfr.commerce.badge-shape",
-          "description": "lfr.commerce.badge-shape",
-          "name": "limitedStockBadgeShape",
+          "description": "lfr.commerce.badge-shape-desc",
+          "name": "badgeShape",
           "type": "select",
           "typeOptions": {
             "validValues": [
               {
-                "label": "lfr.commerce.circle",
-                "value": "circle"
-              },
-              {
-                "label": "lfr.commerce.badge-shape-corner-ribbon",
-                "value": "corner-ribbon"
+                "label": "lfr.commerce.rectangle",
+                "value": "rectangle"
               },
               {
                 "label": "lfr.commerce.pill",
                 "value": "pill"
               },
               {
-                "label": "lfr.commerce.badge-shape-rectangle",
-                "value": "rectangle"
+                "label": "lfr.commerce.circle",
+                "value": "circle"
               }
             ]
           }
-        },
-        {
-          "defaultValue": "var(--primary, var(--color-brand-primary, #f4a261))",
-          "label": "lfr.commerce.color",
-          "description": "lfr.commerce.color",
-          "name": "limitedStockBadgeColor",
-          "type": "colorPicker"
-        },
-        {
-          "defaultValue": "var(--body-bg, (var(--white, #ffffff))",
-          "label": "lfr.commerce.text-color",
-          "description": "lfr.commerce.text-color",
-          "name": "limitedStockBadgeTextColor",
-          "type": "colorPicker"
-        },
-        {
-          "defaultValue": true,
-          "label": "lfr.commerce.shadow",
-          "description": "lfr.commerce.shadow",
-          "name": "limitedStockBadgeShadow",
-          "type": "checkbox"
         }
       ],
-      "label": "lfr.commerce.limited-stock-section"
+      "label": "lfr.commerce.badge-layout"
+    },
+    {
+      "fields": [
+        {
+          "dataType": "string",
+          "defaultValue": "var(--success, #2a9d8f)",
+          "label": "lfr.commerce.badge-bg-color",
+          "description": "lfr.commerce.badge-bg-color-desc",
+          "name": "badgeBgColor",
+          "type": "colorPicker"
+        },
+        {
+          "dataType": "string",
+          "defaultValue": "var(--white, #ffffff)",
+          "label": "lfr.commerce.badge-text-color",
+          "description": "lfr.commerce.badge-text-color-desc",
+          "name": "badgeTextColor",
+          "type": "colorPicker"
+        },
+        {
+          "dataType": "string",
+          "defaultValue": "12px",
+          "label": "lfr.commerce.badge-font-size",
+          "description": "lfr.commerce.badge-font-size-desc",
+          "name": "badgeFontSize",
+          "type": "length"
+        }
+      ],
+      "label": "lfr.commerce.badge-styling"
     },
     {
       "fields": [
         {
           "defaultValue": false,
-          "label": "lfr.commerce.debug-enabled",
-          "description": "lfr.commerce.debug-enabled",
+          "label": "lfr.commerce.enable-debug",
+          "description": "lfr.commerce.enable-debug",
           "name": "enableDebug",
           "type": "checkbox"
-        },
-        {
-          "defaultValue": true,
-          "description": "lfr.commerce.fragment-header-description",
-          "label": "lfr.commerce.fragment-header",
-          "name": "fragmentHeader",
-          "type": "checkbox"
-        },
-        {
-          "defaultValue": true,
-          "description": "lfr.commerce.all-portlets-ready-description",
-          "label": "lfr.commerce.all-portlets-ready",
-          "name": "allPortletsReady",
-          "type": "checkbox"
-        },
-        {
-          "dataType": "int",
-          "defaultValue": "1000",
-          "description": "lfr.commerce.initialize-delay-description",
-          "label": "lfr.commerce.initialize-delay",
-          "name": "initializeDelay",
-          "type": "text"
         }
       ],
-      "label": "lfr.commerce.miscellaneous-section"
+      "label": "lfr.commerce.miscellaneous"
     }
   ]
 }

@@ -10,10 +10,10 @@ This table summarizes the status of documentation, language properties, visual t
 | :-------------------------------- | :------------ | :------------- | :-------- | :------------ | :--------- |
 | **Commerce**                      | YES           | YES            | -         | YES           | -          |
 | - dynamic-badge-overlay           | YES           | YES            | NO        | NO            | NO         |
-| - purchased-products              | YES           | YES            | NO        | YES           | YES        |
+| - purchased-products              | YES           | YES            | YES       | YES           | YES        |
 | **Conditional Content**           | YES           | YES            | NO        | NO            | NO         |
 | **Content**                       | YES           | YES            | -         | YES           | -          |
-| - content-map                     | YES           | YES            | NO        | YES           | YES        |
+| - content-map                     | YES           | YES            | YES       | YES           | YES        |
 | - service-card                    | YES           | YES            | YES       | NO            | NO         |
 | - service-icon                    | YES           | YES            | YES       | NO            | NO         |
 | - service-link-button             | YES           | YES            | NO        | NO            | NO         |
@@ -21,8 +21,8 @@ This table summarizes the status of documentation, language properties, visual t
 | - dashboard-container             | YES           | YES            | NO        | NO            | NO         |
 | - dashboard-filter                | YES           | YES            | NO        | NO            | NO         |
 | **Date Display**                  | YES           | YES            | -         | YES           | YES        |
-| - date-display-collection-display | YES           | YES            | NO        | -             | -          |
-| - date-display-static             | YES           | YES            | NO        | -             | -          |
+| - date-display-collection-display | YES           | YES            | YES       | -             | -          |
+| - date-display-static             | YES           | YES            | YES       | -             | -          |
 | **Finance**                       | YES           | YES            | -         | NO            | NO         |
 | - loan-application-calculator     | YES           | YES            | NO        | NO            | NO         |
 | - loan-calculator                 | YES           | YES            | NO        | NO            | NO         |
@@ -30,24 +30,24 @@ This table summarizes the status of documentation, language properties, visual t
 | - autocomplete-(object)           | YES           | YES            | NO        | NO            | NO         |
 | - (Other fragments)               | YES           | YES            | NO        | NO            | NO         |
 | **Forms**                         | YES           | YES            | -         | YES           | -          |
-| - form-populator                  | YES           | YES            | NO        | YES           | YES        |
+| - form-populator                  | YES           | YES            | YES       | YES           | YES        |
 | - redirect-page                   | YES           | YES            | NO        | YES           | YES        |
 | - refresh-page                    | YES           | YES            | NO        | YES           | YES        |
 | - (Other fragments)               | YES           | YES            | NO        | NO            | NO         |
 | **Gemini Generated**              | YES           | YES            | -         | YES           | -          |
-| - activity-heatmap                | YES           | YES            | NO        | YES           | YES        |
+| - activity-heatmap                | YES           | YES            | YES       | YES           | YES        |
 | - ai-chat-ui                      | YES           | YES            | NO        | NO            | NO         |
-| - animated-metric-counter         | YES           | YES            | NO        | YES           | YES        |
+| - animated-metric-counter         | YES           | YES            | YES       | YES           | YES        |
 | - dynamic-collection-slider       | YES           | YES            | NO        | NO            | NO         |
-| - dynamic-object-gallery          | YES           | YES            | NO        | YES           | YES        |
-| - interactive-event-timeline      | YES           | YES            | NO        | YES           | YES        |
-| - meta-object-form                | YES           | YES            | NO        | YES           | YES        |
-| - meta-object-record-view         | YES           | YES            | NO        | YES           | YES        |
-| - meta-object-table               | YES           | YES            | NO        | YES           | YES        |
-| - modern-parallax-hero            | YES           | YES            | NO        | YES           | YES        |
-| - object-linked-chart             | YES           | YES            | NO        | YES           | YES        |
-| - pricing-comparison-grid         | YES           | YES            | NO        | YES           | YES        |
-| - radial-kpi-gauge                | YES           | YES            | NO        | YES           | YES        |
+| - dynamic-object-gallery          | YES           | YES            | YES       | YES           | YES        |
+| - interactive-event-timeline      | YES           | YES            | YES       | YES           | YES        |
+| - meta-object-form                | YES           | YES            | YES       | YES           | YES        |
+| - meta-object-record-view         | YES           | YES            | YES       | YES           | YES        |
+| - meta-object-table               | YES           | YES            | YES       | YES           | YES        |
+| - modern-parallax-hero            | YES           | YES            | YES       | YES           | YES        |
+| - object-linked-chart             | YES           | YES            | YES       | YES           | YES        |
+| - pricing-comparison-grid         | YES           | YES            | YES       | YES           | YES        |
+| - radial-kpi-gauge                | YES           | YES            | YES       | YES           | YES        |
 | **Header Components**             | YES           | YES            | -         | NO            | NO         |
 | - (Multiple fragments)            | YES           | YES            | NO        | NO            | NO         |
 | **Hero Assets**                   | YES           | YES            | -         | NO            | NO         |
@@ -56,25 +56,26 @@ This table summarizes the status of documentation, language properties, visual t
 | **Layout Components**             | YES           | YES            | -         | YES           | YES        |
 | - (Multiple fragments)            | YES           | YES            | NO        | -             | -          |
 | **Master Page Bg Colour**         | YES           | YES            | NO        | NO            | NO         |
-| **Meter Reading**                 | YES           | YES            | NO        | YES           | NO         |
+| **Meter Reading**                 | YES           | YES            | YES       | YES           | NO         |
 | **Miscellaneous**                 | YES           | YES            | -         | NO            | NO         |
 | - custom-tabs                     | YES           | YES            | YES       | NO            | NO         |
 | - icon-button                     | YES           | YES            | YES       | NO            | NO         |
 | - launch-analytics-cloud          | YES           | YES            | YES       | NO            | NO         |
 | - (Other fragments)               | YES           | YES            | NO        | NO            | NO         |
+| - interactive-wizard              | YES           | YES            | NO        | NO            | NO         |
 | **Objects**                       | YES           | YES            | -         | NO            | NO         |
 | - audit-button                    | YES           | YES            | YES       | NO            | NO         |
 | - (Other fragments)               | YES           | YES            | NO        | NO            | NO         |
 | **Populated Form Fields**         | YES           | YES            | -         | NO            | NO         |
 | - (Multiple fragments)            | YES           | YES            | NO        | NO            | NO         |
 | **Profile**                       | YES           | YES            | -         | YES           | YES        |
-| - pdf-export                      | YES           | YES            | NO        | YES           | YES        |
+| - pdf-export                      | YES           | YES            | YES       | YES           | YES        |
 | - (Other fragments)               | YES           | YES            | NO        | -             | -          |
 | **Pulse**                         | YES           | YES            | -         | NO            | NO         |
 | - pulse-button                    | YES           | YES            | YES       | NO            | NO         |
 | - (Other fragments)               | YES           | YES            | NO        | NO            | NO         |
 | **Remote App Utilities**          | YES           | YES            | -         | YES           | YES        |
-| - liferay-iframer                 | YES           | YES            | NO        | YES           | YES        |
+| - liferay-iframer                 | YES           | YES            | YES       | YES           | YES        |
 | **Responsive Menus**              | YES           | YES            | -         | NO            | NO         |
 | - responsive-menu                 | YES           | YES            | YES       | NO            | NO         |
 | - responsive-side-menu            | YES           | YES            | YES       | NO            | NO         |
@@ -86,6 +87,20 @@ This table summarizes the status of documentation, language properties, visual t
 | - (Multiple fragments)            | YES           | YES            | NO        | NO            | NO         |
 | **Widget Modifiers**              | YES           | YES            | -         | NO            | NO         |
 | - alerts-modifier                 | YES           | YES            | YES       | NO            | NO         |
+
+## Fragments Requiring Visuals & Thumbnails
+
+The following fragments still require a high-quality screenshot (`docs/images/`) and a corresponding `thumbnail.png` in their root directory.
+
+- **Commerce**: `dynamic-badge-overlay`
+- **Dashboard**: `dashboard-container`, `dashboard-filter`
+- **Finance**: `loan-application-calculator`, `loan-calculator`
+- **Form Fragments**: `autocomplete-(object)`, `autocomplete-(picklist)`, `range`, `toggle-switch`, `segmented-numeric`, etc.
+- **Gemini**: `ai-chat-ui`, `dynamic-collection-slider`
+- **Header**: `navigation`, `login-and-user-menu`, `search-bar`, etc.
+- **Miscellaneous**: `interactive-wizard`, `customer-registration`, etc.
+- **Objects**: `comment`, `public-comments`
+- **User Account**: `who-am-i`, `my-rights`, `ping`
 
 ## High Priority (Bugs & Security)
 
@@ -171,7 +186,7 @@ High-impact, visually appealing components to extend the repository's capabiliti
 
 - [x] **Modern Parallax Hero**: A hero fragment with multi-layer parallax effects and configurable scroll-triggered text animations. (Implemented in `gemini-generated` collection)
 - [x] **Object-Based Comparison Table**: A visually rich comparison grid (e.g., for service plans) that can dynamically pull features and pricing from Liferay Objects. (Implemented in `gemini-generated` collection)
-- [ ] **Step-by-Step Interactive Wizard**: A self-contained fragment set for managing multi-stage user journeys with Meridian-styled transition animations.
+- [x] **Step-by-Step Interactive Wizard**: A self-contained fragment set for managing multi-stage user journeys with Meridian-styled transition animations. (Implemented in `misc` collection)
 - [x] **Animated Metric Counters**: Simple but effective cards that animate numeric totals (e.g., \"Total Users\") when they enter the viewport. (Implemented in `gemini-generated` collection)
 - [x] **Interactive Event Timeline**: A vertical/horizontal timeline that dynamically renders milestones from a Liferay Object. (Implemented in `gemini-generated` collection)
 - [x] **AI Assistant Chat UI**: A polished messaging interface for integrating with AI backend extensions. (Implemented in `gemini-generated` collection)
@@ -214,7 +229,7 @@ Tasks to ensure compliance with WCAG standards and a better experience for assis
 
 ### Low Priority (Visual & Structural)
 
-- [ ] **Color Contrast**: Verify that custom color pickers in `configuration.json` have defaults that meet WCAG AA contrast ratios against their respective backgrounds.
+- [x] **CSS Variable & Fallback Audit**: Ensure all fragments use Meridian theme tokens for default colors and provide accessible fallbacks. (Completed repository-wide refactor)
 - [x] **Focus Management**: Ensure a visible focus ring is present for all interactive elements, especially in fragments with custom-styled inputs like `toggle-switch`. (Implemented for toggle-switch)
 
 ## Future Roadmap & Architecture Improvements

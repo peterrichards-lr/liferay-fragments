@@ -57,14 +57,14 @@
           "type": "checkbox"
         },
         {
-          "defaultValue": "#d7e5ff",
+          "defaultValue": "var(--primary-l3, #d7e5ff)",
           "label": "lfr.content.background-color",
           "description": "lfr.content.background-color",
           "name": "backgroundColor",
           "type": "colorPicker"
         },
         {
-          "defaultValue": "#0960ff",
+          "defaultValue": "var(--primary, #0b5fff)",
           "label": "lfr.content.icon-color",
           "description": "lfr.content.icon-color",
           "name": "iconColor",

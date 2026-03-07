@@ -4,62 +4,90 @@
       "fields": [
         {
           "dataType": "string",
-          "defaultValue": "menu-inline",
-          "label": "lfr.responsive-menus.menu-style",
-          "description": "lfr.responsive-menus.menu-style",
-          "name": "menuStyle",
+          "defaultValue": "top",
+          "label": "lfr.responsive-menus.position",
+          "description": "lfr.responsive-menus.position-description",
+          "name": "position",
           "type": "select",
           "typeOptions": {
             "validValues": [
               {
-                "value": "menu-top"
+                "label": "lfr.responsive-menus.top",
+                "value": "top"
               },
               {
-                "value": "menu-inline"
-              },
-              {
-                "value": "menu-top sticky"
+                "label": "lfr.responsive-menus.bottom",
+                "value": "bottom"
               }
             ]
           }
         },
         {
           "dataType": "string",
-          "defaultValue": "ellipsis",
-          "label": "lfr.responsive-menus.menu-item-overflow",
-          "description": "lfr.responsive-menus.menu-item-overflow",
-          "name": "menuItemOverflow",
+          "defaultValue": "fixed-top",
+          "label": "lfr.responsive-menus.stickiness",
+          "description": "lfr.responsive-menus.stickiness-description",
+          "name": "stickiness",
           "type": "select",
           "typeOptions": {
             "validValues": [
               {
-                "value": "clip"
+                "label": "lfr.responsive-menus.fixed-top",
+                "value": "fixed-top"
               },
               {
-                "value": "ellipsis"
+                "label": "lfr.responsive-menus.sticky-top",
+                "value": "sticky-top"
               },
               {
-                "value": "wrap"
+                "label": "lfr.responsive-menus.none",
+                "value": ""
+              }
+            ]
+          }
+        },
+        {
+          "dataType": "string",
+          "defaultValue": "md",
+          "label": "lfr.responsive-menus.breakpoint",
+          "description": "lfr.responsive-menus.breakpoint-description",
+          "name": "breakpoint",
+          "type": "select",
+          "typeOptions": {
+            "validValues": [
+              {
+                "label": "lfr.responsive-menus.sm",
+                "value": "sm"
               },
               {
-                "value": "none"
+                "label": "lfr.responsive-menus.md",
+                "value": "md"
+              },
+              {
+                "label": "lfr.responsive-menus.lg",
+                "value": "lg"
+              },
+              {
+                "label": "lfr.responsive-menus.xl",
+                "value": "xl"
               }
             ]
           }
         },
         {
           "defaultValue": false,
-          "label": "lfr.responsive-menus.limit-menu-width",
-          "description": "lfr.responsive-menus.limit-menu-width",
-          "name": "limitMenuWidth",
+          "label": "lfr.responsive-menus.hide-on-scroll",
+          "description": "lfr.responsive-menus.hide-on-scroll-description",
+          "name": "hideOnScroll",
           "type": "checkbox"
         },
         {
-          "defaultValue": "0",
-          "label": "lfr.responsive-menus.max-width",
-          "description": "lfr.responsive-menus.max-width",
-          "name": "maximumMenuWidth",
-          "type": "length"
+          "dataType": "int",
+          "defaultValue": 100,
+          "label": "lfr.responsive-menus.initialize-delay",
+          "description": "lfr.responsive-menus.initialize-delay-description",
+          "name": "initializeDelay",
+          "type": "text"
         }
       ],
       "label": "lfr.responsive-menus.general"
@@ -68,467 +96,66 @@
       "fields": [
         {
           "dataType": "string",
-          "defaultValue": "menu-only",
-          "description": "lfr.responsive-menus.dropzone-config-description",
-          "label": "lfr.responsive-menus.dropzone-config",
-          "name": "dropzoneConfig",
+          "defaultValue": "navbar-light",
+          "label": "lfr.responsive-menus.theme",
+          "description": "lfr.responsive-menus.theme-description",
+          "name": "theme",
           "type": "select",
           "typeOptions": {
             "validValues": [
               {
-                "value": "menu-only"
+                "label": "lfr.responsive-menus.light",
+                "value": "navbar-light"
               },
               {
-                "value": "menu-left-zone"
-              },
-              {
-                "value": "menu-right-zone"
-              },
-              {
-                "value": "menu-both-zones"
+                "label": "lfr.responsive-menus.dark",
+                "value": "navbar-dark"
               }
             ]
           }
         },
         {
           "dataType": "string",
-          "defaultValue": "dropzone-menu",
-          "description": "lfr.responsive-menus.dropzone-grower-description",
-          "label": "lfr.responsive-menus.dropzone-grower",
-          "name": "dropzoneGrower",
-          "type": "select",
-          "typeOptions": {
-            "validValues": [
-              {
-                "value": "dropzone-menu"
-              },
-              {
-                "value": "dropzone-left"
-              },
-              {
-                "value": "dropzone-right"
-              }
-            ]
-          }
-        },
-        {
-          "defaultValue": "var(--spacer-2, 0.5rem)",
-          "label": "lfr.responsive-menus.dropzone-gap",
-          "description": "lfr.responsive-menus.dropzone-gap",
-          "name": "dropzoneGap",
-          "type": "length"
-        },
-        {
-          "dataType": "string",
-          "defaultValue": "flex-start",
-          "label": "lfr.responsive-menus.dropzone-align-items",
-          "description": "lfr.responsive-menus.dropzone-align-items",
-          "name": "dropzoneAlignItems",
-          "type": "select",
-          "typeOptions": {
-            "validValues": [
-              {
-                "value": "center"
-              },
-              {
-                "value": "flex-start"
-              },
-              {
-                "value": "flex-end"
-              },
-              {
-                "value": "stretch"
-              },
-              {
-                "value": "baseline"
-              },
-              {
-                "value": "normal"
-              }
-            ]
-          }
-        }
-      ],
-      "label": "lfr.responsive-menus.dropzones"
-    },
-    {
-      "fields": [
-        {
-          "defaultValue": false,
-          "label": "lfr.responsive-menus.scroll-lock",
-          "description": "lfr.responsive-menus.scroll-lock",
-          "name": "enableScrollLock",
-          "type": "checkbox"
-        },
-        {
-          "defaultValue": true,
-          "label": "lfr.responsive-menus.close-on-internal-nav",
-          "description": "lfr.responsive-menus.close-on-internal-nav",
-          "name": "enableCloseOnInternalNav",
-          "type": "checkbox"
-        }
-      ],
-      "label": "lfr.responsive-menus.behavior"
-    },
-    {
-      "fields": [
-        {
-          "defaultValue": "2rem",
-          "label": "lfr.responsive-menus.menu-item-logo-max-width",
-          "description": "lfr.responsive-menus.menu-item-logo-max-width",
-          "name": "menuItemLogoMaxWidth",
-          "type": "length"
-        },
-        {
-          "defaultValue": "1rem",
-          "label": "lfr.responsive-menus.menu-item-logo-max-height",
-          "description": "lfr.responsive-menus.menu-item-logo-max-height",
-          "name": "menuItemLogoMaxHeight",
-          "type": "length"
-        },
-        {
-          "defaultValue": "middle",
-          "label": "lfr.responsive-menus.floating-logo-vertical-alignment",
-          "description": "lfr.responsive-menus.floating-logo-vertical-alignment",
-          "name": "floatingLogoVerticalAlignment",
-          "type": "select",
-          "typeOptions": {
-            "validValues": [
-              {
-                "value": "top"
-              },
-              {
-                "value": "middle"
-              },
-              {
-                "value": "bottom"
-              }
-            ]
-          }
-        }
-      ],
-      "label": "lfr.responsive-menus.logos"
-    },
-    {
-      "fields": [
-        {
-          "defaultValue": false,
-          "label": "lfr.responsive-menus.separator",
-          "description": "lfr.responsive-menus.separator",
-          "name": "separator",
-          "type": "checkbox"
-        },
-        {
-          "defaultValue": "#bbb",
-          "label": "lfr.responsive-menus.separator-color",
-          "description": "lfr.responsive-menus.separator-color",
-          "name": "menuItemSeparatorColor",
-          "type": "colorPicker"
-        }
-      ],
-      "label": "lfr.responsive-menus.separator"
-    },
-    {
-      "fields": [
-        {
-          "defaultValue": "black",
-          "label": "lfr.responsive-menus.color",
-          "description": "lfr.responsive-menus.color",
-          "name": "menuHamburgerColor",
-          "type": "colorPicker"
-        },
-        {
-          "defaultValue": "white",
+          "defaultValue": "bg-light",
           "label": "lfr.responsive-menus.background-color",
-          "description": "lfr.responsive-menus.background-color",
-          "name": "menuHamburgerBgColor",
-          "type": "colorPicker"
+          "description": "lfr.responsive-menus.background-color-description",
+          "name": "backgroundColor",
+          "type": "select",
+          "typeOptions": {
+            "validValues": [
+              {
+                "label": "lfr.responsive-menus.light",
+                "value": "bg-light"
+              },
+              {
+                "label": "lfr.responsive-menus.dark",
+                "value": "bg-dark"
+              },
+              {
+                "label": "lfr.responsive-menus.primary",
+                "value": "bg-primary"
+              },
+              {
+                "label": "lfr.responsive-menus.transparent",
+                "value": "bg-transparent"
+              },
+              {
+                "label": "lfr.responsive-menus.white",
+                "value": "bg-white"
+              }
+            ]
+          }
         },
         {
-          "defaultValue": "0px",
-          "label": "lfr.responsive-menus.border-width",
-          "description": "lfr.responsive-menus.border-width",
-          "name": "menuHamburgerBorderWidth",
-          "type": "length"
-        },
-        {
-          "defaultValue": "0px",
-          "label": "lfr.responsive-menus.border-radius",
-          "description": "lfr.responsive-menus.border-radius",
-          "name": "menuHamburgerBorderRadius",
-          "type": "length"
-        },
-        {
-          "defaultValue": "black",
+          "dataType": "string",
+          "defaultValue": "var(--gray-300, #bbb)",
           "label": "lfr.responsive-menus.border-color",
-          "description": "lfr.responsive-menus.border-color",
-          "name": "menuHamburgerBorderColor",
-          "type": "colorPicker"
-        },
-        {
-          "dataType": "string",
-          "defaultValue": "solid",
-          "label": "lfr.responsive-menus.border-style",
-          "description": "lfr.responsive-menus.border-style",
-          "name": "menuHamburgerBorderStyle",
-          "type": "select",
-          "typeOptions": {
-            "validValues": [
-              {
-                "value": "dotted"
-              },
-              {
-                "value": "dashed"
-              },
-              {
-                "value": "solid"
-              },
-              {
-                "value": "double"
-              },
-              {
-                "value": "groove"
-              },
-              {
-                "value": "ridge"
-              },
-              {
-                "value": "inset"
-              },
-              {
-                "value": "outset"
-              },
-              {
-                "value": "none"
-              }
-            ]
-          }
-        }
-      ],
-      "label": "lfr.responsive-menus.hamburger-menu"
-    },
-    {
-      "fields": [
-        {
-          "defaultValue": true,
-          "label": "lfr.responsive-menus.scroll-back-to-top",
-          "description": "lfr.responsive-menus.scroll-back-to-top",
-          "name": "scrollBackToTop",
-          "type": "checkbox"
-        },
-        {
-          "defaultValue": "order-arrow-up",
-          "label": "lfr.responsive-menus.icon",
-          "description": "lfr.responsive-menus.icon",
-          "name": "scrollBackToTopIcon",
-          "type": "text"
-        },
-        {
-          "defaultValue": "var(--dark, #111)",
-          "label": "lfr.responsive-menus.color",
-          "description": "lfr.responsive-menus.color",
-          "name": "scrollBackToTopColor",
-          "type": "colorPicker"
-        },
-        {
-          "defaultValue": "var(--light, white)",
-          "label": "lfr.responsive-menus.background-color",
-          "description": "lfr.responsive-menus.background-color",
-          "name": "scrollBackToTopBgColor",
-          "type": "colorPicker"
-        },
-        {
-          "defaultValue": "var(--primary, #0B5FFF)",
-          "label": "lfr.responsive-menus.hover-color",
-          "description": "lfr.responsive-menus.hover-color",
-          "name": "scrollBackToTopHoverColor",
-          "type": "colorPicker"
-        },
-        {
-          "defaultValue": "var(--light, white)",
-          "label": "lfr.responsive-menus.hover-background-color",
-          "description": "lfr.responsive-menus.hover-background-color",
-          "name": "scrollBackToTopHoverBgColor",
+          "description": "lfr.responsive-menus.border-color-description",
+          "name": "borderColor",
           "type": "colorPicker"
         }
       ],
-      "label": "lfr.responsive-menus.scroll-back-to-top"
-    },
-    {
-      "fields": [
-        {
-          "defaultValue": true,
-          "label": "lfr.responsive-menus.enable-portrait-phone",
-          "description": "lfr.responsive-menus.enable-portrait-phone",
-          "name": "enablePortraitPhoneBreakpoint",
-          "type": "checkbox"
-        },
-        {
-          "defaultValue": "360px",
-          "label": "lfr.responsive-menus.portrait-phone",
-          "description": "lfr.responsive-menus.portrait-phone",
-          "name": "portraitPhoneBreakpoint",
-          "type": "length"
-        },
-        {
-          "defaultValue": "white",
-          "label": "lfr.responsive-menus.portrait-phone-menu-background-color",
-          "description": "lfr.responsive-menus.portrait-phone-menu-background-color",
-          "name": "portraitPhoneMenuBgColor",
-          "type": "colorPicker"
-        },
-        {
-          "defaultValue": true,
-          "label": "lfr.responsive-menus.enable-landscape-phone",
-          "description": "lfr.responsive-menus.enable-landscape-phone",
-          "name": "enableLandscapePhoneBreakpoint",
-          "type": "checkbox"
-        },
-        {
-          "defaultValue": "576px",
-          "label": "lfr.responsive-menus.landscape-phone",
-          "description": "lfr.responsive-menus.landscape-phone",
-          "name": "landscapePhoneBreakpoint",
-          "type": "length"
-        },
-        {
-          "defaultValue": "white",
-          "label": "lfr.responsive-menus.landscape-phone-menu-background-color",
-          "description": "lfr.responsive-menus.landscape-phone-menu-background-color",
-          "name": "landscapePhoneMenuBgColor",
-          "type": "colorPicker"
-        },
-        {
-          "defaultValue": false,
-          "label": "lfr.responsive-menus.enable-tablet",
-          "description": "lfr.responsive-menus.enable-tablet",
-          "name": "enableTabletBreakpoint",
-          "type": "checkbox"
-        },
-        {
-          "defaultValue": "768px",
-          "label": "lfr.responsive-menus.tablet",
-          "description": "lfr.responsive-menus.tablet",
-          "name": "tabletBreakpoint",
-          "type": "length"
-        },
-        {
-          "defaultValue": "transparent",
-          "label": "lfr.responsive-menus.tablet-menu-background-color",
-          "description": "lfr.responsive-menus.tablet-menu-background-color",
-          "name": "tabletMenuBgColor",
-          "type": "colorPicker"
-        },
-        {
-          "defaultValue": "1305px",
-          "label": "lfr.responsive-menus.desktop",
-          "description": "lfr.responsive-menus.desktop",
-          "name": "desktopBreakpoint",
-          "type": "length"
-        },
-        {
-          "defaultValue": "transparent",
-          "label": "lfr.responsive-menus.desktop-menu-background-color",
-          "description": "lfr.responsive-menus.desktop-menu-background-color",
-          "name": "desktopMenuBgColor",
-          "type": "colorPicker"
-        }
-      ],
-      "label": "lfr.responsive-menus.breakpoints"
-    },
-    {
-      "fields": [
-        {
-          "defaultValue": false,
-          "label": "lfr.responsive-menus.override-menu-colors",
-          "description": "lfr.responsive-menus.override-menu-colors",
-          "name": "overrideMenuColors",
-          "type": "checkbox"
-        },
-        {
-          "defaultValue": "var(--light, white)",
-          "label": "lfr.responsive-menus.color",
-          "description": "lfr.responsive-menus.color",
-          "name": "menuItemColor",
-          "type": "colorPicker"
-        },
-        {
-          "defaultValue": "var(--black, #000)",
-          "label": "lfr.responsive-menus.background-color",
-          "description": "lfr.responsive-menus.background-color",
-          "name": "menuItemBgColor",
-          "type": "colorPicker"
-        },
-        {
-          "defaultValue": "var(--light, white)",
-          "label": "lfr.responsive-menus.hover-color",
-          "description": "lfr.responsive-menus.hover-color",
-          "name": "menuItemHoverColor",
-          "type": "colorPicker"
-        },
-        {
-          "defaultValue": "var(--dark, #111)",
-          "label": "lfr.responsive-menus.hover-background-color",
-          "description": "lfr.responsive-menus.hover-background-color",
-          "name": "menuItemHoverBgColor",
-          "type": "colorPicker"
-        },
-        {
-          "defaultValue": "var(--light, white)",
-          "label": "lfr.responsive-menus.selected-item-color",
-          "description": "lfr.responsive-menus.selected-item-color",
-          "name": "menuItemSelectedColor",
-          "type": "colorPicker"
-        },
-        {
-          "defaultValue": "var(--primary, #0B5FFF)",
-          "label": "lfr.responsive-menus.selected-item-background-color",
-          "description": "lfr.responsive-menus.selected-item-background-color",
-          "name": "menuItemSelectedBgColor",
-          "type": "colorPicker"
-        }
-      ],
-      "label": "lfr.responsive-menus.menu-colors"
-    },
-    {
-      "fields": [
-        {
-          "defaultValue": true,
-          "label": "lfr.responsive-menus.menu-header",
-          "description": "lfr.responsive-menus.menu-header",
-          "name": "menuHeader",
-          "type": "checkbox"
-        }
-      ],
-      "label": "lfr.responsive-menus.editor"
-    },
-    {
-      "fields": [
-        {
-          "defaultValue": false,
-          "label": "lfr.responsive-menus.debug-enabled",
-          "description": "lfr.responsive-menus.debug-enabled",
-          "name": "enableDebug",
-          "type": "checkbox"
-        },
-        {
-          "dataType": "int",
-          "defaultValue": "0",
-          "description": "lfr.responsive-menus.debounce-delay-description",
-          "label": "lfr.responsive-menus.debounce-delay",
-          "name": "debounceDelay",
-          "type": "text"
-        },
-        {
-          "dataType": "int",
-          "defaultValue": "100",
-          "description": "lfr.responsive-menus.initialize-delay-description",
-          "label": "lfr.responsive-menus.initialize-delay",
-          "name": "initializeDelay",
-          "type": "text"
-        }
-      ],
-      "label": "lfr.responsive-menus.miscellaneous"
+      "label": "lfr.responsive-menus.styling"
     }
   ]
 }

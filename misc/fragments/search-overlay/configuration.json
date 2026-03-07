@@ -1,0 +1,42 @@
+{
+  "fieldSets": [
+    {
+      "fields": [
+        {
+          "dataType": "string",
+          "defaultValue": "Search for content, pages, products...",
+          "label": "lfr.misc.placeholder",
+          "localizable": true,
+          "name": "placeholder",
+          "type": "text"
+        },
+        {
+          "dataType": "string",
+          "defaultValue": "Search",
+          "label": "lfr.misc.button-label",
+          "localizable": true,
+          "name": "buttonLabel",
+          "type": "text"
+        }
+      ],
+      "label": "lfr.misc.search-options"
+    },
+    {
+      "fields": [
+        {
+          "name": "overlayBgColor",
+          "label": "lfr.misc.overlay-bg-color",
+          "type": "colorPicker",
+          "defaultValue": "var(--white, #ffffff)"
+        },
+        {
+          "name": "accentColor",
+          "label": "lfr.misc.accent-color",
+          "type": "colorPicker",
+          "defaultValue": "var(--primary, #0b5fff)"
+        }
+      ],
+      "label": "lfr.misc.styling"
+    }
+  ]
+}
