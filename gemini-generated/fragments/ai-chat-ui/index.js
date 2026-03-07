@@ -1,50 +1,51 @@
-const state = {
-  history: [],
-};
+const initAIChatUI = () => {
+  const state = {
+    history: [],
+  };
 
-const appendMessage = (text, role) => {
-  const container = fragmentElement.querySelector(
-    `#messages-${fragmentEntryLinkNamespace}`,
-  );
-  if (!container) return;
+  const appendMessage = (text, role) => {
+    const container = fragmentElement.querySelector(
+      `#messages-${fragmentEntryLinkNamespace}`,
+    );
+    if (container) {
+      const msgDiv = document.createElement("div");
+      msgDiv.className = `message ${role}`;
+      msgDiv.innerHTML = `<div class="bubble">${text}</div>`;
+      container.appendChild(msgDiv);
+      container.scrollTop = container.scrollHeight;
+    }
+  };
 
-  const msgDiv = document.createElement("div");
-  msgDiv.className = `message ${role}`;
-  msgDiv.innerHTML = `<div class="bubble">${text}</div>`;
-  container.appendChild(msgDiv);
-  container.scrollTop = container.scrollHeight;
-};
+  const sendMessage = async () => {
+    const input = fragmentElement.querySelector(
+      `#input-${fragmentEntryLinkNamespace}`,
+    );
+    const btn = fragmentElement.querySelector(
+      `#send-${fragmentEntryLinkNamespace}`,
+    );
 
-const sendMessage = async () => {
-  const input = fragmentElement.querySelector(
-    `#input-${fragmentEntryLinkNamespace}`,
-  );
-  const btn = fragmentElement.querySelector(
-    `#send-${fragmentEntryLinkNamespace}`,
-  );
-  if (!input || !btn) return;
+    if (input && btn) {
+      const query = input.value.trim();
 
-  const query = input.value.trim();
+      if (query) {
+        input.value = "";
+        input.disabled = true;
+        btn.disabled = true;
 
-  if (query) {
-    input.value = "";
-    input.disabled = true;
-    btn.disabled = true;
+        appendMessage(query, "user");
 
-    appendMessage(query, "user");
+        // Mock AI Response for prototype
+        setTimeout(() => {
+          const response = `I'm a prototype assistant. You asked: "${query}". In a real implementation, I would connect to a Liferay-hosted AI endpoint.`;
+          appendMessage(response, "assistant");
+          input.disabled = false;
+          btn.disabled = false;
+          input.focus();
+        }, 1000);
+      }
+    }
+  };
 
-    // Mock AI Response for prototype
-    setTimeout(() => {
-      const response = `I'm a prototype assistant. You asked: "${query}". In a real implementation, I would connect to a Liferay-hosted AI endpoint.`;
-      appendMessage(response, "assistant");
-      input.disabled = false;
-      btn.disabled = false;
-      input.focus();
-    }, 1000);
-  }
-};
-
-const initChat = () => {
   const input = fragmentElement.querySelector(
     `#input-${fragmentEntryLinkNamespace}`,
   );
@@ -60,4 +61,4 @@ const initChat = () => {
   }
 };
 
-initChat();
+initAIChatUI();

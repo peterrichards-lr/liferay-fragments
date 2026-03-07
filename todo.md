@@ -274,7 +274,7 @@ Additional tasks identified during a second review of the repository architectur
 
 ### 1. Modernization & Compatibility
 
-- [ ] **Refactor Top-Level Returns**: Systematically eliminate top-level `return` statements to comply with Requirement 8.
+- [x] **Refactor Top-Level Returns**: Systematically eliminate top-level `return` statements to comply with Requirement 8.
   - **Fragments**: `dynamic-badge-overlay`, `ai-chat-ui`, `meta-object-form`, `populate-select`, `responsive-menu`.
 - [ ] **LayoutMode API Migration**: Audit all remaining fragments for `has-edit-mode-menu` usage and migrate to the `layoutMode` API (Requirement 11).
 - [ ] **Robust Identifier Implementation**: Roll out `isValidIdentifier()` validation to all fragments performing network requests (Requirement 10).

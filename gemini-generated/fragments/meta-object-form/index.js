@@ -1,585 +1,594 @@
-const ADMIN_API_BASE = "/o/object-admin/v1.0";
+const initMetaObjectFormFragment = () => {
+  const ADMIN_API_BASE = "/o/object-admin/v1.0";
 
-const getLocalizedValue = (value) => {
-  if (typeof value === "object" && value !== null && !Array.isArray(value)) {
-    const languageId =
-      typeof Liferay !== "undefined"
-        ? Liferay.ThemeDisplay.getLanguageId()
-        : "en_US";
-    return value[languageId] || value["en_US"] || "";
-  }
-  return value || "";
-};
-
-const debounce = (func, wait) => {
-  let timeout;
-  return (...args) => {
-    clearTimeout(timeout);
-    timeout = setTimeout(() => func.apply(this, args), wait);
-  };
-};
-
-const createSearchableSelect = (container, options = {}) => {
-  const {
-    placeholder = "Search...",
-    defaultValue = "",
-    onSelect = () => {},
-    fetchFn = null,
-    initialOptions = [],
-  } = options;
-
-  container.innerHTML = `
-        <div class="searchable-select-container">
-            <input type="text" class="form-control form-control-sm" placeholder="${placeholder}" value="${defaultValue}">
-            <input type="hidden" value="${defaultValue}">
-            <div class="searchable-select-results"></div>
-        </div>
-    `;
-
-  const input = container.querySelector("input[type='text']");
-  const hidden = container.querySelector("input[type='hidden']");
-  const results = container.querySelector(".searchable-select-results");
-  let currentOptions = initialOptions;
-
-  const renderResults = (items) => {
-    if (!items || items.length === 0) {
-      results.innerHTML =
-        '<div class="search-result-item no-results">No results found</div>';
-    } else {
-      results.innerHTML = items
-        .map(
-          (item) => `
-                <div class="search-result-item" data-value="${item.value}">${item.label}</div>
-            `,
-        )
-        .join("");
+  const getLocalizedValue = (value) => {
+    if (typeof value === "object" && value !== null && !Array.isArray(value)) {
+      const languageId =
+        typeof Liferay !== "undefined"
+          ? Liferay.ThemeDisplay.getLanguageId()
+          : "en_US";
+      return value[languageId] || value["en_US"] || "";
     }
-    results.classList.add("show");
+    return value || "";
   };
 
-  const handleSearch = debounce(async (term) => {
-    if (fetchFn) {
-      const items = await fetchFn(term);
-      currentOptions = items;
-      renderResults(items);
-    } else {
-      const filtered = initialOptions.filter((opt) =>
-        opt.label.toLowerCase().includes(term.toLowerCase()),
-      );
-      renderResults(filtered);
-    }
-  }, 300);
-
-  input.addEventListener("input", (e) => {
-    const term = e.target.value;
-    if (term.length >= 0) {
-      handleSearch(term);
-    } else {
-      results.classList.remove("show");
-    }
-  });
-
-  input.addEventListener("focus", () => {
-    if (currentOptions.length > 0 || input.value.length === 0) {
-      renderResults(currentOptions);
-    }
-  });
-
-  document.addEventListener("click", (e) => {
-    if (!container.contains(e.target)) {
-      results.classList.remove("show");
-    }
-  });
-
-  results.addEventListener("click", (e) => {
-    const item = e.target.closest(".search-result-item");
-    if (item && !item.classList.contains("no-results")) {
-      const val = item.dataset.value;
-      const label = item.textContent;
-      input.value = label;
-      hidden.value = val;
-      results.classList.remove("show");
-      onSelect(val, label);
-    }
-  });
-
-  return {
-    setValue: (val, label) => {
-      input.value = label || "";
-      hidden.value = val || "";
-    },
+  const debounce = (func, wait) => {
+    let timeout;
+    return (...args) => {
+      clearTimeout(timeout);
+      timeout = setTimeout(() => func.apply(this, args), wait);
+    };
   };
-};
 
-const mapFieldToInput = (field, value = "") => {
-  const { businessType, name, required } = field;
-  const label = getLocalizedValue(field.label);
-  const commonAttrs = `name="${name}" id="${name}-${fragmentEntryLinkNamespace}" class="form-control" ${required ? "required" : ""}`;
+  const createSearchableSelect = (container, options = {}) => {
+    const {
+      placeholder = "Search...",
+      defaultValue = "",
+      onSelect = () => {},
+      fetchFn = null,
+      initialOptions = [],
+    } = options;
 
-  if (businessType === "Picklist" || businessType === "Relationship") {
-    const selectedId = value && typeof value === "object" ? value.id : value;
-    const initialLabel = value ? value.label || value.name || value : "";
+    container.innerHTML = `
+          <div class="searchable-select-container">
+              <input type="text" class="form-control form-control-sm" placeholder="${placeholder}" value="${defaultValue}">
+              <input type="hidden" value="${defaultValue}">
+              <div class="searchable-select-results"></div>
+          </div>
+      `;
 
-    return `
-            <div class="form-group mb-4">
-                <label for="${name}-${fragmentEntryLinkNamespace}">${label}${required ? " *" : ""}</label>
-                <div class="searchable-field-wrap" data-field-name="${name}" data-value="${selectedId || ""}" data-label="${initialLabel || ""}">
-                    <div class="meta-status small text-muted">Initializing ${businessType.toLowerCase()}...</div>
-                </div>
-            </div>
-        `;
-  }
+    const input = container.querySelector("input[type='text']");
+    const hidden = container.querySelector("input[type='hidden']");
+    const results = container.querySelector(".searchable-select-results");
+    let currentOptions = initialOptions;
 
-  switch (businessType) {
-    case "Integer":
-    case "LongInteger":
-    case "Decimal":
-    case "PrecisionDecimal":
-      return `<div class="form-group mb-4"><label for="${name}-${fragmentEntryLinkNamespace}">${label}${required ? " *" : ""}</label><input type="number" ${commonAttrs} value="${value}"></div>`;
-    case "Date": {
-      const dateValue = value
-        ? new Date(value).toISOString().split("T")[0]
-        : "";
-      return `<div class="form-group mb-4"><label for="${name}-${fragmentEntryLinkNamespace}">${label}${required ? " *" : ""}</label><input type="date" ${commonAttrs} value="${dateValue}"></div>`;
-    }
-    case "DateTime": {
-      const dateValue = value ? new Date(value).toISOString().slice(0, 16) : "";
-      return `<div class="form-group mb-4"><label for="${name}-${fragmentEntryLinkNamespace}">${label}${required ? " *" : ""}</label><input type="datetime-local" ${commonAttrs} value="${dateValue}"></div>`;
-    }
-    case "LongText":
-    case "RichText":
-      return `<div class="form-group mb-4"><label for="${name}-${fragmentEntryLinkNamespace}">${label}${required ? " *" : ""}</label><textarea ${commonAttrs} rows="4">${value}</textarea></div>`;
-    case "Boolean":
-      return `<div class="form-group mb-4"><div class="custom-control custom-checkbox"><input type="checkbox" class="custom-control-input" name="${name}" id="${name}-${fragmentEntryLinkNamespace}" ${value ? "checked" : ""}><label class="custom-control-label" for="${name}-${fragmentEntryLinkNamespace}">${label}</label></div></div>`;
-    default:
-      return `<div class="form-group mb-4"><label for="${name}-${fragmentEntryLinkNamespace}">${label}${required ? " *" : ""}</label><input type="text" ${commonAttrs} value="${value}"></div>`;
-  }
-};
-
-const getBaseUrl = (state) => {
-  let url = state.definition.restContextPath;
-  if (state.definition.scope === "site") {
-    const siteId = Liferay.ThemeDisplay.getScopeGroupId();
-    url += `/scopes/${siteId}`;
-  }
-  return url;
-};
-
-const fetchOptionsForField = async (field, term = "", state) => {
-  const { businessType } = field;
-
-  if (businessType === "Picklist") {
-    const erc = field.listTypeDefinitionExternalReferenceCode;
-    const res = await Liferay.Util.fetch(
-      `/o/headless-admin-list-type/v1.0/list-type-definitions/by-external-reference-code/${erc}/list-type-entries?search=${term}`,
-    );
-    const data = await res.json();
-    return (data.items || []).map((item) => ({
-      label: getLocalizedValue(item.name),
-      value: item.key,
-    }));
-  } else if (businessType === "Relationship") {
-    const erc = field.objectDefinitionExternalReferenceCode1;
-    const defRes = await Liferay.Util.fetch(
-      `${ADMIN_API_BASE}/object-definitions/by-external-reference-code/${erc}`,
-    );
-    const relDef = await defRes.json();
-
-    let url = relDef.restContextPath;
-    if (relDef.scope === "site")
-      url += `/scopes/${Liferay.ThemeDisplay.getScopeGroupId()}`;
-
-    const entriesRes = await Liferay.Util.fetch(
-      `${url}/?search=${term}&pageSize=20`,
-    );
-    const data = await entriesRes.json();
-    const titleField = relDef.titleObjectFieldName || "id";
-
-    return (data.items || []).map((item) => ({
-      label: item[titleField] || item.id,
-      value: item.id,
-    }));
-  }
-  return [];
-};
-
-const isValidIdentifier = (val) => {
-  if (val === undefined || val === null) return false;
-  const s = String(val).trim().toLowerCase();
-  return (
-    s !== "" &&
-    s !== "undefined" &&
-    s !== "null" &&
-    s !== "0" &&
-    s !== "[object object]"
-  );
-};
-
-const loadRecord = async (recordId, recordERC, state) => {
-  console.debug(
-    `[Meta-Object Form] loadRecord called - ID: ${recordId}, ERC: ${recordERC}`,
-  );
-  const fieldsWrap = fragmentElement.querySelector(".form-fields-wrap");
-  const form = fragmentElement.querySelector("form");
-  const { enableAddNew } = configuration;
-
-  // Ensure definition is loaded
-  if (!state.definition) {
-    const timer = setInterval(() => {
-      if (state.definition) {
-        clearInterval(timer);
-        loadRecord(recordId, recordERC, state);
-      }
-    }, 100);
-    return;
-  }
-
-  try {
-    let record = null;
-    let hasIdentifier = false;
-
-    // Build fields list for request
-    const requestedFieldNames = new Set(state.fields.map((f) => f.name));
-    requestedFieldNames.add("id");
-    requestedFieldNames.add("externalReferenceCode");
-    const fieldsParam = `fields=${Array.from(requestedFieldNames).join(",")}`;
-
-    // 1. Try ERC
-    if (isValidIdentifier(recordERC)) {
-      const url = `${getBaseUrl(state)}/by-external-reference-code/${recordERC}?${fieldsParam}`;
-      console.debug(`[Meta-Object Form] Fetching record by ERC: ${url}`);
-      const response = await Liferay.Util.fetch(url);
-      if (response.ok) {
-        record = await response.json();
-        hasIdentifier = true;
-      }
-    }
-
-    // 2. Fallback to ID
-    if (!record && isValidIdentifier(recordId)) {
-      const url = `${getBaseUrl(state)}/${recordId}?${fieldsParam}`;
-      console.debug(`[Meta-Object Form] Fetching record by ID: ${url}`);
-      const response = await Liferay.Util.fetch(url);
-      if (response.ok) {
-        record = await response.json();
-        hasIdentifier = true;
-      }
-    }
-
-    if (hasIdentifier && record) {
-      state.currentRecordId = record.id;
-      state.currentRecordERC = record.externalReferenceCode;
-    } else {
-      state.currentRecordId = null;
-      state.currentRecordERC = null;
-      record = {}; // Use empty object for "Add New" or "No Match"
-    }
-
-    const submitBtn = form.querySelector("button[type='submit']");
-    const statusMsg = fragmentElement.querySelector(".form-status-msg");
-    if (statusMsg) statusMsg.classList.add("d-none");
-
-    if (!state.currentRecordId && !enableAddNew) {
-      if (submitBtn) submitBtn.classList.add("d-none");
-      if (!hasIdentifier) {
-        fieldsWrap.innerHTML = `<div class="alert alert-info">${Liferay.Language.get("lfr.gemini-generated.please-select-a-record") || "Please select a record to edit."}</div>`;
+    const renderResults = (items) => {
+      if (!items || items.length === 0) {
+        results.innerHTML =
+          '<div class="search-result-item no-results">No results found</div>';
       } else {
-        fieldsWrap.innerHTML =
-          '<div class="alert alert-danger">Record not found.</div>';
-      }
-    } else {
-      if (submitBtn) submitBtn.classList.remove("d-none");
-
-      fieldsWrap.innerHTML = state.fields
-        .map((f) => mapFieldToInput(f, record[f.name] || ""))
-        .join("");
-
-      // Initialize searchable fields
-      state.fields.forEach((f) => {
-        if (
-          f.businessType === "Picklist" ||
-          f.businessType === "Relationship"
-        ) {
-          const wrap = fieldsWrap.querySelector(
-            `.searchable-field-wrap[data-field-name="${f.name}"]`,
-          );
-          const val = wrap.dataset.value;
-          const label = wrap.dataset.label;
-
-          createSearchableSelect(wrap, {
-            placeholder: `Select ${getLocalizedValue(f.label)}...`,
-            defaultValue: label,
-            fetchFn: (term) => fetchOptionsForField(f, term, state),
-            onSelect: (v) => {
-              const hidden = document.createElement("input");
-              hidden.type = "hidden";
-              hidden.name = f.name;
-              hidden.value = v;
-              // Replace existing hidden input if any
-              const old = wrap.querySelector(`input[name="${f.name}"]`);
-              if (old) old.remove();
-              wrap.appendChild(hidden);
-            },
-          }).setValue(val, label);
-
-          // Initial hidden input for form submission
-          const hidden = document.createElement("input");
-          hidden.type = "hidden";
-          hidden.name = f.name;
-          hidden.value = val;
-          wrap.appendChild(hidden);
-        }
-      });
-    }
-  } catch (err) {
-    fieldsWrap.innerHTML = `<div class="alert alert-danger">${err.message}</div>`;
-  }
-};
-
-const initSelector = async (state) => {
-  const { enableRecordSelection } = configuration;
-  const container = fragmentElement.querySelector(
-    `#selector-${fragmentEntryLinkNamespace}`,
-  );
-  if (container && enableRecordSelection) {
-    createSearchableSelect(container, {
-      placeholder: "Search records to edit...",
-      fetchFn: async (term) => {
-        const response = await Liferay.Util.fetch(
-          `${getBaseUrl(state)}/?search=${term}&pageSize=20`,
-        );
-        const data = await response.json();
-        const titleField = state.definition.titleObjectFieldName || "id";
-        return (data.items || []).map((r) => ({
-          label: r[titleField] || r.id,
-          value: r.id,
-        }));
-      },
-      onSelect: (id) => loadRecord(id, null, state),
-    });
-  }
-};
-
-const initMetaForm = async (isEditMode) => {
-  const {
-    objectERC: configERC,
-    fixedRecordIdentifier,
-    fixedRecordIdentifierType,
-    enableAddNew,
-    enableRecordSelection,
-    customizeColumns,
-    columnsToDisplay,
-    formTitle: configTitle,
-  } = configuration;
-
-  const state = {
-    definition: null,
-    fields: [],
-    currentRecordId: null,
-    currentRecordERC: null,
-    records: [],
-    fieldOptions: {},
-  };
-
-  const fieldsWrap = fragmentElement.querySelector(".form-fields-wrap");
-  const titleEl = fragmentElement.querySelector(".object-title");
-  const form = fragmentElement.querySelector("form");
-  const errorEl = fragmentElement.querySelector(
-    `#error-${fragmentEntryLinkNamespace}`,
-  );
-  const infoEl = fragmentElement.querySelector(
-    `#info-${fragmentEntryLinkNamespace}`,
-  );
-
-  const showError = (msg) => {
-    if (isEditMode && errorEl) {
-      errorEl.textContent = msg;
-      errorEl.classList.remove("d-none");
-      if (fieldsWrap) fieldsWrap.innerHTML = "";
-    } else if (fieldsWrap) {
-      fieldsWrap.innerHTML = `<div class="text-center p-5 text-danger">${msg}</div>`;
-    }
-  };
-
-  if (errorEl) errorEl.classList.add("d-none");
-  if (infoEl) infoEl.classList.add("d-none");
-
-  // Resolve effective ERC (Prioritize mappable field)
-  const mappableERCEl = fragmentElement.querySelector(
-    "[data-lfr-editable-id='object-erc']",
-  );
-  let objectERC = configERC;
-  if (mappableERCEl) {
-    const mappedVal = mappableERCEl.innerText.trim();
-    if (
-      mappedVal &&
-      mappedVal !== configERC &&
-      mappedVal !== "COMPANY_MILESTONE"
-    ) {
-      objectERC = mappedVal;
-    }
-  }
-
-  // Register event listener IMMEDIATELY to avoid race conditions
-  window.addEventListener("lfr-object-form-select", (e) => {
-    console.debug(
-      `[Meta-Object Form] Received lfr-object-form-select for ${objectERC}`,
-      e.detail,
-    );
-    if (e.detail && e.detail.objectERC === objectERC) {
-      const eventId = e.detail.recordId || e.detail.identifier || null;
-      const eventERC = e.detail.recordERC || e.detail.erc || null;
-
-      if (isValidIdentifier(eventId) || isValidIdentifier(eventERC)) {
-        console.debug(
-          `[Meta-Object Form] Loading record from event - ID: ${eventId}, ERC: ${eventERC}`,
-        );
-        loadRecord(eventId, eventERC, state);
-      }
-    }
-  });
-
-  if (!objectERC) {
-    titleEl.textContent = "Meta-Object Form";
-    if (isEditMode && infoEl) {
-      infoEl.textContent =
-        "Please provide an Object External Reference Code in the configuration.";
-      infoEl.classList.remove("d-none");
-    }
-  } else {
-    try {
-      const response = await Liferay.Util.fetch(
-        `${ADMIN_API_BASE}/object-definitions/by-external-reference-code/${objectERC}`,
-      );
-      if (!response.ok)
-        throw new Error(`Object not found (ERC: ${objectERC}).`);
-
-      state.definition = await response.json();
-
-      // Smart Title Logic
-      const objectLabel = getLocalizedValue(
-        state.definition.label || state.definition.name,
-      );
-      const currentTitle = titleEl.innerText.trim();
-      const defaultFragmentName =
-        fragmentElement.dataset.fragmentName || "Meta-Object Form";
-
-      // Precedence: Configuration (configTitle) > Evaluated Value (objectLabel)
-      const preferredTitle = configTitle || objectLabel;
-
-      if (
-        currentTitle === "Meta-Object Form" ||
-        currentTitle === defaultFragmentName ||
-        currentTitle === "" ||
-        currentTitle === "Update Entry" || // Previous default
-        currentTitle === `${defaultFragmentName} (Preview)`
-      ) {
-        titleEl.innerText = preferredTitle + (isEditMode ? " (Preview)" : "");
-      }
-
-      // Resolve fields to display/edit
-      const allFields = state.definition.objectFields.filter(
-        (f) =>
-          !["id", "externalReferenceCode", "status"].includes(f.name) &&
-          f.readOnly !== "true" &&
-          f.readOnly !== "conditional",
-      );
-
-      if (customizeColumns && columnsToDisplay) {
-        const desired = columnsToDisplay.split(",").map((c) => c.trim());
-        const seen = new Set();
-        state.fields = desired
-          .map((name) =>
-            allFields.find(
-              (f) => f.name === name || getLocalizedValue(f.label) === name,
-            ),
+        results.innerHTML = items
+          .map(
+            (item) => `
+                  <div class="search-result-item" data-value="${item.value}">${item.label}</div>
+              `,
           )
-          .filter((f) => {
-            if (!f || seen.has(f.name)) return false;
-            seen.add(f.name);
-            return true;
-          });
+          .join("");
+      }
+      results.classList.add("show");
+    };
+
+    const handleSearch = debounce(async (term) => {
+      if (fetchFn) {
+        const items = await fetchFn(term);
+        currentOptions = items;
+        renderResults(items);
       } else {
-        state.fields = allFields;
+        const filtered = initialOptions.filter((opt) =>
+          opt.label.toLowerCase().includes(term.toLowerCase()),
+        );
+        renderResults(filtered);
       }
+    }, 300);
 
-      const params = new URLSearchParams(window.location.search);
-      let startId = params.get("entryId") || params.get("id");
-      let startERC = params.get("entryERC") || params.get("erc");
-
-      if (isValidIdentifier(fixedRecordIdentifier)) {
-        if (fixedRecordIdentifierType === "erc")
-          startERC = fixedRecordIdentifier;
-        else startId = fixedRecordIdentifier;
-      }
-
-      // Standardize URL identifiers
-      if (!isValidIdentifier(startId)) startId = null;
-      if (!isValidIdentifier(startERC)) startERC = null;
-
-      if (!startId && !startERC && !enableAddNew && !enableRecordSelection) {
-        // Initial state: nothing to load, show info
-        fieldsWrap.innerHTML = `<div class="alert alert-info">${Liferay.Language.get("lfr.gemini-generated.please-select-a-record") || "Please select a record to edit."}</div>`;
+    input.addEventListener("input", (e) => {
+      const term = e.target.value;
+      if (term.length >= 0) {
+        handleSearch(term);
       } else {
-        await loadRecord(startId, startERC, state);
-        if (!isEditMode && enableRecordSelection) await initSelector(state);
+        results.classList.remove("show");
+      }
+    });
+
+    input.addEventListener("focus", () => {
+      if (currentOptions.length > 0 || input.value.length === 0) {
+        renderResults(currentOptions);
+      }
+    });
+
+    document.addEventListener("click", (e) => {
+      if (!container.contains(e.target)) {
+        results.classList.remove("show");
+      }
+    });
+
+    results.addEventListener("click", (e) => {
+      const item = e.target.closest(".search-result-item");
+      if (item && !item.classList.contains("no-results")) {
+        const val = item.dataset.value;
+        const label = item.textContent;
+        input.value = label;
+        hidden.value = val;
+        results.classList.remove("show");
+        onSelect(val, label);
+      }
+    });
+
+    return {
+      setValue: (val, label) => {
+        input.value = label || "";
+        hidden.value = val || "";
+      },
+    };
+  };
+
+  const mapFieldToInput = (field, value = "") => {
+    const { businessType, name, required } = field;
+    const label = getLocalizedValue(field.label);
+    const commonAttrs = `name="${name}" id="${name}-${fragmentEntryLinkNamespace}" class="form-control" ${required ? "required" : ""}`;
+
+    if (businessType === "Picklist" || businessType === "Relationship") {
+      const selectedId = value && typeof value === "object" ? value.id : value;
+      const initialLabel = value ? value.label || value.name || value : "";
+
+      return `
+              <div class="form-group mb-4">
+                  <label for="${name}-${fragmentEntryLinkNamespace}">${label}${required ? " *" : ""}</label>
+                  <div class="searchable-field-wrap" data-field-name="${name}" data-value="${selectedId || ""}" data-label="${initialLabel || ""}">
+                      <div class="meta-status small text-muted">Initializing ${businessType.toLowerCase()}...</div>
+                  </div>
+              </div>
+          `;
+    }
+
+    switch (businessType) {
+      case "Integer":
+      case "LongInteger":
+      case "Decimal":
+      case "PrecisionDecimal":
+        return `<div class="form-group mb-4"><label for="${name}-${fragmentEntryLinkNamespace}">${label}${required ? " *" : ""}</label><input type="number" ${commonAttrs} value="${value}"></div>`;
+      case "Date": {
+        const dateValue = value
+          ? new Date(value).toISOString().split("T")[0]
+          : "";
+        return `<div class="form-group mb-4"><label for="${name}-${fragmentEntryLinkNamespace}">${label}${required ? " *" : ""}</label><input type="date" ${commonAttrs} value="${dateValue}"></div>`;
+      }
+      case "DateTime": {
+        const dateValue = value
+          ? new Date(value).toISOString().slice(0, 16)
+          : "";
+        return `<div class="form-group mb-4"><label for="${name}-${fragmentEntryLinkNamespace}">${label}${required ? " *" : ""}</label><input type="datetime-local" ${commonAttrs} value="${dateValue}"></div>`;
+      }
+      case "LongText":
+      case "RichText":
+        return `<div class="form-group mb-4"><label for="${name}-${fragmentEntryLinkNamespace}">${label}${required ? " *" : ""}</label><textarea ${commonAttrs} rows="4">${value}</textarea></div>`;
+      case "Boolean":
+        return `<div class="form-group mb-4"><div class="custom-control custom-checkbox"><input type="checkbox" class="custom-control-input" name="${name}" id="${name}-${fragmentEntryLinkNamespace}" ${value ? "checked" : ""}><label class="custom-control-label" for="${name}-${fragmentEntryLinkNamespace}">${label}</label></div></div>`;
+      default:
+        return `<div class="form-group mb-4"><label for="${name}-${fragmentEntryLinkNamespace}">${label}${required ? " *" : ""}</label><input type="text" ${commonAttrs} value="${value}"></div>`;
+    }
+  };
+
+  const getBaseUrl = (state) => {
+    let url = state.definition.restContextPath;
+    if (state.definition.scope === "site") {
+      const siteId = Liferay.ThemeDisplay.getScopeGroupId();
+      url += `/scopes/${siteId}`;
+    }
+    return url;
+  };
+
+  const fetchOptionsForField = async (field, term = "", state) => {
+    const { businessType } = field;
+
+    if (businessType === "Picklist") {
+      const erc = field.listTypeDefinitionExternalReferenceCode;
+      const res = await Liferay.Util.fetch(
+        `/o/headless-admin-list-type/v1.0/list-type-definitions/by-external-reference-code/${erc}/list-type-entries?search=${term}`,
+      );
+      const data = await res.json();
+      return (data.items || []).map((item) => ({
+        label: getLocalizedValue(item.name),
+        value: item.key,
+      }));
+    } else if (businessType === "Relationship") {
+      const erc = field.objectDefinitionExternalReferenceCode1;
+      const defRes = await Liferay.Util.fetch(
+        `${ADMIN_API_BASE}/object-definitions/by-external-reference-code/${erc}`,
+      );
+      const relDef = await defRes.json();
+
+      let url = relDef.restContextPath;
+      if (relDef.scope === "site")
+        url += `/scopes/${Liferay.ThemeDisplay.getScopeGroupId()}`;
+
+      const entriesRes = await Liferay.Util.fetch(
+        `${url}/?search=${term}&pageSize=20`,
+      );
+      const data = await entriesRes.json();
+      const titleField = relDef.titleObjectFieldName || "id";
+
+      return (data.items || []).map((item) => ({
+        label: item[titleField] || item.id,
+        value: item.id,
+      }));
+    }
+    return [];
+  };
+
+  const isValidIdentifier = (val) => {
+    if (val === undefined || val === null) return false;
+    const s = String(val).trim().toLowerCase();
+    return (
+      s !== "" &&
+      s !== "undefined" &&
+      s !== "null" &&
+      s !== "0" &&
+      s !== "[object object]"
+    );
+  };
+
+  const loadRecord = async (recordId, recordERC, state) => {
+    console.debug(
+      `[Meta-Object Form] loadRecord called - ID: ${recordId}, ERC: ${recordERC}`,
+    );
+    const fieldsWrap = fragmentElement.querySelector(".form-fields-wrap");
+    const form = fragmentElement.querySelector("form");
+    const { enableAddNew } = configuration;
+
+    // Ensure definition is loaded
+    if (!state.definition) {
+      const timer = setInterval(() => {
+        if (state.definition) {
+          clearInterval(timer);
+          loadRecord(recordId, recordERC, state);
+        }
+      }, 100);
+      return;
+    }
+
+    try {
+      let record = null;
+      let hasIdentifier = false;
+
+      // Build fields list for request
+      const requestedFieldNames = new Set(state.fields.map((f) => f.name));
+      requestedFieldNames.add("id");
+      requestedFieldNames.add("externalReferenceCode");
+      const fieldsParam = `fields=${Array.from(requestedFieldNames).join(",")}`;
+
+      // 1. Try ERC
+      if (isValidIdentifier(recordERC)) {
+        const url = `${getBaseUrl(state)}/by-external-reference-code/${recordERC}?${fieldsParam}`;
+        console.debug(`[Meta-Object Form] Fetching record by ERC: ${url}`);
+        const response = await Liferay.Util.fetch(url);
+        if (response.ok) {
+          record = await response.json();
+          hasIdentifier = true;
+        }
       }
 
-      if (!isEditMode) {
-        form.addEventListener("submit", async (e) => {
-          e.preventDefault();
-          const formData = new FormData(form);
-          const payload = Object.fromEntries(formData.entries());
+      // 2. Fallback to ID
+      if (!record && isValidIdentifier(recordId)) {
+        const url = `${getBaseUrl(state)}/${recordId}?${fieldsParam}`;
+        console.debug(`[Meta-Object Form] Fetching record by ID: ${url}`);
+        const response = await Liferay.Util.fetch(url);
+        if (response.ok) {
+          record = await response.json();
+          hasIdentifier = true;
+        }
+      }
 
-          state.definition.objectFields.forEach((f) => {
-            if (f.type === "Boolean") payload[f.name] = formData.has(f.name);
-          });
+      if (hasIdentifier && record) {
+        state.currentRecordId = record.id;
+        state.currentRecordERC = record.externalReferenceCode;
+      } else {
+        state.currentRecordId = null;
+        state.currentRecordERC = null;
+        record = {}; // Use empty object for "Add New" or "No Match"
+      }
 
-          const statusMsg = fragmentElement.querySelector(".form-status-msg");
-          if (statusMsg) statusMsg.classList.add("d-none");
+      const submitBtn = form.querySelector("button[type='submit']");
+      const statusMsg = fragmentElement.querySelector(".form-status-msg");
+      if (statusMsg) statusMsg.classList.add("d-none");
 
-          try {
-            const method = state.currentRecordId ? "PATCH" : "POST";
-            const url = state.currentRecordId
-              ? `${getBaseUrl(state)}/${state.currentRecordId}`
-              : `${getBaseUrl(state)}/`;
+      if (!state.currentRecordId && !enableAddNew) {
+        if (submitBtn) submitBtn.classList.add("d-none");
+        if (!hasIdentifier) {
+          fieldsWrap.innerHTML = `<div class="alert alert-info">${Liferay.Language.get("lfr.gemini-generated.please-select-a-record") || "Please select a record to edit."}</div>`;
+        } else {
+          fieldsWrap.innerHTML =
+            '<div class="alert alert-danger">Record not found.</div>';
+        }
+      } else {
+        if (submitBtn) submitBtn.classList.remove("d-none");
 
-            const saveRes = await Liferay.Util.fetch(url, {
-              method: method,
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify(payload),
-            });
+        fieldsWrap.innerHTML = state.fields
+          .map((f) => mapFieldToInput(f, record[f.name] || ""))
+          .join("");
 
-            if (saveRes.ok) {
-              if (statusMsg) {
-                statusMsg.textContent = state.currentRecordId
-                  ? "Entry updated successfully!"
-                  : "Entry saved successfully!";
-                statusMsg.className =
-                  "form-status-msg mt-3 alert alert-success";
-                statusMsg.classList.remove("d-none");
-              }
-              if (!state.currentRecordId) form.reset();
-            } else {
-              const errData = await saveRes.json();
-              throw new Error(errData.title || "Failed to save entry.");
-            }
-          } catch (err) {
-            if (statusMsg) {
-              statusMsg.textContent = err.message;
-              statusMsg.className = "form-status-msg mt-3 alert alert-danger";
-              statusMsg.classList.remove("d-none");
-            }
+        // Initialize searchable fields
+        state.fields.forEach((f) => {
+          if (
+            f.businessType === "Picklist" ||
+            f.businessType === "Relationship"
+          ) {
+            const wrap = fieldsWrap.querySelector(
+              `.searchable-field-wrap[data-field-name="${f.name}"]`,
+            );
+            const val = wrap.dataset.value;
+            const label = wrap.dataset.label;
+
+            createSearchableSelect(wrap, {
+              placeholder: `Select ${getLocalizedValue(f.label)}...`,
+              defaultValue: label,
+              fetchFn: (term) => fetchOptionsForField(f, term, state),
+              onSelect: (v) => {
+                const hidden = document.createElement("input");
+                hidden.type = "hidden";
+                hidden.name = f.name;
+                hidden.value = v;
+                // Replace existing hidden input if any
+                const old = wrap.querySelector(`input[name="${f.name}"]`);
+                if (old) old.remove();
+                wrap.appendChild(hidden);
+              },
+            }).setValue(val, label);
+
+            // Initial hidden input for form submission
+            const hidden = document.createElement("input");
+            hidden.type = "hidden";
+            hidden.name = f.name;
+            hidden.value = val;
+            wrap.appendChild(hidden);
           }
         });
-      } else {
-        form.onsubmit = (e) => e.preventDefault();
       }
     } catch (err) {
-      showError(err.message);
+      fieldsWrap.innerHTML = `<div class="alert alert-danger">${err.message}</div>`;
     }
+  };
+
+  const initSelector = async (state) => {
+    const { enableRecordSelection } = configuration;
+    const container = fragmentElement.querySelector(
+      `#selector-${fragmentEntryLinkNamespace}`,
+    );
+    if (container && enableRecordSelection) {
+      createSearchableSelect(container, {
+        placeholder: "Search records to edit...",
+        fetchFn: async (term) => {
+          const response = await Liferay.Util.fetch(
+            `${getBaseUrl(state)}/?search=${term}&pageSize=20`,
+          );
+          const data = await response.json();
+          const titleField = state.definition.titleObjectFieldName || "id";
+          return (data.items || []).map((r) => ({
+            label: r[titleField] || r.id,
+            value: r.id,
+          }));
+        },
+        onSelect: (id) => loadRecord(id, null, state),
+      });
+    }
+  };
+
+  const startInit = async (isEditMode) => {
+    const {
+      objectERC: configERC,
+      fixedRecordIdentifier,
+      fixedRecordIdentifierType,
+      enableAddNew,
+      enableRecordSelection,
+      customizeColumns,
+      columnsToDisplay,
+      formTitle: configTitle,
+    } = configuration;
+
+    const state = {
+      definition: null,
+      fields: [],
+      currentRecordId: null,
+      currentRecordERC: null,
+      records: [],
+      fieldOptions: {},
+    };
+
+    const fieldsWrap = fragmentElement.querySelector(".form-fields-wrap");
+    const titleEl = fragmentElement.querySelector(".object-title");
+    const form = fragmentElement.querySelector("form");
+    const errorEl = fragmentElement.querySelector(
+      `#error-${fragmentEntryLinkNamespace}`,
+    );
+    const infoEl = fragmentElement.querySelector(
+      `#info-${fragmentEntryLinkNamespace}`,
+    );
+
+    const showError = (msg) => {
+      if (isEditMode && errorEl) {
+        errorEl.textContent = msg;
+        errorEl.classList.remove("d-none");
+        if (fieldsWrap) fieldsWrap.innerHTML = "";
+      } else if (fieldsWrap) {
+        fieldsWrap.innerHTML = `<div class="text-center p-5 text-danger">${msg}</div>`;
+      }
+    };
+
+    if (errorEl) errorEl.classList.add("d-none");
+    if (infoEl) infoEl.classList.add("d-none");
+
+    // Resolve effective ERC (Prioritize mappable field)
+    const mappableERCEl = fragmentElement.querySelector(
+      "[data-lfr-editable-id='object-erc']",
+    );
+    let objectERC = configERC;
+    if (mappableERCEl) {
+      const mappedVal = mappableERCEl.innerText.trim();
+      if (
+        mappedVal &&
+        mappedVal !== configERC &&
+        mappedVal !== "COMPANY_MILESTONE"
+      ) {
+        objectERC = mappedVal;
+      }
+    }
+
+    // Register event listener IMMEDIATELY to avoid race conditions
+    window.addEventListener("lfr-object-form-select", (e) => {
+      console.debug(
+        `[Meta-Object Form] Received lfr-object-form-select for ${objectERC}`,
+        e.detail,
+      );
+      if (e.detail && e.detail.objectERC === objectERC) {
+        const eventId = e.detail.recordId || e.detail.identifier || null;
+        const eventERC = e.detail.recordERC || e.detail.erc || null;
+
+        if (isValidIdentifier(eventId) || isValidIdentifier(eventERC)) {
+          console.debug(
+            `[Meta-Object Form] Loading record from event - ID: ${eventId}, ERC: ${eventERC}`,
+          );
+          loadRecord(eventId, eventERC, state);
+        }
+      }
+    });
+
+    if (!objectERC) {
+      titleEl.textContent = "Meta-Object Form";
+      if (isEditMode && infoEl) {
+        infoEl.textContent =
+          "Please provide an Object External Reference Code in the configuration.";
+        infoEl.classList.remove("d-none");
+      }
+    } else {
+      try {
+        const response = await Liferay.Util.fetch(
+          `${ADMIN_API_BASE}/object-definitions/by-external-reference-code/${objectERC}`,
+        );
+        if (!response.ok)
+          throw new Error(`Object not found (ERC: ${objectERC}).`);
+
+        state.definition = await response.json();
+
+        // Smart Title Logic
+        const objectLabel = getLocalizedValue(
+          state.definition.label || state.definition.name,
+        );
+        const currentTitle = titleEl.innerText.trim();
+        const defaultFragmentName =
+          fragmentElement.dataset.fragmentName || "Meta-Object Form";
+
+        // Precedence: Configuration (configTitle) > Evaluated Value (objectLabel)
+        const preferredTitle = configTitle || objectLabel;
+
+        if (
+          currentTitle === "Meta-Object Form" ||
+          currentTitle === defaultFragmentName ||
+          currentTitle === "" ||
+          currentTitle === "Update Entry" || // Previous default
+          currentTitle === `${defaultFragmentName} (Preview)`
+        ) {
+          titleEl.innerText = preferredTitle + (isEditMode ? " (Preview)" : "");
+        }
+
+        // Resolve fields to display/edit
+        const allFields = state.definition.objectFields.filter(
+          (f) =>
+            !["id", "externalReferenceCode", "status"].includes(f.name) &&
+            f.readOnly !== "true" &&
+            f.readOnly !== "conditional",
+        );
+
+        if (customizeColumns && columnsToDisplay) {
+          const desired = columnsToDisplay.split(",").map((c) => c.trim());
+          const seen = new Set();
+          state.fields = desired
+            .map((name) =>
+              allFields.find(
+                (f) => f.name === name || getLocalizedValue(f.label) === name,
+              ),
+            )
+            .filter((f) => {
+              if (!f || seen.has(f.name)) return false;
+              seen.add(f.name);
+              return true;
+            });
+        } else {
+          state.fields = allFields;
+        }
+
+        const params = new URLSearchParams(window.location.search);
+        let startId = params.get("entryId") || params.get("id");
+        let startERC = params.get("entryERC") || params.get("erc");
+
+        if (isValidIdentifier(fixedRecordIdentifier)) {
+          if (fixedRecordIdentifierType === "erc")
+            startERC = fixedRecordIdentifier;
+          else startId = fixedRecordIdentifier;
+        }
+
+        // Standardize URL identifiers
+        if (!isValidIdentifier(startId)) startId = null;
+        if (!isValidIdentifier(startERC)) startERC = null;
+
+        if (!startId && !startERC && !enableAddNew && !enableRecordSelection) {
+          // Initial state: nothing to load, show info
+          fieldsWrap.innerHTML = `<div class="alert alert-info">${Liferay.Language.get("lfr.gemini-generated.please-select-a-record") || "Please select a record to edit."}</div>`;
+        } else {
+          await loadRecord(startId, startERC, state);
+          if (!isEditMode && enableRecordSelection) await initSelector(state);
+        }
+
+        if (!isEditMode) {
+          form.addEventListener("submit", async (e) => {
+            e.preventDefault();
+            const formData = new FormData(form);
+            const payload = Object.fromEntries(formData.entries());
+
+            state.definition.objectFields.forEach((f) => {
+              if (f.type === "Boolean") payload[f.name] = formData.has(f.name);
+            });
+
+            const statusMsg = fragmentElement.querySelector(".form-status-msg");
+            if (statusMsg) statusMsg.classList.add("d-none");
+
+            try {
+              const method = state.currentRecordId ? "PATCH" : "POST";
+              const url = state.currentRecordId
+                ? `${getBaseUrl(state)}/${state.currentRecordId}`
+                : `${getBaseUrl(state)}/`;
+
+              const saveRes = await Liferay.Util.fetch(url, {
+                method: method,
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(payload),
+              });
+
+              if (saveRes.ok) {
+                if (statusMsg) {
+                  statusMsg.textContent = state.currentRecordId
+                    ? "Entry updated successfully!"
+                    : "Entry saved successfully!";
+                  statusMsg.className =
+                    "form-status-msg mt-3 alert alert-success";
+                  statusMsg.classList.remove("d-none");
+                }
+                if (!state.currentRecordId) form.reset();
+              } else {
+                const errData = await saveRes.json();
+                throw new Error(errData.title || "Failed to save entry.");
+              }
+            } catch (err) {
+              if (statusMsg) {
+                statusMsg.textContent = err.message;
+                statusMsg.className = "form-status-msg mt-3 alert alert-danger";
+                statusMsg.classList.remove("d-none");
+              }
+            }
+          });
+        } else {
+          form.onsubmit = (e) => e.preventDefault();
+        }
+      } catch (err) {
+        showError(err.message);
+      }
+    }
+  };
+
+  if (layoutMode === "view") {
+    startInit(false);
+  } else {
+    startInit(true);
   }
 };
 
-if (layoutMode === "view") initMetaForm(false);
-else initMetaForm(true);
+initMetaObjectFormFragment();

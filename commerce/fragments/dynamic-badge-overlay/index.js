@@ -568,76 +568,76 @@ const initBadgeOverlay = () => {
         const defaults = badgeDefaults[badgeType];
         const customConfig = configMap[badgeType];
 
-        if (!defaults || !customConfig) return;
+        if (defaults && customConfig) {
+          const evaluatedConfig = Object.fromEntries(
+            Object.entries(customConfig).map(([key, value]) => [
+              key,
+              evaluateConfig(value),
+            ]),
+          );
 
-        const evaluatedConfig = Object.fromEntries(
-          Object.entries(customConfig).map(([key, value]) => [
-            key,
-            evaluateConfig(value),
-          ]),
-        );
+          let badgeConfig = {
+            font: evaluateConfig(badgeFont),
+            text: defaults.text,
+            position: evaluatedConfig.position || defaults.position,
+            fontSize:
+              convertToPixels(evaluatedConfig.fontSize) || defaults.fontSize,
+            fontWeight: evaluatedConfig.fontWeight || defaults.fontWeight,
+            offset: convertToPixels(evaluatedConfig.offset) || defaults.offset,
+            width: convertToPixels(evaluatedConfig.width) || defaults.width,
+            height: convertToPixels(evaluatedConfig.height) || defaults.height,
+            shape: determineShape(evaluatedConfig.shape) || defaults.shape,
+            color: evaluatedConfig.color || defaults.color,
+            textColor: evaluatedConfig.textColor || defaults.textColor,
+            shadow: evaluatedConfig.shadow,
+          };
 
-        let badgeConfig = {
-          font: evaluateConfig(badgeFont),
-          text: defaults.text,
-          position: evaluatedConfig.position || defaults.position,
-          fontSize:
-            convertToPixels(evaluatedConfig.fontSize) || defaults.fontSize,
-          fontWeight: evaluatedConfig.fontWeight || defaults.fontWeight,
-          offset: convertToPixels(evaluatedConfig.offset) || defaults.offset,
-          width: convertToPixels(evaluatedConfig.width) || defaults.width,
-          height: convertToPixels(evaluatedConfig.height) || defaults.height,
-          shape: determineShape(evaluatedConfig.shape) || defaults.shape,
-          color: evaluatedConfig.color || defaults.color,
-          textColor: evaluatedConfig.textColor || defaults.textColor,
-          shadow: evaluatedConfig.shadow,
-        };
+          if (badgeConfig.text) {
+            badgeConfig.width /= 2;
+            badgeConfig.height /= 2;
+            badgeConfig.styleType = determineStyleType(badgeConfig);
+            badgeConfig.borderRadius = determineBorderRadius(badgeConfig);
 
-        if (!badgeConfig.text) return;
+            const badge = document.createElement("div");
+            badge.className = "product-badge";
+            badge.classList.add(badgeConfig.position);
 
-        badgeConfig.width /= 2;
-        badgeConfig.height /= 2;
-        badgeConfig.styleType = determineStyleType(badgeConfig);
-        badgeConfig.borderRadius = determineBorderRadius(badgeConfig);
+            const badgeImg = document.createElement("img");
 
-        const badge = document.createElement("div");
-        badge.className = "product-badge";
-        badge.classList.add(badgeConfig.position);
+            const productImageSize = getProductImageSize();
+            if (debugEnabled)
+              debugWithContext("productImageSize", productImageSize);
 
-        const badgeImg = document.createElement("img");
+            if (badgeConfig.position.includes("bottom")) {
+              badge.style.top = `${productImageSize.height - badgeConfig.offset - badgeConfig.height * 2}px`;
+            } else if (badgeConfig.position.includes("top")) {
+              badge.style.top = `${badgeConfig.offset}px`;
+            }
 
-        const productImageSize = getProductImageSize();
-        if (debugEnabled)
-          debugWithContext("productImageSize", productImageSize);
+            if (badgeConfig.position.includes("left")) {
+              badge.style.left = `${badgeConfig.offset}px`;
+            } else if (badgeConfig.position.includes("right")) {
+              badge.style.right = `${badgeConfig.offset}px`;
+            }
 
-        if (badgeConfig.position.includes("bottom")) {
-          badge.style.top = `${productImageSize.height - badgeConfig.offset - badgeConfig.height * 2}px`;
-        } else if (badgeConfig.position.includes("top")) {
-          badge.style.top = `${badgeConfig.offset}px`;
+            if (debugEnabled) {
+              debugWithContext("badge.position", {
+                top: badge.style.top,
+                right: badge.style.right,
+                bottom: badge.style.bottom,
+                left: badge.style.left,
+              });
+            }
+
+            badgeImg.src = generateBadgeImage(badgeConfig);
+            badgeImg.alt = toTitleCase(badgeType.replaceAll("-", " "));
+
+            badge.appendChild(badgeImg);
+            productDiv.appendChild(badge);
+
+            return productDiv;
+          }
         }
-
-        if (badgeConfig.position.includes("left")) {
-          badge.style.left = `${badgeConfig.offset}px`;
-        } else if (badgeConfig.position.includes("right")) {
-          badge.style.right = `${badgeConfig.offset}px`;
-        }
-
-        if (debugEnabled) {
-          debugWithContext("badge.position", {
-            top: badge.style.top,
-            right: badge.style.right,
-            bottom: badge.style.bottom,
-            left: badge.style.left,
-          });
-        }
-
-        badgeImg.src = generateBadgeImage(badgeConfig);
-        badgeImg.alt = toTitleCase(badgeType.replaceAll("-", " "));
-
-        badge.appendChild(badgeImg);
-        productDiv.appendChild(badge);
-
-        return productDiv;
       };
 
       Liferay.Util.fetch(getSkuUrl)
