@@ -147,10 +147,10 @@ const initActivityHeatmap = async (isEditMode) => {
   if (errorEl) errorEl.classList.add("d-none");
   if (infoEl) infoEl.classList.add("d-none");
 
-  const { objectERC } = configuration;
+  const { objectERC, chartTitle: configTitle } = configuration;
 
   if (!objectERC) {
-    if (titleEl) titleEl.textContent = "Activity Heatmap";
+    if (titleEl) titleEl.textContent = configTitle || "Activity Heatmap";
     if (isEditMode && infoEl) {
       infoEl.textContent = "Please configure an Object ERC.";
       infoEl.classList.remove("d-none");
@@ -164,18 +164,23 @@ const initActivityHeatmap = async (isEditMode) => {
       const defaultFragmentName =
         fragmentElement.dataset.fragmentName || "Activity Heatmap";
 
+      // Evaluated Value
+      const objectLabel = getLocalizedValue(
+        state.definition.pluralLabel ||
+          state.definition.label ||
+          state.definition.name,
+      );
+
+      // Precedence: Configuration (configTitle) > Evaluated Value
+      const preferredTitle = configTitle || objectLabel;
+
       if (
         currentTitle === "Activity Heatmap" ||
         currentTitle === defaultFragmentName ||
         currentTitle === "" ||
         currentTitle === `${defaultFragmentName} (Preview)`
       ) {
-        const objectLabel = getLocalizedValue(
-          state.definition.pluralLabel ||
-            state.definition.label ||
-            state.definition.name,
-        );
-        titleEl.innerText = objectLabel + (isEditMode ? " (Preview)" : "");
+        titleEl.innerText = preferredTitle + (isEditMode ? " (Preview)" : "");
       }
 
       renderHeatmap();

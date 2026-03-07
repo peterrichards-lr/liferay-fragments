@@ -4,6 +4,14 @@
       "fields": [
         {
           "dataType": "string",
+          "defaultValue": "Loan Calculator",
+          "label": "lfr.finance.title",
+          "description": "lfr.finance.title-description",
+          "name": "title",
+          "type": "text"
+        },
+        {
+          "dataType": "string",
           "defaultValue": false,
           "label": "lfr.finance.show",
           "description": "lfr.finance.show-description",
@@ -24,15 +32,15 @@
                 "value": "solid"
               },
               {
-                "label": "lfr.finance.ghost",
+                "label": "lfr.misc.ghost",
                 "value": "ghost"
               },
               {
-                "label": "lfr.finance.borderless",
+                "label": "lfr.misc.borderless",
                 "value": "borderless"
               },
               {
-                "label": "lfr.finance.rounded",
+                "label": "lfr.misc.rounded",
                 "value": "rounded"
               }
             ]
