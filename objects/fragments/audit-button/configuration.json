@@ -5,6 +5,7 @@
         {
           "dataType": "string",
           "defaultValue": "NM",
+          "description": "lfr.objects.type-description",
           "label": "lfr.objects.type",
           "name": "type",
           "type": "text"
@@ -12,6 +13,7 @@
         {
           "dataType": "string",
           "defaultValue": "NM",
+          "description": "lfr.objects.button-size-description",
           "label": "lfr.objects.size",
           "name": "buttonSize",
           "type": "select",
@@ -34,18 +36,21 @@
         },
         {
           "defaultValue": false,
+          "description": "lfr.objects.use-button-text-description",
           "label": "lfr.objects.use-button-text",
           "name": "useButtonText",
           "type": "checkbox"
         },
         {
           "defaultValue": false,
+          "description": "lfr.objects.use-prefix-suffix-description",
           "label": "lfr.objects.use-prefix-suffix",
           "name": "usePrefixAndSuffix",
           "type": "checkbox"
         },
         {
           "defaultValue": true,
+          "description": "lfr.objects.add-space-description",
           "label": "lfr.objects.add-space",
           "name": "addSpace",
           "type": "checkbox"
@@ -53,6 +58,7 @@
         {
           "dataType": "string",
           "defaultValue": "",
+          "description": "lfr.objects.audit-action-prefix-description",
           "label": "lfr.objects.audit-action-prefix",
           "name": "auditActionPrefix",
           "type": "text"
@@ -60,6 +66,7 @@
         {
           "dataType": "string",
           "defaultValue": "",
+          "description": "lfr.objects.audit-action-suffix-description",
           "label": "lfr.objects.audit-action-suffix",
           "name": "auditActionSuffix",
           "type": "text"

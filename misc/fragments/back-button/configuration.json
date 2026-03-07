@@ -5,6 +5,7 @@
         {
           "dataType": "string",
           "defaultValue": "solid",
+          "description": "lfr.misc.button-type-description",
           "label": "lfr.misc.type",
           "name": "buttonType",
           "type": "select",
@@ -32,6 +33,7 @@
         {
           "dataType": "string",
           "defaultValue": "primary",
+          "description": "lfr.misc.style-description",
           "label": "lfr.misc.style",
           "name": "style",
           "type": "select",
@@ -55,6 +57,7 @@
         {
           "dataType": "string",
           "defaultValue": "",
+          "description": "lfr.misc.button-size-description",
           "label": "lfr.misc.size",
           "name": "buttonSize",
           "type": "select",
@@ -78,6 +81,7 @@
         {
           "dataType": "string",
           "defaultValue": false,
+          "description": "lfr.misc.inverted-description",
           "label": "lfr.misc.inverted",
           "name": "inverted",
           "type": "checkbox"
@@ -85,6 +89,7 @@
         {
           "dataType": "string",
           "defaultValue": false,
+          "description": "lfr.misc.uppercase-description",
           "label": "lfr.misc.uppercase",
           "name": "uppercase",
           "type": "checkbox"

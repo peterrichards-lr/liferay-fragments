@@ -79,7 +79,7 @@
 
 ## Current Tasks
 
-- [ ] Complete Configuration Descriptions: Add informative `description` fields to all `configuration.json` files missing them.
+- [x] Complete Configuration Descriptions: Add informative `description` fields to all `configuration.json` files missing them.
 - [ ] Implement Mappable Field Ergonomics: Apply the `.meta-editor-mappable-fields` pattern (Requirement 7) to all fragments with dynamic field mapping.
 - [ ] Standardize Smart Title Precedence: Implement Requirement 12 (Config > Evaluated Default) in all fragments featuring dynamic headers.
 - [ ] Robust Identifier Implementation: Roll out `isValidIdentifier()` validation to all fragments performing network requests (Requirement 10).
