@@ -1,1 +1,10 @@
-{"configurationPath": "configuration.json","jsPath":"index.js","htmlPath":"index.html","cssPath":"index.css","icon":"user","name":"Customer Registration","type":"component"}
+{
+  "configurationPath": "configuration.json",
+  "jsPath": "index.js",
+  "htmlPath": "index.html",
+  "cssPath": "index.css",
+  "icon": "user-plus",
+  "name": "Customer Registration",
+  "type": "component",
+  "thumbnailPath": "thumbnail.png"
+}

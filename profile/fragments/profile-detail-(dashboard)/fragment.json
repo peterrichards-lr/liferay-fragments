@@ -1,1 +1,10 @@
-{"configurationPath": "configuration.json","jsPath":"index.js","htmlPath":"index.html","cssPath":"index.css","icon":"code","name":"Profile Detail (Dashboard)","type":"component"}
+{
+  "configurationPath": "configuration.json",
+  "jsPath": "index.js",
+  "htmlPath": "index.html",
+  "cssPath": "index.css",
+  "icon": "bolt",
+  "name": "Profile Detail (Dashboard)",
+  "type": "component",
+  "thumbnailPath": "thumbnail.png"
+}

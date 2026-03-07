@@ -1,1 +1,10 @@
-{"configurationPath": "configuration.json","jsPath":"index.js","htmlPath":"index.html","cssPath":"index.css","icon":"code","name":"Card Content","type":"component"}
+{
+  "configurationPath": "configuration.json",
+  "jsPath": "index.js",
+  "htmlPath": "index.html",
+  "cssPath": "index.css",
+  "icon": "description",
+  "name": "Card Content",
+  "type": "component",
+  "thumbnailPath": "thumbnail.png"
+}

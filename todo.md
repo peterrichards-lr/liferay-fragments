@@ -6,86 +6,86 @@ This list contains bugs, potential issues, and suggested improvements identified
 
 This table summarizes the status of documentation, language properties, visual thumbnails, and gallery inclusion for each fragment collection and its individual components.
 
-| Collection / Fragment             | Documentation                     | Language Props | Thumbnail | Visuals (PNG) | In Gallery |
-| :-------------------------------- | :-------------------------------- | :------------- | :-------- | :------------ | :--------- |
-| **Commerce**                      | YES (in commerce.md)              | YES            | -         | YES           | -          |
-| - dynamic-badge-overlay           | -                                 | -              | NO        | NO            | NO         |
-| - purchased-products              | -                                 | -              | NO        | YES           | YES        |
-| **Conditional Content**           | YES                               | YES            | NO        | NO            | NO         |
-| **Content**                       | YES (in content.md)               | YES            | -         | YES           | -          |
-| - content-map                     | -                                 | -              | NO        | YES           | YES        |
-| - service-card                    | -                                 | -              | YES       | NO            | NO         |
-| - service-icon                    | -                                 | -              | YES       | NO            | NO         |
-| - service-link-button             | -                                 | -              | NO        | NO            | NO         |
-| **Dashboard Components**          | YES (in dashboard-components.md)  | YES            | -         | NO            | NO         |
-| - dashboard-container             | -                                 | -              | NO        | NO            | NO         |
-| - dashboard-filter                | -                                 | -              | NO        | NO            | NO         |
-| **Date Display**                  | YES (in date-display.md)          | YES            | -         | YES           | YES        |
-| - date-display-collection-display | -                                 | -              | NO        | -             | -          |
-| - date-display-static             | -                                 | -              | NO        | -             | -          |
-| **Finance**                       | YES (in finance.md)               | YES            | -         | NO            | NO         |
-| - loan-application-calculator     | -                                 | -              | NO        | NO            | NO         |
-| - loan-calculator                 | -                                 | -              | NO        | NO            | NO         |
-| **Form Fragments**                | YES (in form-fragments.md)        | YES            | -         | NO            | NO         |
-| - autocomplete-(object)           | -                                 | -              | NO        | NO            | NO         |
-| - (Other fragments)               | -                                 | -              | NO        | NO            | NO         |
-| **Forms**                         | YES (in forms.md)                 | YES            | -         | YES           | -          |
-| - form-populator                  | -                                 | -              | NO        | YES           | YES        |
-| - redirect-page                   | -                                 | -              | NO        | YES           | YES        |
-| - refresh-page                    | -                                 | -              | NO        | YES           | YES        |
-| - (Other fragments)               | -                                 | -              | NO        | NO            | NO         |
-| **Gemini Generated**              | NO (Indiv. Docs Exist)            | YES            | -         | YES           | -          |
-| - activity-heatmap                | YES                               | -              | NO        | YES           | YES        |
-| - ai-chat-ui                      | YES                               | -              | NO        | NO            | NO         |
-| - animated-metric-counter         | YES                               | -              | NO        | YES           | YES        |
-| - dynamic-collection-slider       | YES                               | -              | NO        | NO            | NO         |
-| - dynamic-object-gallery          | YES                               | -              | NO        | YES           | YES        |
-| - interactive-event-timeline      | YES                               | -              | NO        | YES           | YES        |
-| - meta-object-form                | YES                               | -              | NO        | YES           | YES        |
-| - meta-object-record-view         | YES                               | -              | NO        | YES           | YES        |
-| - meta-object-table               | YES                               | -              | NO        | YES           | YES        |
-| - modern-parallax-hero            | YES                               | -              | NO        | YES           | YES        |
-| - object-linked-chart             | YES                               | -              | NO        | YES           | YES        |
-| - pricing-comparison-grid         | YES                               | -              | NO        | YES           | YES        |
-| - radial-kpi-gauge                | YES                               | -              | NO        | YES           | YES        |
-| **Header Components**             | YES (in header-components.md)     | YES            | -         | NO            | NO         |
-| - (Multiple fragments)            | -                                 | -              | NO        | NO            | NO         |
-| **Hero Assets**                   | YES (in hero-assets.md)           | YES            | -         | NO            | NO         |
-| - hero-video                      | -                                 | -              | YES       | NO            | NO         |
-| - overlay-background              | -                                 | -              | YES       | NO            | NO         |
-| **Layout Components**             | YES (in layout-components.md)     | YES            | -         | YES           | YES        |
-| - (Multiple fragments)            | -                                 | -              | NO        | -             | -          |
-| **Master Page Bg Colour**         | YES                               | YES            | NO        | NO            | NO         |
-| **Meter Reading**                 | YES                               | YES            | NO        | YES           | NO         |
-| **Miscellaneous**                 | YES (in misc.md)                  | YES            | -         | NO            | NO         |
-| - custom-tabs                     | -                                 | -              | YES       | NO            | NO         |
-| - icon-button                     | -                                 | -              | YES       | NO            | NO         |
-| - launch-analytics-cloud          | -                                 | -              | YES       | NO            | NO         |
-| - (Other fragments)               | -                                 | -              | NO        | NO            | NO         |
-| **Objects**                       | YES (in objects.md)               | YES            | -         | NO            | NO         |
-| - audit-button                    | -                                 | -              | YES       | NO            | NO         |
-| - (Other fragments)               | -                                 | -              | NO        | NO            | NO         |
-| **Populated Form Fields**         | YES (in populated-form-fields.md) | YES            | -         | NO            | NO         |
-| - (Multiple fragments)            | -                                 | -              | NO        | NO            | NO         |
-| **Profile**                       | YES (in profile.md)               | YES            | -         | YES           | YES        |
-| - pdf-export                      | -                                 | -              | NO        | YES           | YES        |
-| - (Other fragments)               | -                                 | -              | NO        | -             | -          |
-| **Pulse**                         | YES (in pulse.md)                 | YES            | -         | NO            | NO         |
-| - pulse-button                    | -                                 | -              | YES       | NO            | NO         |
-| - (Other fragments)               | -                                 | -              | NO        | NO            | NO         |
-| **Remote App Utilities**          | NO                                | YES            | -         | YES           | YES        |
-| - liferay-iframer                 | YES                               | YES            | NO        | YES           | YES        |
-| **Responsive Menus**              | YES (in responsive-menus.md)      | YES            | -         | NO            | NO         |
-| - responsive-menu                 | -                                 | -              | YES       | NO            | NO         |
-| - responsive-side-menu            | -                                 | -              | YES       | NO            | NO         |
-| - (Other fragments)               | -                                 | -              | NO        | NO            | NO         |
-| **Tracker**                       | YES                               | NO             | -         | NO            | NO         |
-| - tracker                         | -                                 | -              | NO        | NO            | NO         |
-| - tracker-step                    | YES (in tracker.md)               | NO             | NO        | NO            | NO         |
-| **User Account**                  | YES (in user-account.md)          | YES            | -         | NO            | NO         |
-| - (Multiple fragments)            | -                                 | -              | NO        | NO            | NO         |
-| **Widget Modifiers**              | YES (in widget-modifiers.md)      | YES            | -         | NO            | NO         |
-| - alerts-modifier                 | -                                 | -              | YES       | NO            | NO         |
+| Collection / Fragment             | Documentation | Language Props | Thumbnail | Visuals (PNG) | In Gallery |
+| :-------------------------------- | :------------ | :------------- | :-------- | :------------ | :--------- |
+| **Commerce**                      | YES           | YES            | -         | YES           | -          |
+| - dynamic-badge-overlay           | YES           | YES            | NO        | NO            | NO         |
+| - purchased-products              | YES           | YES            | NO        | YES           | YES        |
+| **Conditional Content**           | YES           | YES            | NO        | NO            | NO         |
+| **Content**                       | YES           | YES            | -         | YES           | -          |
+| - content-map                     | YES           | YES            | NO        | YES           | YES        |
+| - service-card                    | YES           | YES            | YES       | NO            | NO         |
+| - service-icon                    | YES           | YES            | YES       | NO            | NO         |
+| - service-link-button             | YES           | YES            | NO        | NO            | NO         |
+| **Dashboard Components**          | YES           | YES            | -         | NO            | NO         |
+| - dashboard-container             | YES           | YES            | NO        | NO            | NO         |
+| - dashboard-filter                | YES           | YES            | NO        | NO            | NO         |
+| **Date Display**                  | YES           | YES            | -         | YES           | YES        |
+| - date-display-collection-display | YES           | YES            | NO        | -             | -          |
+| - date-display-static             | YES           | YES            | NO        | -             | -          |
+| **Finance**                       | YES           | YES            | -         | NO            | NO         |
+| - loan-application-calculator     | YES           | YES            | NO        | NO            | NO         |
+| - loan-calculator                 | YES           | YES            | NO        | NO            | NO         |
+| **Form Fragments**                | YES           | YES            | -         | NO            | NO         |
+| - autocomplete-(object)           | YES           | YES            | NO        | NO            | NO         |
+| - (Other fragments)               | YES           | YES            | NO        | NO            | NO         |
+| **Forms**                         | YES           | YES            | -         | YES           | -          |
+| - form-populator                  | YES           | YES            | NO        | YES           | YES        |
+| - redirect-page                   | YES           | YES            | NO        | YES           | YES        |
+| - refresh-page                    | YES           | YES            | NO        | YES           | YES        |
+| - (Other fragments)               | YES           | YES            | NO        | NO            | NO         |
+| **Gemini Generated**              | YES           | YES            | -         | YES           | -          |
+| - activity-heatmap                | YES           | YES            | NO        | YES           | YES        |
+| - ai-chat-ui                      | YES           | YES            | NO        | NO            | NO         |
+| - animated-metric-counter         | YES           | YES            | NO        | YES           | YES        |
+| - dynamic-collection-slider       | YES           | YES            | NO        | NO            | NO         |
+| - dynamic-object-gallery          | YES           | YES            | NO        | YES           | YES        |
+| - interactive-event-timeline      | YES           | YES            | NO        | YES           | YES        |
+| - meta-object-form                | YES           | YES            | NO        | YES           | YES        |
+| - meta-object-record-view         | YES           | YES            | NO        | YES           | YES        |
+| - meta-object-table               | YES           | YES            | NO        | YES           | YES        |
+| - modern-parallax-hero            | YES           | YES            | NO        | YES           | YES        |
+| - object-linked-chart             | YES           | YES            | NO        | YES           | YES        |
+| - pricing-comparison-grid         | YES           | YES            | NO        | YES           | YES        |
+| - radial-kpi-gauge                | YES           | YES            | NO        | YES           | YES        |
+| **Header Components**             | YES           | YES            | -         | NO            | NO         |
+| - (Multiple fragments)            | YES           | YES            | NO        | NO            | NO         |
+| **Hero Assets**                   | YES           | YES            | -         | NO            | NO         |
+| - hero-video                      | YES           | YES            | YES       | NO            | NO         |
+| - overlay-background              | YES           | YES            | YES       | NO            | NO         |
+| **Layout Components**             | YES           | YES            | -         | YES           | YES        |
+| - (Multiple fragments)            | YES           | YES            | NO        | -             | -          |
+| **Master Page Bg Colour**         | YES           | YES            | NO        | NO            | NO         |
+| **Meter Reading**                 | YES           | YES            | NO        | YES           | NO         |
+| **Miscellaneous**                 | YES           | YES            | -         | NO            | NO         |
+| - custom-tabs                     | YES           | YES            | YES       | NO            | NO         |
+| - icon-button                     | YES           | YES            | YES       | NO            | NO         |
+| - launch-analytics-cloud          | YES           | YES            | YES       | NO            | NO         |
+| - (Other fragments)               | YES           | YES            | NO        | NO            | NO         |
+| **Objects**                       | YES           | YES            | -         | NO            | NO         |
+| - audit-button                    | YES           | YES            | YES       | NO            | NO         |
+| - (Other fragments)               | YES           | YES            | NO        | NO            | NO         |
+| **Populated Form Fields**         | YES           | YES            | -         | NO            | NO         |
+| - (Multiple fragments)            | YES           | YES            | NO        | NO            | NO         |
+| **Profile**                       | YES           | YES            | -         | YES           | YES        |
+| - pdf-export                      | YES           | YES            | NO        | YES           | YES        |
+| - (Other fragments)               | YES           | YES            | NO        | -             | -          |
+| **Pulse**                         | YES           | YES            | -         | NO            | NO         |
+| - pulse-button                    | YES           | YES            | YES       | NO            | NO         |
+| - (Other fragments)               | YES           | YES            | NO        | NO            | NO         |
+| **Remote App Utilities**          | YES           | YES            | -         | YES           | YES        |
+| - liferay-iframer                 | YES           | YES            | NO        | YES           | YES        |
+| **Responsive Menus**              | YES           | YES            | -         | NO            | NO         |
+| - responsive-menu                 | YES           | YES            | YES       | NO            | NO         |
+| - responsive-side-menu            | YES           | YES            | YES       | NO            | NO         |
+| - (Other fragments)               | YES           | YES            | NO        | NO            | NO         |
+| **Tracker**                       | YES           | YES            | -         | NO            | NO         |
+| - tracker                         | YES           | YES            | NO        | NO            | NO         |
+| - tracker-step                    | YES           | YES            | NO        | NO            | NO         |
+| **User Account**                  | YES           | YES            | -         | NO            | NO         |
+| - (Multiple fragments)            | YES           | YES            | NO        | NO            | NO         |
+| **Widget Modifiers**              | YES           | YES            | -         | NO            | NO         |
+| - alerts-modifier                 | YES           | YES            | YES       | NO            | NO         |
 
 ## High Priority (Bugs & Security)
 
@@ -117,6 +117,7 @@ This table summarizes the status of documentation, language properties, visual t
 - [x] **ID Scoping**: Even for fragments intended as singletons, it is a best practice to prefix IDs with `${fragmentEntryLinkNamespace}` to prevent accidental collisions.
   - `finance/fragments/loan-calculator/index.html`
   - `meter-reading/fragments/meter-reading/index.html`
+- [x] **Standardize Icons & Thumbnails**: Updated all `fragment.json` files to use valid Meridian theme icons and added `thumbnailPath` configuration.
 - [ ] **Add Thumbnails**: Generate and add `thumbnail.png` for fragments missing them to improve the Liferay UI experience.
 
 ## Theme Integration (Meridian)

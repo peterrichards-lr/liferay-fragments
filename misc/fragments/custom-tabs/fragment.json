@@ -3,7 +3,7 @@
   "jsPath": "index.js",
   "htmlPath": "index.html",
   "cssPath": "index.css",
-  "icon": "tabs",
+  "icon": "list",
   "name": "Custom Tabs",
   "thumbnailPath": "thumbnail.png",
   "type": "component"

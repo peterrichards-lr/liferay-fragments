@@ -1,1 +1,10 @@
-{"configurationPath": "configuration.json", "cssPath": "index.css", "htmlPath": "index.html", "icon": "check-circle", "jsPath": "index.js", "name": "Radial KPI Gauge", "type": "component"}
+{
+  "configurationPath": "configuration.json",
+  "cssPath": "index.css",
+  "htmlPath": "index.html",
+  "icon": "speed",
+  "jsPath": "index.js",
+  "name": "Radial KPI Gauge",
+  "type": "component",
+  "thumbnailPath": "thumbnail.png"
+}

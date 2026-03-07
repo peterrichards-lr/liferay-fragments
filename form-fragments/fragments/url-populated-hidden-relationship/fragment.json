@@ -3,8 +3,13 @@
   "jsPath": "index.js",
   "htmlPath": "index.html",
   "cssPath": "index.css",
-  "icon": "forms",
+  "icon": "bolt",
   "name": "URL Populated Hidden Relationship",
-  "typeOptions": {"fieldTypes": ["relationship"]},
-  "type": "input"
+  "typeOptions": {
+    "fieldTypes": [
+      "relationship"
+    ]
+  },
+  "type": "input",
+  "thumbnailPath": "thumbnail.png"
 }

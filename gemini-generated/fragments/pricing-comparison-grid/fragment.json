@@ -1,1 +1,10 @@
-{"configurationPath": "configuration.json", "cssPath": "index.css", "htmlPath": "index.html", "icon": "table", "jsPath": "index.js", "name": "Pricing Comparison Grid", "type": "component"}
+{
+  "configurationPath": "configuration.json",
+  "cssPath": "index.css",
+  "htmlPath": "index.html",
+  "icon": "price-tag",
+  "jsPath": "index.js",
+  "name": "Pricing Comparison Grid",
+  "type": "component",
+  "thumbnailPath": "thumbnail.png"
+}

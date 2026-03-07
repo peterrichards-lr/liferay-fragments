@@ -2,8 +2,9 @@
   "configurationPath": "configuration.json",
   "cssPath": "index.css",
   "htmlPath": "index.ftl",
-  "icon": "code",
+  "icon": "bolt",
   "jsPath": "index.js",
   "name": "Zone Layout",
-  "type": "component"
+  "type": "component",
+  "thumbnailPath": "thumbnail.png"
 }

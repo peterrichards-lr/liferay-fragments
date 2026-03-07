@@ -3,7 +3,7 @@
   "jsPath": "index.js",
   "htmlPath": "index.html",
   "cssPath": "index.css",
-  "icon": "code",
+  "icon": "video-streaming",
   "name": "Banner Video",
   "thumbnailPath": "thumbnail.png",
   "type": "component"

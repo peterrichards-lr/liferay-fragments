@@ -1,1 +1,10 @@
-{"configurationPath": "configuration.json","jsPath":"index.js","htmlPath":"index.html","cssPath":"index.css","icon":"search","name":"Search Button","type":"component"}
+{
+  "configurationPath": "configuration.json",
+  "jsPath": "index.js",
+  "htmlPath": "index.html",
+  "cssPath": "index.css",
+  "icon": "search",
+  "name": "Search Button",
+  "type": "component",
+  "thumbnailPath": "thumbnail.png"
+}

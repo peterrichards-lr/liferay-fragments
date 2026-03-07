@@ -70,12 +70,39 @@ If you want to target a specific Virtual Instance or Site, set these environment
 
 These fragments provide foundational utility and data display capabilities.
 
-- [Meter Reading](./fragments/meter-reading.md) (DEPRECATED)
-- [Date Display](./fragments/date-display.md) (DEPRECATED)
-- [Form Utilities](./fragments/forms.md) (Populator, Session ID, Refresh, Redirect)
-- [Form Field Enhancements](./fragments/form-fragments.md) (Autocomplete, Star Rating, Toggle)
+- **Commerce**
+  - [Dynamic Badge Overlay](./fragments/dynamic-badge-overlay.md)
+  - [Purchased Products](./fragments/purchased-products.md)
+  - [Collection Summary](./fragments/commerce.md)
+- **Content**
+  - [Content Map](./fragments/content-map.md)
+  - [Service Link Button](./fragments/service-link-button.md)
+  - [Collection Summary](./fragments/content.md)
+- **Form Utilities**
+  - [Form Populator](./fragments/form-populator.md)
+  - [Form Session ID](./fragments/form-session-id.md)
+  - [Generate Form Session ID](./fragments/generate-form-session-id.md)
+  - [Redirect Page](./fragments/redirect-page.md)
+  - [Refresh Page](./fragments/refresh-page.md)
+  - [Collection Summary](./fragments/forms.md)
+- **Form Field Enhancements**
+  - [Autocomplete (Object)](<./fragments/autocomplete-(object).md>)
+  - [Autocomplete (Picklist)](<./fragments/autocomplete-(picklist).md>)
+  - [Confirmation Field](./fragments/confirmation-field.md)
+  - [Hidden Relationship](./fragments/hidden-relationship.md)
+  - [Listbox Multiselect](./fragments/listbox-multiselect.md)
+  - [Range Input](./fragments/range.md)
+  - [Segmented Numeric](./fragments/segmented-numeric.md)
+  - [Star Rating](./fragments/star-rating.md)
+  - [Submit Button (Custom)](./fragments/submit-button.md)
+  - [Toggle Switch](./fragments/toggle-switch.md)
+  - [URL Populated Hidden Relationship](./fragments/url-populated-hidden-relationship.md)
+  - [User Field](./fragments/user-field.md)
+  - [Collection Summary](./fragments/form-fragments.md)
 - [Populated Form Fields](./fragments/populated-form-fields.md) (Persistence, Derived Values)
 - [Liferay Iframer](./fragments/liferay-iframer.md)
+- [Meter Reading](./fragments/meter-reading.md) (DEPRECATED)
+- [Date Display](./fragments/date-display.md) (DEPRECATED)
 
 ## Specialized Collections
 
@@ -102,31 +129,90 @@ A suite of high-fidelity, data-driven fragments designed for modern Liferay port
 
 ### Integration & Data
 
-- [Content Fragments](./fragments/content.md) (Content Map, Service Cards)
-- [Object Fragments](./fragments/objects.md) (Audit Buttons, Comments)
-- [Pulse Integration Fragments](./fragments/pulse.md) (Campaign Tracking)
-- [Finance Fragments](./fragments/finance.md) (Loan Calculators)
+- **Content Fragments**
+  - [Content Map](./fragments/content-map.md)
+  - [Service Card](./fragments/service-card.md)
+  - [Service Icon](./fragments/service-icon.md)
+  - [Service Link Button](./fragments/service-link-button.md)
+  - [Collection Summary](./fragments/content.md)
+- **Object Fragments**
+  - [Audit Button](./fragments/audit-button.md)
+  - [Comment](./fragments/comment.md)
+  - [Public Comments](./fragments/public-comments.md)
+  - [Collection Summary](./fragments/objects.md)
+- **Pulse Integration Fragments**
+  - [Campaign Initialiser](./fragments/campaign-initialiser.md)
+  - [Cookie Sniffer](./fragments/cookie-sniffer.md)
+  - [Custom Event Listener](./fragments/custom-event-listener.md)
+  - [Pulse Button](./fragments/pulse-button.md)
+  - [Collection Summary](./fragments/pulse.md) (Campaign Tracking)
+- **Finance Fragments**
+  - [Loan Application Calculator](./fragments/loan-application-calculator.md)
+  - [Loan Calculator](./fragments/loan-calculator.md)
+  - [Collection Summary](./fragments/finance.md)
 
 ### Advanced UI & Interactivity
 
 - [Conditional Content](./fragments/conditional-content.md) (Outcome-based Drop Zones)
-- [Tracker Fragments](./fragments/tracker.md) (Multi-step Process Indicators)
-- [Dashboard Components](./fragments/dashboard-components.md) (Healthcare/Activity Dashboards)
-- [Widget Modifiers](./fragments/widget-modifiers.md) (Alerts/Announcements Enhancements)
+- **Tracker Fragments**
+  - [Tracker (Container)](./fragments/tracker.md)
+  - [Tracker Step](./fragments/tracker-step.md)
+  - [Collection Summary](./fragments/tracker.md) (Multi-step Process Indicators)
+- **Dashboard Components**
+  - [Dashboard Container](./fragments/dashboard-container.md)
+  - [Dashboard Filter](./fragments/dashboard-filter.md)
+  - [Collection Summary](./fragments/dashboard-components.md)
+- **Widget Modifiers**
+  - [Alerts Modifier](./fragments/alerts-modifier.md)
+  - [Collection Summary](./fragments/widget-modifiers.md) (Alerts/Announcements Enhancements)
 
 ### Layout & Theme
 
-- [Layout Components](./fragments/layout-components.md)
-- [Header Components](./fragments/header-components.md)
-- [Responsive Menu Fragments](./fragments/responsive-menus.md) (Mega Menus, Side Menus)
-- [Hero Assets](./fragments/hero-assets.md) (Video Backgrounds, Overlays)
+- **Layout Components**
+  - [Primary Card](./fragments/primary-card.md)
+  - [Secondary Card](./fragments/secondary-card.md)
+  - [Card Content](./fragments/card-content.md)
+  - [Collection Summary](./fragments/layout-components.md)
+- **Header Components**
+  - [Logo](./fragments/logo.md)
+  - [Navigation](./fragments/navigation.md)
+  - [Login and User Menu](./fragments/login-and-user-menu.md)
+  - [Search Bar](./fragments/search-bar.md)
+  - [Search Button](./fragments/search-button.md)
+  - [Site Name](./fragments/site-name.md)
+  - [User Bar](./fragments/user-bar.md)
+  - [Vertical Bar](./fragments/vertical-bar.md)
+  - [Upper Header Layout](./fragments/upper-header-layout.md)
+  - [Lower Header Layout](./fragments/lower-header-layout.md)
+  - [Linear Gradient Container](./fragments/linear-gradient-container.md)
+  - [Linear Gradient Container (Custom)](<./fragments/linear-gradient-container-(custom).md>)
+  - [Collection Summary](./fragments/header-components.md)
+- **Responsive Menu Fragments**
+  - [Responsive Menu](./fragments/responsive-menu.md)
+  - [Responsive Side Menu](./fragments/responsive-side-menu.md)
+  - [Logo Zone](./fragments/logo-zone.md)
+  - [Zone Layout](./fragments/zone-layout.md)
+  - [Collection Summary](./fragments/responsive-menus.md)
+- **Hero Assets**
+  - [Hero Video](./fragments/hero-video.md)
+  - [Overlay Background](./fragments/overlay-background.md)
+  - [Collection Summary](./fragments/hero-assets.md)
 - [Master Page Utilities](./fragments/master-page-background-colour.md) (Global BG Control)
 
 ### User & Account
 
-- [Profile Fragments](./fragments/profile.md) (DEPRECATED)
+- **Profile Fragments** (DEPRECATED)
+  - [Profile Summary](./fragments/profile-summary.md)
+  - [Profile Detail](./fragments/profile-detail.md)
+  - [Customer Profile](./fragments/customer-profile.md)
+  - [PDF Export](./fragments/pdf-export.md)
+  - [Collection Summary](./fragments/profile.md)
 - [Commerce Fragments](./fragments/commerce.md)
-- [User & Account Fragments](./fragments/user-account.md) (OAuth2, Connectivity Testing)
+- **User & Account Fragments**
+  - [My Rights](./fragments/my-rights.md)
+  - [Ping](./fragments/ping.md)
+  - [Who Am I](./fragments/who-am-i.md)
+  - [Collection Summary](./fragments/user-account.md)
 
 ---
 
@@ -147,4 +233,13 @@ For more information on developing Liferay fragments, refer to the following off
 - [⚙️ Prerequisites & Setup](./setup.md) - Mandatory Liferay configurations (SAP, FreeMarker).
 - [❓ Troubleshooting & FAQ](./troubleshooting.md) - Common issues and solutions.
 - [🎬 Videos](./videos/README.md) - Video tutorials and walkthroughs.
-- [Miscellaneous Fragments](./fragments/miscellaneous.md)
+- **Miscellaneous Fragments**
+  - [Custom Tabs](./fragments/custom-tabs.md)
+  - [Icon Button](./fragments/icon-button.md)
+  - [Launch Analytics Cloud](./fragments/launch-analytics-cloud.md)
+  - [Back Button](./fragments/back-button.md)
+  - [Cookie Sniffer](./fragments/cookie-sniffer.md)
+  - [Dynamic Copyright](./fragments/dynamic-copyright.md)
+  - [Trigger Ray](./fragments/trigger-ray.md)
+  - [Hide Control Menu](./fragments/hide-control-menu.md)
+  - [Collection Summary](./fragments/miscellaneous.md)

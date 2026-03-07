@@ -1,1 +1,10 @@
-{"configurationPath":"configuration.json","jsPath":"index.js","htmlPath":"index.html","cssPath":"index.css","icon":"code","name":"Navigation","type":"component"}
+{
+  "configurationPath": "configuration.json",
+  "jsPath": "index.js",
+  "htmlPath": "index.html",
+  "cssPath": "index.css",
+  "icon": "list",
+  "name": "Navigation",
+  "type": "component",
+  "thumbnailPath": "thumbnail.png"
+}

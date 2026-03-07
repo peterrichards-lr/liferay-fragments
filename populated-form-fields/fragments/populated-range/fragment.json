@@ -3,12 +3,13 @@
   "jsPath": "index.js",
   "htmlPath": "index.html",
   "cssPath": "index.css",
-  "icon": "forms",
+  "icon": "bolt",
   "name": "Populated Range",
   "typeOptions": {
     "fieldTypes": [
       "number"
     ]
   },
-  "type": "input"
+  "type": "input",
+  "thumbnailPath": "thumbnail.png"
 }

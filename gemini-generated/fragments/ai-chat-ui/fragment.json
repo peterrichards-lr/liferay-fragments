@@ -1,1 +1,10 @@
-{"configurationPath": "configuration.json", "cssPath": "index.css", "htmlPath": "index.html", "icon": "comments", "jsPath": "index.js", "name": "AI Assistant Chat UI", "type": "component"}
+{
+  "configurationPath": "configuration.json",
+  "cssPath": "index.css",
+  "htmlPath": "index.html",
+  "icon": "comments",
+  "jsPath": "index.js",
+  "name": "AI Assistant Chat UI",
+  "type": "component",
+  "thumbnailPath": "thumbnail.png"
+}

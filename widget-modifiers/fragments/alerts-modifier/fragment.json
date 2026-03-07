@@ -3,7 +3,7 @@
   "jsPath": "index.js",
   "htmlPath": "index.html",
   "cssPath": "index.css",
-  "icon": "code",
+  "icon": "bell-on",
   "name": "Announcements Modifier",
   "thumbnailPath": "thumbnail.png",
   "type": "component"

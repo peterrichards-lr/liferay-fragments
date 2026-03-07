@@ -5,5 +5,7 @@
   "cssPath": "index.css",
   "name": "Data Display (Static) (DEPRECATED)",
   "description": "DEPRECATED: Use native Liferay 7.4+ date formatting and display capabilities instead.",
-  "type": "component"
+  "type": "component",
+  "icon": "bolt",
+  "thumbnailPath": "thumbnail.png"
 }

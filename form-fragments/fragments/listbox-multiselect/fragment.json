@@ -3,8 +3,13 @@
   "jsPath": "index.js",
   "htmlPath": "index.html",
   "cssPath": "index.css",
-  "icon": "forms",
+  "icon": "list",
   "name": "Listbox Multiselect",
-  "typeOptions": {"fieldTypes": ["multiselect"]},
-  "type": "input"
+  "typeOptions": {
+    "fieldTypes": [
+      "multiselect"
+    ]
+  },
+  "type": "input",
+  "thumbnailPath": "thumbnail.png"
 }

@@ -1,1 +1,10 @@
-{"configurationPath": "configuration.json", "cssPath": "index.css", "htmlPath": "index.html", "icon": "table", "jsPath": "index.js", "name": "Activity Heatmap", "type": "component"}
+{
+  "configurationPath": "configuration.json",
+  "cssPath": "index.css",
+  "htmlPath": "index.html",
+  "icon": "analytics",
+  "jsPath": "index.js",
+  "name": "Activity Heatmap",
+  "type": "component",
+  "thumbnailPath": "thumbnail.png"
+}
