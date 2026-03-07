@@ -1,7 +1,29 @@
 const ADMIN_API_BASE = "/o/object-admin/v1.0";
 
 const initGallery = async (isEditMode) => {
-  const { objectERC, imageField, titleField, descriptionField } = configuration;
+  const {
+    objectERC: configERC,
+    imageField,
+    titleField,
+    descriptionField,
+  } = configuration;
+
+  // Resolve effective ERC (Prioritize mappable field)
+  const mappableERCEl = fragmentElement.querySelector(
+    "[data-lfr-editable-id='object-erc']",
+  );
+  let objectERC = configERC;
+  if (mappableERCEl) {
+    const mappedVal = mappableERCEl.innerText.trim();
+    if (
+      mappedVal &&
+      mappedVal !== configERC &&
+      mappedVal !== "PRODUCT_SHOWCASE" // Default value check
+    ) {
+      objectERC = mappedVal;
+    }
+  }
+
   const grid = fragmentElement.querySelector(".gallery-grid");
   const errorEl = fragmentElement.querySelector(
     `#error-${fragmentEntryLinkNamespace}`,

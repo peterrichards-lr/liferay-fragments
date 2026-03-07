@@ -18,7 +18,24 @@ const getLocalizedValue = (value) => {
 };
 
 const fetchData = async () => {
-  const { objectERC } = configuration;
+  const { objectERC: configERC } = configuration;
+
+  // Resolve effective ERC (Prioritize mappable field)
+  const mappableERCEl = fragmentElement.querySelector(
+    "[data-lfr-editable-id='object-erc']",
+  );
+  let objectERC = configERC;
+  if (mappableERCEl) {
+    const mappedVal = mappableERCEl.innerText.trim();
+    if (
+      mappedVal &&
+      mappedVal !== configERC &&
+      mappedVal !== "ACTIVITY_LOG" // Default value check
+    ) {
+      objectERC = mappedVal;
+    }
+  }
+
   if (!objectERC) throw new Error("Object ERC not configured.");
 
   const adminUrl = `${ADMIN_API_BASE}/object-definitions/by-external-reference-code/${objectERC}`;
