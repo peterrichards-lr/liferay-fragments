@@ -5,8 +5,8 @@
         {
           "dataType": "int",
           "defaultValue": 3,
-          "label": "lfr.misc.number-of-steps",
-          "description": "lfr.misc.number-of-steps-desc",
+          "label": "lfr.gemini-generated.number-of-steps",
+          "description": "lfr.gemini-generated.number-of-steps-desc",
           "name": "numberOfSteps",
           "type": "text",
           "typeOptions": {
@@ -17,7 +17,7 @@
         {
           "dataType": "string",
           "defaultValue": "Back",
-          "label": "lfr.misc.back-label",
+          "label": "lfr.gemini-generated.back-label",
           "localizable": true,
           "name": "backLabel",
           "type": "text"
@@ -25,7 +25,7 @@
         {
           "dataType": "string",
           "defaultValue": "Next",
-          "label": "lfr.misc.next-label",
+          "label": "lfr.gemini-generated.next-label",
           "localizable": true,
           "name": "nextLabel",
           "type": "text"
@@ -33,30 +33,30 @@
         {
           "dataType": "string",
           "defaultValue": "Finish",
-          "label": "lfr.misc.finish-label",
+          "label": "lfr.gemini-generated.finish-label",
           "localizable": true,
           "name": "finishLabel",
           "type": "text"
         }
       ],
-      "label": "lfr.misc.wizard-options"
+      "label": "lfr.gemini-generated.wizard-options"
     },
     {
       "fields": [
         {
           "name": "activeColor",
-          "label": "lfr.misc.active-color",
+          "label": "lfr.gemini-generated.active-color",
           "type": "colorPicker",
           "defaultValue": "var(--primary)"
         },
         {
           "name": "inactiveColor",
-          "label": "lfr.misc.inactive-color",
+          "label": "lfr.gemini-generated.inactive-color",
           "type": "colorPicker",
           "defaultValue": "var(--gray-300)"
         }
       ],
-      "label": "lfr.misc.styling"
+      "label": "lfr.gemini-generated.styling"
     }
   ]
 }

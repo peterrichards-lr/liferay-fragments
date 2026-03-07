@@ -41,10 +41,12 @@ This table summarizes the status of documentation, language properties, visual t
 | - dynamic-collection-slider       | YES           | YES            | NO        | NO            | NO         |
 | - dynamic-object-gallery          | YES           | YES            | YES       | YES           | YES        |
 | - interactive-event-timeline      | YES           | YES            | YES       | YES           | YES        |
+| - interactive-wizard              | YES           | YES            | NO        | NO            | NO         |
 | - meta-object-form                | YES           | YES            | YES       | YES           | YES        |
 | - meta-object-record-view         | YES           | YES            | YES       | YES           | YES        |
 | - meta-object-table               | YES           | YES            | YES       | YES           | YES        |
 | - modern-parallax-hero            | YES           | YES            | YES       | YES           | YES        |
+| - modern-search-overlay           | YES           | YES            | NO        | NO            | NO         |
 | - object-linked-chart             | YES           | YES            | YES       | YES           | YES        |
 | - pricing-comparison-grid         | YES           | YES            | YES       | YES           | YES        |
 | - radial-kpi-gauge                | YES           | YES            | YES       | YES           | YES        |
@@ -62,7 +64,6 @@ This table summarizes the status of documentation, language properties, visual t
 | - icon-button                     | YES           | YES            | YES       | NO            | NO         |
 | - launch-analytics-cloud          | YES           | YES            | YES       | NO            | NO         |
 | - (Other fragments)               | YES           | YES            | NO        | NO            | NO         |
-| - interactive-wizard              | YES           | YES            | NO        | NO            | NO         |
 | **Objects**                       | YES           | YES            | -         | NO            | NO         |
 | - audit-button                    | YES           | YES            | YES       | NO            | NO         |
 | - (Other fragments)               | YES           | YES            | NO        | NO            | NO         |
@@ -96,9 +97,9 @@ The following fragments still require a high-quality screenshot (`docs/images/`)
 - **Dashboard**: `dashboard-container`, `dashboard-filter`
 - **Finance**: `loan-application-calculator`, `loan-calculator`
 - **Form Fragments**: `autocomplete-(object)`, `autocomplete-(picklist)`, `range`, `toggle-switch`, `segmented-numeric`, etc.
-- **Gemini**: `ai-chat-ui`, `dynamic-collection-slider`
+- **Gemini**: `ai-chat-ui`, `dynamic-collection-slider`, `interactive-wizard`, `modern-search-overlay`
 - **Header**: `navigation`, `login-and-user-menu`, `search-bar`, etc.
-- **Miscellaneous**: `interactive-wizard`, `customer-registration`, etc.
+- **Miscellaneous**: `customer-registration`, etc.
 - **Objects**: `comment`, `public-comments`
 - **User Account**: `who-am-i`, `my-rights`, `ping`
 
@@ -133,7 +134,7 @@ The following fragments still require a high-quality screenshot (`docs/images/`)
   - `finance/fragments/loan-calculator/index.html`
   - `meter-reading/fragments/meter-reading/index.html`
 - [x] **Standardize Icons & Thumbnails**: Updated all `fragment.json` files to use valid Meridian theme icons and added `thumbnailPath` configuration.
-- [ ] **Add Thumbnails**: Generate and add `thumbnail.png` for fragments missing them to improve the Liferay UI experience.
+- [x] **Add Thumbnails**: Generated and resized thumbnails for fragments with existing visual assets. (Completed for 20+ fragments)
 
 ## Theme Integration (Meridian)
 
@@ -186,11 +187,11 @@ High-impact, visually appealing components to extend the repository's capabiliti
 
 - [x] **Modern Parallax Hero**: A hero fragment with multi-layer parallax effects and configurable scroll-triggered text animations. (Implemented in `gemini-generated` collection)
 - [x] **Object-Based Comparison Table**: A visually rich comparison grid (e.g., for service plans) that can dynamically pull features and pricing from Liferay Objects. (Implemented in `gemini-generated` collection)
-- [x] **Step-by-Step Interactive Wizard**: A self-contained fragment set for managing multi-stage user journeys with Meridian-styled transition animations. (Implemented in `misc` collection)
+- [x] **Step-by-Step Interactive Wizard**: A self-contained fragment set for managing multi-stage user journeys with Meridian-styled transition animations. (Implemented in `gemini-generated` collection)
 - [x] **Animated Metric Counters**: Simple but effective cards that animate numeric totals (e.g., \"Total Users\") when they enter the viewport. (Implemented in `gemini-generated` collection)
 - [x] **Interactive Event Timeline**: A vertical/horizontal timeline that dynamically renders milestones from a Liferay Object. (Implemented in `gemini-generated` collection)
 - [x] **AI Assistant Chat UI**: A polished messaging interface for integrating with AI backend extensions. (Implemented in `gemini-generated` collection)
-- [ ] **Modern Search Overlay**: A specialized search component that expands into a full-screen categorical navigation/search interface.
+- [x] **Modern Search Overlay**: A specialized search component that expands into a full-screen categorical navigation/search interface. (Implemented in `gemini-generated` collection)
 
 ## Responsiveness Improvements
 
