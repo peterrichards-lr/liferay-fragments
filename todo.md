@@ -260,11 +260,11 @@ These tasks focus on long-term stability, modern API adoption, and cross-fragmen
 
 ### 4. Accessibility (A11y) Refinement
 
-- [ ] **Rich Autocomplete ARIA**: Implement full WAI-ARIA patterns for autocomplete fragments.
+- [x] **Rich Autocomplete ARIA**: Implement full WAI-ARIA patterns for autocomplete fragments.
   - **Plan**: Add `role="combobox"`, `aria-autocomplete="list"`, `aria-expanded`, and manage `aria-activedescendant` during keyboard navigation.
   - **Benefits**: Makes search/selection interfaces usable for screen reader users.
   - **Rank**: Ease: 4/5 | Impact: 5/5 (A11y Compliance).
-- [ ] **Keyboard Navigation Overhaul**: Ensure all interactive fragments (Tabs, Menus, Sliders) are fully keyboard-navigable.
+- [x] **Keyboard Navigation Overhaul**: Ensure all interactive fragments (Tabs, Menus, Sliders) are fully keyboard-navigable.
   - **Plan**: Audit focus states and implement `Enter`/`Space` handlers where missing (e.g. `segmented-numeric` digit focus).
   - **Benefits**: Essential for users with motor impairments.
   - **Rank**: Ease: 3/5 | Impact: 5/5 (A11y).

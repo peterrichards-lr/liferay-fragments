@@ -63,6 +63,7 @@ const initDashboardFilter = () => {
       }
 
       const refreshDashboard = (e) => {
+        if (e) e.preventDefault();
         const dashboard = document.querySelector("#healthcare-dashboard");
 
         var charts;
@@ -106,6 +107,16 @@ const initDashboardFilter = () => {
       if (refreshDashboardBtn && refreshDashboard) {
         refreshDashboardBtn.addEventListener("click", refreshDashboard);
       }
+
+      // Add keyboard support: Refresh on Enter in any input
+      const inputs = fragmentElement.querySelectorAll("input");
+      inputs.forEach((input) => {
+        input.addEventListener("keydown", (e) => {
+          if (e.key === "Enter") {
+            refreshDashboard(e);
+          }
+        });
+      });
 
       const randomIntFromInterval = (min, max) => {
         return Math.floor(randomFloatFromInterval(min, max));

@@ -6,8 +6,23 @@
 	<div class="form-group [#if  input.errorMessage?has_content]has-error[/#if] mb-0" id="${fragmentEntryLinkNamespace}-form-group">
 		<label class="[#if !input.showLabel || !input.label?has_content]sr-only[/#if]" for="${fragmentEntryLinkNamespace}-text-input" id="${fragmentEntryLinkNamespace}-text-input-label">${htmlUtil.escape(input.label)} [#if readOnly](${languageUtil.get(locale, "read-only")})[#elseif input.required][@clay["icon"] className="reference-mark" symbol="asterisk" /][/#if]</label>
 
-		<div class=autocomplete>
-			<input aria-describedby="${fragmentEntryLinkNamespace}-text-input-help-text" aria-labelledby="${fragmentEntryLinkNamespace}-text-input-label [#if  input.errorMessage?has_content]${fragmentEntryLinkNamespace}-text-input-error-message[/#if]" class="form-control" id="${fragmentEntryLinkNamespace}-text-input" name="${input.name}" placeholder="${configuration.placeholder!}" [#if readOnly]readonly[/#if] ${input.required?then('required', '')} type="text" [#if input.value??]value="${input.value}"[/#if] />
+		<div class="autocomplete" role="combobox" aria-haspopup="listbox" aria-owns="${fragmentEntryLinkNamespace}-results" aria-expanded="false">
+			<input 
+                aria-autocomplete="list"
+                aria-controls="${fragmentEntryLinkNamespace}-results"
+                aria-describedby="${fragmentEntryLinkNamespace}-text-input-help-text" 
+                aria-labelledby="${fragmentEntryLinkNamespace}-text-input-label [#if  input.errorMessage?has_content]${fragmentEntryLinkNamespace}-text-input-error-message[/#if]" 
+                class="form-control" 
+                id="${fragmentEntryLinkNamespace}-text-input" 
+                name="${input.name}" 
+                placeholder="${configuration.placeholder!}" 
+                [#if readOnly]readonly[/#if] 
+                ${input.required?then('required', '')} 
+                type="text" 
+                autocomplete="off"
+                [#if input.value??]value="${input.value}"[/#if] 
+            />
+            <ul class="autocomplete-items list-unstyled d-none" id="${fragmentEntryLinkNamespace}-results" role="listbox"></ul>
 		</div>
 
 		[#if input.errorMessage?has_content]

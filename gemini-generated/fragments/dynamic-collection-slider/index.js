@@ -21,6 +21,18 @@ const updateSlider = () => {
 
     dots.forEach((dot, index) => {
       dot.classList.toggle("active", index === state.currentIndex);
+      dot.setAttribute("aria-current", index === state.currentIndex);
+    });
+
+    // Update visibility for screen readers
+    slides.forEach((slide, index) => {
+      if (index === state.currentIndex) {
+        slide.removeAttribute("aria-hidden");
+        slide.setAttribute("tabindex", "0");
+      } else {
+        slide.setAttribute("aria-hidden", "true");
+        slide.setAttribute("tabindex", "-1");
+      }
     });
   }
 };
@@ -36,20 +48,24 @@ const initSlider = () => {
   const nextBtn = fragmentElement.querySelector(".next-btn");
 
   if (track && container && slides.length > 0) {
+    const goToPrev = () => {
+      state.currentIndex =
+        (state.currentIndex - 1 + slides.length) % slides.length;
+      updateSlider();
+    };
+
+    const goToNext = () => {
+      state.currentIndex = (state.currentIndex + 1) % slides.length;
+      updateSlider();
+    };
+
     // Basic Navigation
     if (prevBtn) {
-      prevBtn.onclick = () => {
-        state.currentIndex =
-          (state.currentIndex - 1 + slides.length) % slides.length;
-        updateSlider();
-      };
+      prevBtn.onclick = goToPrev;
     }
 
     if (nextBtn) {
-      nextBtn.onclick = () => {
-        state.currentIndex = (state.currentIndex + 1) % slides.length;
-        updateSlider();
-      };
+      nextBtn.onclick = goToNext;
     }
 
     dots.forEach((dot, index) => {
@@ -57,6 +73,18 @@ const initSlider = () => {
         state.currentIndex = index;
         updateSlider();
       };
+    });
+
+    // Keyboard Navigation
+    container.setAttribute("tabindex", "0");
+    container.addEventListener("keydown", (e) => {
+      if (e.key === "ArrowLeft") {
+        e.preventDefault();
+        goToPrev();
+      } else if (e.key === "ArrowRight") {
+        e.preventDefault();
+        goToNext();
+      }
     });
 
     // Touch/Mouse Events for Dragging
@@ -95,8 +123,10 @@ const initSlider = () => {
       }
     };
 
-    container.addEventListener("touchstart", handleDragStart);
-    container.addEventListener("touchmove", handleDragMove);
+    container.addEventListener("touchstart", handleDragStart, {
+      passive: true,
+    });
+    container.addEventListener("touchmove", handleDragMove, { passive: true });
     container.addEventListener("touchend", handleDragEnd);
     container.addEventListener("mousedown", handleDragStart);
     container.addEventListener("mousemove", handleDragMove);
@@ -109,12 +139,21 @@ const initSlider = () => {
     // Auto-slide if configured
     const interval = parseInt(configuration.autoplayInterval || "0");
     if (interval > 0 && layoutMode === "view") {
-      setInterval(() => {
-        if (!state.isDragging) {
-          state.currentIndex = (state.currentIndex + 1) % slides.length;
-          updateSlider();
+      let intervalId = setInterval(() => {
+        if (!state.isDragging && document.activeElement !== container) {
+          goToNext();
         }
       }, interval);
+
+      container.addEventListener("mouseenter", () => clearInterval(intervalId));
+      container.addEventListener("mouseleave", () => {
+        clearInterval(intervalId);
+        intervalId = setInterval(() => {
+          if (!state.isDragging && document.activeElement !== container) {
+            goToNext();
+          }
+        }, interval);
+      });
     }
   }
 };
