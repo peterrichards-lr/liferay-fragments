@@ -11,6 +11,14 @@ const initAutocomplete = () => {
     );
   };
 
+  const debounce = (func, delay) => {
+    let timeoutId;
+    return (...args) => {
+      clearTimeout(timeoutId);
+      timeoutId = setTimeout(() => func.apply(null, args), delay);
+    };
+  };
+
   if (layoutMode !== "preview") {
     const apiPath = configuration.apiPath;
     const searchParam = configuration.searchParam;
@@ -55,7 +63,7 @@ const initAutocomplete = () => {
         list.style.display = items.length > 0 ? "block" : "none";
       };
 
-      input.addEventListener("input", async (e) => {
+      const handleInput = debounce(async (e) => {
         const searchValue = e.target.value;
         if (searchValue.length >= 3) {
           try {
@@ -67,7 +75,9 @@ const initAutocomplete = () => {
         } else {
           list.style.display = "none";
         }
-      });
+      }, 300);
+
+      input.addEventListener("input", handleInput);
 
       document.addEventListener("click", (e) => {
         if (!fragmentElement.contains(e.target)) {
