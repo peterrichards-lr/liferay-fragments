@@ -115,24 +115,18 @@ const initDashboardFilter = () => {
         return Math.random() * (max - min + 1) + min;
       };
 
-      const getSync = (path) => {
-        const request = new XMLHttpRequest();
-        request.open("GET", path, false);
-        request.setRequestHeader("x-csrf-token", Liferay.authToken);
-        request.setRequestHeader("Content-Type", "application/json");
-        request.send(null);
-
-        if (request.status === 200) {
-          return JSON.parse(request.responseText);
+      const getAsync = async (path) => {
+        const response = await Liferay.Util.fetch(path);
+        if (response.ok) {
+          return await response.json();
         }
         return {};
       };
 
       const submitData = (path, data) => {
-        return fetch(path, {
+        return Liferay.Util.fetch(path, {
           method: "POST",
           headers: {
-            "x-csrf-token": Liferay.authToken,
             "Content-Type": "application/json",
           },
           body: JSON.stringify(data),
@@ -153,8 +147,8 @@ const initDashboardFilter = () => {
       const stepsAPIPath = configuration.stepsAPIPath || "/o/c/stepses";
       const weightAPIPath = configuration.weightAPIPath || "/o/c/weights";
 
-      const getLastHeartRate = (userId) => {
-        const lastReading = getSync(
+      const getLastHeartRate = async (userId) => {
+        const lastReading = await getAsync(
           `${heartRateAPIPath}?filter=r_heartRate_userId%20eq%20%27${userId}%27&page=1&pageSize=1&sort=readingDate%3Adesc`,
         );
         if (lastReading && lastReading.items && lastReading.items.length > 0) {
@@ -185,8 +179,8 @@ const initDashboardFilter = () => {
         };
       };
 
-      const getLastBloodPressure = (userId) => {
-        const lastReading = getSync(
+      const getLastBloodPressure = async (userId) => {
+        const lastReading = await getAsync(
           `${bloodPressureAPIPath}?filter=r_bloodPressure_userId%20eq%20%27${userId}%27&page=1&pageSize=1&sort=readingDate%3Adesc`,
         );
         if (lastReading && lastReading.items && lastReading.items.length > 0) {
@@ -217,8 +211,8 @@ const initDashboardFilter = () => {
         };
       };
 
-      const getLastStepsCount = (userId) => {
-        const lastReading = getSync(
+      const getLastStepsCount = async (userId) => {
+        const lastReading = await getAsync(
           `${stepsAPIPath}?filter=r_steps_userId%20eq%20%27${userId}%27&page=1&pageSize=1&sort=readingDate%3Adesc`,
         );
         if (lastReading && lastReading.items && lastReading.items.length > 0) {
@@ -240,8 +234,8 @@ const initDashboardFilter = () => {
         };
       };
 
-      const getLastWeight = (userId) => {
-        const lastReading = getSync(
+      const getLastWeight = async (userId) => {
+        const lastReading = await getAsync(
           `${weightAPIPath}?filter=r_weight_userId%20eq%20%27${userId}%27&page=1&pageSize=1&sort=readingDate%3Adesc`,
         );
         if (lastReading && lastReading.items && lastReading.items.length > 0) {
@@ -263,7 +257,7 @@ const initDashboardFilter = () => {
         };
       };
 
-      const syncData = (e) => {
+      const syncData = async (e) => {
         const userId = Liferay.ThemeDisplay.getUserId();
 
         if (!isValidIdentifier(userId)) {
@@ -278,10 +272,10 @@ const initDashboardFilter = () => {
         var stepsData = [];
         var weightData = [];
 
-        var lastHeartRate = getLastHeartRate(userId);
-        var lastBloodPressure = getLastBloodPressure(userId);
-        var lastStepsCount = getLastStepsCount(userId);
-        var lastWeight = getLastWeight(userId);
+        var lastHeartRate = await getLastHeartRate(userId);
+        var lastBloodPressure = await getLastBloodPressure(userId);
+        var lastStepsCount = await getLastStepsCount(userId);
+        var lastWeight = await getLastWeight(userId);
 
         for (
           var curDate = startDate;

@@ -223,7 +223,7 @@ These tasks focus on long-term stability, modern API adoption, and cross-fragmen
 
 ### 1. Modern Data Fetching & Performance
 
-- [ ] **Eliminate Synchronous Requests**: Replace `XMLHttpRequest` with `fetch` in `dashboard-filter`.
+- [x] **Eliminate Synchronous Requests**: Replace `XMLHttpRequest` with `fetch` in `dashboard-filter`.
   - **Plan**: Refactor `getSync` to an async `getAsync` function using `fetch` and update all callers to `await` the results.
   - **Benefits**: Prevents browser UI freezes; follows modern JS best practices.
   - **Rank**: Ease: 1/5 | Impact: 4/5 (High UX impact).
@@ -294,4 +294,4 @@ Additional tasks identified during a second review of the repository architectur
 ### 3. Localization (i18n) Maintenance
 
 - [x] **Language Properties Deduplication**: Perform a final pass on all `Language_en_US.properties` to ensure no literal "lfr." keys were accidentally duplicated as values.
-- [ ] **Dangling Property Audit**: Identify and remove any property keys that are no longer referenced by any `configuration.json` or JS files.
+- [x] **Dangling Property Audit**: Identify and remove any property keys that are no longer referenced by any `configuration.json` or JS files.
