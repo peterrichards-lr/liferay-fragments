@@ -3,7 +3,8 @@
   overflow: hidden;
 }
 
-body.has-edit-mode-menu .page-editor .fragment-editor-padding.show {
+body.has-edit-mode-menu .page-editor .fragment-editor-padding.show,
+.dynamic-badge-overlay[data-layout-mode="edit"] .fragment-editor-padding.show {
   height: 26px;
   min-height: 26px;
   box-sizing: border-box;

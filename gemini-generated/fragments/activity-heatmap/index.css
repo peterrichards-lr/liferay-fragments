@@ -71,7 +71,8 @@
     margin-top: 2rem;
 }
 
-body.has-edit-mode-menu .meta-editor-mappable-fields {
+body.has-edit-mode-menu .meta-editor-mappable-fields,
+.heatmap-fragment-container[data-layout-mode="edit"] .meta-editor-mappable-fields {
     display: flex;
 }
 

@@ -64,7 +64,8 @@ a.service-card:hover {
     margin-top: 2rem;
 }
 
-body.has-edit-mode-menu .meta-editor-mappable-fields {
+body.has-edit-mode-menu .meta-editor-mappable-fields,
+.service-card[data-layout-mode="edit"] .meta-editor-mappable-fields {
     display: flex;
 }
 

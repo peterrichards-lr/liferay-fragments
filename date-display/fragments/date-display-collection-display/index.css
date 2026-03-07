@@ -79,7 +79,8 @@
     width: 100%;
 }
 
-body.has-edit-mode-menu .meta-editor-mappable-fields {
+body.has-edit-mode-menu .meta-editor-mappable-fields,
+.date-display[data-layout-mode="edit"] .meta-editor-mappable-fields {
     display: flex;
 }
 

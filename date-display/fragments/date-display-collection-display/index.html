@@ -1,5 +1,5 @@
 [#assign ns = fragmentEntryLinkNamespace /]
-<div class="date-display">
+<div class="date-display" data-layout-mode="${layoutMode}">
 	[#if themeDisplay.isStateMaximized() == false && (request.getAttribute("LIFERAY_SHARED_VISUAL_STATE_PAGE_EDITOR")?? || request.getAttribute("LIFERAY_SHARED_VISUAL_STATE_FRAGMENT_EDITOR")??)]
 		<div class="alert alert-warning">
 			<strong>DEPRECATED:</strong> This fragment is deprecated. Please use native Liferay 7.4+ date formatting instead.

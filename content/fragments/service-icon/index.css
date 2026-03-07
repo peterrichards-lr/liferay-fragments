@@ -50,7 +50,8 @@ a.service-icon {
     margin-top: 2rem;
 }
 
-body.has-edit-mode-menu .meta-editor-mappable-fields {
+body.has-edit-mode-menu .meta-editor-mappable-fields,
+.service-icon[data-layout-mode="edit"] .meta-editor-mappable-fields {
     display: flex;
 }
 
