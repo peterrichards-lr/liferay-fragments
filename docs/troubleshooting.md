@@ -55,6 +55,18 @@ If the build fails with a "Parse error" during JS obfuscation, it is usually due
 
 ## 4. Data & Objects
 
+### Meta-Object fragments fail with 403 Forbidden
+
+If your Table, Form, or Record View fragments are blank or show "Forbidden" errors in the console, it is likely due to missing permissions for the **Object Definition** API.
+
+**Solution**:
+
+1.  Navigate to **Control Panel -> Security -> Service Access Policy**.
+2.  Edit your Guest access policy (e.g., `GUEST_READ`).
+3.  Add the following signature to allow metadata discovery:
+    `com.liferay.object.admin.rest.internal.resource.v1_0.ObjectDefinitionResourceImpl#getObjectDefinitionByExternalReferenceCode`
+4.  Ensure that the specific Liferay Object's REST API is also permitted for the Guest role in the Object's **Permissions** tab.
+
 ### Object-Linked Charts are blank
 
 - **Check Field Mapping**: Ensure the internal field names in the configuration match the field names defined in the Liferay Object (case-sensitive).

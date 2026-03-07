@@ -32,6 +32,33 @@ A powerful data table that dynamically discovers fields and renders Object data 
 - **Row Shading Type**: Toggle zebra striping and choose between Even or Odd row highlighting.
 - **Colors**: Pick custom colors for headers, body text, icons, and striped backgrounds.
 
+## Common Recipes
+
+### 1. The CRUD Dashboard (Table + Form + View)
+
+Pair the table with specialized detail fragments to create a full management interface without leaving the page.
+
+**Setup**:
+
+1. Add a **Meta-Object Table** to the page.
+2. Set **Add Action Mode** to "Modal Window".
+3. Set **View Action Mode** to "Modal Window".
+4. Set **Edit Action Mode** to "Modal Window".
+5. Drop a **Meta-Object Form** into the "Add Record" and "Edit Record" dropzones.
+6. Drop a **Meta-Object Record View** into the "View Record" dropzone.
+7. Ensure all fragments are configured with the same **Object ERC**.
+
+### 2. Side-by-Side Explorer
+
+Use JavaScript events to update a detail view on the same page when a row is clicked.
+
+**Setup**:
+
+1. Place a **Meta-Object Table** and a **Meta-Object Record View** side-by-side (e.g., in a 2-column layout).
+2. Configure the Table's **View Action Mode** to "JS Event".
+3. Configure both fragments with the same **Object ERC**.
+4. At runtime, clicking the "View" icon in the table will instantly update the detail view next to it.
+
 ## Working with Modals
 
 When you set an action mode to **"Modal Window"**:

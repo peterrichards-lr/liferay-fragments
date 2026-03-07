@@ -1,4 +1,5 @@
 const ADMIN_API_BASE = "/o/object-admin/v1.0";
+const VERSION = "1.0.8";
 
 const state = {
   definition: null,
@@ -148,6 +149,21 @@ const toggleModal = (type, show) => {
   }
 };
 
+const isValidIdentifier = (val) => {
+  if (val === undefined || val === null) return false;
+  const s = String(val).trim().toLowerCase();
+  if (
+    s === "" ||
+    s === "undefined" ||
+    s === "null" ||
+    s === "0" ||
+    s === "[object object]"
+  ) {
+    return false;
+  }
+  return true;
+};
+
 const loadPage = async (pageNumber, isEditMode = false) => {
   const tbody = fragmentElement.querySelector(
     `#tbody-${fragmentEntryLinkNamespace}`,
@@ -171,9 +187,15 @@ const loadPage = async (pageNumber, isEditMode = false) => {
     }
 
     let dataUrl = `${url}/?pageSize=${pageSize}&page=${state.page}`;
-    if (customizeColumns && columnsToDisplay) {
-      dataUrl += `&fields=${columnsToDisplay}`;
-    }
+
+    // Ensure id and externalReferenceCode are always returned for action handling
+    // but only displayed if present in state.fields.
+    // We use a Set to ensure each field appears only once in the request.
+    const requestedFieldNames = new Set(state.fields.map((f) => f.name));
+    requestedFieldNames.add("id");
+    requestedFieldNames.add("externalReferenceCode");
+
+    dataUrl += `&fields=${Array.from(requestedFieldNames).join(",")}`;
 
     const data = await fetchData(dataUrl);
     state.items = data.items || [];
@@ -184,12 +206,28 @@ const loadPage = async (pageNumber, isEditMode = false) => {
     } else {
       tbody.innerHTML = state.items
         .map((item) => {
+          // Extremely robust identifier extraction
+          let recordId = "";
+          if (item.id !== undefined && item.id !== null)
+            recordId = String(item.id);
+          else if (item.entryId !== undefined && item.entryId !== null)
+            recordId = String(item.entryId);
+
+          let recordERC = "";
+          if (
+            item.externalReferenceCode !== undefined &&
+            item.externalReferenceCode !== null
+          )
+            recordERC = String(item.externalReferenceCode);
+          else if (item.erc !== undefined && item.erc !== null)
+            recordERC = String(item.erc);
+
           let actionsHtml = "";
           if (enableView || enableEdit) {
             actionsHtml = `<td class="text-right">
                     <div class="btn-group">
-                        ${enableView ? `<button class="btn btn-monospaced btn-sm btn-secondary view-btn" data-id="${item.id}" data-erc="${item.externalReferenceCode || ""}" title="View"><svg class="lexicon-icon"><use xlink:href="${spritemap}#view"></use></svg></button>` : ""}
-                        ${enableEdit ? `<button class="btn btn-monospaced btn-sm btn-secondary edit-btn" data-id="${item.id}" data-erc="${item.externalReferenceCode || ""}" title="Edit"><svg class="lexicon-icon"><use xlink:href="${spritemap}#pencil"></use></svg></button>` : ""}
+                        ${enableView ? `<button class="btn btn-monospaced btn-sm btn-secondary view-btn" data-record-id="${recordId}" data-record-erc="${recordERC}" title="View"><svg class="lexicon-icon"><use xlink:href="${spritemap}#view"></use></svg></button>` : ""}
+                        ${enableEdit ? `<button class="btn btn-monospaced btn-sm btn-secondary edit-btn" data-record-id="${recordId}" data-record-erc="${recordERC}" title="Edit"><svg class="lexicon-icon"><use xlink:href="${spritemap}#pencil"></use></svg></button>` : ""}
                     </div>
                 </td>`;
           }
@@ -206,11 +244,19 @@ const loadPage = async (pageNumber, isEditMode = false) => {
       // Attach action listeners
       tbody.querySelectorAll(".view-btn").forEach((btn) => {
         btn.onclick = () =>
-          fragmentElement.handleAction("view", btn.dataset.id, btn.dataset.erc);
+          fragmentElement.handleAction(
+            "view",
+            btn.dataset.recordId,
+            btn.dataset.recordErc,
+          );
       });
       tbody.querySelectorAll(".edit-btn").forEach((btn) => {
         btn.onclick = () =>
-          fragmentElement.handleAction("edit", btn.dataset.id, btn.dataset.erc);
+          fragmentElement.handleAction(
+            "edit",
+            btn.dataset.recordId,
+            btn.dataset.recordErc,
+          );
       });
 
       if (!isEditMode) {
@@ -242,6 +288,9 @@ const initMetaTable = async (isEditMode) => {
     enableAdd,
     tableTitle: configTitle,
   } = configuration;
+
+  console.info(`[Meta-Object Table] VERSION ${VERSION} INITIALIZING`);
+
   const thead = fragmentElement.querySelector(
     `#thead-${fragmentEntryLinkNamespace}`,
   );
@@ -261,7 +310,7 @@ const initMetaTable = async (isEditMode) => {
 
   // Resolve effective ERC (Prioritize mappable field)
   const mappableERCEl = fragmentElement.querySelector(
-    '[data-lfr-editable-id="object-erc"]',
+    "[data-lfr-editable-id='object-erc']",
   );
   let objectERC = configERC;
   if (mappableERCEl) {
@@ -305,6 +354,10 @@ const initMetaTable = async (isEditMode) => {
       addUrl,
     } = configuration;
 
+    console.debug(
+      `[Meta-Object Table] handleAction - type: ${type}, ID: ${recordId}, ERC: ${recordERC}`,
+    );
+
     let mode = "event";
     let targetUrl = "";
     let eventName = "lfr-object-form-select";
@@ -326,6 +379,17 @@ const initMetaTable = async (isEditMode) => {
       eventName = "lfr-object-form-select";
     }
 
+    // Block invalid identifiers for View/Edit
+    const hasValidId = isValidIdentifier(recordId);
+    const hasValidERC = isValidIdentifier(recordERC);
+
+    if (type !== "add" && !hasValidId && !hasValidERC) {
+      console.warn(
+        `[Meta-Object Table] Ignoring action "${type}" due to invalid record identifier. ID: ${recordId}, ERC: ${recordERC}`,
+      );
+      return;
+    }
+
     if (mode === "event" || mode === "modal") {
       if (mode === "modal") {
         toggleModal(type, true);
@@ -335,16 +399,27 @@ const initMetaTable = async (isEditMode) => {
       setTimeout(() => {
         const detail = {
           objectERC,
-          recordId: type === "add" ? null : recordId,
-          recordERC: type === "add" ? null : recordERC,
-          erc: type === "add" ? null : recordERC, // Backward compatibility
+          recordId: hasValidId ? recordId : null,
+          recordERC: hasValidERC ? recordERC : null,
+          erc: hasValidERC ? recordERC : null, // Backward compatibility
         };
 
-        // Explicitly set primary 'identifier' based on config
+        // Explicitly set primary "identifier" based on config
         if (type !== "add") {
-          detail.identifier = idType === "erc" ? recordERC : recordId;
+          detail.identifier =
+            idType === "erc"
+              ? hasValidERC
+                ? recordERC
+                : null
+              : hasValidId
+                ? recordId
+                : null;
         }
 
+        console.debug(
+          `[Meta-Object Table] Dispatching ${eventName} for ${objectERC}`,
+          detail,
+        );
         window.dispatchEvent(new CustomEvent(eventName, { detail }));
       }, 100);
     } else if (mode === "redirect" || mode === "tab") {
@@ -394,15 +469,14 @@ const initMetaTable = async (isEditMode) => {
       state.definition = await fetchData(defUrl);
 
       // Smart Title Logic
-      const currentTitle = titleEl.innerText.trim();
-      const defaultFragmentName =
-        fragmentElement.dataset.fragmentName || "Meta-Object Table";
-
       const objectLabel = getLocalizedValue(
         state.definition.pluralLabel ||
           state.definition.label ||
           state.definition.name,
       );
+      const currentTitle = titleEl.innerText.trim();
+      const defaultFragmentName =
+        fragmentElement.dataset.fragmentName || "Meta-Object Table";
 
       // Precedence: Configuration (configTitle) > Evaluated Value (objectLabel)
       const preferredTitle = configTitle || objectLabel;
@@ -417,20 +491,29 @@ const initMetaTable = async (isEditMode) => {
         titleEl.innerText = preferredTitle + (isEditMode ? " (Preview)" : "");
       }
 
-      // Strict column filtering
-      let fields = state.definition.objectFields.filter(
-        (f) => !["id", "externalReferenceCode"].includes(f.name),
-      );
+      // Resolve display fields
+      const allFields = state.definition.objectFields;
+      let fields = [];
 
       if (customizeColumns && columnsToDisplay) {
         const desired = columnsToDisplay.split(",").map((col) => col.trim());
+        const seen = new Set();
         fields = desired
           .map((name) =>
-            fields.find(
+            allFields.find(
               (f) => f.name === name || getLocalizedValue(f.label) === name,
             ),
           )
-          .filter(Boolean);
+          .filter((f) => {
+            if (!f || seen.has(f.name)) return false;
+            seen.add(f.name);
+            return true;
+          });
+      } else {
+        // Default: Show all fields EXCEPT technical ones
+        fields = allFields.filter(
+          (f) => !["id", "externalReferenceCode"].includes(f.name),
+        );
       }
       state.fields = fields;
 

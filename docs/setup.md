@@ -19,6 +19,9 @@ Navigate to **Control Panel -> Security -> Service Access Policy**. Create or up
   - `com.liferay.headless.delivery.internal.resource.v1_0.ContentTemplateResourceImpl#getSiteContentTemplate`
 - **Hero Assets / Documents**:
   - `com.liferay.headless.delivery.internal.resource.v1_0.DocumentResourceImpl#getDocument`
+- **Object Metadata Discovery (Meta-Object fragments)**:
+  - `com.liferay.object.admin.rest.internal.resource.v1_0.ObjectDefinitionResourceImpl#getObjectDefinitionByExternalReferenceCode`
+  - _Note: This is required for Meta-Object Table, Form, and Record View fragments to discover fields at runtime. Without it, these fragments will trigger a 403 Forbidden error for Guest users._
 - **Object Integrations**:
   - Ensure the specific Object's REST API is enabled for Guest permissions in the Object's "Permissions" tab.
 

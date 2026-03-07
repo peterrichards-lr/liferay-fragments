@@ -49,6 +49,28 @@
               }
             ]
           }
+        },
+        {
+          "defaultValue": false,
+          "label": "lfr.gemini-generated.customize-display-columns",
+          "description": "lfr.gemini-generated.customize-display-columns-description",
+          "name": "customizeColumns",
+          "type": "checkbox"
+        },
+        {
+          "label": "lfr.gemini-generated.columns-to-display",
+          "description": "lfr.gemini-generated.columns-to-display-description",
+          "name": "columnsToDisplay",
+          "type": "text",
+          "defaultValue": "date,title,description",
+          "typeOptions": {
+            "dependency": {
+              "customizeColumns": {
+                "type": "equal",
+                "value": "true"
+              }
+            }
+          }
         }
       ],
       "label": "lfr.gemini-generated.data"

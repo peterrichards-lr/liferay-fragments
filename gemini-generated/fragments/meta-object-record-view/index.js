@@ -4,11 +4,6 @@ const JSPDF_URL =
 const HTML2CANVAS_URL =
   "https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js";
 
-const state = {
-  definition: null,
-  currentRecordId: null,
-};
-
 const loadScript = (url) =>
   new Promise((res, rej) => {
     if (url.includes("jspdf") && window.jspdf) return res();
@@ -56,14 +51,15 @@ const createSearchableSelect = (container, options = {}) => {
         </div>
     `;
 
-  const input = container.querySelector('input[type="text"]');
-  const hidden = container.querySelector('input[type="hidden"]');
+  const input = container.querySelector("input[type='text']");
+  const hidden = container.querySelector("input[type='hidden']");
   const results = container.querySelector(".searchable-select-results");
   let currentOptions = initialOptions;
 
   const renderResults = (items) => {
     if (!items || items.length === 0) {
-      results.innerHTML = `<div class="search-result-item no-results">No results found</div>`;
+      results.innerHTML =
+        '<div class="search-result-item no-results">No results found</div>';
     } else {
       results.innerHTML = items
         .map(
@@ -185,7 +181,7 @@ const formatCellValue = (item, field) => {
   return String(value);
 };
 
-const getBaseUrl = () => {
+const getBaseUrl = (state) => {
   let url = state.definition.restContextPath;
   if (state.definition.scope === "site") {
     const siteId = Liferay.ThemeDisplay.getScopeGroupId();
@@ -196,13 +192,20 @@ const getBaseUrl = () => {
 
 const isValidIdentifier = (val) => {
   if (val === undefined || val === null) return false;
-  const s = String(val).trim();
+  const s = String(val).trim().toLowerCase();
   return (
-    s !== "" && s !== "undefined" && s !== "null" && s !== "[object Object]"
+    s !== "" &&
+    s !== "undefined" &&
+    s !== "null" &&
+    s !== "0" &&
+    s !== "[object object]"
   );
 };
 
-const loadRecordData = async (recordId, recordERC, isEditMode) => {
+const loadRecordData = async (recordId, recordERC, isEditMode, state) => {
+  console.debug(
+    `[Meta-Object Record View] loadRecordData called - ID: ${recordId}, ERC: ${recordERC}`,
+  );
   const fieldsWrap = fragmentElement.querySelector(
     `#fields-${fragmentEntryLinkNamespace}`,
   );
@@ -215,42 +218,60 @@ const loadRecordData = async (recordId, recordERC, isEditMode) => {
     const timer = setInterval(() => {
       if (state.definition) {
         clearInterval(timer);
-        loadRecordData(recordId, recordERC, isEditMode);
+        loadRecordData(recordId, recordERC, isEditMode, state);
       }
     }, 100);
     return;
   }
 
   try {
-    let record = {};
+    let record = null;
     let hasIdentifier = false;
 
+    // Build fields list for request
+    const requestedFieldNames = new Set(state.fields.map((f) => f.name));
+    requestedFieldNames.add("id");
+    requestedFieldNames.add("externalReferenceCode");
+    const fieldsParam = `fields=${Array.from(requestedFieldNames).join(",")}`;
+
+    // 1. Try ERC
     if (isValidIdentifier(recordERC)) {
-      const url = `${getBaseUrl()}/by-external-reference-code/${recordERC}`;
+      const url = `${getBaseUrl(state)}/by-external-reference-code/${recordERC}?${fieldsParam}`;
+      console.debug(`[Meta-Object Record View] Fetching record by ERC: ${url}`);
       const response = await Liferay.Util.fetch(url);
-      if (!response.ok) throw new Error(`Record not found (ERC: ${recordERC})`);
-      record = await response.json();
-      hasIdentifier = true;
-    } else if (isValidIdentifier(recordId)) {
-      const url = `${getBaseUrl()}/${recordId}`;
-      const response = await Liferay.Util.fetch(url);
-      if (!response.ok) throw new Error(`Record not found (ID: ${recordId})`);
-      record = await response.json();
-      hasIdentifier = true;
-    } else if (isEditMode) {
-      const listRes = await Liferay.Util.fetch(`${getBaseUrl()}/?pageSize=1`);
-      const data = await listRes.json();
-      record = data.items?.[0] || {};
-      hasIdentifier = !!record.id;
+      if (response.ok) {
+        record = await response.json();
+        hasIdentifier = true;
+      }
     }
 
-    if (hasIdentifier) {
+    // 2. Fallback to ID
+    if (!record && isValidIdentifier(recordId)) {
+      const url = `${getBaseUrl(state)}/${recordId}?${fieldsParam}`;
+      console.debug(`[Meta-Object Record View] Fetching record by ID: ${url}`);
+      const response = await Liferay.Util.fetch(url);
+      if (response.ok) {
+        record = await response.json();
+        hasIdentifier = true;
+      }
+    }
+
+    // 3. Fallback to first item in edit mode (preview)
+    if (!record && isEditMode) {
+      const listRes = await Liferay.Util.fetch(
+        `${getBaseUrl(state)}/?pageSize=1&${fieldsParam}`,
+      );
+      if (listRes.ok) {
+        const data = await listRes.json();
+        record = data.items?.[0] || null;
+        hasIdentifier = !!record;
+      }
+    }
+
+    if (record) {
       state.currentRecordId = record.id;
 
-      const displayFields = state.definition.objectFields.filter(
-        (f) => !["id", "externalReferenceCode"].includes(f.name),
-      );
-      fieldsWrap.innerHTML = displayFields
+      fieldsWrap.innerHTML = state.fields
         .map(
           (f) => `
             <div class="record-row">
@@ -289,7 +310,8 @@ const loadRecordData = async (recordId, recordERC, isEditMode) => {
     } else {
       state.currentRecordId = null;
       if (!isEditMode) {
-        fieldsWrap.innerHTML = `<div class="alert alert-info">No record specified.</div>`;
+        fieldsWrap.innerHTML =
+          '<div class="alert alert-info">No record found matching the provided identifier.</div>';
       }
     }
   } catch (err) {
@@ -297,7 +319,7 @@ const loadRecordData = async (recordId, recordERC, isEditMode) => {
   }
 };
 
-const initSelector = async () => {
+const initSelector = async (state) => {
   const { enableRecordSelection } = configuration;
   const container = fragmentElement.querySelector(
     `#selector-${fragmentEntryLinkNamespace}`,
@@ -307,7 +329,7 @@ const initSelector = async () => {
       placeholder: "Search records to view...",
       fetchFn: async (term) => {
         const response = await Liferay.Util.fetch(
-          `${getBaseUrl()}/?search=${term}&pageSize=20`,
+          `${getBaseUrl(state)}/?search=${term}&pageSize=20`,
         );
         const data = await response.json();
         const titleField = state.definition.titleObjectFieldName || "id";
@@ -316,7 +338,7 @@ const initSelector = async () => {
           value: r.id,
         }));
       },
-      onSelect: (id) => loadRecordData(id, null, false),
+      onSelect: (id) => loadRecordData(id, null, false, state),
     });
   }
 };
@@ -327,8 +349,17 @@ const initRecordView = async (isEditMode) => {
     fallbackRecordIdentifier,
     fallbackRecordIdentifierType,
     enableRecordSelection,
+    customizeColumns,
+    columnsToDisplay,
     viewTitle: configTitle,
   } = configuration;
+
+  const state = {
+    definition: null,
+    fields: [],
+    currentRecordId: null,
+  };
+
   const fieldsWrap = fragmentElement.querySelector(
     `#fields-${fragmentEntryLinkNamespace}`,
   );
@@ -365,7 +396,7 @@ const initRecordView = async (isEditMode) => {
 
   // Resolve effective ERC (Prioritize mappable field)
   const mappableERCEl = fragmentElement.querySelector(
-    '[data-lfr-editable-id="object-erc"]',
+    "[data-lfr-editable-id='object-erc']",
   );
   let objectERC = configERC;
   if (mappableERCEl) {
@@ -381,19 +412,20 @@ const initRecordView = async (isEditMode) => {
 
   // Register event listener IMMEDIATELY
   window.addEventListener("lfr-object-view-select", (e) => {
+    console.debug(
+      `[Meta-Object Record View] Received lfr-object-view-select for ${objectERC}`,
+      e.detail,
+    );
     if (e.detail && e.detail.objectERC === objectERC) {
-      const eventId =
-        e.detail.recordId ||
-        (e.detail.identifier && !e.detail.recordERC
-          ? e.detail.identifier
-          : null);
-      const eventERC =
-        e.detail.recordERC ||
-        e.detail.erc ||
-        (e.detail.identifier && e.detail.recordERC
-          ? e.detail.identifier
-          : null);
-      loadRecordData(eventId || null, eventERC || null, false);
+      const eventId = e.detail.recordId || e.detail.identifier || null;
+      const eventERC = e.detail.recordERC || e.detail.erc || null;
+
+      if (isValidIdentifier(eventId) || isValidIdentifier(eventERC)) {
+        console.debug(
+          `[Meta-Object Record View] Loading record from event - ID: ${eventId}, ERC: ${eventERC}`,
+        );
+        loadRecordData(eventId, eventERC, false, state);
+      }
     }
   });
 
@@ -431,6 +463,28 @@ const initRecordView = async (isEditMode) => {
         titleEl.innerText = preferredTitle + (isEditMode ? " (Preview)" : "");
       }
 
+      // Resolve fields to display
+      const allFields = state.definition.objectFields;
+      if (customizeColumns && columnsToDisplay) {
+        const desired = columnsToDisplay.split(",").map((c) => c.trim());
+        const seen = new Set();
+        state.fields = desired
+          .map((name) =>
+            allFields.find(
+              (f) => f.name === name || getLocalizedValue(f.label) === name,
+            ),
+          )
+          .filter((f) => {
+            if (!f || seen.has(f.name)) return false;
+            seen.add(f.name);
+            return true;
+          });
+      } else {
+        state.fields = allFields.filter(
+          (f) => !["id", "externalReferenceCode"].includes(f.name),
+        );
+      }
+
       const params = new URLSearchParams(window.location.search);
       let startId = params.get("entryId") || params.get("id");
       let startERC = params.get("entryERC") || params.get("erc");
@@ -447,8 +501,8 @@ const initRecordView = async (isEditMode) => {
         isEditMode ||
         enableRecordSelection
       ) {
-        await loadRecordData(startId, startERC, isEditMode);
-        if (!isEditMode && enableRecordSelection) await initSelector();
+        await loadRecordData(startId, startERC, isEditMode, state);
+        if (!isEditMode && enableRecordSelection) await initSelector(state);
       } else {
         showInfo("No record ID found in URL or configuration.");
       }
