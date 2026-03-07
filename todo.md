@@ -81,7 +81,7 @@ This table summarizes the status of documentation, language properties, visual t
 | - (Other fragments)               | -                                 | -              | NO        | NO            | NO         |
 | **Tracker**                       | YES                               | NO             | -         | NO            | NO         |
 | - tracker                         | -                                 | -              | NO        | NO            | NO         |
-| - tracker-step                    | **NO**                            | NO             | NO        | NO            | NO         |
+| - tracker-step                    | YES (in tracker.md)               | NO             | NO        | NO            | NO         |
 | **User Account**                  | YES (in user-account.md)          | YES            | -         | NO            | NO         |
 | - (Multiple fragments)            | -                                 | -              | NO        | NO            | NO         |
 | **Widget Modifiers**              | YES (in widget-modifiers.md)      | YES            | -         | NO            | NO         |
