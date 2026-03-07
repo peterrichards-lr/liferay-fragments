@@ -1,4 +1,18 @@
 const initPublicComments = () => {
+  const ADMIN_API_BASE = "/o/object-admin/v1.0";
+
+  const isValidIdentifier = (val) => {
+    if (val === undefined || val === null) return false;
+    const s = String(val).trim().toLowerCase();
+    return (
+      s !== "" &&
+      s !== "undefined" &&
+      s !== "null" &&
+      s !== "0" &&
+      s !== "[object object]"
+    );
+  };
+
   const locales = Liferay.ThemeDisplay.getLanguageId().replaceAll("_", "-");
 
   const formatDate = (date) => {
@@ -40,7 +54,7 @@ const initPublicComments = () => {
     let id = null;
 
     if (configuration.useDummyId && !isNaN(configuration.dummyId)) {
-      return parseInt(configuration.dummyId);
+      return configuration.dummyId;
     } else if (configuration.sourceMethod === "path") {
       const pathPosition = configuration.pathPosition;
       const pathTokens = document.location.pathname.split("/");
@@ -56,55 +70,88 @@ const initPublicComments = () => {
     return id;
   };
 
-  const ticketId = getTicketId();
-  if (ticketId) {
-    const viewComments = fragmentElement.querySelector(".view-comments");
+  let apiPath = "";
 
-    const renderComments = (comments) => {
-      comments.forEach(renderComment);
-    };
+  const resolveApiPath = async () => {
+    const objectERC = configuration.objectERC;
+    if (!isValidIdentifier(objectERC)) {
+      apiPath = configuration.objectAPIPath || "/o/c/j3y7comments/";
+      return;
+    }
+
+    try {
+      const response = await Liferay.Util.fetch(
+        `${ADMIN_API_BASE}/object-definitions/by-external-reference-code/${objectERC}`,
+      );
+      if (!response.ok) throw new Error("Failed to fetch object definition");
+
+      const definition = await response.json();
+      let path = definition.restContextPath;
+
+      if (definition.scope === "site") {
+        const siteId = Liferay.ThemeDisplay.getScopeGroupId();
+        path += `/scopes/${siteId}`;
+      }
+
+      apiPath = path;
+    } catch (err) {
+      console.error(err);
+      apiPath = configuration.objectAPIPath || "/o/c/j3y7comments/";
+    }
+  };
+
+  const ticketId = getTicketId();
+  if (isValidIdentifier(ticketId)) {
+    const viewComments = fragmentElement.querySelector(".view-comments");
 
     const renderComment = (comment) => {
       const temp = fragmentElement.querySelector("template");
+      if (!temp) return;
       const commentEL = temp.content.cloneNode(true);
       const img = commentEL.querySelector("img.commenter-image");
-      img.setAttribute("src", comment.creator.image);
+      if (img && comment.creator)
+        img.setAttribute("src", comment.creator.image);
       const name = commentEL.querySelector("span.commenter-name");
-      name.textContent = comment.creator.name;
+      if (name && comment.creator) name.textContent = comment.creator.name;
       const text = commentEL.querySelector("span.comment");
-      text.innerHTML = comment.comment;
+      if (text) text.innerHTML = comment.comment;
       const dateTime = commentEL.querySelector("span.comment-date-time");
-      const date = new Date(comment.dateCreated);
-      dateTime.textContent = formatDate(date);
+      if (dateTime) {
+        const date = new Date(comment.dateCreated);
+        dateTime.textContent = formatDate(date);
+      }
       viewComments.appendChild(commentEL);
     };
 
-    const objectAPIPath = configuration.objectAPIPath || "/o/c/j3y7comments/";
-    const relationshipFieldName =
-      configuration.relationshipFieldName || "r_ticket_c_j3y7TicketId";
-    const filter = `${relationshipFieldName} eq '${ticketId}' and visibility eq 'Public'`;
+    const fetchComments = async () => {
+      if (!apiPath) await resolveApiPath();
 
-    Liferay.Util.fetch(`${objectAPIPath}?filter=${filter}`)
-      .then((response) => {
+      const relationshipFieldName =
+        configuration.relationshipFieldName || "r_ticket_c_j3y7TicketId";
+      const filter = `${relationshipFieldName} eq '${ticketId}' and visibility eq 'Public'`;
+
+      try {
+        const response = await Liferay.Util.fetch(
+          `${apiPath}?filter=${filter}`,
+        );
         if (!response.ok) {
           throw new Error(
             `Failed to fetch comments: ${response.status} ${response.statusText}`,
           );
         }
-        return response.json();
-      })
-      .then((data) => {
+        const data = await response.json();
         if (data && data.items) {
-          renderComments(data.items);
+          data.items.forEach(renderComment);
         }
-      })
-      .catch((error) => {
+      } catch (error) {
         console.error("Error fetching comments:", error);
-        const viewComments = fragmentElement.querySelector(".view-comments");
         if (viewComments && layoutMode === "edit") {
           viewComments.innerHTML = `<div class="alert alert-danger">Error fetching comments. Check configuration and permissions.</div>`;
         }
-      });
+      }
+    };
+
+    fetchComments();
   }
 };
 

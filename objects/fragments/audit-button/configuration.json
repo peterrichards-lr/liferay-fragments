@@ -73,6 +73,29 @@
         }
       ],
       "label": "lfr.objects.button-options"
+    },
+    {
+      "fields": [
+        {
+          "dataType": "string",
+          "defaultValue": "AUDIT_ENTRY",
+          "label": "lfr.objects.object-erc",
+          "description": "lfr.objects.object-erc-desc",
+          "localizable": false,
+          "name": "objectERC",
+          "type": "text"
+        },
+        {
+          "dataType": "string",
+          "defaultValue": "C_AuditEntry",
+          "label": "lfr.objects.delegate-name",
+          "description": "lfr.objects.delegate-name-desc",
+          "localizable": false,
+          "name": "taskItemDelegateName",
+          "type": "text"
+        }
+      ],
+      "label": "lfr.objects.object-options"
     }
   ]
 }

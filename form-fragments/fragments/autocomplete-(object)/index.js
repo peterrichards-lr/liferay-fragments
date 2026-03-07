@@ -24,11 +24,13 @@ const initAutocomplete = () => {
   if (layoutMode !== "preview") {
     const { objectERC, objectField, valueField, inputFieldId } = configuration;
 
+    const container = fragmentElement.querySelector(".autocomplete");
     const input = fragmentElement.querySelector("input");
     const list = fragmentElement.querySelector("ul");
     const errorContainer = fragmentElement.querySelector(".error-container");
 
     let apiPath = "";
+    let focusedIndex = -1;
 
     const showError = (msg) => {
       if (errorContainer) {
@@ -38,24 +40,17 @@ const initAutocomplete = () => {
     };
 
     const resolveApiPath = async () => {
-      if (!isValidIdentifier(objectERC)) {
-        return;
-      }
-
+      if (!isValidIdentifier(objectERC)) return;
       try {
         const response = await Liferay.Util.fetch(
           `${ADMIN_API_BASE}/object-definitions/by-external-reference-code/${objectERC}`,
         );
         if (!response.ok) throw new Error("Failed to fetch object definition");
-
         const definition = await response.json();
         let path = definition.restContextPath;
-
         if (definition.scope === "site") {
-          const siteId = Liferay.ThemeDisplay.getScopeGroupId();
-          path += `/scopes/${siteId}`;
+          path += `/scopes/${Liferay.ThemeDisplay.getScopeGroupId()}`;
         }
-
         apiPath = path;
       } catch (err) {
         console.error(err);
@@ -63,73 +58,116 @@ const initAutocomplete = () => {
       }
     };
 
-    if (input && list) {
-      const getItems = async (searchValue) => {
-        if (!isValidIdentifier(searchValue)) return [];
-        if (!apiPath) await resolveApiPath();
-        if (!apiPath) return [];
+    const toggleList = (show) => {
+      if (!list || !container) return;
+      if (show) {
+        list.classList.remove("d-none");
+        container.setAttribute("aria-expanded", "true");
+      } else {
+        list.classList.add("d-none");
+        container.setAttribute("aria-expanded", "false");
+        focusedIndex = -1;
+        input.removeAttribute("aria-activedescendant");
+      }
+    };
 
-        try {
-          const response = await Liferay.Util.fetch(
-            `${apiPath}?search=${searchValue}`,
-          );
-          if (!response.ok) {
-            throw new Error("Failed to fetch items");
-          }
-          const data = await response.json();
-          return data.items || [];
-        } catch (err) {
-          console.error(err);
-          return [];
+    const selectItem = (item) => {
+      const label = item[objectField] || "Unnamed";
+      const value = item[valueField] || item.id || "";
+      input.value = label;
+      if (isValidIdentifier(inputFieldId)) {
+        const targetInput = document.querySelector(`#${inputFieldId}`);
+        if (targetInput) {
+          targetInput.value = value;
+          targetInput.dispatchEvent(new Event("change", { bubbles: true }));
         }
-      };
+      }
+      toggleList(false);
+    };
 
-      const renderList = (items) => {
-        list.innerHTML = "";
-        items.forEach((item) => {
-          const li = document.createElement("li");
-          const label = item[objectField] || "Unnamed";
-          const value = item[valueField] || item.id || "";
-
-          li.textContent = label;
-          li.dataset.value = value;
-          li.addEventListener("click", () => {
-            input.value = label;
-            if (isValidIdentifier(inputFieldId)) {
-              const targetInput = document.querySelector(`#${inputFieldId}`);
-              if (targetInput) {
-                targetInput.value = value;
-                targetInput.dispatchEvent(
-                  new Event("change", { bubbles: true }),
-                );
-              }
-            }
-            list.style.display = "none";
-          });
-          list.appendChild(li);
-        });
-        list.style.display = items.length > 0 ? "block" : "none";
-      };
-
-      const handleInput = debounce(async (e) => {
-        const searchValue = e.target.value;
-        if (searchValue.length >= 3) {
-          const items = await getItems(searchValue);
-          renderList(items);
+    const updateFocus = () => {
+      const items = list.querySelectorAll("li");
+      items.forEach((li, index) => {
+        if (index === focusedIndex) {
+          li.classList.add("autocomplete-active");
+          input.setAttribute("aria-activedescendant", li.id);
+          li.scrollIntoView({ block: "nearest" });
         } else {
-          list.style.display = "none";
+          li.classList.remove("autocomplete-active");
         }
-      }, 300);
+      });
+    };
 
-      input.addEventListener("input", handleInput);
+    const renderList = (items) => {
+      list.innerHTML = "";
+      focusedIndex = -1;
+      items.forEach((item, index) => {
+        const li = document.createElement("li");
+        li.id = `${fragmentNamespace}_item_${index}`;
+        li.role = "option";
+        li.textContent = item[objectField] || "Unnamed";
+        li.addEventListener("click", () => selectItem(item));
+        list.appendChild(li);
+      });
+      toggleList(items.length > 0);
+    };
 
-      document.addEventListener("click", (e) => {
-        if (!fragmentElement.contains(e.target)) {
-          list.style.display = "none";
+    const getItems = async (searchValue) => {
+      if (!isValidIdentifier(searchValue)) return [];
+      if (!apiPath) await resolveApiPath();
+      if (!apiPath) return [];
+      try {
+        const response = await Liferay.Util.fetch(
+          `${apiPath}?search=${searchValue}`,
+        );
+        if (!response.ok) throw new Error("Fetch failed");
+        const data = await response.json();
+        return data.items || [];
+      } catch (err) {
+        return [];
+      }
+    };
+
+    if (input && list) {
+      input.addEventListener(
+        "input",
+        debounce(async (e) => {
+          const val = e.target.value;
+          if (val.length >= 3) {
+            const items = await getItems(val);
+            renderList(items);
+          } else {
+            toggleList(false);
+          }
+        }, 300),
+      );
+
+      input.addEventListener("keydown", (e) => {
+        const items = list.querySelectorAll("li");
+        if (!items.length) return;
+
+        if (e.key === "ArrowDown") {
+          focusedIndex = (focusedIndex + 1) % items.length;
+          updateFocus();
+          e.preventDefault();
+        } else if (e.key === "ArrowUp") {
+          focusedIndex = (focusedIndex - 1 + items.length) % items.length;
+          updateFocus();
+          e.preventDefault();
+        } else if (e.key === "Enter") {
+          if (focusedIndex > -1) {
+            items[focusedIndex].click();
+            e.preventDefault();
+          }
+        } else if (e.key === "Escape") {
+          toggleList(false);
         }
       });
 
-      // Initial resolve
+      document.addEventListener("click", (e) => {
+        if (!fragmentElement.contains(e.target)) toggleList(false);
+      });
+
       resolveApiPath();
     }
   }

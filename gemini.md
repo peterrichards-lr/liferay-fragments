@@ -77,6 +77,16 @@
 - [x] Refine Smart Title precedence to prioritize configuration values over evaluated data.
 - [x] Standardize all fragment icons to use valid Meridian theme spritemap identifiers and ensure `thumbnailPath` configuration.
 
+### 13. Standardized API Interaction
+
+- **Requirement**: Use Liferay-provided utilities for all network requests to ensure consistent authentication and security.
+- **Liferay APIs**: For all internal Liferay endpoints and Object APIs, use `Liferay.Util.fetch`. It automatically handles CSRF tokens and `Liferay.authToken`.
+- **Client Extensions**: For calling client extensions that utilize User Agent-based OAuth2 authentication, use `Liferay.OAuth2Client`.
+- **Implementation**:
+  - `Liferay.Util.fetch('/o/c/myobjects')` for standard Liferay APIs.
+  - `const {fetch} = Liferay.OAuth2Client.fromUserAgent('client-id'); fetch('/o/ext/api')` for OAuth2-secured extensions.
+- **Reason**: Prevents manual token management and ensures compatibility with Liferay's security infrastructure.
+
 ## Current Tasks
 
 - [x] Complete Configuration Descriptions: Add informative `description` fields to all `configuration.json` files missing them.

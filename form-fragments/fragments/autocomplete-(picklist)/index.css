@@ -5,29 +5,42 @@
 .autocomplete-picklist-input .autocomplete-items {
   position: absolute;
   border: 1px solid #d4d4d4;
-	border-color: var(--autocomplte-border-color);
-  border-bottom: none;
+  border-color: var(--autocomplete-border-color, #d4d4d4);
   border-top: none;
   z-index: 99;
   top: 100%;
   left: 0;
   right: 0;
+  background-color: var(--autocomplete-bg-color, #fff);
+  max-height: 300px;
+  overflow-y: auto;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  padding: 0;
+  margin: 0;
+  list-style: none;
 }
-.autocomplete-picklist-input .autocomplete-items div {
+
+.autocomplete-picklist-input .autocomplete-items li {
   padding: 10px;
   cursor: pointer;
-  background-color: var(--autocomplete-bg-color);
+  background-color: var(--autocomplete-bg-color, #fff);
   border-bottom: 1px solid #d4d4d4;
-	border-color: var(--autocomplete-border-color);
-  color: var(--autocomplete-color);
+  border-color: var(--autocomplete-border-color, #d4d4d4);
+  color: var(--autocomplete-color, inherit);
 }
-.autocomplete-picklist-input .autocomplete-items div:hover {
-  background-color: var(--hover-bg-color);
-	border-color: var(--hover-border-color);
-	color: var(--hover-color);
+
+.autocomplete-picklist-input .autocomplete-items li:hover {
+  background-color: var(--hover-bg-color, #e9ecef);
+  border-color: var(--hover-border-color, #dee2e6);
+  color: var(--hover-color, inherit);
 }
-.autocomplete-picklist-input .autocomplete-active {
-  background-color: var(--active-bg-color) !important;
-	border-color: var(--active-border-color) !important;
-  color: var(--active-color) !important;
+
+.autocomplete-picklist-input .autocomplete-items li.autocomplete-active {
+  background-color: var(--active-bg-color, #007bff) !important;
+  border-color: var(--active-border-color, #007bff) !important;
+  color: var(--active-color, #fff) !important;
+}
+
+.autocomplete-picklist-input .autocomplete-items li:last-child {
+  border-bottom: none;
 }

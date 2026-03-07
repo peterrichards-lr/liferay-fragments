@@ -10,11 +10,10 @@ const initSubmitButton = () => {
         const data = Object.fromEntries(formData.entries());
 
         if (configuration.apiPath) {
-          fetch(configuration.apiPath, {
+          Liferay.Util.fetch(configuration.apiPath, {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
-              "x-csrf-token": Liferay.authToken,
             },
             body: JSON.stringify(data),
           })

@@ -1,7 +1,6 @@
 const initWhoAmI = () => {
   if (layoutMode === "view") {
-    const endpointUrl = configuration.endpointUrl;
-    const userAgentAppExtRefCode = configuration.userAgentAppExtRefCode;
+    const { endpointUrl, userAgentAppExtRefCode } = configuration;
 
     const button = fragmentElement.querySelector("button");
     const span = fragmentElement.querySelector("span");
@@ -10,37 +9,46 @@ const initWhoAmI = () => {
       `#fragment-${fragmentNamespace}-error`,
     );
 
-    if (
-      endpointUrl &&
-      userAgentAppExtRefCode &&
-      button &&
-      span &&
-      textArea &&
-      error
-    ) {
-      const oAuth2Client = Liferay.OAuth2Client.FromUserAgentApplication(
-        userAgentAppExtRefCode,
-      );
+    if (endpointUrl && button && span && textArea && error) {
       span.innerText = `${Liferay.ThemeDisplay.getUserName()} [${Liferay.ThemeDisplay.getUserId()}]`;
+
       const buttonEventListener = (evt) => {
         error.style.display = "none";
-        if (oAuth2Client) {
-          oAuth2Client
-            .fetch(`https://${endpointUrl}`)
-            .then((response) => response.json())
-            .then((json) => {
-              textArea.value += `${json.name} [${json.id}]\r\n`;
-            })
-            .catch((err) => {
-              if (err.status == 401) {
-                error.innerText = "Unauthorized";
-              } else {
-                console.log(err);
-                error.innerText = "Unexpected error. See console log";
-              }
-              error.style.display = "block";
-            });
+
+        // Determine which fetch to use
+        let fetchFn;
+        if (userAgentAppExtRefCode) {
+          const { fetch } = Liferay.OAuth2Client.fromUserAgent(
+            userAgentAppExtRefCode,
+          );
+          fetchFn = fetch;
+        } else {
+          fetchFn = Liferay.Util.fetch;
         }
+
+        // Determine final URL
+        let finalUrl = endpointUrl;
+        if (!finalUrl.startsWith("/") && !finalUrl.startsWith("http")) {
+          finalUrl = `https://${finalUrl}`;
+        }
+
+        fetchFn(finalUrl)
+          .then((response) => {
+            if (!response.ok) throw response;
+            return response.json();
+          })
+          .then((json) => {
+            textArea.value += `${json.name || json.userName || "Unknown"} [${json.id || json.externalReferenceCode || "N/A"}]\r\n`;
+          })
+          .catch((err) => {
+            if (err.status == 401) {
+              error.innerText = "Unauthorized";
+            } else {
+              console.error(err);
+              error.innerText = "Unexpected error. See console log";
+            }
+            error.style.display = "block";
+          });
       };
 
       button.addEventListener("click", buttonEventListener);

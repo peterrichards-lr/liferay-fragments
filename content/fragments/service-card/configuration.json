@@ -29,6 +29,27 @@
     {
       "fields": [
         {
+          "dataType": "string",
+          "defaultValue": "",
+          "label": "lfr.content.title",
+          "description": "lfr.content.title-desc",
+          "name": "title",
+          "type": "text"
+        },
+        {
+          "dataType": "string",
+          "defaultValue": "coin",
+          "label": "lfr.content.icon-identifier",
+          "description": "lfr.content.icon-identifier-desc",
+          "name": "icon",
+          "type": "text"
+        }
+      ],
+      "label": "lfr.content.metadata-options"
+    },
+    {
+      "fields": [
+        {
           "defaultValue": true,
           "label": "lfr.content.show-icon",
           "description": "lfr.content.show-icon",
@@ -41,14 +62,6 @@
           "description": "lfr.content.background-color",
           "name": "backgroundColor",
           "type": "colorPicker"
-        },
-        {
-          "dataType": "string",
-          "defaultValue": "coin",
-          "label": "lfr.content.default-symbol",
-          "description": "lfr.content.default-symbol",
-          "name": "defaultIcon",
-          "type": "text"
         },
         {
           "defaultValue": "#0960ff",
@@ -65,7 +78,7 @@
           "type": "length"
         }
       ],
-      "label": "lfr.content.icon"
+      "label": "lfr.content.icon-styling"
     },
     {
       "fields": [

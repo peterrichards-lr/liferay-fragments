@@ -238,22 +238,22 @@ These tasks focus on long-term stability, modern API adoption, and cross-fragmen
 
 ### 2. Deep Integration & Site-Scoping
 
-- [ ] **Universal Site-Scoping**: Ensure all fragments hitting Object APIs support site-scoped data.
+- [x] **Universal Site-Scoping**: Ensure all fragments hitting Object APIs support site-scoped data.
   - **Plan**: Implement the "Admin API Discovery" pattern (Requirement 3) in `autocomplete-(object)`, `dashboard-filter`, and `audit-button`.
   - **Benefits**: Makes fragments compatible with Site-scoped Objects, which are common in multi-tenant Liferay environments.
   - **Rank**: Ease: 3/5 | Impact: 5/5 (Mandatory for compliance).
-- [ ] **Robust Record Identifiers**: Retrofit older fragments with strict identifier validation.
+- [x] **Robust Record Identifiers**: Retrofit older fragments with strict identifier validation.
   - **Plan**: Add `isValidIdentifier()` helper to `purchased-products`, `audit-button`, and `comment` fragments.
   - **Benefits**: Prevents 404/400 errors from uninitialized variables or "null" strings reaching the API.
   - **Rank**: Ease: 1/5 | Impact: 3/5 (Stability).
 
 ### 3. Advanced UX & Compliance
 
-- [ ] **Privacy-First Tracking**: Update `cookie-sniffer` to be consent-aware.
+- [x] **Privacy-First Tracking**: Update `cookie-sniffer` to be consent-aware.
   - **Plan**: Add configuration for "Consent Category" and check `Liferay.Consent` (if available) before tracking.
   - **Benefits**: Ensures GDPR/ePrivacy compliance for analytics tracking.
   - **Rank**: Ease: 2/5 | Impact: 4/5 (Legal/Trust).
-- [ ] **Smart Title Adoption**: Roll out Smart Title logic to all display fragments.
+- [x] **Smart Title Adoption**: Roll out Smart Title logic to all display fragments.
   - **Plan**: Implement the configuration-precedence pattern in `loan-application-calculator`, `service-card`, and `activity-log`.
   - **Benefits**: Provides "zero-config" labels while allowing Page Editors to override them.
   - **Rank**: Ease: 2/5 | Impact: 3/5 (Editor Experience).

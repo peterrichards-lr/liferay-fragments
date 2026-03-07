@@ -4,6 +4,14 @@
       "fields": [
         {
           "dataType": "string",
+          "defaultValue": "Loan Summary",
+          "label": "lfr.finance.title",
+          "description": "lfr.finance.title-description",
+          "name": "title",
+          "type": "text"
+        },
+        {
+          "dataType": "string",
           "defaultValue": false,
           "label": "lfr.finance.show",
           "description": "lfr.finance.show-description",

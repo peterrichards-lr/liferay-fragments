@@ -3,9 +3,41 @@
     {
       "fields": [
         {
+          "dataType": "string",
+          "defaultValue": "",
+          "label": "lfr.pulse.cookie-name",
+          "description": "lfr.pulse.cookie-name-desc",
+          "name": "cookieName",
+          "type": "text"
+        },
+        {
+          "dataType": "string",
+          "defaultValue": "marketing",
+          "label": "lfr.pulse.consent-category",
+          "description": "lfr.pulse.consent-category-desc",
+          "name": "consentCategory",
+          "type": "select",
+          "typeOptions": {
+            "validValues": [
+              {
+                "label": "lfr.pulse.essential",
+                "value": "essential"
+              },
+              {
+                "label": "lfr.pulse.functional",
+                "value": "functional"
+              },
+              {
+                "label": "lfr.pulse.marketing",
+                "value": "marketing"
+              }
+            ]
+          }
+        },
+        {
           "defaultValue": false,
           "label": "lfr.pulse.enable-debug",
-          "description": "lfr.pulse.enable-debug",
+          "description": "lfr.pulse.enable-debug-desc",
           "name": "enableDebug",
           "type": "checkbox"
         }
