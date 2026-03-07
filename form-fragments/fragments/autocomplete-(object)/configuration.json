@@ -6,7 +6,7 @@
           "dataType": "string",
           "defaultValue": "",
           "label": "lfr.form-fragments.placeholder",
-          "description": "lfr.form-fragments.placeholder",
+          "description": "lfr.form-fragments.placeholder-desc",
           "localizable": true,
           "name": "placeholder",
           "type": "text"
@@ -31,48 +31,6 @@
           "description": "lfr.form-fragments.border-color-desc",
           "type": "colorPicker",
           "defaultValue": "var(--btn-secondary-border-color)"
-        },
-        {
-          "name": "activeColor",
-          "label": "lfr.form-fragments.active-color",
-          "description": "lfr.form-fragments.active-color-desc",
-          "type": "colorPicker",
-          "defaultValue": "var(--btn-primary-color)"
-        },
-        {
-          "name": "activeBgColor",
-          "label": "lfr.form-fragments.active-bg-color",
-          "description": "lfr.form-fragments.active-bg-color-desc",
-          "type": "colorPicker",
-          "defaultValue": "var(--btn-primary-background-color)"
-        },
-        {
-          "name": "activeBorderColor",
-          "label": "lfr.form-fragments.active-border-color",
-          "description": "lfr.form-fragments.active-border-color-desc",
-          "type": "colorPicker",
-          "defaultValue": "var(--btn-primary-border-color)"
-        },
-        {
-          "name": "hoverColor",
-          "label": "lfr.form-fragments.hover-color",
-          "description": "lfr.form-fragments.hover-color-desc",
-          "type": "colorPicker",
-          "defaultValue": "var(--btn-primary-hover-color)"
-        },
-        {
-          "name": "hoverBgColor",
-          "label": "lfr.form-fragments.hover-bg-color",
-          "description": "lfr.form-fragments.hover-bg-color-desc",
-          "type": "colorPicker",
-          "defaultValue": "var(--btn-primary-hover-background-color)"
-        },
-        {
-          "name": "hoverBorderColor",
-          "label": "lfr.form-fragments.hover-border-color",
-          "description": "lfr.form-fragments.hover-border-color-desc",
-          "type": "colorPicker",
-          "defaultValue": "var(--btn-primary-hover-border-color)"
         }
       ],
       "label": "lfr.form-fragments.field-options"
@@ -82,10 +40,10 @@
         {
           "dataType": "string",
           "defaultValue": "",
-          "label": "lfr.form-fragments.object-path",
-          "description": "lfr.form-fragments.object-path",
+          "label": "lfr.form-fragments.object-erc",
+          "description": "lfr.form-fragments.object-erc-desc",
           "localizable": false,
-          "name": "objectPath",
+          "name": "objectERC",
           "type": "text"
         },
         {
@@ -98,58 +56,25 @@
           "type": "text"
         },
         {
-          "defaultValue": true,
-          "label": "lfr.form-fragments.object-field-localized",
-          "description": "lfr.form-fragments.object-field-localized",
+          "dataType": "string",
+          "defaultValue": "id",
+          "label": "lfr.form-fragments.value-field",
+          "description": "lfr.form-fragments.value-field-desc",
           "localizable": false,
-          "name": "isLocalized",
-          "type": "checkbox"
+          "name": "valueField",
+          "type": "text"
+        },
+        {
+          "dataType": "string",
+          "defaultValue": "",
+          "label": "lfr.form-fragments.target-input-id",
+          "description": "lfr.form-fragments.target-input-id-desc",
+          "localizable": false,
+          "name": "inputFieldId",
+          "type": "text"
         }
       ],
       "label": "lfr.form-fragments.object-options"
-    },
-    {
-      "fields": [
-        {
-          "name": "matchType",
-          "label": "lfr.form-fragments.match-type",
-          "description": "lfr.form-fragments.match-type",
-          "type": "select",
-          "dataType": "string",
-          "typeOptions": {
-            "validValues": [
-              {
-                "label": "lfr.form-fragments.starts-with",
-                "value": "startsWith"
-              },
-              {
-                "label": "lfr.form-fragments.contains",
-                "value": "contains"
-              }
-            ]
-          },
-          "defaultValue": "startsWith"
-        },
-        {
-          "dataType": "string",
-          "defaultValue": "<strong>",
-          "label": "lfr.form-fragments.start-tag",
-          "description": "lfr.form-fragments.start-tag-desc",
-          "localizable": false,
-          "name": "startTag",
-          "type": "text"
-        },
-        {
-          "dataType": "string",
-          "defaultValue": "</strong>",
-          "label": "lfr.form-fragments.end-tag",
-          "description": "lfr.form-fragments.end-tag-desc",
-          "localizable": false,
-          "name": "endTag",
-          "type": "text"
-        }
-      ],
-      "label": "lfr.form-fragments.match-options"
     }
   ]
 }

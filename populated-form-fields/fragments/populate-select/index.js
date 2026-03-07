@@ -12,24 +12,28 @@ const initPopulateSelect = () => {
   const dropdownElement = fragmentElement.querySelector(".dropdown-menu");
   const optionListElement = fragmentElement.querySelector(".list-unstyled");
 
-  const chooseOptionElement = document.getElementById(
-    `${fragmentEntryLinkNamespace}-choose-option-message`,
+  const chooseOptionElement = fragmentElement.querySelector(
+    ".select-from-list [id$='choose-option-message']",
   );
-  const labelInputElement = document.getElementById(
-    `${fragmentEntryLinkNamespace}-label-input`,
+  const labelInputElement = fragmentElement.querySelector(
+    "input[id$='label-input']",
   );
-  const loadingResultsElement = document.getElementById(
-    `${fragmentEntryLinkNamespace}-loading-results-message`,
+  const loadingResultsElement = fragmentElement.querySelector(
+    "[id$='loading-results-message']",
   );
-  const noResultsElement = document.getElementById(
-    `${fragmentEntryLinkNamespace}-no-results-message`,
+  const noResultsElement = fragmentElement.querySelector(
+    "[id$='no-results-message']",
   );
-  const uiInputElement = document.getElementById(
-    `${fragmentEntryLinkNamespace}-select-from-list-input`,
+  const uiInputElement = fragmentElement.querySelector(
+    "input[id$='select-from-list-input']",
   );
-  const valueInputElement = document.getElementById(
-    `${fragmentEntryLinkNamespace}-value-input`,
+  const valueInputElement = fragmentElement.querySelector(
+    "input[id$='value-input']",
   );
+
+  // Fallback to document for safety if fragmentElement fails for some reason
+  const getById = (id) =>
+    fragmentElement.querySelector(`#${id}`) || document.getElementById(id);
 
   const KEYS = {
     ArrowDown: "ArrowDown",
@@ -42,7 +46,11 @@ const initPopulateSelect = () => {
   let lastSearchAbortController = new AbortController();
   let lastSearchQuery = null;
 
-  const optionList = (input.attributes.options || []).map((option) => ({
+  // input global might be problematic if not defined, but it seems to be part of Liferay fragment context for form fields
+  // If it's not defined, we should check attributes on uiInputElement
+  const optionsAttr =
+    (uiInputElement && uiInputElement.attributes.options) || [];
+  const optionList = optionsAttr.map((option) => ({
     textContent: option.label,
     textValue: option.label.toLowerCase(),
     value: option.value,
@@ -71,7 +79,9 @@ const initPopulateSelect = () => {
   }
 
   function handleInputBlur() {
-    uiInputElement.value = labelInputElement.value;
+    if (uiInputElement && labelInputElement) {
+      uiInputElement.value = labelInputElement.value;
+    }
     if (checkIsOpenDropdown()) {
       setTimeout(() => closeDropdown(), 500);
     }
@@ -84,11 +94,11 @@ const initPopulateSelect = () => {
   }
 
   function handleInputKeyDown(event) {
-    if (!optionListElement.firstElementChild) {
+    if (!optionListElement || !optionListElement.firstElementChild) {
       return;
     }
 
-    const currentFocusedOption = document.getElementById(
+    const currentFocusedOption = getById(
       optionListElement.getAttribute("aria-activedescendant"),
     );
 
@@ -126,27 +136,31 @@ const initPopulateSelect = () => {
   }
 
   function handleInputChange() {
+    if (!uiInputElement) return;
     const filterValue = uiInputElement.value.toLowerCase();
 
     if (filterValue !== lastSearchQuery) {
       openDropdown();
       lastSearchQuery = filterValue;
-      chooseOptionElement.classList.add("d-none");
-      loadingResultsElement.classList.remove("d-none");
+      if (chooseOptionElement) chooseOptionElement.classList.add("d-none");
+      if (loadingResultsElement)
+        loadingResultsElement.classList.remove("d-none");
 
       filterOptions(filterValue).then((filteredOptions) => {
-        loadingResultsElement.classList.add("d-none");
+        if (loadingResultsElement)
+          loadingResultsElement.classList.add("d-none");
         renderOptionList(filteredOptions);
 
-        if (optionListElement.firstElementChild) {
-          chooseOptionElement.classList.remove("d-none");
-          noResultsElement.classList.add("d-none");
+        if (optionListElement && optionListElement.firstElementChild) {
+          if (chooseOptionElement)
+            chooseOptionElement.classList.remove("d-none");
+          if (noResultsElement) noResultsElement.classList.add("d-none");
           setFocusedOption(optionListElement.firstElementChild, {
             scrollToElement: false,
           });
         } else {
-          chooseOptionElement.classList.add("d-none");
-          noResultsElement.classList.remove("d-none");
+          if (chooseOptionElement) chooseOptionElement.classList.add("d-none");
+          if (noResultsElement) noResultsElement.classList.remove("d-none");
         }
       });
     }
@@ -154,7 +168,10 @@ const initPopulateSelect = () => {
 
   function filterOptions(query) {
     return new Promise((resolve) => {
-      if (input.attributes.relationshipURL) {
+      // Check for relationshipURL attribute on the UI input element
+      const relationshipURL =
+        uiInputElement && uiInputElement.getAttribute("relationshipurl");
+      if (relationshipURL) {
         lastSearchAbortController.abort();
         lastSearchAbortController = new AbortController();
         filterRemoteOptions(query, lastSearchAbortController).then(resolve);
@@ -184,15 +201,25 @@ const initPopulateSelect = () => {
   }
 
   function filterRemoteOptions(query, abortController) {
+    if (!uiInputElement) return Promise.resolve({ items: [] });
+
+    const relationshipLabelFieldName = uiInputElement.getAttribute(
+      "relationshiplabelfieldname",
+    );
+    const relationshipURL = uiInputElement.getAttribute("relationshipurl");
+    const relationshipValueFieldName = uiInputElement.getAttribute(
+      "relationshipvaluefieldname",
+    );
+
     if (
-      !input.attributes.relationshipLabelFieldName ||
-      !input.attributes.relationshipURL ||
-      !input.attributes.relationshipValueFieldName
+      !relationshipLabelFieldName ||
+      !relationshipURL ||
+      !relationshipValueFieldName
     ) {
       return Promise.resolve({ items: [] });
     }
 
-    const url = new URL(input.attributes.relationshipURL);
+    const url = new URL(relationshipURL);
     url.searchParams.set("search", query);
 
     return Liferay.Util.fetch(url, {
@@ -206,7 +233,7 @@ const initPopulateSelect = () => {
       .then((response) => response.json())
       .then((result) => {
         return result.items.map((entry) => {
-          let label = entry[input.attributes.relationshipLabelFieldName];
+          let label = entry[relationshipLabelFieldName];
           if (Array.isArray(label)) {
             label = label.map((label) => label.name).join(", ");
           } else if (typeof label === "object") {
@@ -215,7 +242,7 @@ const initPopulateSelect = () => {
           return {
             textContent: label,
             textValue: label,
-            value: `${entry[input.attributes.relationshipValueFieldName]}`,
+            value: `${entry[relationshipValueFieldName]}`,
           };
         });
       });
@@ -239,7 +266,9 @@ const initPopulateSelect = () => {
     optionElement,
     { scrollToElement = true } = { scrollToElement: true },
   ) {
-    const currentFocusedOption = document.getElementById(
+    if (!optionListElement) return;
+
+    const currentFocusedOption = getById(
       optionListElement.getAttribute("aria-activedescendant"),
     );
     if (currentFocusedOption) {
@@ -265,13 +294,14 @@ const initPopulateSelect = () => {
     optionElement.classList.add("dropdown-item");
     optionElement.setAttribute("role", "option");
     if (
+      optionListElement &&
       optionListElement.getAttribute("aria-activedescendant") ===
-      optionElement.id
+        optionElement.id
     ) {
       optionElement.setAttribute("aria-selected", "true");
       optionElement.scrollIntoView({ block: "nearest" });
     }
-    if (valueInputElement.value === option.value) {
+    if (valueInputElement && valueInputElement.value === option.value) {
       optionElement.classList.add("active");
     }
     return optionElement;
@@ -279,7 +309,9 @@ const initPopulateSelect = () => {
 
   function setSelectedOption(optionElement) {
     closeDropdown();
-    const selectedOption = document.getElementById(
+    if (!valueInputElement) return;
+
+    const selectedOption = getById(
       `${fragmentEntryLinkNamespace}-option-${valueInputElement.value}`,
     );
     if (selectedOption) {
@@ -287,12 +319,15 @@ const initPopulateSelect = () => {
     }
     lastSearchQuery = optionElement.textContent.toLowerCase();
     optionElement.classList.add("active");
-    labelInputElement.value = optionElement.dataset.optionLabel;
-    uiInputElement.value = optionElement.dataset.optionLabel;
+    if (labelInputElement)
+      labelInputElement.value = optionElement.dataset.optionLabel;
+    if (uiInputElement)
+      uiInputElement.value = optionElement.dataset.optionLabel;
     valueInputElement.value = optionElement.dataset.optionValue;
   }
 
   function checkIsOpenDropdown() {
+    if (!uiInputElement || !buttonElement) return false;
     return (
       uiInputElement.getAttribute("aria-expanded") === "true" &&
       buttonElement.getAttribute("aria-expanded") === "true"
@@ -300,17 +335,20 @@ const initPopulateSelect = () => {
   }
 
   function openDropdown() {
-    const canFetchOptions = input.attributes.relationshipURL;
-    if (!canFetchOptions && !optionList.length) {
+    const relationshipURL =
+      uiInputElement && uiInputElement.getAttribute("relationshipurl");
+    if (!relationshipURL && !optionList.length) {
       return;
     }
-    dropdownElement.classList.replace("d-none", "show");
-    uiInputElement.setAttribute("aria-expanded", "true");
-    buttonElement.setAttribute("aria-expanded", "true");
+    if (dropdownElement) dropdownElement.classList.replace("d-none", "show");
+    if (uiInputElement) uiInputElement.setAttribute("aria-expanded", "true");
+    if (buttonElement) buttonElement.setAttribute("aria-expanded", "true");
     const wrapperWidth = `${fragmentElement.getBoundingClientRect().width}px`;
-    dropdownElement.style.maxWidth = wrapperWidth;
-    dropdownElement.style.minWidth = wrapperWidth;
-    dropdownElement.style.width = wrapperWidth;
+    if (dropdownElement) {
+      dropdownElement.style.maxWidth = wrapperWidth;
+      dropdownElement.style.minWidth = wrapperWidth;
+      dropdownElement.style.width = wrapperWidth;
+    }
     requestAnimationFrame(() => {
       handleInputChange();
       repositionDropdownElement();
@@ -318,9 +356,9 @@ const initPopulateSelect = () => {
   }
 
   function closeDropdown() {
-    dropdownElement.classList.replace("show", "d-none");
-    uiInputElement.setAttribute("aria-expanded", "false");
-    buttonElement.setAttribute("aria-expanded", "false");
+    if (dropdownElement) dropdownElement.classList.replace("show", "d-none");
+    if (uiInputElement) uiInputElement.setAttribute("aria-expanded", "false");
+    if (buttonElement) buttonElement.setAttribute("aria-expanded", "false");
   }
 
   function toggleDropdown() {
@@ -332,6 +370,7 @@ const initPopulateSelect = () => {
   }
 
   function repositionDropdownElement() {
+    if (!uiInputElement) return;
     const uiInputRect = uiInputElement.getBoundingClientRect();
     if (document.body.contains(fragmentElement)) {
       if (fragmentElement.contains(dropdownElement)) {
@@ -340,13 +379,16 @@ const initPopulateSelect = () => {
     } else if (document.body.contains(dropdownElement)) {
       dropdownElement.parentNode.removeChild(dropdownElement);
     }
-    dropdownElement.style.transform = `
-			translateX(${(isRTL ? uiInputRect.right - window.innerWidth : uiInputRect.left) + window.scrollX}px)
-			translateY(${uiInputRect.bottom + window.scrollY}px)
-		`;
+    if (dropdownElement) {
+      dropdownElement.style.transform = `
+				translateX(${(isRTL ? uiInputRect.right - window.innerWidth : uiInputRect.left) + window.scrollX}px)
+				translateY(${uiInputRect.bottom + window.scrollY}px)
+			`;
+    }
   }
 
   function renderOptionList(options) {
+    if (!optionListElement) return;
     optionListElement.innerHTML = "";
     options.forEach((option) =>
       optionListElement.appendChild(createOptionElement(option)),
@@ -385,16 +427,18 @@ const initPopulateSelect = () => {
 
   const setSelectedOptionByValue = (value) => {
     const searchValue = value.replace(/\s+/g, "");
-    const selectedOption = (input.attributes.options || []).find(
+    const selectedOption = optionList.find(
       (option) => option.value === searchValue,
     );
 
     if (selectedOption) {
       lastSearchQuery = selectedOption.label.toLowerCase();
-      valueInputElement.value = selectedOption.value;
-      const selectedOptionElement = optionListElement.querySelector(
-        `.dropdown-item[data-option-value='${value}']`,
-      );
+      if (valueInputElement) valueInputElement.value = selectedOption.value;
+      const selectedOptionElement = optionListElement
+        ? optionListElement.querySelector(
+            `.dropdown-item[data-option-value='${value}']`,
+          )
+        : null;
       if (selectedOptionElement) {
         setSelectedOption(selectedOptionElement);
       }
@@ -403,17 +447,23 @@ const initPopulateSelect = () => {
 
   // Initialization
   if (layoutMode === "edit") {
-    buttonElement.setAttribute("disabled", true);
-    uiInputElement.setAttribute("disabled", true);
+    if (buttonElement) buttonElement.setAttribute("disabled", true);
+    if (uiInputElement) uiInputElement.setAttribute("disabled", true);
   }
 
-  buttonElement.addEventListener("click", toggleDropdown);
-  buttonElement.addEventListener("blur", handleResultListBlur);
-  uiInputElement.addEventListener("click", toggleDropdown);
-  uiInputElement.addEventListener("input", debounce(handleInputChange, 1000));
-  uiInputElement.addEventListener("blur", handleInputBlur);
-  uiInputElement.addEventListener("keydown", handleInputKeyDown);
-  optionListElement.addEventListener("click", handleResultListClick);
+  if (buttonElement) {
+    buttonElement.addEventListener("click", toggleDropdown);
+    buttonElement.addEventListener("blur", handleResultListBlur);
+  }
+  if (uiInputElement) {
+    uiInputElement.addEventListener("click", toggleDropdown);
+    uiInputElement.addEventListener("input", debounce(handleInputChange, 1000));
+    uiInputElement.addEventListener("blur", handleInputBlur);
+    uiInputElement.addEventListener("keydown", handleInputKeyDown);
+  }
+  if (optionListElement) {
+    optionListElement.addEventListener("click", handleResultListClick);
+  }
 
   window.addEventListener("resize", handleWindowResizeOrScroll, {
     passive: true,
@@ -422,16 +472,23 @@ const initPopulateSelect = () => {
     passive: true,
   });
 
-  if (useStorageValue && !input.value) {
-    const storageKey = useSpecificStorageKey
-      ? specificStorageKey
-      : `${storageKeyPrefix}_${convertCase(input.name, "snake")}`;
-    const value = retriveStorageValue(storageKey);
-    if (value) {
-      setSelectedOptionByValue(value);
+  // input global might not exist if not in standard Liferay context
+  const initialValue =
+    (uiInputElement && uiInputElement.getAttribute("value")) || "";
+
+  if (useStorageValue && !initialValue) {
+    const inputName = uiInputElement ? uiInputElement.getAttribute("name") : "";
+    if (inputName) {
+      const storageKey = useSpecificStorageKey
+        ? specificStorageKey
+        : `${storageKeyPrefix}_${convertCase(inputName, "snake")}`;
+      const value = retriveStorageValue(storageKey);
+      if (value) {
+        setSelectedOptionByValue(value);
+      }
     }
-  } else if (input.value) {
-    setSelectedOptionByValue(input.value);
+  } else if (initialValue) {
+    setSelectedOptionByValue(initialValue);
   }
 };
 

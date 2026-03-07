@@ -9,7 +9,8 @@
     </span>
   </div>
   <div
-    id="vidbutton"
+    id="vidbutton-${fragmentEntryLinkNamespace}"
+    class="vidbutton"
     role="button"
     aria-label="Pause"
     aria-pressed="false"
@@ -24,5 +25,5 @@
     </svg>
   </div>
   <div class="containerBackground"></div>
-  <video id="myvid" ${useStandardControl?then('controls','')} ${configuration.autoplay?then('autoplay','')} ${configuration.muted?then('muted','')} ${configuration.loop?then('loop','')} preload="${configuration.preload!}"></video>
+  <video id="myvid-${fragmentEntryLinkNamespace}" class="myvid" ${useStandardControl?then('controls','')} ${configuration.autoplay?then('autoplay','')} ${configuration.muted?then('muted','')} ${configuration.loop?then('loop','')} preload="${configuration.preload!}"></video>
 </div>

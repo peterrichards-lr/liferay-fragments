@@ -227,11 +227,11 @@ These tasks focus on long-term stability, modern API adoption, and cross-fragmen
   - **Plan**: Refactor `getSync` to an async `getAsync` function using `fetch` and update all callers to `await` the results.
   - **Benefits**: Prevents browser UI freezes; follows modern JS best practices.
   - **Rank**: Ease: 1/5 | Impact: 4/5 (High UX impact).
-- [ ] **Implement Debouncing**: Add a debounce helper to all autocomplete and search fragments.
+- [x] **Implement Debouncing**: Add a debounce helper to all autocomplete and search fragments.
   - **Plan**: Create a shared `debounce` utility and wrap `input` listeners in `autocomplete-(object)`, `autocomplete-(picklist)`, and `dashboard-filter`.
   - **Benefits**: Significantly reduces server load and improves responsiveness during rapid typing.
   - **Rank**: Ease: 2/5 | Impact: 4/5 (Performance/Scale).
-- [ ] **Fragment Instance Isolation**: Audit all fragments for `document.querySelector` usage.
+- [x] **Fragment Instance Isolation**: Audit all fragments for `document.querySelector` usage.
   - **Plan**: Systematically replace `document` with `fragmentElement` for internal element targeting, especially in `purchased-products` and `dashboard-filter`.
   - **Benefits**: Ensures multiple instances of the same fragment can coexist on a page without state collision.
   - **Rank**: Ease: 2/5 | Impact: 5/5 (Critical for reusability).

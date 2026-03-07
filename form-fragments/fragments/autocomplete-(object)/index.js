@@ -1,4 +1,6 @@
 const initAutocomplete = () => {
+  const ADMIN_API_BASE = "/o/object-admin/v1.0";
+
   const isValidIdentifier = (val) => {
     if (val === undefined || val === null) return false;
     const s = String(val).trim().toLowerCase();
@@ -20,41 +22,87 @@ const initAutocomplete = () => {
   };
 
   if (layoutMode !== "preview") {
-    const apiPath = configuration.apiPath;
-    const searchParam = configuration.searchParam;
-    const valueField = configuration.valueField;
-    const labelField = configuration.labelField;
-    const inputFieldId = configuration.inputFieldId;
+    const { objectERC, objectField, valueField, inputFieldId } = configuration;
 
     const input = fragmentElement.querySelector("input");
     const list = fragmentElement.querySelector("ul");
+    const errorContainer = fragmentElement.querySelector(".error-container");
+
+    let apiPath = "";
+
+    const showError = (msg) => {
+      if (errorContainer) {
+        errorContainer.textContent = msg;
+        errorContainer.classList.remove("d-none");
+      }
+    };
+
+    const resolveApiPath = async () => {
+      if (!isValidIdentifier(objectERC)) {
+        return;
+      }
+
+      try {
+        const response = await Liferay.Util.fetch(
+          `${ADMIN_API_BASE}/object-definitions/by-external-reference-code/${objectERC}`,
+        );
+        if (!response.ok) throw new Error("Failed to fetch object definition");
+
+        const definition = await response.json();
+        let path = definition.restContextPath;
+
+        if (definition.scope === "site") {
+          const siteId = Liferay.ThemeDisplay.getScopeGroupId();
+          path += `/scopes/${siteId}`;
+        }
+
+        apiPath = path;
+      } catch (err) {
+        console.error(err);
+        showError("Error: Could not resolve object API path.");
+      }
+    };
 
     if (input && list) {
       const getItems = async (searchValue) => {
         if (!isValidIdentifier(searchValue)) return [];
+        if (!apiPath) await resolveApiPath();
+        if (!apiPath) return [];
 
-        const response = await Liferay.Util.fetch(
-          `${apiPath}?${searchParam}=${searchValue}`,
-        );
-        if (!response.ok) {
-          throw new Error("Failed to fetch items");
+        try {
+          const response = await Liferay.Util.fetch(
+            `${apiPath}?search=${searchValue}`,
+          );
+          if (!response.ok) {
+            throw new Error("Failed to fetch items");
+          }
+          const data = await response.json();
+          return data.items || [];
+        } catch (err) {
+          console.error(err);
+          return [];
         }
-        const data = await response.json();
-        return data.items;
       };
 
       const renderList = (items) => {
         list.innerHTML = "";
         items.forEach((item) => {
           const li = document.createElement("li");
-          li.textContent = item[labelField];
-          li.dataset.value = item[valueField];
+          const label = item[objectField] || "Unnamed";
+          const value = item[valueField] || item.id || "";
+
+          li.textContent = label;
+          li.dataset.value = value;
           li.addEventListener("click", () => {
-            input.value = item[labelField];
-            const targetInput = document.querySelector(`#${inputFieldId}`);
-            if (targetInput) {
-              targetInput.value = item[valueField];
-              targetInput.dispatchEvent(new Event("change", { bubbles: true }));
+            input.value = label;
+            if (isValidIdentifier(inputFieldId)) {
+              const targetInput = document.querySelector(`#${inputFieldId}`);
+              if (targetInput) {
+                targetInput.value = value;
+                targetInput.dispatchEvent(
+                  new Event("change", { bubbles: true }),
+                );
+              }
             }
             list.style.display = "none";
           });
@@ -66,12 +114,8 @@ const initAutocomplete = () => {
       const handleInput = debounce(async (e) => {
         const searchValue = e.target.value;
         if (searchValue.length >= 3) {
-          try {
-            const items = await getItems(searchValue);
-            renderList(items);
-          } catch (error) {
-            console.error(error);
-          }
+          const items = await getItems(searchValue);
+          renderList(items);
         } else {
           list.style.display = "none";
         }
@@ -84,6 +128,9 @@ const initAutocomplete = () => {
           list.style.display = "none";
         }
       });
+
+      // Initial resolve
+      resolveApiPath();
     }
   }
 };
