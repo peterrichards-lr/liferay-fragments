@@ -3,8 +3,9 @@
   "jsPath": "index.js",
   "htmlPath": "index.html",
   "cssPath": "index.css",
-  "icon": "code",
+  "icon": "bolt",
   "name": "Launch Analytics Cloud",
   "type": "component",
-  "thumbnail": "thumbnail.png"
+  "thumbnail": "thumbnail.png",
+  "thumbnailPath": "thumbnail.png"
 }

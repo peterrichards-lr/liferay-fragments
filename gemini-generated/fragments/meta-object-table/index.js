@@ -1,5 +1,5 @@
 const ADMIN_API_BASE = "/o/object-admin/v1.0";
-const VERSION = "1.0.8";
+const VERSION = "1.0.10";
 
 const state = {
   definition: null,
@@ -105,18 +105,24 @@ const renderPagination = (isEditMode) => {
 
       if (prevItem) {
         prevItem.classList.toggle("disabled", state.page === 1);
-        prevItem.onclick = (e) => {
-          e.preventDefault();
-          if (state.page > 1) loadPage(state.page - 1);
-        };
+        const prevLink = prevItem.querySelector(".page-link");
+        if (prevLink) {
+          prevLink.onclick = (e) => {
+            e.preventDefault();
+            if (state.page > 1) loadPage(state.page - 1);
+          };
+        }
       }
 
       if (nextItem) {
         nextItem.classList.toggle("disabled", state.page === totalPages);
-        nextItem.onclick = (e) => {
-          e.preventDefault();
-          if (state.page < totalPages) loadPage(state.page + 1);
-        };
+        const nextLink = nextItem.querySelector(".page-link");
+        if (nextLink) {
+          nextLink.onclick = (e) => {
+            e.preventDefault();
+            if (state.page < totalPages) loadPage(state.page + 1);
+          };
+        }
       }
 
       if (activeLink) activeLink.textContent = state.page;
@@ -188,9 +194,6 @@ const loadPage = async (pageNumber, isEditMode = false) => {
 
     let dataUrl = `${url}/?pageSize=${pageSize}&page=${state.page}`;
 
-    // Ensure id and externalReferenceCode are always returned for action handling
-    // but only displayed if present in state.fields.
-    // We use a Set to ensure each field appears only once in the request.
     const requestedFieldNames = new Set(state.fields.map((f) => f.name));
     requestedFieldNames.add("id");
     requestedFieldNames.add("externalReferenceCode");
@@ -206,7 +209,6 @@ const loadPage = async (pageNumber, isEditMode = false) => {
     } else {
       tbody.innerHTML = state.items
         .map((item) => {
-          // Extremely robust identifier extraction
           let recordId = "";
           if (item.id !== undefined && item.id !== null)
             recordId = String(item.id);
@@ -226,8 +228,8 @@ const loadPage = async (pageNumber, isEditMode = false) => {
           if (enableView || enableEdit) {
             actionsHtml = `<td class="text-right">
                     <div class="btn-group">
-                        ${enableView ? `<button class="btn btn-monospaced btn-sm btn-secondary view-btn" data-record-id="${recordId}" data-record-erc="${recordERC}" title="View"><svg class="lexicon-icon"><use xlink:href="${spritemap}#view"></use></svg></button>` : ""}
-                        ${enableEdit ? `<button class="btn btn-monospaced btn-sm btn-secondary edit-btn" data-record-id="${recordId}" data-record-erc="${recordERC}" title="Edit"><svg class="lexicon-icon"><use xlink:href="${spritemap}#pencil"></use></svg></button>` : ""}
+                        ${enableView ? `<button class="btn btn-monospaced btn-sm btn-secondary view-btn" data-record-id="${recordId}" data-record-erc="${recordERC}" title="View" aria-label="View Record"><svg class="lexicon-icon"><use xlink:href="${spritemap}#view"></use></svg></button>` : ""}
+                        ${enableEdit ? `<button class="btn btn-monospaced btn-sm btn-secondary edit-btn" data-record-id="${recordId}" data-record-erc="${recordERC}" title="Edit" aria-label="Edit Record"><svg class="lexicon-icon"><use xlink:href="${spritemap}#pencil"></use></svg></button>` : ""}
                     </div>
                 </td>`;
           }
@@ -289,8 +291,6 @@ const initMetaTable = async (isEditMode) => {
     tableTitle: configTitle,
   } = configuration;
 
-  console.info(`[Meta-Object Table] VERSION ${VERSION} INITIALIZING`);
-
   const thead = fragmentElement.querySelector(
     `#thead-${fragmentEntryLinkNamespace}`,
   );
@@ -308,7 +308,7 @@ const initMetaTable = async (isEditMode) => {
     `#info-${fragmentEntryLinkNamespace}`,
   );
 
-  // Resolve effective ERC (Prioritize mappable field)
+  // Resolve effective ERC
   const mappableERCEl = fragmentElement.querySelector(
     "[data-lfr-editable-id='object-erc']",
   );
@@ -324,7 +324,6 @@ const initMetaTable = async (isEditMode) => {
     }
   }
 
-  // Modal setup helper
   const setupModal = (type) => {
     const suffix = type;
     const closeBtn = fragmentElement.querySelector(
@@ -334,7 +333,15 @@ const initMetaTable = async (isEditMode) => {
       `#overlay-${suffix}-${fragmentEntryLinkNamespace}`,
     );
 
-    if (closeBtn) closeBtn.onclick = () => toggleModal(type, false);
+    if (closeBtn) {
+      closeBtn.onclick = () => toggleModal(type, false);
+      closeBtn.onkeydown = (e) => {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          toggleModal(type, false);
+        }
+      };
+    }
     if (overlay) {
       overlay.onclick = (e) => {
         if (e.target === overlay) toggleModal(type, false);
@@ -353,10 +360,6 @@ const initMetaTable = async (isEditMode) => {
       addMode,
       addUrl,
     } = configuration;
-
-    console.debug(
-      `[Meta-Object Table] handleAction - type: ${type}, ID: ${recordId}, ERC: ${recordERC}`,
-    );
 
     let mode = "event";
     let targetUrl = "";
@@ -379,32 +382,24 @@ const initMetaTable = async (isEditMode) => {
       eventName = "lfr-object-form-select";
     }
 
-    // Block invalid identifiers for View/Edit
     const hasValidId = isValidIdentifier(recordId);
     const hasValidERC = isValidIdentifier(recordERC);
 
-    if (type !== "add" && !hasValidId && !hasValidERC) {
-      console.warn(
-        `[Meta-Object Table] Ignoring action "${type}" due to invalid record identifier. ID: ${recordId}, ERC: ${recordERC}`,
-      );
-      return;
-    }
+    if (type !== "add" && !hasValidId && !hasValidERC) return;
 
     if (mode === "event" || mode === "modal") {
       if (mode === "modal") {
         toggleModal(type, true);
       }
 
-      // Use a slightly larger delay to ensure receiver fragments are ready
       setTimeout(() => {
         const detail = {
           objectERC,
           recordId: hasValidId ? recordId : null,
           recordERC: hasValidERC ? recordERC : null,
-          erc: hasValidERC ? recordERC : null, // Backward compatibility
+          erc: hasValidERC ? recordERC : null,
         };
 
-        // Explicitly set primary "identifier" based on config
         if (type !== "add") {
           detail.identifier =
             idType === "erc"
@@ -416,10 +411,6 @@ const initMetaTable = async (isEditMode) => {
                 : null;
         }
 
-        console.debug(
-          `[Meta-Object Table] Dispatching ${eventName} for ${objectERC}`,
-          detail,
-        );
         window.dispatchEvent(new CustomEvent(eventName, { detail }));
       }, 100);
     } else if (mode === "redirect" || mode === "tab") {
@@ -431,8 +422,6 @@ const initMetaTable = async (isEditMode) => {
         const val = idType === "erc" ? recordERC : recordId;
         const key = idType === "erc" ? "entryERC" : "entryId";
         url.searchParams.set(key, val);
-
-        // Also set legacy/alt params for maximum compatibility
         url.searchParams.set("id", recordId);
         if (recordERC) url.searchParams.set("erc", recordERC);
       }
@@ -441,34 +430,35 @@ const initMetaTable = async (isEditMode) => {
     }
   };
 
-  // Expose handleAction for loadPage to use
   fragmentElement.handleAction = handleAction;
 
   if (errorEl) errorEl.classList.add("d-none");
   if (infoEl) infoEl.classList.add("d-none");
 
-  // Initialize modals
   setupModal("view");
   setupModal("edit");
   setupModal("add");
 
   if (addBtn) {
-    addBtn.onclick = () => handleAction("add");
+    addBtn.addEventListener("click", () => handleAction("add"));
   }
+
+  // Escape key to close modals
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") {
+      toggleModal("view", false);
+      toggleModal("edit", false);
+      toggleModal("add", false);
+    }
+  });
 
   if (!objectERC) {
     titleEl.textContent = "Meta-Object Table";
-    if (isEditMode && infoEl) {
-      infoEl.textContent =
-        "Please provide an Object External Reference Code in the configuration.";
-      infoEl.classList.remove("d-none");
-    }
   } else {
     try {
       const defUrl = `${ADMIN_API_BASE}/object-definitions/by-external-reference-code/${objectERC}`;
       state.definition = await fetchData(defUrl);
 
-      // Smart Title Logic
       const objectLabel = getLocalizedValue(
         state.definition.pluralLabel ||
           state.definition.label ||
@@ -477,21 +467,18 @@ const initMetaTable = async (isEditMode) => {
       const currentTitle = titleEl.innerText.trim();
       const defaultFragmentName =
         fragmentElement.dataset.fragmentName || "Meta-Object Table";
-
-      // Precedence: Configuration (configTitle) > Evaluated Value (objectLabel)
       const preferredTitle = configTitle || objectLabel;
 
       if (
         currentTitle === "Meta-Object Table" ||
         currentTitle === defaultFragmentName ||
         currentTitle === "" ||
-        currentTitle === "Milestones" || // Previous default
+        currentTitle === "Milestones" ||
         currentTitle === `${defaultFragmentName} (Preview)`
       ) {
         titleEl.innerText = preferredTitle + (isEditMode ? " (Preview)" : "");
       }
 
-      // Resolve display fields
       const allFields = state.definition.objectFields;
       let fields = [];
 
@@ -510,7 +497,6 @@ const initMetaTable = async (isEditMode) => {
             return true;
           });
       } else {
-        // Default: Show all fields EXCEPT technical ones
         fields = allFields.filter(
           (f) => !["id", "externalReferenceCode"].includes(f.name),
         );
@@ -528,7 +514,7 @@ const initMetaTable = async (isEditMode) => {
 
       if (!isEditMode && exportBtn) {
         exportBtn.classList.remove("d-none");
-        exportBtn.onclick = () => {
+        exportBtn.addEventListener("click", () => {
           const header = state.fields
             .map((f) => `"${getLocalizedValue(f.label)}"`)
             .join(",");
@@ -550,7 +536,7 @@ const initMetaTable = async (isEditMode) => {
             `${state.definition.restContextPath.replace("/o/c/", "")}.csv`,
           );
           link.click();
-        };
+        });
       }
     } catch (err) {
       if (isEditMode && errorEl) {
@@ -561,8 +547,17 @@ const initMetaTable = async (isEditMode) => {
   }
 };
 
-if (layoutMode === "view") {
-  initMetaTable(false);
-} else {
-  initMetaTable(true);
-}
+// Listen for global refresh signals from Dashboard Filter
+Liferay.on("refreshData", () => {
+  if (layoutMode === "view") loadPage(1, false);
+});
+
+const init = () => {
+  if (layoutMode === "view") {
+    initMetaTable(false);
+  } else {
+    initMetaTable(true);
+  }
+};
+
+init();

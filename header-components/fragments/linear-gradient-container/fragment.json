@@ -3,7 +3,8 @@
   "jsPath": "index.js",
   "htmlPath": "index.html",
   "cssPath": "index.css",
-  "icon": "code",
-  "name": "Linear Gradient Container",
-  "type": "component"
+  "icon": "bolt",
+  "name": "Linear Gradient Container (Deprecated)",
+  "type": "component",
+  "thumbnailPath": "thumbnail.png"
 }

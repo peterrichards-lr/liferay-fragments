@@ -3,7 +3,8 @@
   "jsPath": "index.js",
   "htmlPath": "index.html",
   "cssPath": "index.css",
-  "icon": "code",
+  "icon": "cookie",
   "name": "Campaign Insights",
-  "type": "component"
+  "type": "component",
+  "thumbnailPath": "thumbnail.png"
 }

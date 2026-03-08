@@ -3,7 +3,8 @@
   "jsPath": "index.js",
   "htmlPath": "index.ftl",
   "cssPath": "index.css",
-  "icon": "code",
+  "icon": "bolt",
   "name": "Logo Zone",
-  "type": "component"
+  "type": "component",
+  "thumbnailPath": "thumbnail.png"
 }

@@ -1,7 +1,29 @@
 const ADMIN_API_BASE = "/o/object-admin/v1.0";
 
 const initGallery = async (isEditMode) => {
-  const { objectERC, imageField, titleField, descriptionField } = configuration;
+  const {
+    objectERC: configERC,
+    imageField,
+    titleField,
+    descriptionField,
+  } = configuration;
+
+  // Resolve effective ERC (Prioritize mappable field)
+  const mappableERCEl = fragmentElement.querySelector(
+    "[data-lfr-editable-id='object-erc']",
+  );
+  let objectERC = configERC;
+  if (mappableERCEl) {
+    const mappedVal = mappableERCEl.innerText.trim();
+    if (
+      mappedVal &&
+      mappedVal !== configERC &&
+      mappedVal !== "PRODUCT_SHOWCASE" // Default value check
+    ) {
+      objectERC = mappedVal;
+    }
+  }
+
   const grid = fragmentElement.querySelector(".gallery-grid");
   const errorEl = fragmentElement.querySelector(
     `#error-${fragmentEntryLinkNamespace}`,
@@ -70,9 +92,27 @@ const initGallery = async (isEditMode) => {
             const imgUrl =
               item[imageField] ||
               "https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=2426&auto=format&fit=crop";
-            return `<div class="gallery-item"><div class="item-image" style="background-image: url('${imgUrl}')"></div><div class="item-body"><div class="item-title">${item[titleField] || "Untitled"}</div><div class="item-desc">${item[descriptionField] || ""}</div></div></div>`;
+            const title = item[titleField] || "Untitled";
+            return `
+                <div class="gallery-item" tabindex="0" role="button" aria-label="View details for ${title}">
+                    <div class="item-image" style="background-image: url('${imgUrl}')"></div>
+                    <div class="item-body">
+                        <div class="item-title">${title}</div>
+                        <div class="item-desc">${item[descriptionField] || ""}</div>
+                    </div>
+                </div>`;
           })
           .join("");
+
+        // Add keyboard support
+        grid.querySelectorAll(".gallery-item").forEach((item) => {
+          item.addEventListener("keydown", (e) => {
+            if (e.key === "Enter" || e.key === " ") {
+              e.preventDefault();
+              item.click();
+            }
+          });
+        });
       }
     } catch (err) {
       showError(err.message);

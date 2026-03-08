@@ -6,6 +6,18 @@ const state = {
   daysToDisplay: parseInt(configuration.daysToDisplay || "365"),
 };
 
+const isValidIdentifier = (val) => {
+  if (val === undefined || val === null) return false;
+  const s = String(val).trim().toLowerCase();
+  return (
+    s !== "" &&
+    s !== "undefined" &&
+    s !== "null" &&
+    s !== "0" &&
+    s !== "[object object]"
+  );
+};
+
 const getLocalizedValue = (value) => {
   if (typeof value === "object" && value !== null && !Array.isArray(value)) {
     const languageId =
@@ -18,8 +30,26 @@ const getLocalizedValue = (value) => {
 };
 
 const fetchData = async () => {
-  const { objectERC } = configuration;
-  if (!objectERC) throw new Error("Object ERC not configured.");
+  const { objectERC: configERC } = configuration;
+
+  // Resolve effective ERC (Prioritize mappable field)
+  const mappableERCEl = fragmentElement.querySelector(
+    "[data-lfr-editable-id='object-erc']",
+  );
+  let objectERC = configERC;
+  if (mappableERCEl) {
+    const mappedVal = mappableERCEl.innerText.trim();
+    if (
+      mappedVal &&
+      mappedVal !== configERC &&
+      mappedVal !== "ACTIVITY_LOG" // Default value check
+    ) {
+      objectERC = mappedVal;
+    }
+  }
+
+  if (!isValidIdentifier(objectERC))
+    throw new Error("Object ERC not configured.");
 
   const adminUrl = `${ADMIN_API_BASE}/object-definitions/by-external-reference-code/${objectERC}`;
   const defRes = await Liferay.Util.fetch(adminUrl);
@@ -130,10 +160,22 @@ const initActivityHeatmap = async (isEditMode) => {
   if (errorEl) errorEl.classList.add("d-none");
   if (infoEl) infoEl.classList.add("d-none");
 
-  const { objectERC } = configuration;
+  const { objectERC: configERC, chartTitle: configTitle } = configuration;
 
-  if (!objectERC) {
-    if (titleEl) titleEl.textContent = "Activity Heatmap";
+  // Resolve effective ERC (Prioritize mappable field)
+  const mappableERCEl = fragmentElement.querySelector(
+    "[data-lfr-editable-id='object-erc']",
+  );
+  let objectERC = configERC;
+  if (mappableERCEl) {
+    const mappedVal = mappableERCEl.innerText.trim();
+    if (mappedVal && mappedVal !== configERC && mappedVal !== "ACTIVITY_LOG") {
+      objectERC = mappedVal;
+    }
+  }
+
+  if (!isValidIdentifier(objectERC)) {
+    if (titleEl) titleEl.textContent = configTitle || "Activity Heatmap";
     if (isEditMode && infoEl) {
       infoEl.textContent = "Please configure an Object ERC.";
       infoEl.classList.remove("d-none");
@@ -147,18 +189,23 @@ const initActivityHeatmap = async (isEditMode) => {
       const defaultFragmentName =
         fragmentElement.dataset.fragmentName || "Activity Heatmap";
 
+      // Evaluated Value
+      const objectLabel = getLocalizedValue(
+        state.definition.pluralLabel ||
+          state.definition.label ||
+          state.definition.name,
+      );
+
+      // Precedence: Configuration (configTitle) > Evaluated Value
+      const preferredTitle = configTitle || objectLabel;
+
       if (
         currentTitle === "Activity Heatmap" ||
         currentTitle === defaultFragmentName ||
         currentTitle === "" ||
         currentTitle === `${defaultFragmentName} (Preview)`
       ) {
-        const objectLabel = getLocalizedValue(
-          state.definition.pluralLabel ||
-            state.definition.label ||
-            state.definition.name,
-        );
-        titleEl.innerText = objectLabel + (isEditMode ? " (Preview)" : "");
+        titleEl.innerText = preferredTitle + (isEditMode ? " (Preview)" : "");
       }
 
       renderHeatmap();

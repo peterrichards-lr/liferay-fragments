@@ -60,6 +60,25 @@
         }
       ],
       "label": "lfr.user-account.button-options"
+    },
+    {
+      "fields": [
+        {
+          "defaultValue": "/o/headless-admin-user/v1.0/my-user-account",
+          "label": "lfr.user-account.endpoint-url",
+          "description": "lfr.user-account.endpoint-url-description",
+          "name": "endpointUrl",
+          "type": "text"
+        },
+        {
+          "defaultValue": "",
+          "label": "lfr.user-account.user-agent-application-erc",
+          "description": "lfr.user-account.user-agent-application-erc-description",
+          "name": "userAgentAppExtRefCode",
+          "type": "text"
+        }
+      ],
+      "label": "lfr.user-account.endpoint-options"
     }
   ]
 }

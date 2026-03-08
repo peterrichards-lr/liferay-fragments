@@ -1,0 +1,10 @@
+{
+  "configurationPath": "configuration.json",
+  "cssPath": "index.css",
+  "htmlPath": "index.html",
+  "icon": "shortcut",
+  "jsPath": "index.js",
+  "name": "Interactive Wizard",
+  "thumbnailPath": "thumbnail.png",
+  "type": "component"
+}

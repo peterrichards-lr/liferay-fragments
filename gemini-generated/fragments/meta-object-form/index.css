@@ -7,7 +7,8 @@
 
 /* Editor Header Styles */
 .meta-form-editor-header { height: 0; overflow: hidden; display: none; }
-body.has-edit-mode-menu .meta-form-editor-header.show {
+body.has-edit-mode-menu .meta-form-editor-header.show,
+.meta-form-container[data-layout-mode="edit"] .meta-form-editor-header.show {
    height: 26px;
    min-height: 26px;
    box-sizing: border-box;
@@ -33,7 +34,8 @@ body.has-edit-mode-menu .meta-form-editor-header.show {
     margin-bottom: 2rem;
 }
 
-body.has-edit-mode-menu .meta-editor-mappable-fields {
+body.has-edit-mode-menu .meta-editor-mappable-fields,
+.meta-form-container[data-layout-mode="edit"] .meta-editor-mappable-fields {
     display: flex;
 }
 

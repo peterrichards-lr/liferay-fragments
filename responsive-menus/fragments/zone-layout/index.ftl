@@ -18,9 +18,9 @@ zoneLayoutHeaderClass = "zone-layout-editor-padding" + (configuration.zoneLayout
 /]
 
 <style>
-  body.has-edit-mode-menu .${zoneLayoutNamespace} :is(lfr-drop-zone .page-editor > div, lfr-drop-zone .lfr-tooltip-scope > div),
-  body:not(.has-edit-mode-menu) .${zoneLayoutNamespace} :is(lfr-drop-zone .lfr-tooltip-scope > div),
-  body:not(.has-edit-mode-menu) .${zoneLayoutNamespace} > div {
+  .${zoneLayoutNamespace}[data-layout-mode="edit"] :is(lfr-drop-zone .page-editor > div, lfr-drop-zone .lfr-tooltip-scope > div),
+  .${zoneLayoutNamespace}[data-layout-mode="view"] :is(lfr-drop-zone .lfr-tooltip-scope > div),
+  .${zoneLayoutNamespace}[data-layout-mode="view"] > div {
     display: ${displayValue}${cssImportant};
     flex-direction: ${flexDirection?has_content?then(flexDirection, 'unset')}${cssImportant};
     flex-wrap: ${isFlex?then(configuration.flexWrap, 'unset')}${cssImportant};
@@ -30,9 +30,9 @@ zoneLayoutHeaderClass = "zone-layout-editor-padding" + (configuration.zoneLayout
   }
 
   @media only screen and (max-width: ${configuration.landscapePhoneBreakpoint}) {
-    body.has-edit-mode-menu .${zoneLayoutNamespace}:not(.allow-override) :is(lfr-drop-zone .page-editor > div, lfr-drop-zone .lfr-tooltip-scope > div),
-    body:not(.has-edit-mode-menu) .${zoneLayoutNamespace}:not(.allow-override) :is(lfr-drop-zone .lfr-tooltip-scope > div),
-    body:not(.has-edit-mode-menu) .${zoneLayoutNamespace}:not(.allow-override) > div {
+    .${zoneLayoutNamespace}[data-layout-mode="edit"]:not(.allow-override) :is(lfr-drop-zone .page-editor > div, lfr-drop-zone .lfr-tooltip-scope > div),
+    .${zoneLayoutNamespace}[data-layout-mode="view"]:not(.allow-override) :is(lfr-drop-zone .lfr-tooltip-scope > div),
+    .${zoneLayoutNamespace}[data-layout-mode="view"]:not(.allow-override) > div {
       flex-wrap: ${isFlex?then(configuration.flexWrap, 'unset')}
       align-items: ${isFlex?then(configuration.justifyContent, 'unset')}
       justify-content: ${isFlex?then(configuration.alignItems, 'unset')}
@@ -46,6 +46,7 @@ zoneLayoutHeaderClass = "zone-layout-editor-padding" + (configuration.zoneLayout
   data-lock="${lockStyles?c}"
   data-display="${displayValue}"
   data-direction="${flexDirection}"
+  data-layout-mode="${layoutMode}"
 >
   <lfr-drop-zone></lfr-drop-zone>
 </div>

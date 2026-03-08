@@ -1,17 +1,60 @@
 const initAuditButton = () => {
+  const ADMIN_API_BASE = "/o/object-admin/v1.0";
+
+  const isValidIdentifier = (val) => {
+    if (val === undefined || val === null) return false;
+    const s = String(val).trim().toLowerCase();
+    return (
+      s !== "" &&
+      s !== "undefined" &&
+      s !== "null" &&
+      s !== "0" &&
+      s !== "[object object]"
+    );
+  };
+
   if (layoutMode === "view") {
     const formatDate = (d) => {
       return d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + d.getDate();
     };
 
-    const createAuditEntry = (entryDate, account, action) => {
+    let apiPath = "";
+
+    const resolveApiPath = async () => {
+      const objectERC = configuration.objectERC || "AUDIT_ENTRY";
+      try {
+        const response = await Liferay.Util.fetch(
+          `${ADMIN_API_BASE}/object-definitions/by-external-reference-code/${objectERC}`,
+        );
+        if (!response.ok) throw new Error("Failed to fetch object definition");
+
+        const definition = await response.json();
+        let path = definition.restContextPath;
+
+        if (definition.scope === "site") {
+          const siteId = Liferay.ThemeDisplay.getScopeGroupId();
+          path += `/scopes/${siteId}`;
+        }
+
+        apiPath = path;
+      } catch (err) {
+        console.error(err);
+        // Fallback to legacy path if resolution fails
+        apiPath = "/o/c/auditentries";
+      }
+    };
+
+    const createAuditEntry = async (entryDate, account, action) => {
+      if (!apiPath) await resolveApiPath();
+
       const auditEntry = {
         action,
         account,
         entryDate,
         userEmail: Liferay.ThemeDisplay.getUserEmailAddress(),
       };
-      Liferay.Util.fetch("/o/c/auditentries", {
+
+      Liferay.Util.fetch(apiPath, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -33,9 +76,9 @@ const initAuditButton = () => {
           }
         })
         .then((response) => {
-          console.log(response);
+          console.log("Audit Success:", response);
         })
-        .catch((reason) => console.error(reason));
+        .catch((reason) => console.error("Audit Error:", reason));
     };
 
     const getEntryDate = () => {
@@ -50,11 +93,13 @@ const initAuditButton = () => {
     };
 
     const getAction = (btn) => {
-      const usePrefixSuffix = configuration.usePrefixSuffix;
+      const usePrefixSuffix = configuration.usePrefixAndSuffix;
       const actionPrefix =
-        configuration.auditActionPrefix + (configuration.addSpace ? " " : "");
+        (configuration.auditActionPrefix || "") +
+        (configuration.addSpace ? " " : "");
       const actionSuffix =
-        (configuration.addSpace ? " " : "") + configuration.auditActionSuffix;
+        (configuration.addSpace ? " " : "") +
+        (configuration.auditActionSuffix || "");
 
       var action = usePrefixSuffix ? actionPrefix : "";
       if (configuration.useButtonText && btn) {
@@ -83,6 +128,9 @@ const initAuditButton = () => {
     if (btn) {
       btn.addEventListener("click", clickHandler);
     }
+
+    // Pre-resolve
+    resolveApiPath();
   } else if (layoutMode === "edit") {
     const configEl = fragmentElement.querySelector("#action-configuration");
     if (configEl) configEl.classList.remove("configuration");

@@ -10,6 +10,7 @@ This skill provides comprehensive procedural knowledge and architectural standar
 ## Core Workflows
 
 ### 1. New Fragment Creation
+
 - Ensure `fragment.json` correctly points to all assets.
 - Create `configuration.json` using standard field sets and types.
 - Implement the "Edit Mode Previews & Alerts" pattern in `index.html` and `index.js`.
@@ -17,15 +18,18 @@ This skill provides comprehensive procedural knowledge and architectural standar
 - **Dynamic Object Discovery**: Never hardcode Object API paths (e.g., `/o/c/waterreadings`). Always use a configuration field for the **Object External Reference Code (ERC)**.
   - Since there is no "by-rest-context-path" endpoint in the Object Admin API, fetch the definition via `/o/object-admin/v1.0/object-definitions/by-external-reference-code/{ERC}`.
   - Use the returned `restContextPath` and `scope` to construct the correct data URL (e.g., append `/scopes/{siteId}` if scope is `site`).
+- **Standardized API Interaction**: Always use `Liferay.Util.fetch` for standard Liferay APIs to auto-handle CSRF and authentication. For OAuth2-secured extensions, use `const {fetch} = Liferay.OAuth2Client.fromUserAgent('client-id')`.
 
 ### 2. Auditing Fragments
-- Check for global variable leakage (use `fragmentElement`).
-- Verify null-safety in FreeMarker (`!`).
-- Ensure all icon-only buttons have `aria-label`.
-- Validate that drag/swipe interactions use Pointer Events.
-- **Portability Check**: Flag any hardcoded URLs or environment-specific paths for removal.
+
+- **Scoped Internal Selectors**: Check for global variable leakage. Always use `fragmentElement.querySelector` for internal state. `document` or `window` should only be used for cross-fragment communication (e.g., PubSub).
+- **Modern API Usage**: Verify the use of `layoutMode` instead of the legacy `has-edit-mode-menu` body class check.
+- **Robust Identifiers**: Use a strict validation helper (`isValidIdentifier`) to filter out `"undefined"`, `"null"`, `"0"`, and `"[object object]"` strings before any network calls.
+- **Freemarker Safety**: Verify null-safety in FreeMarker (`!`). Ensure `.no-transform` files exist if FreeMarker syntax is present in JS or CSS.
+- **Accessibility**: Ensure all icon-only buttons have `aria-label`. Validate that interactive components have full keyboard support (`Enter`, `Space`, `Arrow` keys).
 
 ### 3. Deprecation Protocol
+
 - **Naming**: Append `(DEPRECATED)` to the `name` in `fragment.json`.
 - **Description**: Add a clear description explaining why the fragment is deprecated and what the recommended alternative is.
 - **Visual Warning**: Add a conditional alert in `index.html` that is only visible in the Page Editor/Fragment Editor to notify administrators of the deprecation.

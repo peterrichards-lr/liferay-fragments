@@ -1,9 +1,11 @@
 const initMyRights = () => {
   if (layoutMode === "view") {
-    const rolesEndpointUrl = configuration.rolesEndpointUrl;
-    const sitesEndpointUrl = configuration.sitesEndpointUrl;
-    const userGroupsEndpointUrl = configuration.userGroupsEndpointUrl;
-    const userAgentAppExtRefCode = configuration.userAgentAppExtRefCode;
+    const {
+      rolesEndpointUrl,
+      sitesEndpointUrl,
+      userGroupsEndpointUrl,
+      userAgentAppExtRefCode,
+    } = configuration;
 
     const button = fragmentElement.querySelector("button");
     const span = fragmentElement.querySelector("span");
@@ -24,7 +26,6 @@ const initMyRights = () => {
       rolesEndpointUrl &&
       sitesEndpointUrl &&
       userGroupsEndpointUrl &&
-      userAgentAppExtRefCode &&
       button &&
       span &&
       roles &&
@@ -32,65 +33,59 @@ const initMyRights = () => {
       userGroups &&
       error
     ) {
-      const oAuth2Client = Liferay.OAuth2Client.FromUserAgentApplication(
-        userAgentAppExtRefCode,
-      );
       span.textContent = `${Liferay.ThemeDisplay.getUserName()} [${Liferay.ThemeDisplay.getUserId()}]`;
+
       const buttonEventListener = (evt) => {
         error.style.display = "none";
-        if (oAuth2Client) {
-          oAuth2Client
-            .fetch(`https://${rolesEndpointUrl}`)
-            .then((response) => response.json())
-            .then((json) => {
-              json.roles.forEach((role) => {
-                roles.value += `${role.name} [${role.id}]\r\n`;
-              });
-            })
-            .catch((err) => {
-              if (err.status == 401) {
-                error.innerText = "Unauthorized";
-              } else {
-                console.log(err);
-                error.innerText = "Unexpected error. See console log";
-              }
-              error.style.display = "block";
-            });
-          oAuth2Client
-            .fetch(`https://${sitesEndpointUrl}`)
-            .then((response) => response.json())
-            .then((json) => {
-              json.sites.forEach((site) => {
-                sites.value += `${site.name} [${site.id}]\r\n`;
-              });
-            })
-            .catch((err) => {
-              if (err.status == 401) {
-                error.innerText = "Unauthorized";
-              } else {
-                console.log(err);
-                error.innerText = "Unexpected error. See console log";
-              }
-              error.style.display = "block";
-            });
-          oAuth2Client
-            .fetch(`https://${userGroupsEndpointUrl}`)
-            .then((response) => response.json())
-            .then((json) => {
-              json.userGroups.forEach((userGroup) => {
-                userGroups.value += `${userGroup.name} [${userGroup.id}]\r\n`;
-              });
-            })
-            .catch((err) => {
-              if (err.status == 401) {
-                error.innerText = "Unauthorized";
-              } else {
-                console.log(err);
-                error.innerText = "Unexpected error. See console log";
-              }
-              error.style.display = "block";
-            });
+
+        // Determine which fetch to use
+        let fetchFn;
+        if (userAgentAppExtRefCode) {
+          const { fetch } = Liferay.OAuth2Client.fromUserAgent(
+            userAgentAppExtRefCode,
+          );
+          fetchFn = fetch;
+        } else {
+          fetchFn = Liferay.Util.fetch;
         }
+
+        const resolveUrl = (url) => {
+          if (!url.startsWith("/") && !url.startsWith("http")) {
+            return `https://${url}`;
+          }
+          return url;
+        };
+
+        const handleFetch = (url, targetEl, collectionKey, itemLabelKey) => {
+          fetchFn(resolveUrl(url))
+            .then((response) => {
+              if (!response.ok) throw response;
+              return response.json();
+            })
+            .then((json) => {
+              const items = json[collectionKey] || [];
+              items.forEach((item) => {
+                targetEl.value += `${item[itemLabelKey] || "Unknown"} [${item.id || "N/A"}]\r\n`;
+              });
+            })
+            .catch((err) => {
+              if (err.status == 401) {
+                error.innerText = "Unauthorized";
+              } else {
+                console.error(err);
+                error.innerText = "Unexpected error. See console log";
+              }
+              error.style.display = "block";
+            });
+        };
+
+        roles.value = "";
+        sites.value = "";
+        userGroups.value = "";
+
+        handleFetch(rolesEndpointUrl, roles, "roles", "name");
+        handleFetch(sitesEndpointUrl, sites, "sites", "name");
+        handleFetch(userGroupsEndpointUrl, userGroups, "userGroups", "name");
       };
 
       button.addEventListener("click", buttonEventListener);

@@ -1,0 +1,35 @@
+<div class="interactive-wizard" id="wizard-${fragmentEntryLinkNamespace}" style="--active-color: ${configuration.activeColor}; --inactive-color: ${configuration.inactiveColor}">
+    <!-- Step Indicator -->
+    <nav class="wizard-nav" aria-label="Wizard Steps">
+        <ul class="wizard-steps list-unstyled">
+            [#list 1..configuration.numberOfSteps as i]
+            <li class="step-item [#if i == 1]active[/#if]" id="step-indicator-${i}-${fragmentEntryLinkNamespace}" aria-current="${(i == 1)?then('step', 'false')}">
+                <span class="step-number">${i}</span>
+                <span class="step-label sr-only">Step ${i}</span>
+            </li>
+            [/#list]
+        </ul>
+    </nav>
+
+    <!-- Step Content -->
+    <div class="wizard-content">
+        [#list 1..configuration.numberOfSteps as i]
+        <div class="step-panel [#if i > 1]d-none[/#if]" id="step-panel-${i}-${fragmentEntryLinkNamespace}" role="tabpanel" aria-labelledby="step-indicator-${i}-${fragmentEntryLinkNamespace}">
+            <lfr-drop-zone data-lfr-drop-zone-id="step-${i}" data-lfr-priority="${i}"></lfr-drop-zone>
+        </div>
+        [/#list]
+    </div>
+
+    <!-- Navigation -->
+    <div class="wizard-actions d-flex justify-content-between mt-4">
+        <button class="btn btn-secondary back-btn d-none" type="button">
+            ${configuration.backLabel!"Back"}
+        </button>
+        <button class="btn btn-primary next-btn" type="button">
+            ${configuration.nextLabel!"Next"}
+        </button>
+        <button class="btn btn-success finish-btn d-none" type="button">
+            ${configuration.finishLabel!"Finish"}
+        </button>
+    </div>
+</div>

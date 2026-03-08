@@ -2,8 +2,9 @@
   "configurationPath": "configuration.json",
   "cssPath": "index.css",
   "htmlPath": "index.html",
-  "icon": "code",
+  "icon": "bolt",
   "jsPath": "index.js",
   "name": "Dynamic Badge Overlay",
-  "type": "component"
+  "type": "component",
+  "thumbnailPath": "thumbnail.png"
 }

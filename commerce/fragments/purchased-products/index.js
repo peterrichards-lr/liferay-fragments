@@ -1,4 +1,16 @@
 const initPurchasedProducts = () => {
+  const isValidIdentifier = (val) => {
+    if (val === undefined || val === null) return false;
+    const s = String(val).trim().toLowerCase();
+    return (
+      s !== "" &&
+      s !== "undefined" &&
+      s !== "null" &&
+      s !== "0" &&
+      s !== "[object object]"
+    );
+  };
+
   if (layoutMode === "view") {
     var config = undefined;
     if (configuration.useCommerceContext) {
@@ -25,7 +37,11 @@ const initPurchasedProducts = () => {
       }
     }
 
-    if (config) {
+    if (
+      config &&
+      isValidIdentifier(config.accountId) &&
+      isValidIdentifier(config.channelId)
+    ) {
       console.debug(
         `Processing placed orders for account ${config.accountId} on channel ${config.channelId}`,
       );
@@ -49,31 +65,31 @@ const initPurchasedProducts = () => {
         .then((data) => {
           const { items, totalCount } = data;
           console.debug(`Found ${totalCount} order(s)`);
-          const results = document.querySelector(
-            `#${fragmentNamespace}-results`,
-          );
+          const results = fragmentElement.querySelector(".results-placeholder");
           if (!results) {
             console.error("No results placeholder found");
           } else {
             if (items && items.length > 0) {
-              const productCardTemplate = document.querySelector(
-                `#${fragmentNamespace}-product-card-template`,
+              const productCardTemplate = fragmentElement.querySelector(
+                ".product-card-template",
               ).firstElementChild;
               if (!productCardTemplate) {
                 console.error("No product card template was found");
               } else if (Array.isArray(items)) {
                 Promise.all(
                   items.map((order) => {
-                    console.debug(
-                      `Retrieving order items for order ${order.id}`,
-                    );
-                    return Liferay.Util.fetch(
-                      `/o/headless-commerce-delivery-order/v1.0/placed-orders/${order.id}/placed-order-items`,
-                    );
+                    if (isValidIdentifier(order.id)) {
+                      console.debug(
+                        `Retrieving order items for order ${order.id}`,
+                      );
+                      return Liferay.Util.fetch(
+                        `/o/headless-commerce-delivery-order/v1.0/placed-orders/${order.id}/placed-order-items`,
+                      );
+                    }
                   }),
                 ).then((responses) =>
                   Promise.all(
-                    responses.map((response) => {
+                    responses.filter(Boolean).map((response) => {
                       const { status } = response;
                       const responseContentType =
                         response.headers.get("content-type");

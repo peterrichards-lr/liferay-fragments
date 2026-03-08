@@ -1,9 +1,10 @@
 {
-   "configurationPath": "configuration.json",
-   "jsPath": "index.js",
-   "htmlPath": "index.html",
-   "cssPath": "index.css",
-   "icon": "logout",
-   "name": "Site Logo",
-   "type": "component"
+  "configurationPath": "configuration.json",
+  "jsPath": "index.js",
+  "htmlPath": "index.html",
+  "cssPath": "index.css",
+  "icon": "image",
+  "name": "Site Logo",
+  "type": "component",
+  "thumbnailPath": "thumbnail.png"
 }

@@ -1,1 +1,10 @@
-{"configurationPath": "configuration.json", "cssPath": "index.css", "htmlPath": "index.html", "icon": "picture", "jsPath": "index.js", "name": "Modern Parallax Hero", "type": "component"}
+{
+  "configurationPath": "configuration.json",
+  "cssPath": "index.css",
+  "htmlPath": "index.html",
+  "icon": "web",
+  "jsPath": "index.js",
+  "name": "Modern Parallax Hero",
+  "type": "component",
+  "thumbnailPath": "thumbnail.png"
+}

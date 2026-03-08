@@ -47,7 +47,7 @@
     "dropzone-${zone}-${fragmentEntryLinkNamespace}"
   )/]
   [#if zone == 'menu']
-    <nav id="${zoneId}" class="${menuClasses} dropzone dropzone-${zone}" aria-label="Side menu">
+    <nav id="${zoneId}" class="${menuClasses} dropzone dropzone-menu" aria-label="Side menu">
       <lfr-drop-zone></lfr-drop-zone>
     </nav>
   [#else]
@@ -64,7 +64,8 @@
     role="navigation"
     aria-label="Responsive Menu"
     lang="${htmlLang}"
-    dir="${langDir}">
+    dir="${langDir}"
+    data-layout-mode="${layoutMode}">
     <div class="${menuHeaderClass}">Responsive Menu</div>
     <div class="dropzone-wrapper dropzone-wrapper-${configuration.dropzoneConfig}">
       [@renderHamburgerIcon/]
@@ -131,7 +132,7 @@
   }
 
   .fragment-menu-editor-padding { height: 0; overflow: hidden; }
-  body.has-edit-mode-menu .page-editor .fragment-menu-editor-padding.show {
+  .fragment-root[data-layout-mode="edit"] .fragment-menu-editor-padding.show {
     height: 26px;
     min-height: 26px;
     box-sizing: border-box;
@@ -183,11 +184,13 @@
   }
   .lfr-layout-structure-item-responsive-side-menu > div { height: 100%; }
 
-  body.has-control-menu:not(.has-edit-mode-menu) .lfr-layout-structure-item-responsive-side-menu {
+  body.has-control-menu:not(.has-edit-mode-menu) .lfr-layout-structure-item-responsive-side-menu,
+  .fragment-root[data-layout-mode="view"] .lfr-layout-structure-item-responsive-side-menu {
     top: var(--control-menu-container-height, 0);
     height: calc(100dvh - var(--control-menu-container-height, 0));
   }
-  body.has-control-menu.has-edit-mode-menu .lfr-layout-structure-item-responsive-side-menu {
+  body.has-control-menu.has-edit-mode-menu .lfr-layout-structure-item-responsive-side-menu,
+  .fragment-root[data-layout-mode="edit"] .lfr-layout-structure-item-responsive-side-menu {
     height: calc(100dvh - var(--control-menu-container-height, 0) - var(--toolbar-height, 64px) - var(--page-editor-breadcrumb-height, 29px));
   }
 
@@ -219,26 +222,26 @@
     flex: 1;
   }
 
-  body.has-edit-mode-menu .dropzone .page-editor__no-fragments-state {
+  .fragment-root[data-layout-mode="edit"] .dropzone .page-editor__no-fragments-state {
     min-width: 100px;
     padding: calc((-7 * var(--responsive-menu-zone-count, 1) + 26) * 1vh) 12% !important;
   }
-  body.has-edit-mode-menu .dropzone .page-editor__no-fragments-state:first-child:before {
+  .fragment-root[data-layout-mode="edit"] .dropzone .page-editor__no-fragments-state:first-child:before {
     color: #6b6c7e;
     font-size: 14px;
     font-weight: bold;
     text-align: center;
     margin: 0 0 1rem;
   }
-  body.has-edit-mode-menu .dropzone-upper .page-editor__no-fragments-state:first-child:before { content: "Upper Zone"; }
-  body.has-edit-mode-menu .dropzone-menu  .page-editor__no-fragments-state:first-child:before { content: "Menu Zone"; }
-  body.has-edit-mode-menu .dropzone-lower .page-editor__no-fragments-state:first-child:before { content: "Lower Zone"; }
+  .fragment-root[data-layout-mode="edit"] .dropzone-upper .page-editor__no-fragments-state:first-child:before { content: "Upper Zone"; }
+  .fragment-root[data-layout-mode="edit"] .dropzone-menu  .page-editor__no-fragments-state:first-child:before { content: "Menu Zone"; }
+  .fragment-root[data-layout-mode="edit"] .dropzone-lower .page-editor__no-fragments-state:first-child:before { content: "Lower Zone"; }
 
-  body.has-edit-mode-menu .page-editor div.page-editor__container > div[data-name="Drop Zone"],
+  .fragment-root[data-layout-mode="edit"] .page-editor div.page-editor__container > div[data-name="Drop Zone"],
   body .page-editor      div.page-editor__container > div[data-name="Main"] { flex-grow: 1; }
-  body.has-edit-mode-menu .page-editor div.page-editor__container > div:has(div[data-name="Drop Zone"]),
+  .fragment-root[data-layout-mode="edit"] .page-editor div.page-editor__container > div:has(div[data-name="Drop Zone"]),
   body .page-editor      div.page-editor__container > div:has(div[data-name="Main"]) { flex-grow: 1; }
-  body.has-edit-mode-menu div.master-page div:has(#page-editor) { flex-grow: 1; }
+  .fragment-root[data-layout-mode="edit"] div.master-page div:has(#page-editor) { flex-grow: 1; }
 
   [#if configuration.menuStyle?contains('menu-left')]
     .lfr-layout-structure-item-responsive-side-menu { left: 0; }
@@ -646,7 +649,7 @@
       .fragment-root .fragment-menu .lfr-nav-item { align-items: start; }
     [/#if]
 
-    .fragment-root .dropzone .zone-layout.allow-override > div { display: flex; flex-direction: column; align-items: start; justify-content: end; }
+    .fragment-root .dropzone .zone-layout > div { display: flex; flex-direction: column; align-items: start; justify-content: end; }
     .fragment-root .dropzone .zone-layout.allow-override > div > * { width: 100%; }
 
     .fragment-root:has(.dropzone-menu.fragment-menu .text-truncate img) .hamburger-zone-inner .dropzone-upper,
@@ -793,7 +796,7 @@
       flex-direction: column;
       pointer-events: none;
       opacity: 0;
-      transform: translateY(.25rem);
+      transform: translateY(-.25rem);
       transition: opacity .2s ease, transform .2s ease;
       width: 100%;
       position: static;
@@ -827,7 +830,7 @@
       .fragment-root .fragment-menu .lfr-nav-item { align-items: start; }
     [/#if]
 
-    .fragment-root .dropzone .zone-layout.allow-override > div { display: flex; flex-direction: column; align-items: start; justify-content: end; }
+    .fragment-root .dropzone .zone-layout > div { display: flex; flex-direction: column; align-items: start; justify-content: end; }
     .fragment-root .dropzone .zone-layout.allow-override > div > * { width: 100%; }
 
     .fragment-root .dropzone-menu.fragment-menu .lfr-nav-item .text-truncate,

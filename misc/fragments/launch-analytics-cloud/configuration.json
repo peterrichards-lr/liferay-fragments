@@ -5,6 +5,7 @@
         {
           "dataType": "string",
           "defaultValue": "h4",
+          "description": "lfr.misc.heading-level-description",
           "label": "lfr.misc.heading-level",
           "name": "headingLevel",
           "type": "select",
@@ -39,6 +40,7 @@
         {
           "dataType": "string",
           "defaultValue": "py-2",
+          "description": "lfr.misc.height-description",
           "label": "lfr.misc.height",
           "name": "height",
           "type": "select",
@@ -75,6 +77,7 @@
         {
           "dataType": "string",
           "defaultValue": "primary",
+          "description": "lfr.misc.button-type-desc",
           "label": "lfr.misc.type",
           "name": "buttonType",
           "type": "select",
@@ -106,6 +109,7 @@
         {
           "dataType": "string",
           "defaultValue": "nm",
+          "description": "lfr.misc.button-size-desc",
           "label": "lfr.misc.size",
           "name": "buttonSize",
           "type": "select",

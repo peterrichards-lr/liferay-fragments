@@ -48,14 +48,14 @@
           "description": "lfr.form-fragments.integer-fg-color",
           "name": "integerFGColor",
           "type": "colorPicker",
-          "defaultValue": "#FFFFFF"
+          "defaultValue": "var(--white, #FFFFFF)"
         },
         {
           "label": "lfr.form-fragments.integer-bg-color",
           "description": "lfr.form-fragments.integer-bg-color",
           "name": "integerBGColor",
           "type": "colorPicker",
-          "defaultValue": "#000000"
+          "defaultValue": "var(--black, #000000)"
         },
         {
           "defaultValue": "3",
@@ -70,14 +70,14 @@
           "description": "lfr.form-fragments.decimal-fg-color",
           "name": "decimalFGColor",
           "type": "colorPicker",
-          "defaultValue": "#FFFFFF"
+          "defaultValue": "var(--white, #FFFFFF)"
         },
         {
           "label": "lfr.form-fragments.decimal-bg-color",
           "description": "lfr.form-fragments.decimal-bg-color",
           "name": "decimalBGColor",
           "type": "colorPicker",
-          "defaultValue": "#FF0000"
+          "defaultValue": "var(--danger, #FF0000)"
         }
       ],
       "label": "lfr.form-fragments.digits"
@@ -96,7 +96,7 @@
           "description": "lfr.form-fragments.label-color",
           "name": "labelColor",
           "type": "colorPicker",
-          "defaultValue": "#008000"
+          "defaultValue": "var(--success, #008000)"
         },
         {
           "defaultValue": "0.8rem",

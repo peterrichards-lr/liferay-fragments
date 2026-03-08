@@ -3,7 +3,8 @@
   "jsPath": "index.js",
   "htmlPath": "index.html",
   "cssPath": "index.css",
-  "icon": "button",
+  "icon": "shortcut",
   "name": "Back Button",
-  "type": "component"
+  "type": "component",
+  "thumbnailPath": "thumbnail.png"
 }

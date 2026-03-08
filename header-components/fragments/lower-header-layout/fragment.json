@@ -1,1 +1,10 @@
-{"configurationPath": "configuration.json","jsPath":"index.js","htmlPath":"index.html","cssPath":"index.css","icon":"container","name":"Lower Header Bar","type":"component"}
+{
+  "configurationPath": "configuration.json",
+  "jsPath": "index.js",
+  "htmlPath": "index.html",
+  "cssPath": "index.css",
+  "icon": "bolt",
+  "name": "Lower Header Bar",
+  "type": "component",
+  "thumbnailPath": "thumbnail.png"
+}

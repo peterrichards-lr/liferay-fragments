@@ -6,7 +6,7 @@ fragmentClassesList = [
 fragmentClasses = fragmentClassesList?join(' '),
 fragmentHeaderClass = 'fragment-editor-padding' + (configuration.fragmentHeader?then(' show',''))
 /]
-<div class="${fragmentClasses}">
+<div class="${fragmentClasses}" data-layout-mode="${layoutMode}">
 	<div class="${fragmentHeaderClass}">Product Badge</div>
 	<lfr-drop-zone></lfr-drop-zone>
 </div>

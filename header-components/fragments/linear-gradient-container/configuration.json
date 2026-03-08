@@ -3,26 +3,28 @@
     {
       "fields": [
         {
-          "label": "lfr.header-components.start",
-          "name": "start",
-          "type": "colorPicker",
-          "defaultValue": "#000000"
-        },
-        {
-          "label": "lfr.header-components.end",
-          "name": "end",
-          "type": "colorPicker",
-          "defaultValue": "#ffffff"
-        },
-        {
-          "name": "direction",
-          "label": "lfr.header-components.direction",
-          "type": "text",
           "dataType": "string",
-          "defaultValue": "90deg"
+          "defaultValue": "var(--black, #000000)",
+          "label": "lfr.header-components.colour-1",
+          "name": "colour1",
+          "type": "colorPicker"
+        },
+        {
+          "dataType": "string",
+          "defaultValue": "var(--white, #ffffff)",
+          "label": "lfr.header-components.colour-2",
+          "name": "colour2",
+          "type": "colorPicker"
+        },
+        {
+          "dataType": "string",
+          "defaultValue": "0deg",
+          "label": "lfr.header-components.angle",
+          "name": "angle",
+          "type": "text"
         }
       ],
-      "label": "lfr.header-components.linear-gradient"
+      "label": "lfr.header-components.gradient-options"
     }
   ]
 }

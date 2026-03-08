@@ -155,15 +155,15 @@
           "typeOptions": {
             "validValues": [
               {
-                "label": "small",
+                "label": "lfr.meter-reading.small",
                 "value": "sm"
               },
               {
-                "label": "normal",
+                "label": "lfr.meter-reading.normal",
                 "value": "nm"
               },
               {
-                "label": "large",
+                "label": "lfr.meter-reading.large",
                 "value": "lg"
               }
             ]

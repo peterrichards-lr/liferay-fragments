@@ -1,1 +1,10 @@
-{"configurationPath": "configuration.json","jsPath":"index.js","htmlPath":"index.html","cssPath":"index.css","icon":"search-experiences","name":"Search Bar","type":"component"}
+{
+  "configurationPath": "configuration.json",
+  "jsPath": "index.js",
+  "htmlPath": "index.html",
+  "cssPath": "index.css",
+  "icon": "search-experiences",
+  "name": "Search Bar",
+  "type": "component",
+  "thumbnailPath": "thumbnail.png"
+}

@@ -1,1 +1,10 @@
-{"configurationPath": "configuration.json", "cssPath": "index.css", "htmlPath": "index.html", "icon": "form", "jsPath": "index.js", "name": "Meta-Object Form", "type": "component"}
+{
+  "configurationPath": "configuration.json",
+  "cssPath": "index.css",
+  "htmlPath": "index.html",
+  "icon": "forms",
+  "jsPath": "index.js",
+  "name": "Meta-Object Form",
+  "type": "component",
+  "thumbnailPath": "thumbnail.png"
+}

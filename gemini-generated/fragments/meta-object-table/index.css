@@ -7,7 +7,8 @@
 
 /* Editor Header Styles */
 .meta-table-editor-header { height: 0; overflow: hidden; display: none; }
-body.has-edit-mode-menu .meta-table-editor-header.show {
+body.has-edit-mode-menu .meta-table-editor-header.show,
+.meta-table-container[data-layout-mode="edit"] .meta-table-editor-header.show {
    height: 26px;
    min-height: 26px;
    box-sizing: border-box;
@@ -33,7 +34,8 @@ body.has-edit-mode-menu .meta-table-editor-header.show {
     margin-bottom: 2rem;
 }
 
-body.has-edit-mode-menu .meta-editor-mappable-fields {
+body.has-edit-mode-menu .meta-editor-mappable-fields,
+.meta-table-container[data-layout-mode="edit"] .meta-editor-mappable-fields {
     display: flex;
 }
 
@@ -65,7 +67,8 @@ body.has-edit-mode-menu .meta-editor-mappable-fields {
     margin-top: var(--spacer-4, 1.5rem);
 }
 
-body.has-edit-mode-menu .meta-dropzone-editor-label.show {
+body.has-edit-mode-menu .meta-dropzone-editor-label.show,
+.meta-table-container[data-layout-mode="edit"] .meta-dropzone-editor-label.show {
     display: inline-block;
 }
 
@@ -142,7 +145,8 @@ body.has-edit-mode-menu .meta-dropzone-editor-label.show {
 }
 
 /* Robust Editor Overrides for Modal Stacking */
-body.has-edit-mode-menu .meta-table-container .meta-modal-overlay {
+body.has-edit-mode-menu .meta-table-container .meta-modal-overlay,
+.meta-table-container[data-layout-mode="edit"] .meta-modal-overlay {
     position: relative !important;
     top: auto !important;
     left: auto !important;
@@ -157,7 +161,8 @@ body.has-edit-mode-menu .meta-table-container .meta-modal-overlay {
     padding: 0 !important;
 }
 
-body.has-edit-mode-menu .meta-table-container .meta-modal-container {
+body.has-edit-mode-menu .meta-table-container .meta-modal-container,
+.meta-table-container[data-layout-mode="edit"] .meta-modal-container {
     position: relative !important;
     width: 100% !important;
     max-width: none !important;
@@ -169,11 +174,13 @@ body.has-edit-mode-menu .meta-table-container .meta-modal-container {
     display: flex !important;
 }
 
-body.has-edit-mode-menu .meta-table-container .close-modal-btn {
+body.has-edit-mode-menu .meta-table-container .close-modal-btn,
+.meta-table-container[data-layout-mode="edit"] .close-modal-btn {
     display: none !important;
 }
 
-body.has-edit-mode-menu .meta-table-container .meta-modal-body {
+body.has-edit-mode-menu .meta-table-container .meta-modal-body,
+.meta-table-container[data-layout-mode="edit"] .meta-modal-body {
     min-height: 150px;
     display: flex;
     flex-direction: column;

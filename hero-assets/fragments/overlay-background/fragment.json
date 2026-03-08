@@ -2,7 +2,7 @@
   "configurationPath": "configuration.json",
   "cssPath": "index.css",
   "htmlPath": "index.ftl",
-  "icon": "picture",
+  "icon": "bolt",
   "jsPath": "index.js",
   "name": "Overlay Background",
   "thumbnailPath": "thumbnail.png",

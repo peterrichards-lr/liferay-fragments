@@ -1,12 +1,11 @@
 [#assign ns = fragmentEntryLinkNamespace /]
-<div class="date-display">
+<div class="date-display" data-layout-mode="${layoutMode}">
 	[#if themeDisplay.isStateMaximized() == false && (request.getAttribute("LIFERAY_SHARED_VISUAL_STATE_PAGE_EDITOR")?? || request.getAttribute("LIFERAY_SHARED_VISUAL_STATE_FRAGMENT_EDITOR")??)]
 		<div class="alert alert-warning">
 			<strong>DEPRECATED:</strong> This fragment is deprecated. Please use native Liferay 7.4+ date formatting instead.
 		</div>
 	[/#if]
-	<span style="display: none" id="${ns}_startDateInput" data-lfr-editable-id="01-start-date" data-lfr-editable-type="text">Start Date</span>
-	<span style="display: none" id="${ns}_endDateInput" data-lfr-editable-id="02-end date" data-lfr-editable-type="text">End Date</span>
+
 	<div class="date-display-content">
 		[#if configuration.showIcon]
 		<span class="date-display-content__icon">[@clay["icon"] symbol="calendar" /]</span>
@@ -17,6 +16,17 @@
 		<div class="date-display-content__separator" id="${ns}_separator"></div>
 		<div class="date-display-content__date" id="${ns}_endDate">
 			<span class="date-display-content__month" id="${ns}_endMonth"></span>
+		</div>
+	</div>
+
+	<div class="meta-editor-mappable-fields">
+		<div class="mappable-field-item">
+			<label>Start Date Field</label>
+			<div id="${ns}_startDateInput" data-lfr-editable-id="01-start-date" data-lfr-editable-type="text">Start Date</div>
+		</div>
+		<div class="mappable-field-item">
+			<label>End Date Field</label>
+			<div id="${ns}_endDateInput" data-lfr-editable-id="02-end date" data-lfr-editable-type="text">End Date</div>
 		</div>
 	</div>
 </div>

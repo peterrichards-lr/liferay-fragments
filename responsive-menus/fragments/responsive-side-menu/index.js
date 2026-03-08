@@ -556,6 +556,13 @@ const initSideMenu = () => {
             openMenu();
           }
         });
+
+        toggleButton.addEventListener("keydown", (event) => {
+          if (event.key === "Enter" || event.key === " ") {
+            event.preventDefault();
+            toggleButton.click();
+          }
+        });
       }
 
       document.addEventListener("keydown", (e) => {
