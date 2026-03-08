@@ -1,25 +1,37 @@
 # UI and Interaction Standards
 
-## Edit Mode Previews & Alerts
-Fragments MUST provide a high-quality WYSIWYG experience in Edit mode while remaining performant:
-- **User Prompts**: Display an `alert-info` container in Edit mode when critical configuration is missing.
-- **Error Reporting**: Display an `alert-danger` container in Edit mode for fetch failures or validation errors.
-- **Message Hygiene**: If an alert is active, hide the main component body to prevent visual clutter.
-- **Static WYSIWYG**: Render a visual representation that matches production look, but:
-    - Disable events (form submissions, complex handlers).
-    - Disable motion (CSS transitions, animations, autoplay, parallax).
-    - Limit items (restrict lists/tables to 3-5 items for performance).
+## Edit Mode Hygiene
 
-## Required HTML for Alerts
-```html
-<div class="alert alert-info d-none mb-3" id="info-${fragmentEntryLinkNamespace}"></div>
-<div class="alert alert-danger d-none mb-3" id="error-${fragmentEntryLinkNamespace}"></div>
-```
+Fragments MUST provide a high-quality WYSIWYG experience in Edit mode:
+
+- **User Prompts**: Display an `alert-info` container in Edit mode when critical configuration is missing.
+- **Error Reporting**: Display an `alert-danger` container in Edit mode for fetch failures.
+- **Static WYSIWYG**: Render a visual representation that matches production, but disable complex handlers and limit dynamic items (e.g., 3-5 rows in a table).
+
+## Mappable Field Ergonomics
+
+Non-title mappable fields (`data-lfr-editable`) MUST be wrapped in a specific container to provide a clean interface for Page Editors.
+
+- **Container**: `.meta-editor-mappable-fields`
+- **Children**: `.mappable-field-item` containing a `<label>` and the editable element.
+- **Styling**:
+  ```css
+  .meta-editor-mappable-fields {
+    display: none; /* Hidden at runtime */
+  }
+  [data-layout-mode="edit"] .meta-editor-mappable-fields {
+    display: flex; /* Visible during editing */
+  }
+  ```
+
+## Accessibility (A11y)
+
+- **Semantic HTML**: Use `<fieldset>` and `<legend>` for related inputs (e.g., Star Rating, Meter Reading).
+- **Labels**: Ensure every input has a corresponding `<label>` or `aria-label`.
+- **Keyboard Support**: All interactive elements (Tabs, Buttons, Sliders) MUST be fully navigable via `Tab`, `Enter`, and `Space`.
+- **Live Regions**: Use `aria-live="polite"` for dynamic status updates (e.g., "Submission Successful").
 
 ## User Interaction
-- **Unified Pointer Events**: MUST use the **Pointer Events API** (`pointerdown`, `pointermove`, `pointerup`) for all drag or swipe interactions.
-- **Functional Pagination**: Pagination in data-driven fragments MUST be functional, re-fetching data via click handlers.
-- **Accessibility**:
-    - Use semantic elements (`<fieldset>`, `<legend>`).
-    - Provide `aria-label` for icon-only buttons.
-    - Implement `aria-live` regions for dynamic status updates.
+
+- **Pointer Events**: Use the **Pointer Events API** (`pointerdown`, `pointermove`, `pointerup`) for all custom drag/swipe interactions.
+- **Functional Pagination**: Pagination in data-driven fragments MUST be functional in `view` mode, re-fetching data via AJAX.
