@@ -15,7 +15,15 @@
           "description": "lfr.forms.refresh-interval-seconds-description",
           "name": "refreshIntervalSec",
           "type": "text",
-          "dataType": "int"
+          "dataType": "int",
+          "typeOptions": {
+            "dependency": {
+              "enableAutoRefresh": {
+                "type": "equal",
+                "value": "true"
+              }
+            }
+          }
         },
         {
           "defaultValue": true,
@@ -29,7 +37,15 @@
           "label": "lfr.forms.refresh-link-text",
           "description": "lfr.forms.refresh-link-text-description",
           "name": "manualRefreshText",
-          "type": "text"
+          "type": "text",
+          "typeOptions": {
+            "dependency": {
+              "enableManualRefresh": {
+                "type": "equal",
+                "value": "true"
+              }
+            }
+          }
         },
         {
           "defaultValue": ".lfr-message-success",

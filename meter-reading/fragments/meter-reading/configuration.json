@@ -11,16 +11,16 @@
         },
         {
           "defaultValue": false,
-          "label": "lfr.meter-reading.show-date-selector",
-          "description": "lfr.meter-reading.show-date-selector-description",
-          "name": "showDateSelector",
+          "label": "lfr.meter-reading.integer-reading",
+          "description": "lfr.meter-reading.integer-reading-description",
+          "name": "integerReading",
           "type": "checkbox"
         },
         {
           "defaultValue": false,
-          "label": "lfr.meter-reading.integer-reading",
-          "description": "lfr.meter-reading.integer-reading-description",
-          "name": "integerReading",
+          "label": "lfr.meter-reading.show-date-selector",
+          "description": "lfr.meter-reading.show-date-selector-description",
+          "name": "showDateSelector",
           "type": "checkbox"
         },
         {
@@ -71,19 +71,43 @@
           "label": "lfr.meter-reading.decimal-digit-count",
           "name": "decimalDigitCount",
           "type": "text",
-          "dataType": "int"
+          "dataType": "int",
+          "typeOptions": {
+            "dependency": {
+              "integerReading": {
+                "type": "equal",
+                "value": "false"
+              }
+            }
+          }
         },
         {
           "label": "lfr.meter-reading.decimal-fg-color",
           "name": "decimalFGColor",
           "type": "colorPicker",
-          "defaultValue": "var(--white)"
+          "defaultValue": "var(--white)",
+          "typeOptions": {
+            "dependency": {
+              "integerReading": {
+                "type": "equal",
+                "value": "false"
+              }
+            }
+          }
         },
         {
           "label": "lfr.meter-reading.decimal-bg-color",
           "name": "decimalBGColor",
           "type": "colorPicker",
-          "defaultValue": "var(--danger)"
+          "defaultValue": "var(--danger)",
+          "typeOptions": {
+            "dependency": {
+              "integerReading": {
+                "type": "equal",
+                "value": "false"
+              }
+            }
+          }
         }
       ],
       "label": "lfr.meter-reading.digits"
@@ -100,20 +124,44 @@
           "label": "lfr.meter-reading.label-color",
           "name": "labelColor",
           "type": "colorPicker",
-          "defaultValue": "var(--primary)"
+          "defaultValue": "var(--primary)",
+          "typeOptions": {
+            "dependency": {
+              "showLabels": {
+                "type": "equal",
+                "value": "true"
+              }
+            }
+          }
         },
         {
           "defaultValue": "0.8rem",
           "label": "lfr.meter-reading.label-font-size",
           "name": "labelFontSize",
-          "type": "length"
+          "type": "length",
+          "typeOptions": {
+            "dependency": {
+              "showLabels": {
+                "type": "equal",
+                "value": "true"
+              }
+            }
+          }
         },
         {
           "defaultValue": ";;;;1,000 litres;100 litres;10 litres; 1 litre ",
           "label": "lfr.meter-reading.label-list",
           "description": "lfr.meter-reading.label-list-description",
           "name": "labelList",
-          "type": "text"
+          "type": "text",
+          "typeOptions": {
+            "dependency": {
+              "showLabels": {
+                "type": "equal",
+                "value": "true"
+              }
+            }
+          }
         }
       ],
       "label": "lfr.meter-reading.labels"
@@ -186,7 +234,15 @@
           "label": "lfr.meter-reading.pubsub-topic",
           "description": "lfr.meter-reading.pubsub-topic-description",
           "name": "pubSubTopic",
-          "type": "text"
+          "type": "text",
+          "typeOptions": {
+            "dependency": {
+              "usePubSub": {
+                "type": "equal",
+                "value": "true"
+              }
+            }
+          }
         }
       ],
       "label": "lfr.meter-reading.pubsub"
@@ -212,7 +268,15 @@
           "description": "lfr.meter-reading.test-account-description",
           "name": "testAccount",
           "type": "text",
-          "dataType": "int"
+          "dataType": "int",
+          "typeOptions": {
+            "dependency": {
+              "useTestAccount": {
+                "type": "equal",
+                "value": "true"
+              }
+            }
+          }
         }
       ],
       "label": "lfr.meter-reading.debugging"

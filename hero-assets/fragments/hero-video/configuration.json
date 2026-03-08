@@ -72,7 +72,15 @@
           "defaultValue": "var(--primary)",
           "label": "lfr.hero-assets.control-colour",
           "name": "controlColor",
-          "type": "colorPicker"
+          "type": "colorPicker",
+          "typeOptions": {
+            "dependency": {
+              "useCustomControls": {
+                "type": "equal",
+                "value": "true"
+              }
+            }
+          }
         }
       ],
       "label": "lfr.hero-assets.controls"
