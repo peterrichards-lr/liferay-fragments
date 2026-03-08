@@ -54,7 +54,7 @@
 ### 10. Robust Identifier Validation
 
 - **Requirement**: Always use a strict validation helper (like `isValidIdentifier()`) before using record IDs or ERCs in API calls.
-- **Scope**: Explicitly block the strings `"undefined"`, `"null"`, and `"[object Object]"` from reaching network requests.
+- **Scope**: Explicitly block the strings `"undefined"`, `"null"`, `"0"`, and `"[object Object]"` from reaching network requests.
 - **Reason**: Prevents 404/400 errors caused by uninitialized data or corrupted event payloads.
 
 ### 11. Liferay Fragment API Evolution & Compatibility
@@ -74,23 +74,28 @@
 
 - **Requirement**: For fragments with auto-defaulting titles (Smart Titles), the manually configured title (e.g., `configuration.chartTitle`) MUST take precedence over the evaluated value (e.g., `Sales Reports (sum)`).
 - **Implementation**: JS logic should check if the current title matches a system default string; if it does, it should update to the `configuration` title if present, falling back to the evaluated Object label only if the configuration is empty.
-- **Reason**: Ensures Page Editors retain control over fragment headings while providing helpful "zero-config" defaults.
+
+### 13. Standardized API Interaction
+
+- **Requirement**: Use Liferay-provided utilities for all network requests to ensure consistent authentication and security.
+- **Liferay APIs**: For all internal Liferay endpoints and Object APIs, use `Liferay.Util.fetch`. It automatically handles CSRF tokens and `Liferay.authToken`.
+- **Client Extensions**: For calling client extensions that utilize User Agent-based OAuth2 authentication, use `Liferay.OAuth2Client`.
+- **Implementation**:
+  - `Liferay.Util.fetch('/o/c/myobjects')` for standard Liferay APIs.
+  - `const {fetch} = Liferay.OAuth2Client.fromUserAgent('client-id'); fetch('/o/ext/api')` for OAuth2-secured extensions.
+- **Reason**: Prevents manual token management and ensures compatibility with Liferay's security infrastructure.
+
+### 14. Scoped Internal Selectors
+
+- **Requirement**: Always use `fragmentElement.querySelector` instead of `document.querySelector` for targeting internal elements.
+- **Exception**: Global `document` or `window` selectors are only permitted for cross-fragment communication (e.g., PubSub, Liferay.on) or page-level state.
+- **Reason**: Prevents selector collision when multiple instances of the same fragment are present on a single page.
 
 ## Current Tasks
 
-- [x] Update documentation with showcase data conventions (`docs/setup.md` and fragment docs).
-- [x] Synchronize project state in `gemini.md`.
-- [x] Enhance Activity Heatmap with configurable `daysToDisplay` and improved legend styling.
-- [x] Standardize all fragment `objectERC` defaults to reflect actual showcase data.
-- [x] Implement runtime size selector for Activity Heatmap with full localization and documentation.
-- [x] Update Animated Metric Counter to support decimal numbers and configurable precision.
-- [x] Enhance Meta-Object Form with "Add New", record selection dropdown, and external URL/Event integration.
-- [x] Fix Meta-Object Form field display (string-based 'readOnly' and 'businessType' refactoring).
-- [x] Upgrade Object-Linked Chart with dynamic data grouping, aggregation, dual-axis support, and theme palettes.
-- [x] Refactor Meta-Object Table with triple-modal architecture, robust striping, and embedded dropzones.
-- [x] Implement mappable and smart-defaulting titles across all Meta-Object fragments.
-- [x] Improve fragment ergonomics with labeled mappable field containers in the Page Editor.
-- [x] Refactor fragments to eliminate top-level returns for modern Liferay compatibility.
-- [x] Implement automated build optimization (JS obfuscation, CSS/JSON minification) with `.no-transform` support.
-- [x] Finalize `layoutMode` modernization across all legacy fragments.
-- [x] Refine Smart Title precedence to prioritize configuration values over evaluated data.
+- [x] Complete Comprehensive Functional Audit: Systematic check of all fragments against git history to restore lost logic.
+- [x] Restore "Smart Commerce" Badge Logic: Harmonized automatic and manual badging in `dynamic-badge-overlay`.
+- [x] Re-implement Date Range Formatting: Restored start/end day/month logic in Date Display fragments.
+- [x] Stabilize Redirection Workflows: Restored retry and trigger logic in Form Populator and Redirection fragments.
+- [x] Harmonize Dashboard Events: Implemented global `refreshData` synchronization for charts and tables.
+- [x] Finalize `docs/recipes.md`: Added high-fidelity onboarding and commerce badging workflows.
