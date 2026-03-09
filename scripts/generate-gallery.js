@@ -7,75 +7,76 @@ const GALLERY_FILE = path.join(DOCS_DIR, "gallery.md");
 const IMAGES_DIR = path.join(DOCS_DIR, "images");
 
 /**
- * Fragment Gallery Generator
- * Automatically rebuilds docs/gallery.md based on fragments found in the repo.
+ * Fragment Gallery Generator Logic
  */
+function generateGallery() {
+  // 1. Find all collections
+  const collections = globSync("*/collection.json");
 
-// 1. Find all collections
-const collections = globSync("*/collection.json");
+  let markdown = `# Fragment Visual Gallery\n\nA visual reference for the high-fidelity fragments available in this Liferay DXP repository. Generated automatically.\n\n`;
 
-let markdown = `# Fragment Visual Gallery\n\nA visual reference for the high-fidelity fragments available in this Liferay DXP repository. Generated automatically.\n\n`;
+  collections.sort().forEach((collectionFile) => {
+    const collectionDir = path.dirname(collectionFile);
+    const collectionMetadata = JSON.parse(
+      fs.readFileSync(collectionFile, "utf8"),
+    );
 
-collections.sort().forEach((collectionFile) => {
-  const collectionDir = path.dirname(collectionFile);
-  const collectionMetadata = JSON.parse(
-    fs.readFileSync(collectionFile, "utf8"),
-  );
+    // Find fragments in this collection
+    const fragments = globSync(`${collectionDir}/fragments/*/fragment.json`);
 
-  // Find fragments in this collection
-  const fragments = globSync(`${collectionDir}/fragments/*/fragment.json`);
+    if (fragments.length === 0) return;
 
-  if (fragments.length === 0) return;
-
-  markdown += `## ${collectionMetadata.name}\n\n`;
-  if (collectionMetadata.description) {
-    markdown += `${collectionMetadata.description}\n\n`;
-  }
-
-  fragments.sort().forEach((fragFile) => {
-    const fragDir = path.dirname(fragFile);
-    const fragMetadata = JSON.parse(fs.readFileSync(fragFile, "utf8"));
-    const fragSafeName = path.basename(fragDir);
-
-    markdown += `### ${fragMetadata.name}\n\n`;
-
-    // Determine best image
-    // 1. Check for docs/images/[fragSafeName].png (The high-quality manual ones)
-    // 2. Check for fragment root screenshot.png
-    // 3. Check for fragment root thumbnail.png
-    let imgPath = "";
-    const manualImg = path.join(IMAGES_DIR, `${fragSafeName}.png`);
-
-    if (fs.existsSync(manualImg)) {
-      imgPath = `./images/${fragSafeName}.png`;
-    } else if (fs.existsSync(path.join(fragDir, "screenshot.png"))) {
-      // Path relative to docs/gallery.md
-      imgPath = path.relative(DOCS_DIR, path.join(fragDir, "screenshot.png"));
-    } else if (fs.existsSync(path.join(fragDir, "thumbnail.png"))) {
-      imgPath = path.relative(DOCS_DIR, path.join(fragDir, "thumbnail.png"));
+    markdown += `## ${collectionMetadata.name}\n\n`;
+    if (collectionMetadata.description) {
+      markdown += `${collectionMetadata.description}\n\n`;
     }
 
-    if (imgPath) {
-      markdown += `![${fragMetadata.name}](${imgPath})\n\n`;
-    } else {
-      markdown += `*No image available*\n\n`;
-    }
+    fragments.sort().forEach((fragFile) => {
+      const fragDir = path.dirname(fragFile);
+      const fragMetadata = JSON.parse(fs.readFileSync(fragFile, "utf8"));
+      const fragSafeName = path.basename(fragDir);
 
-    // Link to detailed documentation if it exists
-    const docFile = path.join(DOCS_DIR, "fragments", `${fragSafeName}.md`);
-    if (fs.existsSync(docFile)) {
-      markdown += `[Detailed Documentation](./fragments/${fragSafeName}.md)\n\n`;
-    } else {
-      // Check for root level documentation (conditional-content.md)
-      const rootDocFile = path.join(DOCS_DIR, `${fragSafeName}.md`);
-      if (fs.existsSync(rootDocFile)) {
-        markdown += `[Detailed Documentation](./${fragSafeName}.md)\n\n`;
+      markdown += `### ${fragMetadata.name}\n\n`;
+
+      let imgPath = "";
+      const manualImg = path.join(IMAGES_DIR, `${fragSafeName}.png`);
+
+      if (fs.existsSync(manualImg)) {
+        imgPath = `./images/${fragSafeName}.png`;
+      } else if (fs.existsSync(path.join(fragDir, "screenshot.png"))) {
+        imgPath = path.relative(DOCS_DIR, path.join(fragDir, "screenshot.png"));
+      } else if (fs.existsSync(path.join(fragDir, "thumbnail.png"))) {
+        imgPath = path.relative(DOCS_DIR, path.join(fragDir, "thumbnail.png"));
       }
-    }
 
-    markdown += `--- \n\n`;
+      if (imgPath) {
+        markdown += `![${fragMetadata.name}](${imgPath})\n\n`;
+      } else {
+        markdown += `*No image available*\n\n`;
+      }
+
+      const docFile = path.join(DOCS_DIR, "fragments", `${fragSafeName}.md`);
+      if (fs.existsSync(docFile)) {
+        markdown += `[Detailed Documentation](./fragments/${fragSafeName}.md)\n\n`;
+      } else {
+        const rootDocFile = path.join(DOCS_DIR, `${fragSafeName}.md`);
+        if (fs.existsSync(rootDocFile)) {
+          markdown += `[Detailed Documentation](./${fragSafeName}.md)\n\n`;
+        }
+      }
+
+      markdown += `--- \n\n`;
+    });
   });
-});
 
-fs.writeFileSync(GALLERY_FILE, markdown.trim() + "\n");
-console.log(`Successfully generated gallery at: ${GALLERY_FILE}`);
+  return markdown.trim() + "\n";
+}
+
+// If run directly
+if (require.main === module) {
+  const content = generateGallery();
+  fs.writeFileSync(GALLERY_FILE, content);
+  console.log(`Successfully generated gallery at: ${GALLERY_FILE}`);
+}
+
+module.exports = { generateGallery };
