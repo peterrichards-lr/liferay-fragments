@@ -1,14 +1,20 @@
 # Who Am I
 
-The **Who Am I** fragment is a simple but essential component for verifying the current authentication context.
+A diagnostic fragment that displays the current user's name and ID, and optionally queries a REST endpoint to verify authentication and identity.
 
-## Key Features
+## Features
 
-- **Authentication Check**: Displays the Screen Name or Email of the logged-in user.
-- **Support Utility**: Useful for "Impersonation" or multi-account testing scenarios.
-- **Conditional Visibility**: Can be configured to only show for specific roles (e.g., Administrators).
+- **Standard Display**: Automatically shows `Liferay.ThemeDisplay.getUserName()` and ID on load.
+- **REST Validation**: Trigger a fetch to a configurable endpoint to see how the server identifies the session.
+- **OAuth2 Support**: Can be configured with a User Agent Application ERC to use specific OAuth2 scopes.
 
 ## Configuration
 
-- **Label**: Prefix text (e.g., "Logged in as:").
-- **Identity Attribute**: Choose which field to show (Screen Name, Email, or User ID).
+- **Endpoint URL**: The REST API to query (e.g., `/o/headless-admin-user/v1.0/my-user-account`).
+- **User Agent Application ERC**: (Optional) The ERC of an OAuth2 User Agent Application to use for the request.
+
+## Technical Infrastructure
+
+This fragment utilizes the **Shared Resources Architecture**:
+
+- **`validation.js`**: Uses `isValidIdentifier` to ensure the endpoint URL is configured before attempting a fetch.

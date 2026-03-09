@@ -13,3 +13,9 @@ The **Purchased Products** fragment displays a grid or list of commerce items pr
 
 - **Empty Message**: Localized text shown if the user has no purchase history.
 - **Display Style**: Choose between simple text or rich product cards.
+
+## Technical Infrastructure
+
+This fragment utilizes the **Shared Resources Architecture**:
+
+- **`validation.js`**: Uses `isValidIdentifier` to safely handle account and channel identifiers from the commerce context.

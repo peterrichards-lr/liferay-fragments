@@ -1,17 +1,5 @@
 const initCustomEventListener = () => {
-  const ADMIN_API_BASE = "/o/object-admin/v1.0";
-
-  const isValidIdentifier = (val) => {
-    if (val === undefined || val === null) return false;
-    const s = String(val).trim().toLowerCase();
-    return (
-      s !== "" &&
-      s !== "undefined" &&
-      s !== "null" &&
-      s !== "0" &&
-      s !== "[object object]"
-    );
-  };
+  const { isValidIdentifier, resolveObjectPath } = Liferay.Fragment.Commons;
 
   if (layoutMode !== "view") return;
 
@@ -30,20 +18,13 @@ const initCustomEventListener = () => {
 
   const resolveApiPath = async () => {
     try {
-      const response = await Liferay.Util.fetch(
-        `${ADMIN_API_BASE}/object-definitions/by-rest-context-path/campaigninteractions`,
-      );
-      if (!response.ok) throw new Error("Failed to fetch object definition");
+      const result = await resolveObjectPath("/o/c/campaigninteractions");
 
-      const definition = await response.json();
-      let path = definition.restContextPath;
-
-      if (definition.scope === "site") {
-        const siteId = Liferay.ThemeDisplay.getScopeGroupId();
-        path += `/scopes/${siteId}`;
+      if (result.apiPath) {
+        apiPath = result.apiPath;
+      } else {
+        apiPath = "/o/c/campaigninteractions";
       }
-
-      apiPath = path;
     } catch (err) {
       console.error("[Event Listener] Scope resolution failed:", err);
       apiPath = "/o/c/campaigninteractions";

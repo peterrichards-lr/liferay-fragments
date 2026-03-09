@@ -339,7 +339,7 @@ Additional tasks identified during a second review of the repository architectur
   - **Fragments**: `dynamic-badge-overlay`, `ai-chat-ui`, `meta-object-form`, `populate-select`, `responsive-menu`.
 - [x] **LayoutMode API Migration**: Audit all remaining fragments for `has-edit-mode-menu` usage and migrate to the `layoutMode` API (Requirement 11).
 - [x] **Robust Identifier Implementation**: Roll out `isValidIdentifier()` validation to all fragments performing network requests (Requirement 10).
-  - **Fragments**: `purchased-products`, `dashboard-filter`, `autocomplete-(object)`, `activity-heatmap`, `object-linked-chart`.
+  - **Fragments**: `purchased-products`, `dashboard-filter`, `autocomplete-(object)`, `activity-heatmap`, `object-linked-chart`, `meta-object-form`, `meta-object-record-view`, `public-comments`, `ping`, `who-am-i`, `my-rights`, `submit-button`, `audit-button`, `custom-event-listener`, `form-session-id`, `meter-reading`.
 
 ### 2. User & Editor Experience (UX/EX)
 
@@ -349,9 +349,17 @@ Additional tasks identified during a second review of the repository architectur
 - [x] **Implement Mappable Field Ergonomics**: Apply the `.meta-editor-mappable-fields` pattern (Requirement 7) to all fragments with dynamic field mapping.
   - **Fragments**: `service-card`, `service-icon`, `dynamic-object-gallery`, `date-display-collection-display`.
 - [x] **Standardize Smart Title Precedence**: Implement Requirement 12 (Config > Evaluated Default) in all fragments featuring dynamic headers.
-  - **Fragments**: `loan-calculator`, `service-card`, `activity-heatmap`, `object-linked-chart`.
+  - **Fragments**: `loan-calculator`, `service-card`, `activity-heatmap`, `object-linked-chart`, `meta-object-form`, `meta-object-record-view`.
 
-### 3. Localization (i18n) Maintenance
+### 3. Shared Resources Refactor Pass II
+
+- [x] **Enhanced Object Discovery**: Added `resolveObjectPathByERC` to `discovery.js` to allow fragments to resolve Site-scoped API paths using External Reference Codes (ERCs).
+- [x] **Modularize Meta-Object Suite**: Refactored `meta-object-record-view` and `meta-object-form`. Removed ~250 lines of redundant utility logic and migrated to `Liferay.Fragment.Commons`.
+- [x] **Standardize Action Buttons**: Migrated `submit-button`, `audit-button`, `ping`, and `custom-event-listener` to use standardized validation and discovery.
+- [x] **Commerce & Utilities Cleanup**: Refactor `purchased-products`, `meter-reading`, and `form-session-id` to use modular shared resources.
+- [x] **User Account URL Validation**: Retrofitted `who-am-i` and `my-rights` with the shared `isValidIdentifier` utility for robust URL validation.
+
+### 4. Localization (i18n) Maintenance
 
 - [x] **Language Properties Deduplication**: Perform a final pass on all `Language_en_US.properties` to ensure no literal "lfr." keys were accidentally duplicated as values.
 - [x] **Dangling Property Audit**: Identify and remove any property keys that are no longer referenced by any `configuration.json` or JS files.

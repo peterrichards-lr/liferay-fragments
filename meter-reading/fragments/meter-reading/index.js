@@ -1,17 +1,6 @@
 const SINGLETON_KEY = "LFR_FRAG_SINGLETON_METER_READING";
-const ADMIN_API_BASE = "/o/object-admin/v1.0";
 
-const isValidIdentifier = (val) => {
-  if (val === undefined || val === null) return false;
-  const s = String(val).trim().toLowerCase();
-  return (
-    s !== "" &&
-    s !== "undefined" &&
-    s !== "null" &&
-    s !== "0" &&
-    s !== "[object object]"
-  );
-};
+const { isValidIdentifier, resolveObjectPath } = Liferay.Fragment.Commons;
 
 const showError = (message, details) => {
   const container = fragmentElement.querySelector(".error-container");
@@ -131,20 +120,13 @@ if (window[SINGLETON_KEY]) {
   const resolveApiPath = async () => {
     const objectPath = configuration.objectPath || "waterreadings";
     try {
-      const response = await Liferay.Util.fetch(
-        `${ADMIN_API_BASE}/object-definitions/by-rest-context-path/${objectPath}`,
-      );
-      if (!response.ok) throw new Error("Failed to fetch object definition");
+      const result = await resolveObjectPath(`/o/c/${objectPath}`);
 
-      const definition = await response.json();
-      let path = definition.restContextPath;
-
-      if (definition.scope === "site") {
-        const siteId = Liferay.ThemeDisplay.getScopeGroupId();
-        path += `/scopes/${siteId}`;
+      if (result.apiPath) {
+        apiPath = result.apiPath;
+      } else {
+        apiPath = `/o/c/${objectPath}`;
       }
-
-      apiPath = path;
     } catch (err) {
       console.error("[Meter Reading] Scope resolution failed:", err);
       // Fallback to legacy path if resolution fails

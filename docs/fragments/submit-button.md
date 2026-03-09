@@ -20,4 +20,9 @@ A specialized submit button designed to work in tandem with the **Confirmation F
 
 1.  **Placement**: Place this button inside a Liferay Form containing one or more **Confirmation Fields**.
 2.  **Endpoint**: Configure the `API Path` to point to your target Liferay Object or external API.
-3.  **Interaction**: When clicked, the button will first trigger the matching logic in any Confirmation Fields. If the fields do not match, the submission is blocked and an error is displayed.
+
+## Technical Infrastructure
+
+This fragment utilizes the **Shared Resources Architecture**:
+
+- **`validation.js`**: Uses `isValidIdentifier` to ensure the API Path is correctly configured before attempting submission.
