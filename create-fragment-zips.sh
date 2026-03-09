@@ -240,7 +240,7 @@ if [ "$BUILD_FRAGMENTS" = true ]; then
        process_dir "$TEMP_FRAG/$FRAGMENT_NAME" "$FRAGMENT_NAME"
        
        OUTPUT_ZIP="$(pwd)/zips/fragments/${FRAGMENT_NAME}${BUILD_SUFFIX}.zip"
-       (cd "$TEMP_FRAG" && zip -qr "$OUTPUT_ZIP" "$FRAGMENT_NAME" -x "*/Language*.properties" -x "*/client-extension.yaml")
+       (cd "$TEMP_FRAG" && zip -qr "$OUTPUT_ZIP" "$FRAGMENT_NAME" -x "*/Language*.properties" -x "*/client-extension.yaml" -x "*/test/*")
        
        rm -rf "$TEMP_FRAG"
     done
@@ -331,7 +331,7 @@ for COLLECTION_NAME in "${COLLECTIONS[@]}"; do
        process_dir "$TEMP_COLL/$COLLECTION_NAME" "$COLLECTION_NAME"
        
        OUTPUT_COLL_ZIP="$(pwd)/zips/fragments/${COLLECTION_NAME}-collection${BUILD_SUFFIX}.zip"
-       (cd "$TEMP_COLL" && zip -qr "$OUTPUT_COLL_ZIP" "$COLLECTION_NAME" -x "*/Language*.properties" -x "*/client-extension.yaml")
+       (cd "$TEMP_COLL" && zip -qr "$OUTPUT_COLL_ZIP" "$COLLECTION_NAME" -x "*/Language*.properties" -x "*/client-extension.yaml" -x "*/test/*")
        rm -rf "$TEMP_COLL"
        
        # --- C. Legacy Fragment Collection ZIP ---
@@ -360,7 +360,7 @@ for COLLECTION_NAME in "${COLLECTIONS[@]}"; do
        process_dir "$BUILD_TEMP/$COLLECTION_NAME" "$COLLECTION_NAME"
        
        OUTPUT_LEGACY_ZIP="$(pwd)/zips/fragments/${COLLECTION_NAME}-pre2025q3${BUILD_SUFFIX}.zip"
-       (cd "$BUILD_TEMP" && zip -qr "$OUTPUT_LEGACY_ZIP" "$COLLECTION_NAME")
+       (cd "$BUILD_TEMP" && zip -qr "$OUTPUT_LEGACY_ZIP" "$COLLECTION_NAME" -x "*/test/*")
        rm -rf "$BUILD_TEMP"
    fi
 done

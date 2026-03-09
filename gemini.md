@@ -11,6 +11,7 @@
 
 - **Requirement**: Whenever a fragment is updated, its markdown file in `docs/fragments/` must be synchronized.
 - **New Fragments**: Any new fragment MUST have a corresponding documentation file including Overview, Configuration, and Usage sections.
+- **Visuals**: Documentation should include a high-quality `screenshot.png` (full width) and a focused `thumbnail.png`.
 
 ### 3. Site-Scoping Compliance (Discovery Pattern)
 
@@ -29,17 +30,6 @@
 ### 5. Configuration Dependencies
 
 - **Syntax**: Use the object-based dependency structure within `typeOptions` to create dynamic interfaces.
-- **Example**:
-  ```json
-  "typeOptions": {
-    "dependency": {
-      "enableFeature": {
-        "type": "equal",
-        "value": "true"
-      }
-    }
-  }
-  ```
 
 ### 6. Robust Identifier Validation
 
@@ -55,22 +45,36 @@
 
 - **Requirement**: Manually configured titles (e.g., `configuration.chartTitle`) MUST take precedence over evaluated values. Logic should check if the field is empty before falling back to dynamic labels.
 
-### 9. Deprecation Protocol
+### 9. Theme Fidelity & Test-Bed
+
+- **Theme Support**: Fragments MUST be theme-aware and use CSS tokens defined in `docs/THEMES.md`.
+- **Testing**: All fragments MUST be verified using the Playwright-based test-bed in `test-bed/`.
+- **Mocking**: Supply mock data for API calls in `test/data.json` and test-specific configuration in `test/configuration.json`.
+- **Visual Generation**:
+  - `screenshot.png`: High-fidelity, full-width capture for documentation.
+  - `thumbnail.png`: Focused capture for the Liferay UI. This should highlight the fragment's unique features and does not need to be a simple resize of the screenshot.
+  - `test/metadata.json`: Defines the target theme and optional `thumbnailSelector` / `screenshotSelector` to guide the capture. This file MUST be excluded from production ZIPs.
+
+### 10. Deprecation Protocol
 
 - **Metadata**: Append `(Deprecated)` to the `name` in `fragment.json`.
 - **Docs**: Add a warning block at the top of the fragment's documentation file explaining the reason and recommending modern alternatives.
-- **Audit**: Update `todo.md` to mark the fragment as `DEPR` for thumbnails and visuals.
 
 ## Build & Deployment
 
-- **create-fragment-zips.sh**: Supports `--fragments`, `--language`, and `--showcase` categories. Excludes deprecated fragments by default (use `--include-deprecated` to override).
-- **deploy-fragment-zips.sh**: Aligned with category flags for selective deployment to Liferay environments.
+- **create-fragment-zips.sh**: Supports `--fragments`, `--language`, and `--showcase` categories. Excludes deprecated fragments and `test/` directories by default.
+- **deploy-fragment-zips.sh**: Aligned with category flags for selective deployment.
 
 ## Current Tasks
 
+- [ ] Implement `test/metadata.json` across collections to guide visual generation.
+- [ ] Audit all fragments for Rule #9 (Theme Fidelity) and missing `screenshot.png`.
+- [ ] Finalize missing visuals for Dashboard, Gemini, and User Account fragments.
 - [x] Complete Comprehensive Functional Audit.
 - [x] Implement Admin API Scope Discovery across all relevant fragments.
 - [x] Clean up Localization (i18n) properties and remove literal key duplicates.
 - [x] Standardize Build/Deploy scripts with category and cleaning logic.
 - [x] Deprecate legacy serviceLocator-based profile fragments.
-- [ ] Finalize missing visuals for Dashboard, Gemini, and User Account fragments.
+- [x] Extract high-fidelity CSS tokens from theme style guides (Classic, Dialect, Meridian).
+- [x] Create `docs/THEMES.md` as a central reference for AI context and prompting.
+- [x] Update `test-bed/runner.js` to support dual visual output and metadata-driven selectors.
