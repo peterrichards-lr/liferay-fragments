@@ -55,6 +55,16 @@
 - **Metadata**: Append `(Deprecated)` to the `name` in `fragment.json`.
 - **Docs**: Add a warning block at the top of the fragment's documentation file explaining the reason and recommending modern alternatives.
 
+### 11. Fragment Quality Gate (Linter)
+
+- **Requirement**: All fragments MUST pass the local audit script (`npm run lint`) before being committed.
+- **Validation Criteria**:
+  - **Schema**: `fragment.json` and `configuration.json` must match the internal project schemas.
+  - **Localization**: Every label/description key used in `configuration.json` MUST exist in `Language_en_US.properties`.
+  - **Theme Fidelity**: CSS should avoid hardcoded colors (e.g., `#ffffff`) and prioritize safe tokens defined in `docs/THEMES.md`.
+  - **JS Safety**: No top-level `return` statements.
+- **CI Enforcement**: The Quality Gate is enforced via GitHub Actions on every push and PR.
+
 ## Build & Deployment
 
 - **create-fragment-zips.sh**: Supports `--fragments`, `--language`, and `--showcase` categories. Excludes deprecated fragments by default.
