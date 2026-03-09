@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Liferay Fragment Test Bed</title>
+    <!-- Include Clay CSS for Liferay UI components -->
+    <link rel="stylesheet" href="https://unpkg.com/clay-css@2.10.1/lib/css/atlas.css">
+    <style>
+        body { padding: 2rem; background-color: #f4f5f7; }
+        .test-bed-controls { margin-bottom: 2rem; padding: 1rem; background: #fff; border-radius: 8px; border: 1px solid #ddd; }
+        #fragment-container { background: #fff; padding: 1rem; border: 1px solid #eee; min-height: 200px; }
+    </style>
+</head>
+<body>
+
+<div class="test-bed-controls">
+    <strong>Layout Mode:</strong>
+    <select id="layout-mode-selector" onchange="window.location.search = '?mode=' + this.value">
+        <option value="view">View</option>
+        <option value="edit">Edit</option>
+    </select>
+</div>
+
+<div id="fragment-container">
+    <!-- Fragment HTML will be injected here -->
+    <div id="fragment-mock-id"></div>
+</div>
+
+<!-- Mock Liferay Environment -->
+<script src="./mocks.js"></script>
+
+<script type="module">
+    // Simulation of Liferay Variable Injection
+    const urlParams = new URLSearchParams(window.location.search);
+    const layoutMode = urlParams.get('mode') || 'view';
+    
+    // 1. Mock Configuration (Specific to each fragment being tested)
+    const configuration = {
+        headerTextColor: "var(--gray-900)",
+        enableAdd: true,
+        pageSize: 10,
+        viewShowTitle: false,
+        viewIdentifierType: "id",
+        addShowTitle: false,
+        viewModalSize: "md",
+        enableView: true,
+        viewShowHeader: true,
+        addShowHeader: true,
+        editIdentifierType: "id",
+        editModalSize: "lg",
+        showFragmentHeader: true,
+        tableTitle: "Mock Table",
+        editShowHeader: true,
+        enablePagination: true,
+        objectERC: "MOCK_OBJECT",
+        enableEdit: true
+    };
+
+    // 2. Fragment Context
+    const fragmentElement = document.querySelector('#fragment-mock-id');
+    const fragmentElementId = 'fragment-mock-id';
+    const fragmentEntryLinkNamespace = 'test-ns';
+    const fragmentNamespace = 'test-ns';
+
+    // Set globally for fragment script to pick up
+    window.layoutMode = layoutMode;
+    window.configuration = configuration;
+    window.fragmentElement = fragmentElement;
+    window.fragmentEntryLinkNamespace = fragmentEntryLinkNamespace;
+
+    console.info(`[Test Bed] Starting in ${layoutMode} mode`);
+
+    // In a real test-bed runner, we would load the specific fragment's HTML/JS/CSS here.
+    // For now, this is a placeholder for the logic.
+</script>
+
+</body>
+</html>

@@ -1,0 +1,5 @@
+--- Log for master-page-background-colour ---
+
+[Browser info] [Runner] Environment initialized.
+[Browser error] [Runner] Fragment JS error: TypeError: Cannot read properties of null (reading 'style')
+    at file:///Volumes/SanDisk/repos/liferay-fragments/temp_test_bed/index.html:564:13

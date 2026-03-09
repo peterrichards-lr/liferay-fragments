@@ -1,0 +1,5 @@
+{
+  "theme": "meridian",
+  "thumbnailSelector": ".autocomplete-object-input",
+  "screenshotSelector": "body"
+}

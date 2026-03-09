@@ -1,0 +1,9 @@
+--- Log for header-components/fragments/customer-registration ---
+
+[Browser info] [Runner] Environment initialized.
+[Browser log] TypeError: Cannot read properties of null (reading 'querySelectorAll')
+    at queryInnerTextAll (file:///Volumes/SanDisk/repos/liferay-fragments/temp_test_bed/index.html:531:33)
+    at queryInnerText (file:///Volumes/SanDisk/repos/liferay-fragments/temp_test_bed/index.html:541:24)
+    at menuTextFunc (file:///Volumes/SanDisk/repos/liferay-fragments/temp_test_bed/index.html:565:31)
+    at initCustomerRegistration (file:///Volumes/SanDisk/repos/liferay-fragments/temp_test_bed/index.html:624:9)
+    at file:///Volumes/SanDisk/repos/liferay-fragments/temp_test_bed/index.html:639:1

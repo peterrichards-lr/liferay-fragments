@@ -1,0 +1,48 @@
+{
+  "object-definitions/by-rest-context-path/heartrates": {
+    "restContextPath": "/o/c/heartrates",
+    "scope": "site"
+  },
+  "object-definitions/by-rest-context-path/bloodpressures": {
+    "restContextPath": "/o/c/bloodpressures",
+    "scope": "site"
+  },
+  "object-definitions/by-rest-context-path/stepses": {
+    "restContextPath": "/o/c/stepses",
+    "scope": "site"
+  },
+  "object-definitions/by-rest-context-path/weights": {
+    "restContextPath": "/o/c/weights",
+    "scope": "site"
+  },
+  "/o/c/heartrates": {
+    "items": [
+      {
+        "lowest": 60,
+        "highest": 100
+      }
+    ]
+  },
+  "/o/c/bloodpressures": {
+    "items": [
+      {
+        "diastolic": 80,
+        "systolic": 120
+      }
+    ]
+  },
+  "/o/c/stepses": {
+    "items": [
+      {
+        "stepCount": 5000
+      }
+    ]
+  },
+  "/o/c/weights": {
+    "items": [
+      {
+        "weight": 75.5
+      }
+    ]
+  }
+}

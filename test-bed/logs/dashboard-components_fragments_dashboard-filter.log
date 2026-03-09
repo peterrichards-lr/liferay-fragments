@@ -1,0 +1,7 @@
+--- Log for dashboard-components/fragments/dashboard-filter ---
+
+[Browser info] [Runner] Environment initialized.
+[Browser info] [Mock Fetch] /o/object-admin/v1.0/object-definitions/by-rest-context-path/heartrates
+[Browser info] [Mock Fetch] /o/object-admin/v1.0/object-definitions/by-rest-context-path/bloodpressures
+[Browser info] [Mock Fetch] /o/object-admin/v1.0/object-definitions/by-rest-context-path/stepses
+[Browser info] [Mock Fetch] /o/object-admin/v1.0/object-definitions/by-rest-context-path/weights

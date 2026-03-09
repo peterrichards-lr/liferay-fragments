@@ -1,0 +1,5 @@
+--- Log for content/fragments/service-card ---
+
+[Browser info] [Runner] Environment initialized.
+[Browser error] Unsafe attempt to load URL file:///o/dialect-theme/images/clay/icons.svg#magic from frame with URL file:///Volumes/SanDisk/repos/liferay-fragments/temp_test_bed/index.html. 'file:' URLs are treated as unique security origins.
+

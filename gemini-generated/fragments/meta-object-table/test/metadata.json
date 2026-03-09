@@ -1,0 +1,5 @@
+{
+  "theme": "meridian",
+  "thumbnailSelector": ".meta-table-container",
+  "screenshotSelector": "body"
+}

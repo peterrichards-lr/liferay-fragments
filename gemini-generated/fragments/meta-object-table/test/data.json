@@ -1,0 +1,65 @@
+{
+  "by-external-reference-code/MOCK_OBJECT": {
+    "name": "MockObject",
+    "pluralLabel": {
+      "en_US": "Mock Objects"
+    },
+    "restContextPath": "/o/c/mockobjects",
+    "scope": "site",
+    "objectFields": [
+      {
+        "name": "title",
+        "label": {
+          "en_US": "Object Title"
+        },
+        "type": "String"
+      },
+      {
+        "name": "description",
+        "label": {
+          "en_US": "Object Description"
+        },
+        "type": "String"
+      },
+      {
+        "name": "status",
+        "label": {
+          "en_US": "Status"
+        },
+        "type": "String"
+      }
+    ]
+  },
+  "/o/c/mockobjects": {
+    "totalCount": 3,
+    "items": [
+      {
+        "id": 101,
+        "title": "API Test Record 1",
+        "description": "Successfully intercepted via test/data.json keyed match.",
+        "status": {
+          "label": "Active",
+          "code": 0
+        }
+      },
+      {
+        "id": 102,
+        "title": "API Test Record 2",
+        "description": "Showing custom columns and localized labels.",
+        "status": {
+          "label": "Pending",
+          "code": 1
+        }
+      },
+      {
+        "id": 103,
+        "title": "API Test Record 3",
+        "description": "Verified high-fidelity rendering.",
+        "status": {
+          "label": "Active",
+          "code": 0
+        }
+      }
+    ]
+  }
+}

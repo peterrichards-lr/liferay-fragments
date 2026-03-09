@@ -1,0 +1,10 @@
+#fragment-root .meta-table-container {
+  border: 5px solid var(--primary);
+  border-radius: 15px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+}
+
+#fragment-root .object-title {
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}

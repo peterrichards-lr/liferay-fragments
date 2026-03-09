@@ -1,0 +1,6 @@
+--- Log for commerce/fragments/purchased-products ---
+
+[Browser info] [Runner] Environment initialized.
+[Browser debug] Processing placed orders for account 20122 on channel 20123
+[Browser info] [Mock Fetch] /o/headless-commerce-delivery-order/v1.0/channels/20123/accounts/20122/placed-orders
+[Browser Error] Cannot read properties of undefined (reading 'get')

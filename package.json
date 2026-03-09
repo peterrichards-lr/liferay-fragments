@@ -1,0 +1,12 @@
+{
+  "name": "liferay-fragments-test-bed",
+  "version": "1.0.0",
+  "description": "Liferay Fragment Test Bed and Thumbnail Generator",
+  "main": "test-bed/runner.js",
+  "dependencies": {
+    "playwright": "^1.40.0"
+  },
+  "scripts": {
+    "generate-thumbnails": "node test-bed/runner.js"
+  }
+}

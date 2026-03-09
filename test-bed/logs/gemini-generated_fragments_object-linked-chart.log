@@ -1,0 +1,5 @@
+--- Log for gemini-generated/fragments/object-linked-chart ---
+
+[Browser info] [Runner] Environment initialized.
+[Browser info] [Mock Fetch] /o/object-admin/v1.0/object-definitions/by-external-reference-code/SALES_REPORT
+[Browser info] [Mock Fetch] /o/c/sales_report/scopes/20120/?pageSize=100

@@ -1,0 +1,7 @@
+{
+  "showIcon": true,
+  "backgroundColor": "var(--primary-l2, #b8e4f5)",
+  "iconColor": "var(--primary, #007dad)",
+  "size": "100px",
+  "icon": "magic"
+}

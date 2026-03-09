@@ -1,0 +1,5 @@
+--- Log for gemini-generated/fragments/radial-kpi-gauge ---
+
+[Browser info] [Runner] Environment initialized.
+[Browser info] [Mock Fetch] /o/object-admin/v1.0/object-definitions/by-external-reference-code/WATER_READING
+[Browser info] [Mock Fetch] /o/c/water_reading/scopes/20120/?pageSize=1
