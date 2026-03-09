@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "lint": "node scripts/lint-fragments.js",
+    "create-fragment": "node scripts/create-fragment.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
