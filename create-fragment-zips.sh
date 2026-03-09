@@ -105,14 +105,24 @@ handle_shared_resources() {
         local FRAG_NAME=$(basename "$FRAG_DIR")
         echo "  -> Processing build metadata for $FRAG_NAME"
         
-        # 1. Process Shared Resources
+        # 1. Process Shared Resources (Concatenate JS, Copy others)
         local RESOURCES
         RESOURCES=$(jq -r '.sharedResources[]?' "$METADATA_FILE")
 
         for RES in $RESOURCES; do
             if [ -f "$SHARED_ROOT/$RES" ]; then
-                echo "    + Including shared resource: $RES"
-                cp "$SHARED_ROOT/$RES" "$FRAG_DIR/$RES"
+                if [[ "$RES" == *.js ]]; then
+                    echo "    + Concatenating shared script: $RES"
+                    # Prepend shared JS to index.js
+                    if [ -f "$FRAG_DIR/index.js" ]; then
+                        cat "$SHARED_ROOT/$RES" "$FRAG_DIR/index.js" > "$FRAG_DIR/index.js.tmp" && mv "$FRAG_DIR/index.js.tmp" "$FRAG_DIR/index.js"
+                    else
+                        cp "$SHARED_ROOT/$RES" "$FRAG_DIR/index.js"
+                    fi
+                else
+                    echo "    + Including shared resource: $RES"
+                    cp "$SHARED_ROOT/$RES" "$FRAG_DIR/$RES"
+                fi
             else
                 echo "    ! Warning: Shared resource not found: $SHARED_ROOT/$RES"
             fi
@@ -126,6 +136,7 @@ handle_shared_resources() {
         if [[ "$STRATEGY" == "generic" ]]; then
             # Perform a quick Rule #9 check (Warnings only during build)
             if [ -f "$FRAG_DIR/index.css" ]; then
+                # Search for hex colors not preceded by var( or a comma
                 if grep -qE "#[0-9a-fA-F]{3,6}" "$FRAG_DIR/index.css" | grep -qv "var("; then
                     echo "    ! Warning: Generic fragment $FRAG_NAME contains hardcoded colors. Use safe tokens."
                 fi

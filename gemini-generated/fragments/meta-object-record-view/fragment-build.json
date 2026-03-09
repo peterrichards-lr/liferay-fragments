@@ -1,0 +1,7 @@
+{
+  "sharedResources": [
+    "localization.js",
+    "validation.js"
+  ],
+  "themeStrategy": "generic"
+}
