@@ -65,18 +65,32 @@
   - **JS Safety**: No top-level `return` statements.
 - **CI Enforcement**: The Quality Gate is enforced via GitHub Actions on every push and PR.
 
+### 12. Shared Resources Architecture
+
+- **Central Storage**: Shared logic/assets reside in the root `shared-resources/` directory.
+- **Metadata Declaration**: Fragments requiring shared resources MUST include a `fragment-build.json` file.
+- **Schema**:
+  ```json
+  {
+    "sharedResources": ["commons.js"],
+    "themeStrategy": "generic"
+  }
+  ```
+- **Build Injection**: The `create-fragment-zips.sh` script automatically bundles declared resources into the fragment ZIP during build time. This allows for DRY code while keeping fragments self-contained for Liferay. The `fragment-build.json` file is excluded from the final ZIP.
+
 ## Build & Deployment
 
-- **create-fragment-zips.sh**: Supports `--fragments`, `--language`, and `--showcase` categories. Excludes deprecated fragments by default.
+- **create-fragment-zips.sh**: Supports `--fragments`, `--language`, and `--showcase` categories. Handles Shared Resource injection.
 - **deploy-fragment-zips.sh**: Aligned with category flags for selective deployment.
 
 ## Current Tasks
 
-- [x] Complete Comprehensive Functional Audit.
 - [x] Implement Admin API Scope Discovery across all relevant fragments.
 - [x] Clean up Localization (i18n) properties and remove literal key duplicates.
 - [x] Standardize Build/Deploy scripts with category and cleaning logic.
-- [x] Deprecate legacy serviceLocator-based profile fragments.
 - [x] Extract high-fidelity CSS tokens from theme style guides (Classic, Dialect, Meridian).
 - [x] Create `docs/THEMES.md` as a central reference for cross-theme safe tokens.
+- [x] Implement Fragment Quality Gate (Linter).
+- [x] Establish Shared Resources Architecture (`shared-resources/` + `fragment-metadata.json`).
+- [ ] Refactor existing dynamic fragments to use `shared-resources/commons.js`.
 - [ ] Finalize missing visuals for Dashboard, Gemini, and User Account fragments.

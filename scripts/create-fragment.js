@@ -32,6 +32,11 @@ const fragmentJson = {
   thumbnailPath: "thumbnail.png",
 };
 
+const fragmentBuildJson = {
+  sharedResources: ["commons.js"],
+  themeStrategy: "generic",
+};
+
 const configurationJson = {
   fieldSets: [
     {
@@ -64,9 +69,10 @@ const indexJs = `
 const init${fragmentName.replace(/\s+/g, "")} = () => {
     console.info("[Fragment] ${fragmentName} Initialized.");
     
-    // Use fragmentElement.querySelector for scoped selection
+    // Example usage of Commons if linked via build
+    // if (Liferay.Fragment.Commons.isValidIdentifier(someVal)) { ... }
+
     const title = fragmentElement.querySelector('h2');
-    
     if (title) {
         // Logic goes here
     }
@@ -89,11 +95,6 @@ const indexCss = `
 }
 `;
 
-const languageProps = `
-lfr.${safeName}.general=General
-lfr.${safeName}.title=Title
-`;
-
 // --- EXECUTION ---
 
 console.log(
@@ -108,16 +109,35 @@ fs.writeFileSync(
   JSON.stringify(fragmentJson, null, 2),
 );
 fs.writeFileSync(
+  path.join(targetDir, "fragment-build.json"),
+  JSON.stringify(fragmentBuildJson, null, 2),
+);
+fs.writeFileSync(
   path.join(targetDir, "configuration.json"),
   JSON.stringify(configurationJson, null, 2),
 );
 fs.writeFileSync(path.join(targetDir, "index.html"), indexHtml.trim());
 fs.writeFileSync(path.join(targetDir, "index.js"), indexJs.trim());
 fs.writeFileSync(path.join(targetDir, "index.css"), indexCss.trim());
-fs.writeFileSync(
-  path.join(targetDir, "Language_en_US.properties"),
-  languageProps.trim(),
+
+// Update or Create Language properties in the collection root
+const langPath = path.join(
+  process.cwd(),
+  collection,
+  "Language_en_US.properties",
 );
+let langContent = fs.existsSync(langPath)
+  ? fs.readFileSync(langPath, "utf8")
+  : "";
+const newKeys = `
+lfr.${safeName}.general=General
+lfr.${safeName}.title=Title
+`.trim();
+
+if (!langContent.includes(`lfr.${safeName}.title`)) {
+  langContent = langContent.trim() + "\n" + newKeys + "\n";
+  fs.writeFileSync(langPath, langContent);
+}
 
 // Create dummy metadata for test-bed
 const testMetadata = {
@@ -131,7 +151,3 @@ fs.writeFileSync(
 );
 
 console.log(`\nSuccessfully created fragment at: ${targetDir}`);
-console.log(`Next steps:`);
-console.log(`1. Add logic to index.js`);
-console.log(`2. Style the component in index.css`);
-console.log(`3. Run "npm run lint" to verify compliance.`);

@@ -95,6 +95,48 @@ is_deprecated() {
     return 1
 }
 
+# Helper to handle shared resources based on fragment-build.json
+handle_shared_resources() {
+    local FRAG_DIR=$1
+    local METADATA_FILE="$FRAG_DIR/fragment-build.json"
+    local SHARED_ROOT="shared-resources"
+
+    if [ -f "$METADATA_FILE" ]; then
+        local FRAG_NAME=$(basename "$FRAG_DIR")
+        echo "  -> Processing build metadata for $FRAG_NAME"
+        
+        # 1. Process Shared Resources
+        local RESOURCES
+        RESOURCES=$(jq -r '.sharedResources[]?' "$METADATA_FILE")
+
+        for RES in $RESOURCES; do
+            if [ -f "$SHARED_ROOT/$RES" ]; then
+                echo "    + Including shared resource: $RES"
+                cp "$SHARED_ROOT/$RES" "$FRAG_DIR/$RES"
+            else
+                echo "    ! Warning: Shared resource not found: $SHARED_ROOT/$RES"
+            fi
+        done
+
+        # 2. Process Theme Strategy
+        local STRATEGY
+        STRATEGY=$(jq -r '.themeStrategy // "generic"' "$METADATA_FILE")
+        echo "    + Theme Strategy: $STRATEGY"
+
+        if [[ "$STRATEGY" == "generic" ]]; then
+            # Perform a quick Rule #9 check (Warnings only during build)
+            if [ -f "$FRAG_DIR/index.css" ]; then
+                if grep -qE "#[0-9a-fA-F]{3,6}" "$FRAG_DIR/index.css" | grep -qv "var("; then
+                    echo "    ! Warning: Generic fragment $FRAG_NAME contains hardcoded colors. Use safe tokens."
+                fi
+            fi
+        fi
+        
+        # Remove metadata from the final ZIP to keep it clean
+        rm "$METADATA_FILE"
+    fi
+}
+
 # 2. Gather all available root items, sorted alphabetically
 ALL_COLLECTIONS=$(find . -type d -maxdepth 1 -exec test -e '{}'/collection.json \; -print | sed 's|^\./||' | sort)
 ALL_FRAGMENTS=$(find . -type d -maxdepth 1 -exec test -e '{}'/fragment.json \; -print | sed 's|^\./||' | sort)
@@ -236,6 +278,7 @@ if [ "$BUILD_FRAGMENTS" = true ]; then
        mkdir -p "$TEMP_FRAG/$FRAGMENT_NAME"
        cp -r "$FRAGMENT_NAME/." "$TEMP_FRAG/$FRAGMENT_NAME/"
        
+       handle_shared_resources "$TEMP_FRAG/$FRAGMENT_NAME"
        ensure_descriptor "$TEMP_FRAG/$FRAGMENT_NAME"
        process_dir "$TEMP_FRAG/$FRAGMENT_NAME" "$FRAGMENT_NAME"
        
@@ -327,6 +370,13 @@ for COLLECTION_NAME in "${COLLECTIONS[@]}"; do
            done
        fi
 
+       # Process each fragment in the collection for shared resources
+       for FRAG_PATH in "$TEMP_COLL/$COLLECTION_NAME"/fragments/*; do
+           if [ -d "$FRAG_PATH" ]; then
+               handle_shared_resources "$FRAG_PATH"
+           fi
+       done
+
        ensure_descriptor "$TEMP_COLL/$COLLECTION_NAME"
        process_dir "$TEMP_COLL/$COLLECTION_NAME" "$COLLECTION_NAME"
        
@@ -349,6 +399,13 @@ for COLLECTION_NAME in "${COLLECTIONS[@]}"; do
                fi
            done
        fi
+
+       # Process each fragment in the legacy collection for shared resources
+       for FRAG_PATH in "$BUILD_TEMP/$COLLECTION_NAME"/fragments/*; do
+           if [ -d "$FRAG_PATH" ]; then
+               handle_shared_resources "$FRAG_PATH"
+           fi
+       done
 
        find "$BUILD_TEMP/$COLLECTION_NAME" -name "Language*.properties" -delete
        find "$BUILD_TEMP/$COLLECTION_NAME" -name "client-extension.yaml" -delete
