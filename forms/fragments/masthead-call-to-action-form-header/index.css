@@ -2,4 +2,4 @@
 .masthead-form div.ddm-layout-builder.ddm-page-container-layout > div > div > h2 {display: none;}
 .masthead-form div.lfr-ddm__default-page-header > div {display: none}
 .masthead-form div.ddm-layout-builder.ddm-page-container-layout > div > div > p {display: none;}
-.masthead-form label {color: #f0f5ff;}
+.masthead-form label {color: var(--gray-100, #f0f5ff);}

@@ -176,11 +176,21 @@ fragmentFiles.forEach((file) => {
   const cssPath = path.join(dir, fragJson.cssPath || "index.css");
   if (fs.existsSync(cssPath)) {
     const css = fs.readFileSync(cssPath, "utf8");
-    const hexMatch = css.match(/#[0-9a-fA-F]{3,6}\b/g);
-    if (hexMatch) {
+    // Find hex colors, then filter out those that are part of a var() fallback.
+    const allHexMatches = css.match(/#[0-9a-fA-F]{3,6}\b/g) || [];
+    const hardcodedHex = allHexMatches.filter((hex) => {
+      // Strip var() fallbacks and check if hex still exists
+      const strippedCss = css.replace(
+        /var\([^,]+,\s*#[0-9a-fA-F]{3,6}\)/g,
+        "VAR_WITH_FALLBACK",
+      );
+      return strippedCss.includes(hex);
+    });
+
+    if (hardcodedHex.length > 0) {
       logWarn(
         fragmentName,
-        `Hardcoded colors found in CSS: ${[...new Set(hexMatch)].join(", ")}. Use var() tokens.`,
+        `Hardcoded colors found in CSS: ${[...new Set(hardcodedHex)].join(", ")}. Use var() tokens.`,
       );
     }
   }
@@ -189,9 +199,7 @@ fragmentFiles.forEach((file) => {
   const jsPath = path.join(dir, fragJson.jsPath || "index.js");
   if (fs.existsSync(jsPath)) {
     const js = fs.readFileSync(jsPath, "utf8");
-    // Simple check for top-level return
     // Matches 'return' not inside a function block {}
-    // This is a naive regex, but covers most basic violations in fragments
     if (
       /^return\s+|[;{]\s*return\s+/m.test(js) &&
       !js.includes("function") &&

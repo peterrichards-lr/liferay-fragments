@@ -4,8 +4,8 @@
 
 .autocomplete-object-input .autocomplete-items {
   position: absolute;
-  border: 1px solid #d4d4d4;
-  border-color: var(--autocomplete-border-color, #d4d4d4);
+  border: 1px solid var(--gray-300, #d4d4d4);
+  border-color: var(--autocomplete-border-color, var(--gray-300, #d4d4d4));
   border-top: none;
   z-index: 99;
   top: 100%;
@@ -24,8 +24,8 @@
   padding: 10px;
   cursor: pointer;
   background-color: var(--autocomplete-bg-color, #fff);
-  border-bottom: 1px solid #d4d4d4;
-  border-color: var(--autocomplete-border-color, #d4d4d4);
+  border-bottom: 1px solid var(--gray-300, #d4d4d4);
+  border-color: var(--autocomplete-border-color, var(--gray-300, #d4d4d4));
   color: var(--autocomplete-color, inherit);
 }
 

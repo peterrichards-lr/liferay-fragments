@@ -16,7 +16,7 @@
 .commerce-search .commerce-search__input input {
 	background-color: transparent;
 	border: 0;
-	caret-color: #71d2e8;
+	caret-color: var(--primary, #71d2e8);
 	caret-color: var(--color-brand-primary, #71d2e8);
 	font-size: 14px;
 	height: 100%;
