@@ -1,6 +1,6 @@
 ---
 name: liferay-fragment-developer
-description: Expert guidance for developing Liferay Fragments. Use when creating, modifying, or auditing Liferay Fragments to ensure compliance with architectural, accessibility, responsiveness, and Meridian theme standards.
+description: Expert guidance for developing Liferay Fragments. Use when creating, modifying, or auditing Liferay Fragments to ensure compliance with architectural, accessibility, responsiveness, and multi-theme (Classic, Dialect, Meridian) standards.
 ---
 
 # Liferay Fragment Developer Skill
@@ -14,7 +14,9 @@ This skill provides comprehensive procedural knowledge and architectural standar
 - Ensure `fragment.json` correctly points to all assets.
 - Create `configuration.json` using standard field sets and types.
 - Implement the "Edit Mode Previews & Alerts" pattern in `index.html` and `index.js`.
-- Adhere to the Meridian Theme by using CSS tokens.
+- **Theme Awareness**: Fragments MUST be theme-aware.
+  - Refer to `docs/THEMES.md` for high-fidelity CSS tokens and icon spritemaps.
+  - Support **Classic**, **Dialect**, and **Meridian** by using semantic variables (e.g., `var(--primary)`, `var(--card-background-color)`).
 - **Dynamic Object Discovery**: Never hardcode Object API paths.
   - Fetch definition via `/o/object-admin/v1.0/object-definitions/by-rest-context-path/{path}`.
   - Use the returned `scope` to construct the correct data URL (append `/scopes/{siteId}` if scope is `site`).
@@ -41,5 +43,5 @@ This skill provides comprehensive procedural knowledge and architectural standar
 - **[Best Practices](./references/best-practices.md)**: Configuration nesting, dependencies, and scoping.
 - **[UI & Interaction](./references/ui-standards.md)**: Edit mode hygiene, Mappable Field Ergonomics, and A11y.
 - **[Object Integration](./references/object-integration.md)**: Metadata discovery and scope handling.
-- **[Meridian Theme](./references/theme-meridian.md)**: CSS tokens and brand integration rules.
-- **[AI Integration](./references/ai-chat-interface.md)**: Standard JSON interface for AI components.
+- [Theme Standards](./references/themes.md): Multi-theme tokens and brand integration rules.
+- [AI Integration](./references/ai-chat-interface.md): Standard JSON interface for AI components.

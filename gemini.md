@@ -29,17 +29,6 @@
 ### 5. Configuration Dependencies
 
 - **Syntax**: Use the object-based dependency structure within `typeOptions` to create dynamic interfaces.
-- **Example**:
-  ```json
-  "typeOptions": {
-    "dependency": {
-      "enableFeature": {
-        "type": "equal",
-        "value": "true"
-      }
-    }
-  }
-  ```
 
 ### 6. Robust Identifier Validation
 
@@ -55,16 +44,21 @@
 
 - **Requirement**: Manually configured titles (e.g., `configuration.chartTitle`) MUST take precedence over evaluated values. Logic should check if the field is empty before falling back to dynamic labels.
 
-### 9. Deprecation Protocol
+### 9. Theme Fidelity (Safe Tokens)
+
+- **Theme Awareness**: Fragments MUST be theme-aware and use CSS tokens defined in `docs/THEMES.md`.
+- **Safe Intersect**: Prioritize variables that exist across Classic, Dialect, and Meridian (e.g., `--primary`, `--body-bg`, `--body-color`, `--secondary`).
+- **Theme Scoping**: Use theme-specific body classes (`.meridian-theme`, `.liferay-dialect-theme`, `.classic-theme`) for targeted overrides if safe tokens are insufficient.
+
+### 10. Deprecation Protocol
 
 - **Metadata**: Append `(Deprecated)` to the `name` in `fragment.json`.
 - **Docs**: Add a warning block at the top of the fragment's documentation file explaining the reason and recommending modern alternatives.
-- **Audit**: Update `todo.md` to mark the fragment as `DEPR` for thumbnails and visuals.
 
 ## Build & Deployment
 
-- **create-fragment-zips.sh**: Supports `--fragments`, `--language`, and `--showcase` categories. Excludes deprecated fragments by default (use `--include-deprecated` to override).
-- **deploy-fragment-zips.sh**: Aligned with category flags for selective deployment to Liferay environments.
+- **create-fragment-zips.sh**: Supports `--fragments`, `--language`, and `--showcase` categories. Excludes deprecated fragments by default.
+- **deploy-fragment-zips.sh**: Aligned with category flags for selective deployment.
 
 ## Current Tasks
 
@@ -73,4 +67,6 @@
 - [x] Clean up Localization (i18n) properties and remove literal key duplicates.
 - [x] Standardize Build/Deploy scripts with category and cleaning logic.
 - [x] Deprecate legacy serviceLocator-based profile fragments.
+- [x] Extract high-fidelity CSS tokens from theme style guides (Classic, Dialect, Meridian).
+- [x] Create `docs/THEMES.md` as a central reference for cross-theme safe tokens.
 - [ ] Finalize missing visuals for Dashboard, Gemini, and User Account fragments.
