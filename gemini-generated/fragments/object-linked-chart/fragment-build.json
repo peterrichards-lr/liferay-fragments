@@ -1,5 +1,6 @@
 {
   "sharedResources": [
+    "assets.js",
     "discovery.js",
     "localization.js",
     "validation.js"
