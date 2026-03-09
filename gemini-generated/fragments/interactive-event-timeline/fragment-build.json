@@ -1,6 +1,5 @@
 {
   "sharedResources": [
     "localization.js"
-  ],
-  "themeStrategy": "generic"
+  ]
 }

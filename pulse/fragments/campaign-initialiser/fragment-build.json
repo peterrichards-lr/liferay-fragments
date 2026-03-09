@@ -3,6 +3,5 @@
     "discovery.js",
     "storage.js",
     "validation.js"
-  ],
-  "themeStrategy": "generic"
+  ]
 }

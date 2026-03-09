@@ -2,6 +2,5 @@
   "sharedResources": [
     "storage.js",
     "validation.js"
-  ],
-  "themeStrategy": "generic"
+  ]
 }

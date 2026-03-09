@@ -3,6 +3,5 @@
     "discovery.js",
     "localization.js",
     "validation.js"
-  ],
-  "themeStrategy": "generic"
+  ]
 }
