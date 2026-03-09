@@ -32,7 +32,7 @@ if (themeId === "liferay-meridian-theme") {
 
 ### CSS (Body Classes)
 
-The test-bed and Liferay DXP inject theme-specific classes into the `<html>` or `<body>` element.
+Liferay DXP injects theme-specific classes into the `<html>` or `<body>` element.
 
 - `.meridian-theme`
 - `.liferay-dialect-theme`
@@ -63,23 +63,5 @@ If a variable is missing in one theme, it will fallback to the second value prov
 
   /* Meridian uses specific border-radius tokens */
   border-radius: var(--border-radius-lg, 0.5rem);
-}
-```
-
-## 4. Fragment Testing (Test-Bed)
-
-The `test-bed/runner.js` automatically:
-
-1. Injects the selected theme's CSS.
-2. Adds the theme class to the `<body>`.
-3. Mocks `Liferay.ThemeDisplay` with the correct ID and Name.
-4. Replaces `data-lfr-editable-id` fields with content from `test/data.json`.
-
-### Example `test/data.json` for editables:
-
-```json
-{
-  "title": "Custom Mock Title",
-  "description": "This text replaces the data-lfr-editable-id='description' field."
 }
 ```

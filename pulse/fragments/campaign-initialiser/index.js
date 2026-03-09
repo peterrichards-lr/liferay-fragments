@@ -1,18 +1,6 @@
 const initCampaignInitialiser = () => {
   const ADMIN_API_BASE = "/o/object-admin/v1.0";
 
-  const isValidIdentifier = (val) => {
-    if (val === undefined || val === null) return false;
-    const s = String(val).trim().toLowerCase();
-    return (
-      s !== "" &&
-      s !== "undefined" &&
-      s !== "null" &&
-      s !== "0" &&
-      s !== "[object object]"
-    );
-  };
-
   if (layoutMode !== "view") return;
 
   const cookieName = "__coId";
@@ -49,20 +37,9 @@ const initCampaignInitialiser = () => {
 
   const resolveApiPath = async () => {
     try {
-      const response = await Liferay.Util.fetch(
-        `${ADMIN_API_BASE}/object-definitions/by-rest-context-path/campaigns`,
-      );
-      if (!response.ok) throw new Error("Failed to fetch object definition");
-
-      const definition = await response.json();
-      let path = definition.restContextPath;
-
-      if (definition.scope === "site") {
-        const siteId = Liferay.ThemeDisplay.getScopeGroupId();
-        path += `/scopes/${siteId}`;
-      }
-
-      apiPath = path;
+      const { apiPath: resolvedPath } =
+        await Liferay.Fragment.Commons.resolveObjectPath("/o/c/campaigns");
+      apiPath = resolvedPath;
     } catch (err) {
       console.error("[Campaign Initialiser] Scope resolution failed:", err);
       apiPath = "/o/c/campaigns";
@@ -76,7 +53,7 @@ const initCampaignInitialiser = () => {
     if (!utm.utm_campaign && !configuration.campaignId) return;
 
     const existingId = getCookie(cookieName);
-    if (isValidIdentifier(existingId)) {
+    if (Liferay.Fragment.Commons.isValidIdentifier(existingId)) {
       const check = await Liferay.Util.fetch(`${apiPath}/${existingId}`);
       if (check.ok) return;
     }

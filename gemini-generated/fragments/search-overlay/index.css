@@ -1,6 +1,6 @@
 .modern-search-overlay {
-    --overlay-bg: #ffffff;
-    --accent-color: #0b5fff;
+    --overlay-bg: var(--body-bg, #ffffff);
+    --accent-color: var(--primary, #0b5fff);
 }
 
 .search-modal {

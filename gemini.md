@@ -48,6 +48,7 @@
 ### 9. Theme Fidelity & Test-Bed
 
 - **Theme Support**: Fragments MUST be theme-aware and use CSS tokens defined in `docs/THEMES.md`.
+- **Safe Intersect**: Prioritize variables that exist across Classic, Dialect, and Meridian (e.g., `--primary`, `--body-bg`, `--body-color`, `--secondary`).
 - **Testing**: All fragments MUST be verified using the Playwright-based test-bed in `test-bed/`.
 - **Mocking**: Supply mock data for API calls in `test/data.json` and test-specific configuration in `test/configuration.json`.
 - **Visual Generation**:
@@ -60,21 +61,37 @@
 - **Metadata**: Append `(Deprecated)` to the `name` in `fragment.json`.
 - **Docs**: Add a warning block at the top of the fragment's documentation file explaining the reason and recommending modern alternatives.
 
+### 11. Fragment Quality Gate (Linter)
+
+- **Requirement**: All fragments MUST pass the local audit script (`npm run lint`) before being committed.
+- **Validation Criteria**:
+  - **Schema**: `fragment.json` and `configuration.json` must match the internal project schemas.
+  - **Localization**: Every label/description key used in `configuration.json` MUST exist in `Language_en_US.properties`.
+  - **Theme Fidelity**: CSS should avoid hardcoded colors (e.g., `#ffffff`) and prioritize safe tokens defined in `docs/THEMES.md`.
+  - **JS Safety**: No top-level `return` statements.
+- **CI Enforcement**: The Quality Gate is enforced via GitHub Actions on every push and PR.
+
+### 12. Shared Resources Architecture
+
+- **Central Storage**: Shared logic/assets reside in the root `shared-logic/` directory.
+- **Metadata Declaration**: Fragments requiring shared logic MUST include a `fragment-build.json` file.
+- **Hierarchical Config**: Global theme strategy is defined in `collection-build.json` at the collection level.
+- **Build Injection**: The `create-fragment-zips.sh` script automatically bundles declared resources into the fragment ZIP during build time. JS modules are concatenated into `index.js` for zero-latency execution.
+
 ## Build & Deployment
 
-- **create-fragment-zips.sh**: Supports `--fragments`, `--language`, and `--showcase` categories. Excludes deprecated fragments and `test/` directories by default.
+- **create-fragment-zips.sh**: Supports `--fragments`, `--language`, and `--showcase` categories. Handles Shared Resource injection and build metadata processing.
 - **deploy-fragment-zips.sh**: Aligned with category flags for selective deployment.
 
 ## Current Tasks
 
-- [ ] Implement `test/metadata.json` across collections to guide visual generation.
-- [ ] Audit all fragments for Rule #9 (Theme Fidelity) and missing `screenshot.png`.
-- [ ] Finalize missing visuals for Dashboard, Gemini, and User Account fragments.
-- [x] Complete Comprehensive Functional Audit.
 - [x] Implement Admin API Scope Discovery across all relevant fragments.
 - [x] Clean up Localization (i18n) properties and remove literal key duplicates.
 - [x] Standardize Build/Deploy scripts with category and cleaning logic.
-- [x] Deprecate legacy serviceLocator-based profile fragments.
 - [x] Extract high-fidelity CSS tokens from theme style guides (Classic, Dialect, Meridian).
-- [x] Create `docs/THEMES.md` as a central reference for AI context and prompting.
-- [x] Update `test-bed/runner.js` to support dual visual output and metadata-driven selectors.
+- [x] Create `docs/THEMES.md` as a central reference for cross-theme safe tokens.
+- [x] Implement Fragment Quality Gate (Linter).
+- [x] Establish Shared Resources Architecture (`shared-logic/` + `fragment-build.json`).
+- [x] Refactor existing dynamic fragments to use modular shared logic.
+- [ ] Update `test-bed/runner.js` to simulate modular JS concatenation.
+- [ ] Finalize missing visuals for Dashboard, Gemini, and User Account fragments.

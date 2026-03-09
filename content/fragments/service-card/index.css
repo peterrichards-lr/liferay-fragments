@@ -5,7 +5,7 @@ div.service-card {
   --left: calc(50% - (var(--font-size, 24px) / 2));
   --padding: calc(var(--size) / 4.5);
 
-  border: 1px solid #d8d8d8;
+  border: 1px solid var(--gray-300, #d8d8d8);
   border-radius: 0.5rem;
   padding: var(--spacer-3, 16px) var(--spacer-2, 8px);
 }

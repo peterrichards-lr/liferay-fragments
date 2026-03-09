@@ -1,0 +1,6 @@
+{
+  "sharedResources": [
+    "data.js",
+    "storage.js"
+  ]
+}

@@ -6,28 +6,9 @@ const state = {
   daysToDisplay: parseInt(configuration.daysToDisplay || "365"),
 };
 
-const isValidIdentifier = (val) => {
-  if (val === undefined || val === null) return false;
-  const s = String(val).trim().toLowerCase();
-  return (
-    s !== "" &&
-    s !== "undefined" &&
-    s !== "null" &&
-    s !== "0" &&
-    s !== "[object object]"
-  );
-};
-
-const getLocalizedValue = (value) => {
-  if (typeof value === "object" && value !== null && !Array.isArray(value)) {
-    const languageId =
-      typeof Liferay !== "undefined"
-        ? Liferay.ThemeDisplay.getLanguageId()
-        : "en_US";
-    return value[languageId] || value["en_US"] || "";
-  }
-  return value || "";
-};
+// Use Commons for localization
+const getLocalizedValue = (value) =>
+  Liferay.Fragment.Commons.getLocalizedValue(value);
 
 const fetchData = async () => {
   const { objectERC: configERC } = configuration;
@@ -48,20 +29,19 @@ const fetchData = async () => {
     }
   }
 
-  if (!isValidIdentifier(objectERC))
+  if (!Liferay.Fragment.Commons.isValidIdentifier(objectERC))
     throw new Error("Object ERC not configured.");
 
-  const adminUrl = `${ADMIN_API_BASE}/object-definitions/by-external-reference-code/${objectERC}`;
-  const defRes = await Liferay.Util.fetch(adminUrl);
-  if (!defRes.ok) throw new Error("Object definition not found.");
-  state.definition = await defRes.json();
+  // Use Commons for discovery and path resolution
+  const { definition, apiPath } =
+    await Liferay.Fragment.Commons.resolveObjectPath(
+      `/o/c/${objectERC.toLowerCase()}`,
+    );
 
-  let url = state.definition.restContextPath;
-  if (state.definition.scope === "site") {
-    url += `/scopes/${Liferay.ThemeDisplay.getScopeGroupId()}`;
-  }
+  if (!definition) throw new Error("Object definition not found.");
+  state.definition = definition;
 
-  const response = await Liferay.Util.fetch(`${url}/?pageSize=1000`);
+  const response = await Liferay.Util.fetch(`${apiPath}/?pageSize=1000`);
   const data = await response.json();
   state.items = data.items || [];
   return state.items;
@@ -174,7 +154,7 @@ const initActivityHeatmap = async (isEditMode) => {
     }
   }
 
-  if (!isValidIdentifier(objectERC)) {
+  if (!Liferay.Fragment.Commons.isValidIdentifier(objectERC)) {
     if (titleEl) titleEl.textContent = configTitle || "Activity Heatmap";
     if (isEditMode && infoEl) {
       infoEl.textContent = "Please configure an Object ERC.";

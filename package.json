@@ -1,12 +1,26 @@
 {
-  "name": "liferay-fragments-test-bed",
+  "name": "liferay-fragments",
   "version": "1.0.0",
-  "description": "Liferay Fragment Test Bed and Thumbnail Generator",
-  "main": "test-bed/runner.js",
-  "dependencies": {
-    "playwright": "^1.40.0"
-  },
+  "description": "High-fidelity Liferay DXP Fragments",
+  "main": "index.js",
   "scripts": {
-    "generate-thumbnails": "node test-bed/runner.js"
+    "lint": "node scripts/lint-fragments.js",
+    "create-fragment": "node scripts/create-fragment.js",
+    "docs:gallery": "node scripts/generate-gallery.js",
+    "test-bed": "node test-bed/runner.js",
+    "test-bed:bulk": "node test-bed/bulk-render.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "liferay",
+    "fragments",
+    "dxp"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "ajv": "^8.12.0",
+    "glob": "^10.3.10",
+    "playwright": "^1.40.0"
   }
 }

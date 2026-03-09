@@ -141,6 +141,31 @@ async function run() {
     } catch (e) {}
   }
 
+  // --- BUILD METADATA EMULATION ---
+  const fragBuildFile = path.join(fragmentPath, "fragment-build.json");
+  if (fs.existsSync(fragBuildFile)) {
+    try {
+      const buildConfig = JSON.parse(fs.readFileSync(fragBuildFile, "utf8"));
+      const sharedLogicRoot = path.resolve(__dirname, "../shared-logic");
+
+      if (buildConfig.sharedResources) {
+        let concatenatedLogic = "";
+        buildConfig.sharedResources.forEach((res) => {
+          if (res.endsWith(".js")) {
+            const resPath = path.join(sharedLogicRoot, res);
+            if (fs.existsSync(resPath)) {
+              console.log(`[Runner] Emulating build: prepending ${res}`);
+              concatenatedLogic += fs.readFileSync(resPath, "utf8") + "\n";
+            }
+          }
+        });
+        js = concatenatedLogic + js;
+      }
+    } catch (e) {
+      console.warn(`[Runner] Error parsing fragment-build.json: ${e.message}`);
+    }
+  }
+
   // --- IMPROVED FREE MARKER PRE-PROCESSOR ---
 
   const input = {
@@ -173,7 +198,6 @@ async function run() {
     return undefined;
   };
 
-  // 1. Handle ${var!default} and ${var!}
   html = html.replace(
     /\$\{([^}!]+)(?:!([^}]*))?\}/g,
     (match, pathStr, defaultVal) => {
@@ -183,7 +207,6 @@ async function run() {
     },
   );
 
-  // 2. Handle Functions: htmlUtil.escape(...)
   html = html.replace(
     /\$\{htmlUtil\.escape\(([^)]+)\)\}/g,
     (match, pathStr) => {
@@ -204,10 +227,7 @@ async function run() {
     },
   );
 
-  // 3. Handle Functions: languageUtil.get(...)
   html = html.replace(/\$\{languageUtil\.get\([^)]+\)\}/g, "Translated String");
-
-  // 4. Handle site-specific vars
   html = html
     .replace(/\$\{siteSpritemap\}/g, "#")
     .replace(
@@ -215,7 +235,6 @@ async function run() {
       "https://www.liferay.com/documents/10182/0/Liferay+Logo/63620164-6362-4362-8362-636201646362",
     );
 
-  // 5. Handle shorthand ?then
   html = html.replace(
     /\$\{([^?]+)\?then\('([^']*)',\s*'([^']*)'\)\}/g,
     (m, pathStr, p2, p3) => {
@@ -224,7 +243,6 @@ async function run() {
     },
   );
 
-  // 6. Handle [#if] blocks (including else/elseif)
   html = html.replace(
     /\[#if\s+([^\]]+)\]([\s\S]*?)(\[#else\]([\s\S]*?))?\[\/#if\]/g,
     (m, conditionStr, body, elsePart, elseBody) => {

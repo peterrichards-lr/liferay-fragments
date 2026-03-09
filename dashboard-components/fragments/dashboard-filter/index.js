@@ -1,18 +1,6 @@
 const initDashboardFilter = () => {
   const ADMIN_API_BASE = "/o/object-admin/v1.0";
 
-  const isValidIdentifier = (val) => {
-    if (val === undefined || val === null) return false;
-    const s = String(val).trim().toLowerCase();
-    return (
-      s !== "" &&
-      s !== "undefined" &&
-      s !== "null" &&
-      s !== "0" &&
-      s !== "[object object]"
-    );
-  };
-
   if (layoutMode === "view") {
     Date.prototype.addDays = function (days) {
       var date = new Date(this.valueOf());
@@ -133,7 +121,7 @@ const initDashboardFilter = () => {
       };
 
       const getAsync = async (path) => {
-        if (!isValidIdentifier(path)) return {};
+        if (!Liferay.Fragment.Commons.isValidIdentifier(path)) return {};
         const response = await Liferay.Util.fetch(path);
         if (response.ok) {
           return await response.json();
@@ -142,7 +130,8 @@ const initDashboardFilter = () => {
       };
 
       const submitData = (path, data) => {
-        if (!isValidIdentifier(path)) return Promise.reject("Invalid path");
+        if (!Liferay.Fragment.Commons.isValidIdentifier(path))
+          return Promise.reject("Invalid path");
         return Liferay.Util.fetch(path, {
           method: "POST",
           headers: {
@@ -163,30 +152,20 @@ const initDashboardFilter = () => {
 
       const resolveObjectPath = async (key, defaultPath) => {
         const configPath = configuration[key] || defaultPath;
-        const objectName = configPath.replace(/^\/o\/c\//, "");
+        const restContextPath = configPath.startsWith("/o/c/")
+          ? configPath
+          : `/o/c/${configPath}`;
 
         try {
-          const response = await Liferay.Util.fetch(
-            `${ADMIN_API_BASE}/object-definitions/by-rest-context-path/${objectName}`,
-          );
-          if (!response.ok)
-            throw new Error("Failed to fetch object definition");
-
-          const definition = await response.json();
-          let path = definition.restContextPath;
-
-          if (definition.scope === "site") {
-            const siteId = Liferay.ThemeDisplay.getScopeGroupId();
-            path += `/scopes/${siteId}`;
-          }
-
-          apiPaths[key] = path;
+          const { apiPath } =
+            await Liferay.Fragment.Commons.resolveObjectPath(restContextPath);
+          apiPaths[key] = apiPath;
         } catch (err) {
           console.error(
             `[Dashboard Filter] Scope resolution failed for ${key}:`,
             err,
           );
-          apiPaths[key] = `/o/c/${objectName}`;
+          apiPaths[key] = restContextPath;
         }
       };
 
@@ -320,7 +299,7 @@ const initDashboardFilter = () => {
       const syncData = async (e) => {
         const userId = Liferay.ThemeDisplay.getUserId();
 
-        if (!isValidIdentifier(userId)) {
+        if (!Liferay.Fragment.Commons.isValidIdentifier(userId)) {
           console.error("Invalid User ID for sync data.");
           return;
         }

@@ -1,5 +1,5 @@
 button.pdf-export {
-	background-color: #555555;
+	background-color: var(--gray-700, #555555);
   border: none;
   color: white;
   padding: 16px 16px;

@@ -1,16 +1,9 @@
 const initMetaObjectFormFragment = () => {
   const ADMIN_API_BASE = "/o/object-admin/v1.0";
 
-  const getLocalizedValue = (value) => {
-    if (typeof value === "object" && value !== null && !Array.isArray(value)) {
-      const languageId =
-        typeof Liferay !== "undefined"
-          ? Liferay.ThemeDisplay.getLanguageId()
-          : "en_US";
-      return value[languageId] || value["en_US"] || "";
-    }
-    return value || "";
-  };
+  // Use Commons for localization
+  const getLocalizedValue = (value) =>
+    Liferay.Fragment.Commons.getLocalizedValue(value);
 
   const debounce = (func, wait) => {
     let timeout;
@@ -159,13 +152,12 @@ const initMetaObjectFormFragment = () => {
     }
   };
 
-  const getBaseUrl = (state) => {
-    let url = state.definition.restContextPath;
-    if (state.definition.scope === "site") {
-      const siteId = Liferay.ThemeDisplay.getScopeGroupId();
-      url += `/scopes/${siteId}`;
-    }
-    return url;
+  // Uses Commons for API path resolution
+  const getBaseUrl = async (state) => {
+    const { apiPath } = await Liferay.Fragment.Commons.resolveObjectPath(
+      state.definition.restContextPath,
+    );
+    return apiPath;
   };
 
   const fetchOptionsForField = async (field, term = "", state) => {
@@ -183,39 +175,24 @@ const initMetaObjectFormFragment = () => {
       }));
     } else if (businessType === "Relationship") {
       const erc = field.objectDefinitionExternalReferenceCode1;
-      const defRes = await Liferay.Util.fetch(
-        `${ADMIN_API_BASE}/object-definitions/by-external-reference-code/${erc}`,
-      );
-      const relDef = await defRes.json();
 
-      let url = relDef.restContextPath;
-      if (relDef.scope === "site")
-        url += `/scopes/${Liferay.ThemeDisplay.getScopeGroupId()}`;
+      const { definition, apiPath } =
+        await Liferay.Fragment.Commons.resolveObjectPath(
+          `/o/c/${erc.toLowerCase()}`,
+        );
 
       const entriesRes = await Liferay.Util.fetch(
-        `${url}/?search=${term}&pageSize=20`,
+        `${apiPath}/?search=${term}&pageSize=20`,
       );
       const data = await entriesRes.json();
-      const titleField = relDef.titleObjectFieldName || "id";
+      const titleField = definition ? definition.titleObjectFieldName : "id";
 
       return (data.items || []).map((item) => ({
-        label: item[titleField] || item.id,
+        label: item[titleField || "id"] || item.id,
         value: item.id,
       }));
     }
     return [];
-  };
-
-  const isValidIdentifier = (val) => {
-    if (val === undefined || val === null) return false;
-    const s = String(val).trim().toLowerCase();
-    return (
-      s !== "" &&
-      s !== "undefined" &&
-      s !== "null" &&
-      s !== "0" &&
-      s !== "[object object]"
-    );
   };
 
   const loadRecord = async (recordId, recordERC, state) => {
@@ -247,9 +224,11 @@ const initMetaObjectFormFragment = () => {
       requestedFieldNames.add("externalReferenceCode");
       const fieldsParam = `fields=${Array.from(requestedFieldNames).join(",")}`;
 
+      const baseUrl = await getBaseUrl(state);
+
       // 1. Try ERC
-      if (isValidIdentifier(recordERC)) {
-        const url = `${getBaseUrl(state)}/by-external-reference-code/${recordERC}?${fieldsParam}`;
+      if (Liferay.Fragment.Commons.isValidIdentifier(recordERC)) {
+        const url = `${baseUrl}/by-external-reference-code/${recordERC}?${fieldsParam}`;
         console.debug(`[Meta-Object Form] Fetching record by ERC: ${url}`);
         const response = await Liferay.Util.fetch(url);
         if (response.ok) {
@@ -259,8 +238,8 @@ const initMetaObjectFormFragment = () => {
       }
 
       // 2. Fallback to ID
-      if (!record && isValidIdentifier(recordId)) {
-        const url = `${getBaseUrl(state)}/${recordId}?${fieldsParam}`;
+      if (!record && Liferay.Fragment.Commons.isValidIdentifier(recordId)) {
+        const url = `${baseUrl}/${recordId}?${fieldsParam}`;
         console.debug(`[Meta-Object Form] Fetching record by ID: ${url}`);
         const response = await Liferay.Util.fetch(url);
         if (response.ok) {
@@ -344,12 +323,14 @@ const initMetaObjectFormFragment = () => {
     const container = fragmentElement.querySelector(
       `#selector-${fragmentEntryLinkNamespace}`,
     );
+    const baseUrl = await getBaseUrl(state);
+
     if (container && enableRecordSelection) {
       createSearchableSelect(container, {
         placeholder: "Search records to edit...",
         fetchFn: async (term) => {
           const response = await Liferay.Util.fetch(
-            `${getBaseUrl(state)}/?search=${term}&pageSize=20`,
+            `${baseUrl}/?search=${term}&pageSize=20`,
           );
           const data = await response.json();
           const titleField = state.definition.titleObjectFieldName || "id";
@@ -433,7 +414,10 @@ const initMetaObjectFormFragment = () => {
         const eventId = e.detail.recordId || e.detail.identifier || null;
         const eventERC = e.detail.recordERC || e.detail.erc || null;
 
-        if (isValidIdentifier(eventId) || isValidIdentifier(eventERC)) {
+        if (
+          Liferay.Fragment.Commons.isValidIdentifier(eventId) ||
+          Liferay.Fragment.Commons.isValidIdentifier(eventERC)
+        ) {
           console.debug(
             `[Meta-Object Form] Loading record from event - ID: ${eventId}, ERC: ${eventERC}`,
           );
@@ -442,7 +426,7 @@ const initMetaObjectFormFragment = () => {
       }
     });
 
-    if (!objectERC) {
+    if (!Liferay.Fragment.Commons.isValidIdentifier(objectERC)) {
       titleEl.textContent = "Meta-Object Form";
       if (isEditMode && infoEl) {
         infoEl.textContent =
@@ -510,15 +494,17 @@ const initMetaObjectFormFragment = () => {
         let startId = params.get("entryId") || params.get("id");
         let startERC = params.get("entryERC") || params.get("erc");
 
-        if (isValidIdentifier(fixedRecordIdentifier)) {
+        if (Liferay.Fragment.Commons.isValidIdentifier(fixedRecordIdentifier)) {
           if (fixedRecordIdentifierType === "erc")
             startERC = fixedRecordIdentifier;
           else startId = fixedRecordIdentifier;
         }
 
         // Standardize URL identifiers
-        if (!isValidIdentifier(startId)) startId = null;
-        if (!isValidIdentifier(startERC)) startERC = null;
+        if (!Liferay.Fragment.Commons.isValidIdentifier(startId))
+          startId = null;
+        if (!Liferay.Fragment.Commons.isValidIdentifier(startERC))
+          startERC = null;
 
         if (!startId && !startERC && !enableAddNew && !enableRecordSelection) {
           // Initial state: nothing to load, show info
@@ -543,9 +529,10 @@ const initMetaObjectFormFragment = () => {
 
             try {
               const method = state.currentRecordId ? "PATCH" : "POST";
+              const baseUrl = await getBaseUrl(state);
               const url = state.currentRecordId
-                ? `${getBaseUrl(state)}/${state.currentRecordId}`
-                : `${getBaseUrl(state)}/`;
+                ? `${baseUrl}/${state.currentRecordId}`
+                : `${baseUrl}/`;
 
               const saveRes = await Liferay.Util.fetch(url, {
                 method: method,

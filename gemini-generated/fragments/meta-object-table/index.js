@@ -1,5 +1,5 @@
 const ADMIN_API_BASE = "/o/object-admin/v1.0";
-const VERSION = "1.0.10";
+const VERSION = "1.0.11";
 
 const state = {
   definition: null,
@@ -9,16 +9,9 @@ const state = {
   totalCount: 0,
 };
 
-const getLocalizedValue = (value) => {
-  if (typeof value === "object" && value !== null && !Array.isArray(value)) {
-    const languageId =
-      typeof Liferay !== "undefined"
-        ? Liferay.ThemeDisplay.getLanguageId()
-        : "en_US";
-    return value[languageId] || value["en_US"] || "";
-  }
-  return value || "";
-};
+// Use Commons for localization
+const getLocalizedValue = (value) =>
+  Liferay.Fragment.Commons.getLocalizedValue(value);
 
 const formatCellValue = (item, field) => {
   let value = item[field.name];
@@ -155,21 +148,6 @@ const toggleModal = (type, show) => {
   }
 };
 
-const isValidIdentifier = (val) => {
-  if (val === undefined || val === null) return false;
-  const s = String(val).trim().toLowerCase();
-  if (
-    s === "" ||
-    s === "undefined" ||
-    s === "null" ||
-    s === "0" ||
-    s === "[object object]"
-  ) {
-    return false;
-  }
-  return true;
-};
-
 const loadPage = async (pageNumber, isEditMode = false) => {
   const tbody = fragmentElement.querySelector(
     `#tbody-${fragmentEntryLinkNamespace}`,
@@ -186,13 +164,11 @@ const loadPage = async (pageNumber, isEditMode = false) => {
   state.page = pageNumber;
 
   try {
-    let url = state.definition.restContextPath;
-    if (state.definition.scope === "site") {
-      const siteId = Liferay.ThemeDisplay.getScopeGroupId();
-      url += `/scopes/${siteId}`;
-    }
-
-    let dataUrl = `${url}/?pageSize=${pageSize}&page=${state.page}`;
+    // Standard Object discovery pattern using Commons
+    const { apiPath } = await Liferay.Fragment.Commons.resolveObjectPath(
+      state.definition.restContextPath,
+    );
+    let dataUrl = `${apiPath}/?pageSize=${pageSize}&page=${state.page}`;
 
     const requestedFieldNames = new Set(state.fields.map((f) => f.name));
     requestedFieldNames.add("id");
@@ -295,9 +271,6 @@ const initMetaTable = async (isEditMode) => {
     `#thead-${fragmentEntryLinkNamespace}`,
   );
   const titleEl = fragmentElement.querySelector(".object-title");
-  const exportBtn = fragmentElement.querySelector(
-    `#export-${fragmentEntryLinkNamespace}`,
-  );
   const addBtn = fragmentElement.querySelector(
     `#add-${fragmentEntryLinkNamespace}`,
   );
@@ -382,8 +355,8 @@ const initMetaTable = async (isEditMode) => {
       eventName = "lfr-object-form-select";
     }
 
-    const hasValidId = isValidIdentifier(recordId);
-    const hasValidERC = isValidIdentifier(recordERC);
+    const hasValidId = Liferay.Fragment.Commons.isValidIdentifier(recordId);
+    const hasValidERC = Liferay.Fragment.Commons.isValidIdentifier(recordERC);
 
     if (type !== "add" && !hasValidId && !hasValidERC) return;
 
@@ -452,7 +425,7 @@ const initMetaTable = async (isEditMode) => {
     }
   });
 
-  if (!objectERC) {
+  if (!Liferay.Fragment.Commons.isValidIdentifier(objectERC)) {
     titleEl.textContent = "Meta-Object Table";
   } else {
     try {
@@ -511,33 +484,6 @@ const initMetaTable = async (isEditMode) => {
       thead.innerHTML = headerHtml;
 
       await loadPage(1, isEditMode);
-
-      if (!isEditMode && exportBtn) {
-        exportBtn.classList.remove("d-none");
-        exportBtn.addEventListener("click", () => {
-          const header = state.fields
-            .map((f) => `"${getLocalizedValue(f.label)}"`)
-            .join(",");
-          const rows = state.items.map((item) =>
-            state.fields
-              .map(
-                (f) =>
-                  `"${String(formatCellValue(item, f)).replace(/"/g, '""')}"`,
-              )
-              .join(","),
-          );
-          const blob = new Blob([[header, ...rows].join("\n")], {
-            type: "text/csv;charset=utf-8;",
-          });
-          const link = document.createElement("a");
-          link.href = URL.createObjectURL(blob);
-          link.setAttribute(
-            "download",
-            `${state.definition.restContextPath.replace("/o/c/", "")}.csv`,
-          );
-          link.click();
-        });
-      }
     } catch (err) {
       if (isEditMode && errorEl) {
         errorEl.textContent = err.message;

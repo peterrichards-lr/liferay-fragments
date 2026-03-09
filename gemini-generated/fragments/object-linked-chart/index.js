@@ -39,28 +39,9 @@ const WARM_COLORS = [
   "var(--warning, #ffcc00)",
 ];
 
-const isValidIdentifier = (val) => {
-  if (val === undefined || val === null) return false;
-  const s = String(val).trim().toLowerCase();
-  return (
-    s !== "" &&
-    s !== "undefined" &&
-    s !== "null" &&
-    s !== "0" &&
-    s !== "[object object]"
-  );
-};
-
-const getLocalizedValue = (value) => {
-  if (typeof value === "object" && value !== null && !Array.isArray(value)) {
-    const languageId =
-      typeof Liferay !== "undefined"
-        ? Liferay.ThemeDisplay.getLanguageId()
-        : "en_US";
-    return value[languageId] || value["en_US"] || "";
-  }
-  return value || "";
-};
+// Use Commons for logic
+const getLocalizedValue = (value) =>
+  Liferay.Fragment.Commons.getLocalizedValue(value);
 
 const loadScript = (url) => {
   return new Promise((resolve, reject) => {
@@ -102,23 +83,19 @@ const fetchData = async () => {
     }
   }
 
-  if (!isValidIdentifier(objectERC))
+  if (!Liferay.Fragment.Commons.isValidIdentifier(objectERC))
     throw new Error("Object ERC not configured.");
 
-  // Fetch definition by ERC
-  const adminUrl = `/o/object-admin/v1.0/object-definitions/by-external-reference-code/${objectERC}`;
-  const defRes = await Liferay.Util.fetch(adminUrl);
-  if (!defRes.ok)
+  // Use Commons for discovery and path resolution
+  const { definition, apiPath } =
+    await Liferay.Fragment.Commons.resolveObjectPath(
+      `/o/c/${objectERC.toLowerCase()}`,
+    );
+
+  if (!definition)
     throw new Error(`Could not find object with ERC "${objectERC}".`);
-  const definition = await defRes.json();
 
-  let url = definition.restContextPath;
-  if (definition.scope === "site") {
-    const siteId = Liferay.ThemeDisplay.getScopeGroupId();
-    url += `/scopes/${siteId}`;
-  }
-
-  const response = await Liferay.Util.fetch(`${url}/?pageSize=100`);
+  const response = await Liferay.Util.fetch(`${apiPath}/?pageSize=100`);
   if (!response.ok) {
     if (response.status === 401 || response.status === 403)
       throw new Error("Permission denied.");
@@ -251,7 +228,7 @@ const initChart = async (isEditMode) => {
     }
   }
 
-  if (!isValidIdentifier(objectERC)) {
+  if (!Liferay.Fragment.Commons.isValidIdentifier(objectERC)) {
     showInfo("Please configure an Object External Reference Code.");
   } else {
     try {
@@ -441,7 +418,7 @@ const initChart = async (isEditMode) => {
                   position: "right",
                   grid: { drawOnChartArea: false },
                   title: {
-                    display: !!resolvedYLabel2,
+                    display: !!resolvedXLabel,
                     text: resolvedYLabel2,
                   },
                 };
