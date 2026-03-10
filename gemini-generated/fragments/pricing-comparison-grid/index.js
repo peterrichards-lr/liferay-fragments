@@ -43,8 +43,8 @@ const initPricing = () => {
         grid.innerHTML = plans
           .map(
             (plan, index) => `
-                  <div class="pricing-card ${index === 1 ? "featured" : ""}">
-                      <div class="plan-name">${plan.name}</div>
+                  <article class="pricing-card ${index === 1 ? "featured" : ""}">
+                      <h3 class="plan-name">${plan.name}</h3>
                       <div class="plan-price">
                           $${isYearly ? plan.yearPrice : plan.monthPrice}
                           <span>/${isYearly ? "yr" : "mo"}</span>
@@ -52,8 +52,8 @@ const initPricing = () => {
                       <ul class="plan-features">
                           ${plan.features.map((f) => `<li>${f}</li>`).join("")}
                       </ul>
-                      <a href="#" class="plan-btn">Choose ${plan.name}</a>
-                  </div>
+                      <a href="#" class="plan-btn" aria-label="Choose ${plan.name} Plan">Choose ${plan.name}</a>
+                  </article>
               `,
           )
           .join("");
@@ -65,6 +65,7 @@ const initPricing = () => {
 
   if (toggle) {
     toggle.addEventListener("change", (e) => {
+      toggle.setAttribute("aria-checked", e.target.checked);
       renderGrid(e.target.checked);
     });
 
@@ -72,6 +73,7 @@ const initPricing = () => {
     toggle.addEventListener("keydown", (e) => {
       if (e.key === "Enter") {
         toggle.checked = !toggle.checked;
+        toggle.setAttribute("aria-checked", toggle.checked);
         renderGrid(toggle.checked);
       }
     });

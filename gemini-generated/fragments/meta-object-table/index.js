@@ -141,9 +141,21 @@ const toggleModal = (type, show) => {
     if (show) {
       overlay.classList.remove("d-none");
       document.body.style.overflow = "hidden"; // Prevent background scroll
+
+      // Focus management: focus the first focusable element or the close button
+      const closeBtn = overlay.querySelector(".close-modal-btn");
+      if (closeBtn) setTimeout(() => closeBtn.focus(), 100);
+
+      // Store the element that had focus before opening the modal
+      state.previousFocusedElement = document.activeElement;
     } else {
       overlay.classList.add("d-none");
       document.body.style.overflow = "";
+
+      // Return focus to the previous element
+      if (state.previousFocusedElement) {
+        state.previousFocusedElement.focus();
+      }
     }
   }
 };
@@ -204,15 +216,15 @@ const loadPage = async (pageNumber, isEditMode = false) => {
           if (enableView || enableEdit) {
             actionsHtml = `<td class="text-right">
                     <div class="btn-group">
-                        ${enableView ? `<button class="btn btn-monospaced btn-sm btn-secondary view-btn" data-record-id="${recordId}" data-record-erc="${recordERC}" title="View" aria-label="View Record"><svg class="lexicon-icon"><use xlink:href="${spritemap}#view"></use></svg></button>` : ""}
-                        ${enableEdit ? `<button class="btn btn-monospaced btn-sm btn-secondary edit-btn" data-record-id="${recordId}" data-record-erc="${recordERC}" title="Edit" aria-label="Edit Record"><svg class="lexicon-icon"><use xlink:href="${spritemap}#pencil"></use></svg></button>` : ""}
+                        ${enableView ? `<button class="btn btn-monospaced btn-sm btn-secondary view-btn" data-record-id="${recordId}" data-record-erc="${recordERC}" title="View Record" aria-label="View Record"><svg class="lexicon-icon"><use xlink:href="${spritemap}#view"></use></svg></button>` : ""}
+                        ${enableEdit ? `<button class="btn btn-monospaced btn-sm btn-secondary edit-btn" data-record-id="${recordId}" data-record-erc="${recordERC}" title="Edit Record" aria-label="Edit Record"><svg class="lexicon-icon"><use xlink:href="${spritemap}#pencil"></use></svg></button>` : ""}
                     </div>
                 </td>`;
           }
 
           return `
                 <tr>
-                    ${state.fields.map((f) => `<td data-label="${getLocalizedValue(f.label)}">${formatCellValue(item, f)}</td>`).join("")}
+                    ${state.fields.map((f, i) => `<td ${i === 0 ? 'scope="row"' : ""} data-label="${getLocalizedValue(f.label)}">${formatCellValue(item, f)}</td>`).join("")}
                     ${actionsHtml}
                 </tr>
             `;

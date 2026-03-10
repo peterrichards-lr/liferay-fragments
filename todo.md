@@ -271,11 +271,15 @@ Tasks to ensure compliance with WCAG standards and a better experience for assis
 - [x] **Loan Calculator**: Add `aria-live=\"polite\"` to the summary paragraph so updates to total payments are announced as the user slides. (Implemented)
 - [x] **Object-Linked Chart**: Provide an `aria-label` or a visually hidden fallback table that summarizes the chart data for screen readers. (Implemented)
 - [x] **All Icon-Only Buttons**: Audit all fragments (e.g., `back-button`, `icon-button`, `slider-btn`) to ensure they have an explicit `aria-label`. (Implemented)
+- [x] **Meta-Object Table**: Implemented modal focus management, semantic headers (`scope="col"`), and aria-labels for pagination.
+- [x] **Pricing Grid**: Enhanced toggle with `role="switch"`, `aria-checked`, and improved semantic structure using `<article>` and headings.
+- [x] **Event Timeline**: Converted to an ordered list (`<ol>`) with proper `<time>` elements and region labeling.
 
 ### Low Priority (Visual & Structural)
 
 - [x] **CSS Variable & Fallback Audit**: Ensure all fragments use Meridian theme tokens for default colors and provide accessible fallbacks. (Completed repository-wide refactor)
 - [x] **Focus Management**: Ensure a visible focus ring is present for all interactive elements, especially in fragments with custom-styled inputs like `toggle-switch`. (Implemented for toggle-switch)
+- [x] **Missing Alt Text/Labels**: Retrofitted profile summaries, public comments, and user bars with descriptive alt text and aria-labels for non-textual elements.
 
 ## Future Roadmap & Architecture Improvements
 
@@ -328,6 +332,13 @@ These tasks focus on long-term stability, modern API adoption, and cross-fragmen
   - **Plan**: Audit focus states and implement `Enter`/`Space` handlers where missing (e.g. `segmented-numeric` digit focus).
   - **Benefits**: Essential for users with motor impairments.
   - **Rank**: Ease: 3/5 | Impact: 5/5 (A11y).
+
+### 5. Empty State Patterns
+
+- [ ] **Standardize Empty States**: Implement consistent "no data" patterns across all data-driven fragments.
+  - **Plan**: Create a shared CSS/HTML pattern for empty states (e.g. including an illustration, title, and "Add New" call to action where appropriate).
+  - **Fragments**: `meta-object-table`, `object-linked-chart`, `activity-heatmap`, `purchased-products`, `dynamic-collection-slider`.
+  - **Rank**: Ease: 2/5 | Impact: 4/5 (Visual polish / UX).
 
 ## Review Phase II (Post-Refactor Audit)
 

@@ -39,7 +39,7 @@ const fetchData = async () => {
 
 const initTimeline = async () => {
   const container = fragmentElement.querySelector(
-    `#timeline-${fragmentEntryLinkNamespace}`,
+    `#items-${fragmentEntryLinkNamespace}`,
   );
   if (container) {
     const { objectERC, dateField, titleField, descriptionField } =
@@ -47,25 +47,25 @@ const initTimeline = async () => {
 
     if (!objectERC) {
       container.innerHTML =
-        '<div class="text-center p-5 text-muted">Please configure an Object ERC.</div>';
+        '<li class="text-center p-5 text-muted">Please configure an Object ERC.</li>';
     } else {
       try {
         state.items = await fetchData();
 
         if (state.items.length === 0) {
           container.innerHTML =
-            '<div class="text-center p-5 text-muted">No events found.</div>';
+            '<li class="text-center p-5 text-muted">No events found.</li>';
         } else {
           container.innerHTML = state.items
             .map(
               (item, index) => `
-                    <div class="timeline-item ${index % 2 === 0 ? "left" : "right"}" data-index="${index}">
+                    <li class="timeline-item ${index % 2 === 0 ? "left" : "right"}" data-index="${index}">
                         <div class="timeline-content">
-                            <div class="timeline-date">${new Date(item[dateField] || item.createDate).toLocaleDateString()}</div>
+                            <time class="timeline-date" datetime="${new Date(item[dateField] || item.createDate).toISOString()}">${new Date(item[dateField] || item.createDate).toLocaleDateString()}</time>
                             <h4 class="timeline-title">${item[titleField] || "Untitled Event"}</h4>
                             <p class="timeline-description">${item[descriptionField] || ""}</p>
                         </div>
-                    </div>
+                    </li>
                 `,
             )
             .join("");
@@ -88,7 +88,7 @@ const initTimeline = async () => {
           }
         }
       } catch (err) {
-        container.innerHTML = `<div class="alert alert-danger">${err.message}</div>`;
+        container.innerHTML = `<li class="alert alert-danger">${err.message}</li>`;
       }
     }
   }

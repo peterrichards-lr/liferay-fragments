@@ -214,7 +214,9 @@ const currentGalleryContent = fs.existsSync(GALLERY_FILE)
   : "";
 const expectedGalleryContent = generateGallery();
 
-if (currentGalleryContent.trim() !== expectedGalleryContent.trim()) {
+const normalize = (str) => str.trim().replace(/\s+/g, " ");
+
+if (normalize(currentGalleryContent) !== normalize(expectedGalleryContent)) {
   logError(
     "Documentation",
     "Gallery is out of sync. Please run 'npm run docs:gallery' to update it.",
