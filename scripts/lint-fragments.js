@@ -59,17 +59,26 @@ const getLangKeys = (dir) => {
     if (fs.existsSync(parentPropFile)) {
       return parseProps(parentPropFile);
     }
-    return new Set();
+    const grandparentPropFile = path.join(
+      dir,
+      "..",
+      "..",
+      "Language_en_US.properties",
+    );
+    if (fs.existsSync(grandparentPropFile)) {
+      return parseProps(grandparentPropFile);
+    }
+    return new Map();
   }
   return parseProps(propFile);
 };
 
 const parseProps = (filePath) => {
   const content = fs.readFileSync(filePath, "utf8");
-  const keys = new Set();
+  const keys = new Map();
   content.split("\n").forEach((line) => {
-    const match = line.match(/^([^=]+)=/);
-    if (match) keys.add(match[1].trim());
+    const match = line.match(/^([^=]+)=(.*)$/);
+    if (match) keys.set(match[1].trim(), match[2].trim());
   });
   return keys;
 };
@@ -138,7 +147,13 @@ fragmentFiles.forEach((file) => {
             fragmentName,
             `Missing localization for fieldset: ${set.label}`,
           );
+        } else if (set.label && langKeys.get(set.label) === set.label) {
+          logError(
+            fragmentName,
+            `Lazy localization found for fieldset (key equals value): ${set.label}`,
+          );
         }
+
         set.fields?.forEach((field) => {
           if (
             field.label &&
@@ -149,7 +164,13 @@ fragmentFiles.forEach((file) => {
               fragmentName,
               `Missing localization for label: ${field.label}`,
             );
+          } else if (field.label && langKeys.get(field.label) === field.label) {
+            logError(
+              fragmentName,
+              `Lazy localization found for label (key equals value): ${field.label}`,
+            );
           }
+
           if (
             field.description &&
             field.description.includes(".") &&
@@ -158,6 +179,14 @@ fragmentFiles.forEach((file) => {
             logWarn(
               fragmentName,
               `Missing localization for description: ${field.description}`,
+            );
+          } else if (
+            field.description &&
+            langKeys.get(field.description) === field.description
+          ) {
+            logWarn(
+              fragmentName,
+              `Lazy localization found for description (key equals value): ${field.description}`,
             );
           }
         });

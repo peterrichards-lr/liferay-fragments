@@ -60,7 +60,7 @@
 - **Requirement**: All fragments MUST pass the local audit script (`npm run lint`) before being committed.
 - **Validation Criteria**:
   - **Schema**: `fragment.json` and `configuration.json` must match the internal project schemas.
-  - **Localization**: Every label/description key used in `configuration.json` MUST exist in `Language_en_US.properties`.
+  - **Localization**: Every label/description key used in `configuration.json` MUST exist in `Language_en_US.properties`. No "lazy keys" (where key equals value) are permitted.
   - **Theme Fidelity**: CSS should avoid hardcoded colors (e.g., `#ffffff`) and prioritize safe tokens defined in `docs/THEMES.md`.
   - **JS Safety**: No top-level `return` statements.
 - **CI Enforcement**: The Quality Gate is enforced via GitHub Actions on every push and PR.
@@ -72,11 +72,18 @@
 - **Schema**:
   ```json
   {
-    "sharedResources": ["commons.js"],
+    "sharedResources": ["discovery.js", "dom.js"],
     "themeStrategy": "generic"
   }
   ```
 - **Build Injection**: The `create-fragment-zips.sh` script automatically bundles declared resources into the fragment ZIP during build time. This allows for DRY code while keeping fragments self-contained for Liferay. The `fragment-build.json` file is excluded from the final ZIP.
+
+### 13. Standardized Empty States & Configuration Warnings
+
+- **Requirement**: Data-driven fragments MUST implement the two-tier safety pattern using `Liferay.Fragment.Commons` helpers.
+- **Patterns**:
+  - **Configuration Warning**: Use `renderConfigWarning` in Edit mode when required settings (e.g., Object ERC) are missing.
+  - **Empty State**: Use `renderEmptyState` in View mode when the data source returns zero results, utilizing native Liferay `c-empty-state` classes.
 
 ## Build & Deployment
 
@@ -91,6 +98,6 @@
 - [x] Extract high-fidelity CSS tokens from theme style guides (Classic, Dialect, Meridian).
 - [x] Create `docs/THEMES.md` as a central reference for cross-theme safe tokens.
 - [x] Implement Fragment Quality Gate (Linter).
-- [x] Establish Shared Resources Architecture (`shared-resources/` + `fragment-metadata.json`).
-- [ ] Refactor existing dynamic fragments to use `shared-resources/commons.js`.
+- [x] Establish Shared Resources Architecture (`shared-resources/` + `fragment-build.json`).
+- [x] Refactor existing dynamic fragments to use shared resources.
 - [ ] Finalize missing visuals for Dashboard, Gemini, and User Account fragments.

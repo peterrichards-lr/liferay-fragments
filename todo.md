@@ -335,42 +335,23 @@ These tasks focus on long-term stability, modern API adoption, and cross-fragmen
 
 ### 5. Empty State Patterns
 
-- [ ] **Standardize Empty States**: Implement consistent "no data" patterns across all data-driven fragments.
+- [x] **Standardize Empty States**: Implement consistent "no data" patterns across all data-driven fragments.
   - **Plan**: Create a shared CSS/HTML pattern for empty states (e.g. including an illustration, title, and "Add New" call to action where appropriate).
-  - **Fragments**: `meta-object-table`, `object-linked-chart`, `activity-heatmap`, `purchased-products`, `dynamic-collection-slider`.
+  - **Fragments**: `meta-object-table`, `object-linked-chart`, `activity-heatmap`, `purchased-products`, `dynamic-collection-slider`, `dynamic-object-gallery`, `search-overlay`.
   - **Rank**: Ease: 2/5 | Impact: 4/5 (Visual polish / UX).
 
-## Review Phase II (Post-Refactor Audit)
+## Review Phase III (Architecture & Localization Hardening)
 
-Additional tasks identified during a second review of the repository architecture and conventions.
+Final refinements to repository standards and build integrity.
 
-### 1. Modernization & Compatibility
+### 1. Shared Resources Migration (Rule #12)
 
-- [x] **Refactor Top-Level Returns**: Systematically eliminate top-level `return` statements to comply with Requirement 8.
-  - **Fragments**: `dynamic-badge-overlay`, `ai-chat-ui`, `meta-object-form`, `populate-select`, `responsive-menu`.
-- [x] **LayoutMode API Migration**: Audit all remaining fragments for `has-edit-mode-menu` usage and migrate to the `layoutMode` API (Requirement 11).
-- [x] **Robust Identifier Implementation**: Roll out `isValidIdentifier()` validation to all fragments performing network requests (Requirement 10).
-  - **Fragments**: `purchased-products`, `dashboard-filter`, `autocomplete-(object)`, `activity-heatmap`, `object-linked-chart`, `meta-object-form`, `meta-object-record-view`, `public-comments`, `ping`, `who-am-i`, `my-rights`, `submit-button`, `audit-button`, `custom-event-listener`, `form-session-id`, `meter-reading`.
+- [x] **Formalize Shared Resources**: Migrate `shared-logic/` to root `shared-resources/` and update `create-fragment-zips.sh` to bundle declared logic via `fragment-build.json`.
+- [x] **Absolute Path ZIP Generation**: Hardened the build script to use absolute paths, ensuring consistent ZIP creation regardless of current working directory.
+- [x] **Dependency Audit**: Verified all 106 fragments have correct `fragment-build.json` declarations for shared JS utilities (e.g., `dom.js`, `discovery.js`).
 
-### 2. User & Editor Experience (UX/EX)
+### 2. Localization (i18n) Enforcement
 
-- [x] **Complete Configuration Descriptions**: Add informative `description` fields to all `configuration.json` files missing them.
-  - **Impact**: Provides essential guidance to Page Editors within the fragment configuration panel.
-  - **Collections**: `misc`, `header-components`, `layout-components`, `objects`, `profile`.
-- [x] **Implement Mappable Field Ergonomics**: Apply the `.meta-editor-mappable-fields` pattern (Requirement 7) to all fragments with dynamic field mapping.
-  - **Fragments**: `service-card`, `service-icon`, `dynamic-object-gallery`, `date-display-collection-display`.
-- [x] **Standardize Smart Title Precedence**: Implement Requirement 12 (Config > Evaluated Default) in all fragments featuring dynamic headers.
-  - **Fragments**: `loan-calculator`, `service-card`, `activity-heatmap`, `object-linked-chart`, `meta-object-form`, `meta-object-record-view`.
-
-### 3. Shared Resources Refactor Pass II
-
-- [x] **Enhanced Object Discovery**: Added `resolveObjectPathByERC` to `discovery.js` to allow fragments to resolve Site-scoped API paths using External Reference Codes (ERCs).
-- [x] **Modularize Meta-Object Suite**: Refactored `meta-object-record-view` and `meta-object-form`. Removed ~250 lines of redundant utility logic and migrated to `Liferay.Fragment.Commons`.
-- [x] **Standardize Action Buttons**: Migrated `submit-button`, `audit-button`, `ping`, and `custom-event-listener` to use standardized validation and discovery.
-- [x] **Commerce & Utilities Cleanup**: Refactor `purchased-products`, `meter-reading`, and `form-session-id` to use modular shared resources.
-- [x] **User Account URL Validation**: Retrofitted `who-am-i` and `my-rights` with the shared `isValidIdentifier` utility for robust URL validation.
-
-### 4. Localization (i18n) Maintenance
-
-- [x] **Language Properties Deduplication**: Perform a final pass on all `Language_en_US.properties` to ensure no literal "lfr." keys were accidentally duplicated as values.
-- [x] **Dangling Property Audit**: Identify and remove any property keys that are no longer referenced by any `configuration.json` or JS files.
+- [x] **Prohibit Lazy Keys**: Updated the Fragment Quality Gate (`lint-fragments.js`) to fail if any localization key equals its value (e.g., `key=key`).
+- [x] **100% Meaningful Coverage**: Performed a repository-wide fix to transform hundreds of technical keys into polished, human-readable English strings.
+- [x] **Dangling Property Audit**: Removed legacy property keys no longer referenced by configuration or logic.

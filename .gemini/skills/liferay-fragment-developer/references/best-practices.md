@@ -18,7 +18,7 @@
   }
   ```
 - **Localization**: All labels and descriptions MUST reference keys in `Language_en_US.properties`.
-- **Property Deduplication**: Never use the key as the value (e.g., `lfr.key=lfr.key`). Always provide meaningful English values.
+- **Property Deduplication**: Never use the key as the value (e.g., `lfr.key=lfr.key`). Always provide meaningful English values. "Lazy keys" (key equals value) are prohibited and will fail the audit.
 
 ## JavaScript & Logic
 
@@ -31,4 +31,5 @@
 
 - Use `Object.prototype.hasOwnProperty.call(obj, prop)` instead of `Object.hasOwn`.
 - Prefer `URLSearchParams` for robust query string parsing.
+- **Build Metadata**: Fragments requiring shared resources MUST include a `fragment-build.json` file to declare dependencies on files within the root `shared-resources/` directory.
 - **Build Integrity**: Ensure `Language_en_US.properties` is excluded from final ZIP packages to maintain clean fragment metadata.

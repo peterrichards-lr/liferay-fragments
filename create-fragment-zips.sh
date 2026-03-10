@@ -101,7 +101,7 @@ handle_shared_resources() {
     local COLLECTION_DIR=$2
     local FRAG_BUILD_FILE="$FRAG_DIR/fragment-build.json"
     local COLL_BUILD_FILE="$COLLECTION_DIR/collection-build.json"
-    local SHARED_LOGIC_ROOT="shared-logic"
+    local SHARED_LOGIC_ROOT="shared-resources"
 
     local STRATEGY="generic" # Default fallback
 
@@ -216,6 +216,8 @@ mkdir -p zips/fragments
 mkdir -p zips/language
 mkdir -p zips/showcase
 
+ZIPS_ROOT="$(pwd)/zips"
+
 # Helper function to generate fragment deployment descriptor
 ensure_descriptor() {
     local TARGET_DIR=$1
@@ -273,7 +275,7 @@ if [ "$BUILD_FRAGMENTS" = true ]; then
        if [[ "$INCLUDE_DEPRECATED" = false ]] && is_deprecated "$FRAGMENT_NAME"; then continue; fi
 
        echo "Processing fragment: $FRAGMENT_NAME"
-       rm -f "zips/fragments/${FRAGMENT_NAME}${BUILD_SUFFIX}.zip"
+       rm -f "$ZIPS_ROOT/fragments/${FRAGMENT_NAME}${BUILD_SUFFIX}.zip"
        
        TEMP_FRAG="temp_build_$FRAGMENT_NAME"
        mkdir -p "$TEMP_FRAG/$FRAGMENT_NAME"
@@ -284,7 +286,7 @@ if [ "$BUILD_FRAGMENTS" = true ]; then
        ensure_descriptor "$TEMP_FRAG/$FRAGMENT_NAME"
        process_dir "$TEMP_FRAG/$FRAGMENT_NAME" "$FRAGMENT_NAME"
        
-       OUTPUT_ZIP="$(pwd)/zips/fragments/${FRAGMENT_NAME}${BUILD_SUFFIX}.zip"
+       OUTPUT_ZIP="$ZIPS_ROOT/fragments/${FRAGMENT_NAME}${BUILD_SUFFIX}.zip"
        (cd "$TEMP_FRAG" && zip -qr "$OUTPUT_ZIP" "$FRAGMENT_NAME" -x "*/Language*.properties" -x "*/client-extension.yaml")
        rm -rf "$TEMP_FRAG"
     done
@@ -311,7 +313,7 @@ for COLLECTION_NAME in "${COLLECTIONS[@]}"; do
            echo "name=$COLLECTION_NAME Language Overrides" >> "$CX_ROOT/WEB-INF/liferay-plugin-package.properties"
            CONFIG_KEY="com.liferay.oauth2.provider.configuration.OAuth2ProviderApplicationHeadlessServerConfiguration~$COLLECTION_NAME-language-batch-oauth"
            jq -n -c --arg key "$CONFIG_KEY" --arg name "$COLLECTION_NAME Language Batch OAuth" --arg proj "$COLLECTION_NAME-language" --argjson ts "$TIMESTAMP" '{$key:{".serviceAddress":"localhost:8080",".serviceScheme":"http",":configurator:policy":"force",baseURL:"${portalURL}/o/language",buildTimestamp:$ts,description:"", "dxp.lxc.liferay.com.virtualInstanceId":"default",homePageURL:"$[conf:.serviceScheme]://$[conf:.serviceAddress]",name:$name,projectId:$proj,projectName:$proj,properties:[],scopes:["Liferay.Headless.Admin.Workflow.everything","Liferay.Headless.Batch.Engine.everything","Liferay.Message.Admin.REST.everything"],sourceCodeURL:"",type:"oAuthApplicationHeadlessServer",typeSettings:[".serviceAddress=localhost:8080",".serviceScheme=http","scopes=Liferay.Headless.Admin.Workflow.everything\nLiferay.Headless.Batch.Engine.everything\nLiferay.Message.Admin.REST.everything"],webContextPath:("/"+$proj)}}' > "$CX_ROOT/client-extension-config.json"
-           (cd "$CX_ROOT" && zip -qr "$(pwd)/zips/language/${COLLECTION_NAME}-language-batch-cx.zip" .)
+           (cd "$CX_ROOT" && zip -qr "$ZIPS_ROOT/language/${COLLECTION_NAME}-language-batch-cx.zip" .)
            rm -rf "$CX_ROOT"
        fi
    fi
@@ -336,7 +338,7 @@ for COLLECTION_NAME in "${COLLECTIONS[@]}"; do
 
        ensure_descriptor "$TEMP_COLL/$COLLECTION_NAME"
        process_dir "$TEMP_COLL/$COLLECTION_NAME" "$COLLECTION_NAME"
-       (cd "$TEMP_COLL" && zip -qr "$(pwd)/zips/fragments/${COLLECTION_NAME}-collection${BUILD_SUFFIX}.zip" "$COLLECTION_NAME" -x "*/Language*.properties" -x "*/client-extension.yaml")
+       (cd "$TEMP_COLL" && zip -qr "$ZIPS_ROOT/fragments/${COLLECTION_NAME}-collection${BUILD_SUFFIX}.zip" "$COLLECTION_NAME" -x "*/Language*.properties" -x "*/client-extension.yaml")
        rm -rf "$TEMP_COLL"
        
        # --- C. Legacy Collection ---
@@ -358,7 +360,7 @@ for COLLECTION_NAME in "${COLLECTIONS[@]}"; do
        find "$BUILD_TEMP/$COLLECTION_NAME" -name "client-extension.yaml" -delete
        find "$BUILD_TEMP/$COLLECTION_NAME" -name "configuration.json" -exec sh -c 'jq "del(.fieldSets[].fields[].typeOptions.dependency)" "$1" > "$1.tmp" && mv "$1.tmp" "$1"' -- {} \;
        process_dir "$BUILD_TEMP/$COLLECTION_NAME" "$COLLECTION_NAME"
-       (cd "$BUILD_TEMP" && zip -qr "$(pwd)/zips/fragments/${COLLECTION_NAME}-pre2025q3${BUILD_SUFFIX}.zip" "$COLLECTION_NAME")
+       (cd "$BUILD_TEMP" && zip -qr "$ZIPS_ROOT/fragments/${COLLECTION_NAME}-pre2025q3${BUILD_SUFFIX}.zip" "$COLLECTION_NAME")
        rm -rf "$BUILD_TEMP"
    fi
 done
@@ -385,7 +387,7 @@ if [ "$BUILD_SHOWCASE" = true ] && [ -d "other-resources/showcase-data" ]; then
         echo "name=$RESOURCE_NAME Showcase Object" >> "$CX_ROOT/WEB-INF/liferay-plugin-package.properties"
         CONFIG_KEY="com.liferay.oauth2.provider.configuration.OAuth2ProviderApplicationHeadlessServerConfiguration~$RESOURCE_NAME-batch-oauth"
         jq -n -c --arg key "$CONFIG_KEY" --arg name "$RESOURCE_NAME Batch OAuth" --arg proj "$RESOURCE_NAME" --argjson ts "$TIMESTAMP" '{$key:{".serviceAddress":"localhost:8080",".serviceScheme":"http",":configurator:policy":"force",baseURL:("${portalURL}/o/"+$proj),buildTimestamp:$ts,description:"", "dxp.lxc.liferay.com.virtualInstanceId":"default",homePageURL:"$[conf:.serviceScheme]://$[conf:.serviceAddress]",name:$name,projectId:$proj,projectName:$proj,properties:[],scopes:["Liferay.Headless.Batch.Engine.everything","Liferay.Object.Admin.REST.everything"],sourceCodeURL:"",type:"oAuthApplicationHeadlessServer",typeSettings:[".serviceAddress=localhost:8080", ".serviceScheme=http", "scopes=Liferay.Headless.Admin.Workflow.everything\nLiferay.Headless.Batch.Engine.everything\nLiferay.Message.Admin.REST.everything"],webContextPath:("/"+$proj)}}' > "$CX_ROOT/client-extension-config.json"
-        (cd "$CX_ROOT" && zip -qr "$(pwd)/zips/showcase/${RESOURCE_NAME}-batch-cx.zip" .)
+        (cd "$CX_ROOT" && zip -qr "$ZIPS_ROOT/showcase/${RESOURCE_NAME}-batch-cx.zip" .)
         rm -rf "$CX_ROOT"
     done
 fi
