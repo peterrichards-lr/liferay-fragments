@@ -131,7 +131,10 @@ const initPurchasedProducts = () => {
                           "product-card-picture",
                         )[0];
                       productPicture.id = `${productId}-pic`;
-                      productPicture.style.backgroundImage = `url(${thumbnail})`;
+                      productPicture.style.setProperty(
+                        "--product-card-image",
+                        `url(${thumbnail})`,
+                      );
                       const productName =
                         currentProduct.getElementsByTagName("h3")[0];
                       productName.innerText = name;

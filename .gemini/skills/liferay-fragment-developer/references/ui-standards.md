@@ -16,6 +16,14 @@ When a data-driven fragment returns zero results, it MUST NOT simply disappear.
 - **Visuals**: Utilizes native Liferay `c-empty-state` classes and standard search/empty SVGs from `/o/admin-theme/`.
 - **Context**: Apply to tables, charts, sliders, and galleries.
 
+## CSS Utility and Style Standards
+
+- **Inline Style Avoidance**: Never use `style="display: none"` in HTML. Use the standard Liferay `d-none` utility class.
+- **Dynamic Backgrounds/Colors**: Do not set complex styles directly via `element.style`. Use CSS variables:
+  - **JS**: `element.style.setProperty('--my-dynamic-bg', 'url(...)')`
+  - **CSS**: `background-image: var(--my-dynamic-bg, none);`
+- **Utility Priority**: Leverage Clay/Bootstrap utility classes (`mb-3`, `text-center`, `d-flex`) instead of custom inline styles for layout adjustments.
+
 ## Mappable Field Ergonomics
 
 ...

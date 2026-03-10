@@ -67,23 +67,20 @@
 
 ### 12. Shared Resources Architecture
 
-- **Central Storage**: Shared logic/assets reside in the root `shared-resources/` directory.
-- **Metadata Declaration**: Fragments requiring shared resources MUST include a `fragment-build.json` file.
-- **Schema**:
-  ```json
-  {
-    "sharedResources": ["discovery.js", "dom.js"],
-    "themeStrategy": "generic"
-  }
-  ```
+...
+
 - **Build Injection**: The `create-fragment-zips.sh` script automatically bundles declared resources into the fragment ZIP during build time. This allows for DRY code while keeping fragments self-contained for Liferay. The `fragment-build.json` file is excluded from the final ZIP.
 
 ### 13. Standardized Empty States & Configuration Warnings
 
-- **Requirement**: Data-driven fragments MUST implement the two-tier safety pattern using `Liferay.Fragment.Commons` helpers.
-- **Patterns**:
-  - **Configuration Warning**: Use `renderConfigWarning` in Edit mode when required settings (e.g., Object ERC) are missing.
-  - **Empty State**: Use `renderEmptyState` in View mode when the data source returns zero results, utilizing native Liferay `c-empty-state` classes.
+...
+
+- **Empty State**: Use `renderEmptyState` in View mode when the data source returns zero results, utilizing native Liferay `c-empty-state` classes.
+
+### 14. Inline Style Avoidance (Utility Class Priority)
+
+- **Requirement**: Do NOT use inline `style="display: none"` in HTML. Use the standard Liferay utility class `d-none`.
+- **Dynamic Styles**: For dynamic properties (like background images or colors), use CSS variables via `style.setProperty('--my-var', value)` and define the property in `index.css`. This keeps the visual logic in the stylesheet and prevents linting warnings.
 
 ## Build & Deployment
 

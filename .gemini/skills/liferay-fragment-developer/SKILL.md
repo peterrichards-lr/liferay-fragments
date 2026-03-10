@@ -1,6 +1,6 @@
+---
 name: liferay-fragment-developer
 description: Expert guidance for developing Liferay Fragments. Use when creating, modifying, or auditing Liferay Fragments to ensure compliance with architectural, accessibility, responsiveness, and multi-theme (Classic, Dialect, Meridian) standards.
-
 ---
 
 # Liferay Fragment Developer Skill
@@ -33,6 +33,7 @@ This skill provides comprehensive procedural knowledge and architectural standar
 - **Top-Level Logic**: Ensure all JS is encapsulated in an initialization function; top-level `return` statements are prohibited.
 - **Robust Identifiers**: Use a strict validation helper (`isValidIdentifier`) to block `"undefined"`, `"null"`, `"0"`, and `"[object object]"`.
 - **Localization Hygiene**: Verify that no "lazy keys" exist (e.g., `key=key`). Values MUST be meaningful English.
+- **CSS Utility Usage**: Verify that `d-none` is used instead of inline `style="display: none"`. Ensure dynamic styles use CSS variables via `setProperty`.
 - **Freemarker Safety**: Verify null-safety in FreeMarker (`!`). Ensure `.no-transform` files exist if FreeMarker syntax is present in JS or CSS.
 - **Accessibility**: Ensure all icon-only buttons have `aria-label`.
 
