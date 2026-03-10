@@ -122,6 +122,9 @@ const initSizeSelector = () => {
 };
 
 const initActivityHeatmap = async (isEditMode) => {
+  const grid = fragmentElement.querySelector(
+    `#heatmap-grid-${fragmentEntryLinkNamespace}`,
+  );
   const errorEl = fragmentElement.querySelector(
     `#error-${fragmentEntryLinkNamespace}`,
   );
@@ -129,6 +132,7 @@ const initActivityHeatmap = async (isEditMode) => {
     `#info-${fragmentEntryLinkNamespace}`,
   );
   const titleEl = fragmentElement.querySelector(".heatmap-title");
+  const legend = fragmentElement.querySelector(".heatmap-legend");
 
   const showError = (msg) => {
     if (isEditMode && errorEl) {
@@ -154,42 +158,65 @@ const initActivityHeatmap = async (isEditMode) => {
     }
   }
 
+  const gridContainer = fragmentElement.querySelector(".heatmap-grid");
+
   if (!Liferay.Fragment.Commons.isValidIdentifier(objectERC)) {
     if (titleEl) titleEl.textContent = configTitle || "Activity Heatmap";
-    if (isEditMode && infoEl) {
-      infoEl.textContent = "Please configure an Object ERC.";
-      infoEl.classList.remove("d-none");
+    if (gridContainer) {
+      Liferay.Fragment.Commons.renderConfigWarning(
+        gridContainer,
+        "Please select a Liferay Object ERC in the fragment settings to visualize activity.",
+        layoutMode,
+      );
     }
+    if (legend) legend.style.display = "none";
   } else {
     try {
       await fetchData();
 
-      // Smart Title defaulting
-      const currentTitle = titleEl.innerText.trim();
-      const defaultFragmentName =
-        fragmentElement.dataset.fragmentName || "Activity Heatmap";
+      if (state.items.length === 0) {
+        if (gridContainer) {
+          Liferay.Fragment.Commons.renderEmptyState(gridContainer, {
+            title: "No Activity Recorded",
+            description: `The ${state.definition.name} object currently has no data to display in the heatmap.`,
+          });
+        }
+        if (legend) legend.style.display = "none";
+      } else {
+        if (legend) legend.style.display = "flex";
+        // Restore grid if it was replaced by empty state
+        if (gridContainer && !gridContainer.id) {
+          gridContainer.id = `heatmap-grid-${fragmentEntryLinkNamespace}`;
+          gridContainer.classList.add("heatmap-grid");
+        }
 
-      // Evaluated Value
-      const objectLabel = getLocalizedValue(
-        state.definition.pluralLabel ||
-          state.definition.label ||
-          state.definition.name,
-      );
+        // Smart Title defaulting
+        const currentTitle = titleEl.innerText.trim();
+        const defaultFragmentName =
+          fragmentElement.dataset.fragmentName || "Activity Heatmap";
 
-      // Precedence: Configuration (configTitle) > Evaluated Value
-      const preferredTitle = configTitle || objectLabel;
+        // Evaluated Value
+        const objectLabel = getLocalizedValue(
+          state.definition.pluralLabel ||
+            state.definition.label ||
+            state.definition.name,
+        );
 
-      if (
-        currentTitle === "Activity Heatmap" ||
-        currentTitle === defaultFragmentName ||
-        currentTitle === "" ||
-        currentTitle === `${defaultFragmentName} (Preview)`
-      ) {
-        titleEl.innerText = preferredTitle + (isEditMode ? " (Preview)" : "");
+        // Precedence: Configuration (configTitle) > Evaluated Value
+        const preferredTitle = configTitle || objectLabel;
+
+        if (
+          currentTitle === "Activity Heatmap" ||
+          currentTitle === defaultFragmentName ||
+          currentTitle === "" ||
+          currentTitle === `${defaultFragmentName} (Preview)`
+        ) {
+          titleEl.innerText = preferredTitle + (isEditMode ? " (Preview)" : "");
+        }
+
+        renderHeatmap();
+        initSizeSelector();
       }
-
-      renderHeatmap();
-      initSizeSelector();
     } catch (err) {
       showError(err.message);
     }
