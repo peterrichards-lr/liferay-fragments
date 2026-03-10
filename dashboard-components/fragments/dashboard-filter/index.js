@@ -1,6 +1,31 @@
 const initDashboardFilter = () => {
   const ADMIN_API_BASE = "/o/object-admin/v1.0";
 
+  if (layoutMode !== "view") {
+    const container = fragmentElement.querySelector(
+      ".dashboard-filter-container",
+    );
+    const {
+      heartRateAPIPath,
+      bloodPressureAPIPath,
+      stepsAPIPath,
+      weightAPIPath,
+    } = configuration;
+
+    if (
+      !heartRateAPIPath ||
+      !bloodPressureAPIPath ||
+      !stepsAPIPath ||
+      !weightAPIPath
+    ) {
+      Liferay.Fragment.Commons.renderConfigWarning(
+        container,
+        "Please ensure all Health API paths (Heart Rate, BP, Steps, Weight) are configured in the fragment settings.",
+        layoutMode,
+      );
+    }
+  }
+
   if (layoutMode === "view") {
     Date.prototype.addDays = function (days) {
       var date = new Date(this.valueOf());

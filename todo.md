@@ -271,11 +271,15 @@ Tasks to ensure compliance with WCAG standards and a better experience for assis
 - [x] **Loan Calculator**: Add `aria-live=\"polite\"` to the summary paragraph so updates to total payments are announced as the user slides. (Implemented)
 - [x] **Object-Linked Chart**: Provide an `aria-label` or a visually hidden fallback table that summarizes the chart data for screen readers. (Implemented)
 - [x] **All Icon-Only Buttons**: Audit all fragments (e.g., `back-button`, `icon-button`, `slider-btn`) to ensure they have an explicit `aria-label`. (Implemented)
+- [x] **Meta-Object Table**: Implemented modal focus management, semantic headers (`scope="col"`), and aria-labels for pagination.
+- [x] **Pricing Grid**: Enhanced toggle with `role="switch"`, `aria-checked`, and improved semantic structure using `<article>` and headings.
+- [x] **Event Timeline**: Converted to an ordered list (`<ol>`) with proper `<time>` elements and region labeling.
 
 ### Low Priority (Visual & Structural)
 
 - [x] **CSS Variable & Fallback Audit**: Ensure all fragments use Meridian theme tokens for default colors and provide accessible fallbacks. (Completed repository-wide refactor)
 - [x] **Focus Management**: Ensure a visible focus ring is present for all interactive elements, especially in fragments with custom-styled inputs like `toggle-switch`. (Implemented for toggle-switch)
+- [x] **Missing Alt Text/Labels**: Retrofitted profile summaries, public comments, and user bars with descriptive alt text and aria-labels for non-textual elements.
 
 ## Future Roadmap & Architecture Improvements
 
@@ -329,29 +333,25 @@ These tasks focus on long-term stability, modern API adoption, and cross-fragmen
   - **Benefits**: Essential for users with motor impairments.
   - **Rank**: Ease: 3/5 | Impact: 5/5 (A11y).
 
-## Review Phase II (Post-Refactor Audit)
+### 5. Empty State Patterns
 
-Additional tasks identified during a second review of the repository architecture and conventions.
+- [x] **Standardize Empty States**: Implement consistent "no data" patterns across all data-driven fragments.
+  - **Plan**: Create a shared CSS/HTML pattern for empty states (e.g. including an illustration, title, and "Add New" call to action where appropriate).
+  - **Fragments**: `meta-object-table`, `object-linked-chart`, `activity-heatmap`, `purchased-products`, `dynamic-collection-slider`, `dynamic-object-gallery`, `search-overlay`.
+  - **Rank**: Ease: 2/5 | Impact: 4/5 (Visual polish / UX).
 
-### 1. Modernization & Compatibility
+## Review Phase III (Architecture & Localization Hardening)
 
-- [x] **Refactor Top-Level Returns**: Systematically eliminate top-level `return` statements to comply with Requirement 8.
-  - **Fragments**: `dynamic-badge-overlay`, `ai-chat-ui`, `meta-object-form`, `populate-select`, `responsive-menu`.
-- [x] **LayoutMode API Migration**: Audit all remaining fragments for `has-edit-mode-menu` usage and migrate to the `layoutMode` API (Requirement 11).
-- [x] **Robust Identifier Implementation**: Roll out `isValidIdentifier()` validation to all fragments performing network requests (Requirement 10).
-  - **Fragments**: `purchased-products`, `dashboard-filter`, `autocomplete-(object)`, `activity-heatmap`, `object-linked-chart`.
+Final refinements to repository standards and build integrity.
 
-### 2. User & Editor Experience (UX/EX)
+### 1. Shared Resources Migration (Rule #12)
 
-- [x] **Complete Configuration Descriptions**: Add informative `description` fields to all `configuration.json` files missing them.
-  - **Impact**: Provides essential guidance to Page Editors within the fragment configuration panel.
-  - **Collections**: `misc`, `header-components`, `layout-components`, `objects`, `profile`.
-- [x] **Implement Mappable Field Ergonomics**: Apply the `.meta-editor-mappable-fields` pattern (Requirement 7) to all fragments with dynamic field mapping.
-  - **Fragments**: `service-card`, `service-icon`, `dynamic-object-gallery`, `date-display-collection-display`.
-- [x] **Standardize Smart Title Precedence**: Implement Requirement 12 (Config > Evaluated Default) in all fragments featuring dynamic headers.
-  - **Fragments**: `loan-calculator`, `service-card`, `activity-heatmap`, `object-linked-chart`.
+- [x] **Formalize Shared Resources**: Migrate `shared-logic/` to root `shared-resources/` and update `create-fragment-zips.sh` to bundle declared logic via `fragment-build.json`.
+- [x] **Absolute Path ZIP Generation**: Hardened the build script to use absolute paths, ensuring consistent ZIP creation regardless of current working directory.
+- [x] **Dependency Audit**: Verified all 106 fragments have correct `fragment-build.json` declarations for shared JS utilities (e.g., `dom.js`, `discovery.js`).
 
-### 3. Localization (i18n) Maintenance
+### 2. Localization (i18n) Enforcement
 
-- [x] **Language Properties Deduplication**: Perform a final pass on all `Language_en_US.properties` to ensure no literal "lfr." keys were accidentally duplicated as values.
-- [x] **Dangling Property Audit**: Identify and remove any property keys that are no longer referenced by any `configuration.json` or JS files.
+- [x] **Prohibit Lazy Keys**: Updated the Fragment Quality Gate (`lint-fragments.js`) to fail if any localization key equals its value (e.g., `key=key`).
+- [x] **100% Meaningful Coverage**: Performed a repository-wide fix to transform hundreds of technical keys into polished, human-readable English strings.
+- [x] **Dangling Property Audit**: Removed legacy property keys no longer referenced by configuration or logic.

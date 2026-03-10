@@ -1,4 +1,5 @@
 const initSearchOverlay = () => {
+  const { debounce, renderEmptyState } = Liferay.Fragment.Commons;
   const container = fragmentElement.querySelector(".modern-search-overlay");
   const modal = fragmentElement.querySelector(".search-modal");
   const trigger = fragmentElement.querySelector(".search-trigger");
@@ -9,14 +10,6 @@ const initSearchOverlay = () => {
   const loading = fragmentElement.querySelector(".loading-spinner");
 
   const SEARCH_API = "/o/search/v1.0/search";
-
-  const debounce = (func, delay) => {
-    let timeoutId;
-    return (...args) => {
-      clearTimeout(timeoutId);
-      timeoutId = setTimeout(() => func.apply(null, args), delay);
-    };
-  };
 
   const toggleModal = (show) => {
     if (show) {
@@ -37,9 +30,12 @@ const initSearchOverlay = () => {
     loading.classList.add("d-none");
 
     if (!items || items.length === 0) {
-      resultsList.innerHTML =
-        '<div class="col-12 text-center py-5"><p class="text-muted">No results found.</p></div>';
+      resultsList.innerHTML = "";
       resultsList.classList.remove("d-none");
+      renderEmptyState(resultsList, {
+        title: "No Results Found",
+        description: "Adjust your search terms and try again.",
+      });
       return;
     }
 
@@ -52,78 +48,66 @@ const initSearchOverlay = () => {
     }, {});
 
     resultsList.innerHTML = Object.entries(groups)
-      .map(([cat, catItems]) => {
-        const catName = cat.split(".").pop();
-        return `
-                <div class="result-category col-12">
-                    <h4 class="result-category-title">${catName}</h4>
-                    <div class="row">
-                        ${catItems
-                          .map(
-                            (item) => `
-                            <a href="${item.url || "#"}" class="result-item col-12 col-md-6">
-                                <div class="result-title">${item.title || "Untitled"}</div>
-                                <div class="result-snippet">${item.content || ""}</div>
-                            </a>
-                        `,
-                          )
-                          .join("")}
-                    </div>
-                </div>
-            `;
-      })
+      .map(
+        ([cat, docs]) => `
+          <div class="col-12 mb-4">
+              <h5 class="text-uppercase small font-weight-bold text-muted mb-3">${cat.split(".").pop()}</h5>
+              <div class="row">
+                  ${docs
+                    .map(
+                      (doc) => `
+                      <div class="col-md-6 mb-3">
+                          <a href="${doc.url}" class="search-result-card">
+                              <div class="result-title">${doc.title || "Untitled"}</div>
+                              <div class="result-snippet">${doc.content ? doc.content.substring(0, 100) + "..." : ""}</div>
+                          </a>
+                      </div>
+                  `,
+                    )
+                    .join("")}
+              </div>
+          </div>
+      `,
+      )
       .join("");
 
     resultsList.classList.remove("d-none");
   };
 
-  const performSearch = async (query) => {
-    if (query.length < 3) {
+  const handleSearch = debounce(async (query) => {
+    if (!query || query.length < 2) {
       resultsList.classList.add("d-none");
       initialMsg.classList.remove("d-none");
       return;
     }
 
     initialMsg.classList.add("d-none");
-    loading.classList.remove("d-none");
     resultsList.classList.add("d-none");
+    loading.classList.remove("d-none");
 
     try {
       const response = await Liferay.Util.fetch(`${SEARCH_API}?q=${query}`);
-      if (!response.ok) throw new Error("Search failed");
       const data = await response.json();
-      renderResults(data.items || []);
+      renderResults(data.items);
     } catch (err) {
-      console.error(err);
-      resultsList.innerHTML =
-        '<div class="col-12 text-center py-5 text-danger">Search unavailable.</div>';
-      resultsList.classList.remove("d-none");
+      console.error("Search failed:", err);
       loading.classList.add("d-none");
     }
-  };
+  }, 300);
 
-  if (layoutMode === "view") {
-    if (trigger) trigger.onclick = () => toggleModal(true);
-    if (closeBtn) closeBtn.onclick = () => toggleModal(false);
+  if (trigger) trigger.addEventListener("click", () => toggleModal(true));
+  if (closeBtn) closeBtn.addEventListener("click", () => toggleModal(false));
 
-    if (input) {
-      input.addEventListener(
-        "input",
-        debounce((e) => performSearch(e.target.value), 400),
-      );
+  input.addEventListener("input", (e) => handleSearch(e.target.value));
 
-      input.addEventListener("keydown", (e) => {
-        if (e.key === "Escape") toggleModal(false);
-      });
+  // Keyboard support
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") toggleModal(false);
+    if ((e.metaKey || e.ctrlKey) && e.key === "k") {
+      e.preventDefault();
+      toggleModal(true);
     }
-
-    // Global Esc key
-    document.addEventListener("keydown", (e) => {
-      if (e.key === "Escape" && !modal.classList.contains("d-none")) {
-        toggleModal(false);
-      }
-    });
-  }
+  });
 };
 
 initSearchOverlay();

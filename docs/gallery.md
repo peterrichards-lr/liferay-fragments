@@ -10,7 +10,7 @@ A visual reference for the high-fidelity fragments available in this Liferay DXP
 
 [Detailed Documentation](./fragments/dynamic-badge-overlay.md)
 
----
+--- 
 
 ### Purchased Products
 
@@ -18,7 +18,7 @@ A visual reference for the high-fidelity fragments available in this Liferay DXP
 
 [Detailed Documentation](./fragments/purchased-products.md)
 
----
+--- 
 
 ## Content
 
@@ -28,7 +28,7 @@ A visual reference for the high-fidelity fragments available in this Liferay DXP
 
 [Detailed Documentation](./fragments/content-map.md)
 
----
+--- 
 
 ### Service Card
 
@@ -36,7 +36,7 @@ A visual reference for the high-fidelity fragments available in this Liferay DXP
 
 [Detailed Documentation](./fragments/service-card.md)
 
----
+--- 
 
 ### Service Icon
 
@@ -44,33 +44,33 @@ A visual reference for the high-fidelity fragments available in this Liferay DXP
 
 [Detailed Documentation](./fragments/service-icon.md)
 
----
+--- 
 
 ### Service Link Button
 
-_No image available_
+*No image available*
 
 [Detailed Documentation](./fragments/service-link-button.md)
 
----
+--- 
 
 ## Heathcare Portal
 
 ### Dashboard Container
 
-_No image available_
+*No image available*
 
 [Detailed Documentation](./fragments/dashboard-container.md)
 
----
+--- 
 
 ### Dashboard Filter
 
-_No image available_
+*No image available*
 
 [Detailed Documentation](./fragments/dashboard-filter.md)
 
----
+--- 
 
 ## Date Display
 
@@ -80,7 +80,7 @@ _No image available_
 
 [Detailed Documentation](./fragments/date-display-collection-display.md)
 
----
+--- 
 
 ### Data Display (Static) (DEPRECATED)
 
@@ -88,7 +88,7 @@ _No image available_
 
 [Detailed Documentation](./fragments/date-display-static.md)
 
----
+--- 
 
 ## Finance
 
@@ -98,7 +98,7 @@ _No image available_
 
 [Detailed Documentation](./fragments/loan-application-calculator.md)
 
----
+--- 
 
 ### Loan Calculator
 
@@ -106,25 +106,25 @@ _No image available_
 
 [Detailed Documentation](./fragments/loan-calculator.md)
 
----
+--- 
 
 ## Forms Fragments
 
 ### Autocomplete (Object)
 
-![Autocomplete (Object)](<../form-fragments/fragments/autocomplete-(object)/thumbnail.png>)
+![Autocomplete (Object)](../form-fragments/fragments/autocomplete-(object)/thumbnail.png)
 
-[Detailed Documentation](<./fragments/autocomplete-(object).md>)
+[Detailed Documentation](./fragments/autocomplete-(object).md)
 
----
+--- 
 
 ### Autocomplete (Picklist)
 
-![Autocomplete (Picklist)](<../form-fragments/fragments/autocomplete-(picklist)/thumbnail.png>)
+![Autocomplete (Picklist)](../form-fragments/fragments/autocomplete-(picklist)/thumbnail.png)
 
-[Detailed Documentation](<./fragments/autocomplete-(picklist).md>)
+[Detailed Documentation](./fragments/autocomplete-(picklist).md)
 
----
+--- 
 
 ### Confirmation Field
 
@@ -132,7 +132,7 @@ _No image available_
 
 [Detailed Documentation](./fragments/confirmation-field.md)
 
----
+--- 
 
 ### Hidden Relationship
 
@@ -140,7 +140,7 @@ _No image available_
 
 [Detailed Documentation](./fragments/hidden-relationship.md)
 
----
+--- 
 
 ### Listbox Multiselect
 
@@ -148,7 +148,7 @@ _No image available_
 
 [Detailed Documentation](./fragments/listbox-multiselect.md)
 
----
+--- 
 
 ### Range
 
@@ -156,7 +156,7 @@ _No image available_
 
 [Detailed Documentation](./fragments/range.md)
 
----
+--- 
 
 ### Segmented Numeric
 
@@ -164,7 +164,7 @@ _No image available_
 
 [Detailed Documentation](./fragments/segmented-numeric.md)
 
----
+--- 
 
 ### Star Rating
 
@@ -172,15 +172,15 @@ _No image available_
 
 [Detailed Documentation](./fragments/star-rating.md)
 
----
+--- 
 
 ### Submit Button (Confirmation)
 
-_No image available_
+*No image available*
 
 [Detailed Documentation](./fragments/submit-button.md)
 
----
+--- 
 
 ### Toggle Switch
 
@@ -188,23 +188,23 @@ _No image available_
 
 [Detailed Documentation](./fragments/toggle-switch.md)
 
----
+--- 
 
 ### URL Populated Hidden Relationship
 
-_No image available_
+*No image available*
 
 [Detailed Documentation](./fragments/url-populated-hidden-relationship.md)
 
----
+--- 
 
 ### User Attribute
 
-_No image available_
+*No image available*
 
 [Detailed Documentation](./fragments/user-field.md)
 
----
+--- 
 
 ## Forms
 
@@ -214,39 +214,39 @@ _No image available_
 
 [Detailed Documentation](./fragments/form-populator.md)
 
----
+--- 
 
 ### Link Form to Applicant
 
-_No image available_
+*No image available*
 
 [Detailed Documentation](./fragments/form-session-id.md)
 
----
+--- 
 
 ### Generate Form Session Id
 
-_No image available_
+*No image available*
 
 [Detailed Documentation](./fragments/generate-form-session-id.md)
 
----
+--- 
 
 ### Masthead Call to Action Form Holder
 
-_No image available_
+*No image available*
 
 [Detailed Documentation](./fragments/masthead-call-to-action-form-header.md)
 
----
+--- 
 
 ### Redirect Page
 
-_No image available_
+*No image available*
 
 [Detailed Documentation](./fragments/redirect-page.md)
 
----
+--- 
 
 ### Refresh Page
 
@@ -254,7 +254,7 @@ _No image available_
 
 [Detailed Documentation](./fragments/refresh-page.md)
 
----
+--- 
 
 ## Gemini Generated
 
@@ -266,15 +266,15 @@ Visually appealing fragments generated by Gemini.
 
 [Detailed Documentation](./fragments/activity-heatmap.md)
 
----
+--- 
 
 ### AI Assistant Chat UI
 
-_No image available_
+*No image available*
 
 [Detailed Documentation](./fragments/ai-chat-ui.md)
 
----
+--- 
 
 ### Animated Metric Counter
 
@@ -282,7 +282,7 @@ _No image available_
 
 [Detailed Documentation](./fragments/animated-metric-counter.md)
 
----
+--- 
 
 ### Dynamic Collection Slider
 
@@ -290,7 +290,7 @@ _No image available_
 
 [Detailed Documentation](./fragments/dynamic-collection-slider.md)
 
----
+--- 
 
 ### Dynamic Object Gallery
 
@@ -298,7 +298,7 @@ _No image available_
 
 [Detailed Documentation](./fragments/dynamic-object-gallery.md)
 
----
+--- 
 
 ### Interactive Event Timeline
 
@@ -306,15 +306,15 @@ _No image available_
 
 [Detailed Documentation](./fragments/interactive-event-timeline.md)
 
----
+--- 
 
 ### Interactive Wizard
 
-_No image available_
+*No image available*
 
 [Detailed Documentation](./fragments/interactive-wizard.md)
 
----
+--- 
 
 ### Meta-Object Form
 
@@ -322,7 +322,7 @@ _No image available_
 
 [Detailed Documentation](./fragments/meta-object-form.md)
 
----
+--- 
 
 ### Meta-Object Record View
 
@@ -330,7 +330,7 @@ _No image available_
 
 [Detailed Documentation](./fragments/meta-object-record-view.md)
 
----
+--- 
 
 ### Meta-Object Table
 
@@ -338,7 +338,7 @@ _No image available_
 
 [Detailed Documentation](./fragments/meta-object-table.md)
 
----
+--- 
 
 ### Modern Parallax Hero
 
@@ -346,7 +346,7 @@ _No image available_
 
 [Detailed Documentation](./fragments/modern-parallax-hero.md)
 
----
+--- 
 
 ### Object-Linked Chart
 
@@ -354,7 +354,7 @@ _No image available_
 
 [Detailed Documentation](./fragments/object-linked-chart.md)
 
----
+--- 
 
 ### Pricing Comparison Grid
 
@@ -362,7 +362,7 @@ _No image available_
 
 [Detailed Documentation](./fragments/pricing-comparison-grid.md)
 
----
+--- 
 
 ### Radial KPI Gauge
 
@@ -370,33 +370,33 @@ _No image available_
 
 [Detailed Documentation](./fragments/radial-kpi-gauge.md)
 
----
+--- 
 
 ### Modern Search Overlay
 
-_No image available_
+*No image available*
 
 [Detailed Documentation](./fragments/search-overlay.md)
 
----
+--- 
 
 ## Header Components
 
 ### Customer Registration (Deprecated)
 
-_No image available_
+*No image available*
 
 [Detailed Documentation](./fragments/customer-registration.md)
 
----
+--- 
 
 ### Linear Gradient Container
 
-_No image available_
+*No image available*
 
-[Detailed Documentation](<./fragments/linear-gradient-container-(custom).md>)
+[Detailed Documentation](./fragments/linear-gradient-container-(custom).md)
 
----
+--- 
 
 ### Linear Gradient Container (Deprecated)
 
@@ -404,7 +404,7 @@ _No image available_
 
 [Detailed Documentation](./fragments/linear-gradient-container.md)
 
----
+--- 
 
 ### Login and User Menu
 
@@ -412,15 +412,15 @@ _No image available_
 
 [Detailed Documentation](./fragments/login-and-user-menu.md)
 
----
+--- 
 
 ### Login Card (Deprecated)
 
-_No image available_
+*No image available*
 
 [Detailed Documentation](./fragments/login-card.md)
 
----
+--- 
 
 ### Site Logo
 
@@ -428,7 +428,7 @@ _No image available_
 
 [Detailed Documentation](./fragments/logo.md)
 
----
+--- 
 
 ### Lower Header Bar
 
@@ -436,7 +436,7 @@ _No image available_
 
 [Detailed Documentation](./fragments/lower-header-layout.md)
 
----
+--- 
 
 ### Navigation (Deprecated)
 
@@ -444,7 +444,7 @@ _No image available_
 
 [Detailed Documentation](./fragments/navigation.md)
 
----
+--- 
 
 ### Search Bar
 
@@ -452,7 +452,7 @@ _No image available_
 
 [Detailed Documentation](./fragments/search-bar.md)
 
----
+--- 
 
 ### Search Button
 
@@ -460,7 +460,7 @@ _No image available_
 
 [Detailed Documentation](./fragments/search-button.md)
 
----
+--- 
 
 ### Site Name
 
@@ -468,7 +468,7 @@ _No image available_
 
 [Detailed Documentation](./fragments/site-name.md)
 
----
+--- 
 
 ### Upper Header Bar Layout
 
@@ -476,7 +476,7 @@ _No image available_
 
 [Detailed Documentation](./fragments/upper-header-layout.md)
 
----
+--- 
 
 ### User Personal Bar
 
@@ -484,7 +484,7 @@ _No image available_
 
 [Detailed Documentation](./fragments/user-bar.md)
 
----
+--- 
 
 ## Hero Assets
 
@@ -496,7 +496,7 @@ Prominent visuals, such as videos or banners, that capture attention and define 
 
 [Detailed Documentation](./fragments/hero-video.md)
 
----
+--- 
 
 ### Overlay Background
 
@@ -504,17 +504,17 @@ Prominent visuals, such as videos or banners, that capture attention and define 
 
 [Detailed Documentation](./fragments/overlay-background.md)
 
----
+--- 
 
 ## Layout Components
 
 ### Card Content
 
-_No image available_
+*No image available*
 
 [Detailed Documentation](./fragments/card-content.md)
 
----
+--- 
 
 ### Primary Card
 
@@ -522,7 +522,7 @@ _No image available_
 
 [Detailed Documentation](./fragments/primary-card.md)
 
----
+--- 
 
 ### Secondary Card
 
@@ -530,7 +530,7 @@ _No image available_
 
 [Detailed Documentation](./fragments/secondary-card.md)
 
----
+--- 
 
 ## Meter Reading
 
@@ -540,17 +540,17 @@ _No image available_
 
 [Detailed Documentation](./fragments/meter-reading.md)
 
----
+--- 
 
 ## Miscellaneous
 
 ### Back Button
 
-_No image available_
+*No image available*
 
 [Detailed Documentation](./fragments/back-button.md)
 
----
+--- 
 
 ### Custom Tabs
 
@@ -558,15 +558,15 @@ _No image available_
 
 [Detailed Documentation](./fragments/custom-tabs.md)
 
----
+--- 
 
 ### Customer Registration (Deprecated)
 
-_No image available_
+*No image available*
 
 [Detailed Documentation](./fragments/customer-registration.md)
 
----
+--- 
 
 ### Dynamic Copyright
 
@@ -574,15 +574,15 @@ _No image available_
 
 [Detailed Documentation](./fragments/dynamic-copyright.md)
 
----
+--- 
 
 ### Hide Control Menu
 
-_No image available_
+*No image available*
 
 [Detailed Documentation](./fragments/hide-control-menu.md)
 
----
+--- 
 
 ### Icon Button
 
@@ -590,7 +590,7 @@ _No image available_
 
 [Detailed Documentation](./fragments/icon-button.md)
 
----
+--- 
 
 ### Launch Analytics Cloud
 
@@ -598,31 +598,31 @@ _No image available_
 
 [Detailed Documentation](./fragments/launch-analytics-cloud.md)
 
----
+--- 
 
 ### Modify My Profile Link
 
-_No image available_
+*No image available*
 
 [Detailed Documentation](./fragments/modify-my-profile-link.md)
 
----
+--- 
 
 ### My Dashboard Link
 
-_No image available_
+*No image available*
 
 [Detailed Documentation](./fragments/my-dashboard-link.md)
 
----
+--- 
 
 ### Trigger Ray
 
-_No image available_
+*No image available*
 
 [Detailed Documentation](./fragments/trigger-ray.md)
 
----
+--- 
 
 ## Forms
 
@@ -632,7 +632,7 @@ _No image available_
 
 [Detailed Documentation](./fragments/audit-button.md)
 
----
+--- 
 
 ### Comment
 
@@ -640,7 +640,7 @@ _No image available_
 
 [Detailed Documentation](./fragments/comment.md)
 
----
+--- 
 
 ### View Comments
 
@@ -648,7 +648,7 @@ _No image available_
 
 [Detailed Documentation](./fragments/public-comments.md)
 
----
+--- 
 
 ## Populated Form Fields
 
@@ -658,7 +658,7 @@ _No image available_
 
 [Detailed Documentation](./fragments/populate-select.md)
 
----
+--- 
 
 ### Populated Range
 
@@ -666,7 +666,7 @@ _No image available_
 
 [Detailed Documentation](./fragments/populated-range.md)
 
----
+--- 
 
 ### Store Default Value
 
@@ -674,23 +674,23 @@ _No image available_
 
 [Detailed Documentation](./fragments/store-default-value.md)
 
----
+--- 
 
 ### Store Form Field Values
 
-_No image available_
+*No image available*
 
 [Detailed Documentation](./fragments/store-form-field-values.md)
 
----
+--- 
 
 ### Text (Derived Value)
 
-_No image available_
+*No image available*
 
 [Detailed Documentation](./fragments/text-derived-value.md)
 
----
+--- 
 
 ## Profile
 
@@ -700,15 +700,15 @@ _No image available_
 
 [Detailed Documentation](./fragments/customer-profile.md)
 
----
+--- 
 
 ### PDF Export (Dashboard) (Deprecated)
 
-![PDF Export (Dashboard) (Deprecated)](<../profile/fragments/pdf-export-(dashboard)/thumbnail.png>)
+![PDF Export (Dashboard) (Deprecated)](../profile/fragments/pdf-export-(dashboard)/thumbnail.png)
 
-[Detailed Documentation](<./fragments/pdf-export-(dashboard).md>)
+[Detailed Documentation](./fragments/pdf-export-(dashboard).md)
 
----
+--- 
 
 ### PDF Export (DEPRECATED)
 
@@ -716,15 +716,15 @@ _No image available_
 
 [Detailed Documentation](./fragments/pdf-export.md)
 
----
+--- 
 
 ### Profile Detail (Dashboard) (Deprecated)
 
-_No image available_
+*No image available*
 
-[Detailed Documentation](<./fragments/profile-detail-(dashboard).md>)
+[Detailed Documentation](./fragments/profile-detail-(dashboard).md)
 
----
+--- 
 
 ### Profile Detail (DEPRECATED)
 
@@ -732,15 +732,15 @@ _No image available_
 
 [Detailed Documentation](./fragments/profile-detail.md)
 
----
+--- 
 
 ### Profile Summary (Dashboard) (DEPRECATED)
 
-_No image available_
+*No image available*
 
-[Detailed Documentation](<./fragments/profile-summary-(dashboard).md>)
+[Detailed Documentation](./fragments/profile-summary-(dashboard).md)
 
----
+--- 
 
 ### Profile Summary (DEPRECATED)
 
@@ -748,33 +748,33 @@ _No image available_
 
 [Detailed Documentation](./fragments/profile-summary.md)
 
----
+--- 
 
 ## Pulse
 
 ### Campaign Initialiser
 
-_No image available_
+*No image available*
 
 [Detailed Documentation](./fragments/campaign-initialiser.md)
 
----
+--- 
 
 ### Campaign Insights
 
-_No image available_
+*No image available*
 
 [Detailed Documentation](./fragments/cookie-sniffer.md)
 
----
+--- 
 
 ### Custom Event Listener
 
-_No image available_
+*No image available*
 
 [Detailed Documentation](./fragments/custom-event-listener.md)
 
----
+--- 
 
 ### Pulse Button
 
@@ -782,17 +782,17 @@ _No image available_
 
 [Detailed Documentation](./fragments/pulse-button.md)
 
----
+--- 
 
 ## Responsive Menus
 
 ### Logo Zone
 
-_No image available_
+*No image available*
 
 [Detailed Documentation](./fragments/logo-zone.md)
 
----
+--- 
 
 ### Responsive Menu
 
@@ -800,7 +800,7 @@ _No image available_
 
 [Detailed Documentation](./fragments/responsive-menu.md)
 
----
+--- 
 
 ### Responsive Side Menu
 
@@ -808,41 +808,41 @@ _No image available_
 
 [Detailed Documentation](./fragments/responsive-side-menu.md)
 
----
+--- 
 
 ### Zone Layout
 
-_No image available_
+*No image available*
 
 [Detailed Documentation](./fragments/zone-layout.md)
 
----
+--- 
 
 ## User Account
 
 ### My Rights
 
-_No image available_
+*No image available*
 
 [Detailed Documentation](./fragments/my-rights.md)
 
----
+--- 
 
 ### Ping
 
-_No image available_
+*No image available*
 
 [Detailed Documentation](./fragments/ping.md)
 
----
+--- 
 
 ### Who Am I
 
-_No image available_
+*No image available*
 
 [Detailed Documentation](./fragments/who-am-i.md)
 
----
+--- 
 
 ## Widget Modifiers
 

@@ -1,14 +1,22 @@
 # Form Session ID
 
-The **Form Session ID** fragment allows for tracking and linking form submissions across a user's session using a persistent identifier.
+A specialized utility fragment that links a form submission to an existing `applicant` record by matching a session ID stored in a cookie.
 
-## Key Features
+## Features
 
-- **Session Persistence**: Stores and retrieves a unique session ID from session storage.
-- **Hidden Input**: Injects the ID into a hidden form field for submission.
-- **Cross-Fragment Support**: Works in tandem with the "Generate Form Session ID" fragment.
+- **Automatic Linking**: Searches for an applicant record with a matching `sessionID`.
+- **Relationship Injection**: If a match is found, it automatically populates a hidden relationship field in the form.
+- **Site-Scoped Discovery**: Automatically resolves the correct API path for the `applicants` Object.
 
 ## Configuration
 
-- **Field ID**: The ID of the form field where the session ID should be injected.
-- **Storage Key**: Custom key for session storage persistence.
+- **Cookie Name**: The name of the cookie containing the session ID.
+- **Applicant Relationship ID**: The name of the relationship field in the form to populate.
+- **Enable Debug**: Toggle console logging for troubleshooting.
+
+## Technical Infrastructure
+
+This fragment utilizes the **Shared Resources Architecture**:
+
+- **`discovery.js`**: Uses `resolveObjectPath` to dynamically discover the REST endpoint.
+- **`validation.js`**: Uses `isValidIdentifier` for robust session ID checking.

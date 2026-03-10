@@ -1,4 +1,6 @@
 const initMyRights = () => {
+  const { isValidIdentifier } = Liferay.Fragment.Commons;
+
   if (layoutMode === "view") {
     const {
       rolesEndpointUrl,
@@ -23,9 +25,9 @@ const initMyRights = () => {
     );
 
     if (
-      rolesEndpointUrl &&
-      sitesEndpointUrl &&
-      userGroupsEndpointUrl &&
+      isValidIdentifier(rolesEndpointUrl) &&
+      isValidIdentifier(sitesEndpointUrl) &&
+      isValidIdentifier(userGroupsEndpointUrl) &&
       button &&
       span &&
       roles &&

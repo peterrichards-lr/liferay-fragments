@@ -1,3 +1,6 @@
 {
-  "sharedResources": []
+  "sharedResources": [
+    "validation.js",
+    "dom.js"
+  ]
 }

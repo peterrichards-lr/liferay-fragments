@@ -1,4 +1,6 @@
 const initWhoAmI = () => {
+  const { isValidIdentifier } = Liferay.Fragment.Commons;
+
   if (layoutMode === "view") {
     const { endpointUrl, userAgentAppExtRefCode } = configuration;
 
@@ -9,7 +11,7 @@ const initWhoAmI = () => {
       `#fragment-${fragmentNamespace}-error`,
     );
 
-    if (endpointUrl && button && span && textArea && error) {
+    if (isValidIdentifier(endpointUrl) && button && span && textArea && error) {
       span.innerText = `${Liferay.ThemeDisplay.getUserName()} [${Liferay.ThemeDisplay.getUserId()}]`;
 
       const buttonEventListener = (evt) => {

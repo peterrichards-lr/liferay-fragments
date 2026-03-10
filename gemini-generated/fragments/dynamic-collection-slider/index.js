@@ -41,11 +41,26 @@ const initSlider = () => {
   const track = fragmentElement.querySelector(
     `#track-${fragmentEntryLinkNamespace}`,
   );
-  const container = fragmentElement.querySelector(".slider-container");
+  const container = fragmentElement.querySelector(".dynamic-slider-container");
+  const viewport = fragmentElement.querySelector(".slider-viewport");
   const slides = fragmentElement.querySelectorAll(".slider-slide");
   const dots = fragmentElement.querySelectorAll(".dot");
   const prevBtn = fragmentElement.querySelector(".prev-btn");
   const nextBtn = fragmentElement.querySelector(".next-btn");
+
+  // Check for configuration (Standard Collections check)
+  if (!slides.length && layoutMode !== "view") {
+    // Basic check for manual slides vs collection
+    const hasManualSlides = container.querySelector("[data-lfr-editable-id]");
+    if (!hasManualSlides) {
+      Liferay.Fragment.Commons.renderConfigWarning(
+        viewport,
+        "Please map this fragment to a Collection or add manual slides to see content.",
+        layoutMode,
+      );
+      return;
+    }
+  }
 
   if (track && container && slides.length > 0) {
     const goToPrev = () => {
@@ -155,6 +170,14 @@ const initSlider = () => {
         }, interval);
       });
     }
+  } else if (slides.length === 0 && layoutMode === "view") {
+    Liferay.Fragment.Commons.renderEmptyState(viewport, {
+      title: "Collection is Empty",
+      description:
+        "There are no items in this collection to display in the slider.",
+    });
+    if (prevBtn) prevBtn.style.display = "none";
+    if (nextBtn) nextBtn.style.display = "none";
   }
 };
 

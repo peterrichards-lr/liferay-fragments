@@ -166,37 +166,8 @@ const aggregateData = (items, labelField, valueFields, type, sortOrder) => {
 };
 
 const initChart = async (isEditMode) => {
-  const errorEl = fragmentElement.querySelector(
-    `#error-${fragmentEntryLinkNamespace}`,
-  );
-  const infoEl = fragmentElement.querySelector(
-    `#info-${fragmentEntryLinkNamespace}`,
-  );
   const chartWrapper = fragmentElement.querySelector(".chart-wrapper");
   const titleEl = fragmentElement.querySelector(".chart-title");
-
-  const showError = (msg) => {
-    if (isEditMode && errorEl) {
-      errorEl.textContent = msg;
-      errorEl.classList.remove("d-none");
-      if (chartWrapper) chartWrapper.innerHTML = "";
-    } else if (chartWrapper) {
-      chartWrapper.innerHTML = `<div class="d-flex align-items-center justify-content-center h-100 text-danger">${msg}</div>`;
-    }
-  };
-
-  const showInfo = (msg) => {
-    if (isEditMode && infoEl) {
-      infoEl.textContent = msg;
-      infoEl.classList.remove("d-none");
-      if (chartWrapper) chartWrapper.innerHTML = "";
-    } else if (chartWrapper) {
-      chartWrapper.innerHTML = `<div class="d-flex align-items-center justify-content-center h-100 text-muted">${msg}</div>`;
-    }
-  };
-
-  if (errorEl) errorEl.classList.add("d-none");
-  if (infoEl) infoEl.classList.add("d-none");
 
   const {
     objectERC: configERC,
@@ -229,14 +200,25 @@ const initChart = async (isEditMode) => {
   }
 
   if (!Liferay.Fragment.Commons.isValidIdentifier(objectERC)) {
-    showInfo("Please configure an Object External Reference Code.");
+    if (chartWrapper) {
+      Liferay.Fragment.Commons.renderConfigWarning(
+        chartWrapper,
+        "Please select a Liferay Object ERC in the fragment settings to visualize data.",
+        layoutMode,
+      );
+    }
   } else {
     try {
       await loadScript(CHART_JS_URL);
       const { items, definition } = await fetchData();
 
       if (items.length === 0) {
-        showInfo(`No data found for object "${objectERC}".`);
+        if (chartWrapper) {
+          Liferay.Fragment.Commons.renderEmptyState(chartWrapper, {
+            title: "No Data Available",
+            description: `The ${definition.name} object currently has no records to display.`,
+          });
+        }
       } else {
         // Create field name to localized label map
         const fieldNameMap = {};
@@ -275,7 +257,13 @@ const initChart = async (isEditMode) => {
           .filter(Boolean);
 
         if (fields.length === 0) {
-          showInfo("Please configure at least one value field.");
+          if (chartWrapper) {
+            Liferay.Fragment.Commons.renderConfigWarning(
+              chartWrapper,
+              "Please configure at least one Value Field in the settings.",
+              layoutMode,
+            );
+          }
         } else {
           const { labels, datasets: dataValues } = aggregateData(
             items,
@@ -283,6 +271,15 @@ const initChart = async (isEditMode) => {
             fields,
             aggregationType,
             sortOrder,
+          );
+
+          // Restore canvas if it was replaced by empty state/warning
+          if (chartWrapper && !chartWrapper.querySelector("canvas")) {
+            chartWrapper.innerHTML = `<canvas id="chart-${fragmentEntryLinkNamespace}"></canvas>`;
+          }
+
+          const canvas = fragmentElement.querySelector(
+            `#chart-${fragmentEntryLinkNamespace}`,
           );
 
           // Resolve effective color mapping mode
@@ -354,9 +351,6 @@ const initChart = async (isEditMode) => {
             return ds;
           });
 
-          const canvas = fragmentElement.querySelector(
-            `#chart-${fragmentEntryLinkNamespace}`,
-          );
           if (canvas) {
             const xLabelEl = fragmentElement.querySelector(
               '[data-lfr-editable-id="x-axis-label"]',
@@ -446,7 +440,9 @@ const initChart = async (isEditMode) => {
         }
       }
     } catch (err) {
-      showError(err.message);
+      if (chartWrapper) {
+        chartWrapper.innerHTML = `<div class="d-flex align-items-center justify-content-center h-100 text-danger">${err.message}</div>`;
+      }
     }
   }
 };

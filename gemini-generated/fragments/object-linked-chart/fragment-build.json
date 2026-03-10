@@ -3,6 +3,7 @@
     "assets.js",
     "discovery.js",
     "localization.js",
-    "validation.js"
+    "validation.js",
+    "dom.js"
   ]
 }

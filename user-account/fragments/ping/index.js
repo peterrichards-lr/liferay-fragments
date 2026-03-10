@@ -1,15 +1,5 @@
 const initPing = () => {
-  const isValidIdentifier = (val) => {
-    if (val === undefined || val === null) return false;
-    const s = String(val).trim().toLowerCase();
-    return (
-      s !== "" &&
-      s !== "undefined" &&
-      s !== "null" &&
-      s !== "0" &&
-      s !== "[object object]"
-    );
-  };
+  const { isValidIdentifier } = Liferay.Fragment.Commons;
 
   if (layoutMode === "view") {
     const { endpointUrl } = configuration;

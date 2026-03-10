@@ -141,20 +141,34 @@ const toggleModal = (type, show) => {
     if (show) {
       overlay.classList.remove("d-none");
       document.body.style.overflow = "hidden"; // Prevent background scroll
+
+      // Focus management: focus the first focusable element or the close button
+      const closeBtn = overlay.querySelector(".close-modal-btn");
+      if (closeBtn) setTimeout(() => closeBtn.focus(), 100);
+
+      // Store the element that had focus before opening the modal
+      state.previousFocusedElement = document.activeElement;
     } else {
       overlay.classList.add("d-none");
       document.body.style.overflow = "";
+
+      // Return focus to the previous element
+      if (state.previousFocusedElement) {
+        state.previousFocusedElement.focus();
+      }
     }
   }
 };
 
 const loadPage = async (pageNumber, isEditMode = false) => {
-  const tbody = fragmentElement.querySelector(
-    `#tbody-${fragmentEntryLinkNamespace}`,
+  const tableResponsive = fragmentElement.querySelector(".table-responsive");
+  const paginationInfo = fragmentElement.querySelector(".pagination-info");
+  const paginationNav = fragmentElement.querySelector(
+    `#pagination-${fragmentEntryLinkNamespace}`,
   );
+
   const pageSize = isEditMode ? 3 : parseInt(configuration.pageSize || 10);
-  const { columnsToDisplay, customizeColumns, enableView, enableEdit } =
-    configuration;
+  const { enableView, enableEdit } = configuration;
 
   const spritemap =
     typeof Liferay !== "undefined" && Liferay.Icons
@@ -181,38 +195,56 @@ const loadPage = async (pageNumber, isEditMode = false) => {
     state.totalCount = data.totalCount || 0;
 
     if (state.items.length === 0) {
-      tbody.innerHTML = `<tr><td colspan="${state.fields.length + (enableView || enableEdit ? 1 : 0)}" class="text-center p-5">No data found.</td></tr>`;
+      if (tableResponsive) {
+        Liferay.Fragment.Commons.renderEmptyState(tableResponsive, {
+          title: "No Records Found",
+          description: `This ${state.definition.name} object currently has no data to display.`,
+        });
+      }
+      if (paginationInfo) paginationInfo.textContent = "";
+      if (paginationNav) paginationNav.classList.add("d-none");
     } else {
-      tbody.innerHTML = state.items
-        .map((item) => {
-          let recordId = "";
-          if (item.id !== undefined && item.id !== null)
-            recordId = String(item.id);
-          else if (item.entryId !== undefined && item.entryId !== null)
-            recordId = String(item.entryId);
+      // Restore table if it was replaced by empty state
+      if (tableResponsive && !tableResponsive.querySelector("table")) {
+        tableResponsive.innerHTML = `
+          <table class="table table-autofit show-quick-actions-on-hover table-hover table-list ${configuration.enableStriped ? "table-striped" : ""}" id="table-${fragmentEntryLinkNamespace}" aria-labelledby="table-title-${fragmentEntryLinkNamespace}">
+            <thead><tr id="thead-${fragmentEntryLinkNamespace}"></tr></thead>
+            <tbody id="tbody-${fragmentEntryLinkNamespace}"></tbody>
+          </table>
+        `;
+        // Re-render headers
+        const newThead = tableResponsive.querySelector(
+          `#thead-${fragmentEntryLinkNamespace}`,
+        );
+        let headerHtml = state.fields
+          .map((f) => `<th>${getLocalizedValue(f.label)}</th>`)
+          .join("");
+        if (enableView || enableEdit)
+          headerHtml += '<th class="text-right">Actions</th>';
+        newThead.innerHTML = headerHtml;
+      }
 
-          let recordERC = "";
-          if (
-            item.externalReferenceCode !== undefined &&
-            item.externalReferenceCode !== null
-          )
-            recordERC = String(item.externalReferenceCode);
-          else if (item.erc !== undefined && item.erc !== null)
-            recordERC = String(item.erc);
+      const activeTbody = fragmentElement.querySelector(
+        `#tbody-${fragmentEntryLinkNamespace}`,
+      );
+      activeTbody.innerHTML = state.items
+        .map((item) => {
+          let recordId = item.id || item.entryId || "";
+          let recordERC = item.externalReferenceCode || item.erc || "";
 
           let actionsHtml = "";
           if (enableView || enableEdit) {
             actionsHtml = `<td class="text-right">
                     <div class="btn-group">
-                        ${enableView ? `<button class="btn btn-monospaced btn-sm btn-secondary view-btn" data-record-id="${recordId}" data-record-erc="${recordERC}" title="View" aria-label="View Record"><svg class="lexicon-icon"><use xlink:href="${spritemap}#view"></use></svg></button>` : ""}
-                        ${enableEdit ? `<button class="btn btn-monospaced btn-sm btn-secondary edit-btn" data-record-id="${recordId}" data-record-erc="${recordERC}" title="Edit" aria-label="Edit Record"><svg class="lexicon-icon"><use xlink:href="${spritemap}#pencil"></use></svg></button>` : ""}
+                        ${enableView ? `<button class="btn btn-monospaced btn-sm btn-secondary view-btn" data-record-id="${recordId}" data-record-erc="${recordERC}" title="View Record" aria-label="View Record"><svg class="lexicon-icon"><use xlink:href="${spritemap}#view"></use></svg></button>` : ""}
+                        ${enableEdit ? `<button class="btn btn-monospaced btn-sm btn-secondary edit-btn" data-record-id="${recordId}" data-record-erc="${recordERC}" title="Edit Record" aria-label="Edit Record"><svg class="lexicon-icon"><use xlink:href="${spritemap}#pencil"></use></svg></button>` : ""}
                     </div>
                 </td>`;
           }
 
           return `
                 <tr>
-                    ${state.fields.map((f) => `<td data-label="${getLocalizedValue(f.label)}">${formatCellValue(item, f)}</td>`).join("")}
+                    ${state.fields.map((f, i) => `<td ${i === 0 ? 'scope="row"' : ""} data-label="${getLocalizedValue(f.label)}">${formatCellValue(item, f)}</td>`).join("")}
                     ${actionsHtml}
                 </tr>
             `;
@@ -220,7 +252,7 @@ const loadPage = async (pageNumber, isEditMode = false) => {
         .join("");
 
       // Attach action listeners
-      tbody.querySelectorAll(".view-btn").forEach((btn) => {
+      activeTbody.querySelectorAll(".view-btn").forEach((btn) => {
         btn.onclick = () =>
           fragmentElement.handleAction(
             "view",
@@ -228,7 +260,7 @@ const loadPage = async (pageNumber, isEditMode = false) => {
             btn.dataset.recordErc,
           );
       });
-      tbody.querySelectorAll(".edit-btn").forEach((btn) => {
+      activeTbody.querySelectorAll(".edit-btn").forEach((btn) => {
         btn.onclick = () =>
           fragmentElement.handleAction(
             "edit",
@@ -240,9 +272,8 @@ const loadPage = async (pageNumber, isEditMode = false) => {
       if (!isEditMode) {
         renderPagination(false);
       } else {
-        const info = fragmentElement.querySelector(".pagination-info");
-        if (info)
-          info.textContent = `Showing ${state.items.length} entries (Editor Preview)`;
+        if (paginationInfo)
+          paginationInfo.textContent = `Showing ${state.items.length} entries (Editor Preview)`;
       }
     }
   } catch (err) {
@@ -426,7 +457,11 @@ const initMetaTable = async (isEditMode) => {
   });
 
   if (!Liferay.Fragment.Commons.isValidIdentifier(objectERC)) {
-    titleEl.textContent = "Meta-Object Table";
+    Liferay.Fragment.Commons.renderConfigWarning(
+      tableResponsive,
+      "Please select a Liferay Object ERC in the fragment settings to populate this table.",
+      layoutMode,
+    );
   } else {
     try {
       const defUrl = `${ADMIN_API_BASE}/object-definitions/by-external-reference-code/${objectERC}`;
@@ -476,12 +511,17 @@ const initMetaTable = async (isEditMode) => {
       }
       state.fields = fields;
 
-      let headerHtml = state.fields
-        .map((f) => `<th>${getLocalizedValue(f.label)}</th>`)
-        .join("");
-      if (enableView || enableEdit)
-        headerHtml += '<th class="text-right">Actions</th>';
-      thead.innerHTML = headerHtml;
+      const thead = fragmentElement.querySelector(
+        `#thead-${fragmentEntryLinkNamespace}`,
+      );
+      if (thead) {
+        let headerHtml = state.fields
+          .map((f) => `<th>${getLocalizedValue(f.label)}</th>`)
+          .join("");
+        if (enableView || enableEdit)
+          headerHtml += '<th class="text-right">Actions</th>';
+        thead.innerHTML = headerHtml;
+      }
 
       await loadPage(1, isEditMode);
     } catch (err) {

@@ -66,22 +66,46 @@ This guide provides common "recipes" for combining individual fragments into pow
 
 ---
 
-## 5. Multi-Step Loan Application with Persistent State
+## 6. Standardized Empty States & Configuration Warnings
 
-**Goal**: Create a seamless application flow where a user's initial estimations are automatically carried forward into a formal application.
+**Goal**: Ensure fragments remain professional and helpful even when data is missing or the fragment isn't yet configured.
 
-### Fragments Required:
+### The Pattern:
 
-- `Loan Calculator` (Step 1)
-- `Store Form Field Values` (Step 1)
-- `Loan Application Calculator` (Step 2)
-- `Populated Range` (Step 2)
-- `Populate Select` (Step 3)
+When building data-driven fragments (Tables, Charts, Lists), always implement the two-tier safety pattern using the `Liferay.Fragment.Commons` shared logic.
 
-### The Recipe:
+#### Mode A: Configuration Warning (For Editors)
 
-1.  **Estimation (Step 1)**: Place the `Loan Calculator` on your "Get a Quote" page. Wrap it with the `Store Form Field Values` fragment.
-2.  **Capture**: Configure `Store Form Field Values` to monitor the slider IDs (`loanAmount`, `loanTerm`) and save them to Session Storage using a specific prefix (e.g., `LFR_LOAN`).
-3.  **Handoff (Step 2)**: On your "Formal Application" page, add the `Loan Application Calculator`. In its drop-zones, place two `Populated Range` fragments.
-4.  **Auto-Populate**: Configure the `Populated Range` fragments to load their values from the same Session Storage keys used in Step 1. The user will see their previous estimations already filled in.
-5.  **Refine (Step 3)**: Use the `Populate Select` fragment for fields like "Loan Purpose." If the user previously selected a purpose, it can be automatically restored from storage, reducing friction and improving conversion.
+Use `renderConfigWarning` when a required setting (like an Object ERC or API Path) is missing. This prevents the fragment from looking "broken" in the Page Editor and guides the user on how to fix it.
+
+```javascript
+if (!configuration.objectERC) {
+  Liferay.Fragment.Commons.renderConfigWarning(
+    container,
+    "Please select an Object ERC in the fragment settings.",
+    layoutMode,
+  );
+  return;
+}
+```
+
+#### Mode B: Standard Empty State (For End-Users)
+
+Use `renderEmptyState` when the configuration is correct, but the data source (API/Object) returns zero results. This uses Liferay's native "No Results" visual style.
+
+```javascript
+if (data.items.length === 0) {
+  Liferay.Fragment.Commons.renderEmptyState(container, {
+    title: "No Data Found",
+    description: "Adjust your filters or add a new entry to see results here.",
+  });
+}
+```
+
+### Fragments Implementing this Pattern:
+
+- `Meta-Object Table`
+- `Object-Linked Chart`
+- `Activity Heatmap`
+- `Dynamic Collection Slider`
+- `Purchased Products`

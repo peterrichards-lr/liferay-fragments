@@ -1,6 +1,8 @@
 {
   "sharedResources": [
+    "discovery.js",
     "dom.js",
     "validation.js"
-  ]
+  ],
+  "themeStrategy": "generic"
 }

@@ -2,6 +2,7 @@ const fs = require("fs");
 const path = require("path");
 const Ajv = require("ajv");
 const { globSync } = require("glob");
+const { generateGallery } = require("./generate-gallery");
 
 const ajv = new Ajv({ allErrors: true });
 
@@ -54,22 +55,30 @@ const validateConfiguration = ajv.compile(configurationSchema);
 const getLangKeys = (dir) => {
   const propFile = path.join(dir, "Language_en_US.properties");
   if (!fs.existsSync(propFile)) {
-    // Try parent directory (collection level)
     const parentPropFile = path.join(dir, "..", "Language_en_US.properties");
     if (fs.existsSync(parentPropFile)) {
       return parseProps(parentPropFile);
     }
-    return new Set();
+    const grandparentPropFile = path.join(
+      dir,
+      "..",
+      "..",
+      "Language_en_US.properties",
+    );
+    if (fs.existsSync(grandparentPropFile)) {
+      return parseProps(grandparentPropFile);
+    }
+    return new Map();
   }
   return parseProps(propFile);
 };
 
 const parseProps = (filePath) => {
   const content = fs.readFileSync(filePath, "utf8");
-  const keys = new Set();
+  const keys = new Map();
   content.split("\n").forEach((line) => {
-    const match = line.match(/^([^=]+)=/);
-    if (match) keys.add(match[1].trim());
+    const match = line.match(/^([^=]+)=(.*)$/);
+    if (match) keys.set(match[1].trim(), match[2].trim());
   });
   return keys;
 };
@@ -104,7 +113,6 @@ fragmentFiles.forEach((file) => {
   const fragmentName = path.basename(dir);
   let fragJson;
 
-  // A. Validate fragment.json
   try {
     fragJson = JSON.parse(fs.readFileSync(file, "utf8"));
     if (!validateFragment(fragJson)) {
@@ -118,7 +126,6 @@ fragmentFiles.forEach((file) => {
     return;
   }
 
-  // B. Validate configuration.json & Localization
   const configPath = path.join(
     dir,
     fragJson.configurationPath || "configuration.json",
@@ -140,7 +147,13 @@ fragmentFiles.forEach((file) => {
             fragmentName,
             `Missing localization for fieldset: ${set.label}`,
           );
+        } else if (set.label && langKeys.get(set.label) === set.label) {
+          logError(
+            fragmentName,
+            `Lazy localization found for fieldset (key equals value): ${set.label}`,
+          );
         }
+
         set.fields?.forEach((field) => {
           if (
             field.label &&
@@ -151,7 +164,13 @@ fragmentFiles.forEach((file) => {
               fragmentName,
               `Missing localization for label: ${field.label}`,
             );
+          } else if (field.label && langKeys.get(field.label) === field.label) {
+            logError(
+              fragmentName,
+              `Lazy localization found for label (key equals value): ${field.label}`,
+            );
           }
+
           if (
             field.description &&
             field.description.includes(".") &&
@@ -160,6 +179,14 @@ fragmentFiles.forEach((file) => {
             logWarn(
               fragmentName,
               `Missing localization for description: ${field.description}`,
+            );
+          } else if (
+            field.description &&
+            langKeys.get(field.description) === field.description
+          ) {
+            logWarn(
+              fragmentName,
+              `Lazy localization found for description (key equals value): ${field.description}`,
             );
           }
         });
@@ -172,14 +199,11 @@ fragmentFiles.forEach((file) => {
     }
   }
 
-  // C. Rule #9: Theme Fidelity (Safe Tokens)
   const cssPath = path.join(dir, fragJson.cssPath || "index.css");
   if (fs.existsSync(cssPath)) {
     const css = fs.readFileSync(cssPath, "utf8");
-    // Find hex colors, then filter out those that are part of a var() fallback.
     const allHexMatches = css.match(/#[0-9a-fA-F]{3,6}\b/g) || [];
     const hardcodedHex = allHexMatches.filter((hex) => {
-      // Strip var() fallbacks and check if hex still exists
       const strippedCss = css.replace(
         /var\([^,]+,\s*#[0-9a-fA-F]{3,6}\)/g,
         "VAR_WITH_FALLBACK",
@@ -195,11 +219,9 @@ fragmentFiles.forEach((file) => {
     }
   }
 
-  // D. Rule #4: JS Encapsulation
   const jsPath = path.join(dir, fragJson.jsPath || "index.js");
   if (fs.existsSync(jsPath)) {
     const js = fs.readFileSync(jsPath, "utf8");
-    // Matches 'return' not inside a function block {}
     if (
       /^return\s+|[;{]\s*return\s+/m.test(js) &&
       !js.includes("function") &&
@@ -212,6 +234,25 @@ fragmentFiles.forEach((file) => {
     }
   }
 });
+
+// --- GALLERY DRIFT CHECK ---
+console.log(`Checking for Gallery drift...`);
+const GALLERY_FILE = path.join(process.cwd(), "docs", "gallery.md");
+const currentGalleryContent = fs.existsSync(GALLERY_FILE)
+  ? fs.readFileSync(GALLERY_FILE, "utf8")
+  : "";
+const expectedGalleryContent = generateGallery();
+
+const normalize = (str) => str.trim().replace(/\s+/g, " ");
+
+if (normalize(currentGalleryContent) !== normalize(expectedGalleryContent)) {
+  logError(
+    "Documentation",
+    "Gallery is out of sync. Please run 'npm run docs:gallery' to update it.",
+  );
+} else {
+  console.log("Gallery is in sync.\n");
+}
 
 console.log(`\nAudit Complete!`);
 console.log(`---------------------------------`);

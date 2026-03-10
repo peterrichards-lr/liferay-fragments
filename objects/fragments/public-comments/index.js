@@ -1,17 +1,6 @@
 const initPublicComments = () => {
-  const ADMIN_API_BASE = "/o/object-admin/v1.0";
-
-  const isValidIdentifier = (val) => {
-    if (val === undefined || val === null) return false;
-    const s = String(val).trim().toLowerCase();
-    return (
-      s !== "" &&
-      s !== "undefined" &&
-      s !== "null" &&
-      s !== "0" &&
-      s !== "[object object]"
-    );
-  };
+  const { isValidIdentifier, resolveObjectPathByERC } =
+    Liferay.Fragment.Commons;
 
   const locales = Liferay.ThemeDisplay.getLanguageId().replaceAll("_", "-");
 
@@ -80,20 +69,13 @@ const initPublicComments = () => {
     }
 
     try {
-      const response = await Liferay.Util.fetch(
-        `${ADMIN_API_BASE}/object-definitions/by-external-reference-code/${objectERC}`,
-      );
-      if (!response.ok) throw new Error("Failed to fetch object definition");
+      const result = await resolveObjectPathByERC(objectERC);
 
-      const definition = await response.json();
-      let path = definition.restContextPath;
-
-      if (definition.scope === "site") {
-        const siteId = Liferay.ThemeDisplay.getScopeGroupId();
-        path += `/scopes/${siteId}`;
+      if (result.apiPath) {
+        apiPath = result.apiPath;
+      } else {
+        apiPath = configuration.objectAPIPath || "/o/c/j3y7comments/";
       }
-
-      apiPath = path;
     } catch (err) {
       console.error(err);
       apiPath = configuration.objectAPIPath || "/o/c/j3y7comments/";

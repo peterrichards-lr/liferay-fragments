@@ -42,21 +42,17 @@ const initGallery = async (isEditMode) => {
     }
   };
 
-  const showInfo = (msg) => {
-    if (isEditMode && infoEl) {
-      infoEl.textContent = msg;
-      infoEl.classList.remove("d-none");
-      if (grid) grid.innerHTML = "";
-    } else if (grid) {
-      grid.innerHTML = `<div class="text-center p-5 w-100 text-muted">${msg}</div>`;
-    }
-  };
-
   if (errorEl) errorEl.classList.add("d-none");
   if (infoEl) infoEl.classList.add("d-none");
 
-  if (!objectERC) {
-    showInfo("Please configure an Object External Reference Code.");
+  if (!Liferay.Fragment.Commons.isValidIdentifier(objectERC)) {
+    if (grid) {
+      Liferay.Fragment.Commons.renderConfigWarning(
+        grid,
+        "Please select a Liferay Object ERC in the fragment settings to populate this gallery.",
+        layoutMode,
+      );
+    }
   } else {
     try {
       const defRes = await Liferay.Util.fetch(
@@ -85,7 +81,12 @@ const initGallery = async (isEditMode) => {
       const items = data.items || [];
 
       if (items.length === 0) {
-        showInfo("No entries found.");
+        if (grid) {
+          Liferay.Fragment.Commons.renderEmptyState(grid, {
+            title: "No Items Found",
+            description: `This ${definition.name} object currently has no data to display in the gallery.`,
+          });
+        }
       } else {
         grid.innerHTML = items
           .map((item) => {

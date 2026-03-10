@@ -1,15 +1,17 @@
 const initPurchasedProducts = () => {
-  const isValidIdentifier = (val) => {
-    if (val === undefined || val === null) return false;
-    const s = String(val).trim().toLowerCase();
-    return (
-      s !== "" &&
-      s !== "undefined" &&
-      s !== "null" &&
-      s !== "0" &&
-      s !== "[object object]"
-    );
-  };
+  const { isValidIdentifier, renderEmptyState, renderConfigWarning } =
+    Liferay.Fragment.Commons;
+  const results = fragmentElement.querySelector(".results-placeholder");
+
+  if (layoutMode !== "view") {
+    if (!configuration.accountId || !configuration.channelId) {
+      renderConfigWarning(
+        results,
+        "Please select a Commerce Account and Channel in the fragment settings.",
+        layoutMode,
+      );
+    }
+  }
 
   if (layoutMode === "view") {
     var config = undefined;
@@ -193,13 +195,13 @@ const initPurchasedProducts = () => {
                 );
               }
             } else {
-              const noResults = document.createElement("div");
-              noResults.classList.add("alert");
-              noResults.classList.add("alert-info");
-              noResults.innerText = configuration.notfoundMessage
-                ? configuration.notfoundMessage
-                : "You currently have no purchased products";
-              results.append(noResults);
+              renderEmptyState(results, {
+                title: "No Products Purchased",
+                description:
+                  configuration.notfoundMessage ||
+                  "You currently have no purchased products.",
+                image: "/o/admin-theme/images/states/empty_state.svg",
+              });
             }
           }
         });

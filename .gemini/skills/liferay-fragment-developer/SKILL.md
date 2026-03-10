@@ -1,6 +1,6 @@
----
 name: liferay-fragment-developer
 description: Expert guidance for developing Liferay Fragments. Use when creating, modifying, or auditing Liferay Fragments to ensure compliance with architectural, accessibility, responsiveness, and multi-theme (Classic, Dialect, Meridian) standards.
+
 ---
 
 # Liferay Fragment Developer Skill
@@ -13,7 +13,11 @@ This skill provides comprehensive procedural knowledge and architectural standar
 
 - Ensure `fragment.json` correctly points to all assets.
 - Create `configuration.json` using standard field sets and types.
-- Implement the "Edit Mode Previews & Alerts" pattern in `index.html` and `index.js`.
+- **Shared Resources**: Every fragment MUST include a `fragment-build.json` file if it requires shared logic from `shared-resources/`.
+  - Declare dependencies: `"sharedResources": ["dom.js", "discovery.js"]`.
+- **Edit Mode Hygiene**: Implement the "Edit Mode Previews & Alerts" pattern using `Liferay.Fragment.Commons` helpers.
+  - Use `renderConfigWarning` for missing settings.
+  - Use `renderEmptyState` for zero-result scenarios.
 - **Theme Awareness**: Fragments MUST be theme-aware.
   - Refer to `docs/THEMES.md` for high-fidelity CSS tokens and icon spritemaps.
   - Support **Classic**, **Dialect**, and **Meridian** by using semantic variables (e.g., `var(--primary)`, `var(--card-background-color)`).
@@ -28,6 +32,7 @@ This skill provides comprehensive procedural knowledge and architectural standar
 - **Modern API Usage**: Verify the use of `layoutMode` instead of legacy body class checks.
 - **Top-Level Logic**: Ensure all JS is encapsulated in an initialization function; top-level `return` statements are prohibited.
 - **Robust Identifiers**: Use a strict validation helper (`isValidIdentifier`) to block `"undefined"`, `"null"`, `"0"`, and `"[object object]"`.
+- **Localization Hygiene**: Verify that no "lazy keys" exist (e.g., `key=key`). Values MUST be meaningful English.
 - **Freemarker Safety**: Verify null-safety in FreeMarker (`!`). Ensure `.no-transform` files exist if FreeMarker syntax is present in JS or CSS.
 - **Accessibility**: Ensure all icon-only buttons have `aria-label`.
 

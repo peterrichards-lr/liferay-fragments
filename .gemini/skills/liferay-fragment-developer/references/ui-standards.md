@@ -4,11 +4,21 @@
 
 Fragments MUST provide a high-quality WYSIWYG experience in Edit mode:
 
-- **User Prompts**: Display an `alert-info` container in Edit mode when critical configuration is missing.
+- **Configuration Warnings**: Display an `alert-info` container in Edit mode when critical configuration (e.g., Object ERC) is missing. Use `Liferay.Fragment.Commons.renderConfigWarning()`.
 - **Error Reporting**: Display an `alert-danger` container in Edit mode for fetch failures.
 - **Static WYSIWYG**: Render a visual representation that matches production, but disable complex handlers and limit dynamic items (e.g., 3-5 rows in a table).
 
+## Standardized Empty States
+
+When a data-driven fragment returns zero results, it MUST NOT simply disappear.
+
+- **Requirement**: Use `Liferay.Fragment.Commons.renderEmptyState()`.
+- **Visuals**: Utilizes native Liferay `c-empty-state` classes and standard search/empty SVGs from `/o/admin-theme/`.
+- **Context**: Apply to tables, charts, sliders, and galleries.
+
 ## Mappable Field Ergonomics
+
+...
 
 Non-title mappable fields (`data-lfr-editable`) MUST be wrapped in a specific container to provide a clean interface for Page Editors.
 

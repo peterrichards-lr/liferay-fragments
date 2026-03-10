@@ -33,7 +33,7 @@
 	[#else]
 		[#assign notification_link = "javascript:;" /]
 	[/#if]
-	<a href="${notification_link}">
+	<a href="${notification_link}" aria-label="View notifications[#if notification_count gt 0] (${notification_count} new)[/#if]">
 		<span class="notification-indicator">
 			[@clay["icon"] symbol="bell-on" /]
 		</span>

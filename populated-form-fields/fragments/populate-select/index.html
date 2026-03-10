@@ -20,7 +20,7 @@
 				</div>
 
 				<span class="input-group-append input-group-item input-group-item-shrink">
-					<button aria-controls="${fragmentEntryLinkNamespace}-listbox" [#if input.showHelpText && input.helpText?has_content]aria-describedby="${fragmentEntryLinkNamespace}-help-text"[/#if] aria-expanded="false" class="btn btn-secondary" type="button">
+					<button aria-controls="${fragmentEntryLinkNamespace}-listbox" [#if input.showHelpText && input.helpText?has_content]aria-describedby="${fragmentEntryLinkNamespace}-help-text"[/#if] aria-expanded="false" aria-label="Toggle listbox" class="btn btn-secondary" type="button">
 						[@clay["icon"] symbol="caret-double" /]
 					</button>
 				</span>

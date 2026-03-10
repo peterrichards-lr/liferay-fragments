@@ -2,77 +2,49 @@ const fs = require("fs");
 const path = require("path");
 const { globSync } = require("glob");
 
-// --- UTILS ---
-const parseProps = (filePath) => {
-  if (!fs.existsSync(filePath)) return new Map();
+const fixLazyKeys = (filePath) => {
+  if (!fs.existsSync(filePath)) return;
+
   const content = fs.readFileSync(filePath, "utf8");
   const lines = content.split("\n");
-  const props = new Map();
-  lines.forEach((line) => {
+  const newLines = lines.map((line) => {
     const match = line.match(/^([^=]+)=(.*)$/);
-    if (match) props.set(match[1].trim(), match[2].trim());
+    if (!match) return line;
+
+    const key = match[1].trim();
+    const value = match[2].trim();
+
+    if (key === value && key.startsWith("lfr.")) {
+      // Transform lfr.collection.some-key into "Some Key"
+      let newValue = key.replace(/^lfr\.[^.]+\./, ""); // Remove lfr.namespace.
+      if (newValue === key) newValue = key.replace(/^lfr\./, ""); // Fallback if only one dot
+
+      newValue = newValue
+        .split("-")
+        .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+        .join(" ");
+
+      console.log(`  [FIXED] ${key} -> ${newValue}`);
+      return `${key}=${newValue}`;
+    }
+
+    return line;
   });
-  return props;
+
+  fs.writeFileSync(filePath, newLines.join("\n"));
 };
 
-const writeProps = (filePath, propsMap) => {
-  const sortedKeys = Array.from(propsMap.keys()).sort();
-  const content =
-    sortedKeys.map((k) => `${k}=${propsMap.get(k)}`).join("\n") + "\n";
-  fs.writeFileSync(filePath, content, "utf8");
-};
-
-const formatKey = (key) => {
-  // Convert lfr.category.field-name to "Field Name"
-  const parts = key.split(".");
-  const lastPart = parts[parts.length - 1];
-  return lastPart
-    .split("-")
-    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-    .join(" ");
-};
-
-// --- MAIN ---
-const fragmentFiles = globSync("**/fragment.json", {
+const propFiles = globSync("**/Language_en_US.properties", {
   ignore: "node_modules/**",
 });
-let totalFixed = 0;
 
-fragmentFiles.forEach((file) => {
-  const dir = path.dirname(file);
-  const configPath = path.join(dir, "configuration.json");
-  const propPath = path.join(dir, "Language_en_US.properties");
+console.log(
+  `Found ${propFiles.length} localization files. Checking for lazy keys...\n`,
+);
 
-  if (!fs.existsSync(configPath)) return;
-
-  try {
-    const config = JSON.parse(fs.readFileSync(configPath, "utf8"));
-    let props = parseProps(propPath);
-    let changed = false;
-
-    const addKey = (key) => {
-      if (key && key.includes(".") && !props.has(key)) {
-        props.set(key, formatKey(key));
-        changed = true;
-        totalFixed++;
-      }
-    };
-
-    config.fieldSets?.forEach((set) => {
-      addKey(set.label);
-      set.fields?.forEach((field) => {
-        addKey(field.label);
-        addKey(field.description);
-      });
-    });
-
-    if (changed) {
-      console.log(`Updating localization for: ${path.basename(dir)}`);
-      writeProps(propPath, props);
-    }
-  } catch (e) {
-    console.error(`Error processing ${dir}: ${e.message}`);
-  }
+propFiles.forEach((file) => {
+  console.log(`Processing ${file}...`);
+  fixLazyKeys(file);
 });
 
-console.log(`\nSuccessfully added ${totalFixed} missing localization keys.`);
+console.log("\nLocalization clean-up complete.");
