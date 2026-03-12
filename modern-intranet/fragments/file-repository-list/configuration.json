@@ -1,0 +1,15 @@
+{
+  "fieldSets": [
+    {
+      "fields": [
+        {
+          "defaultValue": "#",
+          "label": "lfr.modern-intranet.file-repository-list.view-all-url",
+          "name": "viewAllURL",
+          "type": "url"
+        }
+      ],
+      "label": "lfr.modern-intranet.behavior"
+    }
+  ]
+}

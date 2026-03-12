@@ -1,0 +1,64 @@
+{
+  "fieldSets": [
+    {
+      "fields": [
+        {
+          "label": "lfr.modern-intranet.welcome-banner.background-image",
+          "name": "backgroundImage",
+          "type": "itemSelector",
+          "typeOptions": {
+            "itemType": "image"
+          }
+        },
+        {
+          "defaultValue": "Welcome back, John",
+          "label": "lfr.modern-intranet.welcome-banner.title",
+          "name": "title",
+          "type": "text"
+        },
+        {
+          "defaultValue": "Here's what's happening in your workspace today.",
+          "label": "lfr.modern-intranet.welcome-banner.subtext",
+          "name": "subtext",
+          "type": "text"
+        }
+      ],
+      "label": "lfr.modern-intranet.data"
+    },
+    {
+      "fields": [
+        {
+          "label": "lfr.modern-intranet.welcome-banner.button-1-label",
+          "name": "button1Label",
+          "type": "text"
+        },
+        {
+          "label": "lfr.modern-intranet.welcome-banner.button-1-url",
+          "name": "button1URL",
+          "type": "url"
+        },
+        {
+          "label": "lfr.modern-intranet.welcome-banner.button-2-label",
+          "name": "button2Label",
+          "type": "text"
+        },
+        {
+          "label": "lfr.modern-intranet.welcome-banner.button-2-url",
+          "name": "button2URL",
+          "type": "url"
+        },
+        {
+          "label": "lfr.modern-intranet.welcome-banner.button-3-label",
+          "name": "button3Label",
+          "type": "text"
+        },
+        {
+          "label": "lfr.modern-intranet.welcome-banner.button-3-url",
+          "name": "button3URL",
+          "type": "url"
+        }
+      ],
+      "label": "lfr.modern-intranet.welcome-banner.actions"
+    }
+  ]
+}

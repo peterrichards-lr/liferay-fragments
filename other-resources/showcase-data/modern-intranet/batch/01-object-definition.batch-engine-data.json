@@ -1,0 +1,213 @@
+{
+  "configuration": {
+    "className": "com.liferay.object.admin.rest.dto.v1_0.ObjectDefinition",
+    "parameters": {
+      "containsHeaders": "true",
+      "createStrategy": "UPSERT",
+      "importStrategy": "ON_ERROR_CONTINUE",
+      "updateStrategy": "UPDATE"
+    }
+  },
+  "items": [
+    {
+      "active": true,
+      "defaultLanguageId": "en_US",
+      "externalReferenceCode": "INTRANET_POST",
+      "label": {
+        "en_US": "Intranet Post"
+      },
+      "name": "IntranetPost",
+      "objectFields": [
+        {
+          "businessType": "Text",
+          "externalReferenceCode": "TITLE",
+          "label": {
+            "en_US": "Title"
+          },
+          "name": "title",
+          "required": true,
+          "type": "String"
+        },
+        {
+          "businessType": "LongText",
+          "externalReferenceCode": "CONTENT",
+          "label": {
+            "en_US": "Content"
+          },
+          "name": "content",
+          "required": true,
+          "type": "String"
+        },
+        {
+          "businessType": "Text",
+          "externalReferenceCode": "AUTHOR_NAME",
+          "label": {
+            "en_US": "Author Name"
+          },
+          "name": "authorName",
+          "required": false,
+          "type": "String"
+        },
+        {
+          "businessType": "Text",
+          "externalReferenceCode": "AUTHOR_AVATAR_URL",
+          "label": {
+            "en_US": "Author Avatar URL"
+          },
+          "name": "authorAvatarUrl",
+          "required": false,
+          "type": "String"
+        },
+        {
+          "businessType": "Integer",
+          "externalReferenceCode": "LIKES_COUNT",
+          "label": {
+            "en_US": "Likes Count"
+          },
+          "name": "likesCount",
+          "required": false,
+          "type": "Integer"
+        },
+        {
+          "businessType": "Integer",
+          "externalReferenceCode": "COMMENTS_COUNT",
+          "label": {
+            "en_US": "Comments Count"
+          },
+          "name": "commentsCount",
+          "required": false,
+          "type": "Integer"
+        }
+      ],
+      "pluralLabel": {
+        "en_US": "Intranet Posts"
+      },
+      "restContextPath": "/o/c/intranetposts",
+      "scope": "site",
+      "status": {
+        "code": 0,
+        "label": "approved"
+      }
+    },
+    {
+      "active": true,
+      "defaultLanguageId": "en_US",
+      "externalReferenceCode": "INTRANET_ASSET",
+      "label": {
+        "en_US": "Intranet Asset"
+      },
+      "name": "IntranetAsset",
+      "objectFields": [
+        {
+          "businessType": "Text",
+          "externalReferenceCode": "TITLE",
+          "label": {
+            "en_US": "Title"
+          },
+          "name": "title",
+          "required": true,
+          "type": "String"
+        },
+        {
+          "businessType": "Text",
+          "externalReferenceCode": "STATUS",
+          "label": {
+            "en_US": "Status"
+          },
+          "name": "status",
+          "required": false,
+          "type": "String"
+        },
+        {
+          "businessType": "Text",
+          "externalReferenceCode": "FILE_SIZE",
+          "label": {
+            "en_US": "File Size"
+          },
+          "name": "fileSize",
+          "required": false,
+          "type": "String"
+        },
+        {
+          "businessType": "Text",
+          "externalReferenceCode": "FILE_TYPE",
+          "label": {
+            "en_US": "File Type"
+          },
+          "name": "fileType",
+          "required": false,
+          "type": "String"
+        }
+      ],
+      "pluralLabel": {
+        "en_US": "Intranet Assets"
+      },
+      "restContextPath": "/o/c/intranetassets",
+      "scope": "site",
+      "status": {
+        "code": 0,
+        "label": "approved"
+      }
+    },
+    {
+      "active": true,
+      "defaultLanguageId": "en_US",
+      "externalReferenceCode": "USER_COURSE_PROGRESS",
+      "label": {
+        "en_US": "User Course Progress"
+      },
+      "name": "UserCourseProgress",
+      "objectFields": [
+        {
+          "businessType": "Text",
+          "externalReferenceCode": "COURSE_TITLE",
+          "label": {
+            "en_US": "Course Title"
+          },
+          "name": "courseTitle",
+          "required": true,
+          "type": "String"
+        },
+        {
+          "businessType": "Text",
+          "externalReferenceCode": "COURSE_DESCRIPTION",
+          "label": {
+            "en_US": "Course Description"
+          },
+          "name": "courseDescription",
+          "required": false,
+          "type": "String"
+        },
+        {
+          "businessType": "Text",
+          "externalReferenceCode": "COURSE_IMAGE_URL",
+          "label": {
+            "en_US": "Course Image URL"
+          },
+          "name": "courseImageUrl",
+          "required": false,
+          "type": "String"
+        },
+        {
+          "businessType": "Integer",
+          "externalReferenceCode": "PROGRESS_PERCENTAGE",
+          "label": {
+            "en_US": "Progress Percentage"
+          },
+          "name": "progressPercentage",
+          "required": false,
+          "type": "Integer"
+        }
+      ],
+      "pluralLabel": {
+        "en_US": "User Course Progress"
+      },
+      "restContextPath": "/o/c/usercourseprogress",
+      "scope": "site",
+      "status": {
+        "code": 0,
+        "label": "approved"
+      }
+    }
+  ]
+}

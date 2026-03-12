@@ -1,0 +1,36 @@
+{
+  "configuration": {
+    "className": "com.liferay.object.rest.dto.v1_0.ObjectEntry",
+    "parameters": {
+      "containsHeaders": "true",
+      "createStrategy": "UPSERT",
+      "siteExternalReferenceCode": "L_GUEST",
+      "importStrategy": "ON_ERROR_CONTINUE",
+      "updateStrategy": "UPDATE"
+    },
+    "taskItemDelegateName": "C_UserCourseProgress"
+  },
+  "items": [
+    {
+      "externalReferenceCode": "COURSE-01",
+      "courseTitle": "Q3 Product Strategy",
+      "courseDescription": "Deep dive into the revised Q3 roadmap, OKRs, and market trends for the upcoming quarter.",
+      "courseImageUrl": "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&q=80&w=400",
+      "progressPercentage": 30
+    },
+    {
+      "externalReferenceCode": "COURSE-02",
+      "courseTitle": "Data Privacy for PMs",
+      "courseDescription": "Mandatory compliance training for handling EU/US customer data in accordance with local regulations.",
+      "courseImageUrl": "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&q=80&w=400",
+      "progressPercentage": 50
+    },
+    {
+      "externalReferenceCode": "COURSE-03",
+      "courseTitle": "JIRA Advanced Workflows",
+      "courseDescription": "Optimizing sprint boards and automation for technical project managers.",
+      "courseImageUrl": "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=400",
+      "progressPercentage": 10
+    }
+  ]
+}

@@ -1,0 +1,113 @@
+.file-repo {
+  background-color: var(--white, #fff);
+  padding: var(--spacer-4, 1rem) 0;
+}
+
+.file-repo-section-title {
+  color: var(--primary, #007dad);
+  font-size: var(--font-size-lg, 1.25rem);
+  font-weight: var(--font-weight-bold, 700);
+}
+
+.file-repo-view-all {
+  color: var(--primary, #007dad);
+  font-size: var(--font-size-sm, 0.875rem);
+  font-weight: var(--font-weight-semi-bold, 600);
+  text-decoration: none !important;
+}
+
+.file-repo-table-container {
+  background-color: var(--white, #fff);
+  border: 1px solid var(--gray-200, #e7e7ed);
+  border-radius: var(--border-radius-xl, 1rem);
+  overflow: hidden;
+}
+
+.file-repo-table {
+  margin-bottom: 0;
+}
+
+.file-repo-table thead th {
+  background-color: var(--gray-100, #f1f2f5);
+  border-bottom: 1px solid var(--gray-200, #e7e7ed);
+  color: var(--secondary, #6b6c7e);
+  font-size: var(--font-size-xs, 0.75rem);
+  font-weight: var(--font-weight-bold, 700);
+  padding: var(--spacer-3, 1rem);
+  text-transform: uppercase;
+}
+
+.file-repo-table td {
+  border-top: 1px solid var(--gray-200, #e7e7ed);
+  padding: var(--spacer-3, 1rem);
+  vertical-align: middle;
+}
+
+.file-repo-cell-title {
+  color: var(--body-color, #272833);
+  font-weight: var(--font-weight-semi-bold, 600);
+}
+
+.file-repo-status {
+  font-size: var(--font-size-xs, 0.75rem);
+  font-weight: var(--font-weight-semi-bold, 600);
+  padding: var(--spacer-1, 0.25rem) var(--spacer-3, 1rem);
+}
+
+.badge-warning.file-repo-status {
+  background-color: var(--warning-l3, #fff3cd);
+  color: var(--warning-d2, #856404);
+}
+
+.badge-success.file-repo-status {
+  background-color: var(--success-l3, #d4edda);
+  color: var(--success-d2, #155724);
+}
+
+.file-repo-col-check { width: 50px; }
+.file-repo-col-actions { width: 50px; }
+
+/* Responsive Stacked View */
+@media (max-width: 767.98px) {
+  .file-repo-table thead {
+    display: none;
+  }
+
+  .file-repo-table, .file-repo-table tbody, .file-repo-table tr, .file-repo-table td {
+    display: block;
+    width: 100%;
+  }
+
+  .file-repo-table tr {
+    border-bottom: 1px solid var(--gray-200, #e7e7ed);
+    padding: var(--spacer-3, 1rem);
+  }
+
+  .file-repo-table td {
+    border: none;
+    padding: var(--spacer-1, 0.25rem) 0;
+  }
+
+  .file-repo-col-check { display: none; }
+  
+  .file-repo-cell-title {
+    font-size: var(--font-size-base, 1rem);
+    margin-bottom: var(--spacer-2, 0.5rem);
+  }
+}
+
+/* Mappable Field Ergonomics */
+.meta-editor-mappable-fields {
+  display: none;
+}
+
+[data-layout-mode="edit"] .meta-editor-mappable-fields {
+  background-color: var(--gray-100, #f1f2f5);
+  border: 1px dashed var(--primary, #007dad);
+  border-radius: var(--border-radius-lg, 0.5rem);
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacer-4, 1rem);
+  margin-top: var(--spacer-4, 1rem);
+  padding: var(--spacer-4, 1rem);
+}

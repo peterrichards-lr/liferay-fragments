@@ -1,0 +1,65 @@
+.course-card {
+  background-color: var(--white, #fff);
+  border: 1px solid var(--gray-200, #e7e7ed);
+  border-radius: var(--border-radius-lg, 0.5rem);
+  overflow: hidden;
+}
+
+.course-card-image-container {
+  aspect-ratio: 1 / 1;
+  height: 100%;
+}
+
+.course-card-image {
+  height: 100%;
+  object-fit: cover;
+  width: 100%;
+}
+
+.course-card-title {
+  color: var(--body-color, #272833);
+  font-size: var(--font-size-base, 1rem);
+  font-weight: var(--font-weight-bold, 700);
+}
+
+.course-card-description {
+  line-height: 1.4;
+}
+
+.course-card-progress {
+  background-color: var(--gray-200, #e7e7ed);
+  height: 0.5rem;
+}
+
+.course-card-progress .progress-bar {
+  background-color: var(--primary, #007dad);
+}
+
+.course-card-btn {
+  border-radius: var(--border-radius-lg, 0.5rem);
+  font-size: var(--font-size-sm, 0.875rem);
+  font-weight: var(--font-weight-semi-bold, 600);
+}
+
+@media (max-width: 575.98px) {
+  .course-card .border-left {
+    border-left: none !important;
+    border-top: 1px solid var(--gray-200, #e7e7ed);
+  }
+}
+
+/* Mappable Field Ergonomics */
+.meta-editor-mappable-fields {
+  display: none;
+}
+
+[data-layout-mode="edit"] .meta-editor-mappable-fields {
+  background-color: var(--gray-100, #f1f2f5);
+  border: 1px dashed var(--primary, #007dad);
+  border-radius: var(--border-radius-lg, 0.5rem);
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacer-4, 1rem);
+  margin-top: var(--spacer-4, 1rem);
+  padding: var(--spacer-4, 1rem);
+}

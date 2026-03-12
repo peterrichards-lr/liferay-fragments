@@ -1,0 +1,23 @@
+<div class="welcome-banner" style="--background-image: url('${configuration.backgroundImage!''}');">
+  <div class="welcome-banner-content container-fluid">
+    <div class="row align-items-center">
+      <div class="col-md-8">
+        <h1 class="welcome-banner-title">${configuration.title!'Welcome'}</h1>
+        <p class="welcome-banner-subtext">${configuration.subtext!''}</p>
+      </div>
+      <div class="col-md-4 text-md-right">
+        <div class="welcome-banner-actions">
+          [#if configuration.button1Label?? && configuration.button1Label != ""]
+            <a class="btn btn-outline-light welcome-banner-btn" href="${configuration.button1URL!'#'}">${configuration.button1Label}</a>
+          [/#if]
+          [#if configuration.button2Label?? && configuration.button2Label != ""]
+            <a class="btn btn-outline-light welcome-banner-btn" href="${configuration.button2URL!'#'}">${configuration.button2Label}</a>
+          [/#if]
+          [#if configuration.button3Label?? && configuration.button3Label != ""]
+            <a class="btn btn-outline-light welcome-banner-btn" href="${configuration.button3URL!'#'}">${configuration.button3Label}</a>
+          [/#if]
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

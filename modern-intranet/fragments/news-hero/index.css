@@ -1,0 +1,99 @@
+.news-hero {
+  background-color: var(--white, #fff);
+  padding: var(--spacer-5, 1.5rem) 0;
+}
+
+.news-hero-section-title {
+  color: var(--primary, #007dad);
+  font-size: var(--font-size-lg, 1.25rem);
+  font-weight: var(--font-weight-bold, 700);
+}
+
+.news-hero-view-all {
+  color: var(--primary, #007dad);
+  font-size: var(--font-size-sm, 0.875rem);
+  font-weight: var(--font-weight-semi-bold, 600);
+  text-decoration: none !important;
+}
+
+.news-hero-main {
+  background-color: var(--white, #fff);
+  border: 1px solid var(--gray-200, #e7e7ed);
+  border-radius: var(--border-radius-xl, 1rem);
+  overflow: hidden;
+}
+
+.news-hero-image-container {
+  height: 100%;
+  min-height: 300px;
+}
+
+.news-hero-image {
+  height: 100%;
+  object-fit: cover;
+  width: 100%;
+}
+
+.news-hero-category {
+  color: var(--primary, #007dad);
+  font-size: var(--font-size-xs, 0.75rem);
+  font-weight: var(--font-weight-bold, 700);
+  letter-spacing: 0.05em;
+}
+
+.news-hero-title {
+  color: var(--body-color, #272833);
+  font-size: var(--h2-font-size, 2rem);
+  font-weight: var(--font-weight-bold, 700);
+  line-height: 1.2;
+}
+
+.news-hero-summary {
+  color: var(--secondary, #6b6c7e);
+  font-size: var(--font-size-base, 1rem);
+  line-height: 1.6;
+}
+
+.news-hero-meta {
+  color: var(--secondary, #6b6c7e);
+  font-size: var(--font-size-sm, 0.875rem);
+}
+
+/* Mappable Field Ergonomics */
+.meta-editor-mappable-fields {
+  display: none;
+}
+
+[data-layout-mode="edit"] .meta-editor-mappable-fields {
+  background-color: var(--gray-100, #f1f2f5);
+  border: 1px dashed var(--primary, #007dad);
+  border-radius: var(--border-radius-lg, 0.5rem);
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacer-4, 1rem);
+  margin-top: var(--spacer-4, 1rem);
+  padding: var(--spacer-4, 1rem);
+}
+
+.mappable-field-item {
+  flex: 1 1 200px;
+}
+
+.mappable-field-item label {
+  color: var(--secondary, #6b6c7e);
+  display: block;
+  font-size: var(--font-size-xs, 0.75rem);
+  font-weight: var(--font-weight-bold, 700);
+  margin-bottom: var(--spacer-1, 0.25rem);
+  text-transform: uppercase;
+}
+
+@media (max-width: 767.98px) {
+  .news-hero-title {
+    font-size: var(--h3-font-size, 1.75rem);
+  }
+
+  .news-hero-image-container {
+    min-height: 250px;
+  }
+}

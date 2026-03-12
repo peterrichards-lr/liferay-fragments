@@ -136,6 +136,14 @@ This table summarizes the status of documentation, language properties, visual t
 | - who-am-i                        | YES  | YES  | NO    | NO     | NO      | YES             |
 | **Widget Modifiers**              | YES  | YES  | YES   | NO     | NO      | YES             |
 | - alerts-modifier                 | YES  | YES  | YES   | NO     | NO      | YES             |
+| **Modern Intranet**               | YES  | YES  | PART  | PART   | NO      | YES             |
+| - welcome-banner                  | YES  | YES  | NO    | NO     | NO      | YES             |
+| - app-launcher                    | YES  | YES  | NO    | NO     | NO      | YES             |
+| - stat-card                       | YES  | YES  | NO    | NO     | NO      | YES             |
+| - news-hero                       | YES  | YES  | NO    | NO     | NO      | YES             |
+| - intranet-feed                   | YES  | YES  | NO    | NO     | NO      | YES             |
+| - file-repository-list            | YES  | YES  | NO    | NO     | NO      | YES             |
+| - course-progress-card            | YES  | YES  | NO    | NO     | NO      | YES             |
 
 ## Fragments Requiring Visuals & Thumbnails
 

@@ -624,6 +624,52 @@ Prominent visuals, such as videos or banners, that capture attention and define 
 
 --- 
 
+## Modern Intranet
+
+A collection of high-fidelity fragments for constructing modern corporate intranet pages, including social feeds, learning centers, and personalized dashboards.
+
+### App Launcher
+
+*No image available*
+
+--- 
+
+### Course Progress Card
+
+*No image available*
+
+--- 
+
+### File Repository List
+
+*No image available*
+
+--- 
+
+### Intranet Feed
+
+*No image available*
+
+--- 
+
+### News Hero
+
+*No image available*
+
+--- 
+
+### Stat Card
+
+*No image available*
+
+--- 
+
+### Welcome Banner
+
+*No image available*
+
+--- 
+
 ## Forms
 
 ### Audit Button

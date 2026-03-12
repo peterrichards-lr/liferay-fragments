@@ -1,0 +1,17 @@
+assemble:
+    - from: batch
+      into: batch
+
+modern-intranet:
+    name: Modern Intranet Showcase Data
+    oAuthApplicationHeadlessServer: modern-intranet-oauth
+    type: batch
+
+modern-intranet-oauth:
+    .serviceAddress: localhost:8080
+    .serviceScheme: http
+    name: Modern Intranet OAuth
+    scopes:
+        - Liferay.Headless.Batch.Engine.everything
+        - Liferay.Object.Admin.REST.everything
+    type: oAuthApplicationHeadlessServer
