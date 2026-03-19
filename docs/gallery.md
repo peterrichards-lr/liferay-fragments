@@ -1,126 +1,901 @@
 # Fragment Visual Gallery
 
-A visual reference for the high-fidelity fragments available in this Liferay DXP repository.
+A visual reference for the high-fidelity fragments available in this Liferay DXP repository. Generated automatically.
 
-## Data Visualization & Integration
+## Commerce
 
-### Activity Heatmap
+### Dynamic Badge Overlay
 
-![Liferay DXP Activity Heatmap with GitHub-style data density visualization](./images/activity-heatmap.png)
-Flexible, data-driven heatmap for visualizing activity frequency from Liferay Objects.
+![Dynamic Badge Overlay](./images/dynamic-badge-overlay.png)
 
-### Object-Linked Chart
+[Detailed Documentation](./fragments/dynamic-badge-overlay.md)
 
-![Liferay DXP Object-Linked Chart with Chart.js integration](./images/object-linked-chart.png)
-Data visualization fragment that integrates Chart.js to render Liferay Object data with support for multiple chart types and aggregations.
-
-### Animated Metric Counter
-
-![Animated Metric Counter with count-up animation and decimal support](./images/animated-metric-counter.png)
-High-impact numeric visualization with smooth scroll-triggered animations.
-
-### Content Map
-
-![Liferay DXP Content Map Fragment with OpenStreetMap integration](./images/content-map.png)
-Enhanced mapping utility for web content, supporting Headless APIs and custom taxonomy markers.
-
-### Date Display
-
-![Liferay DXP Date Display Fragment with Static and Collection mapping support](./images/date-display.png)
-Flexible date formatting for both static values and dynamic Liferay Collections.
-
-### Radial KPI Gauge
-
-![Radial KPI Gauge showing progress against a target value](./images/radial-kpi-gauge.png)
-A high-fidelity radial progress indicator for showing single metrics derived from Object data.
-
----
-
-## Dynamic Content & Objects
-
-### Dynamic Object Gallery
-
-![Dynamic Object Gallery showing a grid of product entries](./images/dynamic-object-gallery.png)
-A flexible grid/masonry view that dynamically maps Object fields to a polished gallery layout.
-
-### Interactive Event Timeline
-
-![Interactive Event Timeline showing company milestones with scroll animations](./images/interactive-event-timeline.png)
-Vertical/horizontal timeline that dynamically renders and animates milestones from Liferay Objects.
-
-### Meta-Object Record View
-
-![Meta-Object Record View showing a detailed record with PDF export](./images/meta-object-record-view.png)
-A single-entry detail view that dynamically discovers fields and provides a high-fidelity PDF export feature.
-
-### Meta-Object Form
-
-![Meta-Object Form showing a dynamic form with field discovery and record selection](./images/meta-object-form.png)
-A truly dynamic form that auto-generates inputs based on a Liferay Object's definition, supporting "Add New" and "Edit" modes.
-
-### Meta-Object Table
-
-![Meta-Object Table showing a sortable, paginated data table](./images/meta-object-table.png)
-A powerful data table that dynamically discovers fields and renders Object data with functional pagination.
-
----
-
-## Forms & User Interaction
-
-### Form Populator
-
-![Liferay Form Populator Fragment showing URL-based field pre-population](./images/form-populator.png)
-Intelligent pre-population of Liferay Form fields via URL query parameters and JSON mapping.
-
-### Page Refresh / Redirect
-
-![Liferay Page Refresh and Redirect Fragment for Form Workflows](./images/page-refresh.png)
-Automated page refresh and intelligent redirection logic, ideal for post-form-submission workflows.
-
----
-
-## User Profile & Commerce
-
-### Profile Fragments
-
-![Liferay DXP User Profile Fragments and Account Identity UI](./images/profile-fragments.png)
-Comprehensive suite for displaying user information, permissions, and identity details.
-
-### Public Profile
-
-![Liferay DXP Public User Profile View Fragment](./images/public-profile.png)
-A public-facing view for user profiles, integrated with Liferay's user management system.
+--- 
 
 ### Purchased Products
 
-![Liferay Commerce Purchased Products Fragment showing order history](./images/purchased-products-found.png)
-Display commerce history and purchased items for the current user in a clean, responsive layout.
+![Purchased Products](../commerce/fragments/purchased-products/thumbnail.png)
 
----
+[Detailed Documentation](./fragments/purchased-products.md)
 
-## Layout & Utilities
+--- 
 
-### Layout Components
+## Content
 
-![Liferay DXP Layout Cards and Responsive Containers](./images/layout-components.png)
-Foundational cards, containers, and structural elements designed for modern portal layouts.
+### Content Map
 
-### Liferay Iframer
+![Content Map](./images/content-map.png)
 
-![Liferay DXP Responsive Iframe Fragment with Dynamic Resizing](./images/liferay-iframer.png)
-Enhanced iframe utility with automatic responsive resizing and deep configuration options.
+[Detailed Documentation](./fragments/content-map.md)
+
+--- 
+
+### Service Card
+
+![Service Card](../content/fragments/service-card/thumbnail.png)
+
+[Detailed Documentation](./fragments/service-card.md)
+
+--- 
+
+### Service Icon
+
+![Service Icon](../content/fragments/service-icon/thumbnail.png)
+
+[Detailed Documentation](./fragments/service-icon.md)
+
+--- 
+
+### Service Link Button
+
+*No image available*
+
+[Detailed Documentation](./fragments/service-link-button.md)
+
+--- 
+
+## Heathcare Portal
+
+### Dashboard Container
+
+*No image available*
+
+[Detailed Documentation](./fragments/dashboard-container.md)
+
+--- 
+
+### Dashboard Filter
+
+*No image available*
+
+[Detailed Documentation](./fragments/dashboard-filter.md)
+
+--- 
+
+## Date Display
+
+### Date Display (Collection Display) (DEPRECATED)
+
+![Date Display (Collection Display) (DEPRECATED)](../date-display/fragments/date-display-collection-display/thumbnail.png)
+
+[Detailed Documentation](./fragments/date-display-collection-display.md)
+
+--- 
+
+### Data Display (Static) (DEPRECATED)
+
+![Data Display (Static) (DEPRECATED)](../date-display/fragments/date-display-static/thumbnail.png)
+
+[Detailed Documentation](./fragments/date-display-static.md)
+
+--- 
+
+## Finance
+
+### Loan Application Calculator
+
+![Loan Application Calculator](./images/loan-application-calculator.png)
+
+[Detailed Documentation](./fragments/loan-application-calculator.md)
+
+--- 
+
+### Loan Calculator
+
+![Loan Calculator](./images/loan-calculator.png)
+
+[Detailed Documentation](./fragments/loan-calculator.md)
+
+--- 
+
+## Forms Fragments
+
+### Autocomplete (Object)
+
+![Autocomplete (Object)](../form-fragments/fragments/autocomplete-(object)/thumbnail.png)
+
+[Detailed Documentation](./fragments/autocomplete-(object).md)
+
+--- 
+
+### Autocomplete (Picklist)
+
+![Autocomplete (Picklist)](../form-fragments/fragments/autocomplete-(picklist)/thumbnail.png)
+
+[Detailed Documentation](./fragments/autocomplete-(picklist).md)
+
+--- 
+
+### Confirmation Field
+
+![Confirmation Field](../form-fragments/fragments/confirmation-field/thumbnail.png)
+
+[Detailed Documentation](./fragments/confirmation-field.md)
+
+--- 
+
+### Hidden Relationship
+
+![Hidden Relationship](./images/hidden-relationship.png)
+
+[Detailed Documentation](./fragments/hidden-relationship.md)
+
+--- 
+
+### Listbox Multiselect
+
+![Listbox Multiselect](./images/listbox-multiselect.png)
+
+[Detailed Documentation](./fragments/listbox-multiselect.md)
+
+--- 
+
+### Range
+
+![Range](../form-fragments/fragments/range/thumbnail.png)
+
+[Detailed Documentation](./fragments/range.md)
+
+--- 
+
+### Segmented Numeric
+
+![Segmented Numeric](./images/segmented-numeric.png)
+
+[Detailed Documentation](./fragments/segmented-numeric.md)
+
+--- 
+
+### Star Rating
+
+![Star Rating](./images/star-rating.png)
+
+[Detailed Documentation](./fragments/star-rating.md)
+
+--- 
+
+### Submit Button (Confirmation)
+
+*No image available*
+
+[Detailed Documentation](./fragments/submit-button.md)
+
+--- 
+
+### Toggle Switch
+
+![Toggle Switch](./images/toggle-switch.png)
+
+[Detailed Documentation](./fragments/toggle-switch.md)
+
+--- 
+
+### URL Populated Hidden Relationship
+
+*No image available*
+
+[Detailed Documentation](./fragments/url-populated-hidden-relationship.md)
+
+--- 
+
+### User Attribute
+
+*No image available*
+
+[Detailed Documentation](./fragments/user-field.md)
+
+--- 
+
+## Forms
+
+### Form Populator (DEPRECATED)
+
+![Form Populator (DEPRECATED)](./images/form-populator.png)
+
+[Detailed Documentation](./fragments/form-populator.md)
+
+--- 
+
+### Link Form to Applicant
+
+*No image available*
+
+[Detailed Documentation](./fragments/form-session-id.md)
+
+--- 
+
+### Generate Form Session Id
+
+*No image available*
+
+[Detailed Documentation](./fragments/generate-form-session-id.md)
+
+--- 
+
+### Masthead Call to Action Form Holder
+
+*No image available*
+
+[Detailed Documentation](./fragments/masthead-call-to-action-form-header.md)
+
+--- 
+
+### Redirect Page
+
+*No image available*
+
+[Detailed Documentation](./fragments/redirect-page.md)
+
+--- 
+
+### Refresh Page
+
+![Refresh Page](../forms/fragments/refresh-page/thumbnail.png)
+
+[Detailed Documentation](./fragments/refresh-page.md)
+
+--- 
+
+## Gemini Generated
+
+Visually appealing fragments generated by Gemini.
+
+### Activity Heatmap
+
+![Activity Heatmap](./images/activity-heatmap.png)
+
+[Detailed Documentation](./fragments/activity-heatmap.md)
+
+--- 
+
+### AI Assistant Chat UI
+
+*No image available*
+
+[Detailed Documentation](./fragments/ai-chat-ui.md)
+
+--- 
+
+### Animated Metric Counter
+
+![Animated Metric Counter](./images/animated-metric-counter.png)
+
+[Detailed Documentation](./fragments/animated-metric-counter.md)
+
+--- 
+
+### Dynamic Collection Slider
+
+![Dynamic Collection Slider](./images/dynamic-collection-slider.png)
+
+[Detailed Documentation](./fragments/dynamic-collection-slider.md)
+
+--- 
+
+### Dynamic Object Gallery
+
+![Dynamic Object Gallery](./images/dynamic-object-gallery.png)
+
+[Detailed Documentation](./fragments/dynamic-object-gallery.md)
+
+--- 
+
+### Interactive Event Timeline
+
+![Interactive Event Timeline](./images/interactive-event-timeline.png)
+
+[Detailed Documentation](./fragments/interactive-event-timeline.md)
+
+--- 
+
+### Interactive Wizard
+
+*No image available*
+
+[Detailed Documentation](./fragments/interactive-wizard.md)
+
+--- 
+
+### Meta-Object Form
+
+![Meta-Object Form](./images/meta-object-form.png)
+
+[Detailed Documentation](./fragments/meta-object-form.md)
+
+--- 
+
+### Meta-Object Record View
+
+![Meta-Object Record View](./images/meta-object-record-view.png)
+
+[Detailed Documentation](./fragments/meta-object-record-view.md)
+
+--- 
+
+### Meta-Object Table
+
+![Meta-Object Table](./images/meta-object-table.png)
+
+[Detailed Documentation](./fragments/meta-object-table.md)
+
+--- 
 
 ### Modern Parallax Hero
 
-![Modern Parallax Hero with multi-layer depth effects](./images/modern-parallax-hero.png)
-A premium hero fragment with multi-layer parallax effects and configurable text animations.
+![Modern Parallax Hero](./images/modern-parallax-hero.png)
 
-### PDF Export
+[Detailed Documentation](./fragments/modern-parallax-hero.md)
 
-![Liferay DXP Object Record PDF Export and Document Generation](./images/pdf-export.png)
-High-fidelity PDF generation for Liferay Object records, perfect for detail views and reports.
+--- 
+
+### Object-Linked Chart
+
+![Object-Linked Chart](./images/object-linked-chart.png)
+
+[Detailed Documentation](./fragments/object-linked-chart.md)
+
+--- 
 
 ### Pricing Comparison Grid
 
-![Pricing Comparison Grid with Monthly/Yearly toggle and featured plans](./images/pricing-comparison-grid.png)
-A visually rich comparison grid for service plans that pulls data from Liferay Objects or static config.
+![Pricing Comparison Grid](./images/pricing-comparison-grid.png)
+
+[Detailed Documentation](./fragments/pricing-comparison-grid.md)
+
+--- 
+
+### Radial KPI Gauge
+
+![Radial KPI Gauge](./images/radial-kpi-gauge.png)
+
+[Detailed Documentation](./fragments/radial-kpi-gauge.md)
+
+--- 
+
+### Modern Search Overlay
+
+*No image available*
+
+[Detailed Documentation](./fragments/search-overlay.md)
+
+--- 
+
+## Header Components
+
+### Customer Registration (Deprecated)
+
+*No image available*
+
+[Detailed Documentation](./fragments/customer-registration.md)
+
+--- 
+
+### Linear Gradient Container
+
+*No image available*
+
+[Detailed Documentation](./fragments/linear-gradient-container-(custom).md)
+
+--- 
+
+### Linear Gradient Container (Deprecated)
+
+![Linear Gradient Container (Deprecated)](./images/linear-gradient-container.png)
+
+[Detailed Documentation](./fragments/linear-gradient-container.md)
+
+--- 
+
+### Login and User Menu
+
+![Login and User Menu](../header-components/fragments/login-and-user-menu/thumbnail.png)
+
+[Detailed Documentation](./fragments/login-and-user-menu.md)
+
+--- 
+
+### Login Card (Deprecated)
+
+*No image available*
+
+[Detailed Documentation](./fragments/login-card.md)
+
+--- 
+
+### Site Logo
+
+![Site Logo](../header-components/fragments/logo/thumbnail.png)
+
+[Detailed Documentation](./fragments/logo.md)
+
+--- 
+
+### Lower Header Bar
+
+![Lower Header Bar](./images/lower-header-layout.png)
+
+[Detailed Documentation](./fragments/lower-header-layout.md)
+
+--- 
+
+### Navigation (Deprecated)
+
+![Navigation (Deprecated)](../header-components/fragments/navigation/thumbnail.png)
+
+[Detailed Documentation](./fragments/navigation.md)
+
+--- 
+
+### Search Bar
+
+![Search Bar](../header-components/fragments/search-bar/thumbnail.png)
+
+[Detailed Documentation](./fragments/search-bar.md)
+
+--- 
+
+### Search Button
+
+![Search Button](../header-components/fragments/search-button/thumbnail.png)
+
+[Detailed Documentation](./fragments/search-button.md)
+
+--- 
+
+### Site Name
+
+![Site Name](../header-components/fragments/site-name/thumbnail.png)
+
+[Detailed Documentation](./fragments/site-name.md)
+
+--- 
+
+### Upper Header Bar Layout
+
+![Upper Header Bar Layout](../header-components/fragments/upper-header-layout/thumbnail.png)
+
+[Detailed Documentation](./fragments/upper-header-layout.md)
+
+--- 
+
+### User Personal Bar
+
+![User Personal Bar](../header-components/fragments/user-bar/thumbnail.png)
+
+[Detailed Documentation](./fragments/user-bar.md)
+
+--- 
+
+## Hero Assets
+
+Prominent visuals, such as videos or banners, that capture attention and define page impact.
+
+### Banner Video
+
+![Banner Video](../hero-assets/fragments/hero-video/thumbnail.png)
+
+[Detailed Documentation](./fragments/hero-video.md)
+
+--- 
+
+### Overlay Background
+
+![Overlay Background](../hero-assets/fragments/overlay-background/thumbnail.png)
+
+[Detailed Documentation](./fragments/overlay-background.md)
+
+--- 
+
+## Layout Components
+
+### Card Content
+
+*No image available*
+
+[Detailed Documentation](./fragments/card-content.md)
+
+--- 
+
+### Primary Card
+
+![Primary Card](../layout-components/fragments/primary-card/thumbnail.png)
+
+[Detailed Documentation](./fragments/primary-card.md)
+
+--- 
+
+### Secondary Card
+
+![Secondary Card](../layout-components/fragments/secondary-card/thumbnail.png)
+
+[Detailed Documentation](./fragments/secondary-card.md)
+
+--- 
+
+## Meter Reading
+
+### Meter Reading
+
+![Meter Reading](../meter-reading/fragments/meter-reading/thumbnail.png)
+
+[Detailed Documentation](./fragments/meter-reading.md)
+
+--- 
+
+## Miscellaneous
+
+### Back Button
+
+*No image available*
+
+[Detailed Documentation](./fragments/back-button.md)
+
+--- 
+
+### Custom Tabs
+
+![Custom Tabs](../misc/fragments/custom-tabs/thumbnail.png)
+
+[Detailed Documentation](./fragments/custom-tabs.md)
+
+--- 
+
+### Customer Registration (Deprecated)
+
+*No image available*
+
+[Detailed Documentation](./fragments/customer-registration.md)
+
+--- 
+
+### Dynamic Copyright
+
+![Dynamic Copyright](./images/dynamic-copyright.png)
+
+[Detailed Documentation](./fragments/dynamic-copyright.md)
+
+--- 
+
+### Hide Control Menu
+
+*No image available*
+
+[Detailed Documentation](./fragments/hide-control-menu.md)
+
+--- 
+
+### Icon Button
+
+![Icon Button](./images/icon-button.png)
+
+[Detailed Documentation](./fragments/icon-button.md)
+
+--- 
+
+### Launch Analytics Cloud
+
+![Launch Analytics Cloud](../misc/fragments/launch-analytics-cloud/thumbnail.png)
+
+[Detailed Documentation](./fragments/launch-analytics-cloud.md)
+
+--- 
+
+### Modify My Profile Link
+
+*No image available*
+
+[Detailed Documentation](./fragments/modify-my-profile-link.md)
+
+--- 
+
+### My Dashboard Link
+
+*No image available*
+
+[Detailed Documentation](./fragments/my-dashboard-link.md)
+
+--- 
+
+### Trigger Ray
+
+*No image available*
+
+[Detailed Documentation](./fragments/trigger-ray.md)
+
+--- 
+
+## Modern Intranet
+
+A collection of high-fidelity fragments for constructing modern corporate intranet pages, including social feeds, learning centers, and personalized dashboards.
+
+### App Launcher
+
+*No image available*
+
+--- 
+
+### Course Progress Card
+
+*No image available*
+
+--- 
+
+### File Repository List
+
+*No image available*
+
+--- 
+
+### Intranet Feed
+
+*No image available*
+
+--- 
+
+### News Hero
+
+*No image available*
+
+--- 
+
+### Stat Card
+
+*No image available*
+
+--- 
+
+### Welcome Banner
+
+*No image available*
+
+--- 
+
+## Forms
+
+### Audit Button
+
+![Audit Button](../objects/fragments/audit-button/thumbnail.png)
+
+[Detailed Documentation](./fragments/audit-button.md)
+
+--- 
+
+### Comment
+
+![Comment](./images/comment.png)
+
+[Detailed Documentation](./fragments/comment.md)
+
+--- 
+
+### View Comments
+
+![View Comments](./images/public-comments.png)
+
+[Detailed Documentation](./fragments/public-comments.md)
+
+--- 
+
+## Populated Form Fields
+
+### Populate Select
+
+![Populate Select](./images/populate-select.png)
+
+[Detailed Documentation](./fragments/populate-select.md)
+
+--- 
+
+### Populated Range
+
+![Populated Range](./images/populated-range.png)
+
+[Detailed Documentation](./fragments/populated-range.md)
+
+--- 
+
+### Store Default Value
+
+![Store Default Value](./images/store-default-value.png)
+
+[Detailed Documentation](./fragments/store-default-value.md)
+
+--- 
+
+### Store Form Field Values
+
+*No image available*
+
+[Detailed Documentation](./fragments/store-form-field-values.md)
+
+--- 
+
+### Text (Derived Value)
+
+*No image available*
+
+[Detailed Documentation](./fragments/text-derived-value.md)
+
+--- 
+
+## Profile
+
+### Customer Profile (DEPRECATED)
+
+![Customer Profile (DEPRECATED)](../profile/fragments/customer-profile/thumbnail.png)
+
+[Detailed Documentation](./fragments/customer-profile.md)
+
+--- 
+
+### PDF Export (Dashboard) (Deprecated)
+
+![PDF Export (Dashboard) (Deprecated)](../profile/fragments/pdf-export-(dashboard)/thumbnail.png)
+
+[Detailed Documentation](./fragments/pdf-export-(dashboard).md)
+
+--- 
+
+### PDF Export (DEPRECATED)
+
+![PDF Export (DEPRECATED)](./images/pdf-export.png)
+
+[Detailed Documentation](./fragments/pdf-export.md)
+
+--- 
+
+### Profile Detail (Dashboard) (Deprecated)
+
+*No image available*
+
+[Detailed Documentation](./fragments/profile-detail-(dashboard).md)
+
+--- 
+
+### Profile Detail (DEPRECATED)
+
+![Profile Detail (DEPRECATED)](../profile/fragments/profile-detail/thumbnail.png)
+
+[Detailed Documentation](./fragments/profile-detail.md)
+
+--- 
+
+### Profile Summary (Dashboard) (DEPRECATED)
+
+*No image available*
+
+[Detailed Documentation](./fragments/profile-summary-(dashboard).md)
+
+--- 
+
+### Profile Summary (DEPRECATED)
+
+![Profile Summary (DEPRECATED)](../profile/fragments/profile-summary/thumbnail.png)
+
+[Detailed Documentation](./fragments/profile-summary.md)
+
+--- 
+
+## Pulse
+
+### Campaign Initialiser
+
+*No image available*
+
+[Detailed Documentation](./fragments/campaign-initialiser.md)
+
+--- 
+
+### Campaign Insights
+
+*No image available*
+
+[Detailed Documentation](./fragments/cookie-sniffer.md)
+
+--- 
+
+### Custom Event Listener
+
+*No image available*
+
+[Detailed Documentation](./fragments/custom-event-listener.md)
+
+--- 
+
+### Pulse Button
+
+![Pulse Button](../pulse/fragments/pulse-button/thumbnail.png)
+
+[Detailed Documentation](./fragments/pulse-button.md)
+
+--- 
+
+## Responsive Menus
+
+### Logo Zone
+
+*No image available*
+
+[Detailed Documentation](./fragments/logo-zone.md)
+
+--- 
+
+### Responsive Menu
+
+![Responsive Menu](../responsive-menus/fragments/responsive-menu/thumbnail.png)
+
+[Detailed Documentation](./fragments/responsive-menu.md)
+
+--- 
+
+### Responsive Side Menu
+
+![Responsive Side Menu](../responsive-menus/fragments/responsive-side-menu/thumbnail.png)
+
+[Detailed Documentation](./fragments/responsive-side-menu.md)
+
+--- 
+
+### Zone Layout
+
+*No image available*
+
+[Detailed Documentation](./fragments/zone-layout.md)
+
+--- 
+
+## User Account
+
+### My Rights
+
+*No image available*
+
+[Detailed Documentation](./fragments/my-rights.md)
+
+--- 
+
+### Ping
+
+*No image available*
+
+[Detailed Documentation](./fragments/ping.md)
+
+--- 
+
+### Who Am I
+
+*No image available*
+
+[Detailed Documentation](./fragments/who-am-i.md)
+
+--- 
+
+## Widget Modifiers
+
+### Announcements Modifier
+
+![Announcements Modifier](../widget-modifiers/fragments/alerts-modifier/thumbnail.png)
+
+[Detailed Documentation](./fragments/alerts-modifier.md)
+
+---

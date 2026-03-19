@@ -36,18 +36,18 @@ content: "";
     left: 0;
     top: 0;
     border-left: 15px solid transparent;
-    border-top: 25px solid #eea61f;
-    border-bottom: 25px solid #eea61f;
+    border-top: 25px solid var(--warning, #eea61f);
+    border-bottom: 25px solid var(--warning, #eea61f);
 }
 
 .tracker .tracker-step .tracker-step-content.left-arrow .content.past-step:before {
-border-top-color: #001f38;
-    border-bottom-color: #001f38;
+border-top-color: var(--primary-d2, #001f38);
+    border-bottom-color: var(--primary-d2, #001f38);
 }
 
 .tracker .tracker-step .tracker-step-content.left-arrow .content.future-step:before {
-border-top-color: #017c92;
-    border-bottom-color: #017c92;
+border-top-color: var(--primary, #017c92);
+    border-bottom-color: var(--primary, #017c92);
 }
 
 .tracker .tracker-step .tracker-step-content.right-arrow {
@@ -59,17 +59,17 @@ padding-right: 15px;
     position: absolute;
     right: 0;
     top: 0;
-    border-left: 15px solid #eea61f;
+    border-left: 15px solid var(--warning, #eea61f);
     border-top: 25px solid transparent;
     border-bottom: 25px solid transparent;
 }
 
 .tracker .tracker-step .tracker-step-content.right-arrow .content.past-step:after {
-border-left-color: #001f38
+border-left-color: var(--primary-d2, #001f38)
 }
 
 .tracker .tracker-step .tracker-step-content.right-arrow .content.future-step:after {
-border-left-color: #017c92
+border-left-color: var(--primary, #017c92)
 }
 
 .tracker .tracker-step .tracker-step-content .content {

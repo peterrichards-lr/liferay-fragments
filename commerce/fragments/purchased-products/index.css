@@ -20,6 +20,7 @@
 	background-position: 50%;
 	background-repeat: no-repeat;
 	background-size: cover;
+	background-image: var(--product-card-image, none);
 	position: relative;
 	overflow: hidden;
 	width: calc(100% - 40px);

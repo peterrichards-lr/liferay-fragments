@@ -1,4 +1,6 @@
 const initSubmitButton = () => {
+  const { isValidIdentifier } = Liferay.Fragment.Commons;
+
   if (layoutMode !== "preview") {
     const button = fragmentElement.querySelector("button");
     const form = fragmentElement.closest("form");
@@ -9,12 +11,11 @@ const initSubmitButton = () => {
         const formData = new FormData(form);
         const data = Object.fromEntries(formData.entries());
 
-        if (configuration.apiPath) {
-          fetch(configuration.apiPath, {
+        if (isValidIdentifier(configuration.apiPath)) {
+          Liferay.Util.fetch(configuration.apiPath, {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
-              "x-csrf-token": Liferay.authToken,
             },
             body: JSON.stringify(data),
           })

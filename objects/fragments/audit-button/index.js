@@ -1,17 +1,41 @@
 const initAuditButton = () => {
+  const { resolveObjectPathByERC } = Liferay.Fragment.Commons;
+
   if (layoutMode === "view") {
     const formatDate = (d) => {
       return d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + d.getDate();
     };
 
-    const createAuditEntry = (entryDate, account, action) => {
+    let apiPath = "";
+
+    const resolveApiPath = async () => {
+      const objectERC = configuration.objectERC || "AUDIT_ENTRY";
+      try {
+        const result = await resolveObjectPathByERC(objectERC);
+
+        if (result.apiPath) {
+          apiPath = result.apiPath;
+        } else {
+          // Fallback to legacy path if resolution fails
+          apiPath = "/o/c/auditentries";
+        }
+      } catch (err) {
+        console.error(err);
+        apiPath = "/o/c/auditentries";
+      }
+    };
+
+    const createAuditEntry = async (entryDate, account, action) => {
+      if (!apiPath) await resolveApiPath();
+
       const auditEntry = {
         action,
         account,
         entryDate,
         userEmail: Liferay.ThemeDisplay.getUserEmailAddress(),
       };
-      Liferay.Util.fetch("/o/c/auditentries", {
+
+      Liferay.Util.fetch(apiPath, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -33,9 +57,9 @@ const initAuditButton = () => {
           }
         })
         .then((response) => {
-          console.log(response);
+          console.log("Audit Success:", response);
         })
-        .catch((reason) => console.error(reason));
+        .catch((reason) => console.error("Audit Error:", reason));
     };
 
     const getEntryDate = () => {
@@ -50,11 +74,13 @@ const initAuditButton = () => {
     };
 
     const getAction = (btn) => {
-      const usePrefixSuffix = configuration.usePrefixSuffix;
+      const usePrefixSuffix = configuration.usePrefixAndSuffix;
       const actionPrefix =
-        configuration.auditActionPrefix + (configuration.addSpace ? " " : "");
+        (configuration.auditActionPrefix || "") +
+        (configuration.addSpace ? " " : "");
       const actionSuffix =
-        (configuration.addSpace ? " " : "") + configuration.auditActionSuffix;
+        (configuration.addSpace ? " " : "") +
+        (configuration.auditActionSuffix || "");
 
       var action = usePrefixSuffix ? actionPrefix : "";
       if (configuration.useButtonText && btn) {
@@ -83,6 +109,9 @@ const initAuditButton = () => {
     if (btn) {
       btn.addEventListener("click", clickHandler);
     }
+
+    // Pre-resolve
+    resolveApiPath();
   } else if (layoutMode === "edit") {
     const configEl = fragmentElement.querySelector("#action-configuration");
     if (configEl) configEl.classList.remove("configuration");

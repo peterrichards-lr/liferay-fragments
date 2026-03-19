@@ -1,0 +1,89 @@
+.intranet-feed {
+  background-color: var(--white, #fff);
+  padding: var(--spacer-4, 1rem) 0;
+}
+
+.intranet-feed-section-title {
+  color: var(--primary, #007dad);
+  font-size: var(--font-size-lg, 1.25rem);
+  font-weight: var(--font-weight-bold, 700);
+}
+
+.intranet-feed-view-all {
+  color: var(--primary, #007dad);
+  font-size: var(--font-size-sm, 0.875rem);
+  font-weight: var(--font-weight-semi-bold, 600);
+  text-decoration: none !important;
+}
+
+.intranet-feed-composer {
+  background-color: var(--white, #fff);
+  border: 1px solid var(--gray-200, #e7e7ed);
+  border-radius: var(--border-radius-lg, 0.5rem);
+}
+
+.intranet-feed-avatar img {
+  height: 2.5rem;
+  object-fit: cover;
+  width: 2.5rem;
+}
+
+.intranet-feed-input-placeholder {
+  color: var(--secondary, #6b6c7e);
+  cursor: pointer;
+  font-size: var(--font-size-base, 1rem);
+}
+
+.intranet-feed-post-btn {
+  background-color: var(--primary, #007dad);
+  border-radius: var(--border-radius-lg, 0.5rem);
+  padding: 0.25rem 1rem;
+}
+
+.intranet-feed-item {
+  background-color: var(--white, #fff);
+  border: 1px solid var(--gray-200, #e7e7ed);
+  border-radius: var(--border-radius-lg, 0.5rem);
+}
+
+.intranet-feed-item-author {
+  color: var(--body-color, #272833);
+}
+
+.intranet-feed-item-meta {
+  color: var(--secondary, #6b6c7e);
+}
+
+.intranet-feed-item-content {
+  color: var(--body-color, #272833);
+  line-height: 1.5;
+}
+
+/* Mappable Field Ergonomics */
+.meta-editor-mappable-fields {
+  display: none;
+}
+
+[data-layout-mode="edit"] .meta-editor-mappable-fields {
+  background-color: var(--gray-100, #f1f2f5);
+  border: 1px dashed var(--primary, #007dad);
+  border-radius: var(--border-radius-lg, 0.5rem);
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacer-4, 1rem);
+  margin-top: var(--spacer-4, 1rem);
+  padding: var(--spacer-4, 1rem);
+}
+
+.mappable-field-item {
+  flex: 1 1 200px;
+}
+
+.mappable-field-item label {
+  color: var(--secondary, #6b6c7e);
+  display: block;
+  font-size: var(--font-size-xs, 0.75rem);
+  font-weight: var(--font-weight-bold, 700);
+  margin-bottom: var(--spacer-1, 0.25rem);
+  text-transform: uppercase;
+}

@@ -1,0 +1,16 @@
+{
+  "fieldSets": [
+    {
+      "fields": [
+        {
+          "defaultValue": "#",
+          "label": "lfr.modern-intranet.intranet-feed.view-all-url",
+          "description": "lfr.modern-intranet.intranet-feed.view-all-url-description",
+          "name": "viewAllURL",
+          "type": "url"
+        }
+      ],
+      "label": "lfr.modern-intranet.behavior"
+    }
+  ]
+}

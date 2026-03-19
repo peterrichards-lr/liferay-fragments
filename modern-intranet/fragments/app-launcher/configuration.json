@@ -1,0 +1,166 @@
+{
+  "fieldSets": [
+    {
+      "fields": [
+        {
+          "defaultValue": "My Applications",
+          "label": "lfr.modern-intranet.app-launcher.title",
+          "description": "lfr.modern-intranet.app-launcher.title-description",
+          "name": "title",
+          "type": "text"
+        }
+      ],
+      "label": "lfr.modern-intranet.data"
+    },
+    {
+      "fields": [
+        {
+          "defaultValue": "Slack",
+          "label": "lfr.modern-intranet.app-launcher.app-name",
+          "description": "lfr.modern-intranet.app-launcher.app-name-description",
+          "name": "appName1",
+          "type": "text"
+        },
+        {
+          "defaultValue": "slack",
+          "label": "lfr.modern-intranet.app-launcher.app-icon",
+          "description": "lfr.modern-intranet.app-launcher.app-icon-description",
+          "name": "appIcon1",
+          "type": "text"
+        },
+        {
+          "label": "lfr.modern-intranet.app-launcher.app-url",
+          "description": "lfr.modern-intranet.app-launcher.app-url-description",
+          "name": "appURL1",
+          "type": "url"
+        }
+      ],
+      "label": "lfr.modern-intranet.app-launcher.app-1"
+    },
+    {
+      "fields": [
+        {
+          "defaultValue": "Figma",
+          "label": "lfr.modern-intranet.app-launcher.app-name",
+          "description": "lfr.modern-intranet.app-launcher.app-name-description",
+          "name": "appName2",
+          "type": "text"
+        },
+        {
+          "defaultValue": "figma",
+          "label": "lfr.modern-intranet.app-launcher.app-icon",
+          "description": "lfr.modern-intranet.app-launcher.app-icon-description",
+          "name": "appIcon2",
+          "type": "text"
+        },
+        {
+          "label": "lfr.modern-intranet.app-launcher.app-url",
+          "description": "lfr.modern-intranet.app-launcher.app-url-description",
+          "name": "appURL2",
+          "type": "url"
+        }
+      ],
+      "label": "lfr.modern-intranet.app-launcher.app-2"
+    },
+    {
+      "fields": [
+        {
+          "defaultValue": "Confluence",
+          "label": "lfr.modern-intranet.app-launcher.app-name",
+          "description": "lfr.modern-intranet.app-launcher.app-name-description",
+          "name": "appName3",
+          "type": "text"
+        },
+        {
+          "defaultValue": "grid",
+          "label": "lfr.modern-intranet.app-launcher.app-icon",
+          "description": "lfr.modern-intranet.app-launcher.app-icon-description",
+          "name": "appIcon3",
+          "type": "text"
+        },
+        {
+          "label": "lfr.modern-intranet.app-launcher.app-url",
+          "description": "lfr.modern-intranet.app-launcher.app-url-description",
+          "name": "appURL3",
+          "type": "url"
+        }
+      ],
+      "label": "lfr.modern-intranet.app-launcher.app-3"
+    },
+    {
+      "fields": [
+        {
+          "defaultValue": "Calendar",
+          "label": "lfr.modern-intranet.app-launcher.app-name",
+          "description": "lfr.modern-intranet.app-launcher.app-name-description",
+          "name": "appName4",
+          "type": "text"
+        },
+        {
+          "defaultValue": "calendar",
+          "label": "lfr.modern-intranet.app-launcher.app-icon",
+          "description": "lfr.modern-intranet.app-launcher.app-icon-description",
+          "name": "appIcon4",
+          "type": "text"
+        },
+        {
+          "label": "lfr.modern-intranet.app-launcher.app-url",
+          "description": "lfr.modern-intranet.app-launcher.app-url-description",
+          "name": "appURL4",
+          "type": "url"
+        }
+      ],
+      "label": "lfr.modern-intranet.app-launcher.app-4"
+    },
+    {
+      "fields": [
+        {
+          "defaultValue": "Jira",
+          "label": "lfr.modern-intranet.app-launcher.app-name",
+          "description": "lfr.modern-intranet.app-launcher.app-name-description",
+          "name": "appName5",
+          "type": "text"
+        },
+        {
+          "defaultValue": "sites",
+          "label": "lfr.modern-intranet.app-launcher.app-icon",
+          "description": "lfr.modern-intranet.app-launcher.app-icon-description",
+          "name": "appIcon5",
+          "type": "text"
+        },
+        {
+          "label": "lfr.modern-intranet.app-launcher.app-url",
+          "description": "lfr.modern-intranet.app-launcher.app-url-description",
+          "name": "appURL5",
+          "type": "url"
+        }
+      ],
+      "label": "lfr.modern-intranet.app-launcher.app-5"
+    },
+    {
+      "fields": [
+        {
+          "defaultValue": "Trello",
+          "label": "lfr.modern-intranet.app-launcher.app-name",
+          "description": "lfr.modern-intranet.app-launcher.app-name-description",
+          "name": "appName6",
+          "type": "text"
+        },
+        {
+          "defaultValue": "boards",
+          "label": "lfr.modern-intranet.app-launcher.app-icon",
+          "description": "lfr.modern-intranet.app-launcher.app-icon-description",
+          "name": "appIcon6",
+          "type": "text"
+        },
+        {
+          "label": "lfr.modern-intranet.app-launcher.app-url",
+          "description": "lfr.modern-intranet.app-launcher.app-url-description",
+          "name": "appURL6",
+          "type": "url"
+        }
+      ],
+      "label": "lfr.modern-intranet.app-launcher.app-6"
+    }
+  ]
+}

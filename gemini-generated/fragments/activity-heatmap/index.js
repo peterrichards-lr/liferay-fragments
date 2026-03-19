@@ -6,32 +6,42 @@ const state = {
   daysToDisplay: parseInt(configuration.daysToDisplay || "365"),
 };
 
-const getLocalizedValue = (value) => {
-  if (typeof value === "object" && value !== null && !Array.isArray(value)) {
-    const languageId =
-      typeof Liferay !== "undefined"
-        ? Liferay.ThemeDisplay.getLanguageId()
-        : "en_US";
-    return value[languageId] || value["en_US"] || "";
-  }
-  return value || "";
-};
+// Use Commons for localization
+const getLocalizedValue = (value) =>
+  Liferay.Fragment.Commons.getLocalizedValue(value);
 
 const fetchData = async () => {
-  const { objectERC } = configuration;
-  if (!objectERC) throw new Error("Object ERC not configured.");
+  const { objectERC: configERC } = configuration;
 
-  const adminUrl = `${ADMIN_API_BASE}/object-definitions/by-external-reference-code/${objectERC}`;
-  const defRes = await Liferay.Util.fetch(adminUrl);
-  if (!defRes.ok) throw new Error("Object definition not found.");
-  state.definition = await defRes.json();
-
-  let url = state.definition.restContextPath;
-  if (state.definition.scope === "site") {
-    url += `/scopes/${Liferay.ThemeDisplay.getScopeGroupId()}`;
+  // Resolve effective ERC (Prioritize mappable field)
+  const mappableERCEl = fragmentElement.querySelector(
+    "[data-lfr-editable-id='object-erc']",
+  );
+  let objectERC = configERC;
+  if (mappableERCEl) {
+    const mappedVal = mappableERCEl.innerText.trim();
+    if (
+      mappedVal &&
+      mappedVal !== configERC &&
+      mappedVal !== "ACTIVITY_LOG" // Default value check
+    ) {
+      objectERC = mappedVal;
+    }
   }
 
-  const response = await Liferay.Util.fetch(`${url}/?pageSize=1000`);
+  if (!Liferay.Fragment.Commons.isValidIdentifier(objectERC))
+    throw new Error("Object ERC not configured.");
+
+  // Use Commons for discovery and path resolution
+  const { definition, apiPath } =
+    await Liferay.Fragment.Commons.resolveObjectPath(
+      `/o/c/${objectERC.toLowerCase()}`,
+    );
+
+  if (!definition) throw new Error("Object definition not found.");
+  state.definition = definition;
+
+  const response = await Liferay.Util.fetch(`${apiPath}/?pageSize=1000`);
   const data = await response.json();
   state.items = data.items || [];
   return state.items;
@@ -112,6 +122,9 @@ const initSizeSelector = () => {
 };
 
 const initActivityHeatmap = async (isEditMode) => {
+  const grid = fragmentElement.querySelector(
+    `#heatmap-grid-${fragmentEntryLinkNamespace}`,
+  );
   const errorEl = fragmentElement.querySelector(
     `#error-${fragmentEntryLinkNamespace}`,
   );
@@ -119,6 +132,7 @@ const initActivityHeatmap = async (isEditMode) => {
     `#info-${fragmentEntryLinkNamespace}`,
   );
   const titleEl = fragmentElement.querySelector(".heatmap-title");
+  const legend = fragmentElement.querySelector(".heatmap-legend");
 
   const showError = (msg) => {
     if (isEditMode && errorEl) {
@@ -130,39 +144,79 @@ const initActivityHeatmap = async (isEditMode) => {
   if (errorEl) errorEl.classList.add("d-none");
   if (infoEl) infoEl.classList.add("d-none");
 
-  const { objectERC } = configuration;
+  const { objectERC: configERC, chartTitle: configTitle } = configuration;
 
-  if (!objectERC) {
-    if (titleEl) titleEl.textContent = "Activity Heatmap";
-    if (isEditMode && infoEl) {
-      infoEl.textContent = "Please configure an Object ERC.";
-      infoEl.classList.remove("d-none");
+  // Resolve effective ERC (Prioritize mappable field)
+  const mappableERCEl = fragmentElement.querySelector(
+    "[data-lfr-editable-id='object-erc']",
+  );
+  let objectERC = configERC;
+  if (mappableERCEl) {
+    const mappedVal = mappableERCEl.innerText.trim();
+    if (mappedVal && mappedVal !== configERC && mappedVal !== "ACTIVITY_LOG") {
+      objectERC = mappedVal;
     }
+  }
+
+  const gridContainer = fragmentElement.querySelector(".heatmap-grid");
+
+  if (!Liferay.Fragment.Commons.isValidIdentifier(objectERC)) {
+    if (titleEl) titleEl.textContent = configTitle || "Activity Heatmap";
+    if (gridContainer) {
+      Liferay.Fragment.Commons.renderConfigWarning(
+        gridContainer,
+        "Please select a Liferay Object ERC in the fragment settings to visualize activity.",
+        layoutMode,
+      );
+    }
+    if (legend) legend.style.display = "none";
   } else {
     try {
       await fetchData();
 
-      // Smart Title defaulting
-      const currentTitle = titleEl.innerText.trim();
-      const defaultFragmentName =
-        fragmentElement.dataset.fragmentName || "Activity Heatmap";
+      if (state.items.length === 0) {
+        if (gridContainer) {
+          Liferay.Fragment.Commons.renderEmptyState(gridContainer, {
+            title: "No Activity Recorded",
+            description: `The ${state.definition.name} object currently has no data to display in the heatmap.`,
+          });
+        }
+        if (legend) legend.style.display = "none";
+      } else {
+        if (legend) legend.style.display = "flex";
+        // Restore grid if it was replaced by empty state
+        if (gridContainer && !gridContainer.id) {
+          gridContainer.id = `heatmap-grid-${fragmentEntryLinkNamespace}`;
+          gridContainer.classList.add("heatmap-grid");
+        }
 
-      if (
-        currentTitle === "Activity Heatmap" ||
-        currentTitle === defaultFragmentName ||
-        currentTitle === "" ||
-        currentTitle === `${defaultFragmentName} (Preview)`
-      ) {
+        // Smart Title defaulting
+        const currentTitle = titleEl.innerText.trim();
+        const defaultFragmentName =
+          fragmentElement.dataset.fragmentName || "Activity Heatmap";
+
+        // Evaluated Value
         const objectLabel = getLocalizedValue(
           state.definition.pluralLabel ||
             state.definition.label ||
             state.definition.name,
         );
-        titleEl.innerText = objectLabel + (isEditMode ? " (Preview)" : "");
-      }
 
-      renderHeatmap();
-      initSizeSelector();
+        // Precedence: Configuration (configTitle) > Evaluated Value
+        const preferredTitle = configTitle || objectLabel;
+
+        if (
+          currentTitle === "Activity Heatmap" ||
+          currentTitle === defaultFragmentName ||
+          currentTitle === "" ||
+          currentTitle === `${defaultFragmentName} (Preview)`
+        ) {
+          titleEl.innerText = preferredTitle + (isEditMode ? " (Preview)" : "");
+        }
+
+        renderHeatmap();
+        initSizeSelector();
+      }
     } catch (err) {
       showError(err.message);
     }

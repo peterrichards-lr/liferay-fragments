@@ -1,7 +1,7 @@
-[#assign useStandardControl = configuration.controls && !configuration.useCustomControl /]
+[#assign useStandardControl = configuration.controls && !configuration.useCustomControls /]
 <div
   class="row banner-colour-dark banner-content-alignment-centre overlayContainer"
-  style="--margin-top: ${configuration.marginTop!}; --margin-bottom: ${configuration.marginBottom!}; --margin-left: ${configuration.marginLeft!}; --margin-right: ${configuration.marginRight!}; --video-height: ${configuration.height!}; --video-width: ${configuration.width!}; --control-colour: ${configuration.controlColour!};"
+  style="--margin-top: ${configuration.marginTop!}; --margin-bottom: ${configuration.marginBottom!}; --margin-left: ${configuration.marginLeft!}; --margin-right: ${configuration.marginRight!}; --video-height: ${configuration.height!}; --video-width: ${configuration.width!}; --control-colour: ${configuration.controlColor!};"
 >
   <div class="overlayContent">
     <span data-lfr-editable-id="overlay-text" data-lfr-editable-type="text">
@@ -9,7 +9,8 @@
     </span>
   </div>
   <div
-    id="vidbutton"
+    id="vidbutton-${fragmentEntryLinkNamespace}"
+    class="vidbutton"
     role="button"
     aria-label="Pause"
     aria-pressed="false"
@@ -24,5 +25,5 @@
     </svg>
   </div>
   <div class="containerBackground"></div>
-  <video id="myvid" ${useStandardControl?then('controls','')} ${configuration.autoplay?then('autoplay','')} ${configuration.muted?then('muted','')} ${configuration.loop?then('loop','')} preload="${configuration.preload!}"></video>
+  <video id="myvid-${fragmentEntryLinkNamespace}" class="myvid" ${useStandardControl?then('controls','')} ${configuration.autoplay?then('autoplay','')} ${configuration.muted?then('muted','')} ${configuration.loop?then('loop','')} preload="${configuration.preload!}"></video>
 </div>

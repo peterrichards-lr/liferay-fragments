@@ -1,5 +1,6 @@
 .logo-zone-editor-padding { height: 0; overflow: hidden; }
-body.has-edit-mode-menu .page-editor .logo-zone-editor-padding.show {
+body.has-edit-mode-menu .page-editor .logo-zone-editor-padding.show,
+.logo-zone-fragment[data-layout-mode="edit"] .logo-zone-editor-padding.show {
    height: 26px;
    min-height: 26px;
    box-sizing: border-box;
@@ -12,10 +13,13 @@ body.has-edit-mode-menu .page-editor .logo-zone-editor-padding.show {
    font-weight: 600;
 }
 
-body.has-edit-mode-menu .logo-zone-fragment .page-editor__no-fragments-state { min-width: 100px; }
-body.has-edit-mode-menu .logo-zone-fragment .page-editor__no-fragments-state:first-child:before { content: unset; }
+body.has-edit-mode-menu .logo-zone-fragment .page-editor__no-fragments-state,
+.logo-zone-fragment[data-layout-mode="edit"] .page-editor__no-fragments-state { min-width: 100px; }
+body.has-edit-mode-menu .logo-zone-fragment .page-editor__no-fragments-state:first-child:before,
+.logo-zone-fragment[data-layout-mode="edit"] .page-editor__no-fragments-state:first-child:before { content: unset; }
 
 body.has-edit-mode-menu .logo-zone-fragment lfr-drop-zone .page-editor > div,
+.logo-zone-fragment[data-layout-mode="edit"] lfr-drop-zone .page-editor > div,
   .logo-zone-fragment .site-logo .logo-link {
     display: var(--lz-display, block);
     flex-direction: var(--lz-flex-direction, initial);
@@ -26,7 +30,9 @@ body.has-edit-mode-menu .logo-zone-fragment lfr-drop-zone .page-editor > div,
 }
 
 body:not(.has-edit-mode-menu) .logo-zone-fragment .site-logo .logo-link,
-body:not(.has-edit-mode-menu) .logo-zone-fragment > lfr-drop-zone > *:first-child {
+body:not(.has-edit-mode-menu) .logo-zone-fragment > lfr-drop-zone > *:first-child,
+.logo-zone-fragment[data-layout-mode="view"] .site-logo .logo-link,
+.logo-zone-fragment[data-layout-mode="view"] > lfr-drop-zone > *:first-child {
   display: var(--lz-display, block);
   flex-direction: var(--lz-flex-direction, initial);
   flex-wrap: var(--lz-flex-wrap, initial);
@@ -35,7 +41,8 @@ body:not(.has-edit-mode-menu) .logo-zone-fragment > lfr-drop-zone > *:first-chil
   gap: var(--lz-gap, 0);
 }
 
-body.has-edit-mode-menu .logo-zone-fragment[data-lock="true"] lfr-drop-zone .page-editor > div {
+body.has-edit-mode-menu .logo-zone-fragment[data-lock="true"] lfr-drop-zone .page-editor > div,
+.logo-zone-fragment[data-layout-mode="edit"][data-lock="true"] lfr-drop-zone .page-editor > div {
   display: var(--lz-display, block) !important;
   flex-direction: var(--lz-flex-direction, initial) !important;
   flex-wrap: var(--lz-flex-wrap, initial) !important;
@@ -45,7 +52,9 @@ body.has-edit-mode-menu .logo-zone-fragment[data-lock="true"] lfr-drop-zone .pag
 }
 
 body:not(.has-edit-mode-menu) .logo-zone-fragment[data-lock="true"] .site-logo .logo-link,
-body:not(.has-edit-mode-menu) .logo-zone-fragment[data-lock="true"] > lfr-drop-zone > *:first-child {
+body:not(.has-edit-mode-menu) .logo-zone-fragment[data-lock="true"] > lfr-drop-zone > *:first-child,
+.logo-zone-fragment[data-layout-mode="view"][data-lock="true"] .site-logo .logo-link,
+.logo-zone-fragment[data-layout-mode="view"][data-lock="true"] > lfr-drop-zone > *:first-child {
   display: var(--lz-display, block) !important;
   flex-direction: var(--lz-flex-direction, initial) !important;
   flex-wrap: var(--lz-flex-wrap, initial) !important;

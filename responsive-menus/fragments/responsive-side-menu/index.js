@@ -1,708 +1,166 @@
-const initSideMenu = () => {
-  setTimeout(() => {
-    const fontSizePixels = parseFloat(
-      getComputedStyle(document.documentElement).fontSize || "16",
+const initResponsiveSideMenu = () => {
+  const {
+    menuStyle,
+    debounceDelay: configDebounceDelay = 0,
+    menuWidth = "300px",
+    limitMenuWidth = false,
+  } = configuration;
+
+  const isLeft = menuStyle.includes("menu-left");
+  const root = fragmentElement.querySelector(".fragment-root");
+
+  if (!root || layoutMode === "preview") {
+    return;
+  }
+
+  const hamburgerZoneWrapper = root.querySelector(".hamburger-zone-wrapper");
+  const hamburger = root.querySelector(".hamburger");
+  const toggleButton = root.querySelector(".fragment-menu-icon");
+  const menuList = root.querySelector(
+    "#fragmentMenuList-" + fragmentEntryLinkNamespace,
+  );
+  const mainContent = document.getElementById("main-content");
+  const holder = fragmentElement.parentElement;
+
+  const setAria = () => {
+    if (!toggleButton) return;
+    if (menuList && !toggleButton.hasAttribute("aria-controls")) {
+      toggleButton.setAttribute(
+        "aria-controls",
+        "fragmentMenuList-" + fragmentEntryLinkNamespace,
+      );
+    }
+    if (!toggleButton.hasAttribute("aria-expanded")) {
+      toggleButton.setAttribute("aria-expanded", "false");
+    }
+  };
+
+  const getFocusableInMenu = () => {
+    if (!menuList) return [];
+    const nodes = menuList.querySelectorAll(
+      'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])',
     );
-    const parseBreakpoint = (value, fallback = 0) => {
-      if (!value) return fallback;
-      const num = parseFloat(value);
-      return String(value).includes("rem") ? num * fontSizePixels : num;
+    return Array.from(nodes).filter((el) => el.offsetParent !== null);
+  };
+
+  const isMenuOpen = () =>
+    !!(
+      hamburger?.classList.contains("open") ||
+      hamburgerZoneWrapper?.classList.contains("open")
+    );
+
+  const openMenu = () => {
+    [hamburger, hamburgerZoneWrapper].forEach((el) =>
+      el?.classList.add("open"),
+    );
+    toggleButton?.setAttribute("aria-expanded", "true");
+    document.body.classList.add("is-menu-view", "menu-scroll-locked");
+    if (menuList) {
+      const focusables = getFocusableInMenu();
+      if (focusables.length) focusables[0].focus();
+    }
+  };
+
+  const closeMenu = () => {
+    root.setAttribute("data-closing", "true");
+
+    setTimeout(() => {
+      [hamburger, hamburgerZoneWrapper].forEach((el) =>
+        el?.classList.remove("open"),
+      );
+      toggleButton?.setAttribute("aria-expanded", "false");
+      document.body.classList.remove("is-menu-view", "menu-scroll-locked");
+      root.removeAttribute("data-closing");
+    }, 250);
+  };
+
+  const markCurrentPageLink = () => {
+    const here = window.location.pathname;
+    root.querySelectorAll(".fragment-menu a[href]").forEach((a) => {
+      const target = a.getAttribute("href");
+      if (target === here) {
+        a.setAttribute("aria-current", "page");
+        a.closest(".nav-item")?.classList.add("active");
+      }
+    });
+  };
+
+  if (layoutMode === "view") {
+    holder.classList.add("fragment-menu-holder");
+    setAria();
+    markCurrentPageLink();
+
+    const updateSizes = () => {
+      if (limitMenuWidth && window.innerWidth >= 992) {
+        if (hamburgerZoneWrapper) hamburgerZoneWrapper.style.width = menuWidth;
+        if (mainContent) {
+          if (isLeft) mainContent.style.marginLeft = menuWidth;
+          else mainContent.style.marginRight = menuWidth;
+        }
+      } else {
+        if (hamburgerZoneWrapper) hamburgerZoneWrapper.style.width = "";
+        if (mainContent) {
+          mainContent.style.marginLeft = "";
+          mainContent.style.marginRight = "";
+        }
+      }
+      if (window.innerWidth >= 992 && isMenuOpen()) closeMenu();
     };
 
-    const {
-      enableDebug: debugEnabled,
-      desktopBreakpoint: desktopBP,
-      enableTabletBreakpoint,
-      tabletBreakpoint: tabletBP,
-      enableLandscapePhoneBreakpoint,
-      landscapePhoneBreakpoint: landscapePhoneBP,
-      enablePortraitPhoneBreakpoint,
-      portraitPhoneBreakpoint: portraitPhoneBP,
-      menuStyle,
-      debounceDelay = 0,
-      limitMenuWidth = false,
-      menuWidth = "5rem",
-      enableScrollLock = false,
-      enableCloseOnInternalNav = true,
-    } = configuration;
+    updateSizes();
+    window.addEventListener(
+      "resize",
+      Liferay.Fragment.Commons.debounce(updateSizes, configDebounceDelay),
+    );
 
-    const productMenuWidth = 320;
-    const prefersReduced = window.matchMedia(
-      "(prefers-reduced-motion: reduce)",
-    ).matches;
-
-    const root = fragmentElement.querySelector(".fragment-root");
-
-    if (root && layoutMode === "view") {
-      const debug = (label, ...args) => {
-        if (debugEnabled) console.debug("[Menu]", label + ":", ...args);
-      };
-
-      const desktopBreakpoint = parseBreakpoint(desktopBP);
-      const tabletBreakpoint = enableTabletBreakpoint
-        ? parseBreakpoint(tabletBP, desktopBreakpoint)
-        : desktopBreakpoint;
-      const landscapePhoneBreakpoint = enableLandscapePhoneBreakpoint
-        ? parseBreakpoint(landscapePhoneBP, tabletBreakpoint)
-        : tabletBreakpoint;
-      const portraitPhoneBreakpoint = enablePortraitPhoneBreakpoint
-        ? parseBreakpoint(portraitPhoneBP, landscapePhoneBreakpoint)
-        : landscapePhoneBreakpoint;
-
-      const qs = (sel, scope = root) => scope.querySelector(sel);
-      const holder = fragmentElement.parentElement;
-      const zoneWrapper = qs(".hamburger-zone-wrapper");
-      const hamburger = qs(".hamburger");
-      const toggleButton = qs(".fragment-menu-icon");
-      const fragmentMenu = qs(
-        "#fragmentSideMenuList-" + fragmentEntryLinkNamespace,
-      );
-      const mainContent =
-        document.getElementById("main-content") ||
-        document.querySelector(".main-content");
-      const logoZone = zoneWrapper
-        ? zoneWrapper.querySelector(".logo-zone")
-        : null;
-      const isLeft = menuStyle.includes("menu-left");
-      const bodyEl = document.body;
-
-      const deriveSiteName = () => {
-        const og = document
-          .querySelector('meta[property="og:site_name"]')
-          ?.content?.trim();
-        if (og) return og;
-        const app = document
-          .querySelector('meta[name="application-name"]')
-          ?.content?.trim();
-        if (app) return app;
-        const doc = (document.title || "").trim();
-        if (doc) return doc;
-        const host = (location.hostname || "").replace(/^www\./, "").trim();
-        if (host) return host;
-        return "Home";
-      };
-
-      const getAccessibleName = (link) => {
-        if (
-          link.hasAttribute("aria-label") &&
-          link.getAttribute("aria-label").trim()
-        )
-          return null;
-        if (
-          link.hasAttribute("aria-labelledby") &&
-          link.getAttribute("aria-labelledby").trim()
-        )
-          return null;
-
-        if (link.textContent && link.textContent.trim().length) return null;
-
-        const imgAlt = link
-          .querySelector("img[alt]")
-          ?.getAttribute("alt")
-          ?.trim();
-        if (imgAlt) return imgAlt;
-
-        return deriveSiteName();
-      };
-
-      const ensureLogoLinkA11y = (rootEl) => {
-        const link =
-          rootEl?.querySelector?.(
-            "a.logo-link, .logo-zone a[href], .floating-logo a[href]",
-          ) || null;
-        if (!link) return;
-
-        const name =
-          getAccessibleName(link) ||
-          link.getAttribute("aria-label") ||
-          link.getAttribute("title") ||
-          deriveSiteName();
-
-        if (
-          name &&
-          !(
-            link.hasAttribute("aria-label") &&
-            link.getAttribute("aria-label").trim()
-          )
-        ) {
-          link.setAttribute("aria-label", name);
-        }
-
-        if (!link.hasAttribute("title") || !link.getAttribute("title").trim()) {
-          link.setAttribute("title", name);
-        }
-      };
-
-      let __lockY = 0;
-
-      const applyScrollLock = (on) => {
-        if (!enableScrollLock) return;
-        if (layoutMode === "edit") return;
-        if (window.innerWidth > landscapePhoneBreakpoint) on = false;
-
-        if (on) {
-          __lockY = window.scrollY || document.documentElement.scrollTop || 0;
-          document.documentElement.classList.add("menu-scroll-locked");
-          bodyEl.classList.add("menu-scroll-locked");
-          bodyEl.style.position = "fixed";
-          bodyEl.style.top = `-${__lockY}px`;
-          bodyEl.style.left = "0";
-          bodyEl.style.right = "0";
-          bodyEl.style.width = "100%";
-        } else {
-          document.documentElement.classList.remove("menu-scroll-locked");
-          bodyEl.classList.remove("menu-scroll-locked");
-          bodyEl.style.position = "";
-          bodyEl.style.top = "";
-          bodyEl.style.left = "";
-          bodyEl.style.right = "";
-          bodyEl.style.width = "";
-          if (__lockY) window.scrollTo(0, __lockY);
-        }
-      };
-
-      const ensureStyleOnce = (() => {
-        let done = false;
-        return () => {
-          if (done) return;
-          const style = document.createElement("style");
-          style.textContent =
-            ".logo-zone-collapse > *{display:none !important} .floating-logo{will-change:opacity}";
-          document.head.appendChild(style);
-          done = true;
-        };
-      })();
-
-      const stripIds = (el) => {
-        if (!el) return;
-        if (el.id) el.removeAttribute("id");
-        el.querySelectorAll("[id]").forEach((n) => n.removeAttribute("id"));
-      };
-
-      const getLogoAnchor = (el) => {
-        if (!el) return null;
-        return el.tagName === "A" ? el : el.querySelector("a[href]") || null;
-      };
-
-      const setAriaWiring = () => {
-        if (!toggleButton) return;
-        if (fragmentMenu && !toggleButton.hasAttribute("aria-controls")) {
-          toggleButton.setAttribute(
-            "aria-controls",
-            "fragmentSideMenuList-" + fragmentEntryLinkNamespace,
-          );
-        }
-        if (!toggleButton.hasAttribute("aria-expanded")) {
-          toggleButton.setAttribute("aria-expanded", "false");
-        }
-      };
-
-      const getFocusableMenuItems = () => {
-        if (!fragmentMenu) return [];
-        const nodes = fragmentMenu.querySelectorAll(
-          'a[href],button:not([disabled]),[tabindex]:not([tabindex="-1"]),select,textarea,input',
-        );
-        return Array.from(nodes).filter((el) => el.offsetParent !== null);
-      };
-
-      const isMenuOpenInternal = () =>
-        !!(
-          zoneWrapper?.classList.contains("open") ||
-          hamburger?.parentElement?.classList.contains("open")
-        );
-
-      const wireFocusTrap = ({ container, initialFocus, onDeactivate }) => {
-        let active = false;
-        const getFocusables = () => {
-          if (!container) return [];
-          const nodes = container.querySelectorAll(
-            'a[href],button:not([disabled]),[tabindex]:not([tabindex="-1"]),select,textarea,input',
-          );
-          return Array.from(nodes).filter((el) => el.offsetParent !== null);
-        };
-        const keydown = (e) => {
-          if (!active || e.key !== "Tab") return;
-          const els = getFocusables();
-          if (!els.length) {
-            e.preventDefault();
-            const t =
-              typeof initialFocus === "function"
-                ? initialFocus()
-                : initialFocus;
-            t?.focus?.();
-            return;
-          }
-          const first = els[0];
-          const last = els[els.length - 1];
-          if (!e.shiftKey && document.activeElement === last) {
-            e.preventDefault();
-            first.focus();
-          } else if (e.shiftKey && document.activeElement === first) {
-            event.preventDefault();
-            last.focus();
-          }
-        };
-        const activate = () => {
-          if (active) return;
-          active = true;
-          document.addEventListener("keydown", keydown, true);
-          const t =
-            typeof initialFocus === "function" ? initialFocus() : initialFocus;
-          t?.focus?.();
-        };
-        const deactivate = () => {
-          if (!active) return;
-          active = false;
-          document.removeEventListener("keydown", keydown, true);
-          onDeactivate?.();
-        };
-        return { activate, deactivate };
-      };
-
-      const focusTrap = wireFocusTrap({
-        container: zoneWrapper,
-        initialFocus: () => getFocusableMenuItems()[0] || toggleButton,
-        onDeactivate: () => toggleButton?.focus(),
-      });
-
-      let floatingLogo = null;
-
-      const ensureFloatingLogo = () => {
-        if (floatingLogo || !logoZone) return;
-        ensureStyleOnce();
-        floatingLogo = logoZone.cloneNode(true);
-        stripIds(floatingLogo);
-        floatingLogo.classList.add("floating-logo");
-        floatingLogo.removeAttribute("aria-hidden");
-
-        const origA = getLogoAnchor(logoZone);
-        const cloneA = getLogoAnchor(floatingLogo);
-
-        if (origA) {
-          const href = origA.getAttribute("href");
-          const target = origA.getAttribute("target");
-          if (cloneA) {
-            cloneA.setAttribute("href", href || "#");
-            if (target) cloneA.setAttribute("target", target);
-            cloneA.setAttribute("tabindex", "0");
-            cloneA.addEventListener("click", (e) => {
-              if (!href || href === "#") return;
-              if (target === "_blank") return;
-              e.preventDefault();
-              window.location.assign(href);
-            });
-            cloneA.addEventListener("keydown", (e) => {
-              if (e.key === "Enter" || e.key === " ") {
-                e.preventDefault();
-                cloneA.click();
-              }
-            });
-          } else {
-            floatingLogo.setAttribute("tabindex", "0");
-            floatingLogo.setAttribute("role", "link");
-            floatingLogo.addEventListener("click", () => {
-              if (!href || href === "#") return;
-              if (target === "_blank") window.open(href, "_blank");
-              else window.location.assign(href);
-            });
-            floatingLogo.addEventListener("keydown", (e) => {
-              if (e.key === "Enter" || e.key === " ") {
-                e.preventDefault();
-                floatingLogo.click();
-              }
-            });
-          }
-        }
-
-        floatingLogo.style.position = "fixed";
-        floatingLogo.style.top = "var(--control-menu-container-height, 0)";
-        if (isLeft) {
-          floatingLogo.style.right = "8px";
-          floatingLogo.style.left = "auto";
-        } else {
-          floatingLogo.style.left = "8px";
-          floatingLogo.style.right = "auto";
-        }
-        floatingLogo.style.zIndex = "1004";
-        floatingLogo.style.pointerEvents = "auto";
-        floatingLogo.style.userSelect = "none";
-        floatingLogo.style.webkitUserDrag = "none";
-        floatingLogo.style.opacity = "0";
-        floatingLogo.style.visibility = "hidden";
-        floatingLogo.style.display = "block";
-        floatingLogo.style.transition = prefersReduced
-          ? "none"
-          : "opacity .2s ease";
-
-        bodyEl.appendChild(floatingLogo);
-      };
-
-      const menuHasImages = () =>
-        !!fragmentMenu?.querySelector(".text-truncate img");
-      const isMobileLike = () => window.innerWidth <= landscapePhoneBreakpoint;
-      const isLogoAlways = () => !!logoZone?.classList.contains("logo-always");
-
-      const collapseOriginal = (on) => {
-        if (!logoZone) return;
-        if (on) {
-          logoZone.classList.add("logo-zone-collapse");
-          logoZone.setAttribute("aria-hidden", "true");
-        } else {
-          logoZone.classList.remove("logo-zone-collapse");
-          logoZone.removeAttribute("aria-hidden");
-        }
-      };
-
-      const placeFloatingLogo = () => {
-        if (!floatingLogo) return;
-        floatingLogo.style.top = "var(--control-menu-container-height, 0)";
-        if (isLeft) {
-          floatingLogo.style.right = "8px";
-          floatingLogo.style.left = "auto";
-        } else {
-          floatingLogo.style.left = "8px";
-          floatingLogo.style.right = "auto";
-        }
-      };
-
-      const showFloating = (show) => {
-        if (!floatingLogo) return;
-        if (show) {
-          floatingLogo.style.visibility = "visible";
-          floatingLogo.style.opacity = "1";
-        } else {
-          floatingLogo.style.opacity = "0";
-          if (prefersReduced) floatingLogo.style.visibility = "hidden";
-          else
-            setTimeout(() => {
-              floatingLogo.style.visibility = "hidden";
-            }, 200);
-        }
-      };
-
-      const syncLogoMode = () => {
-        if (!logoZone) return;
-        ensureFloatingLogo();
-
-        const desktopOrWider = !isMobileLike();
-        const mobileWithImages = isMobileLike() && menuHasImages();
-        const mobileAlways =
-          isMobileLike() && isLogoAlways() && !menuHasImages();
-        const mobileToggle =
-          isMobileLike() && !isLogoAlways() && !menuHasImages();
-
-        if (desktopOrWider || mobileWithImages) {
-          collapseOriginal(false);
-          showFloating(false);
-        } else if (mobileAlways) {
-          placeFloatingLogo();
-          collapseOriginal(true);
-          showFloating(true);
-        } else if (mobileToggle) {
-          placeFloatingLogo();
-          const open = isMenuOpenInternal();
-          collapseOriginal(open);
-          showFloating(open);
-        }
-
-        if (debugEnabled) {
-          debug("logo sync", {
-            width: window.innerWidth,
-            mobile: isMobileLike(),
-            hasImages: menuHasImages(),
-            logoAlways: isLogoAlways(),
-            open: isMenuOpenInternal(),
-          });
-        }
-      };
-
-      if (logoZone && hamburger) {
-        const width = window.innerWidth;
-        const enlarged = logoZone.classList.contains("increase-hamburger");
-        if (enlarged) {
-          hamburger.classList.add("increase");
-          if (mainContent) mainContent.classList.add("increase-hamburger");
-        }
-        if (logoZone.classList.contains("logo-always"))
-          hamburger.classList.add("logo-always");
+    toggleButton?.addEventListener("click", () => {
+      if (isMenuOpen()) {
+        closeMenu();
+        toggleButton.focus();
+      } else {
+        openMenu();
       }
+    });
 
-      ensureLogoLinkA11y(logoZone || root);
+    // Keyboard Trap and Escape Handling
+    document.addEventListener("keydown", (e) => {
+      if (!isMenuOpen()) return;
 
-      const setOpen = (open, opts = {}) => {
-        const deferUnlock = !!opts.deferUnlock;
-        const isOverlay = window.innerWidth < landscapePhoneBreakpoint;
-        const parent = hamburger?.parentElement || null;
-        if (parent) parent.classList.toggle("open", open);
-        zoneWrapper?.classList.toggle("open", open);
-        logoZone?.classList.toggle("open", open);
-        if (toggleButton)
-          toggleButton.setAttribute("aria-expanded", open ? "true" : "false");
-        root.classList.toggle("is-menu-view", open && isOverlay);
-        if (isOverlay) {
-          if (open) {
-            applyScrollLock(true);
-            focusTrap.activate();
-          } else {
-            if (!deferUnlock) applyScrollLock(false);
-            focusTrap.deactivate();
-          }
-        } else {
-          applyScrollLock(false);
-          focusTrap.deactivate();
-        }
-        syncLogoMode();
-      };
-
-      const onTransitionEndOnce = (
-        el,
-        cb,
-        timeout = prefersReduced ? 0 : 300,
-      ) => {
-        if (!el) {
-          cb();
-          return;
-        }
-        let done = false;
-        const finish = () => {
-          if (done) return;
-          done = true;
-          el.removeEventListener("transitionend", finish, true);
-          cb();
-        };
-        el.addEventListener("transitionend", finish, true);
-        if (timeout >= 0) setTimeout(finish, timeout);
-      };
-
-      const openMenu = () => {
-        setOpen(true);
-        const items = getFocusableMenuItems();
-        if (items.length) {
-          requestAnimationFrame(() => items[0].focus());
-        }
-      };
-
-      const closeMenu = (restoreFocus = true) => {
-        if (!isMenuOpenInternal()) return;
-        const transitionTarget =
-          zoneWrapper?.querySelector(".fragment-menu") ||
-          fragmentMenu ||
-          zoneWrapper;
-        if (!root.hasAttribute("data-closing")) {
-          root.setAttribute("data-closing", "true");
-        }
-        setOpen(false, { deferUnlock: true });
-        onTransitionEndOnce(transitionTarget, () => {
-          applyScrollLock(false);
-          root.removeAttribute("data-closing");
-          if (restoreFocus) toggleButton?.focus();
-        });
-      };
-
-      holder?.classList.add("fragment-menu-holder");
-      setAriaWiring();
-
-      const debounceFn = (fn, delay) => {
-        let id;
-        return (...a) => {
-          clearTimeout(id);
-          id = setTimeout(() => fn(...a), delay);
-        };
-      };
-
-      const setFixedWidthForDesktopLike = () => {
-        if (!zoneWrapper || !mainContent) return;
-
-        const w = window.innerWidth;
-
-        if (w <= landscapePhoneBreakpoint) {
-          zoneWrapper.style.removeProperty("width");
-          mainContent.style.removeProperty("margin-left");
-          mainContent.style.removeProperty("margin-right");
-          return;
-        }
-
-        const targetWidth = limitMenuWidth
-          ? menuWidth
-          : zoneWrapper.offsetWidth + "px";
-        zoneWrapper.style.width = targetWidth;
-
-        if (layoutMode !== "edit") {
-          if (isLeft) {
-            mainContent.style.marginLeft = targetWidth;
-            mainContent.style.removeProperty("margin-right");
-          } else {
-            mainContent.style.marginRight = targetWidth;
-            mainContent.style.removeProperty("margin-left");
-          }
-        }
-      };
-
-      const updateSizes = () => {
-        setFixedWidthForDesktopLike();
-        placeFloatingLogo();
-        syncLogoMode();
-      };
-
-      updateSizes();
-      window.addEventListener("resize", debounceFn(updateSizes, debounceDelay));
-      window.addEventListener("scroll", debounceFn(placeFloatingLogo, 50));
-
-      if (toggleButton) {
-        toggleButton.addEventListener("click", () => {
-          if (isMenuOpenInternal()) {
-            closeMenu(true);
-          } else {
-            openMenu();
-          }
-        });
-      }
-
-      document.addEventListener("keydown", (e) => {
-        if (e.key !== "Escape") return;
-        if (!isMenuOpenInternal()) return;
+      if (e.key === "Escape") {
         e.preventDefault();
-        closeMenu(true);
+        closeMenu();
         toggleButton?.focus();
-      });
-
-      document.addEventListener("click", (e) => {
-        if (!isMenuOpenInternal()) return;
-        if (root.contains(e.target)) return;
-        closeMenu(true);
-      });
-
-      if (isLeft) {
-        const sideMenu = bodyEl.querySelector("nav.lfr-product-menu-panel");
-        if (sideMenu && holder) {
-          const onProductToggle = () => {
-            const width = sideMenu.clientWidth;
-            const isOpen = sideMenu.classList.contains("open");
-            const offsetLeft =
-              window.innerWidth <= productMenuWidth ? 0 : width;
-            holder.style.left = isOpen ? offsetLeft + "px" : "0";
-          };
-          onProductToggle();
-          new MutationObserver(onProductToggle).observe(sideMenu, {
-            attributes: true,
-            attributeFilter: ["class", "style"],
-          });
-        }
+        return;
       }
 
-      const onScroll = () => {
-        if (!holder) return;
-        const y = window.scrollY || document.documentElement.scrollTop || 0;
-        holder.classList.toggle("top", y > 28);
-      };
-      window.addEventListener("scroll", onScroll, { passive: true });
+      if (e.key === "Tab") {
+        const focusables = getFocusableInMenu();
+        if (focusables.length === 0) return;
 
-      const closeIfWiderThanPhones = () => {
-        if (window.innerWidth > landscapePhoneBreakpoint) setOpen(false);
-        syncLogoMode();
-      };
+        const first = focusables[0];
+        const last = focusables[focusables.length - 1];
 
-      // --- control menu offset logic ---
-      const updateControlMenuOffset = () => {
-        const hasControlMenu =
-          document.body.classList.contains("has-control-menu");
-        const scrollY =
-          window.scrollY || document.documentElement.scrollTop || 0;
-        const isPortrait = window.innerWidth <= portraitPhoneBreakpoint;
-
-        if (isPortrait && hasControlMenu && scrollY > 0) {
-          root.classList.add("control-menu-offscreen");
-        } else {
-          root.classList.remove("control-menu-offscreen");
+        if (e.shiftKey && document.activeElement === first) {
+          e.preventDefault();
+          last.focus();
+        } else if (!e.shiftKey && document.activeElement === last) {
+          e.preventDefault();
+          first.focus();
         }
-      };
-
-      window.addEventListener("scroll", updateControlMenuOffset, {
-        passive: true,
-      });
-      window.addEventListener("resize", updateControlMenuOffset);
-      updateControlMenuOffset();
-      window
-        .matchMedia(`(min-width:${landscapePhoneBreakpoint}px)`)
-        .addEventListener("change", closeIfWiderThanPhones);
-
-      if (enableCloseOnInternalNav) {
-        const wireCloseOnInternalNav = ({
-          root,
-          menuContainer,
-          transitionTarget,
-          isMenuOpen,
-          closeMenu,
-          enabled = true,
-          transitionTimeout = 300,
-        }) => {
-          if (!enabled || !menuContainer) return;
-          const isModifier = (e) =>
-            e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button === 1;
-          const isInternal = (a) => {
-            try {
-              const u = new URL(a.href, location.href);
-              return u.origin === location.origin;
-            } catch {
-              return false;
-            }
-          };
-          const getClosestLink = (el) => el.closest("a[href]");
-          menuContainer.addEventListener("click", (e) => {
-            const a = getClosestLink(e.target);
-            if (!a) return;
-            if (
-              a.target === "_blank" ||
-              a.hasAttribute("download") ||
-              isModifier(e)
-            )
-              return;
-            if (!isInternal(a)) return;
-            if (!isMenuOpen()) return;
-            e.preventDefault();
-            const href = a.href;
-            let navigated = false;
-            const go = () => {
-              if (!navigated) {
-                navigated = true;
-                window.location.assign(href);
-              }
-            };
-            const onDone = () => {
-              (transitionTarget || menuContainer).removeEventListener(
-                "transitionend",
-                onDone,
-                true,
-              );
-              root.removeAttribute("data-closing");
-              go();
-            };
-            root.setAttribute("data-closing", "true");
-            closeMenu();
-            (transitionTarget || menuContainer).addEventListener(
-              "transitionend",
-              onDone,
-              true,
-            );
-            setTimeout(onDone, transitionTimeout);
-          });
-        };
-
-        wireCloseOnInternalNav({
-          root,
-          menuContainer: fragmentMenu,
-          transitionTarget:
-            zoneWrapper?.querySelector(".fragment-menu") || fragmentMenu,
-          isMenuOpen: () =>
-            root.classList.contains("is-menu-view") ||
-            zoneWrapper?.classList.contains("open"),
-          closeMenu: () => closeMenu(false),
-          enabled: configuration.enableCloseOnInternalNav === true,
-          transitionTimeout: prefersReduced ? 0 : 300,
-        });
       }
-    }
-  }, configuration.initializeDelay);
+    });
+
+    document.addEventListener("click", (e) => {
+      if (!root.contains(e.target) && isMenuOpen()) closeMenu();
+    });
+
+    // Scroll listener for sticky behaviors
+    const onScroll = () => {
+      const scrollY = window.scrollY || document.documentElement.scrollTop;
+      holder.classList.toggle("top", scrollY > 28);
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+  }
 };
 
-initSideMenu();
+initResponsiveSideMenu();

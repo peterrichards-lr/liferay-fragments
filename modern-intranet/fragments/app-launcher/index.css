@@ -1,0 +1,68 @@
+.app-launcher {
+  background-color: var(--white, #fff);
+  border: 1px solid var(--gray-200, #e7e7ed);
+  border-radius: var(--border-radius-xl, 1rem);
+  padding: var(--spacer-5, 1.5rem);
+}
+
+.app-launcher-title {
+  color: var(--body-color, #272833);
+  font-size: var(--font-size-lg, 1.25rem);
+  font-weight: var(--font-weight-bold, 700);
+}
+
+.app-launcher-grid {
+  display: grid;
+  gap: var(--spacer-4, 1rem);
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.app-launcher-item {
+  align-items: center;
+  border-radius: var(--border-radius-lg, 0.5rem);
+  display: flex;
+  flex-direction: column;
+  padding: var(--spacer-3, 1rem);
+  text-decoration: none !important;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.app-launcher-item:hover {
+  background-color: var(--gray-100, #f1f2f5);
+}
+
+.app-launcher-icon-container {
+  align-items: center;
+  background-color: var(--gray-100, #f1f2f5);
+  border-radius: var(--border-radius-lg, 0.5rem);
+  color: var(--primary, #007dad);
+  display: flex;
+  height: 3rem;
+  justify-content: center;
+  margin-bottom: var(--spacer-2, 0.5rem);
+  width: 3rem;
+}
+
+.app-launcher-icon {
+  height: 1.5rem;
+  width: 1.5rem;
+}
+
+.app-launcher-name {
+  color: var(--body-color, #272833);
+  font-size: var(--font-size-sm, 0.875rem);
+  font-weight: var(--font-weight-semi-bold, 600);
+  text-align: center;
+}
+
+.app-launcher-edit {
+  color: var(--primary, #007dad);
+  font-size: var(--font-size-sm, 0.875rem);
+  font-weight: var(--font-weight-semi-bold, 600);
+}
+
+@media (max-width: 575.98px) {
+  .app-launcher-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}

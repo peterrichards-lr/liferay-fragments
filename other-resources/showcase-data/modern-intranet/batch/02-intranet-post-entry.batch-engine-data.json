@@ -1,0 +1,42 @@
+{
+  "configuration": {
+    "className": "com.liferay.object.rest.dto.v1_0.ObjectEntry",
+    "parameters": {
+      "containsHeaders": "true",
+      "createStrategy": "UPSERT",
+      "siteExternalReferenceCode": "L_GUEST",
+      "importStrategy": "ON_ERROR_CONTINUE",
+      "updateStrategy": "UPDATE"
+    },
+    "taskItemDelegateName": "C_IntranetPost"
+  },
+  "items": [
+    {
+      "externalReferenceCode": "POST-01",
+      "title": "The Quarterly Roadmap Update",
+      "content": "After analyzing the usage data from our top 50 clients, we are pivoting our Q4 focus to enhance the mobile experience and improve search performance.",
+      "authorName": "Sarah Shepherd",
+      "authorAvatarUrl": "https://i.pravatar.cc/150?u=sarah",
+      "likesCount": 48,
+      "commentsCount": 6
+    },
+    {
+      "externalReferenceCode": "POST-02",
+      "title": "Migrating Legacy Modules to React 18",
+      "content": "The frontend architecture team has officially started the migration of the 'Knowledge Base' portlets to React 18. This will significantly improve performance.",
+      "authorName": "Michael Collins",
+      "authorAvatarUrl": "https://i.pravatar.cc/150?u=michael",
+      "likesCount": 31,
+      "commentsCount": 9
+    },
+    {
+      "externalReferenceCode": "POST-03",
+      "title": "New Family Support: Kindergarten Benefit is Live!",
+      "content": "We are thrilled to announce a new addition to our benefits package! Starting today, employees can apply for the 'Knowledge Base' portlets to React 18.",
+      "authorName": "Emily Rodriguez",
+      "authorAvatarUrl": "https://i.pravatar.cc/150?u=emily",
+      "likesCount": 128,
+      "commentsCount": 7
+    }
+  ]
+}

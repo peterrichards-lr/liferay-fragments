@@ -10,7 +10,8 @@
   display: block;
 }
 
-body.has-edit-mode-menu .page-editor .store-form-field-values-padding.show {
+body.has-edit-mode-menu .page-editor .store-form-field-values-padding.show,
+.store-form-field-values[data-layout-mode="edit"] .store-form-field-values-padding.show {
   height: 26px;
   min-height: 26px;
   box-sizing: border-box;

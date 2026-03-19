@@ -1,13 +1,13 @@
 const initContentMap = () => {
-  if (layoutMode !== "preview") {
+  if (layoutMode !== 'preview') {
     const mapContainer = fragmentElement.querySelector(
-      ".content-map-container",
+      '.content-map-container'
     );
     if (mapContainer) {
-      const apiKey = configuration.googleMapsApiKey;
+      const apiKey = configuration.googleApiKey;
       if (apiKey) {
         // Load Google Maps Script
-        const script = document.createElement("script");
+        const script = document.createElement('script');
         script.src = `https://maps.googleapis.com/maps/api/js?key=${apiKey}&callback=initMap-${fragmentNamespace}`;
         script.async = true;
         script.defer = true;

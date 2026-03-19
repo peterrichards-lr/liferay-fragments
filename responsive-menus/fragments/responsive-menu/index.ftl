@@ -79,7 +79,8 @@
     role="navigation"
     aria-label="Responsive Menu"
     lang="${htmlLang}"
-    dir="${langDir}">
+    dir="${langDir}"
+    data-layout-mode="${layoutMode}">
     <div class="${menuHeaderClass}">Responsive Menu</div>
     <div class="dropzone-wrapper dropzone-wrapper-${configuration.dropzoneConfig}">
       [@renderHamburgerIcon /]
@@ -214,7 +215,7 @@
   [/#if]
 
   .fragment-menu-editor-padding { height: 0; overflow: hidden; }
-  body.has-edit-mode-menu .page-editor .fragment-menu-editor-padding.show {
+  .fragment-root[data-layout-mode="edit"] .fragment-menu-editor-padding.show {
     height: 26px; min-height: 26px; box-sizing: border-box; background: #f7f8f9; text-align: right;
     font-size: 12px; line-height: 26px; border-radius: 2px 2px 0 0; padding: 0 8px; font-weight: 600;
   }
@@ -534,17 +535,17 @@
     .fragment-scroll-to-top:hover { background-color: ${configuration.scrollBackToTopHoverBgColor}; color: ${configuration.scrollBackToTopHoverColor}; }
   [/#if]
 
-  body.has-edit-mode-menu .dropzone .page-editor__no-fragments-state:first-child:before {
+  .fragment-root[data-layout-mode="edit"] .dropzone .page-editor__no-fragments-state:first-child:before {
     color: #6b6c7e;
     font-size: 14px;
     font-weight: bold;
     text-align: center;
     margin: 0 0 1rem;
   }
-  body.has-edit-mode-menu .dropzone:has(.page-editor__no-fragments-state) { flex-grow: 1; }
-  body.has-edit-mode-menu .dropzone-left .page-editor__no-fragments-state:first-child:before { content: "Left Zone"; }
-  body.has-edit-mode-menu .dropzone-menu .page-editor__no-fragments-state:first-child:before { content: "Menu Zone"; }
-  body.has-edit-mode-menu .dropzone-right .page-editor__no-fragments-state:first-child:before { content: "Right Zone"; }
+  .fragment-root[data-layout-mode="edit"] .dropzone:has(.page-editor__no-fragments-state) { flex-grow: 1; }
+  .fragment-root[data-layout-mode="edit"] .dropzone-left .page-editor__no-fragments-state:first-child:before { content: "Left Zone"; }
+  .fragment-root[data-layout-mode="edit"] .dropzone-menu .page-editor__no-fragments-state:first-child:before { content: "Menu Zone"; }
+  .fragment-root[data-layout-mode="edit"] .dropzone-right .page-editor__no-fragments-state:first-child:before { content: "Right Zone"; }
 
   body.has-control-menu .master-page .hamburger-zone-inner .${configuration.dropzoneGrower}:not(:has(.page-editor__no-fragments-state)),
   body.has-control-menu .page-editor .hamburger-zone-inner .${configuration.dropzoneGrower}:not(:has(.page-editor__no-fragments-state)) { flex-grow: 1; }

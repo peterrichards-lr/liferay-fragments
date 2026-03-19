@@ -5,7 +5,7 @@ div.service-card {
   --left: calc(50% - (var(--font-size, 24px) / 2));
   --padding: calc(var(--size) / 4.5);
 
-  border: 1px solid #d8d8d8;
+  border: 1px solid var(--gray-300, #d8d8d8);
   border-radius: 0.5rem;
   padding: var(--spacer-3, 16px) var(--spacer-2, 8px);
 }
@@ -50,4 +50,36 @@ a.service-card:hover {
   top: var(--top);
   left: var(--left);
   color: var(--icon-color, #0960ff);
+}
+
+/* Mappable Fields Formatting */
+.meta-editor-mappable-fields {
+    display: none;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    padding: 1.5rem;
+    background: var(--gray-100, #f7f8f9);
+    border: 1px solid var(--gray-200, #e7e8eb);
+    border-radius: 0.5rem;
+    margin-top: 2rem;
+}
+
+body.has-edit-mode-menu .meta-editor-mappable-fields,
+.service-card[data-layout-mode="edit"] .meta-editor-mappable-fields {
+    display: flex;
+}
+
+.mappable-field-item {
+    flex: 1 1 200px;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.mappable-field-item label {
+    font-size: 10px;
+    font-weight: bold;
+    text-transform: uppercase;
+    color: var(--gray-600, #6b6c7e);
+    margin-bottom: 0;
 }

@@ -39,16 +39,9 @@ const WARM_COLORS = [
   "var(--warning, #ffcc00)",
 ];
 
-const getLocalizedValue = (value) => {
-  if (typeof value === "object" && value !== null && !Array.isArray(value)) {
-    const languageId =
-      typeof Liferay !== "undefined"
-        ? Liferay.ThemeDisplay.getLanguageId()
-        : "en_US";
-    return value[languageId] || value["en_US"] || "";
-  }
-  return value || "";
-};
+// Use Commons for logic
+const getLocalizedValue = (value) =>
+  Liferay.Fragment.Commons.getLocalizedValue(value);
 
 const loadScript = (url) => {
   return new Promise((resolve, reject) => {
@@ -76,23 +69,33 @@ const resolveColor = (colorStr, element, filter = "") => {
 };
 
 const fetchData = async () => {
-  const { objectERC } = configuration;
-  if (!objectERC) throw new Error("Object ERC not configured.");
+  const { objectERC: configERC } = configuration;
 
-  // Fetch definition by ERC
-  const adminUrl = `/o/object-admin/v1.0/object-definitions/by-external-reference-code/${objectERC}`;
-  const defRes = await Liferay.Util.fetch(adminUrl);
-  if (!defRes.ok)
-    throw new Error(`Could not find object with ERC "${objectERC}".`);
-  const definition = await defRes.json();
-
-  let url = definition.restContextPath;
-  if (definition.scope === "site") {
-    const siteId = Liferay.ThemeDisplay.getScopeGroupId();
-    url += `/scopes/${siteId}`;
+  // Resolve effective ERC (Prioritize mappable field)
+  const mappableERCEl = fragmentElement.querySelector(
+    "[data-lfr-editable-id='object-erc']",
+  );
+  let objectERC = configERC;
+  if (mappableERCEl) {
+    const mappedVal = mappableERCEl.innerText.trim();
+    if (mappedVal && mappedVal !== configERC && mappedVal !== "SALES_REPORT") {
+      objectERC = mappedVal;
+    }
   }
 
-  const response = await Liferay.Util.fetch(`${url}/?pageSize=100`);
+  if (!Liferay.Fragment.Commons.isValidIdentifier(objectERC))
+    throw new Error("Object ERC not configured.");
+
+  // Use Commons for discovery and path resolution
+  const { definition, apiPath } =
+    await Liferay.Fragment.Commons.resolveObjectPath(
+      `/o/c/${objectERC.toLowerCase()}`,
+    );
+
+  if (!definition)
+    throw new Error(`Could not find object with ERC "${objectERC}".`);
+
+  const response = await Liferay.Util.fetch(`${apiPath}/?pageSize=100`);
   if (!response.ok) {
     if (response.status === 401 || response.status === 403)
       throw new Error("Permission denied.");
@@ -163,40 +166,11 @@ const aggregateData = (items, labelField, valueFields, type, sortOrder) => {
 };
 
 const initChart = async (isEditMode) => {
-  const errorEl = fragmentElement.querySelector(
-    `#error-${fragmentEntryLinkNamespace}`,
-  );
-  const infoEl = fragmentElement.querySelector(
-    `#info-${fragmentEntryLinkNamespace}`,
-  );
   const chartWrapper = fragmentElement.querySelector(".chart-wrapper");
   const titleEl = fragmentElement.querySelector(".chart-title");
 
-  const showError = (msg) => {
-    if (isEditMode && errorEl) {
-      errorEl.textContent = msg;
-      errorEl.classList.remove("d-none");
-      if (chartWrapper) chartWrapper.innerHTML = "";
-    } else if (chartWrapper) {
-      chartWrapper.innerHTML = `<div class="d-flex align-items-center justify-content-center h-100 text-danger">${msg}</div>`;
-    }
-  };
-
-  const showInfo = (msg) => {
-    if (isEditMode && infoEl) {
-      infoEl.textContent = msg;
-      infoEl.classList.remove("d-none");
-      if (chartWrapper) chartWrapper.innerHTML = "";
-    } else if (chartWrapper) {
-      chartWrapper.innerHTML = `<div class="d-flex align-items-center justify-content-center h-100 text-muted">${msg}</div>`;
-    }
-  };
-
-  if (errorEl) errorEl.classList.add("d-none");
-  if (infoEl) infoEl.classList.add("d-none");
-
   const {
-    objectERC,
+    objectERC: configERC,
     labelField,
     valueFields,
     aggregationType,
@@ -213,15 +187,38 @@ const initChart = async (isEditMode) => {
     secondaryYAxisLabel: configYLabel2,
   } = configuration;
 
-  if (!objectERC) {
-    showInfo("Please configure an Object External Reference Code.");
+  // Resolve effective ERC (Prioritize mappable field)
+  const mappableERCEl = fragmentElement.querySelector(
+    "[data-lfr-editable-id='object-erc']",
+  );
+  let objectERC = configERC;
+  if (mappableERCEl) {
+    const mappedVal = mappableERCEl.innerText.trim();
+    if (mappedVal && mappedVal !== configERC && mappedVal !== "SALES_REPORT") {
+      objectERC = mappedVal;
+    }
+  }
+
+  if (!Liferay.Fragment.Commons.isValidIdentifier(objectERC)) {
+    if (chartWrapper) {
+      Liferay.Fragment.Commons.renderConfigWarning(
+        chartWrapper,
+        "Please select a Liferay Object ERC in the fragment settings to visualize data.",
+        layoutMode,
+      );
+    }
   } else {
     try {
       await loadScript(CHART_JS_URL);
       const { items, definition } = await fetchData();
 
       if (items.length === 0) {
-        showInfo(`No data found for object "${objectERC}".`);
+        if (chartWrapper) {
+          Liferay.Fragment.Commons.renderEmptyState(chartWrapper, {
+            title: "No Data Available",
+            description: `The ${definition.name} object currently has no records to display.`,
+          });
+        }
       } else {
         // Create field name to localized label map
         const fieldNameMap = {};
@@ -260,7 +257,13 @@ const initChart = async (isEditMode) => {
           .filter(Boolean);
 
         if (fields.length === 0) {
-          showInfo("Please configure at least one value field.");
+          if (chartWrapper) {
+            Liferay.Fragment.Commons.renderConfigWarning(
+              chartWrapper,
+              "Please configure at least one Value Field in the settings.",
+              layoutMode,
+            );
+          }
         } else {
           const { labels, datasets: dataValues } = aggregateData(
             items,
@@ -268,6 +271,15 @@ const initChart = async (isEditMode) => {
             fields,
             aggregationType,
             sortOrder,
+          );
+
+          // Restore canvas if it was replaced by empty state/warning
+          if (chartWrapper && !chartWrapper.querySelector("canvas")) {
+            chartWrapper.innerHTML = `<canvas id="chart-${fragmentEntryLinkNamespace}"></canvas>`;
+          }
+
+          const canvas = fragmentElement.querySelector(
+            `#chart-${fragmentEntryLinkNamespace}`,
           );
 
           // Resolve effective color mapping mode
@@ -339,9 +351,6 @@ const initChart = async (isEditMode) => {
             return ds;
           });
 
-          const canvas = fragmentElement.querySelector(
-            `#chart-${fragmentEntryLinkNamespace}`,
-          );
           if (canvas) {
             const xLabelEl = fragmentElement.querySelector(
               '[data-lfr-editable-id="x-axis-label"]',
@@ -403,7 +412,7 @@ const initChart = async (isEditMode) => {
                   position: "right",
                   grid: { drawOnChartArea: false },
                   title: {
-                    display: !!resolvedYLabel2,
+                    display: !!resolvedXLabel,
                     text: resolvedYLabel2,
                   },
                 };
@@ -431,19 +440,19 @@ const initChart = async (isEditMode) => {
         }
       }
     } catch (err) {
-      showError(err.message);
+      if (chartWrapper) {
+        chartWrapper.innerHTML = `<div class="d-flex align-items-center justify-content-center h-100 text-danger">${err.message}</div>`;
+      }
     }
   }
 };
 
+// Listen for global refresh signals from Dashboard Filter
+Liferay.on("refreshData", () => {
+  if (layoutMode === "view") initChart(false);
+});
+
 if (layoutMode === "view") initChart(false);
 else {
-  if (configuration.objectERC) initChart(true);
-  else {
-    const chartWrapper = fragmentElement.querySelector(".chart-wrapper");
-    if (chartWrapper) chartWrapper.innerHTML = "";
-    showInfo(
-      "Please provide an Object External Reference Code in the configuration.",
-    );
-  }
+  initChart(true);
 }

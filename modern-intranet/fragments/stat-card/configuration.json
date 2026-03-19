@@ -1,0 +1,29 @@
+{
+  "fieldSets": [
+    {
+      "fields": [
+        {
+          "defaultValue": "Open Positions",
+          "label": "lfr.modern-intranet.stat-card.title",
+          "description": "lfr.modern-intranet.stat-card.title-description",
+          "name": "title",
+          "type": "text"
+        },
+        {
+          "defaultValue": "22",
+          "label": "lfr.modern-intranet.stat-card.value",
+          "description": "lfr.modern-intranet.stat-card.value-description",
+          "name": "value",
+          "type": "text"
+        },
+        {
+          "label": "lfr.modern-intranet.stat-card.trend",
+          "description": "lfr.modern-intranet.stat-card.trend-description",
+          "name": "trend",
+          "type": "text"
+        }
+      ],
+      "label": "lfr.modern-intranet.data"
+    }
+  ]
+}

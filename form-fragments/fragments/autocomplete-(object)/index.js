@@ -1,67 +1,88 @@
-const initAutocomplete = () => {
-  if (layoutMode !== "preview") {
-    const apiPath = configuration.apiPath;
-    const searchParam = configuration.searchParam;
-    const valueField = configuration.valueField;
-    const labelField = configuration.labelField;
-    const inputFieldId = configuration.inputFieldId;
+const initAutocompleteObject = () => {
+  const { objectERC, inputFieldId } = configuration;
 
-    const input = fragmentElement.querySelector("input");
-    const list = fragmentElement.querySelector("ul");
+  const autocompleteContainer = fragmentElement.querySelector(".autocomplete");
+  const inputElement = fragmentElement.querySelector(".autocomplete-input");
+  const resultsList = fragmentElement.querySelector(".autocomplete-results");
 
-    if (input && list) {
-      const getItems = async (searchValue) => {
-        const response = await Liferay.Util.fetch(
-          `${apiPath}?${searchParam}=${searchValue}`,
+  const closeAllLists = () => {
+    resultsList.innerHTML = "";
+  };
+
+  const getObjectEntries = async (searchValue) => {
+    if (!Liferay.Fragment.Commons.isValidIdentifier(objectERC)) return [];
+
+    try {
+      // Use Commons for site-scoping discovery
+      const { definition, apiPath } =
+        await Liferay.Fragment.Commons.resolveObjectPath(
+          `/o/c/${objectERC.toLowerCase()}`,
         );
-        if (!response.ok) {
-          throw new Error("Failed to fetch items");
-        }
-        const data = await response.json();
-        return data.items;
-      };
 
-      const renderList = (items) => {
-        list.innerHTML = "";
-        items.forEach((item) => {
-          const li = document.createElement("li");
-          li.textContent = item[labelField];
-          li.dataset.value = item[valueField];
-          li.addEventListener("click", () => {
-            input.value = item[labelField];
-            const targetInput = document.querySelector(`#${inputFieldId}`);
-            if (targetInput) {
-              targetInput.value = item[valueField];
-              targetInput.dispatchEvent(new Event("change", { bubbles: true }));
-            }
-            list.style.display = "none";
-          });
-          list.appendChild(li);
-        });
-        list.style.display = items.length > 0 ? "block" : "none";
-      };
+      const url = `${apiPath}/?search=${searchValue}&pageSize=20`;
+      const response = await Liferay.Util.fetch(url);
+      const data = await response.json();
 
-      input.addEventListener("input", async (e) => {
-        const searchValue = e.target.value;
-        if (searchValue.length >= 3) {
-          try {
-            const items = await getItems(searchValue);
-            renderList(items);
-          } catch (error) {
-            console.error(error);
-          }
-        } else {
-          list.style.display = "none";
-        }
-      });
+      const titleField = definition ? definition.titleObjectFieldName : "id";
 
-      document.addEventListener("click", (e) => {
-        if (!fragmentElement.contains(e.target)) {
-          list.style.display = "none";
-        }
-      });
+      return (data.items || []).map((item) => ({
+        label: item[titleField] || item.id,
+        value: item.id,
+      }));
+    } catch (error) {
+      console.error("Error fetching object entries:", error);
+      return [];
     }
+  };
+
+  if (inputElement && resultsList) {
+    if (Liferay.Fragment.Commons.isValidIdentifier(inputFieldId)) {
+      const inputField = document.getElementById(inputFieldId);
+      if (inputField) {
+        // Initial setup for edit mode/re-hydration
+        inputElement.value = inputField.dataset.label || inputField.value;
+      }
+    }
+
+    inputElement.addEventListener(
+      "input",
+      Liferay.Fragment.Commons.debounce(async (e) => {
+        const searchValue = e.target.value;
+
+        closeAllLists();
+
+        if (!Liferay.Fragment.Commons.isValidIdentifier(searchValue)) return;
+
+        const entries = await getObjectEntries(searchValue);
+
+        entries.forEach((entry) => {
+          const listItem = document.createElement("li");
+          listItem.innerHTML = entry.label;
+          listItem.addEventListener("click", () => {
+            inputElement.value = entry.label;
+            if (Liferay.Fragment.Commons.isValidIdentifier(inputFieldId)) {
+              const inputField = document.getElementById(inputFieldId);
+              if (inputField) {
+                inputField.value = entry.value;
+                inputField.dataset.label = entry.label;
+                inputField.dispatchEvent(
+                  new Event("change", { bubbles: true }),
+                );
+              }
+            }
+            closeAllLists();
+          });
+          resultsList.appendChild(listItem);
+        });
+      }, 300),
+    );
+
+    document.addEventListener("click", (e) => {
+      if (!autocompleteContainer.contains(e.target)) {
+        closeAllLists();
+      }
+    });
   }
 };
 
-initAutocomplete();
+initAutocompleteObject();

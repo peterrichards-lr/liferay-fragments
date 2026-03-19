@@ -4,7 +4,7 @@
         <strong>Error:</strong> Only one instance of the Loan Calculator is allowed per page. Please remove the duplicate.
     </div>
     <div class="calculator-content">
-        <h2 class="component-text h2 mb-0 text-break">Loan Calculator</h2>
+        <h2 class="component-text h2 mb-0 text-break" data-lfr-editable-id="loan-calculator-title" data-lfr-editable-type="text">${configuration.title!}</h2>
         <div class="slider-container">
             <label for="loanAmount-${fragmentEntryLinkNamespace}">Amount: $<span id="amountValue-${fragmentEntryLinkNamespace}">5000</span></label>
             <input type="range" id="loanAmount-${fragmentEntryLinkNamespace}" min="1000" max="50000" step="100" value="5000">

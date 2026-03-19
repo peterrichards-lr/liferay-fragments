@@ -1,0 +1,73 @@
+{
+  "fieldSets": [
+    {
+      "fields": [
+        {
+          "label": "lfr.modern-intranet.welcome-banner.background-image",
+          "description": "lfr.modern-intranet.welcome-banner.background-image-description",
+          "name": "backgroundImage",
+          "type": "itemSelector",
+          "typeOptions": {
+            "itemType": "image"
+          }
+        },
+        {
+          "defaultValue": "Welcome back, John",
+          "label": "lfr.modern-intranet.welcome-banner.title",
+          "description": "lfr.modern-intranet.welcome-banner.title-description",
+          "name": "title",
+          "type": "text"
+        },
+        {
+          "defaultValue": "Here's what's happening in your workspace today.",
+          "label": "lfr.modern-intranet.welcome-banner.subtext",
+          "description": "lfr.modern-intranet.welcome-banner.subtext-description",
+          "name": "subtext",
+          "type": "text"
+        }
+      ],
+      "label": "lfr.modern-intranet.data"
+    },
+    {
+      "fields": [
+        {
+          "label": "lfr.modern-intranet.welcome-banner.button-1-label",
+          "description": "lfr.modern-intranet.welcome-banner.button-1-label-description",
+          "name": "button1Label",
+          "type": "text"
+        },
+        {
+          "label": "lfr.modern-intranet.welcome-banner.button-1-url",
+          "description": "lfr.modern-intranet.welcome-banner.button-1-url-description",
+          "name": "button1URL",
+          "type": "url"
+        },
+        {
+          "label": "lfr.modern-intranet.welcome-banner.button-2-label",
+          "description": "lfr.modern-intranet.welcome-banner.button-2-label-description",
+          "name": "button2Label",
+          "type": "text"
+        },
+        {
+          "label": "lfr.modern-intranet.welcome-banner.button-2-url",
+          "description": "lfr.modern-intranet.welcome-banner.button-2-url-description",
+          "name": "button2URL",
+          "type": "url"
+        },
+        {
+          "label": "lfr.modern-intranet.welcome-banner.button-3-label",
+          "description": "lfr.modern-intranet.welcome-banner.button-3-label-description",
+          "name": "button3Label",
+          "type": "text"
+        },
+        {
+          "label": "lfr.modern-intranet.welcome-banner.button-3-url",
+          "description": "lfr.modern-intranet.welcome-banner.button-3-url-description",
+          "name": "button3URL",
+          "type": "url"
+        }
+      ],
+      "label": "lfr.modern-intranet.welcome-banner.actions"
+    }
+  ]
+}

@@ -1,11 +1,11 @@
 const initServiceLinkButton = () => {
-  if (layoutMode !== "preview") {
-    const btn = fragmentElement.querySelector(".btn");
-    if (btn && configuration.linkUrl) {
-      btn.addEventListener("click", (e) => {
+  if (layoutMode !== 'preview') {
+    const btn = fragmentElement.querySelector('.btn');
+    if (btn && configuration.defaultPageUrl) {
+      btn.addEventListener('click', (e) => {
         if (configuration.openInNewTab) {
           e.preventDefault();
-          window.open(configuration.linkUrl, "_blank");
+          window.open(configuration.defaultPageUrl, '_blank');
         }
       });
     }

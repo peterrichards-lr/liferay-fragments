@@ -1,4 +1,10 @@
-const ADMIN_API_BASE = "/o/object-admin/v1.0";
+const {
+  debounce,
+  getLocalizedValue,
+  isValidIdentifier,
+  resolveObjectPathByERC,
+} = Liferay.Fragment.Commons;
+
 const JSPDF_URL =
   "https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js";
 const HTML2CANVAS_URL =
@@ -14,25 +20,6 @@ const loadScript = (url) =>
     s.onerror = rej;
     document.head.appendChild(s);
   });
-
-const getLocalizedValue = (value) => {
-  if (typeof value === "object" && value !== null && !Array.isArray(value)) {
-    const languageId =
-      typeof Liferay !== "undefined"
-        ? Liferay.ThemeDisplay.getLanguageId()
-        : "en_US";
-    return value[languageId] || value["en_US"] || "";
-  }
-  return value || "";
-};
-
-const debounce = (func, wait) => {
-  let timeout;
-  return (...args) => {
-    clearTimeout(timeout);
-    timeout = setTimeout(() => func.apply(this, args), wait);
-  };
-};
 
 const createSearchableSelect = (container, options = {}) => {
   const {
@@ -181,27 +168,6 @@ const formatCellValue = (item, field) => {
   return String(value);
 };
 
-const getBaseUrl = (state) => {
-  let url = state.definition.restContextPath;
-  if (state.definition.scope === "site") {
-    const siteId = Liferay.ThemeDisplay.getScopeGroupId();
-    url += `/scopes/${siteId}`;
-  }
-  return url;
-};
-
-const isValidIdentifier = (val) => {
-  if (val === undefined || val === null) return false;
-  const s = String(val).trim().toLowerCase();
-  return (
-    s !== "" &&
-    s !== "undefined" &&
-    s !== "null" &&
-    s !== "0" &&
-    s !== "[object object]"
-  );
-};
-
 const loadRecordData = async (recordId, recordERC, isEditMode, state) => {
   console.debug(
     `[Meta-Object Record View] loadRecordData called - ID: ${recordId}, ERC: ${recordERC}`,
@@ -236,7 +202,7 @@ const loadRecordData = async (recordId, recordERC, isEditMode, state) => {
 
     // 1. Try ERC
     if (isValidIdentifier(recordERC)) {
-      const url = `${getBaseUrl(state)}/by-external-reference-code/${recordERC}?${fieldsParam}`;
+      const url = `${state.apiPath}/by-external-reference-code/${recordERC}?${fieldsParam}`;
       console.debug(`[Meta-Object Record View] Fetching record by ERC: ${url}`);
       const response = await Liferay.Util.fetch(url);
       if (response.ok) {
@@ -247,7 +213,7 @@ const loadRecordData = async (recordId, recordERC, isEditMode, state) => {
 
     // 2. Fallback to ID
     if (!record && isValidIdentifier(recordId)) {
-      const url = `${getBaseUrl(state)}/${recordId}?${fieldsParam}`;
+      const url = `${state.apiPath}/${recordId}?${fieldsParam}`;
       console.debug(`[Meta-Object Record View] Fetching record by ID: ${url}`);
       const response = await Liferay.Util.fetch(url);
       if (response.ok) {
@@ -259,7 +225,7 @@ const loadRecordData = async (recordId, recordERC, isEditMode, state) => {
     // 3. Fallback to first item in edit mode (preview)
     if (!record && isEditMode) {
       const listRes = await Liferay.Util.fetch(
-        `${getBaseUrl(state)}/?pageSize=1&${fieldsParam}`,
+        `${state.apiPath}/?pageSize=1&${fieldsParam}`,
       );
       if (listRes.ok) {
         const data = await listRes.json();
@@ -329,7 +295,7 @@ const initSelector = async (state) => {
       placeholder: "Search records to view...",
       fetchFn: async (term) => {
         const response = await Liferay.Util.fetch(
-          `${getBaseUrl(state)}/?search=${term}&pageSize=20`,
+          `${state.apiPath}/?search=${term}&pageSize=20`,
         );
         const data = await response.json();
         const titleField = state.definition.titleObjectFieldName || "id";
@@ -356,6 +322,7 @@ const initRecordView = async (isEditMode) => {
 
   const state = {
     definition: null,
+    apiPath: null,
     fields: [],
     currentRecordId: null,
   };
@@ -435,12 +402,13 @@ const initRecordView = async (isEditMode) => {
   } else {
     try {
       await Promise.all([loadScript(JSPDF_URL), loadScript(HTML2CANVAS_URL)]);
-      const defRes = await Liferay.Util.fetch(
-        `${ADMIN_API_BASE}/object-definitions/by-external-reference-code/${objectERC}`,
-      );
-      if (!defRes.ok)
+
+      const result = await resolveObjectPathByERC(objectERC);
+      if (!result.definition)
         throw new Error(`Failed to fetch definition (ERC: ${objectERC}).`);
-      state.definition = await defRes.json();
+
+      state.definition = result.definition;
+      state.apiPath = result.apiPath;
 
       // Smart Title Logic
       const currentTitle = titleEl.innerText.trim();

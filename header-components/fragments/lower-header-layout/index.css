@@ -11,7 +11,7 @@
 }
 
 .lower-header-text-color {
-	color: #2b395e;
+	color: var(--secondary, #2b395e);
 	color: var(--color-brand-secondary, #2b395e);
 }
 

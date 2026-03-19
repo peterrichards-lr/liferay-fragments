@@ -14,7 +14,7 @@
 }
 
 .multiselect-list-label .reference-mark {
-	color: #b95000;
+	color: var(--warning, #b95000);
 	font-size: 6px;
 }
 

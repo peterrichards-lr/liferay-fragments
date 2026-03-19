@@ -1,0 +1,23 @@
+{
+  "fieldSets": [
+    {
+      "fields": [
+        {
+          "defaultValue": "Continue",
+          "label": "lfr.modern-intranet.course-progress-card.button-label",
+          "description": "lfr.modern-intranet.course-progress-card.button-label-description",
+          "name": "buttonLabel",
+          "type": "text"
+        },
+        {
+          "defaultValue": "#",
+          "label": "lfr.modern-intranet.course-progress-card.button-url",
+          "description": "lfr.modern-intranet.course-progress-card.button-url-description",
+          "name": "buttonURL",
+          "type": "url"
+        }
+      ],
+      "label": "lfr.modern-intranet.behavior"
+    }
+  ]
+}

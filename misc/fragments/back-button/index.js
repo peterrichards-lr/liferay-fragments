@@ -1,9 +1,28 @@
-/**
- * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
- * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
- */
+const initBackButton = () => {
+  if (layoutMode === "view") {
+    const link = fragmentElement.querySelector(
+      `#fragment-${fragmentNamespace}-link`,
+    );
+    if (link) {
+      link.addEventListener("click", (e) => {
+        e.preventDefault();
+        if (window.history.length > 1) {
+          window.history.back();
+        } else {
+          // Fallback if no history
+          window.location.href = "/";
+        }
+      });
 
-if (layoutMode == 'view') {
-	const link = fragmentElement.querySelector(`#fragment-${fragmentEntryLinkNamespace}-link`);
-	link.addEventListener('click', () => history.back());
-}
+      // Add keyboard support if needed, though <a> already handles Enter
+      link.addEventListener("keydown", (e) => {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          link.click();
+        }
+      });
+    }
+  }
+};
+
+initBackButton();

@@ -1,0 +1,52 @@
+.welcome-banner {
+  background-color: var(--primary, #007dad);
+  background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), var(--background-image);
+  background-position: center;
+  background-size: cover;
+  color: var(--white, #fff);
+  padding: var(--spacer-10, 4rem) 0;
+  position: relative;
+}
+
+.welcome-banner-title {
+  font-family: var(--font-family-base, 'Inter', sans-serif);
+  font-size: var(--h1-font-size, 2.5rem);
+  font-weight: var(--font-weight-bold, 700);
+  margin-bottom: var(--spacer-2, 0.5rem);
+}
+
+.welcome-banner-subtext {
+  font-size: var(--font-size-lg, 1.25rem);
+  margin-bottom: 0;
+  opacity: 0.9;
+}
+
+.welcome-banner-actions {
+  display: flex;
+  gap: var(--spacer-3, 1rem);
+  justify-content: flex-end;
+}
+
+.welcome-banner-btn {
+  border-radius: var(--border-radius-lg, 0.5rem);
+  font-weight: var(--font-weight-semi-bold, 600);
+  padding: var(--spacer-2, 0.5rem) var(--spacer-4, 1rem);
+  white-space: nowrap;
+}
+
+@media (max-width: 767.98px) {
+  .welcome-banner {
+    padding: var(--spacer-6, 2rem) 0;
+    text-align: center;
+  }
+
+  .welcome-banner-actions {
+    flex-direction: column;
+    justify-content: center;
+    margin-top: var(--spacer-4, 1rem);
+  }
+
+  .welcome-banner-btn {
+    width: 100%;
+  }
+}

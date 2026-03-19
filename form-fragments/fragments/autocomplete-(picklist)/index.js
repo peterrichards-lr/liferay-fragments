@@ -1,63 +1,76 @@
 const initAutocompletePicklist = () => {
-  if (layoutMode !== "preview") {
-    const listTypeDefinitionERC = configuration.listTypeDefinitionERC;
-    const inputFieldId = configuration.inputFieldId;
+  const { picklistERC, inputFieldId } = configuration;
 
-    const input = fragmentElement.querySelector("input");
-    const list = fragmentElement.querySelector("ul");
+  const autocompleteContainer = fragmentElement.querySelector(".autocomplete");
+  const inputElement = fragmentElement.querySelector(".autocomplete-input");
+  const resultsList = fragmentElement.querySelector(".autocomplete-results");
 
-    if (input && list) {
-      const getItems = async (searchValue) => {
-        const response = await Liferay.Util.fetch(
-          `/o/headless-admin-list-type/v1.0/list-type-definitions/by-external-reference-code/${listTypeDefinitionERC}/list-type-entries?search=${searchValue}`,
-        );
-        if (!response.ok) {
-          throw new Error("Failed to fetch picklist items");
-        }
-        const data = await response.json();
-        return data.items;
-      };
+  const closeAllLists = () => {
+    resultsList.innerHTML = "";
+  };
 
-      const renderList = (items) => {
-        list.innerHTML = "";
-        items.forEach((item) => {
-          const li = document.createElement("li");
-          li.textContent = item.name_i18n;
-          li.dataset.key = item.key;
-          li.addEventListener("click", () => {
-            input.value = item.name_i18n;
-            const targetInput = document.querySelector(`#${inputFieldId}`);
-            if (targetInput) {
-              targetInput.value = item.key;
-              targetInput.dispatchEvent(new Event("change", { bubbles: true }));
-            }
-            list.style.display = "none";
-          });
-          list.appendChild(li);
-        });
-        list.style.display = items.length > 0 ? "block" : "none";
-      };
+  const getPicklistEntries = async (searchValue) => {
+    if (!Liferay.Fragment.Commons.isValidIdentifier(picklistERC)) return [];
 
-      input.addEventListener("input", async (e) => {
-        const searchValue = e.target.value;
-        if (searchValue.length >= 1) {
-          try {
-            const items = await getItems(searchValue);
-            renderList(items);
-          } catch (error) {
-            console.error(error);
-          }
-        } else {
-          list.style.display = "none";
-        }
-      });
+    const url = `/o/headless-admin-list-type/v1.0/list-type-definitions/by-external-reference-code/${picklistERC}/list-type-entries?search=${searchValue}`;
 
-      document.addEventListener("click", (e) => {
-        if (!fragmentElement.contains(e.target)) {
-          list.style.display = "none";
-        }
-      });
+    try {
+      const response = await Liferay.Util.fetch(url);
+      const data = await response.json();
+      return data.items || [];
+    } catch (error) {
+      console.error("Error fetching picklist entries:", error);
+      return [];
     }
+  };
+
+  if (inputElement && resultsList) {
+    if (Liferay.Fragment.Commons.isValidIdentifier(inputFieldId)) {
+      const inputField = document.getElementById(inputFieldId);
+
+      if (inputField) {
+        inputElement.value = inputField.value;
+      }
+    }
+
+    inputElement.addEventListener(
+      "input",
+      Liferay.Fragment.Commons.debounce(async (e) => {
+        const searchValue = e.target.value;
+
+        closeAllLists();
+
+        if (!searchValue) return;
+
+        const entries = await getPicklistEntries(searchValue);
+
+        entries.forEach((entry) => {
+          const listItem = document.createElement("li");
+          listItem.innerHTML = entry.name;
+          listItem.addEventListener("click", () => {
+            inputElement.value = entry.name;
+            if (Liferay.Fragment.Commons.isValidIdentifier(inputFieldId)) {
+              const inputField = document.getElementById(inputFieldId);
+              if (inputField) {
+                inputField.value = entry.key;
+                // Dispatch event for Liferay Forms
+                inputField.dispatchEvent(
+                  new Event("change", { bubbles: true }),
+                );
+              }
+            }
+            closeAllLists();
+          });
+          resultsList.appendChild(listItem);
+        });
+      }, 300),
+    );
+
+    document.addEventListener("click", (e) => {
+      if (!autocompleteContainer.contains(e.target)) {
+        closeAllLists();
+      }
+    });
   }
 };
 
