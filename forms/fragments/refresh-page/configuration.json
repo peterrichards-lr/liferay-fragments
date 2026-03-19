@@ -15,7 +15,15 @@
           "description": "lfr.forms.refresh-interval-seconds-description",
           "name": "refreshIntervalSec",
           "type": "text",
-          "dataType": "int"
+          "dataType": "int",
+          "typeOptions": {
+            "dependency": {
+              "enableAutoRefresh": {
+                "type": "equal",
+                "value": "true"
+              }
+            }
+          }
         },
         {
           "defaultValue": true,
@@ -29,17 +37,65 @@
           "label": "lfr.forms.refresh-link-text",
           "description": "lfr.forms.refresh-link-text-description",
           "name": "manualRefreshText",
-          "type": "text"
-        },
-        {
-          "defaultValue": ".lfr-message-success",
-          "label": "lfr.forms.refresh-condition-element",
-          "description": "lfr.forms.refresh-condition-element-description",
-          "name": "conditionElement",
-          "type": "text"
+          "type": "text",
+          "typeOptions": {
+            "dependency": {
+              "enableManualRefresh": {
+                "type": "equal",
+                "value": "true"
+              }
+            }
+          }
         }
       ],
       "label": "lfr.forms.behaviour"
+    },
+    {
+      "fields": [
+        {
+          "defaultValue": false,
+          "label": "lfr.forms.enable-refresh-trigger",
+          "description": "lfr.forms.enable-refresh-trigger-description",
+          "name": "enableRefreshTrigger",
+          "type": "checkbox"
+        },
+        {
+          "defaultValue": "Success",
+          "label": "lfr.forms.refresh-trigger-text",
+          "description": "lfr.forms.refresh-trigger-text-description",
+          "name": "refreshTriggerText",
+          "type": "text"
+        },
+        {
+          "dataType": "int",
+          "defaultValue": "500",
+          "label": "lfr.forms.wait-interval-ms",
+          "description": "lfr.forms.wait-interval-ms-description",
+          "name": "waitIntervalMs",
+          "type": "text"
+        },
+        {
+          "dataType": "int",
+          "defaultValue": "10",
+          "label": "lfr.forms.wait-count",
+          "description": "lfr.forms.wait-count-description",
+          "name": "waitCount",
+          "type": "text"
+        }
+      ],
+      "label": "lfr.forms.trigger"
+    },
+    {
+      "fields": [
+        {
+          "defaultValue": false,
+          "label": "lfr.forms.enable-debug",
+          "description": "lfr.forms.enable-debug-description",
+          "name": "enableDebug",
+          "type": "checkbox"
+        }
+      ],
+      "label": "lfr.forms.debugging"
     }
   ]
 }

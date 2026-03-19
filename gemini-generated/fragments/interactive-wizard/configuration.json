@@ -1,0 +1,67 @@
+{
+  "fieldSets": [
+    {
+      "fields": [
+        {
+          "dataType": "int",
+          "defaultValue": 3,
+          "label": "lfr.gemini-generated.number-of-steps",
+          "description": "lfr.gemini-generated.number-of-steps-description",
+          "name": "numberOfSteps",
+          "type": "text",
+          "typeOptions": {
+            "max": 10,
+            "min": 2
+          }
+        },
+        {
+          "dataType": "string",
+          "defaultValue": "Back",
+          "label": "lfr.gemini-generated.back-label",
+          "description": "lfr.gemini-generated.back-label-description",
+          "localizable": true,
+          "name": "backLabel",
+          "type": "text"
+        },
+        {
+          "dataType": "string",
+          "defaultValue": "Next",
+          "label": "lfr.gemini-generated.next-label",
+          "description": "lfr.gemini-generated.next-label-description",
+          "localizable": true,
+          "name": "nextLabel",
+          "type": "text"
+        },
+        {
+          "dataType": "string",
+          "defaultValue": "Finish",
+          "label": "lfr.gemini-generated.finish-label",
+          "description": "lfr.gemini-generated.finish-label-description",
+          "localizable": true,
+          "name": "finishLabel",
+          "type": "text"
+        }
+      ],
+      "label": "lfr.gemini-generated.wizard-options"
+    },
+    {
+      "fields": [
+        {
+          "name": "activeColor",
+          "label": "lfr.gemini-generated.active-color",
+          "description": "lfr.gemini-generated.active-color-description",
+          "type": "colorPicker",
+          "defaultValue": "var(--primary)"
+        },
+        {
+          "name": "inactiveColor",
+          "label": "lfr.gemini-generated.inactive-color",
+          "description": "lfr.gemini-generated.inactive-color-description",
+          "type": "colorPicker",
+          "defaultValue": "var(--gray-300)"
+        }
+      ],
+      "label": "lfr.gemini-generated.styling"
+    }
+  ]
+}

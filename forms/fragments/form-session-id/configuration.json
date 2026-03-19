@@ -13,7 +13,7 @@
           "defaultValue": "formSessionId",
           "label": "lfr.forms.target-field-name",
           "description": "lfr.forms.target-field-name-description",
-          "name": "inputTagName",
+          "name": "applicantRelationshipId",
           "type": "text"
         }
       ],

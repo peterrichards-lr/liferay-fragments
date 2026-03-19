@@ -3,14 +3,33 @@
     {
       "fields": [
         {
+          "defaultValue": "",
+          "label": "lfr.pulse.campaign-id",
+          "description": "lfr.pulse.campaign-id-description",
+          "name": "campaignId",
+          "type": "text"
+        },
+        {
+          "defaultValue": false,
+          "label": "lfr.pulse.force-initialization",
+          "description": "lfr.pulse.force-initialization-description",
+          "name": "force",
+          "type": "checkbox"
+        }
+      ],
+      "label": "lfr.pulse.campaign-options"
+    },
+    {
+      "fields": [
+        {
           "defaultValue": false,
           "label": "lfr.pulse.enable-debug",
-          "description": "lfr.pulse.enable-debug",
+          "description": "lfr.pulse.enable-debug-description",
           "name": "enableDebug",
           "type": "checkbox"
         }
       ],
-      "label": "lfr.pulse.general"
+      "label": "lfr.pulse.debugging"
     }
   ]
 }

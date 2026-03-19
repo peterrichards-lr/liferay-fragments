@@ -4,9 +4,17 @@
       "fields": [
         {
           "dataType": "string",
+          "defaultValue": "",
+          "label": "lfr.form-fragments.api-path",
+          "description": "lfr.form-fragments.api-path-description",
+          "name": "apiPath",
+          "type": "text"
+        },
+        {
+          "dataType": "string",
           "defaultValue": "primary",
           "label": "lfr.form-fragments.type",
-          "description": "lfr.form-fragments.type",
+          "description": "lfr.form-fragments.type-description",
           "name": "buttonType",
           "type": "select",
           "typeOptions": {
@@ -34,7 +42,7 @@
           "dataType": "string",
           "defaultValue": "nm",
           "label": "lfr.form-fragments.size",
-          "description": "lfr.form-fragments.size",
+          "description": "lfr.form-fragments.size-description",
           "name": "buttonSize",
           "type": "select",
           "typeOptions": {

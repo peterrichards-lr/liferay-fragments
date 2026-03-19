@@ -3,14 +3,100 @@
     {
       "fields": [
         {
+          "dataType": "string",
+          "defaultValue": "Pulse Action",
+          "label": "lfr.pulse.button-label",
+          "description": "lfr.pulse.button-label-description",
+          "localizable": true,
+          "name": "label",
+          "type": "text"
+        },
+        {
+          "dataType": "string",
+          "defaultValue": "",
+          "label": "lfr.pulse.link-url",
+          "description": "lfr.pulse.link-url-description",
+          "name": "linkUrl",
+          "type": "text"
+        },
+        {
+          "dataType": "string",
+          "defaultValue": "",
+          "label": "lfr.pulse.action",
+          "description": "lfr.pulse.action-description",
+          "name": "action",
+          "type": "text"
+        }
+      ],
+      "label": "lfr.pulse.general"
+    },
+    {
+      "fields": [
+        {
+          "dataType": "string",
+          "defaultValue": "primary",
+          "label": "lfr.pulse.button-type",
+          "description": "lfr.pulse.button-type-description",
+          "name": "type",
+          "type": "select",
+          "typeOptions": {
+            "validValues": [
+              {
+                "value": "primary"
+              },
+              {
+                "value": "secondary"
+              },
+              {
+                "value": "link"
+              },
+              {
+                "value": "outline-primary"
+              },
+              {
+                "value": "outline-secondary"
+              }
+            ]
+          }
+        },
+        {
+          "dataType": "string",
+          "defaultValue": "nm",
+          "label": "lfr.pulse.button-size",
+          "description": "lfr.pulse.button-size-description",
+          "name": "size",
+          "type": "select",
+          "typeOptions": {
+            "validValues": [
+              {
+                "label": "lfr.pulse.small",
+                "value": "sm"
+              },
+              {
+                "label": "lfr.pulse.normal",
+                "value": "nm"
+              },
+              {
+                "label": "lfr.pulse.large",
+                "value": "lg"
+              }
+            ]
+          }
+        }
+      ],
+      "label": "lfr.pulse.style"
+    },
+    {
+      "fields": [
+        {
           "defaultValue": false,
           "label": "lfr.pulse.enable-debug",
-          "description": "lfr.pulse.enable-debug",
+          "description": "lfr.pulse.enable-debug-description",
           "name": "enableDebug",
           "type": "checkbox"
         }
       ],
-      "label": "lfr.pulse.general"
+      "label": "lfr.pulse.debugging"
     }
   ]
 }

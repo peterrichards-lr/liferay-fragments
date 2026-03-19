@@ -4,6 +4,7 @@
       "fields": [
         {
           "defaultValue": true,
+          "description": "lfr.header-components.enable-notification-indicator-description",
           "label": "lfr.header-components.enable-notification-indicator",
           "name": "enableNotificationIndicator",
           "type": "checkbox"
@@ -11,18 +12,21 @@
         {
           "dataType": "int",
           "defaultValue": "0",
+          "description": "lfr.header-components.notification-count-description",
           "label": "lfr.header-components.notification-count",
           "name": "notificationCount",
           "type": "text"
         },
         {
           "defaultValue": true,
+          "description": "lfr.header-components.enable-custom-link-description",
           "label": "lfr.header-components.enable-custom-link",
           "name": "enableCustomLink",
           "type": "checkbox"
         },
         {
           "defaultValue": "/notifications",
+          "description": "lfr.header-components.custom-notification-link-description",
           "label": "lfr.header-components.custom-notification-link",
           "name": "customNotificationLink",
           "type": "text"
@@ -34,6 +38,7 @@
       "fields": [
         {
           "defaultValue": false,
+          "description": "lfr.header-components.enable-sign-in-link-description",
           "label": "lfr.header-components.enable-sign-in-link",
           "name": "enableSignInLink",
           "type": "checkbox"

@@ -1,40 +1,90 @@
 ---
 name: liferay-fragment-developer
-description: Expert guidance for developing Liferay Fragments. Use when creating, modifying, or auditing Liferay Fragments to ensure compliance with architectural, accessibility, responsiveness, and Meridian theme standards.
+description:
+  Expert guidance for developing Liferay Fragments. Use when creating,
+  modifying, or auditing Liferay Fragments to ensure compliance with
+  architectural, accessibility, responsiveness, and multi-theme (Classic,
+  Dialect, Meridian) standards.
 ---
 
 # Liferay Fragment Developer Skill
 
-This skill provides comprehensive procedural knowledge and architectural standards for building robust, modern Liferay Fragments.
+This skill provides comprehensive procedural knowledge and architectural
+standards for building robust, modern Liferay Fragments.
 
 ## Core Workflows
 
 ### 1. New Fragment Creation
+
 - Ensure `fragment.json` correctly points to all assets.
 - Create `configuration.json` using standard field sets and types.
-- Implement the "Edit Mode Previews & Alerts" pattern in `index.html` and `index.js`.
-- Adhere to the Meridian Theme by using CSS tokens.
-- **Dynamic Object Discovery**: Never hardcode Object API paths (e.g., `/o/c/waterreadings`). Always use a configuration field for the **Object External Reference Code (ERC)**.
-  - Since there is no "by-rest-context-path" endpoint in the Object Admin API, fetch the definition via `/o/object-admin/v1.0/object-definitions/by-external-reference-code/{ERC}`.
-  - Use the returned `restContextPath` and `scope` to construct the correct data URL (e.g., append `/scopes/{siteId}` if scope is `site`).
+- **Shared Resources**: Every fragment MUST include a `fragment-build.json` file
+  if it requires shared logic from `shared-resources/`.
+  - Declare dependencies: `"sharedResources": ["dom.js", "discovery.js"]`.
+- **Edit Mode Hygiene**: Implement the "Edit Mode Previews & Alerts" pattern
+  using `Liferay.Fragment.Commons` helpers.
+  - Use `renderConfigWarning` for missing settings.
+  - Use `renderEmptyState` for zero-result scenarios.
+- **Theme Awareness**: Fragments MUST be theme-aware.
+  - Refer to `docs/THEMES.md` for high-fidelity CSS tokens and icon spritemaps.
+  - Support **Classic**, **Dialect**, and **Meridian** by using semantic
+    variables (e.g., `var(--primary)`, `var(--card-background-color)`).
+- **Dynamic Object Discovery**: Never hardcode Object API paths.
+  - Fetch definition via
+    `/o/object-admin/v1.0/object-definitions/by-rest-context-path/{path}`.
+  - Use the returned `scope` to construct the correct data URL (append
+    `/scopes/{siteId}` if scope is `site`).
+- **Standardized API Interaction**: Always use `Liferay.Util.fetch` for standard
+  Liferay APIs to auto-handle CSRF and authentication.
 
 ### 2. Auditing Fragments
-- Check for global variable leakage (use `fragmentElement`).
-- Verify null-safety in FreeMarker (`!`).
-- Ensure all icon-only buttons have `aria-label`.
-- Validate that drag/swipe interactions use Pointer Events.
-- **Portability Check**: Flag any hardcoded URLs or environment-specific paths for removal.
+
+- **Explicit Metadata**: Verify that `fragment.json` explicitly defines
+  `htmlPath`, `jsPath`, `cssPath`, and `configurationPath`. Defaults are not
+  allowed.
+- **Field Integrity**: Ensure every `configuration.fieldName` referenced in code
+  (JS, HTML, FTL) is defined in `configuration.json`.
+- **Localization Hygiene**:
+  - Verify that ALL labels and descriptions (including those in `validValues`)
+    have corresponding entries in `Language_en_US.properties`.
+  - Ensure no "lazy keys" exist (e.g., `key=key`). Values MUST be meaningful
+    English.
+  - Verify that every field has a `description` attribute.
+- **Configuration Dependencies**: Verify that dependent fields and their source
+  fields reside within the same field set in `configuration.json`.
+- **Scoped Internal Selectors**: Always use `fragmentElement.querySelector` for
+  internal state to prevent instance collision.
+- **Modern API Usage**: Verify the use of `layoutMode` instead of legacy body
+  class checks.
+- **Top-Level Logic**: Ensure all JS is encapsulated in an initialization
+  function; top-level `return` statements are prohibited.
+- **Robust Identifiers**: Use a strict validation helper (`isValidIdentifier`)
+  to block `"undefined"`, `"null"`, `"0"`, and `"[object object]"`.
+- **CSS Utility Usage**: Verify that `d-none` is used instead of inline
+  `style="display: none"`. Ensure dynamic styles use CSS variables via
+  `setProperty`.
+- **Freemarker Safety**: Verify null-safety in FreeMarker (`!`). Ensure
+  `.no-transform` files exist if FreeMarker syntax is present in JS or CSS.
+- **Accessibility**: Ensure all icon-only buttons have `aria-label`.
 
 ### 3. Deprecation Protocol
-- **Naming**: Append `(DEPRECATED)` to the `name` in `fragment.json`.
-- **Description**: Add a clear description explaining why the fragment is deprecated and what the recommended alternative is.
-- **Visual Warning**: Add a conditional alert in `index.html` that is only visible in the Page Editor/Fragment Editor to notify administrators of the deprecation.
+
+- **Metadata**: Append `(Deprecated)` to the `name` in `fragment.json`.
+- **Documentation**: Add a warning block at the top of the fragment's `.md` file
+  explaining the reason and recommending modern alternatives.
+- **Audit**: Mark the fragment as `DEPR` in the `todo.md` readiness audit.
 
 ## Reference Guides
 
-- **[Lifecycle & Environment](./references/lifecycle.md)**: Global objects, initialization, and FreeMarker rules.
-- **[Best Practices](./references/best-practices.md)**: Configuration nesting, editable types, and scoping.
-- **[UI & Interaction](./references/ui-standards.md)**: Edit mode hygiene, Pointer Events, and functional pagination.
-- **[Object Integration](./references/object-integration.md)**: Metadata discovery and strict field filtering.
-- **[Meridian Theme](./references/theme-meridian.md)**: CSS tokens and brand integration rules.
-- **[AI Integration](./references/ai-chat-interface.md)**: Standard JSON interface for AI components.
+- **[Lifecycle & Environment](./references/lifecycle.md)**: Global objects,
+  initialization, and FreeMarker rules.
+- **[Best Practices](./references/best-practices.md)**: Configuration nesting,
+  dependencies, and scoping.
+- **[UI & Interaction](./references/ui-standards.md)**: Edit mode hygiene,
+  Mappable Field Ergonomics, and A11y.
+- **[Object Integration](./references/object-integration.md)**: Metadata
+  discovery and scope handling.
+- [Theme Standards](./references/themes.md): Multi-theme tokens and brand
+  integration rules.
+- [AI Integration](./references/ai-chat-interface.md): Standard JSON interface
+  for AI components.

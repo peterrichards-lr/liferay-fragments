@@ -6,6 +6,7 @@
           "dataType": "string",
           "defaultValue": "user",
           "label": "lfr.header-components.icon-name",
+          "description": "lfr.header-components.icon-name-description",
           "name": "iconName",
           "type": "text"
         },
@@ -13,6 +14,7 @@
           "dataType": "string",
           "defaultValue": "1rem",
           "label": "lfr.header-components.icon-size",
+          "description": "lfr.header-components.icon-size-description",
           "name": "iconSize",
           "type": "select",
           "typeOptions": {

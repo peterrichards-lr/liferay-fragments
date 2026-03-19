@@ -32,17 +32,11 @@ A truly dynamic form that auto-generates inputs based on a Liferay Object's defi
 
 In the Page Editor, specific configuration fields are displayed in a styled container (`.meta-editor-mappable-fields`) at the bottom of the fragment. This allows editors to map dynamic data (like an ERC from a collection) directly to the fragment without using the sidebar.
 
-## External Selection (JS Event)
+## Technical Infrastructure
 
-You can trigger the form to load a specific record from another fragment (like a table or chart) using a custom event. The form intelligently fetches the record based on whether you provide a numeric ID or a string ERC:
+This fragment utilizes the **Shared Resources Architecture**:
 
-```javascript
-window.dispatchEvent(
-  new CustomEvent("lfr-object-form-select", {
-    detail: {
-      objectERC: "COMPANY_MILESTONE",
-      recordId: "12345", // Or use recordERC: "MY_ERC_VALUE"
-    },
-  }),
-);
-```
+- **`discovery.js`**: Uses `resolveObjectPath` and `resolveObjectPathByERC` to dynamically discover REST endpoints.
+- **`localization.js`**: Uses `getLocalizedValue` for field labels and Object names.
+- **`dom.js`**: Uses `debounce` for searchable select inputs.
+- **`validation.js`**: Uses `isValidIdentifier` for robust record and configuration checking.

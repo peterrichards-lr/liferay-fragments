@@ -22,7 +22,7 @@
           "defaultValue": "7",
           "label": "lfr.dashboard-components.max-entries",
           "description": "lfr.dashboard-components.max-entries-description",
-          "name": "maxEntires",
+          "name": "maxEntries",
           "dataType": "int",
           "type": "text"
         },
@@ -30,7 +30,7 @@
           "defaultValue": "10000",
           "label": "lfr.dashboard-components.target-steps",
           "description": "lfr.dashboard-components.target-steps-description",
-          "name": "targetSteps",
+          "name": "stepsTarget",
           "dataType": "int",
           "type": "text"
         },

@@ -5,6 +5,7 @@
         {
           "defaultValue": false,
           "label": "lfr.header-components.enable-debug",
+          "description": "lfr.header-components.enable-debug-description",
           "name": "enableDebug",
           "type": "checkbox"
         }
@@ -16,36 +17,42 @@
         {
           "defaultValue": true,
           "label": "lfr.header-components.enable-menu-text",
+          "description": "lfr.header-components.enable-menu-text-description",
           "name": "enableMenuText",
           "type": "checkbox"
         },
         {
           "defaultValue": false,
           "label": "lfr.header-components.run-menu-text-onload",
+          "description": "lfr.header-components.run-menu-text-onload-description",
           "name": "runMenuTextOnload",
           "type": "checkbox"
         },
         {
           "defaultValue": "Register",
           "label": "lfr.header-components.menu-text",
+          "description": "lfr.header-components.menu-text-description",
           "name": "menuText",
           "type": "text"
         },
         {
           "defaultValue": true,
           "label": "lfr.header-components.enable-register-page",
+          "description": "lfr.header-components.enable-register-page-description",
           "name": "enableRegisterPage",
           "type": "checkbox"
         },
         {
           "defaultValue": true,
           "label": "lfr.header-components.run-register-page-onload",
+          "description": "lfr.header-components.run-register-page-onload-description",
           "name": "runRegisterPageOnload",
           "type": "checkbox"
         },
         {
           "defaultValue": "/web/liferaybotics/register",
           "label": "lfr.header-components.register-page-url",
+          "description": "lfr.header-components.register-page-url-description",
           "name": "registerPageUrl",
           "type": "text"
         }

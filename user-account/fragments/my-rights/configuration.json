@@ -66,29 +66,29 @@
         {
           "defaultValue": "/o/headless-admin-user/v1.0/my-user-account/roles",
           "label": "lfr.user-account.roles-endpoint-url",
-          "description": "lfr.user-account.roles-endpoint-url",
+          "description": "lfr.user-account.roles-endpoint-url-description",
           "name": "rolesEndpointUrl",
           "type": "text"
         },
         {
           "defaultValue": "/o/headless-admin-user/v1.0/my-user-account/sites",
           "label": "lfr.user-account.sites-endpoint-url",
-          "description": "lfr.user-account.sites-endpoint-url",
+          "description": "lfr.user-account.sites-endpoint-url-description",
           "name": "sitesEndpointUrl",
           "type": "text"
         },
         {
           "defaultValue": "/o/headless-admin-user/v1.0/my-user-account/user-groups",
           "label": "lfr.user-account.user-groups-endpoint-url",
-          "description": "lfr.user-account.user-groups-endpoint-url",
+          "description": "lfr.user-account.user-groups-endpoint-url-description",
           "name": "userGroupsEndpointUrl",
           "type": "text"
         },
         {
           "defaultValue": "LIFERAY_FORRESTER_DEMO_USER_AGENT",
           "label": "lfr.user-account.user-agent-application-erc",
-          "description": "lfr.user-account.user-agent-application-erc",
-          "name": "userAgentApplicationExternalReferenceCode",
+          "description": "lfr.user-account.user-agent-application-erc-description",
+          "name": "userAgentAppExtRefCode",
           "type": "text"
         }
       ],

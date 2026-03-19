@@ -51,6 +51,13 @@
     {
       "fields": [
         {
+          "defaultValue": "Activity Heatmap",
+          "description": "lfr.gemini-generated.chart-title-description",
+          "label": "lfr.gemini-generated.chart-title",
+          "name": "chartTitle",
+          "type": "text"
+        },
+        {
           "defaultValue": "var(--primary)",
           "description": "lfr.gemini-generated.base-color-description",
           "label": "lfr.gemini-generated.base-color",

@@ -29,6 +29,35 @@
     {
       "fields": [
         {
+          "dataType": "string",
+          "defaultValue": "",
+          "label": "lfr.content.link-url",
+          "description": "lfr.content.link-url",
+          "name": "linkUrl",
+          "type": "text"
+        },
+        {
+          "dataType": "string",
+          "defaultValue": "",
+          "label": "lfr.content.title",
+          "description": "lfr.content.title-desc",
+          "name": "title",
+          "type": "text"
+        },
+        {
+          "dataType": "string",
+          "defaultValue": "coin",
+          "label": "lfr.content.icon-identifier",
+          "description": "lfr.content.icon-identifier-desc",
+          "name": "icon",
+          "type": "text"
+        }
+      ],
+      "label": "lfr.content.metadata-options"
+    },
+    {
+      "fields": [
+        {
           "defaultValue": true,
           "label": "lfr.content.show-icon",
           "description": "lfr.content.show-icon",
@@ -36,22 +65,14 @@
           "type": "checkbox"
         },
         {
-          "defaultValue": "#d7e5ff",
+          "defaultValue": "var(--primary-l3, #d7e5ff)",
           "label": "lfr.content.background-color",
           "description": "lfr.content.background-color",
           "name": "backgroundColor",
           "type": "colorPicker"
         },
         {
-          "dataType": "string",
-          "defaultValue": "coin",
-          "label": "lfr.content.default-symbol",
-          "description": "lfr.content.default-symbol",
-          "name": "defaultIcon",
-          "type": "text"
-        },
-        {
-          "defaultValue": "#0960ff",
+          "defaultValue": "var(--primary, #0b5fff)",
           "label": "lfr.content.icon-color",
           "description": "lfr.content.icon-color",
           "name": "iconColor",
@@ -65,7 +86,7 @@
           "type": "length"
         }
       ],
-      "label": "lfr.content.icon"
+      "label": "lfr.content.icon-styling"
     },
     {
       "fields": [

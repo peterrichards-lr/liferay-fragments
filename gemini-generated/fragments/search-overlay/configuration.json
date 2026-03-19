@@ -1,0 +1,46 @@
+{
+  "fieldSets": [
+    {
+      "fields": [
+        {
+          "dataType": "string",
+          "defaultValue": "Search for content, pages, products...",
+          "label": "lfr.gemini-generated.search-placeholder",
+          "description": "lfr.gemini-generated.search-placeholder-description",
+          "localizable": true,
+          "name": "placeholder",
+          "type": "text"
+        },
+        {
+          "dataType": "string",
+          "defaultValue": "Search",
+          "label": "lfr.gemini-generated.search-button-label",
+          "description": "lfr.gemini-generated.search-button-label-description",
+          "localizable": true,
+          "name": "buttonLabel",
+          "type": "text"
+        }
+      ],
+      "label": "lfr.gemini-generated.search-options"
+    },
+    {
+      "fields": [
+        {
+          "name": "overlayBgColor",
+          "label": "lfr.gemini-generated.overlay-bg-color",
+          "description": "lfr.gemini-generated.overlay-bg-color-description",
+          "type": "colorPicker",
+          "defaultValue": "var(--white, #ffffff)"
+        },
+        {
+          "name": "accentColor",
+          "label": "lfr.gemini-generated.accent-color",
+          "description": "lfr.gemini-generated.accent-color-description",
+          "type": "colorPicker",
+          "defaultValue": "var(--primary, #0b5fff)"
+        }
+      ],
+      "label": "lfr.gemini-generated.styling"
+    }
+  ]
+}

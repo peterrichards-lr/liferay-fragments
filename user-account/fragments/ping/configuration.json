@@ -66,7 +66,7 @@
         {
           "defaultValue": "/o/headless-admin-user/v1.0/my-user-account",
           "label": "lfr.user-account.endpoint-url",
-          "description": "lfr.user-account.endpoint-url",
+          "description": "lfr.user-account.endpoint-url-description",
           "name": "endpointUrl",
           "type": "text"
         }

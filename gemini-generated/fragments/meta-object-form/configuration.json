@@ -87,6 +87,7 @@
         {
           "defaultValue": "Update Entry",
           "label": "lfr.gemini-generated.form-title",
+          "description": "lfr.gemini-generated.form-title-description",
           "name": "formTitle",
           "type": "text"
         }

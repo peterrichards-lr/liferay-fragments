@@ -48,6 +48,13 @@
           "label": "lfr.content.default-page-url",
           "name": "defaultPageUrl",
           "type": "text"
+        },
+        {
+          "defaultValue": false,
+          "description": "lfr.content.open-in-new-tab-description",
+          "label": "lfr.content.open-in-new-tab",
+          "name": "openInNewTab",
+          "type": "checkbox"
         }
       ],
       "label": "lfr.content.page-url"

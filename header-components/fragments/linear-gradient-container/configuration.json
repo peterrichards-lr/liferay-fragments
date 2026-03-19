@@ -3,26 +3,55 @@
     {
       "fields": [
         {
-          "label": "lfr.header-components.start",
-          "name": "start",
-          "type": "colorPicker",
-          "defaultValue": "#000000"
-        },
-        {
-          "label": "lfr.header-components.end",
-          "name": "end",
-          "type": "colorPicker",
-          "defaultValue": "#ffffff"
-        },
-        {
-          "name": "direction",
-          "label": "lfr.header-components.direction",
-          "type": "text",
           "dataType": "string",
-          "defaultValue": "90deg"
+          "defaultValue": "var(--black, #000000)",
+          "label": "lfr.header-components.colour-1",
+          "description": "lfr.header-components.colour-1-description",
+          "name": "colour1",
+          "type": "colorPicker"
+        },
+        {
+          "dataType": "string",
+          "defaultValue": "var(--white, #ffffff)",
+          "label": "lfr.header-components.colour-2",
+          "description": "lfr.header-components.colour-2-description",
+          "name": "colour2",
+          "type": "colorPicker"
+        },
+        {
+          "dataType": "string",
+          "defaultValue": "0deg",
+          "label": "lfr.header-components.angle",
+          "description": "lfr.header-components.angle-description",
+          "name": "angle",
+          "type": "text"
+        },
+        {
+          "dataType": "string",
+          "defaultValue": "0deg",
+          "label": "lfr.header-components.direction",
+          "description": "lfr.header-components.direction-description",
+          "name": "direction",
+          "type": "text"
+        },
+        {
+          "dataType": "string",
+          "defaultValue": "var(--black, #000000)",
+          "label": "lfr.header-components.start-colour",
+          "description": "lfr.header-components.start-colour-description",
+          "name": "start",
+          "type": "colorPicker"
+        },
+        {
+          "dataType": "string",
+          "defaultValue": "var(--white, #ffffff)",
+          "label": "lfr.header-components.end-colour",
+          "description": "lfr.header-components.end-colour-description",
+          "name": "end",
+          "type": "colorPicker"
         }
       ],
-      "label": "lfr.header-components.linear-gradient"
+      "label": "lfr.header-components.gradient-options"
     }
   ]
 }

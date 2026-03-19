@@ -60,6 +60,85 @@
           "description": "lfr.responsive-menus.max-width",
           "name": "maximumMenuWidth",
           "type": "length"
+        },
+        {
+          "dataType": "string",
+          "defaultValue": "top",
+          "label": "lfr.responsive-menus.position",
+          "description": "lfr.responsive-menus.position-description",
+          "name": "position",
+          "type": "select",
+          "typeOptions": {
+            "validValues": [
+              {
+                "label": "lfr.responsive-menus.top",
+                "value": "top"
+              },
+              {
+                "label": "lfr.responsive-menus.bottom",
+                "value": "bottom"
+              }
+            ]
+          }
+        },
+        {
+          "dataType": "string",
+          "defaultValue": "fixed-top",
+          "label": "lfr.responsive-menus.stickiness",
+          "description": "lfr.responsive-menus.stickiness-description",
+          "name": "stickiness",
+          "type": "select",
+          "typeOptions": {
+            "validValues": [
+              {
+                "label": "lfr.responsive-menus.fixed-top",
+                "value": "fixed-top"
+              },
+              {
+                "label": "lfr.responsive-menus.sticky-top",
+                "value": "sticky-top"
+              },
+              {
+                "label": "lfr.responsive-menus.none",
+                "value": ""
+              }
+            ]
+          }
+        },
+        {
+          "dataType": "string",
+          "defaultValue": "md",
+          "label": "lfr.responsive-menus.breakpoint",
+          "description": "lfr.responsive-menus.breakpoint-description",
+          "name": "breakpoint",
+          "type": "select",
+          "typeOptions": {
+            "validValues": [
+              {
+                "label": "lfr.responsive-menus.sm",
+                "value": "sm"
+              },
+              {
+                "label": "lfr.responsive-menus.md",
+                "value": "md"
+              },
+              {
+                "label": "lfr.responsive-menus.lg",
+                "value": "lg"
+              },
+              {
+                "label": "lfr.responsive-menus.xl",
+                "value": "xl"
+              }
+            ]
+          }
+        },
+        {
+          "defaultValue": false,
+          "label": "lfr.responsive-menus.hide-on-scroll",
+          "description": "lfr.responsive-menus.hide-on-scroll-description",
+          "name": "hideOnScroll",
+          "type": "checkbox"
         }
       ],
       "label": "lfr.responsive-menus.general"
@@ -493,6 +572,66 @@
     {
       "fields": [
         {
+          "dataType": "string",
+          "defaultValue": "navbar-light",
+          "label": "lfr.responsive-menus.theme",
+          "description": "lfr.responsive-menus.theme-description",
+          "name": "theme",
+          "type": "select",
+          "typeOptions": {
+            "validValues": [
+              {
+                "label": "lfr.responsive-menus.light",
+                "value": "navbar-light"
+              },
+              {
+                "label": "lfr.responsive-menus.dark",
+                "value": "navbar-dark"
+              }
+            ]
+          }
+        },
+        {
+          "dataType": "string",
+          "defaultValue": "bg-light",
+          "label": "lfr.responsive-menus.background-color",
+          "description": "lfr.responsive-menus.background-color-description",
+          "name": "backgroundColor",
+          "type": "select",
+          "typeOptions": {
+            "validValues": [
+              {
+                "label": "lfr.responsive-menus.light",
+                "value": "bg-light"
+              },
+              {
+                "label": "lfr.responsive-menus.dark",
+                "value": "bg-dark"
+              },
+              {
+                "label": "lfr.responsive-menus.primary",
+                "value": "bg-primary"
+              },
+              {
+                "label": "lfr.responsive-menus.transparent",
+                "value": "bg-transparent"
+              },
+              {
+                "label": "lfr.responsive-menus.white",
+                "value": "bg-white"
+              }
+            ]
+          }
+        },
+        {
+          "dataType": "string",
+          "defaultValue": "var(--gray-300, #bbb)",
+          "label": "lfr.responsive-menus.border-color",
+          "description": "lfr.responsive-menus.border-color-description",
+          "name": "borderColor",
+          "type": "colorPicker"
+        },
+        {
           "defaultValue": true,
           "label": "lfr.responsive-menus.menu-header",
           "description": "lfr.responsive-menus.menu-header",
@@ -500,7 +639,7 @@
           "type": "checkbox"
         }
       ],
-      "label": "lfr.responsive-menus.editor"
+      "label": "lfr.responsive-menus.styling"
     },
     {
       "fields": [
@@ -513,15 +652,7 @@
         },
         {
           "dataType": "int",
-          "defaultValue": "0",
-          "description": "lfr.responsive-menus.debounce-delay-description",
-          "label": "lfr.responsive-menus.debounce-delay",
-          "name": "debounceDelay",
-          "type": "text"
-        },
-        {
-          "dataType": "int",
-          "defaultValue": "100",
+          "defaultValue": 100,
           "description": "lfr.responsive-menus.initialize-delay-description",
           "label": "lfr.responsive-menus.initialize-delay",
           "name": "initializeDelay",

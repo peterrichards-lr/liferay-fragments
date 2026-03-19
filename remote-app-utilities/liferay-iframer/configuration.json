@@ -6,7 +6,7 @@
           "defaultValue": "https://www.liferay.com",
           "label": "lfr.remote-app-utilities.iframe-url",
           "description": "lfr.remote-app-utilities.iframe-url-description",
-          "name": "iframeUrl",
+          "name": "url",
           "type": "text"
         },
         {

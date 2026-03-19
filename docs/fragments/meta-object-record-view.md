@@ -45,3 +45,12 @@ window.dispatchEvent(
   }),
 );
 ```
+
+## Technical Infrastructure
+
+This fragment utilizes the **Shared Resources Architecture**:
+
+- **`discovery.js`**: Uses `resolveObjectPathByERC` to dynamically discover the REST endpoint.
+- **`localization.js`**: Uses `getLocalizedValue` for field labels and data.
+- **`dom.js`**: Uses `debounce` for search and filter actions.
+- **`validation.js`**: Uses `isValidIdentifier` for robust record and configuration checking.

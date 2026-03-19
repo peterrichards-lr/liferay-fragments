@@ -43,7 +43,7 @@
         {
           "label": "lfr.commerce.cookie-expiry-seconds",
           "description": "lfr.commerce.cookie-expiry-seconds-description",
-          "name": "cookieExpirySections",
+          "name": "cookieExpirySeconds",
           "defaultValue": "10",
           "type": "text",
           "typeOptions": {

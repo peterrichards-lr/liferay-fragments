@@ -1,22 +1,25 @@
 # Object Metadata Integration
 
-## Metadata Discovery
-1. **Fetch Definition**: Use `/o/object-admin/v1.0/object-definitions/by-external-reference-code/{erc}`.
-2. **Dynamic Rendering**: Use the `type` property (e.g., `String`, `DateTime`) from metadata to decide UI components.
-3. **Validation**: Use the `required` property from metadata for client-side enforcement.
+## Metadata Discovery Pattern
 
-## Strict Field Filtering
-If a fragment provides "Selected Fields" configuration:
-- Map through the user's input list to select fields from the definition.
-- Filter out any fields NOT explicitly requested.
-- Maintain the user's specified display order.
+1. **Fetch Definition**: Use `/o/object-admin/v1.0/object-definitions/by-rest-context-path/{objectPath}`.
+2. **Determine Scope**: If the definition's `scope` is `site`, append `/scopes/${siteId}` to the base API path.
+3. **Pre-resolution**: Resolve this path during initialization to avoid repeated Admin API calls during runtime execution.
 
-## API Integrity & Portability
-- **No Hardcoded Paths**: Never hardcode `/o/c/...` paths or absolute URLs in JavaScript.
-- **Configurable Context**: Always provide a configuration field for the user to input the Object's **REST Context Path** (e.g., `heartrates`).
-- **Relationship Portability**: If filtering by relationship, make the **Relationship Field Name** (e.g., `r_ticket_c_ticketId`) configurable, as these can vary between environments.
-- **Batch Endpoints**: Ensure batch endpoints (`/batch`) are constructed dynamically from the configurable base path.
+## Smart Title Priority
+
+For fragments with auto-defaulting titles (e.g., "Sales Reports"):
+
+- **Rule**: Manually configured titles (e.g., `configuration.chartTitle`) MUST take precedence.
+- **Logic**: Check if the configuration field is non-empty. Only fall back to the evaluated object label if the field is empty or set to a system default.
+
+## API Portability
+
+- **No Hardcoded Paths**: Never hardcode `/o/c/...` paths. Use configuration fields for **Object REST Context Paths**.
+- **Dynamic Endpoints**: Construct batch (`/batch`) or scoped endpoints dynamically from the resolved base path.
+- **Robust Identifiers**: Always validate record IDs/ERCs using `isValidIdentifier()` before making network calls.
 
 ## API Permissions
-- All fragments making API calls MUST include user-friendly alert messages for 401/403 errors.
-- Construct URLs carefully: `restContextPath` from the definition often includes the `/o/c/` prefix.
+
+- **User Feedback**: Fragments MUST handle 401/403 errors gracefully by displaying a user-friendly alert or toast.
+- **Authentication**: Use `Liferay.Util.fetch` to automatically include required security tokens.

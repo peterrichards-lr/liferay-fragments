@@ -6,24 +6,32 @@
           "defaultValue": "[]",
           "label": "lfr.forms.form-populator-mapping",
           "description": "lfr.forms.form-populator-mapping-description",
-          "name": "mapping",
+          "name": "fieldMapping",
           "type": "text"
         },
         {
-          "defaultValue": "5",
-          "label": "lfr.forms.retry-count",
-          "description": "lfr.forms.retry-count-description",
-          "name": "retryCount",
-          "type": "text",
-          "dataType": "int"
+          "dataType": "int",
+          "defaultValue": "10",
+          "label": "lfr.forms.wait-count",
+          "description": "lfr.forms.wait-count-description",
+          "name": "waitCount",
+          "type": "text"
         },
         {
+          "dataType": "int",
           "defaultValue": "500",
-          "label": "lfr.forms.retry-interval",
-          "description": "lfr.forms.retry-interval-description",
-          "name": "retryInterval",
-          "type": "text",
-          "dataType": "int"
+          "label": "lfr.forms.wait-interval-ms",
+          "description": "lfr.forms.wait-interval-ms-description",
+          "name": "waitIntervalMs",
+          "type": "text"
+        },
+        {
+          "dataType": "int",
+          "defaultValue": "50",
+          "label": "lfr.forms.type-text-delay",
+          "description": "lfr.forms.type-text-delay-description",
+          "name": "typeTextDelay",
+          "type": "text"
         }
       ],
       "label": "lfr.forms.mapping"

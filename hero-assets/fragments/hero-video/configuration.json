@@ -4,6 +4,7 @@
       "fields": [
         {
           "label": "lfr.hero-assets.video",
+          "description": "lfr.hero-assets.video-description",
           "name": "video",
           "type": "itemSelector",
           "typeOptions": {
@@ -13,24 +14,28 @@
         {
           "defaultValue": true,
           "label": "lfr.hero-assets.autoplay",
+          "description": "lfr.hero-assets.autoplay-description",
           "name": "autoplay",
           "type": "checkbox"
         },
         {
           "defaultValue": true,
           "label": "lfr.hero-assets.muted",
+          "description": "lfr.hero-assets.muted-description",
           "name": "muted",
           "type": "checkbox"
         },
         {
           "defaultValue": true,
           "label": "lfr.hero-assets.loop",
+          "description": "lfr.hero-assets.loop-description",
           "name": "loop",
           "type": "checkbox"
         },
         {
           "defaultValue": true,
           "label": "lfr.hero-assets.controls-label",
+          "description": "lfr.hero-assets.controls-label-description",
           "name": "controls",
           "type": "checkbox"
         },
@@ -38,6 +43,7 @@
           "dataType": "string",
           "defaultValue": "auto",
           "label": "lfr.hero-assets.preload",
+          "description": "lfr.hero-assets.preload-description",
           "name": "preload",
           "type": "select",
           "typeOptions": {
@@ -65,14 +71,24 @@
         {
           "defaultValue": false,
           "label": "lfr.hero-assets.use-custom-control",
+          "description": "lfr.hero-assets.use-custom-control-description",
           "name": "useCustomControls",
           "type": "checkbox"
         },
         {
           "defaultValue": "var(--primary)",
           "label": "lfr.hero-assets.control-colour",
+          "description": "lfr.hero-assets.control-colour-description",
           "name": "controlColor",
-          "type": "colorPicker"
+          "type": "colorPicker",
+          "typeOptions": {
+            "dependency": {
+              "useCustomControls": {
+                "type": "equal",
+                "value": "true"
+              }
+            }
+          }
         }
       ],
       "label": "lfr.hero-assets.controls"
@@ -82,12 +98,14 @@
         {
           "defaultValue": "100%",
           "label": "lfr.hero-assets.width",
+          "description": "lfr.hero-assets.width-description",
           "name": "width",
           "type": "length"
         },
         {
           "defaultValue": "auto",
           "label": "lfr.hero-assets.height",
+          "description": "lfr.hero-assets.height-description",
           "name": "height",
           "type": "length"
         }
@@ -99,24 +117,28 @@
         {
           "defaultValue": "0px",
           "label": "lfr.hero-assets.margin-left",
+          "description": "lfr.hero-assets.margin-left-description",
           "name": "marginLeft",
           "type": "length"
         },
         {
           "defaultValue": "0px",
           "label": "lfr.hero-assets.margin-right",
+          "description": "lfr.hero-assets.margin-right-description",
           "name": "marginRight",
           "type": "length"
         },
         {
           "defaultValue": "0px",
           "label": "lfr.hero-assets.margin-top",
+          "description": "lfr.hero-assets.margin-top-description",
           "name": "marginTop",
           "type": "length"
         },
         {
           "defaultValue": "0px",
           "label": "lfr.hero-assets.margin-bottom",
+          "description": "lfr.hero-assets.margin-bottom-description",
           "name": "marginBottom",
           "type": "length"
         }
@@ -128,6 +150,7 @@
         {
           "defaultValue": false,
           "label": "lfr.hero-assets.enable-debug",
+          "description": "lfr.hero-assets.enable-debug-description",
           "name": "enableDebug",
           "type": "checkbox"
         }

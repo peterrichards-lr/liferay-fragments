@@ -6,7 +6,35 @@
           "defaultValue": "true",
           "label": "lfr.widget-modifiers.show-tabs",
           "description": "lfr.widget-modifiers.show-tabs-description",
-          "name": "showTabs",
+          "name": "showRead",
+          "type": "checkbox"
+        },
+        {
+          "defaultValue": "true",
+          "label": "lfr.widget-modifiers.show-buttons",
+          "description": "lfr.widget-modifiers.show-buttons-description",
+          "name": "showButtons",
+          "type": "checkbox"
+        },
+        {
+          "defaultValue": "true",
+          "label": "lfr.widget-modifiers.show-context-menu",
+          "description": "lfr.widget-modifiers.show-context-menu-description",
+          "name": "showContextMenu",
+          "type": "checkbox"
+        },
+        {
+          "defaultValue": "true",
+          "label": "lfr.widget-modifiers.show-creator-info",
+          "description": "lfr.widget-modifiers.show-creator-info-description",
+          "name": "showCreatorInfo",
+          "type": "checkbox"
+        },
+        {
+          "defaultValue": "false",
+          "label": "lfr.widget-modifiers.use-clay-alerts",
+          "description": "lfr.widget-modifiers.use-clay-alerts-description",
+          "name": "useClayAlerts",
           "type": "checkbox"
         },
         {
@@ -15,57 +43,119 @@
           "description": "lfr.widget-modifiers.hide-anonymous-read-description",
           "name": "hideAnonymousRead",
           "type": "checkbox"
+        }
+      ],
+      "label": "lfr.widget-modifiers.visibility"
+    },
+    {
+      "fields": [
+        {
+          "defaultValue": "false",
+          "label": "lfr.widget-modifiers.use-accordion",
+          "description": "lfr.widget-modifiers.use-accordion-description",
+          "name": "useAccordion",
+          "type": "checkbox"
         },
         {
           "defaultValue": "true",
+          "label": "lfr.widget-modifiers.accordion-icon-left",
+          "description": "lfr.widget-modifiers.accordion-icon-left-description",
+          "name": "accordionIconLeft",
+          "type": "checkbox"
+        },
+        {
+          "defaultValue": "\\2295",
+          "label": "lfr.widget-modifiers.accordion-closed-icon",
+          "description": "lfr.widget-modifiers.accordion-closed-icon-description",
+          "name": "accordionClosedIcon",
+          "type": "text"
+        },
+        {
+          "defaultValue": "\\2296",
+          "label": "lfr.widget-modifiers.accordion-open-icon",
+          "description": "lfr.widget-modifiers.accordion-open-icon-description",
+          "name": "accordionOpenIcon",
+          "type": "text"
+        },
+        {
+          "defaultValue": "false",
+          "label": "lfr.widget-modifiers.show-accordion-expanded",
+          "description": "lfr.widget-modifiers.show-accordion-expanded-description",
+          "name": "showAlertOpen",
+          "type": "checkbox"
+        }
+      ],
+      "label": "lfr.widget-modifiers.accordion"
+    },
+    {
+      "fields": [
+        {
+          "defaultValue": "true",
           "label": "lfr.widget-modifiers.add-mark-as-read",
-          "description": "lfr.widget-modifiers.add-mark-as-read",
+          "description": "lfr.widget-modifiers.add-mark-as-read-description",
           "name": "addMarkAsRead",
           "type": "checkbox"
         },
         {
-          "defaultValue": "true",
-          "label": "lfr.widget-modifiers.accordion-mode",
-          "description": "lfr.widget-modifiers.accordion-mode-description",
-          "name": "accordionMode",
-          "type": "checkbox"
-        },
-        {
           "dataType": "string",
-          "defaultValue": "collapsed",
-          "label": "lfr.widget-modifiers.accordion-initial-state",
-          "description": "lfr.widget-modifiers.accordion-initial-state-description",
-          "name": "accordionInitialState",
+          "defaultValue": "primary",
+          "label": "lfr.widget-modifiers.mark-as-read-button-type",
+          "description": "lfr.widget-modifiers.mark-as-read-button-type-description",
+          "name": "addMarkAsReadButtonType",
           "type": "select",
           "typeOptions": {
             "validValues": [
               {
-                "label": "lfr.widget-modifiers.expanded",
-                "value": "expanded"
+                "value": "primary"
               },
               {
-                "label": "lfr.widget-modifiers.collapsed",
-                "value": "collapsed"
+                "value": "secondary"
+              },
+              {
+                "value": "link"
+              },
+              {
+                "value": "outline-primary"
+              },
+              {
+                "value": "outline-secondary"
               }
             ]
           }
         },
         {
-          "defaultValue": "angle-down",
-          "label": "lfr.widget-modifiers.expand-icon",
-          "description": "lfr.widget-modifiers.expand-icon",
-          "name": "expandIcon",
-          "type": "text"
+          "dataType": "string",
+          "defaultValue": "sm",
+          "label": "lfr.widget-modifiers.mark-as-read-button-size",
+          "description": "lfr.widget-modifiers.mark-as-read-button-size-description",
+          "name": "addMarkAsReadButtonSize",
+          "type": "select",
+          "typeOptions": {
+            "validValues": [
+              {
+                "label": "lfr.widget-modifiers.small",
+                "value": "sm"
+              },
+              {
+                "label": "lfr.widget-modifiers.normal",
+                "value": "nm"
+              },
+              {
+                "label": "lfr.widget-modifiers.large",
+                "value": "lg"
+              }
+            ]
+          }
         },
         {
-          "defaultValue": "angle-up",
-          "label": "lfr.widget-modifiers.collapse-icon",
-          "description": "lfr.widget-modifiers.collapse-icon",
-          "name": "collapseIcon",
-          "type": "text"
+          "defaultValue": false,
+          "label": "lfr.widget-modifiers.enable-ac-custom-event",
+          "description": "lfr.widget-modifiers.enable-ac-custom-event-description",
+          "name": "enableAcCustomEvent",
+          "type": "checkbox"
         }
       ],
-      "label": "lfr.widget-modifiers.general"
+      "label": "lfr.widget-modifiers.actions"
     }
   ]
 }

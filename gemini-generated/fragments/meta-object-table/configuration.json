@@ -46,6 +46,7 @@
         {
           "defaultValue": "Milestones",
           "label": "lfr.gemini-generated.table-title",
+          "description": "lfr.gemini-generated.table-title-description",
           "name": "tableTitle",
           "type": "text"
         },
@@ -72,24 +73,28 @@
         {
           "defaultValue": "var(--gray-900)",
           "label": "lfr.gemini-generated.header-text-color",
+          "description": "lfr.gemini-generated.header-text-color-description",
           "name": "headerTextColor",
           "type": "colorPicker"
         },
         {
           "defaultValue": "var(--gray-100)",
           "label": "lfr.gemini-generated.header-background-color",
+          "description": "lfr.gemini-generated.header-background-color-description",
           "name": "headerBgColor",
           "type": "colorPicker"
         },
         {
           "defaultValue": "var(--body-color)",
           "label": "lfr.gemini-generated.body-text-color",
+          "description": "lfr.gemini-generated.body-text-color-description",
           "name": "bodyTextColor",
           "type": "colorPicker"
         },
         {
           "defaultValue": "var(--gray-600)",
           "label": "lfr.gemini-generated.action-icon-color",
+          "description": "lfr.gemini-generated.action-icon-color-description",
           "name": "actionIconColor",
           "type": "colorPicker"
         },
@@ -156,7 +161,7 @@
         {
           "defaultValue": "modal",
           "label": "lfr.gemini-generated.add-action-mode",
-          "description": "lfr.gemini-generated.view-action-mode-description",
+          "description": "lfr.gemini-generated.add-action-mode-description",
           "name": "addMode",
           "type": "select",
           "typeOptions": {
@@ -181,6 +186,7 @@
         {
           "defaultValue": true,
           "label": "lfr.gemini-generated.show-drop-zone-header",
+          "description": "lfr.gemini-generated.show-drop-zone-header-description",
           "name": "addShowHeader",
           "type": "checkbox",
           "typeOptions": {
@@ -195,6 +201,7 @@
         {
           "defaultValue": true,
           "label": "lfr.gemini-generated.show-modal-title",
+          "description": "lfr.gemini-generated.show-modal-title-description",
           "name": "addShowTitle",
           "type": "checkbox",
           "typeOptions": {
@@ -210,7 +217,7 @@
           "dataType": "string",
           "defaultValue": "lg",
           "label": "lfr.gemini-generated.add-modal-size",
-          "description": "lfr.gemini-generated.modal-size-description",
+          "description": "lfr.gemini-generated.add-modal-size-description",
           "name": "addModalSize",
           "type": "select",
           "typeOptions": {
@@ -238,7 +245,7 @@
         },
         {
           "label": "lfr.gemini-generated.add-target-url",
-          "description": "lfr.gemini-generated.edit-target-url-description",
+          "description": "lfr.gemini-generated.add-target-url-description",
           "name": "addUrl",
           "type": "text",
           "typeOptions": {
@@ -319,6 +326,7 @@
         {
           "defaultValue": true,
           "label": "lfr.gemini-generated.show-drop-zone-header",
+          "description": "lfr.gemini-generated.show-drop-zone-header-description",
           "name": "viewShowHeader",
           "type": "checkbox",
           "typeOptions": {
@@ -333,6 +341,7 @@
         {
           "defaultValue": true,
           "label": "lfr.gemini-generated.show-modal-title",
+          "description": "lfr.gemini-generated.show-modal-title-description",
           "name": "viewShowTitle",
           "type": "checkbox",
           "typeOptions": {
@@ -348,7 +357,7 @@
           "dataType": "string",
           "defaultValue": "md",
           "label": "lfr.gemini-generated.view-modal-size",
-          "description": "lfr.gemini-generated.modal-size-description",
+          "description": "lfr.gemini-generated.view-modal-size-description",
           "name": "viewModalSize",
           "type": "select",
           "typeOptions": {
@@ -457,6 +466,7 @@
         {
           "defaultValue": true,
           "label": "lfr.gemini-generated.show-drop-zone-header",
+          "description": "lfr.gemini-generated.show-drop-zone-header-description",
           "name": "editShowHeader",
           "type": "checkbox",
           "typeOptions": {
@@ -471,6 +481,7 @@
         {
           "defaultValue": true,
           "label": "lfr.gemini-generated.show-modal-title",
+          "description": "lfr.gemini-generated.show-modal-title-description",
           "name": "editShowTitle",
           "type": "checkbox",
           "typeOptions": {
@@ -486,7 +497,7 @@
           "dataType": "string",
           "defaultValue": "lg",
           "label": "lfr.gemini-generated.edit-modal-size",
-          "description": "lfr.gemini-generated.modal-size-description",
+          "description": "lfr.gemini-generated.edit-modal-size-description",
           "name": "editModalSize",
           "type": "select",
           "typeOptions": {

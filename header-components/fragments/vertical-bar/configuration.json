@@ -4,6 +4,7 @@
       "fields": [
         {
           "defaultValue": true,
+          "description": "lfr.header-components.enable-vertical-bar-description",
           "label": "lfr.header-components.enable-vertical-bar",
           "name": "enableVerticalBar",
           "type": "checkbox"

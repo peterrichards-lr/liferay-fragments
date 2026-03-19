@@ -6,8 +6,8 @@
           "dataType": "string",
           "defaultValue": "emailAddress",
           "label": "lfr.form-fragments.user-attribute",
-          "description": "lfr.form-fragments.user-attribute",
-          "name": "userAttribute",
+          "description": "lfr.form-fragments.user-attribute-description",
+          "name": "userFieldType",
           "type": "select",
           "typeOptions": {
             "validValues": [
@@ -66,7 +66,7 @@
           "dataType": "string",
           "defaultValue": "",
           "label": "lfr.form-fragments.custom-field",
-          "description": "lfr.form-fragments.custom-field",
+          "description": "lfr.form-fragments.custom-field-description",
           "name": "customFieldName",
           "type": "text"
         },
@@ -74,7 +74,7 @@
           "dataType": "string",
           "defaultValue": "",
           "label": "lfr.form-fragments.placeholder",
-          "description": "lfr.form-fragments.placeholder",
+          "description": "lfr.form-fragments.placeholder-description",
           "localizable": true,
           "name": "placeholder",
           "type": "text"
@@ -82,7 +82,7 @@
         {
           "defaultValue": false,
           "label": "lfr.form-fragments.show-characters-count",
-          "description": "lfr.form-fragments.show-characters-count",
+          "description": "lfr.form-fragments.show-characters-count-description",
           "name": "showCharactersCount",
           "type": "checkbox",
           "typeOptions": {

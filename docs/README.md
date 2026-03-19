@@ -1,6 +1,7 @@
 # Liferay Fragments Documentation
 
-A collection of robust, accessible, and responsive Liferay fragments for DXP platforms.
+A collection of robust, accessible, and responsive Liferay fragments for DXP
+platforms.
 
 ## 📋 Table of Contents
 
@@ -17,7 +18,8 @@ A collection of robust, accessible, and responsive Liferay fragments for DXP pla
 
 ### Option 1: Automated Deployment (Recommended)
 
-Use the provided `deploy-fragment-zips.sh` script to automate the deployment of your fragment and Language ZIPs.
+Use the provided `deploy-fragment-zips.sh` script to automate the deployment of
+your fragment and Language ZIPs.
 
 #### Usage
 
@@ -25,9 +27,11 @@ Use the provided `deploy-fragment-zips.sh` script to automate the deployment of 
 ./deploy-fragment-zips.sh [TARGET_PATH] [--all | folder_name1 folder_name2 ...]
 ```
 
-- **TARGET_PATH**: The root of a Liferay Workspace or a standalone Liferay bundle.
+- **TARGET_PATH**: The root of a Liferay Workspace or a standalone Liferay
+  bundle.
 - **--all**: Deploys all ZIPs found in the `/zips` directory.
-- **folder_name**: Space-separated list of specific fragment or collection folder names to deploy.
+- **folder_name**: Space-separated list of specific fragment or collection
+  folder names to deploy.
 
 #### Example
 
@@ -38,31 +42,44 @@ Use the provided `deploy-fragment-zips.sh` script to automate the deployment of 
 
 ### Option 3: Showcase Data Deployment
 
-To demonstrate the data-driven capabilities of fragments like `Activity Heatmap` or `Object-Linked Chart`, you can deploy the sample showcase datasets.
+To demonstrate the data-driven capabilities of fragments like `Activity Heatmap`
+or `Object-Linked Chart`, you can deploy the sample showcase datasets.
 
-**Note: Liferay 2025.Q4.10 or later is required for these datasets to function correctly due to site-scoping requirements.**
+**Note: Liferay 2025.Q4.10 or later is required for these datasets to function
+correctly due to site-scoping requirements.**
 
 ```bash
 ./deploy-fragment-zips.sh [TARGET_PATH] --showcase
 ```
 
-This will deploy all showcase resources found in `other-resources/showcase-data/`.
+This will deploy all showcase resources found in
+`other-resources/showcase-data/`.
 
 ### Option 4: Manual Deployment
 
-1.  **Build the assets**: Run `./create-fragment-zips.sh` to generate the ZIP files.
-2.  **Deploy Fragments**: Copy the `.zip` files from `./zips/fragments/` to your Liferay instance's `/deploy` folder.
-3.  **Deploy Language Overrides**: Copy the `-language-batch-cx.zip` files from `./zips/language/` to your Liferay instance's `/osgi/client-extensions/` folder.
-4.  **Deploy Special Resources**: Copy any `.zip` files from `/other-resources/*/dist/` to your Liferay instance's `/osgi/client-extensions/` folder.
+1.  **Build the assets**: Run `./create-fragment-zips.sh` to generate the ZIP
+    files.
+2.  **Deploy Fragments**: Copy the `.zip` files from `./zips/fragments/` to your
+    Liferay instance's `/deploy` folder.
+3.  **Deploy Language Overrides**: Copy the `-language-batch-cx.zip` files from
+    `./zips/language/` to your Liferay instance's `/osgi/client-extensions/`
+    folder.
+4.  **Deploy Special Resources**: Copy any `.zip` files from
+    `/other-resources/*/dist/` to your Liferay instance's
+    `/osgi/client-extensions/` folder.
 
-Liferay will automatically import the fragments and register the language overrides as Client Extensions.
+Liferay will automatically import the fragments and register the language
+overrides as Client Extensions.
 
 ### Custom Build Options
 
-If you want to target a specific Virtual Instance or Site, set these environment variables before running `./create-fragment-zips.sh`:
+If you want to target a specific Virtual Instance or Site, set these environment
+variables before running `./create-fragment-zips.sh`:
 
-- `COMPANY_WEB_ID`: The Web ID of the Virtual Instance (Defaults to `*` / Global).
-- `GROUP_KEY`: The Site Friendly URL or Name (Ignored if `COMPANY_WEB_ID` is `*`).
+- `COMPANY_WEB_ID`: The Web ID of the Virtual Instance (Defaults to `*` /
+  Global).
+- `GROUP_KEY`: The Site Friendly URL or Name (Ignored if `COMPANY_WEB_ID` is
+  `*`).
 
 ---
 
@@ -70,18 +87,47 @@ If you want to target a specific Virtual Instance or Site, set these environment
 
 These fragments provide foundational utility and data display capabilities.
 
+- **Commerce**
+  - [Dynamic Badge Overlay](./fragments/dynamic-badge-overlay.md)
+  - [Purchased Products](./fragments/purchased-products.md)
+  - [Collection Summary](./fragments/commerce.md)
+- **Content**
+  - [Content Map](./fragments/content-map.md)
+  - [Service Link Button](./fragments/service-link-button.md)
+  - [Collection Summary](./fragments/content.md)
+- **Form Utilities**
+  - [Form Populator](./fragments/form-populator.md)
+  - [Form Session ID](./fragments/form-session-id.md)
+  - [Generate Form Session ID](./fragments/generate-form-session-id.md)
+  - [Redirect Page](./fragments/redirect-page.md)
+  - [Refresh Page](./fragments/refresh-page.md)
+  - [Collection Summary](./fragments/forms.md)
+- **Form Field Enhancements**
+  - [Autocomplete (Object)](<./fragments/autocomplete-(object).md>)
+  - [Autocomplete (Picklist)](<./fragments/autocomplete-(picklist).md>)
+  - [Confirmation Field](./fragments/confirmation-field.md)
+  - [Hidden Relationship](./fragments/hidden-relationship.md)
+  - [Listbox Multiselect](./fragments/listbox-multiselect.md)
+  - [Range Input](./fragments/range.md)
+  - [Segmented Numeric](./fragments/segmented-numeric.md)
+  - [Star Rating](./fragments/star-rating.md)
+  - [Submit Button (Custom)](./fragments/submit-button.md)
+  - [Toggle Switch](./fragments/toggle-switch.md)
+  - [URL Populated Hidden Relationship](./fragments/url-populated-hidden-relationship.md)
+  - [User Field](./fragments/user-field.md)
+  - [Collection Summary](./fragments/form-fragments.md)
+- [Populated Form Fields](./fragments/populated-form-fields.md) (Persistence,
+  Derived Values)
+- [Liferay Iframer](./fragments/liferay-iframer.md)
 - [Meter Reading](./fragments/meter-reading.md) (DEPRECATED)
 - [Date Display](./fragments/date-display.md) (DEPRECATED)
-- [Form Utilities](./fragments/forms.md) (Populator, Session ID, Refresh, Redirect)
-- [Form Field Enhancements](./fragments/form-fragments.md) (Autocomplete, Star Rating, Toggle)
-- [Populated Form Fields](./fragments/populated-form-fields.md) (Persistence, Derived Values)
-- [Liferay Iframer](./fragments/liferay-iframer.md)
 
 ## Specialized Collections
 
 ### Gemini Generated
 
-A suite of high-fidelity, data-driven fragments designed for modern Liferay portals.
+A suite of high-fidelity, data-driven fragments designed for modern Liferay
+portals.
 
 - **Data Visualization**
   - [Object-Linked Chart](./fragments/object-linked-chart.md)
@@ -102,49 +148,177 @@ A suite of high-fidelity, data-driven fragments designed for modern Liferay port
 
 ### Integration & Data
 
-- [Content Fragments](./fragments/content.md) (Content Map, Service Cards)
-- [Object Fragments](./fragments/objects.md) (Audit Buttons, Comments)
-- [Pulse Integration Fragments](./fragments/pulse.md) (Campaign Tracking)
-- [Finance Fragments](./fragments/finance.md) (Loan Calculators)
+- **Content Fragments**
+  - [Content Map](./fragments/content-map.md)
+  - [Service Card](./fragments/service-card.md)
+  - [Service Icon](./fragments/service-icon.md)
+  - [Service Link Button](./fragments/service-link-button.md)
+  - [Collection Summary](./fragments/content.md)
+- **Object Fragments**
+  - [Audit Button](./fragments/audit-button.md)
+  - [Comment](./fragments/comment.md)
+  - [Public Comments](./fragments/public-comments.md)
+  - [Collection Summary](./fragments/objects.md)
+- **Pulse Integration Fragments**
+  - [Campaign Initialiser](./fragments/campaign-initialiser.md)
+  - [Cookie Sniffer](./fragments/cookie-sniffer.md)
+  - [Custom Event Listener](./fragments/custom-event-listener.md)
+  - [Pulse Button](./fragments/pulse-button.md)
+  - [Collection Summary](./fragments/pulse.md) (Campaign Tracking)
+- **Finance Fragments**
+  - [Loan Application Calculator](./fragments/loan-application-calculator.md)
+  - [Loan Calculator](./fragments/loan-calculator.md)
+  - [Collection Summary](./fragments/finance.md)
 
 ### Advanced UI & Interactivity
 
-- [Conditional Content](./fragments/conditional-content.md) (Outcome-based Drop Zones)
-- [Tracker Fragments](./fragments/tracker.md) (Multi-step Process Indicators)
-- [Dashboard Components](./fragments/dashboard-components.md) (Healthcare/Activity Dashboards)
-- [Widget Modifiers](./fragments/widget-modifiers.md) (Alerts/Announcements Enhancements)
+- [Conditional Content](./fragments/conditional-content.md) (Outcome-based Drop
+  Zones)
+- **Tracker Fragments**
+  - [Tracker (Container)](./fragments/tracker.md)
+  - [Tracker Step](./fragments/tracker-step.md)
+  - [Collection Summary](./fragments/tracker.md) (Multi-step Process Indicators)
+- **Dashboard Components**
+  - [Dashboard Container](./fragments/dashboard-container.md)
+  - [Dashboard Filter](./fragments/dashboard-filter.md)
+  - [Collection Summary](./fragments/dashboard-components.md)
+- **Widget Modifiers**
+  - [Alerts Modifier](./fragments/alerts-modifier.md)
+  - [Collection Summary](./fragments/widget-modifiers.md) (Alerts/Announcements
+    Enhancements)
 
 ### Layout & Theme
 
-- [Layout Components](./fragments/layout-components.md)
-- [Header Components](./fragments/header-components.md)
-- [Responsive Menu Fragments](./fragments/responsive-menus.md) (Mega Menus, Side Menus)
-- [Hero Assets](./fragments/hero-assets.md) (Video Backgrounds, Overlays)
-- [Master Page Utilities](./fragments/master-page-background-colour.md) (Global BG Control)
+- **Layout Components**
+  - [Primary Card](./fragments/primary-card.md)
+  - [Secondary Card](./fragments/secondary-card.md)
+  - [Card Content](./fragments/card-content.md)
+  - [Collection Summary](./fragments/layout-components.md)
+- **Header Components**
+  - [Logo](./fragments/logo.md)
+  - [Navigation](./fragments/navigation.md)
+  - [Login and User Menu](./fragments/login-and-user-menu.md)
+  - [Search Bar](./fragments/search-bar.md)
+  - [Search Button](./fragments/search-button.md)
+  - [Site Name](./fragments/site-name.md)
+  - [User Bar](./fragments/user-bar.md)
+  - [Vertical Bar](./fragments/vertical-bar.md)
+  - [Upper Header Layout](./fragments/upper-header-layout.md)
+  - [Lower Header Layout](./fragments/lower-header-layout.md)
+  - [Linear Gradient Container](./fragments/linear-gradient-container.md)
+  - [Linear Gradient Container (Custom)](<./fragments/linear-gradient-container-(custom).md>)
+  - [Collection Summary](./fragments/header-components.md)
+- **Responsive Menu Fragments**
+  - [Responsive Menu](./fragments/responsive-menu.md)
+  - [Responsive Side Menu](./fragments/responsive-side-menu.md)
+  - [Logo Zone](./fragments/logo-zone.md)
+  - [Zone Layout](./fragments/zone-layout.md)
+  - [Collection Summary](./fragments/responsive-menus.md)
+- **Hero Assets**
+  - [Hero Video](./fragments/hero-video.md)
+  - [Overlay Background](./fragments/overlay-background.md)
+  - [Collection Summary](./fragments/hero-assets.md)
+- [Master Page Utilities](./fragments/master-page-background-colour.md) (Global
+  BG Control)
 
 ### User & Account
 
-- [Profile Fragments](./fragments/profile.md) (DEPRECATED)
+- **Profile Fragments** (DEPRECATED)
+  - [Profile Summary](./fragments/profile-summary.md)
+  - [Profile Detail](./fragments/profile-detail.md)
+  - [Customer Profile](./fragments/customer-profile.md)
+  - [PDF Export](./fragments/pdf-export.md)
+  - [Collection Summary](./fragments/profile.md)
 - [Commerce Fragments](./fragments/commerce.md)
-- [User & Account Fragments](./fragments/user-account.md) (OAuth2, Connectivity Testing)
+- **User & Account Fragments**
+  - [My Rights](./fragments/my-rights.md)
+  - [Ping](./fragments/ping.md)
+  - [Who Am I](./fragments/who-am-i.md)
+  - [Collection Summary](./fragments/user-account.md)
 
 ---
 
 ## 🛠️ Developer Resources
 
-For more information on developing Liferay fragments, refer to the following official Liferay Learn guides:
+For more information on developing Liferay fragments, refer to the following
+official Liferay Learn guides:
 
-- **[Fragment-Specific Tags and Attributes Reference](https://learn.liferay.com/w/dxp/development/developing-page-fragments/reference/fragment-specific-tags-and-attributes-reference)**: A comprehensive guide to the `data-lfr` attributes and FreeMarker variables available within fragments.
-- **[Fragment Configuration Types Reference](https://learn.liferay.com/w/dxp/development/developing-page-fragments/reference/fragment-configuration-types-reference)**: Details on all available configuration field types (text, checkbox, select, etc.) for `configuration.json`.
-- **[Page Fragment Editor Interface Reference](https://learn.liferay.com/w/dxp/development/developing-page-fragments/reference/page-fragment-editor-interface-reference)**: An overview of the built-in Page Editor interface and how it interacts with your fragment code.
+- **[Fragment-Specific Tags and Attributes Reference](https://learn.liferay.com/w/dxp/development/developing-page-fragments/reference/fragment-specific-tags-and-attributes-reference)**:
+  A comprehensive guide to the `data-lfr` attributes and FreeMarker variables
+  available within fragments.
+- **[Fragment Configuration Types Reference](https://learn.liferay.com/w/dxp/development/developing-page-fragments/reference/fragment-configuration-types-reference)**:
+  Details on all available configuration field types (text, checkbox, select,
+  etc.) for `configuration.json`.
+- **[Page Fragment Editor Interface Reference](https://learn.liferay.com/w/dxp/development/developing-page-fragments/reference/page-fragment-editor-interface-reference)**:
+  An overview of the built-in Page Editor interface and how it interacts with
+  your fragment code.
+
+### 🛠 Fragment Development Standards
+
+To maintain high quality and compatibility across all fragments, all
+contributions must adhere to these mandatory standards:
+
+#### 1. Structure & Metadata
+
+- **Explicit Paths**: `fragment.json` MUST explicitly define `htmlPath`,
+  `jsPath`, `cssPath`, and `configurationPath`. Defaults are not permitted.
+- **JS Encapsulation**: All JavaScript must be encapsulated in an initialization
+  function (e.g., `initMyFragment()`). Top-level `return` statements are
+  strictly prohibited.
+- **Site-Scoping**: Fragments using Object APIs must support Site-scoped data
+  via dynamic discovery (see `gemini.md` for the pattern).
+
+#### 2. Configuration & Dependencies
+
+- **Grouped Fields**: Fields must be logically grouped into named field sets
+  (e.g., Data, Behavior, Style).
+- **Dependency Scope**: Dependent fields and their source fields MUST reside
+  within the same field set. Liferay does not support cross-field-set
+  dependencies.
+- **Holistic Renaming**: Renaming a field in `configuration.json` requires
+  immediate, coordinated updates to all references in `index.js`, `index.html`,
+  and `index.ftl`.
+
+#### 3. Localization (i18n)
+
+- **Comprehensive Coverage**: ALL labels and descriptions in
+  `configuration.json` (including `validValues`) MUST have a corresponding entry
+  in `Language_en_US.properties`.
+- **No Lazy Keys**: Properties where the key equals the value (e.g.,
+  `lfr.key=lfr.key`) are prohibited and will fail the audit.
+- **Mandatory Descriptions**: Every configuration field MUST have a meaningful
+  description to assist content creators in the Page Editor.
+
+#### 4. Styling & Quality Gate
+
+- **Safe Tokens**: Use CSS variables defined in [THEMES.md](./THEMES.md). Avoid
+  hardcoded hex colors.
+- **Linter Enforcement**: Every change must pass the local audit script before
+  submission:
+  ```bash
+  npm run lint
+  ```
 
 ---
 
 ## 📚 Resources
 
-- [🖼️ Visual Gallery](./gallery.md) - A screenshot-first guide to every fragment.
-- [📖 Recipes & Workflows](./recipes.md) - Step-by-step guides for common fragment combinations.
-- [⚙️ Prerequisites & Setup](./setup.md) - Mandatory Liferay configurations (SAP, FreeMarker).
-- [❓ Troubleshooting & FAQ](./troubleshooting.md) - Common issues and solutions.
+- [🖼️ Visual Gallery](./gallery.md) - A screenshot-first guide to every
+  fragment.
+- [📖 Recipes & Workflows](./recipes.md) - Step-by-step guides for common
+  fragment combinations.
+- [⚙️ Prerequisites & Setup](./setup.md) - Mandatory Liferay configurations
+  (SAP, FreeMarker).
+- [❓ Troubleshooting & FAQ](./troubleshooting.md) - Common issues and
+  solutions.
 - [🎬 Videos](./videos/README.md) - Video tutorials and walkthroughs.
-- [Miscellaneous Fragments](./fragments/miscellaneous.md)
+- **Miscellaneous Fragments**
+  - [Custom Tabs](./fragments/custom-tabs.md)
+  - [Icon Button](./fragments/icon-button.md)
+  - [Launch Analytics Cloud](./fragments/launch-analytics-cloud.md)
+  - [Back Button](./fragments/back-button.md)
+  - [Cookie Sniffer](./fragments/cookie-sniffer.md)
+  - [Dynamic Copyright](./fragments/dynamic-copyright.md)
+  - [Trigger Ray](./fragments/trigger-ray.md)
+  - [Hide Control Menu](./fragments/hide-control-menu.md)
+  - [Collection Summary](./fragments/miscellaneous.md)

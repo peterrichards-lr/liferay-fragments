@@ -10,36 +10,83 @@
           "type": "text"
         },
         {
+          "defaultValue": false,
+          "label": "lfr.forms.enable-redirect",
+          "description": "lfr.forms.enable-redirect-description",
+          "name": "enableRedirect",
+          "type": "checkbox"
+        },
+        {
           "defaultValue": true,
-          "label": "lfr.forms.enable-auto-redirect",
-          "description": "lfr.forms.enable-auto-redirect-description",
-          "name": "enableAutoRedirect",
+          "label": "lfr.forms.enable-auto-refresh",
+          "description": "lfr.forms.enable-auto-refresh-description",
+          "name": "enableAutoRefresh",
+          "type": "checkbox"
+        },
+        {
+          "defaultValue": true,
+          "label": "lfr.forms.enable-manual-refresh",
+          "description": "lfr.forms.enable-manual-refresh-description",
+          "name": "enableManualRefresh",
           "type": "checkbox"
         },
         {
           "defaultValue": "5",
-          "label": "lfr.forms.redirect-interval-seconds",
-          "description": "lfr.forms.redirect-interval-seconds-description",
-          "name": "redirectIntervalSec",
+          "label": "lfr.forms.refresh-interval-seconds",
+          "description": "lfr.forms.refresh-interval-seconds-description",
+          "name": "refreshIntervalSec",
           "type": "text",
           "dataType": "int"
-        },
-        {
-          "defaultValue": true,
-          "label": "lfr.forms.enable-manual-redirect",
-          "description": "lfr.forms.enable-manual-redirect-description",
-          "name": "enableManualRedirect",
-          "type": "checkbox"
-        },
-        {
-          "defaultValue": "click here",
-          "label": "lfr.forms.redirect-link-text",
-          "description": "lfr.forms.redirect-link-text-description",
-          "name": "manualRedirectText",
-          "type": "text"
         }
       ],
       "label": "lfr.forms.behaviour"
+    },
+    {
+      "fields": [
+        {
+          "defaultValue": false,
+          "label": "lfr.forms.enable-refresh-trigger",
+          "description": "lfr.forms.enable-refresh-trigger-description",
+          "name": "enableRefreshTrigger",
+          "type": "checkbox"
+        },
+        {
+          "defaultValue": "Success",
+          "label": "lfr.forms.refresh-trigger-text",
+          "description": "lfr.forms.refresh-trigger-text-description",
+          "name": "refreshTriggerText",
+          "type": "text"
+        },
+        {
+          "dataType": "int",
+          "defaultValue": "500",
+          "label": "lfr.forms.wait-interval-ms",
+          "description": "lfr.forms.wait-interval-ms-description",
+          "name": "waitIntervalMs",
+          "type": "text"
+        },
+        {
+          "dataType": "int",
+          "defaultValue": "10",
+          "label": "lfr.forms.wait-count",
+          "description": "lfr.forms.wait-count-description",
+          "name": "waitCount",
+          "type": "text"
+        }
+      ],
+      "label": "lfr.forms.trigger"
+    },
+    {
+      "fields": [
+        {
+          "defaultValue": false,
+          "label": "lfr.forms.enable-debug",
+          "description": "lfr.forms.enable-debug-description",
+          "name": "enableDebug",
+          "type": "checkbox"
+        }
+      ],
+      "label": "lfr.forms.debugging"
     }
   ]
 }

@@ -3,6 +3,13 @@
     {
       "fields": [
         {
+          "defaultValue": "0",
+          "description": "lfr.gemini-generated.start-value-description",
+          "label": "lfr.gemini-generated.start-value",
+          "name": "startValue",
+          "type": "text"
+        },
+        {
           "defaultValue": "1000",
           "description": "lfr.gemini-generated.end-value-description",
           "label": "lfr.gemini-generated.end-value",
@@ -11,9 +18,9 @@
         },
         {
           "defaultValue": "0",
-          "description": "lfr.gemini-generated.decimal-places-description",
-          "label": "lfr.gemini-generated.decimal-places",
-          "name": "decimalPlaces",
+          "description": "lfr.gemini-generated.decimal-precision-description",
+          "label": "lfr.gemini-generated.decimal-precision",
+          "name": "decimalPrecision",
           "type": "text",
           "dataType": "int"
         },
