@@ -1,0 +1,8 @@
+{
+  "configurationPath": "configuration.json",
+  "cssPath": "index.css",
+  "htmlPath": "index.html",
+  "jsPath": "index.js",
+  "name": "Course Progress Card",
+  "type": "component"
+}

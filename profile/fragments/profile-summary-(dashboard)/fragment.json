@@ -3,8 +3,9 @@
   "jsPath": "index.js",
   "htmlPath": "index.html",
   "cssPath": "index.css",
-  "icon": "code",
+  "icon": "bolt",
   "name": "Profile Summary (Dashboard) (DEPRECATED)",
   "description": "DEPRECATED: This fragment relies on legacy serviceLocator patterns. Use modern Data Providers instead.",
-  "type": "component"
+  "type": "component",
+  "thumbnailPath": "thumbnail.png"
 }

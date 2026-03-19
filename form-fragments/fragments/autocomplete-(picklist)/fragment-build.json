@@ -1,0 +1,7 @@
+{
+  "sharedResources": [
+    "validation.js",
+    "dom.js"
+  ],
+  "themeStrategy": "generic"
+}

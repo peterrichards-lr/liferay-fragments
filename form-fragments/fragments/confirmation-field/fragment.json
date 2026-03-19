@@ -3,8 +3,13 @@
   "jsPath": "index.js",
   "htmlPath": "index.html",
   "cssPath": "index.css",
-  "icon": "forms",
+  "icon": "bolt",
   "name": "Confirmation Field",
-  "typeOptions": {"fieldTypes": ["text"]},
-  "type": "input"
+  "typeOptions": {
+    "fieldTypes": [
+      "text"
+    ]
+  },
+  "type": "input",
+  "thumbnailPath": "thumbnail.png"
 }

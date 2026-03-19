@@ -1,1 +1,10 @@
-{"configurationPath": "configuration.json","jsPath":"index.js","htmlPath":"index.html","cssPath":"index.css","icon":"container","name":"Upper Header Bar Layout","type":"component"}
+{
+  "configurationPath": "configuration.json",
+  "jsPath": "index.js",
+  "htmlPath": "index.html",
+  "cssPath": "index.css",
+  "icon": "bolt",
+  "name": "Upper Header Bar Layout",
+  "type": "component",
+  "thumbnailPath": "thumbnail.png"
+}

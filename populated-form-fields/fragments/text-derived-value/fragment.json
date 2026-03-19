@@ -3,7 +3,7 @@
   "jsPath": "index.js",
   "htmlPath": "index.html",
   "cssPath": "index.css",
-  "icon": "custom-field",
+  "icon": "bolt",
   "name": "Text (Derived Value)",
   "typeOptions": {
     "fieldTypes": [
@@ -11,5 +11,6 @@
       "text"
     ]
   },
-  "type": "input"
+  "type": "input",
+  "thumbnailPath": "thumbnail.png"
 }

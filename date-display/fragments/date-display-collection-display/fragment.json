@@ -5,5 +5,7 @@
   "cssPath": "index.css",
   "name": "Date Display (Collection Display) (DEPRECATED)",
   "description": "DEPRECATED: Use native Liferay 7.4+ date formatting and collection mapping instead.",
-  "type": "component"
+  "type": "component",
+  "icon": "bolt",
+  "thumbnailPath": "thumbnail.png"
 }

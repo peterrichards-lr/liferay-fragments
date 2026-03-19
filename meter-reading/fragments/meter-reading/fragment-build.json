@@ -1,0 +1,6 @@
+{
+  "sharedResources": [
+    "validation.js",
+    "discovery.js"
+  ]
+}

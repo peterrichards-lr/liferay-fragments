@@ -7,3 +7,5 @@ language.zip
 /.gradle
 temp_*
 temp
+.env
+node_modules/**

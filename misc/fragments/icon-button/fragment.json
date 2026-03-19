@@ -3,7 +3,7 @@
   "jsPath": "index.js",
   "htmlPath": "index.html",
   "cssPath": "index.css",
-  "icon": "button",
+  "icon": "shortcut",
   "name": "Icon Button",
   "thumbnailPath": "thumbnail.png",
   "type": "component"

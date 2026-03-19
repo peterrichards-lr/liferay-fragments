@@ -3,7 +3,8 @@
   "jsPath": "index.js",
   "htmlPath": "index.html",
   "cssPath": "index.css",
-  "icon": "code",
+  "icon": "sun",
   "name": "Master Page Background Colour",
-  "type": "component"
+  "type": "component",
+  "thumbnailPath": "thumbnail.png"
 }

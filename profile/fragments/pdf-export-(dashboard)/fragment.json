@@ -1,1 +1,10 @@
-{"configurationPath": "configuration.json","jsPath":"index.js","htmlPath":"index.html","cssPath":"index.css","icon":"code","name":"PDF Export (Dashboard)","type":"component"}
+{
+  "configurationPath": "configuration.json",
+  "jsPath": "index.js",
+  "htmlPath": "index.html",
+  "cssPath": "index.css",
+  "icon": "bolt",
+  "name": "PDF Export (Dashboard) (Deprecated)",
+  "type": "component",
+  "thumbnailPath": "thumbnail.png"
+}

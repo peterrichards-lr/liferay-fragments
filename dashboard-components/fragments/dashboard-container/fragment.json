@@ -3,7 +3,8 @@
   "jsPath": "index.js",
   "htmlPath": "index.html",
   "cssPath": "index.css",
-  "icon": "code",
+  "icon": "dashboard",
   "name": "Dashboard Container",
-  "type": "component"
+  "type": "component",
+  "thumbnailPath": "thumbnail.png"
 }

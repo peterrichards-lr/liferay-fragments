@@ -3,7 +3,7 @@
   "jsPath": "index.js",
   "htmlPath": "index.html",
   "cssPath": "index.css",
-  "icon": "select",
+  "icon": "bolt",
   "name": "Populate Select",
   "typeOptions": {
     "fieldTypes": [
@@ -11,5 +11,6 @@
       "select"
     ]
   },
-  "type": "input"
+  "type": "input",
+  "thumbnailPath": "thumbnail.png"
 }

@@ -3,7 +3,8 @@
   "jsPath": "index.js",
   "htmlPath": "index.html",
   "cssPath": "index.css",
-  "icon": "code",
+  "icon": "bolt",
   "name": "Masthead Call to Action Form Holder",
-  "type": "section"
+  "type": "section",
+  "thumbnailPath": "thumbnail.png"
 }

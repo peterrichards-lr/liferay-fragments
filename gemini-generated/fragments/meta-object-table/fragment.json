@@ -1,1 +1,10 @@
-{"configurationPath": "configuration.json", "cssPath": "index.css", "htmlPath": "index.html", "icon": "table", "jsPath": "index.js", "name": "Meta-Object Table", "type": "component"}
+{
+  "configurationPath": "configuration.json",
+  "cssPath": "index.css",
+  "htmlPath": "index.html",
+  "icon": "sheets",
+  "jsPath": "index.js",
+  "name": "Meta-Object Table",
+  "type": "component",
+  "thumbnailPath": "thumbnail.png"
+}
