@@ -1,30 +1,45 @@
 # Date Display (DEPRECATED)
 
-> [!WARNING]
-> These fragments are **DEPRECATED**. Liferay DXP 7.4+ now includes native date formatting and display capabilities within the product. It is recommended to use the out-of-the-box features for all new projects.
+> [!WARNING] These fragments are **DEPRECATED**. Liferay DXP now includes native
+> date formatting and display capabilities within the product. It is recommended
+> to use the out-of-the-box features for all new projects.
 
 ## Date Display (Static) (DEPRECATED)
-This fragment displays a date or date range via its configuration; hence it can only be used for static dates.
+
+This fragment displays a date or date range via its configuration; hence it can
+only be used for static dates.
 
 The date format must be yyyy-MM-dd, e.g., 2021-11-01 for the 1st November 2021.
 
-You can set either the start date, end date or both. When only one date is displayed then no separator is displayed. If both dates are specified, then the start date will be first followed by the separator and then finally the end date.
+You can set either the start date, end date or both. When only one date is
+displayed then no separator is displayed. If both dates are specified, then the
+start date will be first followed by the separator and then finally the end
+date.
 
-The fragment makes use of `${fragmentEntryLinkNamespace}` to ensure unique identifiers across multiple instances on the same page. No additional system configuration is required for Liferay 7.4+.
+The fragment makes use of `${fragmentEntryLinkNamespace}` to ensure unique
+identifiers across multiple instances on the same page. No additional system
+configuration is required for Liferay DXP.
 
 The Clay calendar icon can be turned on or off via the configuration.
 
-The JavaScript will not execute when the fragment is viewed in either the Fragment Editor or the Page Content Editor.
+The JavaScript will not execute when the fragment is viewed in either the
+Fragment Editor or the Page Content Editor.
 
 ## Date Display (Collection Display)
-This fragment displays a date or date range via two mappable fields; hence it can be used for collection displays.
 
-The left-hand mappable field is for the start date and the right-hand mappable field is for the end date. If either value is empty, then its corresponding HTML will not be displayed.
+This fragment displays a date or date range via two mappable fields; hence it
+can be used for collection displays.
 
-The mappable fields are hidden by default and only made visible when the fragment is viewed in the Page Content Editor.
+The left-hand mappable field is for the start date and the right-hand mappable
+field is for the end date. If either value is empty, then its corresponding HTML
+will not be displayed.
+
+The mappable fields are hidden by default and only made visible when the
+fragment is viewed in the Page Content Editor.
 
 The Clay calendar icon can be turned on or off via the configuration.
 
-The JavaScript will not execute when the fragment is viewed in either the Fragment Editor or the Page Content Editor.
+The JavaScript will not execute when the fragment is viewed in either the
+Fragment Editor or the Page Content Editor.
 
 ![Date Display](../images/date-display.png)

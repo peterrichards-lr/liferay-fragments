@@ -4,7 +4,7 @@
   "htmlPath": "index.html",
   "cssPath": "index.css",
   "name": "Form Populator (DEPRECATED)",
-  "description": "DEPRECATED: Use native Liferay 7.4+ form mapping or the 'Populated Form Fields' collection instead.",
+  "description": "DEPRECATED: Use native Liferay DXP form mapping or the 'Populated Form Fields' collection instead.",
   "type": "component",
   "icon": "bolt",
   "thumbnailPath": "thumbnail.png"
