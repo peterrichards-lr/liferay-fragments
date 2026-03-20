@@ -1,9 +1,9 @@
 const initDashboardFilter = () => {
-  const ADMIN_API_BASE = "/o/object-admin/v1.0";
+  const ADMIN_API_BASE = '/o/object-admin/v1.0';
 
-  if (layoutMode !== "view") {
+  if (layoutMode !== 'view') {
     const container = fragmentElement.querySelector(
-      ".dashboard-filter-container",
+      '.dashboard-filter-container'
     );
     const {
       heartRateAPIPath,
@@ -20,13 +20,13 @@ const initDashboardFilter = () => {
     ) {
       Liferay.Fragment.Commons.renderConfigWarning(
         container,
-        "Please ensure all Health API paths (Heart Rate, BP, Steps, Weight) are configured in the fragment settings.",
-        layoutMode,
+        'Please ensure all Health API paths (Heart Rate, BP, Steps, Weight) are configured in the fragment settings.',
+        layoutMode
       );
     }
   }
 
-  if (layoutMode === "view") {
+  if (layoutMode === 'view') {
     Date.prototype.addDays = function (days) {
       var date = new Date(this.valueOf());
       date.setDate(date.getDate() + days);
@@ -48,30 +48,30 @@ const initDashboardFilter = () => {
         : 10000;
       const defaultPubSubTopic = configuration.pubsubTopic
         ? configuration.pubsubTopic
-        : "healthcare-example";
+        : 'healthcare-example';
 
       const startDateEl = fragmentElement.querySelector(
-        `#${fragmentNamespace}_startDate`,
+        `#${fragmentNamespace}_startDate`
       );
       if (startDateEl) {
         startDateEl.valueAsDate = defaultStartDate;
       }
       const endDateEl = fragmentElement.querySelector(
-        `#${fragmentNamespace}_endDate`,
+        `#${fragmentNamespace}_endDate`
       );
       if (endDateEl) {
         endDateEl.valueAsDate = defaultEndDate;
       }
 
       const maxEntriesEl = fragmentElement.querySelector(
-        `#${fragmentNamespace}_maxEntries`,
+        `#${fragmentNamespace}_maxEntries`
       );
       if (maxEntriesEl) {
         maxEntriesEl.value = defaultMaxEntires;
       }
 
       const targetStepsEl = fragmentElement.querySelector(
-        `#${fragmentNamespace}_targetSteps`,
+        `#${fragmentNamespace}_targetSteps`
       );
       if (targetStepsEl) {
         targetStepsEl.value = defaultStepsTarget;
@@ -80,58 +80,69 @@ const initDashboardFilter = () => {
       const refreshDashboard = (e) => {
         if (e) e.preventDefault();
 
-        // Broadcast signal for synchronized fragments (Gemini recipe support)
-        Liferay.fire("refreshData");
+        // Standardized payload for all dashboard components
+        const payload = {
+          startDate: startDateEl ? startDateEl.value : null,
+          endDate: endDateEl ? endDateEl.value : null,
+          maxEntries: maxEntriesEl ? maxEntriesEl.value : null,
+          stepsTarget: targetStepsEl ? targetStepsEl.value : null,
+          timestamp: Date.now(),
+        };
 
-        const dashboard = document.querySelector("#healthcare-dashboard");
+        // Broadcast signal via the standardized Event Bus
+        Liferay.Fragment.Commons.EventBus.publish('refreshData', payload, {
+          sticky: true,
+        });
+
+        const dashboard = document.querySelector('#healthcare-dashboard');
 
         var charts;
         if (dashboard) {
-          charts = dashboard.querySelectorAll("healthcare-component");
+          charts = dashboard.querySelectorAll('healthcare-component');
         } else {
-          console.warn("Unable to find dashboard, search full DOM");
-          charts = document.querySelectorAll("healthcare-component");
+          console.warn('Unable to find dashboard, search full DOM');
+          charts = document.querySelectorAll('healthcare-component');
         }
 
         if (charts) {
           charts.forEach((chart) => {
             if (startDateEl) {
               const val = startDateEl.value;
-              chart.setAttribute("startdate", val);
+              chart.setAttribute('startdate', val);
             }
 
             if (endDateEl) {
               const val = endDateEl.value;
-              chart.setAttribute("enddate", val);
+              chart.setAttribute('enddate', val);
             }
 
             if (maxEntriesEl) {
               const val = maxEntriesEl.value;
-              chart.setAttribute("maxentries", val);
+              chart.setAttribute('maxentries', val);
             }
 
             if (targetStepsEl) {
               const val = targetStepsEl.value;
-              chart.setAttribute("targetsteps", val);
+              chart.setAttribute('targetsteps', val);
             }
           });
         } else {
-          console.warn("Unable to find the healthcare components");
+          console.warn('Unable to find the healthcare components');
         }
       };
 
       const refreshDashboardBtn = fragmentElement.querySelector(
-        `#${fragmentNamespace}_refreshDashboard`,
+        `#${fragmentNamespace}_refreshDashboard`
       );
       if (refreshDashboardBtn && refreshDashboard) {
-        refreshDashboardBtn.addEventListener("click", refreshDashboard);
+        refreshDashboardBtn.addEventListener('click', refreshDashboard);
       }
 
       // Add keyboard support: Refresh on Enter in any input
-      const inputs = fragmentElement.querySelectorAll("input");
+      const inputs = fragmentElement.querySelectorAll('input');
       inputs.forEach((input) => {
-        input.addEventListener("keydown", (e) => {
-          if (e.key === "Enter") {
+        input.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter') {
             refreshDashboard(e);
           }
         });
@@ -156,20 +167,20 @@ const initDashboardFilter = () => {
 
       const submitData = (path, data) => {
         if (!Liferay.Fragment.Commons.isValidIdentifier(path))
-          return Promise.reject("Invalid path");
+          return Promise.reject('Invalid path');
         return Liferay.Util.fetch(path, {
-          method: "POST",
+          method: 'POST',
           headers: {
-            "Content-Type": "application/json",
+            'Content-Type': 'application/json',
           },
           body: JSON.stringify(data),
         })
           .then((response) => response.json())
           .then((data) => {
-            console.log("Success:", data);
+            console.log('Success:', data);
           })
           .catch((error) => {
-            console.error("Error:", error);
+            console.error('Error:', error);
           });
       };
 
@@ -177,7 +188,7 @@ const initDashboardFilter = () => {
 
       const resolveObjectPath = async (key, defaultPath) => {
         const configPath = configuration[key] || defaultPath;
-        const restContextPath = configPath.startsWith("/o/c/")
+        const restContextPath = configPath.startsWith('/o/c/')
           ? configPath
           : `/o/c/${configPath}`;
 
@@ -188,7 +199,7 @@ const initDashboardFilter = () => {
         } catch (err) {
           console.error(
             `[Dashboard Filter] Scope resolution failed for ${key}:`,
-            err,
+            err
           );
           apiPaths[key] = restContextPath;
         }
@@ -196,18 +207,18 @@ const initDashboardFilter = () => {
 
       const resolveAllPaths = async () => {
         await Promise.all([
-          resolveObjectPath("heartRateAPIPath", "heartrates"),
-          resolveObjectPath("bloodPressureAPIPath", "bloodpressures"),
-          resolveObjectPath("stepsAPIPath", "stepses"),
-          resolveObjectPath("weightAPIPath", "weights"),
+          resolveObjectPath('heartRateAPIPath', 'heartrates'),
+          resolveObjectPath('bloodPressureAPIPath', 'bloodpressures'),
+          resolveObjectPath('stepsAPIPath', 'stepses'),
+          resolveObjectPath('weightAPIPath', 'weights'),
         ]);
       };
 
       const getLastHeartRate = async (userId) => {
         if (!apiPaths.heartRateAPIPath)
-          await resolveObjectPath("heartRateAPIPath", "heartrates");
+          await resolveObjectPath('heartRateAPIPath', 'heartrates');
         const lastReading = await getAsync(
-          `${apiPaths.heartRateAPIPath}?filter=r_heartRate_userId%20eq%20%27${userId}%27&page=1&pageSize=1&sort=readingDate%3Adesc`,
+          `${apiPaths.heartRateAPIPath}?filter=r_heartRate_userId%20eq%20%27${userId}%27&page=1&pageSize=1&sort=readingDate%3Adesc`
         );
         if (lastReading && lastReading.items && lastReading.items.length > 0) {
           const { lowest, highest } = lastReading.items[0];
@@ -219,15 +230,15 @@ const initDashboardFilter = () => {
       const generateHeartRateData = (
         userId,
         readingDate,
-        previousHeartRate,
+        previousHeartRate
       ) => {
         const lowest = randomIntFromInterval(
           previousHeartRate.lowest * 0.95,
-          previousHeartRate.lowest * 1.05,
+          previousHeartRate.lowest * 1.05
         );
         const highest = randomIntFromInterval(
           previousHeartRate.highest * 0.95,
-          previousHeartRate.highest * 1.05,
+          previousHeartRate.highest * 1.05
         );
         return {
           readingDate,
@@ -239,9 +250,9 @@ const initDashboardFilter = () => {
 
       const getLastBloodPressure = async (userId) => {
         if (!apiPaths.bloodPressureAPIPath)
-          await resolveObjectPath("bloodPressureAPIPath", "bloodpressures");
+          await resolveObjectPath('bloodPressureAPIPath', 'bloodpressures');
         const lastReading = await getAsync(
-          `${apiPaths.bloodPressureAPIPath}?filter=r_bloodPressure_userId%20eq%20%27${userId}%27&page=1&pageSize=1&sort=readingDate%3Adesc`,
+          `${apiPaths.bloodPressureAPIPath}?filter=r_bloodPressure_userId%20eq%20%27${userId}%27&page=1&pageSize=1&sort=readingDate%3Adesc`
         );
         if (lastReading && lastReading.items && lastReading.items.length > 0) {
           const { diastolic, systolic } = lastReading.items[0];
@@ -253,15 +264,15 @@ const initDashboardFilter = () => {
       const generateBloodPressureData = (
         userId,
         readingDate,
-        previousBloodPressure,
+        previousBloodPressure
       ) => {
         const diastolic = randomIntFromInterval(
           previousBloodPressure.diastolic * 0.9,
-          previousBloodPressure.diastolic * 1.1,
+          previousBloodPressure.diastolic * 1.1
         );
         const systolic = randomIntFromInterval(
           previousBloodPressure.systolic * 0.9,
-          previousBloodPressure.systolic * 1.1,
+          previousBloodPressure.systolic * 1.1
         );
         return {
           readingDate,
@@ -273,9 +284,9 @@ const initDashboardFilter = () => {
 
       const getLastStepsCount = async (userId) => {
         if (!apiPaths.stepsAPIPath)
-          await resolveObjectPath("stepsAPIPath", "stepses");
+          await resolveObjectPath('stepsAPIPath', 'stepses');
         const lastReading = await getAsync(
-          `${apiPaths.stepsAPIPath}?filter=r_steps_userId%20eq%20%27${userId}%27&page=1&pageSize=1&sort=readingDate%3Adesc`,
+          `${apiPaths.stepsAPIPath}?filter=r_steps_userId%20eq%20%27${userId}%27&page=1&pageSize=1&sort=readingDate%3Adesc`
         );
         if (lastReading && lastReading.items && lastReading.items.length > 0) {
           const { stepCount } = lastReading.items[0];
@@ -287,7 +298,7 @@ const initDashboardFilter = () => {
       const generateStepsData = (userId, readingDate, previousStepCount) => {
         const stepCount = randomIntFromInterval(
           previousStepCount * 0.6,
-          previousStepCount * 1.4,
+          previousStepCount * 1.4
         );
         return {
           readingDate,
@@ -298,9 +309,9 @@ const initDashboardFilter = () => {
 
       const getLastWeight = async (userId) => {
         if (!apiPaths.weightAPIPath)
-          await resolveObjectPath("weightAPIPath", "weights");
+          await resolveObjectPath('weightAPIPath', 'weights');
         const lastReading = await getAsync(
-          `${apiPaths.weightAPIPath}?filter=r_weight_userId%20eq%20%27${userId}%27&page=1&pageSize=1&sort=readingDate%3Adesc`,
+          `${apiPaths.weightAPIPath}?filter=r_weight_userId%20eq%20%27${userId}%27&page=1&pageSize=1&sort=readingDate%3Adesc`
         );
         if (lastReading && lastReading.items && lastReading.items.length > 0) {
           const { weight } = lastReading.items[0];
@@ -312,7 +323,7 @@ const initDashboardFilter = () => {
       const generateWeightData = (userId, readingDate, previousWeight) => {
         const weight = randomFloatFromInterval(
           previousWeight * 0.97,
-          previousWeight * 1.03,
+          previousWeight * 1.03
         );
         return {
           readingDate,
@@ -325,7 +336,7 @@ const initDashboardFilter = () => {
         const userId = Liferay.ThemeDisplay.getUserId();
 
         if (!Liferay.Fragment.Commons.isValidIdentifier(userId)) {
-          console.error("Invalid User ID for sync data.");
+          console.error('Invalid User ID for sync data.');
           return;
         }
 
@@ -351,7 +362,7 @@ const initDashboardFilter = () => {
           const heartRate = generateHeartRateData(
             userId,
             new Date(curDate.valueOf()),
-            lastHeartRate,
+            lastHeartRate
           );
           heartRateData.push(heartRate);
           const { lowest, highest } = heartRate;
@@ -359,7 +370,7 @@ const initDashboardFilter = () => {
           const bloodPressure = generateBloodPressureData(
             userId,
             new Date(curDate.valueOf()),
-            lastBloodPressure,
+            lastBloodPressure
           );
           bloodPressureData.push(bloodPressure);
           const { diastolic, systolic } = bloodPressure;
@@ -367,14 +378,14 @@ const initDashboardFilter = () => {
           const steps = generateStepsData(
             userId,
             new Date(curDate.valueOf()),
-            lastStepsCount,
+            lastStepsCount
           );
           stepsData.push(steps);
           lastStepsCount = steps.stepCount;
           const weight = generateWeightData(
             userId,
             new Date(curDate.valueOf()),
-            lastWeight,
+            lastWeight
           );
           weightData.push(weight);
           lastWeight = weight.weight;
@@ -385,39 +396,39 @@ const initDashboardFilter = () => {
             () => {
               submitData(
                 `${apiPaths.bloodPressureAPIPath}/batch`,
-                bloodPressureData,
+                bloodPressureData
               ).then(() => {
                 submitData(`${apiPaths.stepsAPIPath}/batch`, stepsData).then(
                   () => {
                     submitData(
                       `${apiPaths.weightAPIPath}/batch`,
-                      weightData,
+                      weightData
                     ).then(() => {
                       if (!PubSub) {
-                        console.warn("PubSub is not available");
+                        console.warn('PubSub is not available');
                       } else if (!defaultPubSubTopic) {
-                        console.warn("The PubSub topic has not been set");
+                        console.warn('The PubSub topic has not been set');
                       } else {
                         const msg = {
                           refresh: true,
                         };
                         var token = PubSub.publish(defaultPubSubTopic, msg);
-                        console.log("PubSub token", token);
+                        console.log('PubSub token', token);
                       }
                     });
-                  },
+                  }
                 );
               });
-            },
+            }
           );
         }
       };
 
       const syncDataBtn = fragmentElement.querySelector(
-        `#${fragmentNamespace}_syncData`,
+        `#${fragmentNamespace}_syncData`
       );
       if (syncDataBtn && syncData) {
-        syncDataBtn.addEventListener("click", syncData);
+        syncDataBtn.addEventListener('click', syncData);
       }
 
       // Pre-resolve paths

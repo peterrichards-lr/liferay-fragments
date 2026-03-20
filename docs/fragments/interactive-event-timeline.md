@@ -1,6 +1,7 @@
 # Interactive Event Timeline
 
-A vertical/horizontal timeline that dynamically renders milestones from a Liferay Object.
+A vertical/horizontal timeline that dynamically renders milestones from a
+Liferay Object.
 
 ## Features
 

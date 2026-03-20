@@ -1,12 +1,12 @@
 const initAutocompletePicklist = () => {
   const { picklistERC, inputFieldId } = configuration;
 
-  const autocompleteContainer = fragmentElement.querySelector(".autocomplete");
-  const inputElement = fragmentElement.querySelector(".autocomplete-input");
-  const resultsList = fragmentElement.querySelector(".autocomplete-results");
+  const autocompleteContainer = fragmentElement.querySelector('.autocomplete');
+  const inputElement = fragmentElement.querySelector('.autocomplete-input');
+  const resultsList = fragmentElement.querySelector('.autocomplete-results');
 
   const closeAllLists = () => {
-    resultsList.innerHTML = "";
+    resultsList.innerHTML = '';
   };
 
   const getPicklistEntries = async (searchValue) => {
@@ -19,7 +19,7 @@ const initAutocompletePicklist = () => {
       const data = await response.json();
       return data.items || [];
     } catch (error) {
-      console.error("Error fetching picklist entries:", error);
+      console.error('Error fetching picklist entries:', error);
       return [];
     }
   };
@@ -34,7 +34,7 @@ const initAutocompletePicklist = () => {
     }
 
     inputElement.addEventListener(
-      "input",
+      'input',
       Liferay.Fragment.Commons.debounce(async (e) => {
         const searchValue = e.target.value;
 
@@ -45,9 +45,9 @@ const initAutocompletePicklist = () => {
         const entries = await getPicklistEntries(searchValue);
 
         entries.forEach((entry) => {
-          const listItem = document.createElement("li");
+          const listItem = document.createElement('li');
           listItem.innerHTML = entry.name;
-          listItem.addEventListener("click", () => {
+          listItem.addEventListener('click', () => {
             inputElement.value = entry.name;
             if (Liferay.Fragment.Commons.isValidIdentifier(inputFieldId)) {
               const inputField = document.getElementById(inputFieldId);
@@ -55,7 +55,7 @@ const initAutocompletePicklist = () => {
                 inputField.value = entry.key;
                 // Dispatch event for Liferay Forms
                 inputField.dispatchEvent(
-                  new Event("change", { bubbles: true }),
+                  new Event('change', { bubbles: true })
                 );
               }
             }
@@ -63,10 +63,10 @@ const initAutocompletePicklist = () => {
           });
           resultsList.appendChild(listItem);
         });
-      }, 300),
+      }, 300)
     );
 
-    document.addEventListener("click", (e) => {
+    document.addEventListener('click', (e) => {
       if (!autocompleteContainer.contains(e.target)) {
         closeAllLists();
       }

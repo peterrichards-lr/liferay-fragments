@@ -1,0 +1,15 @@
+{
+  "configurationPath": "configuration.json",
+  "jsPath": "index.js",
+  "htmlPath": "index.ftl",
+  "cssPath": "index.css",
+  "icon": "password",
+  "name": "Password Strength",
+  "typeOptions": {
+    "fieldTypes": [
+      "text"
+    ]
+  },
+  "type": "input",
+  "thumbnailPath": "thumbnail.png"
+}

@@ -1,0 +1,66 @@
+{
+  "fieldSets": [
+    {
+      "fields": [
+        {
+          "dataType": "string",
+          "defaultValue": "osm",
+          "label": "lfr.form-fragments.api-provider",
+          "description": "lfr.form-fragments.api-provider-description",
+          "name": "apiProvider",
+          "type": "select",
+          "typeOptions": {
+            "validValues": [
+              {
+                "label": "lfr.form-fragments.openstreetmap",
+                "value": "osm"
+              },
+              {
+                "label": "lfr.form-fragments.google-places",
+                "value": "google"
+              }
+            ]
+          }
+        },
+        {
+          "dataType": "string",
+          "defaultValue": "",
+          "label": "lfr.form-fragments.api-key",
+          "description": "lfr.form-fragments.api-key-description",
+          "name": "apiKey",
+          "type": "text"
+        },
+        {
+          "dataType": "string",
+          "defaultValue": "formatted",
+          "label": "lfr.form-fragments.storage-mode",
+          "description": "lfr.form-fragments.storage-mode-description",
+          "name": "storageMode",
+          "type": "select",
+          "typeOptions": {
+            "validValues": [
+              {
+                "label": "lfr.form-fragments.formatted-string",
+                "value": "formatted"
+              },
+              {
+                "label": "lfr.form-fragments.json-object",
+                "value": "json"
+              }
+            ]
+          }
+        },
+        {
+          "dataType": "string",
+          "defaultValue": "",
+          "label": "lfr.form-fragments.placeholder",
+          "description": "lfr.form-fragments.placeholder-description",
+          "localizable": true,
+          "name": "placeholder",
+          "type": "text"
+        }
+      ],
+      "label": "lfr.form-fragments.address-options"
+    }
+  ]
+}

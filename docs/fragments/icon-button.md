@@ -1,6 +1,7 @@
 # Icon Button
 
-A versatile button component that focuses on iconography, supporting Lexicon/Clay icons.
+A versatile button component that focuses on iconography, supporting
+Lexicon/Clay icons.
 
 ## Visuals
 

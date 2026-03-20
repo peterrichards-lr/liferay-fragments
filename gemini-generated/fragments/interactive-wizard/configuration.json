@@ -4,14 +4,17 @@
       "fields": [
         {
           "dataType": "int",
-          "defaultValue": 3,
+          "defaultValue": "3",
           "label": "lfr.gemini-generated.number-of-steps",
           "description": "lfr.gemini-generated.number-of-steps-description",
           "name": "numberOfSteps",
           "type": "text",
           "typeOptions": {
-            "max": 10,
-            "min": 2
+            "validation": {
+              "max": 10,
+              "min": 2,
+              "type": "number"
+            }
           }
         },
         {

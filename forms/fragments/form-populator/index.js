@@ -1,5 +1,5 @@
 const initFormPopulator = () => {
-  if (layoutMode !== "view") return;
+  if (layoutMode !== 'view') return;
 
   const waitInterval = configuration.waitIntervalMs || 500;
   const waitCount = (configuration.waitCount || 10) - 1;
@@ -9,7 +9,7 @@ const initFormPopulator = () => {
   const search = location.search.substring(1);
   if (!search) {
     if (enableDebug)
-      console.debug("There is no query string, so nothing to do");
+      console.debug('There is no query string, so nothing to do');
     return;
   }
 
@@ -23,25 +23,25 @@ const initFormPopulator = () => {
   };
 
   if (!configuration.fieldMapping) {
-    console.error("Field mapping has not been configured.");
+    console.error('Field mapping has not been configured.');
     return;
   }
 
   if (!isJsonString(configuration.fieldMapping)) {
-    console.error("Field mapping is not in JSON format.");
+    console.error('Field mapping is not in JSON format.');
     return;
   }
 
   const fieldMapping = JSON.parse(configuration.fieldMapping);
   if (!Array.isArray(fieldMapping)) {
-    console.error("Field mapping is not an array.");
+    console.error('Field mapping is not an array.');
     return;
   }
 
   const setNativeValue = (el, value) => {
     const previousValue = el.value;
 
-    if (el.type === "checkbox" || el.type === "radio") {
+    if (el.type === 'checkbox' || el.type === 'radio') {
       if ((!!value && !el.checked) || (!!!value && el.checked)) {
         el.click();
       }
@@ -52,23 +52,23 @@ const initFormPopulator = () => {
       tracker.setValue(previousValue);
     }
 
-    el.dispatchEvent(new Event("change", { bubbles: true }));
+    el.dispatchEvent(new Event('change', { bubbles: true }));
   };
 
   const populateFieldRetry = (
     config,
     fieldSelectorCallback,
-    fieldSetterCallback,
+    fieldSetterCallback
   ) => {
     let c = 0;
     const intervalHandle = setInterval(() => {
       if (enableDebug)
         console.debug(
           config.fieldReference +
-            " - retry : " +
+            ' - retry : ' +
             (c + 1) +
-            " out of " +
-            (waitCount + 1),
+            ' out of ' +
+            (waitCount + 1)
         );
       let field = fieldSelectorCallback(config);
       if (field) {
@@ -81,7 +81,7 @@ const initFormPopulator = () => {
         clearInterval(intervalHandle);
         if (enableDebug)
           console.debug(
-            config.fieldReference + " - unable to find within given bounds",
+            config.fieldReference + ' - unable to find within given bounds'
           );
         return;
       }
@@ -93,19 +93,19 @@ const initFormPopulator = () => {
       "div[data-field-name='" + config.fieldReference + "']";
     const fieldDiv = document.querySelector(fieldDivSelector);
     if (!fieldDiv) return null;
-    const selector = "input:not([type=hidden])";
+    const selector = 'input:not([type=hidden])';
     return fieldDiv.querySelector(selector);
   };
 
   const defaultFieldSetter = (field, config) => {
-    if (config && config["fieldValue"]) {
+    if (config && config['fieldValue']) {
       setNativeValue(field, config.fieldValue);
     }
   };
 
   const selectFieldSelector = (config) => {
     const fieldDivSelector =
-      "div.dropdown-menu.ddm-btn-full.ddm-select-dropdown";
+      'div.dropdown-menu.ddm-btn-full.ddm-select-dropdown';
     const fieldDivs = document.querySelectorAll(fieldDivSelector);
     let fieldDiv;
 
@@ -113,14 +113,14 @@ const initFormPopulator = () => {
       return null;
     } else if (fieldDivs.length === 1) {
       fieldDiv = fieldDivs.item(0);
-    } else if (fieldDivs.length > 1 && config["fieldConfig"]) {
+    } else if (fieldDivs.length > 1 && config['fieldConfig']) {
       const index = (config.fieldConfig.listPosition || 1) - 1;
       fieldDiv = fieldDivs.item(index);
     }
 
     if (!fieldDiv) return null;
 
-    if (config["fieldValue"]) {
+    if (config['fieldValue']) {
       const selector =
         "button[label='" + config.fieldValue + "'][class='dropdown-item']";
       return fieldDiv.querySelector(selector);
@@ -129,16 +129,16 @@ const initFormPopulator = () => {
   };
 
   const selectFieldSetter = (field) => {
-    if (field && typeof field["click"] === "function") {
+    if (field && typeof field['click'] === 'function') {
       field.click();
     }
   };
 
   const populateFields = (mapping) => {
     if (
-      !mapping["parameter"] ||
-      !mapping["fieldReference"] ||
-      !mapping["fieldType"]
+      !mapping['parameter'] ||
+      !mapping['fieldReference'] ||
+      !mapping['fieldType']
     )
       return;
 
@@ -151,7 +151,7 @@ const initFormPopulator = () => {
     let fieldSetterFunc;
 
     switch (mapping.fieldType) {
-      case "selectFromList":
+      case 'selectFromList':
         fieldSelectorFunc = selectFieldSelector;
         fieldSetterFunc = selectFieldSetter;
         break;
@@ -168,11 +168,11 @@ const initFormPopulator = () => {
         fieldConfig: mapping.fieldConfig,
       },
       fieldSelectorFunc,
-      fieldSetterFunc,
+      fieldSetterFunc
     );
   };
 
-  Liferay.on("allPortletsReady", () => {
+  Liferay.on('allPortletsReady', () => {
     fieldMapping.map(populateFields);
   });
 };

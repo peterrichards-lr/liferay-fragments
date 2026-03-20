@@ -5,6 +5,8 @@
   "main": "index.js",
   "scripts": {
     "lint": "node scripts/lint-fragments.js",
+    "format": "prettier --write . && node scripts/format-ftl.js",
+    "format:check": "prettier --check .",
     "create-fragment": "node scripts/create-fragment.js",
     "docs:gallery": "node scripts/generate-gallery.js",
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -19,5 +21,8 @@
   "dependencies": {
     "ajv": "^8.12.0",
     "glob": "^10.3.10"
+  },
+  "devDependencies": {
+    "prettier": "^3.8.1"
   }
 }

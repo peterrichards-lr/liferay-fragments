@@ -1,6 +1,8 @@
 .welcome-banner {
   background-color: var(--primary, #007dad);
-  background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), var(--background-image);
+  background-image:
+    linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
+    var(--background-image);
   background-position: center;
   background-size: cover;
   color: var(--white, #fff);

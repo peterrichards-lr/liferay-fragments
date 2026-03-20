@@ -1,0 +1,16 @@
+{
+  "configurationPath": "configuration.json",
+  "jsPath": "index.js",
+  "htmlPath": "index.ftl",
+  "cssPath": "index.css",
+  "icon": "geolocation",
+  "name": "Address Autocomplete",
+  "typeOptions": {
+    "fieldTypes": [
+      "text",
+      "long-text"
+    ]
+  },
+  "type": "input",
+  "thumbnailPath": "thumbnail.png"
+}

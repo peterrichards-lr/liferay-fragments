@@ -25,11 +25,15 @@
 - **Requirement**: Fragments interacting with Liferay Objects must support
   Site-scoped data via dynamic discovery.
 - **Pattern**:
-  1. Fetch the object definition via
-     `/o/object-admin/v1.0/object-definitions/by-rest-context-path/${objectPath}`.
-  2. If `definition.scope === 'site'`, append `/scopes/${siteId}` to the base
+  1. Primary: Fetch the object definition via its External Reference Code (ERC)
+     using
+     `/o/object-admin/v1.0/object-definitions/by-external-reference-code/${erc}`.
+  2. Fallback: Search for the object definition by its REST Context Path via
+     `/o/object-admin/v1.0/object-definitions?search=${path}` and filter
+     results.
+  3. If `definition.scope === 'site'`, append `/scopes/${siteId}` to the base
      API path.
-  3. Pre-resolve this path during fragment initialization to ensure performant
+  4. Pre-resolve this path during fragment initialization to ensure performant
      runtime execution.
 
 ### 4. Fragment Logic & Compatibility
@@ -42,10 +46,17 @@
 - **Internal Selectors**: Always use `fragmentElement.querySelector` for
   internal elements to prevent state collision between multiple instances.
 
-### 5. Configuration Dependencies
+### 5. Configuration Integrity & Validation
 
-- **Syntax**: Use the object-based dependency structure within `typeOptions` to
-  create dynamic interfaces.
+- **Dependencies**: Use the object-based dependency structure within
+  `typeOptions.dependency` to create dynamic interfaces.
+- **Numeric Limits**: `min` and `max` properties MUST NOT be placed directly
+  within `typeOptions`. They MUST be nested within a `validation` object (e.g.,
+  `typeOptions.validation.min`).
+- **Quoted Defaults**: ALL `defaultValue` entries for fields with
+  `"dataType": "int"` or `float` MUST be provided as quoted strings (e.g.,
+  `"defaultValue": "10"`). Raw integers/floats are not permitted and will
+  trigger import warnings.
 - **Scope**: Dependent fields and their source fields MUST reside within the
   same field set. Liferay does not support cross-field-set dependencies.
 
@@ -86,7 +97,24 @@
   `configuration.json`, `index.js`, `index.html`, and `index.ftl`. Mismatches
   will be flagged as errors by the linter.
 
-### 11. Fragment Quality Gate (Linter)
+### 11. Template Extension Rule (FTL vs HTML)
+
+- **Requirement**: Fragments MUST use the correct file extension for their
+  primary template file.
+- **`.ftl` (FreeMarker)**: Use if the fragment contains ANY FreeMarker logic
+  (`[#if]`, `[#list]`), taglibs (`[@clay]`), or Liferay variables
+  (`${siteSpritemap}`).
+- **`.html` (HTML)**: Use ONLY if the fragment is strictly static HTML or basic
+  `data-lfr-editable` fields with no FreeMarker logic.
+- **Metadata**: The `htmlPath` in `fragment.json` MUST accurately reflect this
+  extension.
+- **Defensive FreeMarker**: Templates SHOULD perform data type checks before
+  using numeric or boolean configuration values (e.g., `?is_number`). Always use
+  the `?c` built-in when outputting numeric or boolean values into non-display
+  contexts (like CSS or JavaScript) to ensure computer-readable formatting
+  regardless of locale.
+
+### 12. Fragment Quality Gate (Linter)
 
 - **Requirement**: All fragments MUST pass the local audit script
   (`npm run lint`) before being committed.
@@ -129,6 +157,32 @@
   use CSS variables via `style.setProperty('--my-var', value)` and define the
   property in `index.css`. This keeps the visual logic in the stylesheet and
   prevents linting warnings.
+
+### 15. Standardized Inter-Fragment Messaging (Event Bus)
+
+- **Requirement**: Use the shared `EventBus` utility for all
+  fragment-to-fragment communication. Direct use of `window.dispatchEvent` or
+  `Liferay.fire` for custom cross-fragment logic is discouraged.
+- **Pattern**:
+  - **Publishing**: Use
+    `EventBus.publish('topic-name', { payload }, { sticky: true })`.
+  - **Subscribing**: Use
+    `EventBus.subscribe('topic-name', callback, { replay: true })`.
+- **Hydration Safety**: Always use `{ sticky: true }` for state-broadcasts and
+  `{ replay: true }` for subscribers to ensure that fragments initializing late
+  still receive the last known state.
+
+### 16. Standardized Logging
+
+- **Requirement**: Use the shared `Logger` utility for all fragment console
+  output. Direct use of `console.log`, `console.warn`, etc., is discouraged for
+  production-grade logic.
+- **Context**: Initialize the logger with a unique context (e.g.,
+  `const logger = Logger.create('My Fragment');`).
+- **Standardized Levels**: Use `logger.info()`, `logger.warn()`,
+  `logger.error()`, and `logger.debug()`.
+- **Debug Control**: `logger.debug()` output is suppressed by default and only
+  visible when the `?debugFragments` URL parameter is present.
 
 ## Build & Deployment
 

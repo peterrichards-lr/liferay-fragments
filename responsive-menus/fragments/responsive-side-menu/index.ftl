@@ -1,83 +1,71 @@
-[#assign
-  menuClassesList = [
-    "fragment-menu-${fragmentEntryLinkNamespace}",
-    "fragment-menu",
-    configuration.menuStyle,
-    (configuration.separator?then('separator',''))
-  ]?filter(x -> x?has_content),
-  menuClasses   = menuClassesList?join(' '),
-  dropzoneConfig = configuration.dropzoneConfig,
-  menuHeaderClass = 'fragment-menu-editor-padding' + (configuration.menuHeader?then(' show','')),
-  menuTextAlign = configuration.menuStyle?contains('menu-right')?then("right","left"),
-  menuId        = 'nav-' + fragmentEntryLinkNamespace,
-  langDir       = (locale?starts_with("ar") || locale?starts_with("he"))?then("rtl","ltr"),
-  htmlLang      = locale?replace("_","-")
-/]
-
-[#assign
-  zoneMap = {
-    'menu-only':       ['menu'],
-    'menu-upper-zone': ['upper','menu'],
-    'menu-lower-zone': ['menu','lower'],
-    'menu-both-zones': ['upper','menu','lower']
-  },
-  zones        = zoneMap[dropzoneConfig]!['menu'],
-  dropzoneCount = zones?size
-/]
-
-[#macro renderHamburgerIcon]
-  <div class="hamburger">
-    <button
-      class="fragment-menu-icon"
-      type="button"
-      aria-label="Open menu"
-      aria-controls="fragmentSideMenuList-${fragmentEntryLinkNamespace}"
-      aria-expanded="false">
-      <span class="visually-hidden">Menu</span>
-      <span class="bar" aria-hidden="true"></span>
-      <span class="bar" aria-hidden="true"></span>
-      <span class="bar" aria-hidden="true"></span>
-    </button>
-  </div>
-[/#macro]
-
-[#macro renderDropzone zone]
-  [#local zoneId = (zone == 'menu')?then(
-    "fragmentSideMenuList-${fragmentEntryLinkNamespace}",
-    "dropzone-${zone}-${fragmentEntryLinkNamespace}"
-  )/]
-  [#if zone == 'menu']
-    <nav id="${zoneId}" class="${menuClasses} dropzone dropzone-menu" aria-label="Side menu">
-      <lfr-drop-zone></lfr-drop-zone>
-    </nav>
-  [#else]
-    <section id="${zoneId}" class="dropzone dropzone-${zone}" aria-label="${zone?cap_first} zone">
-      <lfr-drop-zone></lfr-drop-zone>
-    </section>
-  [/#if]
-[/#macro]
-
-[#macro renderDropzones zones]
+[#-- prettier-ignore --] [#assign menuClassesList = [
+"fragment-menu-${fragmentEntryLinkNamespace}", "fragment-menu",
+configuration.menuStyle, (configuration.separator?then('separator',''))
+]?filter(x -> x?has_content), menuClasses = menuClassesList?join(' '),
+dropzoneConfig = configuration.dropzoneConfig, menuHeaderClass =
+'fragment-menu-editor-padding' + (configuration.menuHeader?then(' show','')),
+menuTextAlign =
+configuration.menuStyle?contains('menu-right')?then("right","left"), menuId =
+'nav-' + fragmentEntryLinkNamespace, langDir = (locale?starts_with("ar") ||
+locale?starts_with("he"))?then("rtl","ltr"), htmlLang = locale?replace("_","-")
+/] [#assign zoneMap = { 'menu-only': ['menu'], 'menu-upper-zone':
+['upper','menu'], 'menu-lower-zone': ['menu','lower'], 'menu-both-zones':
+['upper','menu','lower'] }, zones = zoneMap[dropzoneConfig]!['menu'],
+dropzoneCount = zones?size /] [#macro renderHamburgerIcon]
+<div class="hamburger">
+  <button
+    class="fragment-menu-icon"
+    type="button"
+    aria-label="Open menu"
+    aria-controls="fragmentSideMenuList-${fragmentEntryLinkNamespace}"
+    aria-expanded="false"
+  >
+    <span class="visually-hidden">Menu</span>
+    <span class="bar" aria-hidden="true"></span>
+    <span class="bar" aria-hidden="true"></span>
+    <span class="bar" aria-hidden="true"></span>
+  </button>
+</div>
+[/#macro] [#macro renderDropzone zone] [#local zoneId = (zone == 'menu')?then(
+"fragmentSideMenuList-${fragmentEntryLinkNamespace}",
+"dropzone-${zone}-${fragmentEntryLinkNamespace}" )/] [#if zone == 'menu']
+<nav
+  id="${zoneId}"
+  class="${menuClasses} dropzone dropzone-menu"
+  aria-label="Side menu"
+>
+  <lfr-drop-zone></lfr-drop-zone>
+</nav>
+[#else]
+<section
+  id="${zoneId}"
+  class="dropzone dropzone-${zone}"
+  aria-label="${zone?cap_first} zone"
+>
+  <lfr-drop-zone></lfr-drop-zone>
+</section>
+[/#if] [/#macro] [#macro renderDropzones zones]
+<div
+  id="${menuId}"
+  class="fragment-root-${fragmentEntryLinkNamespace} fragment-root"
+  role="navigation"
+  aria-label="Responsive Menu"
+  lang="${htmlLang}"
+  dir="${langDir}"
+  data-layout-mode="${layoutMode}"
+>
+  <div class="${menuHeaderClass}">Responsive Menu</div>
   <div
-    id="${menuId}"
-    class="fragment-root-${fragmentEntryLinkNamespace} fragment-root"
-    role="navigation"
-    aria-label="Responsive Menu"
-    lang="${htmlLang}"
-    dir="${langDir}"
-    data-layout-mode="${layoutMode}">
-    <div class="${menuHeaderClass}">Responsive Menu</div>
-    <div class="dropzone-wrapper dropzone-wrapper-${configuration.dropzoneConfig}">
-      [@renderHamburgerIcon/]
-      <div class="hamburger-zone-wrapper">
-        <div class="hamburger-zone-inner">
-          [#list zones as zone]
-            [@renderDropzone zone/]
-          [/#list]
-        </div>
+    class="dropzone-wrapper dropzone-wrapper-${configuration.dropzoneConfig}"
+  >
+    [@renderHamburgerIcon/]
+    <div class="hamburger-zone-wrapper">
+      <div class="hamburger-zone-inner">
+        [#list zones as zone] [@renderDropzone zone/] [/#list]
       </div>
     </div>
   </div>
+</div>
 [/#macro]
 
 <style>
@@ -309,7 +297,7 @@
     overflow: hidden !important;
   }
   [/#if]
-  
+
   [#if configuration.enableTabletBreakpoint]
   @media only screen and (max-width: ${configuration.tabletBreakpoint}) {
     .lfr-layout-structure-item-responsive-side-menu { position: fixed; z-index: 1; }
@@ -399,7 +387,7 @@
       background-color: ${configuration.menuHamburgerColor};
     }
     .fragment-root .fragment-menu-icon:focus-visible { outline: 2px solid currentColor; outline-offset: 2px; }
-    
+
     .fragment-root .dropzone-menu.fragment-menu {
       flex-direction: column;
       pointer-events: none;

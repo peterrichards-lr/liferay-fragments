@@ -17,6 +17,11 @@ standards for building robust, modern Liferay Fragments.
 ### 1. New Fragment Creation
 
 - Ensure `fragment.json` correctly points to all assets.
+- **Template Extension**: Use the correct extension for the primary template:
+  - **`.ftl`**: If using FreeMarker tags (`[#if]`), Clay taglibs (`[@clay]`), or
+    Liferay variables (`${siteSpritemap}`).
+  - **`.html`**: Only for strictly static HTML or basic editable fields.
+  - Update `htmlPath` in `fragment.json` accordingly.
 - Create `configuration.json` using standard field sets and types.
 - **Shared Resources**: Every fragment MUST include a `fragment-build.json` file
   if it requires shared logic from `shared-resources/`.
@@ -73,6 +78,12 @@ standards for building robust, modern Liferay Fragments.
 - **Documentation**: Add a warning block at the top of the fragment's `.md` file
   explaining the reason and recommending modern alternatives.
 - **Audit**: Mark the fragment as `DEPR` in the `todo.md` readiness audit.
+
+## Specialized Skills
+
+- **[Liferay Form Fragment Developer](liferay-form-fragment-developer)**: Use
+  this skill for building fragments specifically designed for Form Containers
+  and Object field mapping.
 
 ## Reference Guides
 

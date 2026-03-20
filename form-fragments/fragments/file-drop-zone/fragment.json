@@ -1,0 +1,15 @@
+{
+  "configurationPath": "configuration.json",
+  "jsPath": "index.js",
+  "htmlPath": "index.ftl",
+  "cssPath": "index.css",
+  "icon": "upload",
+  "name": "File Drop Zone",
+  "typeOptions": {
+    "fieldTypes": [
+      "file"
+    ]
+  },
+  "type": "input",
+  "thumbnailPath": "thumbnail.png"
+}

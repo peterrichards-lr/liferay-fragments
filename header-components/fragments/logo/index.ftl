@@ -1,0 +1,83 @@
+[#assign logoLink = "" /] [#assign logoTitle = "" /] [#if
+configuration.enableLink] [#assign logoLink = configuration.linkUrl /] [#assign
+logoTitle = configuration.logoTitle /] [/#if] [#assign logoAltText =
+configuration.logoAltText /] [#if configuration.overrideSiteConfig] [#if
+configuration.showSiteName] [#assign siteName = configuration.siteName /] [/#if]
+[#else] [#if configuration.showSiteName] [#assign pageGroup = layout.getGroup()
+/] [#assign siteName = htmlUtil.escape(pageGroup.getDescriptiveName()) /] [#if
+!logoAltText?has_content] [#assign logoAltText = siteName /] [/#if] [/#if]
+[#assign logoUrl = htmlUtil.escape(themeDisplay.getCompanyLogo()) /] [/#if]
+
+<style>
+  :root {
+    --responsive-menu-logo-max-height: ${configuration.logoMaxHeight!};
+    --responsive-menu-logo-max-width: ${configuration.logoMaxWidth!};
+  }
+
+  .site-logo .logo-link {
+    display: inline-flex;
+    align-items: center;
+    text-decoration: none;
+  }
+</style>
+<div
+  class="site-logo"
+  style="
+    --logo-max-height: ${configuration.logoMaxHeight!};
+    --logo-max-width: ${configuration.logoMaxWidth!};
+  "
+>
+  [#if configuration.overrideSiteConfig] [#if configuration.enableLink]
+  <a class="logo-link" href="${logoLink}" title="${logoTitle}">
+    <lfr-drop-zone></lfr-drop-zone>
+    [#if configuration.showSiteName]
+    <h2
+      aria-level="1"
+      class="d-md-inline-flex d-none d-sm-none site-name"
+      role="heading"
+    >
+      ${siteName}
+    </h2>
+    [/#if]
+  </a>
+  [#else]
+  <span class="logo-link" role="img" aria-label="${logoTitle}">
+    <lfr-drop-zone></lfr-drop-zone>
+    [#if configuration.showSiteName]
+    <h2
+      aria-level="1"
+      class="d-md-inline-flex d-none d-sm-none site-name"
+      role="heading"
+    >
+      ${siteName}
+    </h2>
+    [/#if]
+  </span>
+  [/#if] [#else] [#if configuration.enableLink]
+  <a class="logo-link" href="${logoLink}" title="${logoTitle}">
+    <img alt="${logoAltText}" class="mr-2" src="${logoUrl}" />
+    [#if configuration.showSiteName]
+    <h2
+      aria-level="1"
+      class="d-md-inline-flex d-none d-sm-none site-name"
+      role="heading"
+    >
+      ${siteName}
+    </h2>
+    [/#if]
+  </a>
+  [#else]
+  <span class="logo-link" role="img" aria-label="${logoTitle}">
+    <img alt="${logoAltText}" class="mr-2" src="${logoUrl}" />
+    [#if configuration.showSiteName]
+    <h2
+      aria-level="1"
+      class="d-md-inline-flex d-none d-sm-none site-name"
+      role="heading"
+    >
+      ${siteName}
+    </h2>
+    [/#if]
+  </span>
+  [/#if] [/#if]
+</div>

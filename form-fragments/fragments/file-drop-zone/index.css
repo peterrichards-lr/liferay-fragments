@@ -1,0 +1,45 @@
+.file-drop-zone-fragment .drop-zone {
+  border: 2px dashed var(--gray-400, #a0a0a0);
+  border-radius: 0.5rem;
+  padding: 2rem;
+  text-align: center;
+  transition: all 0.2s ease;
+  background-color: var(--light, #f8f9fa);
+  cursor: pointer;
+  min-height: 150px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.file-drop-zone-fragment .drop-zone:hover {
+  border-color: var(--primary, #0b5fff);
+  background-color: var(--white, #fff);
+}
+
+.file-drop-zone-fragment .drop-zone.drag-over {
+  border-color: var(--success, #28a745);
+  background-color: rgba(40, 167, 69, 0.05);
+  transform: scale(1.02);
+}
+
+.file-drop-zone-fragment .drop-zone.readonly {
+  cursor: default;
+  opacity: 0.6;
+}
+
+.file-drop-zone-fragment .drop-zone-icon {
+  width: 48px;
+  height: 48px;
+  color: var(--secondary, #6b6c7e);
+}
+
+.file-drop-zone-fragment .drop-zone.drag-over .drop-zone-icon {
+  color: var(--success, #28a745);
+}
+
+.file-drop-zone-fragment .file-info {
+  background: var(--light, #f1f8ff);
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+}

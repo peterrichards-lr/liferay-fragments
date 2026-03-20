@@ -1,10 +1,12 @@
 # Trigger Ray
 
-The **Trigger Ray** fragment is a specialized component within the Liferay Fragments library.
+The **Trigger Ray** fragment is a specialized component within the Liferay
+Fragments library.
 
 ## Overview
 
-A specialized utility for triggering custom events within the Ray interaction system.
+A specialized utility for triggering custom events within the Ray interaction
+system.
 
 ## Key Features
 

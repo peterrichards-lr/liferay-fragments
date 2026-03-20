@@ -1,0 +1,70 @@
+{
+  "fieldSets": [
+    {
+      "fields": [
+        {
+          "dataType": "string",
+          "defaultValue": "#000000,#FFFFFF,#0B5FFF,#FFD500,#DA1414,#28A745",
+          "label": "lfr.form-fragments.swatches",
+          "description": "lfr.form-fragments.swatches-description",
+          "localizable": false,
+          "name": "swatchesJSON",
+          "type": "text"
+        },
+        {
+          "dataType": "string",
+          "defaultValue": "circle",
+          "label": "lfr.form-fragments.swatch-shape",
+          "description": "lfr.form-fragments.swatch-shape-description",
+          "name": "swatchShape",
+          "type": "select",
+          "typeOptions": {
+            "validValues": [
+              {
+                "label": "lfr.form-fragments.circle",
+                "value": "circle"
+              },
+              {
+                "label": "lfr.form-fragments.square",
+                "value": "square"
+              }
+            ]
+          }
+        },
+        {
+          "dataType": "string",
+          "defaultValue": "nm",
+          "label": "lfr.form-fragments.swatch-size",
+          "description": "lfr.form-fragments.swatch-size-description",
+          "name": "swatchSize",
+          "type": "select",
+          "typeOptions": {
+            "validValues": [
+              {
+                "label": "lfr.form-fragments.small",
+                "value": "sm"
+              },
+              {
+                "label": "lfr.form-fragments.normal",
+                "value": "nm"
+              },
+              {
+                "label": "lfr.form-fragments.large",
+                "value": "lg"
+              }
+            ]
+          }
+        },
+        {
+          "dataType": "bool",
+          "defaultValue": true,
+          "label": "lfr.form-fragments.show-value",
+          "description": "lfr.form-fragments.show-value-description",
+          "name": "showValue",
+          "type": "checkbox"
+        }
+      ],
+      "label": "lfr.form-fragments.color-swatch-options"
+    }
+  ]
+}

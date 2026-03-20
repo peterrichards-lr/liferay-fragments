@@ -14,14 +14,14 @@
     {
       "externalReferenceCode": "SALE-001",
       "salesRegion": "North America",
-      "revenue": 1500.50,
+      "revenue": 1500.5,
       "unitsSold": 10,
       "saleDate": "2024-01-10"
     },
     {
       "externalReferenceCode": "SALE-002",
       "salesRegion": "North America",
-      "revenue": 2200.00,
+      "revenue": 2200.0,
       "unitsSold": 15,
       "saleDate": "2024-01-15"
     },
@@ -35,14 +35,14 @@
     {
       "externalReferenceCode": "SALE-004",
       "salesRegion": "Europe",
-      "revenue": 1200.00,
+      "revenue": 1200.0,
       "unitsSold": 8,
       "saleDate": "2024-01-18"
     },
     {
       "externalReferenceCode": "SALE-005",
       "salesRegion": "Asia",
-      "revenue": 3500.00,
+      "revenue": 3500.0,
       "unitsSold": 25,
       "saleDate": "2024-01-20"
     },
@@ -56,28 +56,28 @@
     {
       "externalReferenceCode": "SALE-007",
       "salesRegion": "South America",
-      "revenue": 950.00,
+      "revenue": 950.0,
       "unitsSold": 5,
       "saleDate": "2024-01-25"
     },
     {
       "externalReferenceCode": "SALE-008",
       "salesRegion": "North America",
-      "revenue": 1100.00,
+      "revenue": 1100.0,
       "unitsSold": 7,
       "saleDate": "2024-02-01"
     },
     {
       "externalReferenceCode": "SALE-009",
       "salesRegion": "Europe",
-      "revenue": 2500.00,
+      "revenue": 2500.0,
       "unitsSold": 18,
       "saleDate": "2024-02-05"
     },
     {
       "externalReferenceCode": "SALE-010",
       "salesRegion": "Asia",
-      "revenue": 4200.50,
+      "revenue": 4200.5,
       "unitsSold": 30,
       "saleDate": "2024-02-10"
     }

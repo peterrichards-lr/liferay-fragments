@@ -14,7 +14,7 @@ window.Liferay.Fragment.Commons.loadScript = (src) => {
       resolve();
       return;
     }
-    const script = document.createElement("script");
+    const script = document.createElement('script');
     script.src = src;
     script.onload = resolve;
     script.onerror = reject;
@@ -31,8 +31,8 @@ window.Liferay.Fragment.Commons.loadCSS = (href) => {
       resolve();
       return;
     }
-    const link = document.createElement("link");
-    link.rel = "stylesheet";
+    const link = document.createElement('link');
+    link.rel = 'stylesheet';
     link.href = href;
     link.onload = resolve;
     link.onerror = reject;

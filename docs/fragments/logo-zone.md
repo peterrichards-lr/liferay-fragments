@@ -1,6 +1,7 @@
 # Logo Zone
 
-The **Logo Zone** fragment is a specialized component within the Liferay Fragments library.
+The **Logo Zone** fragment is a specialized component within the Liferay
+Fragments library.
 
 ## Overview
 

@@ -1,6 +1,7 @@
 # Linear Gradient Container (Custom)
 
-The **Linear Gradient Container (Custom)** fragment is a specialized component within the Liferay Fragments library.
+The **Linear Gradient Container (Custom)** fragment is a specialized component
+within the Liferay Fragments library.
 
 ## Overview
 

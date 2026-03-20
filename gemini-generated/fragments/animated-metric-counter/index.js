@@ -1,12 +1,12 @@
 const initCounter = () => {
   const valueEl = fragmentElement.querySelector(
-    `#value-${fragmentEntryLinkNamespace}`,
+    `#value-${fragmentEntryLinkNamespace}`
   );
   if (valueEl) {
-    const startValue = parseFloat(configuration.startValue || "0");
-    const endValue = parseFloat(configuration.endValue || "100");
-    const duration = parseInt(configuration.duration || "2000");
-    const decimals = parseInt(configuration.decimalPrecision || "0");
+    const startValue = parseFloat(configuration.startValue || '0');
+    const endValue = parseFloat(configuration.endValue || '100');
+    const duration = parseInt(configuration.duration || '2000');
+    const decimals = parseInt(configuration.decimalPrecision || '0');
 
     const animate = () => {
       let startTimestamp = null;
@@ -24,7 +24,7 @@ const initCounter = () => {
       window.requestAnimationFrame(step);
     };
 
-    if (layoutMode === "view") {
+    if (layoutMode === 'view') {
       const observer = new IntersectionObserver(
         (entries) => {
           if (entries[0].isIntersecting) {
@@ -32,7 +32,7 @@ const initCounter = () => {
             observer.disconnect();
           }
         },
-        { threshold: 0.1 },
+        { threshold: 0.1 }
       );
 
       observer.observe(valueEl);

@@ -1,0 +1,80 @@
+[#attempt] [#assign displayFragmentName = fragmentName /] [#recover] [#assign
+displayFragmentName = "" /] [/#attempt] [#if !displayFragmentName?has_content]
+[#assign displayFragmentName = "Meta-Object Record View" /] [/#if] [#assign
+showFragmentHeader = configuration.showFragmentHeader!true /] [#if layoutMode ==
+'edit']
+<div class="meta-view-editor-header ${showFragmentHeader?then('show', '')}">
+  ${displayFragmentName}
+</div>
+[/#if]
+
+<div
+  class="meta-record-view meta-view-${fragmentEntryLinkNamespace}"
+  data-layout-mode="${layoutMode}"
+  data-fragment-name="${displayFragmentName}"
+  style="
+    --accent-color: ${configuration.accentColor!};
+    --label-color: ${configuration.labelColor!};
+    --value-color: ${configuration.valueColor!};
+  "
+>
+  <div
+    class="alert alert-danger d-none"
+    id="error-${fragmentEntryLinkNamespace}"
+  ></div>
+  <div
+    class="alert alert-info d-none"
+    id="info-${fragmentEntryLinkNamespace}"
+  ></div>
+
+  [#if configuration.enableRecordSelection && layoutMode == 'view']
+  <div
+    class="record-selector-wrap mb-4"
+    id="selector-${fragmentEntryLinkNamespace}"
+  >
+    <div class="meta-status small text-muted">Loading records...</div>
+  </div>
+  [/#if]
+
+  <div id="capture-${fragmentEntryLinkNamespace}">
+    <div
+      class="meta-view-header mb-4 d-flex justify-content-between align-items-center"
+    >
+      <h2
+        class="object-name-label mb-0"
+        data-lfr-editable-id="view-title"
+        data-lfr-editable-type="text"
+      >
+        Record Detail
+      </h2>
+      <button
+        class="btn btn-secondary btn-sm d-none"
+        id="pdf-${fragmentEntryLinkNamespace}"
+      >
+        [@clay["icon"] symbol="download" /] Export PDF
+      </button>
+    </div>
+
+    <div
+      class="record-fields-container"
+      id="fields-${fragmentEntryLinkNamespace}"
+    >
+      <div class="text-center p-5">
+        <div class="meta-status">Loading record details...</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="meta-editor-mappable-fields mt-4">
+    <div class="mappable-field-item">
+      <label>Object ERC</label>
+      <div
+        class="small text-muted"
+        data-lfr-editable-id="object-erc"
+        data-lfr-editable-type="text"
+      >
+        ${configuration.objectERC!}
+      </div>
+    </div>
+  </div>
+</div>

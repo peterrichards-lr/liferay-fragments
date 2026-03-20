@@ -1,24 +1,24 @@
-const fs = require("fs");
-const path = require("path");
-const { globSync } = require("glob");
+const fs = require('fs');
+const path = require('path');
+const { globSync } = require('glob');
 
-const DOCS_DIR = path.join(process.cwd(), "docs");
-const GALLERY_FILE = path.join(DOCS_DIR, "gallery.md");
-const IMAGES_DIR = path.join(DOCS_DIR, "images");
+const DOCS_DIR = path.join(process.cwd(), 'docs');
+const GALLERY_FILE = path.join(DOCS_DIR, 'gallery.md');
+const IMAGES_DIR = path.join(DOCS_DIR, 'images');
 
 /**
  * Fragment Gallery Generator Logic
  */
 function generateGallery() {
   // 1. Find all collections
-  const collections = globSync("*/collection.json");
+  const collections = globSync('*/collection.json');
 
   let markdown = `# Fragment Visual Gallery\n\nA visual reference for the high-fidelity fragments available in this Liferay DXP repository. Generated automatically.\n\n`;
 
   collections.sort().forEach((collectionFile) => {
     const collectionDir = path.dirname(collectionFile);
     const collectionMetadata = JSON.parse(
-      fs.readFileSync(collectionFile, "utf8"),
+      fs.readFileSync(collectionFile, 'utf8')
     );
 
     // Find fragments in this collection
@@ -33,20 +33,20 @@ function generateGallery() {
 
     fragments.sort().forEach((fragFile) => {
       const fragDir = path.dirname(fragFile);
-      const fragMetadata = JSON.parse(fs.readFileSync(fragFile, "utf8"));
+      const fragMetadata = JSON.parse(fs.readFileSync(fragFile, 'utf8'));
       const fragSafeName = path.basename(fragDir);
 
       markdown += `### ${fragMetadata.name}\n\n`;
 
-      let imgPath = "";
+      let imgPath = '';
       const manualImg = path.join(IMAGES_DIR, `${fragSafeName}.png`);
 
       if (fs.existsSync(manualImg)) {
         imgPath = `./images/${fragSafeName}.png`;
-      } else if (fs.existsSync(path.join(fragDir, "screenshot.png"))) {
-        imgPath = path.relative(DOCS_DIR, path.join(fragDir, "screenshot.png"));
-      } else if (fs.existsSync(path.join(fragDir, "thumbnail.png"))) {
-        imgPath = path.relative(DOCS_DIR, path.join(fragDir, "thumbnail.png"));
+      } else if (fs.existsSync(path.join(fragDir, 'screenshot.png'))) {
+        imgPath = path.relative(DOCS_DIR, path.join(fragDir, 'screenshot.png'));
+      } else if (fs.existsSync(path.join(fragDir, 'thumbnail.png'))) {
+        imgPath = path.relative(DOCS_DIR, path.join(fragDir, 'thumbnail.png'));
       }
 
       if (imgPath) {
@@ -55,7 +55,7 @@ function generateGallery() {
         markdown += `*No image available*\n\n`;
       }
 
-      const docFile = path.join(DOCS_DIR, "fragments", `${fragSafeName}.md`);
+      const docFile = path.join(DOCS_DIR, 'fragments', `${fragSafeName}.md`);
       if (fs.existsSync(docFile)) {
         markdown += `[Detailed Documentation](./fragments/${fragSafeName}.md)\n\n`;
       } else {
@@ -69,7 +69,7 @@ function generateGallery() {
     });
   });
 
-  return markdown.trim() + "\n";
+  return markdown.trim() + '\n';
 }
 
 // If run directly

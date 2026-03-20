@@ -1,6 +1,8 @@
 # Tracker (Container)
 
-The **Tracker** fragment is a layout container designed to hold multiple **Tracker Step** components, creating a cohesive visual indicator for multi-stage processes. It dynamically manages the connections between steps.
+The **Tracker** fragment is a layout container designed to hold multiple
+**Tracker Step** components, creating a cohesive visual indicator for
+multi-stage processes. It dynamically manages the connections between steps.
 
 ## Visuals
 
@@ -8,9 +10,12 @@ The **Tracker** fragment is a layout container designed to hold multiple **Track
 
 ## Key Features
 
-- **Visual Continuity**: Automatically draws connecting lines or arrows between steps.
-- **Responsive Layout**: Switches between horizontal and vertical orientations based on screen size.
-- **Contextual Awareness**: Works in tandem with Tracker Step status to show progress.
+- **Visual Continuity**: Automatically draws connecting lines or arrows between
+  steps.
+- **Responsive Layout**: Switches between horizontal and vertical orientations
+  based on screen size.
+- **Contextual Awareness**: Works in tandem with Tracker Step status to show
+  progress.
 
 ## Configuration
 

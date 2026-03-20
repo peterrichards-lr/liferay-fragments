@@ -1,6 +1,7 @@
 # Service Card
 
-The **Service Card** fragment is a specialized component within the Liferay Fragments library.
+The **Service Card** fragment is a specialized component within the Liferay
+Fragments library.
 
 ## Overview
 

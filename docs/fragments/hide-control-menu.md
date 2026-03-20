@@ -1,6 +1,7 @@
 # Hide Control Menu
 
-The **Hide Control Menu** fragment is a specialized component within the Liferay Fragments library.
+The **Hide Control Menu** fragment is a specialized component within the Liferay
+Fragments library.
 
 ## Overview
 

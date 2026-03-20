@@ -1,6 +1,7 @@
 # User Bar
 
-A compact user identity and action bar for site headers, typically used to show the current user's profile and quick links.
+A compact user identity and action bar for site headers, typically used to show
+the current user's profile and quick links.
 
 ## Visuals
 

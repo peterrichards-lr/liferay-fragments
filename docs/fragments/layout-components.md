@@ -1,6 +1,9 @@
 # Layout Components
 
-This collection demonstrates a "Contextual Styling" pattern where child fragments adapt their appearance based on their parent container. This allows for highly reusable components that remain consistent with their surrounding layout.
+This collection demonstrates a "Contextual Styling" pattern where child
+fragments adapt their appearance based on their parent container. This allows
+for highly reusable components that remain consistent with their surrounding
+layout.
 
 ![Layout Components Overview](../../docs/images/layout-components.png)
 
@@ -8,9 +11,13 @@ This collection demonstrates a "Contextual Styling" pattern where child fragment
 
 To achieve the best results, fragments should be nested in the following order:
 
-1.  **Grid Column**: The outermost container. It ensures proper horizontal spacing and alignment when multiple cards are used in a Liferay Grid row.
-2.  **Primary or Secondary Card**: The styled container. These define the "flavor" (borders, shadows, background) of the card.
-3.  **Card Content**: The internal payload. This fragment is dropped into the Card's dropzone and **automatically changes its typography and link styling** to match the parent card type.
+1.  **Grid Column**: The outermost container. It ensures proper horizontal
+    spacing and alignment when multiple cards are used in a Liferay Grid row.
+2.  **Primary or Secondary Card**: The styled container. These define the
+    "flavor" (borders, shadows, background) of the card.
+3.  **Card Content**: The internal payload. This fragment is dropped into the
+    Card's dropzone and **automatically changes its typography and link
+    styling** to match the parent card type.
 
 ## Components Summary
 

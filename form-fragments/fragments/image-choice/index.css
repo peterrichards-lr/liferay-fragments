@@ -1,0 +1,75 @@
+.image-choice-input .image-grid {
+  display: grid;
+  grid-template-columns: repeat(var(--grid-columns, 3), 1fr);
+  gap: 1rem;
+  margin-top: 0.5rem;
+}
+
+.image-choice-input .image-choice-item {
+  cursor: pointer;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.image-choice-input .image-choice-item input {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.image-choice-input .image-card {
+  border: 2px solid var(--gray-300, #d4d4d4);
+  border-radius: 0.5rem;
+  padding: 0.5rem;
+  transition: all 0.2s ease;
+  width: 100%;
+  text-align: center;
+  background: var(--body-bg, #fff);
+}
+
+.image-choice-input .image-choice-item.sm .image-card img {
+  height: 60px;
+}
+.image-choice-input .image-choice-item.nm .image-card img {
+  height: 100px;
+}
+.image-choice-input .image-choice-item.lg .image-card img {
+  height: 160px;
+}
+
+.image-choice-input .image-card img {
+  width: 100%;
+  object-fit: cover;
+  border-radius: 0.25rem;
+  margin-bottom: 0.5rem;
+}
+
+.image-choice-input .image-label {
+  display: block;
+  font-weight: 600;
+  color: var(--body-color, #272833);
+}
+
+/* Selected State */
+.image-choice-input .image-choice-item input:checked + .image-card {
+  border-color: var(--primary, #0b5fff);
+  background: var(--light, #f1f8ff);
+  box-shadow: 0 0 0 2px rgba(11, 95, 255, 0.2);
+}
+
+.image-choice-input .image-choice-item input:focus + .image-card {
+  outline: 2px solid var(--primary, #0b5fff);
+  outline-offset: 2px;
+}
+
+.image-choice-input .image-choice-item:hover .image-card {
+  border-color: var(--gray-600, #a0a0a0);
+}
+
+.image-choice-input .image-choice-item input:disabled + .image-card {
+  opacity: 0.6;
+  cursor: not-allowed;
+}

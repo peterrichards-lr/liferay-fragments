@@ -1,17 +1,17 @@
 assemble:
-    - from: batch
-      into: batch
+  - from: batch
+    into: batch
 
 company-milestone:
-    name: Company Milestone Object
-    oAuthApplicationHeadlessServer: company-milestone-oauth
-    type: batch
+  name: Company Milestone Object
+  oAuthApplicationHeadlessServer: company-milestone-oauth
+  type: batch
 
 company-milestone-oauth:
-    .serviceAddress: localhost:8080
-    .serviceScheme: http
-    name: Company Milestone OAuth
-    scopes:
-        - Liferay.Headless.Batch.Engine.everything
-        - Liferay.Object.Admin.REST.everything
-    type: oAuthApplicationHeadlessServer
+  .serviceAddress: localhost:8080
+  .serviceScheme: http
+  name: Company Milestone OAuth
+  scopes:
+    - Liferay.Headless.Batch.Engine.everything
+    - Liferay.Object.Admin.REST.everything
+  type: oAuthApplicationHeadlessServer

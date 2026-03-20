@@ -264,23 +264,78 @@ fragmentFiles.forEach((file) => {
         }
       };
 
+      const validateFreeMarker = (filePath) => {
+        if (!fs.existsSync(filePath) || !filePath.endsWith('.ftl')) return;
+        const content = fs.readFileSync(filePath, 'utf8');
+        const fragmentName = path.basename(path.dirname(filePath));
+
+        // 1. Basic Square Bracket Balance Check
+        const openBrackets =
+          (content.match(/\[#/g) || []).length +
+          (content.match(/\[@/g) || []).length;
+        const closeBrackets =
+          (content.match(/\[\/#/g) || []).length +
+          (content.match(/\/\]/g) || []).length;
+
+        // Note: This is a loose check because some tags are self-closing [ @clay... / ]
+        // but we can check for common Liferay FTL patterns.
+
+        const ifCount = (content.match(/\[#if/g) || []).length;
+        const endifCount = (content.match(/\[\/#if\]/g) || []).length;
+        if (ifCount !== endifCount) {
+          logError(
+            fragmentName,
+            `Mismatched FreeMarker [#if] tags in ${path.basename(filePath)}. Found ${ifCount} open, ${endifCount} closed.`
+          );
+        }
+
+        const listCount = (content.match(/\[#list/g) || []).length;
+        const endlistCount = (content.match(/\[\/#list\]/g) || []).length;
+        if (listCount !== endlistCount) {
+          logError(
+            fragmentName,
+            `Mismatched FreeMarker [#list] tags in ${path.basename(filePath)}. Found ${listCount} open, ${endlistCount} closed.`
+          );
+        }
+
+        const assignCount = (content.match(/\[#assign/g) || []).length;
+        const endassignCount = (content.match(/\[\/#assign\]/g) || []).length;
+        // Assign doesn't always need a closing tag if it's a single line, but usually does in Liferay fragments for blocks
+
+        // 2. Check for common siteSpritemap / clay icon errors
+        if (
+          content.includes('siteSpritemap') &&
+          !content.includes('${siteSpritemap}')
+        ) {
+          logWarn(
+            fragmentName,
+            `Suspicious usage of 'siteSpritemap' in ${path.basename(filePath)}. Did you mean \${siteSpritemap}?`
+          );
+        }
+      };
+
       const htmlPath = path.join(dir, fragJson.htmlPath || 'index.html');
       const jsPath = path.join(dir, fragJson.jsPath || 'index.js');
 
       // Also check for .ftl if htmlPath is something else or just common extensions
-      const extensions = ['.html', '.js', '.ftl'];
-      const filesToCheck = new Set([htmlPath, jsPath]);
+      const filesToCheck = new Set();
 
-      // Add any specific paths from fragment.json if they weren't the defaults
+      // Add any specific paths from fragment.json
       if (fragJson.htmlPath)
         filesToCheck.add(path.join(dir, fragJson.htmlPath));
       if (fragJson.jsPath) filesToCheck.add(path.join(dir, fragJson.jsPath));
+      if (fragJson.cssPath) filesToCheck.add(path.join(dir, fragJson.cssPath));
 
-      filesToCheck.forEach((f) => checkFieldReferences(f));
+      // Always check standard names if they exist
+      ['index.html', 'index.ftl', 'index.js', 'index.css'].forEach((name) => {
+        const p = path.join(dir, name);
+        if (fs.existsSync(p)) filesToCheck.add(p);
+      });
 
-      // Special case: check for index.ftl if it exists but wasn't explicitly referenced
-      const ftlPath = path.join(dir, 'index.ftl');
-      if (fs.existsSync(ftlPath)) checkFieldReferences(ftlPath);
+      filesToCheck.forEach((f) => {
+        checkFieldReferences(f);
+        validateFreeMarker(f);
+      });
     } catch (e) {
       logError(
         fragmentName,
@@ -294,10 +349,12 @@ fragmentFiles.forEach((file) => {
     const css = fs.readFileSync(cssPath, 'utf8');
     const allHexMatches = css.match(/#[0-9a-fA-F]{3,6}\b/g) || [];
     const hardcodedHex = allHexMatches.filter((hex) => {
-      const strippedCss = css.replace(
-        /var\([^,]+,\s*#[0-9a-fA-F]{3,6}\)/g,
-        'VAR_WITH_FALLBACK'
-      );
+      const strippedCss = css
+        .replace(/var\([^,]+,\s*#[0-9a-fA-F]{3,6}\)/g, 'VAR_WITH_FALLBACK')
+        .replace(
+          /\[style\*=["'][^\]]*#[0-9a-fA-F]{3,6}[^\]]*["']\]/g,
+          'ATTR_SELECTOR_WITH_HEX'
+        );
       return strippedCss.includes(hex);
     });
 

@@ -1,0 +1,132 @@
+<div class="file-repo">
+  <div
+    class="file-repo-header d-flex justify-content-between align-items-center mb-4"
+  >
+    <h2
+      class="file-repo-section-title mb-0"
+      data-lfr-editable-id="repo-title"
+      data-lfr-editable-type="text"
+    >
+      Strategic Assets & Deliverables
+    </h2>
+    [#if configuration.viewAllURL?? && configuration.viewAllURL != ""]
+    <a href="${configuration.viewAllURL}" class="file-repo-view-all"
+      >${languageUtil.get(locale, "view-all")}</a
+    >
+    [/#if]
+  </div>
+
+  <div class="file-repo-table-container">
+    <table class="table file-repo-table">
+      <thead>
+        <tr>
+          <th class="file-repo-col-check">
+            <div class="custom-control custom-checkbox">
+              <input
+                type="checkbox"
+                class="custom-control-input"
+                id="${fragmentEntryLinkNamespace}-check-all"
+              />
+              <label
+                class="custom-control-label"
+                for="${fragmentEntryLinkNamespace}-check-all"
+              ></label>
+            </div>
+          </th>
+          <th class="file-repo-col-title">Title</th>
+          <th class="file-repo-col-status">Status</th>
+          <th class="file-repo-col-updated">Updated</th>
+          <th class="file-repo-col-size">Size</th>
+          <th class="file-repo-col-actions"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="file-repo-row">
+          <td>
+            <div class="custom-control custom-checkbox">
+              <input
+                type="checkbox"
+                class="custom-control-input"
+                id="${fragmentEntryLinkNamespace}-check-1"
+              />
+              <label
+                class="custom-control-label"
+                for="${fragmentEntryLinkNamespace}-check-1"
+              ></label>
+            </div>
+          </td>
+          <td class="file-repo-cell-title">
+            <div class="d-flex align-items-center">
+              [@clay["icon"] symbol="documents-and-media" elementClasses="mr-2
+              text-primary" /]
+              <span
+                data-lfr-editable-id="file-name-1"
+                data-lfr-editable-type="text"
+                >Q3_Product_Roadmap_Final.pdf</span
+              >
+            </div>
+          </td>
+          <td>
+            <span class="badge badge-warning badge-pill file-repo-status"
+              >Pending Review</span
+            >
+          </td>
+          <td class="text-muted small">10 min ago</td>
+          <td class="text-muted small">4.2 MB</td>
+          <td class="text-right">
+            <button class="btn btn-link btn-sm p-0 text-muted">
+              [@clay["icon"] symbol="ellipsis-v" /]
+            </button>
+          </td>
+        </tr>
+        <tr class="file-repo-row">
+          <td>
+            <div class="custom-control custom-checkbox">
+              <input
+                type="checkbox"
+                class="custom-control-input"
+                id="${fragmentEntryLinkNamespace}-check-2"
+              />
+              <label
+                class="custom-control-label"
+                for="${fragmentEntryLinkNamespace}-check-2"
+              ></label>
+            </div>
+          </td>
+          <td class="file-repo-cell-title">
+            <div class="d-flex align-items-center">
+              [@clay["icon"] symbol="document-text" elementClasses="mr-2
+              text-primary" /]
+              <span
+                data-lfr-editable-id="file-name-2"
+                data-lfr-editable-type="text"
+                >Pricing_Model_v2.xlsx</span
+              >
+            </div>
+          </td>
+          <td>
+            <span class="badge badge-success badge-pill file-repo-status"
+              >Approved</span
+            >
+          </td>
+          <td class="text-muted small">Yesterday</td>
+          <td class="text-muted small">1.8 MB</td>
+          <td class="text-right">
+            <button class="btn btn-link btn-sm p-0 text-muted">
+              [@clay["icon"] symbol="ellipsis-v" /]
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="meta-editor-mappable-fields">
+    <div class="mappable-field-item">
+      <label>Object Folder ERC</label>
+      <div data-lfr-editable-id="repo-folder-erc" data-lfr-editable-type="text">
+        EXTERNAL_ASSETS
+      </div>
+    </div>
+  </div>
+</div>

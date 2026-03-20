@@ -1,0 +1,66 @@
+{
+  "fieldSets": [
+    {
+      "fields": [
+        {
+          "dataType": "string",
+          "defaultValue": "",
+          "label": "lfr.form-fragments.placeholder",
+          "description": "lfr.form-fragments.placeholder-description",
+          "localizable": true,
+          "name": "placeholder",
+          "type": "text"
+        },
+        {
+          "dataType": "int",
+          "defaultValue": "8",
+          "label": "lfr.form-fragments.min-length",
+          "description": "lfr.form-fragments.min-length-description",
+          "name": "minLength",
+          "type": "text"
+        },
+        {
+          "dataType": "bool",
+          "defaultValue": true,
+          "label": "lfr.form-fragments.require-uppercase",
+          "description": "lfr.form-fragments.require-uppercase-description",
+          "name": "requireUppercase",
+          "type": "checkbox"
+        },
+        {
+          "dataType": "bool",
+          "defaultValue": true,
+          "label": "lfr.form-fragments.require-number",
+          "description": "lfr.form-fragments.require-number-description",
+          "name": "requireNumber",
+          "type": "checkbox"
+        },
+        {
+          "dataType": "bool",
+          "defaultValue": true,
+          "label": "lfr.form-fragments.require-special",
+          "description": "lfr.form-fragments.require-special-description",
+          "name": "requireSpecial",
+          "type": "checkbox"
+        },
+        {
+          "dataType": "bool",
+          "defaultValue": true,
+          "label": "lfr.form-fragments.show-strength-meter",
+          "description": "lfr.form-fragments.show-strength-meter-description",
+          "name": "showStrengthMeter",
+          "type": "checkbox"
+        },
+        {
+          "dataType": "bool",
+          "defaultValue": true,
+          "label": "lfr.form-fragments.enable-toggle-visibility",
+          "description": "lfr.form-fragments.enable-toggle-visibility-description",
+          "name": "enableToggleVisibility",
+          "type": "checkbox"
+        }
+      ],
+      "label": "lfr.form-fragments.password-options"
+    }
+  ]
+}

@@ -1,6 +1,7 @@
 # Site Name
 
-Displays the current Liferay Site name with optional manual override and dynamic linking.
+Displays the current Liferay Site name with optional manual override and dynamic
+linking.
 
 ## Visuals
 

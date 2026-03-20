@@ -1,6 +1,7 @@
 # Tracker Step
 
-The **Tracker Step** fragment represents a single milestone within a parent **Tracker** container. It adapts its styling based on its current status.
+The **Tracker Step** fragment represents a single milestone within a parent
+**Tracker** container. It adapts its styling based on its current status.
 
 ## Visuals
 
@@ -8,9 +9,11 @@ The **Tracker Step** fragment represents a single milestone within a parent **Tr
 
 ## Key Features
 
-- **Status Indicators**: Visual cues for Pending, Active, Complete, and Error states.
+- **Status Indicators**: Visual cues for Pending, Active, Complete, and Error
+  states.
 - **Adaptive Coloring**: Automatically changes colors based on step completion.
-- **Lexicon Icon Support**: Assign unique icons to each step to represent the milestone.
+- **Lexicon Icon Support**: Assign unique icons to each step to represent the
+  milestone.
 
 ## Configuration
 

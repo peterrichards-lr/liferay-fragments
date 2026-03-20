@@ -1,20 +1,20 @@
 .profile-detail {
-	display: table;
+  display: table;
 }
 
 .profile-detail .row,
 .profile-detail .cell {
-	padding: 10px;
+  padding: 10px;
 }
 
 .profile-detail .row {
-	display: table-row;
+  display: table-row;
 }
 
 .profile-detail .cell {
-	display: table-cell;
+  display: table-cell;
 }
 
 .profile-detail .cell:nth-child(odd) {
-	font-weight: bold;
+  font-weight: bold;
 }

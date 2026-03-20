@@ -1,42 +1,42 @@
-const CHART_JS_URL = "https://cdn.jsdelivr.net/npm/chart.js";
+const CHART_JS_URL = 'https://cdn.jsdelivr.net/npm/chart.js';
 
 const THEME_COLORS = [
-  "var(--orange, #cc4e00)",
-  "var(--indigo, #4d5fff)",
-  "var(--pink, #e50082)",
-  "var(--cyan, #0077b3)",
-  "var(--green, #458613)",
-  "var(--red, #e60000)",
-  "var(--purple, #aa33ff)",
-  "var(--blue, #006eff)",
-  "var(--teal, #1b7e6e)",
-  "var(--yellow, #ffbb00)",
+  'var(--orange, #cc4e00)',
+  'var(--indigo, #4d5fff)',
+  'var(--pink, #e50082)',
+  'var(--cyan, #0077b3)',
+  'var(--green, #458613)',
+  'var(--red, #e60000)',
+  'var(--purple, #aa33ff)',
+  'var(--blue, #006eff)',
+  'var(--teal, #1b7e6e)',
+  'var(--yellow, #ffbb00)',
 ];
 
 const RAINBOW_COLORS = [
-  "var(--red, #ff0000)",
-  "var(--orange, #ff7f00)",
-  "var(--yellow, #ffff00)",
-  "var(--green, #00ff00)",
-  "var(--blue, #0000ff)",
-  "var(--indigo, #4b0082)",
-  "var(--purple, #8b00ff)",
+  'var(--red, #ff0000)',
+  'var(--orange, #ff7f00)',
+  'var(--yellow, #ffff00)',
+  'var(--green, #00ff00)',
+  'var(--blue, #0000ff)',
+  'var(--indigo, #4b0082)',
+  'var(--purple, #8b00ff)',
 ];
 
 const COOL_COLORS = [
-  "var(--cyan, #0077b3)",
-  "var(--teal, #1b7e6e)",
-  "var(--blue, #006eff)",
-  "var(--indigo, #4d5fff)",
-  "var(--purple, #aa33ff)",
+  'var(--cyan, #0077b3)',
+  'var(--teal, #1b7e6e)',
+  'var(--blue, #006eff)',
+  'var(--indigo, #4d5fff)',
+  'var(--purple, #aa33ff)',
 ];
 
 const WARM_COLORS = [
-  "var(--red, #e60000)",
-  "var(--orange, #cc4e00)",
-  "var(--yellow, #ffbb00)",
-  "var(--pink, #e50082)",
-  "var(--warning, #ffcc00)",
+  'var(--red, #e60000)',
+  'var(--orange, #cc4e00)',
+  'var(--yellow, #ffbb00)',
+  'var(--pink, #e50082)',
+  'var(--warning, #ffcc00)',
 ];
 
 // Use Commons for logic
@@ -48,7 +48,7 @@ const loadScript = (url) => {
     if (window.Chart) {
       resolve();
     } else {
-      const script = document.createElement("script");
+      const script = document.createElement('script');
       script.src = url;
       script.onload = resolve;
       script.onerror = reject;
@@ -57,11 +57,11 @@ const loadScript = (url) => {
   });
 };
 
-const resolveColor = (colorStr, element, filter = "") => {
-  const temp = document.createElement("div");
+const resolveColor = (colorStr, element, filter = '') => {
+  const temp = document.createElement('div');
   temp.style.color = colorStr;
   if (filter) temp.style.filter = filter;
-  temp.style.display = "none";
+  temp.style.display = 'none';
   element.appendChild(temp);
   const resolved = getComputedStyle(temp).color;
   element.removeChild(temp);
@@ -73,24 +73,22 @@ const fetchData = async () => {
 
   // Resolve effective ERC (Prioritize mappable field)
   const mappableERCEl = fragmentElement.querySelector(
-    "[data-lfr-editable-id='object-erc']",
+    "[data-lfr-editable-id='object-erc']"
   );
   let objectERC = configERC;
   if (mappableERCEl) {
     const mappedVal = mappableERCEl.innerText.trim();
-    if (mappedVal && mappedVal !== configERC && mappedVal !== "SALES_REPORT") {
+    if (mappedVal && mappedVal !== configERC && mappedVal !== 'SALES_REPORT') {
       objectERC = mappedVal;
     }
   }
 
   if (!Liferay.Fragment.Commons.isValidIdentifier(objectERC))
-    throw new Error("Object ERC not configured.");
+    throw new Error('Object ERC not configured.');
 
   // Use Commons for discovery and path resolution
   const { definition, apiPath } =
-    await Liferay.Fragment.Commons.resolveObjectPath(
-      `/o/c/${objectERC.toLowerCase()}`,
-    );
+    await Liferay.Fragment.Commons.resolveObjectPathByERC(objectERC);
 
   if (!definition)
     throw new Error(`Could not find object with ERC "${objectERC}".`);
@@ -98,9 +96,9 @@ const fetchData = async () => {
   const response = await Liferay.Util.fetch(`${apiPath}/?pageSize=100`);
   if (!response.ok) {
     if (response.status === 401 || response.status === 403)
-      throw new Error("Permission denied.");
+      throw new Error('Permission denied.');
     throw new Error(
-      `Failed to fetch data for "${definition.restContextPath}".`,
+      `Failed to fetch data for "${definition.restContextPath}".`
     );
   }
   const data = await response.json();
@@ -111,15 +109,15 @@ const aggregateData = (items, labelField, valueFields, type, sortOrder) => {
   let processedLabels = [];
   let processedDatasets = [];
 
-  if (type === "none") {
-    processedLabels = items.map((item) => item[labelField] || "N/A");
+  if (type === 'none') {
+    processedLabels = items.map((item) => item[labelField] || 'N/A');
     processedDatasets = valueFields.map((field) =>
-      items.map((item) => item[field] || 0),
+      items.map((item) => item[field] || 0)
     );
   } else {
     const groups = {};
     items.forEach((item) => {
-      const key = item[labelField] || "N/A";
+      const key = item[labelField] || 'N/A';
       if (!groups[key]) {
         groups[key] = { count: 0, label: key };
         valueFields.forEach((f) => (groups[key][f] = 0));
@@ -134,29 +132,29 @@ const aggregateData = (items, labelField, valueFields, type, sortOrder) => {
     const sortedGroups = Object.values(groups);
 
     // Apply Sorting Logic
-    if (sortOrder === "label-asc") {
+    if (sortOrder === 'label-asc') {
       sortedGroups.sort((a, b) =>
-        String(a.label).localeCompare(String(b.label)),
+        String(a.label).localeCompare(String(b.label))
       );
-    } else if (sortOrder === "label-desc") {
+    } else if (sortOrder === 'label-desc') {
       sortedGroups.sort((a, b) =>
-        String(b.label).localeCompare(String(a.label)),
+        String(b.label).localeCompare(String(a.label))
       );
-    } else if (sortOrder === "value-asc" || sortOrder === "value-desc") {
+    } else if (sortOrder === 'value-asc' || sortOrder === 'value-desc') {
       const primaryField = valueFields[0];
       sortedGroups.sort((a, b) => {
-        const valA = type === "count" ? a.count : a[primaryField];
-        const valB = type === "count" ? b.count : b[primaryField];
-        return sortOrder === "value-asc" ? valA - valB : valB - valA;
+        const valA = type === 'count' ? a.count : a[primaryField];
+        const valB = type === 'count' ? b.count : b[primaryField];
+        return sortOrder === 'value-asc' ? valA - valB : valB - valA;
       });
     }
 
     processedLabels = sortedGroups.map((g) => g.label);
     processedDatasets = valueFields.map((field) => {
       return sortedGroups.map((group) => {
-        if (type === "sum") return group[field];
-        if (type === "avg") return group[field] / group.count;
-        if (type === "count") return group.count;
+        if (type === 'sum') return group[field];
+        if (type === 'avg') return group[field] / group.count;
+        if (type === 'count') return group.count;
         return 0;
       });
     });
@@ -166,8 +164,8 @@ const aggregateData = (items, labelField, valueFields, type, sortOrder) => {
 };
 
 const initChart = async (isEditMode) => {
-  const chartWrapper = fragmentElement.querySelector(".chart-wrapper");
-  const titleEl = fragmentElement.querySelector(".chart-title");
+  const chartWrapper = fragmentElement.querySelector('.chart-wrapper');
+  const titleEl = fragmentElement.querySelector('.chart-title');
 
   const {
     objectERC: configERC,
@@ -189,12 +187,12 @@ const initChart = async (isEditMode) => {
 
   // Resolve effective ERC (Prioritize mappable field)
   const mappableERCEl = fragmentElement.querySelector(
-    "[data-lfr-editable-id='object-erc']",
+    "[data-lfr-editable-id='object-erc']"
   );
   let objectERC = configERC;
   if (mappableERCEl) {
     const mappedVal = mappableERCEl.innerText.trim();
-    if (mappedVal && mappedVal !== configERC && mappedVal !== "SALES_REPORT") {
+    if (mappedVal && mappedVal !== configERC && mappedVal !== 'SALES_REPORT') {
       objectERC = mappedVal;
     }
   }
@@ -203,8 +201,8 @@ const initChart = async (isEditMode) => {
     if (chartWrapper) {
       Liferay.Fragment.Commons.renderConfigWarning(
         chartWrapper,
-        "Please select a Liferay Object ERC in the fragment settings to visualize data.",
-        layoutMode,
+        'Please select a Liferay Object ERC in the fragment settings to visualize data.',
+        layoutMode
       );
     }
   } else {
@@ -215,7 +213,7 @@ const initChart = async (isEditMode) => {
       if (items.length === 0) {
         if (chartWrapper) {
           Liferay.Fragment.Commons.renderEmptyState(chartWrapper, {
-            title: "No Data Available",
+            title: 'No Data Available',
             description: `The ${definition.name} object currently has no records to display.`,
           });
         }
@@ -229,30 +227,30 @@ const initChart = async (isEditMode) => {
         // Smart Title Logic
         const currentTitle = titleEl.innerText.trim();
         const defaultFragmentName =
-          fragmentElement.dataset.fragmentName || "Object-Linked Chart";
+          fragmentElement.dataset.fragmentName || 'Object-Linked Chart';
 
         // "Evaluated Value" based on data
         const objectLabel = getLocalizedValue(
-          definition.pluralLabel || definition.label || definition.name,
+          definition.pluralLabel || definition.label || definition.name
         );
-        const evaluatedTitle = `${objectLabel} (${aggregationType !== "none" ? aggregationType : "Raw Data"})`;
+        const evaluatedTitle = `${objectLabel} (${aggregationType !== 'none' ? aggregationType : 'Raw Data'})`;
 
         // Precedence: Configuration (configTitle) > Evaluated Value
         const preferredTitle = configTitle || evaluatedTitle;
 
         if (
-          currentTitle === "Object-Linked Chart" ||
-          currentTitle === "Object Data Chart" ||
+          currentTitle === 'Object-Linked Chart' ||
+          currentTitle === 'Object Data Chart' ||
           currentTitle === defaultFragmentName ||
-          currentTitle === "" ||
-          currentTitle === "Regional Sales Performance" || // Previous default
+          currentTitle === '' ||
+          currentTitle === 'Regional Sales Performance' || // Previous default
           currentTitle === `${defaultFragmentName} (Preview)`
         ) {
-          titleEl.innerText = preferredTitle + (isEditMode ? " (Preview)" : "");
+          titleEl.innerText = preferredTitle + (isEditMode ? ' (Preview)' : '');
         }
 
-        const fields = (valueFields || "")
-          .split(",")
+        const fields = (valueFields || '')
+          .split(',')
           .map((f) => f.trim())
           .filter(Boolean);
 
@@ -260,8 +258,8 @@ const initChart = async (isEditMode) => {
           if (chartWrapper) {
             Liferay.Fragment.Commons.renderConfigWarning(
               chartWrapper,
-              "Please configure at least one Value Field in the settings.",
-              layoutMode,
+              'Please configure at least one Value Field in the settings.',
+              layoutMode
             );
           }
         } else {
@@ -270,51 +268,51 @@ const initChart = async (isEditMode) => {
             labelField,
             fields,
             aggregationType,
-            sortOrder,
+            sortOrder
           );
 
           // Restore canvas if it was replaced by empty state/warning
-          if (chartWrapper && !chartWrapper.querySelector("canvas")) {
+          if (chartWrapper && !chartWrapper.querySelector('canvas')) {
             chartWrapper.innerHTML = `<canvas id="chart-${fragmentEntryLinkNamespace}"></canvas>`;
           }
 
           const canvas = fragmentElement.querySelector(
-            `#chart-${fragmentEntryLinkNamespace}`,
+            `#chart-${fragmentEntryLinkNamespace}`
           );
 
           // Resolve effective color mapping mode
-          let effectiveMapping = colorMapping || "auto";
-          if (effectiveMapping === "auto") {
+          let effectiveMapping = colorMapping || 'auto';
+          if (effectiveMapping === 'auto') {
             if (fields.length === 1) {
-              effectiveMapping = "label";
+              effectiveMapping = 'label';
             } else {
-              effectiveMapping = ["pie", "doughnut", "polarArea"].includes(
-                chartType,
+              effectiveMapping = ['pie', 'doughnut', 'polarArea'].includes(
+                chartType
               )
-                ? "label"
-                : "series";
+                ? 'label'
+                : 'series';
             }
           }
 
           // Determine color palette
           let palette = THEME_COLORS;
-          if (colorPalette === "rainbow") palette = RAINBOW_COLORS;
-          else if (colorPalette === "cool") palette = COOL_COLORS;
-          else if (colorPalette === "warm") palette = WARM_COLORS;
+          if (colorPalette === 'rainbow') palette = RAINBOW_COLORS;
+          else if (colorPalette === 'cool') palette = COOL_COLORS;
+          else if (colorPalette === 'warm') palette = WARM_COLORS;
 
           const datasets = fields.map((field, index) => {
             let bgColors, borderColors;
 
-            if (effectiveMapping === "label") {
+            if (effectiveMapping === 'label') {
               bgColors = labels.map((_, i) =>
-                resolveColor(palette[i % palette.length], fragmentElement),
+                resolveColor(palette[i % palette.length], fragmentElement)
               );
               borderColors = labels.map((_, i) =>
                 resolveColor(
                   palette[i % palette.length],
                   fragmentElement,
-                  borderFilter,
-                ),
+                  borderFilter
+                )
               );
             } else {
               const baseColor = palette[index % palette.length];
@@ -322,7 +320,7 @@ const initChart = async (isEditMode) => {
               borderColors = resolveColor(
                 baseColor,
                 fragmentElement,
-                borderFilter,
+                borderFilter
               );
             }
 
@@ -330,22 +328,22 @@ const initChart = async (isEditMode) => {
 
             const ds = {
               label:
-                aggregationType !== "none"
+                aggregationType !== 'none'
                   ? `${localizedFieldLabel} (${aggregationType})`
                   : localizedFieldLabel,
               data: dataValues[index],
               backgroundColor: bgColors,
               borderColor: borderColors,
               borderWidth: 2,
-              fill: chartType === "line" ? false : true,
+              fill: chartType === 'line' ? false : true,
             };
 
             if (
               enableSecondaryYAxis &&
               index > 0 &&
-              ["bar", "line"].includes(chartType)
+              ['bar', 'line'].includes(chartType)
             ) {
-              ds.yAxisID = "y1";
+              ds.yAxisID = 'y1';
             }
 
             return ds;
@@ -353,13 +351,13 @@ const initChart = async (isEditMode) => {
 
           if (canvas) {
             const xLabelEl = fragmentElement.querySelector(
-              '[data-lfr-editable-id="x-axis-label"]',
+              '[data-lfr-editable-id="x-axis-label"]'
             );
             const yLabelEl = fragmentElement.querySelector(
-              '[data-lfr-editable-id="y-axis-label"]',
+              '[data-lfr-editable-id="y-axis-label"]'
             );
             const yLabelEl2 = fragmentElement.querySelector(
-              '[data-lfr-editable-id="y-axis-label-2"]',
+              '[data-lfr-editable-id="y-axis-label-2"]'
             );
             const resolvedXLabel = xLabelEl ? xLabelEl.innerText : configXLabel;
             const resolvedYLabel = yLabelEl ? yLabelEl.innerText : configYLabel;
@@ -370,8 +368,8 @@ const initChart = async (isEditMode) => {
             const existingChart = Chart.getChart(canvas);
             if (existingChart) existingChart.destroy();
 
-            const isCartesian = ["bar", "line"].includes(chartType);
-            const isRadial = ["radar", "polarArea"].includes(chartType);
+            const isCartesian = ['bar', 'line'].includes(chartType);
+            const isRadial = ['radar', 'polarArea'].includes(chartType);
 
             const chartOptions = {
               responsive: true,
@@ -380,9 +378,9 @@ const initChart = async (isEditMode) => {
               plugins: {
                 legend: {
                   display: showLegend !== false,
-                  position: "top",
+                  position: 'top',
                 },
-                tooltip: { mode: "index", intersect: false },
+                tooltip: { mode: 'index', intersect: false },
               },
             };
 
@@ -409,7 +407,7 @@ const initChart = async (isEditMode) => {
                 chartOptions.scales.y1 = {
                   beginAtZero: true,
                   display: true,
-                  position: "right",
+                  position: 'right',
                   grid: { drawOnChartArea: false },
                   title: {
                     display: !!resolvedXLabel,
@@ -427,9 +425,9 @@ const initChart = async (isEditMode) => {
               };
             }
 
-            const ctx = canvas.getContext("2d");
+            const ctx = canvas.getContext('2d');
             new Chart(ctx, {
-              type: chartType || "bar",
+              type: chartType || 'bar',
               data: {
                 labels: labels,
                 datasets: datasets,
@@ -447,12 +445,20 @@ const initChart = async (isEditMode) => {
   }
 };
 
-// Listen for global refresh signals from Dashboard Filter
-Liferay.on("refreshData", () => {
-  if (layoutMode === "view") initChart(false);
-});
+// Listen for global refresh signals from standardized Event Bus
+Liferay.Fragment.Commons.EventBus.subscribe(
+  'refreshData',
+  (data) => {
+    if (layoutMode === 'view') {
+      console.debug('[Object Chart] Received refresh signal', data);
+      initChart(false);
+    }
+  },
+  { replay: true }
+);
 
-if (layoutMode === "view") initChart(false);
-else {
+if (layoutMode === 'view') {
+  // Manual call removed because subscribe with replay:true handles the initial load if filter exists
+} else {
   initChart(true);
 }

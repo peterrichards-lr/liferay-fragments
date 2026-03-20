@@ -1,6 +1,8 @@
 # Login and User Menu
 
-The **Login and User Menu** fragment provides a combined identity component for site headers, showing login links for guests and a dropdown menu for authenticated users.
+The **Login and User Menu** fragment provides a combined identity component for
+site headers, showing login links for guests and a dropdown menu for
+authenticated users.
 
 ## Visuals
 
@@ -8,7 +10,8 @@ The **Login and User Menu** fragment provides a combined identity component for 
 
 ## Key Features
 
-- **Context Aware**: Automatically switches between guest and authenticated states.
+- **Context Aware**: Automatically switches between guest and authenticated
+  states.
 - **Lexicon Icon Support**: Customizable user icon.
 - **Deep Integration**: Links to Liferay account management and logout actions.
 

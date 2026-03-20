@@ -1,6 +1,7 @@
 # Animated Metric Counter
 
-A high-impact card that animates numeric totals when they enter the user's viewport.
+A high-impact card that animates numeric totals when they enter the user's
+viewport.
 
 ## Features
 

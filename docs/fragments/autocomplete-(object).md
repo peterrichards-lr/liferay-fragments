@@ -1,12 +1,14 @@
 # Autocomplete (Object)
 
-The **Autocomplete (Object)** fragment provides a searchable dropdown input that fetches results from a Liferay Object API.
+The **Autocomplete (Object)** fragment provides a searchable dropdown input that
+fetches results from a Liferay Object API.
 
 ## Key Features
 
 - **Dynamic Fetching**: Queries Liferay Objects in real-time as the user types.
 - **Debounced Search**: Optimized performance to prevent excessive API calls.
-- **Site-Scoped Support**: Automatically detects and handles Site-scoped Object data.
+- **Site-Scoped Support**: Automatically detects and handles Site-scoped Object
+  data.
 - **Accessible UI**: Includes ARIA attributes for screen reader compatibility.
 
 ## Configuration

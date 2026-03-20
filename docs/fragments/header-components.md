@@ -1,6 +1,9 @@
 # Header Components
 
-This collection contains a group of atomic fragments designed to build high-fidelity, fully configurable headers within Liferay Master Pages. By breaking the header into individual components (Logo, Site Name, Navigation, Search, User Bar), editors have maximum flexibility over layout and styling.
+This collection contains a group of atomic fragments designed to build
+high-fidelity, fully configurable headers within Liferay Master Pages. By
+breaking the header into individual components (Logo, Site Name, Navigation,
+Search, User Bar), editors have maximum flexibility over layout and styling.
 
 ## Visuals
 
@@ -10,10 +13,12 @@ This collection contains a group of atomic fragments designed to build high-fide
 
 - **Logo**: Displays the site logo with configurable scaling.
 - **Site Name**: Renders the site name with dynamic linking.
-- **Navigation**: A flexible menu component supporting various Liferay navigation menus.
+- **Navigation**: A flexible menu component supporting various Liferay
+  navigation menus.
 - **Search Bar**: A compact search input for header placement.
 - **User Bar / Login**: Standardized user identity and login menu.
-- **Layout Containers**: Upper and lower layout containers for structuring the header rows.
+- **Layout Containers**: Upper and lower layout containers for structuring the
+  header rows.
 
 Refer to individual documentation files for deep configuration details.
 

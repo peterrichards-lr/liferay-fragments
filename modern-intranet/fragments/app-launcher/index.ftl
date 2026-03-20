@@ -1,0 +1,30 @@
+<div class="app-launcher">
+  [#if configuration.title?? && configuration.title != ""]
+  <div
+    class="app-launcher-header d-flex justify-content-between align-items-center mb-4"
+  >
+    <h2 class="app-launcher-title mb-0">${configuration.title}</h2>
+    <a href="#" class="btn btn-link p-0 app-launcher-edit"
+      >${languageUtil.get(locale, "edit")}</a
+    >
+  </div>
+  [/#if]
+
+  <div class="app-launcher-grid">
+    [#list 1..6 as i] [#assign appName = configuration["appName${i}"]!"" /]
+    [#assign appIcon = configuration["appIcon${i}"]!"grid" /] [#assign appURL =
+    configuration["appURL${i}"]!"#" /] [#if appName != ""]
+    <a href="${appURL}" class="app-launcher-item">
+      <div class="app-launcher-icon-container">
+        <svg
+          class="lexicon-icon lexicon-icon-${appIcon} app-launcher-icon"
+          role="presentation"
+        >
+          <use xlink:href="/o/classic-theme/images/clay/icons.svg#${appIcon}" />
+        </svg>
+      </div>
+      <span class="app-launcher-name">${appName}</span>
+    </a>
+    [/#if] [/#list]
+  </div>
+</div>

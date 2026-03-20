@@ -1,0 +1,50 @@
+{
+  "fieldSets": [
+    {
+      "fields": [
+        {
+          "dataType": "string",
+          "defaultValue": "$",
+          "label": "lfr.form-fragments.currency-symbol",
+          "description": "lfr.form-fragments.currency-symbol-description",
+          "name": "currencySymbol",
+          "type": "text"
+        },
+        {
+          "dataType": "string",
+          "defaultValue": ",",
+          "label": "lfr.form-fragments.thousands-separator",
+          "description": "lfr.form-fragments.thousands-separator-description",
+          "name": "thousandsSeparator",
+          "type": "text"
+        },
+        {
+          "dataType": "string",
+          "defaultValue": ".",
+          "label": "lfr.form-fragments.decimal-separator",
+          "description": "lfr.form-fragments.decimal-separator-description",
+          "name": "decimalSeparator",
+          "type": "text"
+        },
+        {
+          "dataType": "int",
+          "defaultValue": "2",
+          "label": "lfr.form-fragments.decimal-places",
+          "description": "lfr.form-fragments.decimal-places-description",
+          "name": "decimalPlaces",
+          "type": "text"
+        },
+        {
+          "dataType": "string",
+          "defaultValue": "",
+          "label": "lfr.form-fragments.placeholder",
+          "description": "lfr.form-fragments.placeholder-description",
+          "localizable": true,
+          "name": "placeholder",
+          "type": "text"
+        }
+      ],
+      "label": "lfr.form-fragments.currency-options"
+    }
+  ]
+}

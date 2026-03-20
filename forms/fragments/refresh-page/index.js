@@ -1,5 +1,5 @@
 const initRefreshPage = () => {
-  if (layoutMode !== "view") return;
+  if (layoutMode !== 'view') return;
 
   const enableDebug = configuration.enableDebug;
   const enableRefreshTrigger = configuration.enableRefreshTrigger;
@@ -8,8 +8,8 @@ const initRefreshPage = () => {
   const refreshTriggerText = configuration.refreshTriggerText;
 
   const queryInnerTextAll = function (root, selector, regex) {
-    if (typeof regex === "string") {
-      regex = new RegExp(regex, "i");
+    if (typeof regex === 'string') {
+      regex = new RegExp(regex, 'i');
     }
     const elements = [...root.querySelectorAll(selector)];
     const rtn = elements.filter((element) => {
@@ -35,11 +35,11 @@ const initRefreshPage = () => {
 
   const triggerHandler = () => {
     if (fragmentElement.children[0]) {
-      fragmentElement.children[0].style.display = "block";
+      fragmentElement.children[0].style.display = 'block';
     }
 
     if (enableAutoRefresh) {
-      if (enableDebug) console.debug("Refreshing page");
+      if (enableDebug) console.debug('Refreshing page');
       setTimeout(function () {
         window.location.reload();
       }, refreshIntervalSec * 1000);
@@ -51,13 +51,13 @@ const initRefreshPage = () => {
       fragmentElement.parentElement.parentElement.parentElement;
     if (commonParent) {
       const triggerContainer = commonParent.querySelector(
-        "div.portlet-forms-display",
+        'div.portlet-forms-display'
       );
       if (triggerContainer) {
         const triggerElement = queryInnerText(
           triggerContainer,
-          "h2",
-          refreshTriggerText,
+          'h2',
+          refreshTriggerText
         );
         return triggerElement;
       }
@@ -72,10 +72,10 @@ const initRefreshPage = () => {
     let c = 0;
     const intervalHandle = setInterval(() => {
       if (enableDebug)
-        console.debug("retry : " + (c + 1) + " out of " + (waitCount + 1));
+        console.debug('retry : ' + (c + 1) + ' out of ' + (waitCount + 1));
       let triggerElement = triggerSelectorCallback(config);
       if (triggerElement) {
-        if (enableDebug) console.debug("Trigger found");
+        if (enableDebug) console.debug('Trigger found');
         clearInterval(intervalHandle);
         triggerHandler(config);
       }
@@ -83,7 +83,7 @@ const initRefreshPage = () => {
       if (c > waitCount) {
         clearInterval(intervalHandle);
         if (enableDebug)
-          console.debug("Unable to find trigger within given bounds");
+          console.debug('Unable to find trigger within given bounds');
         return;
       }
     }, waitInterval);
@@ -92,7 +92,7 @@ const initRefreshPage = () => {
   if (!enableRefreshTrigger) {
     triggerHandler();
   } else {
-    Liferay.on("allPortletsReady", () => {
+    Liferay.on('allPortletsReady', () => {
       triggerChecker({}, triggerSelector, triggerHandler);
     });
   }

@@ -1,5 +1,5 @@
 const initDateDisplayStatic = () => {
-  if (layoutMode !== "view") return;
+  if (layoutMode !== 'view') return;
 
   const idPrefix = `#${fragmentEntryLinkNamespace}`;
   const startDate = fragmentElement.querySelector(`${idPrefix}_startDate`);
@@ -15,9 +15,9 @@ const initDateDisplayStatic = () => {
   };
 
   const getAbbMonth = (date, abbLen = 3) => {
-    const languageId = Liferay.ThemeDisplay.getLanguageId().replace("_", "-");
+    const languageId = Liferay.ThemeDisplay.getLanguageId().replace('_', '-');
     const dateFormatter = new Intl.DateTimeFormat(languageId, {
-      month: "long",
+      month: 'long',
     });
     return dateFormatter.format(date).substring(0, abbLen);
   };
@@ -29,26 +29,26 @@ const initDateDisplayStatic = () => {
     if (startDate) {
       const textnode = document.createTextNode(startDateValue.getDate());
       startDate.insertBefore(textnode, startDate.firstChild);
-      startDate.classList.add("show");
+      startDate.classList.add('show');
     }
     if (startMonth) {
       startMonth.innerText = getAbbMonth(startDateValue);
-      startMonth.classList.add("show");
+      startMonth.classList.add('show');
     }
   }
 
   if (endDateValue) {
     if (separator && startDateValue) {
-      separator.classList.add("show");
+      separator.classList.add('show');
     }
     if (endDate) {
       const textnode = document.createTextNode(endDateValue.getDate());
       endDate.insertBefore(textnode, endDate.firstChild);
-      endDate.classList.add("show");
+      endDate.classList.add('show');
     }
     if (endMonth) {
       endMonth.innerText = getAbbMonth(endDateValue);
-      endMonth.classList.add("show");
+      endMonth.classList.add('show');
     }
   }
 };

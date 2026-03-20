@@ -1,0 +1,33 @@
+<div
+  class="meta-gallery-container gallery-${fragmentEntryLinkNamespace}"
+  data-layout-mode="${layoutMode}"
+  style="--grid-cols: ${configuration.columns!}"
+>
+  <div
+    class="alert alert-info d-none mb-3"
+    id="info-${fragmentEntryLinkNamespace}"
+  ></div>
+  <div
+    class="alert alert-danger d-none mb-3"
+    id="error-${fragmentEntryLinkNamespace}"
+  ></div>
+
+  <div class="gallery-grid" id="grid-${fragmentEntryLinkNamespace}">
+    <div class="meta-status text-center p-5 w-100">
+      Loading gallery items...
+    </div>
+  </div>
+
+  <div class="meta-editor-mappable-fields">
+    <div class="mappable-field-item">
+      <label>Object ERC</label>
+      <div
+        class="small text-muted"
+        data-lfr-editable-id="object-erc"
+        data-lfr-editable-type="text"
+      >
+        ${configuration.objectERC!}
+      </div>
+    </div>
+  </div>
+</div>

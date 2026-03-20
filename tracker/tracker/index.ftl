@@ -1,0 +1,5 @@
+[#assign elementId = fragmentElementId?has_content?then(fragmentElementId[9..],
+'') /]
+<div class="tracker" id="tracker-${elementId}">
+  <lfr-drop-zone></lfr-drop-zone>
+</div>

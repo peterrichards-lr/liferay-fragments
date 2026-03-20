@@ -1,6 +1,7 @@
 # Zone Layout
 
-The **Zone Layout** fragment is a specialized component within the Liferay Fragments library.
+The **Zone Layout** fragment is a specialized component within the Liferay
+Fragments library.
 
 ## Overview
 

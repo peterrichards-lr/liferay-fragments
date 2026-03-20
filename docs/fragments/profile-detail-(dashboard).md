@@ -1,6 +1,7 @@
 # Profile Detail (Dashboard)
 
-The **Profile Detail (Dashboard)** fragment is a specialized component within the Liferay Fragments library.
+The **Profile Detail (Dashboard)** fragment is a specialized component within
+the Liferay Fragments library.
 
 ## Overview
 

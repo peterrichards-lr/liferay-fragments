@@ -1,6 +1,7 @@
 # Toggle Switch
 
-The **Toggle Switch** fragment is a modern, accessible checkbox replacement for binary settings.
+The **Toggle Switch** fragment is a modern, accessible checkbox replacement for
+binary settings.
 
 ## Key Features
 

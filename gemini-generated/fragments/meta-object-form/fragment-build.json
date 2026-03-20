@@ -3,6 +3,8 @@
     "discovery.js",
     "dom.js",
     "localization.js",
-    "validation.js"
+    "validation.js",
+    "event-bus.js",
+    "logger.js"
   ]
 }

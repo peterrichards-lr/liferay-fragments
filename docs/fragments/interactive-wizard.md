@@ -1,6 +1,8 @@
 # Interactive Wizard
 
-A versatile, multi-step journey component designed for onboarding, complex forms, or guided processes. It features a responsive progress indicator and smooth transitions between steps.
+A versatile, multi-step journey component designed for onboarding, complex
+forms, or guided processes. It features a responsive progress indicator and
+smooth transitions between steps.
 
 ## Configuration
 
@@ -15,11 +17,14 @@ A versatile, multi-step journey component designed for onboarding, complex forms
 
 ## Usage
 
-1.  **Drop & Configure**: Add the fragment to a page and set the required number of steps.
-2.  **Add Content**: Inside each step's drop zone, add the fragments or form fields required for that stage of the journey.
-3.  **Progress Tracking**: The wizard automatically manages the visibility of panels and updates the progress bar as the user navigates.
+1.  **Drop & Configure**: Add the fragment to a page and set the required number
+    of steps.
+2.  **Add Content**: Inside each step's drop zone, add the fragments or form
+    fields required for that stage of the journey.
+3.  **Progress Tracking**: The wizard automatically manages the visibility of
+    panels and updates the progress bar as the user navigates.
 
 ## Visuals
 
-![Interactive Wizard](../../docs/images/interactive-wizard.png)
-_(Note: Upload screenshot to docs/images/interactive-wizard.png)_
+![Interactive Wizard](../../docs/images/interactive-wizard.png) _(Note: Upload
+screenshot to docs/images/interactive-wizard.png)_

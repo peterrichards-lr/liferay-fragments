@@ -6,7 +6,9 @@ if (inputElements) {
   for (let i = 0; i < inputElements.length; i++) {
     const inputElement = inputElements[i];
     if (inputElement.readOnly) {
-      const label = fragmentElement.querySelector(`label[for="${inputElement.id}"]`);
+      const label = fragmentElement.querySelector(
+        `label[for="${inputElement.id}"]`
+      );
       inputElement.addEventListener('click', (event) => event.preventDefault());
 
       label.addEventListener('click', (event) => event.preventDefault());

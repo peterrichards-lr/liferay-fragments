@@ -1,7 +1,7 @@
 {
   "configurationPath": "configuration.json",
   "cssPath": "index.css",
-  "htmlPath": "index.html",
+  "htmlPath": "index.ftl",
   "jsPath": "index.js",
   "name": "App Launcher",
   "type": "component"

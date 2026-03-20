@@ -1,27 +1,27 @@
 const initWhoAmI = () => {
   const { isValidIdentifier } = Liferay.Fragment.Commons;
 
-  if (layoutMode === "view") {
+  if (layoutMode === 'view') {
     const { endpointUrl, userAgentAppExtRefCode } = configuration;
 
-    const button = fragmentElement.querySelector("button");
-    const span = fragmentElement.querySelector("span");
-    const textArea = fragmentElement.querySelector("textarea");
+    const button = fragmentElement.querySelector('button');
+    const span = fragmentElement.querySelector('span');
+    const textArea = fragmentElement.querySelector('textarea');
     const error = fragmentElement.querySelector(
-      `#fragment-${fragmentNamespace}-error`,
+      `#fragment-${fragmentNamespace}-error`
     );
 
     if (isValidIdentifier(endpointUrl) && button && span && textArea && error) {
       span.innerText = `${Liferay.ThemeDisplay.getUserName()} [${Liferay.ThemeDisplay.getUserId()}]`;
 
       const buttonEventListener = (evt) => {
-        error.style.display = "none";
+        error.style.display = 'none';
 
         // Determine which fetch to use
         let fetchFn;
         if (userAgentAppExtRefCode) {
           const { fetch } = Liferay.OAuth2Client.fromUserAgent(
-            userAgentAppExtRefCode,
+            userAgentAppExtRefCode
           );
           fetchFn = fetch;
         } else {
@@ -30,7 +30,7 @@ const initWhoAmI = () => {
 
         // Determine final URL
         let finalUrl = endpointUrl;
-        if (!finalUrl.startsWith("/") && !finalUrl.startsWith("http")) {
+        if (!finalUrl.startsWith('/') && !finalUrl.startsWith('http')) {
           finalUrl = `https://${finalUrl}`;
         }
 
@@ -40,20 +40,20 @@ const initWhoAmI = () => {
             return response.json();
           })
           .then((json) => {
-            textArea.value += `${json.name || json.userName || "Unknown"} [${json.id || json.externalReferenceCode || "N/A"}]\r\n`;
+            textArea.value += `${json.name || json.userName || 'Unknown'} [${json.id || json.externalReferenceCode || 'N/A'}]\r\n`;
           })
           .catch((err) => {
             if (err.status == 401) {
-              error.innerText = "Unauthorized";
+              error.innerText = 'Unauthorized';
             } else {
               console.error(err);
-              error.innerText = "Unexpected error. See console log";
+              error.innerText = 'Unexpected error. See console log';
             }
-            error.style.display = "block";
+            error.style.display = 'block';
           });
       };
 
-      button.addEventListener("click", buttonEventListener);
+      button.addEventListener('click', buttonEventListener);
     }
   }
 };

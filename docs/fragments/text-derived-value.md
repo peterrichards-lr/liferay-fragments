@@ -1,6 +1,7 @@
 # Text Derived Value
 
-The **Text Derived Value** fragment is a specialized component within the Liferay Fragments library.
+The **Text Derived Value** fragment is a specialized component within the
+Liferay Fragments library.
 
 ## Overview
 

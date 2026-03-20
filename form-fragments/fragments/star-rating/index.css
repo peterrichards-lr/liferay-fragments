@@ -1,14 +1,14 @@
 .star-rating-container {
-	width: max-content;
+  width: max-content;
 }
 
 .star-rating-container label:not(.star-label) {
-	display: block;
+  display: block;
 }
 
 .star-rating-container .star-wrap {
   position: relative;
-	margin-top: 1rem;
+  margin-top: 1rem;
 }
 
 .star-rating-container .star-label.hidden {
@@ -71,7 +71,7 @@
   right: -1rem;
   text-align: center;
   line-height: 2rem;
-  font-size:2rem;
+  font-size: 2rem;
   background-color: rgba(255, 255, 255, 0.1);
 }
 

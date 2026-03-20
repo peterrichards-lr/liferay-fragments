@@ -1,0 +1,12 @@
+<div class="form-populator">
+  [#if themeDisplay.isStateMaximized() == false &&
+  (request.getAttribute("LIFERAY_SHARED_VISUAL_STATE_PAGE_EDITOR")?? ||
+  request.getAttribute("LIFERAY_SHARED_VISUAL_STATE_FRAGMENT_EDITOR")??)]
+  <div class="alert alert-warning">
+    <strong>DEPRECATED:</strong> This fragment is deprecated. Please use native
+    Liferay DXP form mapping or the <em>Populated Form Fields</em> collection
+    instead.
+  </div>
+  [/#if]
+  <lfr-drop-zone></lfr-drop-zone>
+</div>

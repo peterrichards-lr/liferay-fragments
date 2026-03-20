@@ -13,7 +13,7 @@
         },
         {
           "dataType": "string",
-          "defaultValue": "/o/c/j3y7comments/",
+          "defaultValue": "/o/c/comments/",
           "label": "lfr.objects.object-api-path",
           "description": "lfr.objects.object-api-path-description",
           "name": "objectAPIPath",
@@ -21,7 +21,7 @@
         },
         {
           "dataType": "string",
-          "defaultValue": "r_ticket_c_j3y7TicketId",
+          "defaultValue": "r_ticket_ticketId",
           "label": "lfr.objects.relationship-field-name",
           "description": "lfr.objects.relationship-field-name-description",
           "name": "relationshipFieldName",

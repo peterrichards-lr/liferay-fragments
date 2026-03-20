@@ -1,22 +1,22 @@
 const initAIChatUI = () => {
   const container = fragmentElement.querySelector(
-    `#messages-${fragmentEntryLinkNamespace}`,
+    `#messages-${fragmentEntryLinkNamespace}`
   );
   const input = fragmentElement.querySelector(
-    `#input-${fragmentEntryLinkNamespace}`,
+    `#input-${fragmentEntryLinkNamespace}`
   );
   const btn = fragmentElement.querySelector(
-    `#send-${fragmentEntryLinkNamespace}`,
+    `#send-${fragmentEntryLinkNamespace}`
   );
 
   const appendMessage = (text, role) => {
     if (container) {
-      const msgDiv = document.createElement("div");
+      const msgDiv = document.createElement('div');
       msgDiv.className = `message ${role}`;
-      msgDiv.setAttribute("role", "listitem");
+      msgDiv.setAttribute('role', 'listitem');
 
-      const bubble = document.createElement("div");
-      bubble.className = "bubble";
+      const bubble = document.createElement('div');
+      bubble.className = 'bubble';
       bubble.textContent = text; // Safer than innerHTML
 
       msgDiv.appendChild(bubble);
@@ -33,16 +33,16 @@ const initAIChatUI = () => {
     const query = input.value.trim();
 
     if (query) {
-      input.value = "";
+      input.value = '';
       input.disabled = true;
       btn.disabled = true;
 
-      appendMessage(query, "user");
+      appendMessage(query, 'user');
 
       // Mock AI Response for prototype
       setTimeout(() => {
         const response = `I'm a prototype assistant. You asked: "${query}". In a real implementation, I would connect to a Liferay-hosted AI endpoint.`;
-        appendMessage(response, "assistant");
+        appendMessage(response, 'assistant');
         input.disabled = false;
         btn.disabled = false;
         input.focus();
@@ -52,8 +52,8 @@ const initAIChatUI = () => {
 
   if (input && btn) {
     btn.onclick = sendMessage;
-    input.addEventListener("keydown", (e) => {
-      if (e.key === "Enter") {
+    input.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') {
         e.preventDefault();
         sendMessage();
       }
@@ -61,8 +61,8 @@ const initAIChatUI = () => {
   }
 
   if (container) {
-    container.setAttribute("role", "list");
-    container.setAttribute("aria-live", "polite");
+    container.setAttribute('role', 'list');
+    container.setAttribute('aria-live', 'polite');
   }
 };
 

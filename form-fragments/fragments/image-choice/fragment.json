@@ -1,0 +1,16 @@
+{
+  "configurationPath": "configuration.json",
+  "jsPath": "index.js",
+  "htmlPath": "index.ftl",
+  "cssPath": "index.css",
+  "icon": "picture",
+  "name": "Image Choice",
+  "typeOptions": {
+    "fieldTypes": [
+      "text",
+      "multiselect"
+    ]
+  },
+  "type": "input",
+  "thumbnailPath": "thumbnail.png"
+}

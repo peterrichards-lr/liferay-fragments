@@ -1,6 +1,7 @@
 # Search Bar
 
-A clean, modern search input integrated with Liferay Search, optimized for placement in site headers.
+A clean, modern search input integrated with Liferay Search, optimized for
+placement in site headers.
 
 ## Visuals
 

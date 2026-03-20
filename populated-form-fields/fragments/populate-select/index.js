@@ -6,36 +6,36 @@ const initPopulateSelect = () => {
     specificStorageKey,
   } = configuration;
 
-  const isRTL = document.documentElement.classList.contains("rtl");
-  const buttonElement = fragmentElement.querySelector(".btn");
-  const dropdownElement = fragmentElement.querySelector(".dropdown-menu");
-  const optionListElement = fragmentElement.querySelector(".list-unstyled");
+  const isRTL = document.documentElement.classList.contains('rtl');
+  const buttonElement = fragmentElement.querySelector('.btn');
+  const dropdownElement = fragmentElement.querySelector('.dropdown-menu');
+  const optionListElement = fragmentElement.querySelector('.list-unstyled');
 
   const getById = (idSuffix) =>
     fragmentElement.querySelector(`[id$='${idSuffix}']`);
 
-  const chooseOptionElement = getById("choose-option-message");
-  const labelInputElement = getById("label-input");
-  const loadingResultsElement = getById("loading-results-message");
-  const noResultsElement = getById("no-results-message");
-  const uiInputElement = getById("select-from-list-input");
-  const valueInputElement = getById("value-input");
+  const chooseOptionElement = getById('choose-option-message');
+  const labelInputElement = getById('label-input');
+  const loadingResultsElement = getById('loading-results-message');
+  const noResultsElement = getById('no-results-message');
+  const uiInputElement = getById('select-from-list-input');
+  const valueInputElement = getById('value-input');
 
   if (!uiInputElement || !buttonElement) return;
 
-  if (layoutMode === "edit") {
-    buttonElement.setAttribute("disabled", true);
-    uiInputElement.setAttribute("disabled", true);
+  if (layoutMode === 'edit') {
+    buttonElement.setAttribute('disabled', true);
+    uiInputElement.setAttribute('disabled', true);
     return;
   }
 
   const KEYS = {
-    ArrowDown: "ArrowDown",
-    ArrowUp: "ArrowUp",
-    End: "End",
-    Enter: "Enter",
-    Home: "Home",
-    Escape: "Escape",
+    ArrowDown: 'ArrowDown',
+    ArrowUp: 'ArrowUp',
+    End: 'End',
+    Enter: 'Enter',
+    Home: 'Home',
+    Escape: 'Escape',
   };
 
   let lastSearchAbortController = new AbortController();
@@ -45,7 +45,7 @@ const initPopulateSelect = () => {
   const getOptions = () => {
     // Attempt to get options from input context or attributes
     try {
-      return (typeof input !== "undefined" && input.attributes.options) || [];
+      return (typeof input !== 'undefined' && input.attributes.options) || [];
     } catch (e) {
       return [];
     }
@@ -59,10 +59,10 @@ const initPopulateSelect = () => {
 
   const setSelectedOptionByValue = (value) => {
     if (!value) return;
-    const searchValue = String(value).replace(/\s+/g, "");
+    const searchValue = String(value).replace(/\s+/g, '');
     const options = getOptions();
     const selectedOption = options.find(
-      (option) => option.value === searchValue,
+      (option) => option.value === searchValue
     );
 
     if (selectedOption) {
@@ -74,7 +74,7 @@ const initPopulateSelect = () => {
   };
 
   function handleResultListClick(event) {
-    const selectedOptionElement = event.target.closest(".dropdown-item");
+    const selectedOptionElement = event.target.closest('.dropdown-item');
     if (selectedOptionElement) {
       setFocusedOption(selectedOptionElement, { scrollToElement: false });
       setSelectedOption(selectedOptionElement);
@@ -94,23 +94,23 @@ const initPopulateSelect = () => {
     if (!optionListElement || !optionListElement.firstElementChild) return;
 
     const currentFocusedOption = fragmentElement.querySelector(
-      `#${optionListElement.getAttribute("aria-activedescendant")}`,
+      `#${optionListElement.getAttribute('aria-activedescendant')}`
     );
 
     if (KEYS[event.key]) {
       openDropdown();
-      if (event.key !== "Enter") event.preventDefault();
+      if (event.key !== 'Enter') event.preventDefault();
     }
 
     if (event.key === KEYS.ArrowDown && !event.altKey) {
       setFocusedOption(
         currentFocusedOption?.nextElementSibling ||
-          optionListElement.firstElementChild,
+          optionListElement.firstElementChild
       );
     } else if (event.key === KEYS.ArrowUp) {
       setFocusedOption(
         currentFocusedOption?.previousElementSibling ||
-          optionListElement.lastElementChild,
+          optionListElement.lastElementChild
       );
     } else if (event.key === KEYS.Home) {
       setFocusedOption(optionListElement.firstElementChild);
@@ -129,25 +129,25 @@ const initPopulateSelect = () => {
       openDropdown();
       lastSearchQuery = filterValue;
 
-      if (chooseOptionElement) chooseOptionElement.classList.add("d-none");
+      if (chooseOptionElement) chooseOptionElement.classList.add('d-none');
       if (loadingResultsElement)
-        loadingResultsElement.classList.remove("d-none");
+        loadingResultsElement.classList.remove('d-none');
 
       filterOptions(filterValue).then((filteredOptions) => {
         if (loadingResultsElement)
-          loadingResultsElement.classList.add("d-none");
+          loadingResultsElement.classList.add('d-none');
         renderOptionList(filteredOptions);
 
         if (optionListElement.firstElementChild) {
           if (chooseOptionElement)
-            chooseOptionElement.classList.remove("d-none");
-          if (noResultsElement) noResultsElement.classList.add("d-none");
+            chooseOptionElement.classList.remove('d-none');
+          if (noResultsElement) noResultsElement.classList.add('d-none');
           setFocusedOption(optionListElement.firstElementChild, {
             scrollToElement: false,
           });
         } else {
-          if (chooseOptionElement) chooseOptionElement.classList.add("d-none");
-          if (noResultsElement) noResultsElement.classList.remove("d-none");
+          if (chooseOptionElement) chooseOptionElement.classList.add('d-none');
+          if (noResultsElement) noResultsElement.classList.remove('d-none');
         }
       });
     }
@@ -155,14 +155,14 @@ const initPopulateSelect = () => {
 
   function filterOptions(query) {
     return new Promise((resolve) => {
-      const relationshipURL = uiInputElement.getAttribute("relationshipurl");
+      const relationshipURL = uiInputElement.getAttribute('relationshipurl');
       if (relationshipURL) {
         lastSearchAbortController.abort();
         lastSearchAbortController = new AbortController();
         filterRemoteOptions(query, lastSearchAbortController).then(resolve);
       } else if (query) {
         const filtered = optionList.filter((opt) =>
-          opt.textValue.includes(query),
+          opt.textValue.includes(query)
         );
         resolve(filtered);
       } else {
@@ -172,27 +172,27 @@ const initPopulateSelect = () => {
   }
 
   function filterRemoteOptions(query, abortController) {
-    const relationshipURL = uiInputElement.getAttribute("relationshipurl");
+    const relationshipURL = uiInputElement.getAttribute('relationshipurl');
     const labelField = uiInputElement.getAttribute(
-      "relationshiplabelfieldname",
+      'relationshiplabelfieldname'
     );
     const valueField = uiInputElement.getAttribute(
-      "relationshipvaluefieldname",
+      'relationshipvaluefieldname'
     );
 
     if (!relationshipURL || !labelField || !valueField)
       return Promise.resolve([]);
 
     const url = new URL(relationshipURL, window.location.origin);
-    url.searchParams.set("search", query);
+    url.searchParams.set('search', query);
 
     return Liferay.Util.fetch(url, { signal: abortController.signal })
       .then((res) => res.json())
       .then((result) => {
         return (result.items || []).map((entry) => {
           let label = entry[labelField];
-          if (Array.isArray(label)) label = label[0]?.name || "";
-          else if (typeof label === "object") label = label.name || "";
+          if (Array.isArray(label)) label = label[0]?.name || '';
+          else if (typeof label === 'object') label = label.name || '';
 
           return {
             textContent: label,
@@ -206,14 +206,14 @@ const initPopulateSelect = () => {
   function setFocusedOption(el, { scrollToElement = true } = {}) {
     if (!optionListElement) return;
     const current = fragmentElement.querySelector(
-      `#${optionListElement.getAttribute("aria-activedescendant")}`,
+      `#${optionListElement.getAttribute('aria-activedescendant')}`
     );
-    if (current) current.removeAttribute("aria-selected");
+    if (current) current.removeAttribute('aria-selected');
 
     if (el) {
-      optionListElement.setAttribute("aria-activedescendant", el.id);
-      el.setAttribute("aria-selected", "true");
-      if (scrollToElement) el.scrollIntoView({ block: "nearest" });
+      optionListElement.setAttribute('aria-activedescendant', el.id);
+      el.setAttribute('aria-selected', 'true');
+      if (scrollToElement) el.scrollIntoView({ block: 'nearest' });
     }
   }
 
@@ -236,28 +236,28 @@ const initPopulateSelect = () => {
       Liferay.Util.SessionStorage.setItem(
         storageKey,
         val,
-        Liferay.Util.SessionStorage.TYPES.PERSONALIZATION,
+        Liferay.Util.SessionStorage.TYPES.PERSONALIZATION
       );
     }
 
-    uiInputElement.dispatchEvent(new Event("change", { bubbles: true }));
+    uiInputElement.dispatchEvent(new Event('change', { bubbles: true }));
   }
 
   function checkIsOpenDropdown() {
-    return uiInputElement.getAttribute("aria-expanded") === "true";
+    return uiInputElement.getAttribute('aria-expanded') === 'true';
   }
 
   function openDropdown() {
-    dropdownElement.classList.replace("d-none", "show");
-    uiInputElement.setAttribute("aria-expanded", "true");
-    buttonElement.setAttribute("aria-expanded", "true");
+    dropdownElement.classList.replace('d-none', 'show');
+    uiInputElement.setAttribute('aria-expanded', 'true');
+    buttonElement.setAttribute('aria-expanded', 'true');
     repositionDropdown();
   }
 
   function closeDropdown() {
-    dropdownElement.classList.replace("show", "d-none");
-    uiInputElement.setAttribute("aria-expanded", "false");
-    buttonElement.setAttribute("aria-expanded", "false");
+    dropdownElement.classList.replace('show', 'd-none');
+    uiInputElement.setAttribute('aria-expanded', 'false');
+    buttonElement.setAttribute('aria-expanded', 'false');
   }
 
   function repositionDropdown() {
@@ -274,9 +274,9 @@ const initPopulateSelect = () => {
       <li class="dropdown-item" role="option" id="${fragmentEntryLinkNamespace}-opt-${opt.value}" 
           data-option-value="${opt.value}" data-option-label="${opt.textContent}">
         ${opt.textContent}
-      </li>`,
+      </li>`
       )
-      .join("");
+      .join('');
   }
 
   function debounce(fn, delay) {
@@ -302,7 +302,7 @@ const initPopulateSelect = () => {
       : `${storageKeyPrefix}_${uiInputElement.name}`;
     const storedVal = Liferay.Util.SessionStorage.getItem(
       storageKey,
-      Liferay.Util.SessionStorage.TYPES.PERSONALIZATION,
+      Liferay.Util.SessionStorage.TYPES.PERSONALIZATION
     );
     if (storedVal) setSelectedOptionByValue(storedVal);
   }

@@ -1,11 +1,14 @@
 # Star Rating
 
-The **Star Rating** fragment provides an accessible and visually appealing input for capturing user ratings.
+The **Star Rating** fragment provides an accessible and visually appealing input
+for capturing user ratings.
 
 ## Key Features
 
-- **Accessibility**: Built using standard radio inputs with full keyboard support and ARIA labeling.
-- **Customizable Appearance**: Configurable star colors (active/inactive) and count.
+- **Accessibility**: Built using standard radio inputs with full keyboard
+  support and ARIA labeling.
+- **Customizable Appearance**: Configurable star colors (active/inactive) and
+  count.
 - **Meridian Integration**: Uses theme tokens for consistent styling.
 
 ## Configuration

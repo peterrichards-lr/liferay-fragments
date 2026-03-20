@@ -1,17 +1,17 @@
 assemble:
-    - from: batch
-      into: batch
+  - from: batch
+    into: batch
 
 water-readings:
-    name: Water Readings Object
-    oAuthApplicationHeadlessServer: water-readings-oauth
-    type: batch
+  name: Water Readings Object
+  oAuthApplicationHeadlessServer: water-readings-oauth
+  type: batch
 
 water-readings-oauth:
-    .serviceAddress: localhost:8080
-    .serviceScheme: http
-    name: Water Readings OAuth Application Headless Server
-    scopes:
-        - Liferay.Headless.Batch.Engine.everything
-        - Liferay.Object.Admin.REST.everything
-    type: oAuthApplicationHeadlessServer
+  .serviceAddress: localhost:8080
+  .serviceScheme: http
+  name: Water Readings OAuth Application Headless Server
+  scopes:
+    - Liferay.Headless.Batch.Engine.everything
+    - Liferay.Object.Admin.REST.everything
+  type: oAuthApplicationHeadlessServer

@@ -53,7 +53,7 @@
   display: none;
 }
 
-[data-layout-mode="edit"] .meta-editor-mappable-fields {
+[data-layout-mode='edit'] .meta-editor-mappable-fields {
   background-color: var(--gray-100, #f1f2f5);
   border: 1px dashed var(--primary, #007dad);
   border-radius: var(--border-radius-lg, 0.5rem);

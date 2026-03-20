@@ -1,13 +1,16 @@
 # Radial KPI Gauge
 
-A high-fidelity radial progress indicator for showing single metrics derived from Object data.
+A high-fidelity radial progress indicator for showing single metrics derived
+from Object data.
 
 ## Features
 
-- **Live Aggregation**: Sums values from a Liferay Object to show progress against a goal.
+- **Live Aggregation**: Sums values from a Liferay Object to show progress
+  against a goal.
 - **Smooth Animations**: SVG-based stroke transitions.
 - **Dynamic Text**: Centers the percentage value automatically.
-- **Responsive**: Scalable SVG design that fits small sidebars or large dashboard slots.
+- **Responsive**: Scalable SVG design that fits small sidebars or large
+  dashboard slots.
 
 ## Visuals
 

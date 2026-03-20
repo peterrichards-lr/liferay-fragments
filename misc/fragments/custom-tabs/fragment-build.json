@@ -1,3 +1,5 @@
 {
-  "sharedResources": []
+  "sharedResources": [
+    "event-bus.js"
+  ]
 }

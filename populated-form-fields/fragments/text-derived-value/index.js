@@ -2,44 +2,44 @@ const initTextDerivedValue = () => {
   const getById = (idSuffix) =>
     fragmentElement.querySelector(`[id$='${idSuffix}']`);
 
-  const currentLength = getById("current-length");
-  const formGroup = getById("form-group");
-  const lengthInfo = getById("length-info");
-  const lengthWarning = getById("length-warning");
-  const lengthWarningText = getById("length-warning-text");
-  const inputElement = getById("text-input");
+  const currentLength = getById('current-length');
+  const formGroup = getById('form-group');
+  const lengthInfo = getById('length-info');
+  const lengthWarning = getById('length-warning');
+  const lengthWarningText = getById('length-warning-text');
+  const inputElement = getById('text-input');
 
   if (!inputElement) return;
 
   function enableLengthWarning() {
-    if (formGroup) formGroup.classList.add("has-error");
+    if (formGroup) formGroup.classList.add('has-error');
     if (lengthInfo)
-      lengthInfo.classList.add("text-danger", "font-weight-semi-bold");
-    if (lengthWarning) lengthWarning.classList.remove("sr-only");
+      lengthInfo.classList.add('text-danger', 'font-weight-semi-bold');
+    if (lengthWarning) lengthWarning.classList.remove('sr-only');
 
     if (lengthWarningText) {
-      const warningText = lengthWarningText.getAttribute("data-error-message");
+      const warningText = lengthWarningText.getAttribute('data-error-message');
       lengthWarningText.innerText = warningText;
     }
 
     if (!configuration.showCharactersCount && lengthInfo) {
-      lengthInfo.classList.remove("sr-only");
+      lengthInfo.classList.remove('sr-only');
     }
   }
 
   function disableLengthWarning() {
-    if (formGroup) formGroup.classList.remove("has-error");
+    if (formGroup) formGroup.classList.remove('has-error');
     if (lengthInfo)
-      lengthInfo.classList.remove("text-danger", "font-weight-semi-bold");
-    if (lengthWarning) lengthWarning.classList.add("sr-only");
+      lengthInfo.classList.remove('text-danger', 'font-weight-semi-bold');
+    if (lengthWarning) lengthWarning.classList.add('sr-only');
 
     if (lengthWarningText) {
-      const validText = lengthWarningText.getAttribute("data-valid-message");
+      const validText = lengthWarningText.getAttribute('data-valid-message');
       lengthWarningText.innerText = validText;
     }
 
     if (!configuration.showCharactersCount && lengthInfo) {
-      lengthInfo.classList.add("sr-only");
+      lengthInfo.classList.add('sr-only');
     }
   }
 
@@ -49,11 +49,11 @@ const initTextDerivedValue = () => {
 
     // input.attributes might be provided by Liferay context
     const maxLength =
-      (typeof input !== "undefined" && input.attributes.maxLength) || 0;
+      (typeof input !== 'undefined' && input.attributes.maxLength) || 0;
 
     if (maxLength > 0 && length > maxLength) {
       enableLengthWarning();
-    } else if (formGroup && formGroup.classList.contains("has-error")) {
+    } else if (formGroup && formGroup.classList.contains('has-error')) {
       disableLengthWarning();
     }
   }
@@ -74,15 +74,15 @@ const initTextDerivedValue = () => {
     });
   }
 
-  if (layoutMode === "edit") {
-    inputElement.setAttribute("disabled", true);
+  if (layoutMode === 'edit') {
+    inputElement.setAttribute('disabled', true);
   } else {
     if (configuration.deriveValue) {
       const template = configuration.deriveValueTemplate;
       if (template) {
         const inputFieldNames = extractInputFieldNames(template);
         const form =
-          fragmentElement.closest("form") || document.querySelector("form");
+          fragmentElement.closest('form') || document.querySelector('form');
         const nameValues = {};
 
         const setDerivedValue = () => {
@@ -95,8 +95,8 @@ const initTextDerivedValue = () => {
           inputFieldNames.forEach((name) => {
             const field = form.querySelector(`[name='${name}']`);
             if (field) {
-              nameValues[name] = field.value || "";
-              field.addEventListener("input", (e) => {
+              nameValues[name] = field.value || '';
+              field.addEventListener('input', (e) => {
                 nameValues[name] = e.target.value;
                 setDerivedValue();
               });
@@ -108,7 +108,7 @@ const initTextDerivedValue = () => {
     }
 
     if (currentLength) currentLength.innerText = inputElement.value.length;
-    inputElement.addEventListener("keyup", onInputKeyup);
+    inputElement.addEventListener('keyup', onInputKeyup);
   }
 };
 

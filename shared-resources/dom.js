@@ -22,9 +22,9 @@ window.Liferay.Fragment.Commons.debounce = (func, wait) => {
 window.Liferay.Fragment.Commons.getDataAttributes = (el) => {
   const data = {};
   [...el.attributes].forEach((attr) => {
-    if (attr.name.startsWith("data-lfr-js-")) {
+    if (attr.name.startsWith('data-lfr-js-')) {
       const key = attr.name
-        .replace("data-lfr-js-", "")
+        .replace('data-lfr-js-', '')
         .replace(/-([a-z])/g, (g) => g[1].toUpperCase());
       data[key] = attr.value;
     }
@@ -37,7 +37,7 @@ window.Liferay.Fragment.Commons.getDataAttributes = (el) => {
  */
 window.Liferay.Fragment.Commons.getCssVariable = (
   varName,
-  root = document.documentElement,
+  root = document.documentElement
 ) => {
   return getComputedStyle(root).getPropertyValue(varName).trim();
 };
@@ -47,13 +47,13 @@ window.Liferay.Fragment.Commons.getCssVariable = (
  */
 window.Liferay.Fragment.Commons.renderEmptyState = (
   container,
-  options = {},
+  options = {}
 ) => {
   const {
-    title = "No Results Found",
-    description = "Sorry, no results were found.",
-    image = "/o/admin-theme/images/states/search_state.svg",
-    reducedMotionImage = "/o/admin-theme/images/states/search_state_reduced_motion.svg",
+    title = 'No Results Found',
+    description = 'Sorry, no results were found.',
+    image = '/o/admin-theme/images/states/search_state.svg',
+    reducedMotionImage = '/o/admin-theme/images/states/search_state_reduced_motion.svg',
   } = options;
 
   container.innerHTML = `
@@ -77,9 +77,9 @@ window.Liferay.Fragment.Commons.renderEmptyState = (
 window.Liferay.Fragment.Commons.renderConfigWarning = (
   container,
   message,
-  layoutMode,
+  layoutMode
 ) => {
-  if (layoutMode !== "view") {
+  if (layoutMode !== 'view') {
     container.innerHTML = `
       <div class="alert alert-info" role="alert">
         <span class="alert-indicator">
@@ -92,6 +92,6 @@ window.Liferay.Fragment.Commons.renderConfigWarning = (
       </div>
     `;
   } else {
-    container.innerHTML = "";
+    container.innerHTML = '';
   }
 };

@@ -1,12 +1,16 @@
 # Responsive Menu
 
-The **Responsive Menu** fragment is a high-fidelity navigation component that supports horizontal layouts on desktop and an optimized hamburger menu on mobile.
+The **Responsive Menu** fragment is a high-fidelity navigation component that
+supports horizontal layouts on desktop and an optimized hamburger menu on
+mobile.
 
 ## Key Features
 
 - **Liferay Menus Integration**: Connects directly to Liferay navigation menus.
-- **Accessible Hamburger**: Fully keyboard and screen reader accessible mobile view.
-- **Deep Nesting Support**: Renders multi-level dropdowns with polished animations.
+- **Accessible Hamburger**: Fully keyboard and screen reader accessible mobile
+  view.
+- **Deep Nesting Support**: Renders multi-level dropdowns with polished
+  animations.
 
 ## Configuration
 

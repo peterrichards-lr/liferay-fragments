@@ -1,0 +1,7 @@
+<div class="secondary-card-${fragmentEntryLinkNamespace}">
+  <div class="wrapper">
+    <div class="action-card">
+      <lfr-drop-zone></lfr-drop-zone>
+    </div>
+  </div>
+</div>

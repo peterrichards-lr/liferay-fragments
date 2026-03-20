@@ -1,37 +1,31 @@
-const ADMIN_API_BASE = "/o/object-admin/v1.0";
-
 const state = {
   definition: null,
   items: [],
 };
 
 const getLocalizedValue = (value) => {
-  if (typeof value === "object" && value !== null && !Array.isArray(value)) {
+  if (typeof value === 'object' && value !== null && !Array.isArray(value)) {
     const languageId =
-      typeof Liferay !== "undefined"
+      typeof Liferay !== 'undefined'
         ? Liferay.ThemeDisplay.getLanguageId()
-        : "en_US";
-    return value[languageId] || value["en_US"] || "";
+        : 'en_US';
+    return value[languageId] || value['en_US'] || '';
   }
-  return value || "";
+  return value || '';
 };
 
 const fetchData = async () => {
   const { objectERC } = configuration;
-  if (!objectERC) throw new Error("Object ERC not configured.");
+  if (!objectERC) throw new Error('Object ERC not configured.');
 
-  const adminUrl = `${ADMIN_API_BASE}/object-definitions/by-external-reference-code/${objectERC}`;
-  const defRes = await Liferay.Util.fetch(adminUrl);
-  if (!defRes.ok) throw new Error("Object definition not found.");
-  state.definition = await defRes.json();
+  const { definition, apiPath } =
+    await Liferay.Fragment.Commons.resolveObjectPathByERC(objectERC);
 
-  let url = state.definition.restContextPath;
-  if (state.definition.scope === "site") {
-    url += `/scopes/${Liferay.ThemeDisplay.getScopeGroupId()}`;
-  }
+  if (!definition) throw new Error('Object definition not found.');
+  state.definition = definition;
 
   const response = await Liferay.Util.fetch(
-    `${url}/?pageSize=100&sort=date:asc`,
+    `${apiPath}/?pageSize=100&sort=date:asc`
   );
   const data = await response.json();
   return data.items || [];
@@ -39,7 +33,7 @@ const fetchData = async () => {
 
 const initTimeline = async () => {
   const container = fragmentElement.querySelector(
-    `#items-${fragmentEntryLinkNamespace}`,
+    `#items-${fragmentEntryLinkNamespace}`
   );
   if (container) {
     const { objectERC, dateField, titleField, descriptionField } =
@@ -59,30 +53,30 @@ const initTimeline = async () => {
           container.innerHTML = state.items
             .map(
               (item, index) => `
-                    <li class="timeline-item ${index % 2 === 0 ? "left" : "right"}" data-index="${index}">
+                    <li class="timeline-item ${index % 2 === 0 ? 'left' : 'right'}" data-index="${index}">
                         <div class="timeline-content">
                             <time class="timeline-date" datetime="${new Date(item[dateField] || item.createDate).toISOString()}">${new Date(item[dateField] || item.createDate).toLocaleDateString()}</time>
-                            <h4 class="timeline-title">${item[titleField] || "Untitled Event"}</h4>
-                            <p class="timeline-description">${item[descriptionField] || ""}</p>
+                            <h4 class="timeline-title">${item[titleField] || 'Untitled Event'}</h4>
+                            <p class="timeline-description">${item[descriptionField] || ''}</p>
                         </div>
                     </li>
-                `,
+                `
             )
-            .join("");
+            .join('');
 
-          if (layoutMode === "view") {
+          if (layoutMode === 'view') {
             const observer = new IntersectionObserver(
               (entries) => {
                 entries.forEach((entry) => {
                   if (entry.isIntersecting) {
-                    entry.target.classList.add("visible");
+                    entry.target.classList.add('visible');
                   }
                 });
               },
-              { threshold: 0.2 },
+              { threshold: 0.2 }
             );
 
-            container.querySelectorAll(".timeline-item").forEach((item) => {
+            container.querySelectorAll('.timeline-item').forEach((item) => {
               observer.observe(item);
             });
           }

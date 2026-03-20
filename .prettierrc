@@ -3,5 +3,14 @@
   "trailingComma": "es5",
   "tabWidth": 2,
   "printWidth": 80,
-  "proseWrap": "always"
+  "proseWrap": "always",
+  "overrides": [
+    {
+      "files": "*.ftl",
+      "options": {
+        "parser": "html",
+        "htmlWhitespaceSensitivity": "strict"
+      }
+    }
+  ]
 }

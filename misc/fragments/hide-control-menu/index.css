@@ -1,41 +1,43 @@
 .loading-panel {
-	background-color: var(--gray-200, #f1f2f5);
-	position: fixed;
-	height: 100%;
-	width: 100%;
-	top: 0;
-	left: 0;
-	z-index:9999;
-	box-sizing: border-box;
+  background-color: var(--gray-200, #f1f2f5);
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  left: 0;
+  z-index: 9999;
+  box-sizing: border-box;
 }
 
 .loading-panel .loading-spinner {
-	position: relative;
-	top: calc(50% - 0.5rem);
-	left: calc(50% - 0.5rem);
-	background: transparent;
-	z-index:9999;
+  position: relative;
+  top: calc(50% - 0.5rem);
+  left: calc(50% - 0.5rem);
+  background: transparent;
+  z-index: 9999;
 }
 
 .loading-panel .loading-spinner::after {
-		animation: loading-animation-circle 1s linear infinite;
-    background-color: currentColor;
-    border-radius: 50%;
-    content: "";
-    display: block;
-    height: 1em;
-    -webkit-mask: conic-gradient(transparent 10%, var(--black, #000)), linear-gradient(var(--black, #000) 0 0) content-box;
-    -webkit-mask-composite: source-out;
-    mask-composite: subtract;
-    padding: 0.25em;
-    width: 1em;
+  animation: loading-animation-circle 1s linear infinite;
+  background-color: currentColor;
+  border-radius: 50%;
+  content: '';
+  display: block;
+  height: 1em;
+  -webkit-mask:
+    conic-gradient(transparent 10%, var(--black, #000)),
+    linear-gradient(var(--black, #000) 0 0) content-box;
+  -webkit-mask-composite: source-out;
+  mask-composite: subtract;
+  padding: 0.25em;
+  width: 1em;
 }
 
 @keyframes loading-animation-circle {
-    100% {
-        transform: rotate(360deg)
-    }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 .fds-side-panel {
-	height: calc(100% - var(--control-menu-height, 56px));
+  height: calc(100% - var(--control-menu-height, 56px));
 }

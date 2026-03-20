@@ -2,6 +2,7 @@
   "sharedResources": [
     "discovery.js",
     "validation.js",
-    "dom.js"
+    "dom.js",
+    "event-bus.js"
   ]
 }

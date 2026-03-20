@@ -1,9 +1,9 @@
-const ADMIN_API_BASE = "/o/object-admin/v1.0";
+const ADMIN_API_BASE = '/o/object-admin/v1.0';
 
 const state = {
   definition: null,
   items: [],
-  daysToDisplay: parseInt(configuration.daysToDisplay || "365"),
+  daysToDisplay: parseInt(configuration.daysToDisplay || '365'),
 };
 
 // Use Commons for localization
@@ -15,7 +15,7 @@ const fetchData = async () => {
 
   // Resolve effective ERC (Prioritize mappable field)
   const mappableERCEl = fragmentElement.querySelector(
-    "[data-lfr-editable-id='object-erc']",
+    "[data-lfr-editable-id='object-erc']"
   );
   let objectERC = configERC;
   if (mappableERCEl) {
@@ -23,22 +23,20 @@ const fetchData = async () => {
     if (
       mappedVal &&
       mappedVal !== configERC &&
-      mappedVal !== "ACTIVITY_LOG" // Default value check
+      mappedVal !== 'ACTIVITY_LOG' // Default value check
     ) {
       objectERC = mappedVal;
     }
   }
 
   if (!Liferay.Fragment.Commons.isValidIdentifier(objectERC))
-    throw new Error("Object ERC not configured.");
+    throw new Error('Object ERC not configured.');
 
   // Use Commons for discovery and path resolution
   const { definition, apiPath } =
-    await Liferay.Fragment.Commons.resolveObjectPath(
-      `/o/c/${objectERC.toLowerCase()}`,
-    );
+    await Liferay.Fragment.Commons.resolveObjectPathByERC(objectERC);
 
-  if (!definition) throw new Error("Object definition not found.");
+  if (!definition) throw new Error('Object definition not found.');
   state.definition = definition;
 
   const response = await Liferay.Util.fetch(`${apiPath}/?pageSize=1000`);
@@ -49,10 +47,10 @@ const fetchData = async () => {
 
 const renderHeatmap = () => {
   const grid = fragmentElement.querySelector(
-    `#heatmap-grid-${fragmentEntryLinkNamespace}`,
+    `#heatmap-grid-${fragmentEntryLinkNamespace}`
   );
   const legend = fragmentElement.querySelector(
-    `#heatmap-legend-${fragmentEntryLinkNamespace}`,
+    `#heatmap-legend-${fragmentEntryLinkNamespace}`
   );
 
   if (grid) {
@@ -65,15 +63,15 @@ const renderHeatmap = () => {
     state.items.forEach((item) => {
       const dateStr = new Date(item.createDate || item.dateCreated)
         .toISOString()
-        .split("T")[0];
+        .split('T')[0];
       counts[dateStr] = (counts[dateStr] || 0) + 1;
     });
 
-    let html = "";
+    let html = '';
     const tempDate = new Date(startDate);
 
     while (tempDate <= now) {
-      const dateStr = tempDate.toISOString().split("T")[0];
+      const dateStr = tempDate.toISOString().split('T')[0];
       const count = counts[dateStr] || 0;
       let level = 0;
       if (count > 0) level = Math.min(Math.ceil(count / 2), 4);
@@ -101,7 +99,7 @@ const renderHeatmap = () => {
 const initSizeSelector = () => {
   const { showSizeSelector } = configuration;
   const container = fragmentElement.querySelector(
-    `#size-selector-${fragmentEntryLinkNamespace}`,
+    `#size-selector-${fragmentEntryLinkNamespace}`
   );
 
   if (container && showSizeSelector) {
@@ -114,7 +112,7 @@ const initSizeSelector = () => {
         </select>
     `;
 
-    container.querySelector("select").onchange = (e) => {
+    container.querySelector('select').onchange = (e) => {
       state.daysToDisplay = parseInt(e.target.value);
       renderHeatmap();
     };
@@ -123,53 +121,53 @@ const initSizeSelector = () => {
 
 const initActivityHeatmap = async (isEditMode) => {
   const grid = fragmentElement.querySelector(
-    `#heatmap-grid-${fragmentEntryLinkNamespace}`,
+    `#heatmap-grid-${fragmentEntryLinkNamespace}`
   );
   const errorEl = fragmentElement.querySelector(
-    `#error-${fragmentEntryLinkNamespace}`,
+    `#error-${fragmentEntryLinkNamespace}`
   );
   const infoEl = fragmentElement.querySelector(
-    `#info-${fragmentEntryLinkNamespace}`,
+    `#info-${fragmentEntryLinkNamespace}`
   );
-  const titleEl = fragmentElement.querySelector(".heatmap-title");
-  const legend = fragmentElement.querySelector(".heatmap-legend");
+  const titleEl = fragmentElement.querySelector('.heatmap-title');
+  const legend = fragmentElement.querySelector('.heatmap-legend');
 
   const showError = (msg) => {
     if (isEditMode && errorEl) {
       errorEl.textContent = msg;
-      errorEl.classList.remove("d-none");
+      errorEl.classList.remove('d-none');
     }
   };
 
-  if (errorEl) errorEl.classList.add("d-none");
-  if (infoEl) infoEl.classList.add("d-none");
+  if (errorEl) errorEl.classList.add('d-none');
+  if (infoEl) infoEl.classList.add('d-none');
 
   const { objectERC: configERC, chartTitle: configTitle } = configuration;
 
   // Resolve effective ERC (Prioritize mappable field)
   const mappableERCEl = fragmentElement.querySelector(
-    "[data-lfr-editable-id='object-erc']",
+    "[data-lfr-editable-id='object-erc']"
   );
   let objectERC = configERC;
   if (mappableERCEl) {
     const mappedVal = mappableERCEl.innerText.trim();
-    if (mappedVal && mappedVal !== configERC && mappedVal !== "ACTIVITY_LOG") {
+    if (mappedVal && mappedVal !== configERC && mappedVal !== 'ACTIVITY_LOG') {
       objectERC = mappedVal;
     }
   }
 
-  const gridContainer = fragmentElement.querySelector(".heatmap-grid");
+  const gridContainer = fragmentElement.querySelector('.heatmap-grid');
 
   if (!Liferay.Fragment.Commons.isValidIdentifier(objectERC)) {
-    if (titleEl) titleEl.textContent = configTitle || "Activity Heatmap";
+    if (titleEl) titleEl.textContent = configTitle || 'Activity Heatmap';
     if (gridContainer) {
       Liferay.Fragment.Commons.renderConfigWarning(
         gridContainer,
-        "Please select a Liferay Object ERC in the fragment settings to visualize activity.",
-        layoutMode,
+        'Please select a Liferay Object ERC in the fragment settings to visualize activity.',
+        layoutMode
       );
     }
-    if (legend) legend.style.display = "none";
+    if (legend) legend.style.display = 'none';
   } else {
     try {
       await fetchData();
@@ -177,41 +175,41 @@ const initActivityHeatmap = async (isEditMode) => {
       if (state.items.length === 0) {
         if (gridContainer) {
           Liferay.Fragment.Commons.renderEmptyState(gridContainer, {
-            title: "No Activity Recorded",
+            title: 'No Activity Recorded',
             description: `The ${state.definition.name} object currently has no data to display in the heatmap.`,
           });
         }
-        if (legend) legend.style.display = "none";
+        if (legend) legend.style.display = 'none';
       } else {
-        if (legend) legend.style.display = "flex";
+        if (legend) legend.style.display = 'flex';
         // Restore grid if it was replaced by empty state
         if (gridContainer && !gridContainer.id) {
           gridContainer.id = `heatmap-grid-${fragmentEntryLinkNamespace}`;
-          gridContainer.classList.add("heatmap-grid");
+          gridContainer.classList.add('heatmap-grid');
         }
 
         // Smart Title defaulting
         const currentTitle = titleEl.innerText.trim();
         const defaultFragmentName =
-          fragmentElement.dataset.fragmentName || "Activity Heatmap";
+          fragmentElement.dataset.fragmentName || 'Activity Heatmap';
 
         // Evaluated Value
         const objectLabel = getLocalizedValue(
           state.definition.pluralLabel ||
             state.definition.label ||
-            state.definition.name,
+            state.definition.name
         );
 
         // Precedence: Configuration (configTitle) > Evaluated Value
         const preferredTitle = configTitle || objectLabel;
 
         if (
-          currentTitle === "Activity Heatmap" ||
+          currentTitle === 'Activity Heatmap' ||
           currentTitle === defaultFragmentName ||
-          currentTitle === "" ||
+          currentTitle === '' ||
           currentTitle === `${defaultFragmentName} (Preview)`
         ) {
-          titleEl.innerText = preferredTitle + (isEditMode ? " (Preview)" : "");
+          titleEl.innerText = preferredTitle + (isEditMode ? ' (Preview)' : '');
         }
 
         renderHeatmap();
@@ -223,8 +221,20 @@ const initActivityHeatmap = async (isEditMode) => {
   }
 };
 
-if (layoutMode === "view") {
-  initActivityHeatmap(false);
+// Listen for global refresh signals from standardized Event Bus
+Liferay.Fragment.Commons.EventBus.subscribe(
+  'refreshData',
+  (data) => {
+    if (layoutMode === 'view') {
+      console.debug('[Activity Heatmap] Received refresh signal', data);
+      initActivityHeatmap(false);
+    }
+  },
+  { replay: true }
+);
+
+if (layoutMode === 'view') {
+  // Initial load handled by EventBus subscribe with replay:true
 } else {
   initActivityHeatmap(true);
 }

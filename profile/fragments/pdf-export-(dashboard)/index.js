@@ -1,10 +1,10 @@
 const initPdfExportDashboard = () => {
-  if (layoutMode === "view") {
+  if (layoutMode === 'view') {
     const pdfClickHandler = (evt) => {
-      const profileDivId = evt.target.getAttribute("profileDivId");
-      const filename = evt.target.getAttribute("filename");
+      const profileDivId = evt.target.getAttribute('profileDivId');
+      const filename = evt.target.getAttribute('filename');
       const { jsPDF } = window.jspdf;
-      const doc = new jsPDF("p", "pt", "a4");
+      const doc = new jsPDF('p', 'pt', 'a4');
       var wrapper = document.getElementById(profileDivId);
       if (wrapper) {
         const source = wrapper;
@@ -18,19 +18,19 @@ const initPdfExportDashboard = () => {
       }
     };
 
-    const loadScript = (FILE_URL, async = true, type = "text/javascript") => {
+    const loadScript = (FILE_URL, async = true, type = 'text/javascript') => {
       return new Promise((resolve, reject) => {
         try {
-          const scriptEle = document.createElement("script");
+          const scriptEle = document.createElement('script');
           scriptEle.type = type;
           scriptEle.async = async;
           scriptEle.src = FILE_URL;
 
-          scriptEle.addEventListener("load", (ev) => {
+          scriptEle.addEventListener('load', (ev) => {
             resolve({ status: true });
           });
 
-          scriptEle.addEventListener("error", (ev) => {
+          scriptEle.addEventListener('error', (ev) => {
             reject({
               status: false,
               message: `Failed to load the script ${FILE_URL}`,
@@ -46,17 +46,17 @@ const initPdfExportDashboard = () => {
 
     Promise.all([
       loadScript(
-        "https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js",
+        'https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js'
       ),
       loadScript(
-        "https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js",
+        'https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js'
       ),
     ])
       .then(() => {
-        console.log("PDF libraries loaded successfully for dashboard");
-        const pdfButton = fragmentElement.querySelector("button");
+        console.log('PDF libraries loaded successfully for dashboard');
+        const pdfButton = fragmentElement.querySelector('button');
         if (pdfButton) {
-          pdfButton.addEventListener("click", pdfClickHandler);
+          pdfButton.addEventListener('click', pdfClickHandler);
         }
       })
       .catch((err) => {

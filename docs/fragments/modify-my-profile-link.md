@@ -1,6 +1,7 @@
 # Modify My Profile Link
 
-The **Modify My Profile Link** fragment is a specialized component within the Liferay Fragments library.
+The **Modify My Profile Link** fragment is a specialized component within the
+Liferay Fragments library.
 
 ## Overview
 

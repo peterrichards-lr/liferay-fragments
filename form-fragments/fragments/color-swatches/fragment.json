@@ -1,0 +1,15 @@
+{
+  "configurationPath": "configuration.json",
+  "jsPath": "index.js",
+  "htmlPath": "index.ftl",
+  "cssPath": "index.css",
+  "icon": "color-picker",
+  "name": "Color Swatches",
+  "typeOptions": {
+    "fieldTypes": [
+      "text"
+    ]
+  },
+  "type": "input",
+  "thumbnailPath": "thumbnail.png"
+}

@@ -1,10 +1,12 @@
 # Populate Select
 
-The **Populate Select** fragment is a specialized component within the Liferay Fragments library.
+The **Populate Select** fragment is a specialized component within the Liferay
+Fragments library.
 
 ## Overview
 
-Automatically populates a select input with options from a session or storage value.
+Automatically populates a select input with options from a session or storage
+value.
 
 ## Key Features
 

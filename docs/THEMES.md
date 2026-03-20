@@ -1,6 +1,7 @@
 # Liferay Theme Tokens & Spritemaps
 
-This document serves as a high-fidelity reference for the CSS variables (tokens) and icon spritemaps used across Liferay's primary themes.
+This document serves as a high-fidelity reference for the CSS variables (tokens)
+and icon spritemaps used across Liferay's primary themes.
 
 ## 1. Theme Spritemaps
 
@@ -25,14 +26,15 @@ This document serves as a high-fidelity reference for the CSS variables (tokens)
 
 ```javascript
 const themeId = Liferay.ThemeDisplay.getThemeId();
-if (themeId === "liferay-meridian-theme") {
+if (themeId === 'liferay-meridian-theme') {
   // Meridian specific logic
 }
 ```
 
 ### CSS (Body Classes)
 
-Liferay DXP injects theme-specific classes into the `<html>` or `<body>` element.
+Liferay DXP injects theme-specific classes into the `<html>` or `<body>`
+element.
 
 - `.meridian-theme`
 - `.liferay-dialect-theme`
@@ -40,7 +42,8 @@ Liferay DXP injects theme-specific classes into the `<html>` or `<body>` element
 
 ## 3. Cross-Theme CSS Intersect (Safe Tokens)
 
-Use these variables to ensure your fragment looks good across Classic, Dialect, and Meridian.
+Use these variables to ensure your fragment looks good across Classic, Dialect,
+and Meridian.
 
 | Variable             | Description        | Classic   | Dialect   | Meridian  |
 | :------------------- | :----------------- | :-------- | :-------- | :-------- |
@@ -54,7 +57,8 @@ Use these variables to ensure your fragment looks good across Classic, Dialect, 
 
 ### Theme-Specific Variable Mapping
 
-If a variable is missing in one theme, it will fallback to the second value provided in the `var()` function.
+If a variable is missing in one theme, it will fallback to the second value
+provided in the `var()` function.
 
 ```css
 .card {

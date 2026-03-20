@@ -1,6 +1,7 @@
 # Service Icon
 
-The **Service Icon** fragment is a specialized component within the Liferay Fragments library.
+The **Service Icon** fragment is a specialized component within the Liferay
+Fragments library.
 
 ## Overview
 

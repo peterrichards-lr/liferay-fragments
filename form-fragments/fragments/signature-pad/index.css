@@ -1,0 +1,28 @@
+.signature-pad-fragment .canvas-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.signature-pad-fragment .signature-canvas {
+  width: 100%;
+  height: var(--pad-height, 200px);
+  border: 2px solid var(--gray-300, #d4d4d4);
+  border-radius: 4px;
+  background-color: var(--body-bg, #fff);
+  cursor: crosshair;
+  touch-action: none; /* Prevent scrolling when signing */
+}
+
+.signature-pad-fragment .signature-canvas[data-readonly='true'] {
+  cursor: default;
+  background-color: var(--light, #f8f9fa);
+}
+
+.signature-pad-fragment .clear-signature {
+  align-self: flex-start;
+}
+
+.signature-pad-fragment .form-group.has-error .signature-canvas {
+  border-color: var(--danger, #da1414);
+}

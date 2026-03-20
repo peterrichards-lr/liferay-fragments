@@ -1,6 +1,7 @@
 # Gemini-Generated High-Fidelity Components
 
-This collection contains high-fidelity UI and data visualization components generated via Gemini, leveraging modern Liferay APIs and the Meridian theme.
+This collection contains high-fidelity UI and data visualization components
+generated via Gemini, leveraging modern Liferay APIs and the Meridian theme.
 
 ## Components Summary
 
@@ -17,7 +18,8 @@ This collection contains high-fidelity UI and data visualization components gene
 - **Meta-Object Form**: Self-configuring Object forms (Add/Edit).
 - **Meta-Object Record View**: Detailed single-record views with PDF export.
 - **Dynamic Object Gallery**: Grid/Masonry gallery for Object records.
-- **Dynamic Collection Slider**: Performance-optimized slider for Liferay Collections.
+- **Dynamic Collection Slider**: Performance-optimized slider for Liferay
+  Collections.
 
 ### Interactive UI
 

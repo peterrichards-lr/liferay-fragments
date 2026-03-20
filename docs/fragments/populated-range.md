@@ -1,6 +1,7 @@
 # Populated Range
 
-The **Populated Range** fragment is a specialized component within the Liferay Fragments library.
+The **Populated Range** fragment is a specialized component within the Liferay
+Fragments library.
 
 ## Overview
 

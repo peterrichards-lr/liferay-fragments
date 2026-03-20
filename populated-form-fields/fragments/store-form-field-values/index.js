@@ -130,18 +130,18 @@ const run = () => {
         storageKey = (
           storageKeyPrefix
             ? `${convertCase(storageKeyPrefix, 'snake')}_${convertCase(
-              inputField.id,
-              'snake'
-            )}`
+                inputField.id,
+                'snake'
+              )}`
             : inputField.id
         ).replace('__', '_');
       } else {
         storageKey = (
           storageKeyPrefix
             ? `${convertCase(storageKeyPrefix, 'snake')}_${convertCase(
-              inputField.name,
-              'snake'
-            )}`
+                inputField.name,
+                'snake'
+              )}`
             : inputField.name
         ).replace('__', '_');
       }

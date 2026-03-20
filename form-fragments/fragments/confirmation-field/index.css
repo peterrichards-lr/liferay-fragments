@@ -1,24 +1,23 @@
 .text-confirmation-input .form-group-fields {
-	display: flex;
+  display: flex;
 }
 
 .text-confirmation-input .form-group-fields.flex-column-direction {
-	flex-direction: column;
+  flex-direction: column;
 }
 
 .text-confirmation-input .form-group-fields.flex-row-direction {
-	flex-direction: row;
+  flex-direction: row;
 }
 
 .text-confirmation-input .form-feedback-group {
-	color: red;
-	color: var(--danger, red);
+  color: red;
+  color: var(--danger, red);
 }
-
 
 .text-confirmation-input .form-feedback-group.form-feedback-group-visibility {
-	visibility: hidden;
+  visibility: hidden;
 }
 .text-confirmation-input .form-feedback-group.form-feedback-group-display {
-	display: none;
+  display: none;
 }

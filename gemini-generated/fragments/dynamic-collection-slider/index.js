@@ -8,10 +8,10 @@ const state = {
 
 const updateSlider = () => {
   const track = fragmentElement.querySelector(
-    `#track-${fragmentEntryLinkNamespace}`,
+    `#track-${fragmentEntryLinkNamespace}`
   );
-  const slides = fragmentElement.querySelectorAll(".slider-slide");
-  const dots = fragmentElement.querySelectorAll(".dot");
+  const slides = fragmentElement.querySelectorAll('.slider-slide');
+  const dots = fragmentElement.querySelectorAll('.dot');
 
   if (track && slides.length > 0) {
     const slideWidth = slides[0].offsetWidth;
@@ -20,18 +20,18 @@ const updateSlider = () => {
     track.style.transform = `translateX(${state.currentTranslate}px)`;
 
     dots.forEach((dot, index) => {
-      dot.classList.toggle("active", index === state.currentIndex);
-      dot.setAttribute("aria-current", index === state.currentIndex);
+      dot.classList.toggle('active', index === state.currentIndex);
+      dot.setAttribute('aria-current', index === state.currentIndex);
     });
 
     // Update visibility for screen readers
     slides.forEach((slide, index) => {
       if (index === state.currentIndex) {
-        slide.removeAttribute("aria-hidden");
-        slide.setAttribute("tabindex", "0");
+        slide.removeAttribute('aria-hidden');
+        slide.setAttribute('tabindex', '0');
       } else {
-        slide.setAttribute("aria-hidden", "true");
-        slide.setAttribute("tabindex", "-1");
+        slide.setAttribute('aria-hidden', 'true');
+        slide.setAttribute('tabindex', '-1');
       }
     });
   }
@@ -39,24 +39,24 @@ const updateSlider = () => {
 
 const initSlider = () => {
   const track = fragmentElement.querySelector(
-    `#track-${fragmentEntryLinkNamespace}`,
+    `#track-${fragmentEntryLinkNamespace}`
   );
-  const container = fragmentElement.querySelector(".dynamic-slider-container");
-  const viewport = fragmentElement.querySelector(".slider-viewport");
-  const slides = fragmentElement.querySelectorAll(".slider-slide");
-  const dots = fragmentElement.querySelectorAll(".dot");
-  const prevBtn = fragmentElement.querySelector(".prev-btn");
-  const nextBtn = fragmentElement.querySelector(".next-btn");
+  const container = fragmentElement.querySelector('.dynamic-slider-container');
+  const viewport = fragmentElement.querySelector('.slider-viewport');
+  const slides = fragmentElement.querySelectorAll('.slider-slide');
+  const dots = fragmentElement.querySelectorAll('.dot');
+  const prevBtn = fragmentElement.querySelector('.prev-btn');
+  const nextBtn = fragmentElement.querySelector('.next-btn');
 
   // Check for configuration (Standard Collections check)
-  if (!slides.length && layoutMode !== "view") {
+  if (!slides.length && layoutMode !== 'view') {
     // Basic check for manual slides vs collection
-    const hasManualSlides = container.querySelector("[data-lfr-editable-id]");
+    const hasManualSlides = container.querySelector('[data-lfr-editable-id]');
     if (!hasManualSlides) {
       Liferay.Fragment.Commons.renderConfigWarning(
         viewport,
-        "Please map this fragment to a Collection or add manual slides to see content.",
-        layoutMode,
+        'Please map this fragment to a Collection or add manual slides to see content.',
+        layoutMode
       );
       return;
     }
@@ -91,12 +91,12 @@ const initSlider = () => {
     });
 
     // Keyboard Navigation
-    container.setAttribute("tabindex", "0");
-    container.addEventListener("keydown", (e) => {
-      if (e.key === "ArrowLeft") {
+    container.setAttribute('tabindex', '0');
+    container.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowLeft') {
         e.preventDefault();
         goToPrev();
-      } else if (e.key === "ArrowRight") {
+      } else if (e.key === 'ArrowRight') {
         e.preventDefault();
         goToNext();
       }
@@ -104,18 +104,18 @@ const initSlider = () => {
 
     // Touch/Mouse Events for Dragging
     const handleDragStart = (e) => {
-      if (!e.target.closest(".slider-btn, .dot")) {
+      if (!e.target.closest('.slider-btn, .dot')) {
         state.isDragging = true;
-        state.startX = e.type.includes("touch")
+        state.startX = e.type.includes('touch')
           ? e.touches[0].clientX
           : e.pageX;
-        track.style.transition = "none";
+        track.style.transition = 'none';
       }
     };
 
     const handleDragMove = (e) => {
       if (state.isDragging) {
-        const currentX = e.type.includes("touch")
+        const currentX = e.type.includes('touch')
           ? e.touches[0].clientX
           : e.pageX;
         const diff = currentX - state.startX;
@@ -127,7 +127,7 @@ const initSlider = () => {
     const handleDragEnd = () => {
       if (state.isDragging) {
         state.isDragging = false;
-        track.style.transition = "transform 0.3s ease-out";
+        track.style.transition = 'transform 0.3s ease-out';
 
         const movedBy = state.currentTranslate - state.prevTranslate;
         if (movedBy < -100 && state.currentIndex < slides.length - 1)
@@ -138,30 +138,30 @@ const initSlider = () => {
       }
     };
 
-    container.addEventListener("touchstart", handleDragStart, {
+    container.addEventListener('touchstart', handleDragStart, {
       passive: true,
     });
-    container.addEventListener("touchmove", handleDragMove, { passive: true });
-    container.addEventListener("touchend", handleDragEnd);
-    container.addEventListener("mousedown", handleDragStart);
-    container.addEventListener("mousemove", handleDragMove);
-    container.addEventListener("mouseup", handleDragEnd);
-    container.addEventListener("mouseleave", handleDragEnd);
+    container.addEventListener('touchmove', handleDragMove, { passive: true });
+    container.addEventListener('touchend', handleDragEnd);
+    container.addEventListener('mousedown', handleDragStart);
+    container.addEventListener('mousemove', handleDragMove);
+    container.addEventListener('mouseup', handleDragEnd);
+    container.addEventListener('mouseleave', handleDragEnd);
 
     // Initial setup
     updateSlider();
 
     // Auto-slide if configured
-    const interval = parseInt(configuration.autoplayInterval || "0");
-    if (interval > 0 && layoutMode === "view") {
+    const interval = parseInt(configuration.autoplayInterval || '0');
+    if (interval > 0 && layoutMode === 'view') {
       let intervalId = setInterval(() => {
         if (!state.isDragging && document.activeElement !== container) {
           goToNext();
         }
       }, interval);
 
-      container.addEventListener("mouseenter", () => clearInterval(intervalId));
-      container.addEventListener("mouseleave", () => {
+      container.addEventListener('mouseenter', () => clearInterval(intervalId));
+      container.addEventListener('mouseleave', () => {
         clearInterval(intervalId);
         intervalId = setInterval(() => {
           if (!state.isDragging && document.activeElement !== container) {
@@ -170,14 +170,14 @@ const initSlider = () => {
         }, interval);
       });
     }
-  } else if (slides.length === 0 && layoutMode === "view") {
+  } else if (slides.length === 0 && layoutMode === 'view') {
     Liferay.Fragment.Commons.renderEmptyState(viewport, {
-      title: "Collection is Empty",
+      title: 'Collection is Empty',
       description:
-        "There are no items in this collection to display in the slider.",
+        'There are no items in this collection to display in the slider.',
     });
-    if (prevBtn) prevBtn.style.display = "none";
-    if (nextBtn) nextBtn.style.display = "none";
+    if (prevBtn) prevBtn.style.display = 'none';
+    if (nextBtn) nextBtn.style.display = 'none';
   }
 };
 

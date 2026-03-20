@@ -1,0 +1,70 @@
+{
+  "fieldSets": [
+    {
+      "fields": [
+        {
+          "dataType": "string",
+          "defaultValue": "[]",
+          "label": "lfr.form-fragments.image-options-json",
+          "description": "lfr.form-fragments.image-options-json-description",
+          "localizable": false,
+          "name": "optionsJSON",
+          "type": "text"
+        },
+        {
+          "dataType": "int",
+          "defaultValue": "3",
+          "label": "lfr.form-fragments.grid-columns",
+          "description": "lfr.form-fragments.grid-columns-description",
+          "name": "gridColumns",
+          "type": "text"
+        },
+        {
+          "dataType": "string",
+          "defaultValue": "nm",
+          "label": "lfr.form-fragments.image-size",
+          "description": "lfr.form-fragments.image-size-description",
+          "name": "imageSize",
+          "type": "select",
+          "typeOptions": {
+            "validValues": [
+              {
+                "label": "lfr.form-fragments.small",
+                "value": "sm"
+              },
+              {
+                "label": "lfr.form-fragments.normal",
+                "value": "nm"
+              },
+              {
+                "label": "lfr.form-fragments.large",
+                "value": "lg"
+              }
+            ]
+          }
+        },
+        {
+          "dataType": "string",
+          "defaultValue": "radio",
+          "label": "lfr.form-fragments.selection-type",
+          "description": "lfr.form-fragments.selection-type-description",
+          "name": "selectionType",
+          "type": "select",
+          "typeOptions": {
+            "validValues": [
+              {
+                "label": "lfr.form-fragments.single",
+                "value": "radio"
+              },
+              {
+                "label": "lfr.form-fragments.multiple",
+                "value": "checkbox"
+              }
+            ]
+          }
+        }
+      ],
+      "label": "lfr.form-fragments.image-choice-options"
+    }
+  ]
+}

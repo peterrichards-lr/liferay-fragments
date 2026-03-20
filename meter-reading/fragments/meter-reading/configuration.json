@@ -3,6 +3,13 @@
     {
       "fields": [
         {
+          "defaultValue": "WATER_READING",
+          "label": "lfr.meter-reading.object-erc",
+          "description": "lfr.meter-reading.object-erc-description",
+          "name": "objectERC",
+          "type": "text"
+        },
+        {
           "defaultValue": "waterreadings",
           "label": "lfr.meter-reading.object-path",
           "description": "lfr.meter-reading.object-path-description",

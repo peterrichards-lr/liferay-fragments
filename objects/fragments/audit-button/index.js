@@ -1,15 +1,15 @@
 const initAuditButton = () => {
   const { resolveObjectPathByERC } = Liferay.Fragment.Commons;
 
-  if (layoutMode === "view") {
+  if (layoutMode === 'view') {
     const formatDate = (d) => {
-      return d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + d.getDate();
+      return d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate();
     };
 
-    let apiPath = "";
+    let apiPath = '';
 
     const resolveApiPath = async () => {
-      const objectERC = configuration.objectERC || "AUDIT_ENTRY";
+      const objectERC = configuration.objectERC || 'AUDIT_ENTRY';
       try {
         const result = await resolveObjectPathByERC(objectERC);
 
@@ -17,11 +17,11 @@ const initAuditButton = () => {
           apiPath = result.apiPath;
         } else {
           // Fallback to legacy path if resolution fails
-          apiPath = "/o/c/auditentries";
+          apiPath = '/o/c/auditentries';
         }
       } catch (err) {
         console.error(err);
-        apiPath = "/o/c/auditentries";
+        apiPath = '/o/c/auditentries';
       }
     };
 
@@ -36,20 +36,20 @@ const initAuditButton = () => {
       };
 
       Liferay.Util.fetch(apiPath, {
-        method: "POST",
+        method: 'POST',
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
         body: JSON.stringify(auditEntry),
       })
         .then((response) => {
           const { status } = response;
-          const responseContentType = response.headers.get("content-type");
+          const responseContentType = response.headers.get('content-type');
           if (status === 204) {
             return { status };
           } else if (
             response.ok &&
-            responseContentType === "application/json"
+            responseContentType === 'application/json'
           ) {
             return response.json();
           } else {
@@ -57,9 +57,9 @@ const initAuditButton = () => {
           }
         })
         .then((response) => {
-          console.log("Audit Success:", response);
+          console.log('Audit Success:', response);
         })
-        .catch((reason) => console.error("Audit Error:", reason));
+        .catch((reason) => console.error('Audit Error:', reason));
     };
 
     const getEntryDate = () => {
@@ -70,28 +70,28 @@ const initAuditButton = () => {
       if (Liferay.CommerceContext && Liferay.CommerceContext.getAccountName) {
         return Liferay.CommerceContext.getAccountName();
       }
-      return "N/A";
+      return 'N/A';
     };
 
     const getAction = (btn) => {
       const usePrefixSuffix = configuration.usePrefixAndSuffix;
       const actionPrefix =
-        (configuration.auditActionPrefix || "") +
-        (configuration.addSpace ? " " : "");
+        (configuration.auditActionPrefix || '') +
+        (configuration.addSpace ? ' ' : '');
       const actionSuffix =
-        (configuration.addSpace ? " " : "") +
-        (configuration.auditActionSuffix || "");
+        (configuration.addSpace ? ' ' : '') +
+        (configuration.auditActionSuffix || '');
 
-      var action = usePrefixSuffix ? actionPrefix : "";
+      var action = usePrefixSuffix ? actionPrefix : '';
       if (configuration.useButtonText && btn) {
         action += btn.innerHTML.trim();
       } else {
         const actionMessage = fragmentElement.querySelector(
-          "div.action-configuration",
+          'div.action-configuration'
         );
         if (actionMessage) action += actionMessage.innerHTML.trim();
       }
-      action += usePrefixSuffix ? actionSuffix : "";
+      action += usePrefixSuffix ? actionSuffix : '';
       return action.trim();
     };
 
@@ -105,16 +105,16 @@ const initAuditButton = () => {
       createAuditEntry(entryDate, account, action);
     };
 
-    const btn = fragmentElement.querySelector("a.btn");
+    const btn = fragmentElement.querySelector('a.btn');
     if (btn) {
-      btn.addEventListener("click", clickHandler);
+      btn.addEventListener('click', clickHandler);
     }
 
     // Pre-resolve
     resolveApiPath();
-  } else if (layoutMode === "edit") {
-    const configEl = fragmentElement.querySelector("#action-configuration");
-    if (configEl) configEl.classList.remove("configuration");
+  } else if (layoutMode === 'edit') {
+    const configEl = fragmentElement.querySelector('#action-configuration');
+    if (configEl) configEl.classList.remove('configuration');
   }
 };
 

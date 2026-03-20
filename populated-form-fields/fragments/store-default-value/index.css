@@ -11,7 +11,8 @@
 }
 
 body.has-edit-mode-menu .page-editor .store-default-value-padding.show,
-.store-default-value[data-layout-mode="edit"] .store-default-value-padding.show {
+.store-default-value[data-layout-mode='edit']
+  .store-default-value-padding.show {
   height: 26px;
   min-height: 26px;
   box-sizing: border-box;

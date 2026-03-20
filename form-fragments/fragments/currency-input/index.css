@@ -1,0 +1,14 @@
+.currency-input-fragment .input-group-text {
+  background-color: var(--light, #f8f9fa);
+  color: var(--secondary, #6b6c7e);
+  font-weight: 600;
+}
+
+.currency-input-fragment .visible-currency-input {
+  text-align: right;
+  font-family: var(--font-family-monospace, monospace);
+}
+
+.currency-input-fragment .form-group.has-error .input-group-text {
+  border-color: var(--danger, #da1414);
+}

@@ -1,6 +1,7 @@
 # Store Default Value
 
-The **Store Default Value** fragment is a specialized component within the Liferay Fragments library.
+The **Store Default Value** fragment is a specialized component within the
+Liferay Fragments library.
 
 ## Overview
 

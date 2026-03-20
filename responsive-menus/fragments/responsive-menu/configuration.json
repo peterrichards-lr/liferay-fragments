@@ -652,7 +652,7 @@
         },
         {
           "dataType": "int",
-          "defaultValue": 100,
+          "defaultValue": "100",
           "description": "lfr.responsive-menus.initialize-delay-description",
           "label": "lfr.responsive-menus.initialize-delay",
           "name": "initializeDelay",

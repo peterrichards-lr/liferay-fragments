@@ -2,6 +2,40 @@
 
 A visual reference for the high-fidelity fragments available in this Liferay DXP repository. Generated automatically.
 
+## Aura Design System
+
+A lifestyle-focused design system with a scoped container architecture, high-fidelity design tokens, and modern product showcase components.
+
+### Aura - Final CTA Banner
+
+![Aura - Final CTA Banner](../aura/fragments/aura-final-cta/thumbnail.png)
+
+--- 
+
+### Aura - Lookbook Row
+
+![Aura - Lookbook Row](../aura/fragments/aura-lookbook/thumbnail.png)
+
+--- 
+
+### Aura - Product Gallery
+
+![Aura - Product Gallery](../aura/fragments/aura-product-gallery/thumbnail.png)
+
+--- 
+
+### Aura - Scoped Container
+
+![Aura - Scoped Container](../aura/fragments/aura-scoped-container/thumbnail.png)
+
+--- 
+
+### Aura - USP Grid
+
+![Aura - USP Grid](../aura/fragments/aura-usp-grid/thumbnail.png)
+
+--- 
+
 ## Commerce
 
 ### Dynamic Badge Overlay
@@ -110,6 +144,12 @@ A visual reference for the high-fidelity fragments available in this Liferay DXP
 
 ## Forms Fragments
 
+### Address Autocomplete
+
+*No image available*
+
+--- 
+
 ### Autocomplete (Object)
 
 ![Autocomplete (Object)](../form-fragments/fragments/autocomplete-(object)/thumbnail.png)
@@ -126,11 +166,29 @@ A visual reference for the high-fidelity fragments available in this Liferay DXP
 
 --- 
 
+### Color Swatches
+
+*No image available*
+
+--- 
+
 ### Confirmation Field
 
 ![Confirmation Field](../form-fragments/fragments/confirmation-field/thumbnail.png)
 
 [Detailed Documentation](./fragments/confirmation-field.md)
+
+--- 
+
+### Currency Masked Input
+
+*No image available*
+
+--- 
+
+### File Drop Zone
+
+*No image available*
 
 --- 
 
@@ -142,11 +200,29 @@ A visual reference for the high-fidelity fragments available in this Liferay DXP
 
 --- 
 
+### Image Choice
+
+*No image available*
+
+--- 
+
 ### Listbox Multiselect
 
 ![Listbox Multiselect](./images/listbox-multiselect.png)
 
 [Detailed Documentation](./fragments/listbox-multiselect.md)
+
+--- 
+
+### OTP / Verification Code
+
+*No image available*
+
+--- 
+
+### Password Strength
+
+*No image available*
 
 --- 
 
@@ -163,6 +239,12 @@ A visual reference for the high-fidelity fragments available in this Liferay DXP
 ![Segmented Numeric](./images/segmented-numeric.png)
 
 [Detailed Documentation](./fragments/segmented-numeric.md)
+
+--- 
+
+### Signature Pad
+
+*No image available*
 
 --- 
 

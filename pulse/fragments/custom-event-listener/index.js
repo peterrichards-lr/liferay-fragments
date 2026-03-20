@@ -1,33 +1,35 @@
 const initCustomEventListener = () => {
   const { isValidIdentifier, resolveObjectPath } = Liferay.Fragment.Commons;
 
-  if (layoutMode !== "view") return;
+  if (layoutMode !== 'view') return;
 
   const { selectors, eventType, defaultAction } = configuration;
   if (!selectors) return;
 
-  const cookieName = "__coId";
+  const cookieName = '__coId';
   const getCookie = (name) => {
     const value = `; ${document.cookie}`;
     const parts = value.split(`; ${name}=`);
-    if (parts.length === 2) return parts.pop().split(";").shift();
+    if (parts.length === 2) return parts.pop().split(';').shift();
     return null;
   };
 
-  let apiPath = "";
+  let apiPath = '';
 
   const resolveApiPath = async () => {
     try {
-      const result = await resolveObjectPath("/o/c/campaigninteractions");
-
-      if (result.apiPath) {
-        apiPath = result.apiPath;
+      const { apiPath: resolvedPath } =
+        await Liferay.Fragment.Commons.resolveObjectPathByERC(
+          'CAMPAIGN_INTERACTION'
+        );
+      if (resolvedPath) {
+        apiPath = resolvedPath;
       } else {
-        apiPath = "/o/c/campaigninteractions";
+        apiPath = '/o/c/campaigninteractions';
       }
     } catch (err) {
-      console.error("[Event Listener] Scope resolution failed:", err);
-      apiPath = "/o/c/campaigninteractions";
+      console.error('[Event Listener] Scope resolution failed:', err);
+      apiPath = '/o/c/campaigninteractions';
     }
   };
 
@@ -46,19 +48,19 @@ const initCustomEventListener = () => {
 
     try {
       await Liferay.Util.fetch(apiPath, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload),
       });
     } catch (err) {
-      console.error("[Event Listener] Interaction Error:", err);
+      console.error('[Event Listener] Interaction Error:', err);
     }
   };
 
   const eventHandler = (e) => {
     const target = e.target;
     let action =
-      target.getAttribute("custom-event-action") ||
+      target.getAttribute('custom-event-action') ||
       defaultAction ||
       `${e.type} on ${target.tagName}`;
 
@@ -73,14 +75,14 @@ const initCustomEventListener = () => {
     }
   };
 
-  Liferay.on("allPortletsReady", () => {
+  Liferay.on('allPortletsReady', () => {
     try {
       const elements = document.querySelectorAll(selectors);
       elements.forEach((el) => {
-        el.addEventListener(eventType || "click", eventHandler);
+        el.addEventListener(eventType || 'click', eventHandler);
       });
     } catch (err) {
-      console.error("[Event Listener] Selector Error:", err);
+      console.error('[Event Listener] Selector Error:', err);
     }
   });
 

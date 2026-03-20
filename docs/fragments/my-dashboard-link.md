@@ -1,6 +1,7 @@
 # My Dashboard Link
 
-The **My Dashboard Link** fragment is a specialized component within the Liferay Fragments library.
+The **My Dashboard Link** fragment is a specialized component within the Liferay
+Fragments library.
 
 ## Overview
 

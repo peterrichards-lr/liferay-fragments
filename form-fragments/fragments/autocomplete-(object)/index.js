@@ -1,12 +1,12 @@
 const initAutocompleteObject = () => {
   const { objectERC, inputFieldId } = configuration;
 
-  const autocompleteContainer = fragmentElement.querySelector(".autocomplete");
-  const inputElement = fragmentElement.querySelector(".autocomplete-input");
-  const resultsList = fragmentElement.querySelector(".autocomplete-results");
+  const autocompleteContainer = fragmentElement.querySelector('.autocomplete');
+  const inputElement = fragmentElement.querySelector('.autocomplete-input');
+  const resultsList = fragmentElement.querySelector('.autocomplete-results');
 
   const closeAllLists = () => {
-    resultsList.innerHTML = "";
+    resultsList.innerHTML = '';
   };
 
   const getObjectEntries = async (searchValue) => {
@@ -15,22 +15,20 @@ const initAutocompleteObject = () => {
     try {
       // Use Commons for site-scoping discovery
       const { definition, apiPath } =
-        await Liferay.Fragment.Commons.resolveObjectPath(
-          `/o/c/${objectERC.toLowerCase()}`,
-        );
+        await Liferay.Fragment.Commons.resolveObjectPathByERC(objectERC);
 
       const url = `${apiPath}/?search=${searchValue}&pageSize=20`;
       const response = await Liferay.Util.fetch(url);
       const data = await response.json();
 
-      const titleField = definition ? definition.titleObjectFieldName : "id";
+      const titleField = definition ? definition.titleObjectFieldName : 'id';
 
       return (data.items || []).map((item) => ({
         label: item[titleField] || item.id,
         value: item.id,
       }));
     } catch (error) {
-      console.error("Error fetching object entries:", error);
+      console.error('Error fetching object entries:', error);
       return [];
     }
   };
@@ -45,7 +43,7 @@ const initAutocompleteObject = () => {
     }
 
     inputElement.addEventListener(
-      "input",
+      'input',
       Liferay.Fragment.Commons.debounce(async (e) => {
         const searchValue = e.target.value;
 
@@ -56,9 +54,9 @@ const initAutocompleteObject = () => {
         const entries = await getObjectEntries(searchValue);
 
         entries.forEach((entry) => {
-          const listItem = document.createElement("li");
+          const listItem = document.createElement('li');
           listItem.innerHTML = entry.label;
-          listItem.addEventListener("click", () => {
+          listItem.addEventListener('click', () => {
             inputElement.value = entry.label;
             if (Liferay.Fragment.Commons.isValidIdentifier(inputFieldId)) {
               const inputField = document.getElementById(inputFieldId);
@@ -66,7 +64,7 @@ const initAutocompleteObject = () => {
                 inputField.value = entry.value;
                 inputField.dataset.label = entry.label;
                 inputField.dispatchEvent(
-                  new Event("change", { bubbles: true }),
+                  new Event('change', { bubbles: true })
                 );
               }
             }
@@ -74,10 +72,10 @@ const initAutocompleteObject = () => {
           });
           resultsList.appendChild(listItem);
         });
-      }, 300),
+      }, 300)
     );
 
-    document.addEventListener("click", (e) => {
+    document.addEventListener('click', (e) => {
       if (!autocompleteContainer.contains(e.target)) {
         closeAllLists();
       }

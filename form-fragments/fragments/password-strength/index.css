@@ -1,0 +1,45 @@
+.password-strength-fragment .strength-bar {
+  transition:
+    width 0.3s ease,
+    background-color 0.3s ease;
+}
+
+.password-strength-fragment .requirement {
+  display: flex;
+  align-items: center;
+  color: var(--secondary, #6b6c7e);
+  margin-bottom: 0.25rem;
+  transition: color 0.2s ease;
+}
+
+.password-strength-fragment .requirement.met {
+  color: var(--success, #28a745);
+}
+
+.password-strength-fragment .requirement.unmet {
+  color: var(--danger, #da1414);
+}
+
+.password-strength-fragment .met .status-icon {
+  color: var(--success, #28a745);
+}
+
+.password-strength-fragment .unmet .status-icon {
+  color: var(--danger, #da1414);
+}
+
+.password-strength-fragment .toggle-visibility {
+  border-left: none;
+}
+
+.password-strength-fragment .toggle-visibility:focus {
+  z-index: 3;
+}
+
+.password-strength-fragment .met .status-icon svg {
+  /* Replace circle with check icon logic in JS */
+}
+
+.password-strength-fragment .progress {
+  background-color: var(--gray-200, #e9ecef);
+}

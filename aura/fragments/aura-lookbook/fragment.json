@@ -1,0 +1,9 @@
+{
+  "configurationPath": "configuration.json",
+  "cssPath": "main.css",
+  "htmlPath": "index.ftl",
+  "jsPath": "main.js",
+  "name": "Aura - Lookbook Row",
+  "thumbnailPath": "thumbnail.png",
+  "type": "component"
+}

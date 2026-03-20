@@ -1,31 +1,31 @@
-const SINGLETON_KEY = "LFR_FRAG_SINGLETON_LOAN_APP_CALC";
+const SINGLETON_KEY = 'LFR_FRAG_SINGLETON_LOAN_APP_CALC';
 
 const initLoanAppCalc = () => {
   if (window[SINGLETON_KEY]) {
-    console.warn("Multiple Loan Application Calculators detected.");
+    console.warn('Multiple Loan Application Calculators detected.');
     return;
   }
   window[SINGLETON_KEY] = true;
 
-  const loanAmountDiv = fragmentElement.querySelector("#loanAmount");
-  const loanTermDiv = fragmentElement.querySelector("#loanTerm");
+  const loanAmountDiv = fragmentElement.querySelector('#loanAmount');
+  const loanTermDiv = fragmentElement.querySelector('#loanTerm');
 
   if (!loanAmountDiv || !loanTermDiv) {
-    if (layoutMode === "edit") {
+    if (layoutMode === 'edit') {
       console.info(
-        "Loan Application Calculator: Please drop 'Range' fragments into the drop-zone and set their IDs to 'loanAmount' and 'loanTerm'.",
+        "Loan Application Calculator: Please drop 'Range' fragments into the drop-zone and set their IDs to 'loanAmount' and 'loanTerm'."
       );
     }
     return;
   }
 
-  const loanAmountInput = loanAmountDiv.querySelector("input");
-  const loanTermInput = loanTermDiv.querySelector("input");
-  const amountValue = loanAmountDiv.querySelector("span.value");
-  const termValue = loanTermDiv.querySelector("span.value");
-  const totalPaymentText = fragmentElement.querySelector("#totalPayment");
-  const termMonthsText = fragmentElement.querySelector("#termMonths");
-  const interestRateText = fragmentElement.querySelector("#interestRate");
+  const loanAmountInput = loanAmountDiv.querySelector('input');
+  const loanTermInput = loanTermDiv.querySelector('input');
+  const amountValue = loanAmountDiv.querySelector('span.value');
+  const termValue = loanTermDiv.querySelector('span.value');
+  const totalPaymentText = fragmentElement.querySelector('#totalPayment');
+  const termMonthsText = fragmentElement.querySelector('#termMonths');
+  const interestRateText = fragmentElement.querySelector('#interestRate');
 
   const getInterestRate = (amount) => {
     if (amount < 5000) return 0.085;
@@ -60,8 +60,8 @@ const initLoanAppCalc = () => {
       interestRateText.textContent = `${(interestRate * 100).toFixed(1)}%`;
   };
 
-  if (loanAmountInput) loanAmountInput.addEventListener("input", updateSummary);
-  if (loanTermInput) loanTermInput.addEventListener("input", updateSummary);
+  if (loanAmountInput) loanAmountInput.addEventListener('input', updateSummary);
+  if (loanTermInput) loanTermInput.addEventListener('input', updateSummary);
 
   updateSummary();
 };

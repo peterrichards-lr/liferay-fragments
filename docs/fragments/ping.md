@@ -1,12 +1,15 @@
 # Ping
 
-A diagnostic fragment that verifies connectivity between the client browser and a Liferay REST endpoint.
+A diagnostic fragment that verifies connectivity between the client browser and
+a Liferay REST endpoint.
 
 ## Features
 
 - **Connectivity Test**: Trigger a fetch to a configurable endpoint.
-- **Log View**: Displays the raw text response from the server in a scrollable textarea.
-- **Protocol Awareness**: Automatically prepends `https://` if the endpoint is not absolute or root-relative.
+- **Log View**: Displays the raw text response from the server in a scrollable
+  textarea.
+- **Protocol Awareness**: Automatically prepends `https://` if the endpoint is
+  not absolute or root-relative.
 
 ## Configuration
 
@@ -16,4 +19,5 @@ A diagnostic fragment that verifies connectivity between the client browser and 
 
 This fragment utilizes the **Shared Resources Architecture**:
 
-- **`validation.js`**: Uses `isValidIdentifier` to ensure the endpoint URL is configured before attempting a fetch.
+- **`validation.js`**: Uses `isValidIdentifier` to ensure the endpoint URL is
+  configured before attempting a fetch.

@@ -1,0 +1,99 @@
+.color-swatches-input .swatch-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 0.5rem;
+}
+
+.color-swatches-input .swatch-item {
+  cursor: pointer;
+  position: relative;
+}
+
+.color-swatches-input .swatch-item input {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.color-swatches-input .swatch-visual {
+  border: 2px solid var(--gray-300, #d4d4d4);
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.color-swatches-input .circle .swatch-visual {
+  border-radius: 50%;
+}
+.color-swatches-input .square .swatch-visual {
+  border-radius: 4px;
+}
+
+.color-swatches-input .swatch-item.sm .swatch-visual {
+  width: 32px;
+  height: 32px;
+}
+.color-swatches-input .swatch-item.nm .swatch-visual {
+  width: 44px;
+  height: 44px;
+}
+.color-swatches-input .swatch-item.lg .swatch-visual {
+  width: 60px;
+  height: 60px;
+}
+
+.color-swatches-input .check-icon {
+  color: white;
+  opacity: 0;
+  transform: scale(0.5);
+  transition: all 0.2s ease;
+  filter: drop-shadow(0 0 2px rgba(0, 0, 0, 0.5));
+}
+
+/* Selected State */
+.color-swatches-input input:checked + .swatch-visual {
+  border-color: var(--primary, #0b5fff);
+  box-shadow: 0 0 0 3px rgba(11, 95, 255, 0.3);
+  transform: scale(1.1);
+}
+
+.color-swatches-input input:checked + .swatch-visual .check-icon {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* Contrast for Light Colors */
+.color-swatches-input
+  input:checked
+  + .swatch-visual[style*='background-color: #ffffff'],
+.color-swatches-input
+  input:checked
+  + .swatch-visual[style*='background-color: white'],
+.color-swatches-input
+  input:checked
+  + .swatch-visual[style*='background-color: #f'] {
+  border-color: var(--gray-600, #a0a0a0);
+}
+.color-swatches-input
+  input:checked
+  + .swatch-visual[style*='background-color: #ffffff']
+  .check-icon,
+.color-swatches-input
+  input:checked
+  + .swatch-visual[style*='background-color: white']
+  .check-icon,
+.color-swatches-input
+  input:checked
+  + .swatch-visual[style*='background-color: #f']
+  .check-icon {
+  color: var(--body-color, #272833);
+}
+
+.color-swatches-input .swatch-item:hover .swatch-visual {
+  border-color: var(--gray-600, #a0a0a0);
+  transform: translateY(-2px);
+}

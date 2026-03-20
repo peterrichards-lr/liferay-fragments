@@ -1,6 +1,7 @@
 # Overlay Background
 
-The **Overlay Background** fragment is a specialized component within the Liferay Fragments library.
+The **Overlay Background** fragment is a specialized component within the
+Liferay Fragments library.
 
 ## Overview
 

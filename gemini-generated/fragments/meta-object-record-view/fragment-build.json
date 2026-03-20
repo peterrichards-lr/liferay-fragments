@@ -4,6 +4,7 @@
     "dom.js",
     "localization.js",
     "validation.js",
-    "discovery.js"
+    "discovery.js",
+    "event-bus.js"
   ]
 }

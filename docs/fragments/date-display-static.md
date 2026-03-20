@@ -1,6 +1,7 @@
 # Date Display (Static)
 
-The **Date Display (Static)** fragment is a simple utility for displaying a hardcoded or manually entered date with consistent formatting across a page.
+The **Date Display (Static)** fragment is a simple utility for displaying a
+hardcoded or manually entered date with consistent formatting across a page.
 
 ## Key Features
 

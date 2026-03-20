@@ -1,0 +1,16 @@
+{
+  "configurationPath": "configuration.json",
+  "jsPath": "index.js",
+  "htmlPath": "index.ftl",
+  "cssPath": "index.css",
+  "icon": "password",
+  "name": "OTP / Verification Code",
+  "typeOptions": {
+    "fieldTypes": [
+      "number",
+      "text"
+    ]
+  },
+  "type": "input",
+  "thumbnailPath": "thumbnail.png"
+}

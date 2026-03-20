@@ -1,12 +1,15 @@
 # Responsive Side Menu
 
-The **Responsive Side Menu** fragment provides a persistent sidebar navigation experience, ideal for complex applications and dashboards.
+The **Responsive Side Menu** fragment provides a persistent sidebar navigation
+experience, ideal for complex applications and dashboards.
 
 ## Key Features
 
 - **Sidebar Layout**: Fixed or relative positioning for vertical navigation.
-- **Scroll Locking**: Optional background scroll prevention when the mobile overlay is open.
-- **Floating Logo**: Specialized logic for handling brand identity in constrained spaces.
+- **Scroll Locking**: Optional background scroll prevention when the mobile
+  overlay is open.
+- **Floating Logo**: Specialized logic for handling brand identity in
+  constrained spaces.
 
 ## Configuration
 

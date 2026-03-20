@@ -1,21 +1,14 @@
-[#assign
-isFlex = configuration.contentDisplay?contains('flex')
-isRow = configuration.contentDisplay?contains('row')
-displayValue = isFlex?then('flex', 'block')
-flexDirection = isFlex?then(isRow?then('row', 'column'), '')
-lockStyles = !configuration.allowMenuOverride
-cssImportant = lockStyles?then(' !important', '')
-
-zoneLayoutNamespace = "zone-layout-${fragmentEntryLinkNamespace}"
-zoneLayoutClassList = [
-"zone-layout",
-"zone-layout-fragment",
-zoneLayoutNamespace,
-(lockStyles?then('', 'allow-override'))
-]?filter(x -> x?has_content),
-zoneLayoutClass = zoneLayoutClassList?join(' ')
-zoneLayoutHeaderClass = "zone-layout-editor-padding" + (configuration.zoneLayoutHeader?then(" show", ""))
-/]
+[#-- prettier-ignore --] [#assign isFlex =
+configuration.contentDisplay?contains('flex') isRow =
+configuration.contentDisplay?contains('row') displayValue = isFlex?then('flex',
+'block') flexDirection = isFlex?then(isRow?then('row', 'column'), '') lockStyles
+= !configuration.allowMenuOverride cssImportant = lockStyles?then(' !important',
+'') zoneLayoutNamespace = "zone-layout-${fragmentEntryLinkNamespace}"
+zoneLayoutClassList = [ "zone-layout", "zone-layout-fragment",
+zoneLayoutNamespace, (lockStyles?then('', 'allow-override')) ]?filter(x ->
+x?has_content), zoneLayoutClass = zoneLayoutClassList?join(' ')
+zoneLayoutHeaderClass = "zone-layout-editor-padding" +
+(configuration.zoneLayoutHeader?then(" show", "")) /]
 
 <style>
   .${zoneLayoutNamespace}[data-layout-mode="edit"] :is(lfr-drop-zone .page-editor > div, lfr-drop-zone .lfr-tooltip-scope > div),
@@ -42,7 +35,8 @@ zoneLayoutHeaderClass = "zone-layout-editor-padding" + (configuration.zoneLayout
 
 <div class="${zoneLayoutHeaderClass}">Zone Layout</div>
 
-<div class="${zoneLayoutClass}"
+<div
+  class="${zoneLayoutClass}"
   data-lock="${lockStyles?c}"
   data-display="${displayValue}"
   data-direction="${flexDirection}"

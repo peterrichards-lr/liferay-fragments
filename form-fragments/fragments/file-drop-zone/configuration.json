@@ -1,0 +1,34 @@
+{
+  "fieldSets": [
+    {
+      "fields": [
+        {
+          "dataType": "string",
+          "defaultValue": "Drag & Drop or Click to Upload",
+          "label": "lfr.form-fragments.drop-zone-text",
+          "description": "lfr.form-fragments.drop-zone-text-description",
+          "localizable": true,
+          "name": "dropZoneText",
+          "type": "text"
+        },
+        {
+          "dataType": "string",
+          "defaultValue": "upload",
+          "label": "lfr.form-fragments.drop-zone-icon",
+          "description": "lfr.form-fragments.drop-zone-icon-description",
+          "name": "dropZoneIcon",
+          "type": "text"
+        },
+        {
+          "dataType": "bool",
+          "defaultValue": true,
+          "label": "lfr.form-fragments.show-document-library-picker",
+          "description": "lfr.form-fragments.show-document-library-picker-description",
+          "name": "showDocumentLibraryPicker",
+          "type": "checkbox"
+        }
+      ],
+      "label": "lfr.form-fragments.drop-zone-options"
+    }
+  ]
+}

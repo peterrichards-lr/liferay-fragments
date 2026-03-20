@@ -1,0 +1,18 @@
+[#-- prettier-ignore --] [#assign fragmentName = "Store Form Field Values",
+fragmentClassName = fragmentName?lower_case?replace(' ', '-'),
+fragmentUniqueClassName = "${fragmentClassName}-${fragmentEntryLinkNamespace}",
+fragmentClassesList = [ fragmentUniqueClassName, fragmentClassName ]?filter(x ->
+x?has_content), fragmentClasses = fragmentClassesList?join(' '),
+fragmentHeaderClass = '${fragmentClassName}-padding' +
+(configuration.fragmentHeader?then(' show','')) /]
+<div
+  data-lfr-js-fragment-unique-class-name="${fragmentUniqueClassName}"
+  data-lfr-js-fragment-name="${fragmentName}"
+  data-lfr-js-fragment-class-name="${fragmentClassName}"
+  class="${fragmentClasses}"
+  data-layout-mode="${layoutMode}"
+>
+  <div class="${fragmentHeaderClass}">${fragmentName}</div>
+  <lfr-drop-zone></lfr-drop-zone>
+</div>
+<div class="config" style="display: none"></div>

@@ -1,142 +1,146 @@
 .meta-record-view {
-    padding: var(--spacer-6, 2.5rem);
-    background: var(--white, #fff);
-    border-radius: var(--border-radius-lg, 0.5rem);
-    box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+  padding: var(--spacer-6, 2.5rem);
+  background: var(--white, #fff);
+  border-radius: var(--border-radius-lg, 0.5rem);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
 }
 
 /* Editor Header Styles */
-.meta-view-editor-header { height: 0; overflow: hidden; display: none; }
+.meta-view-editor-header {
+  height: 0;
+  overflow: hidden;
+  display: none;
+}
 body.has-edit-mode-menu .meta-view-editor-header.show,
-.meta-record-view[data-layout-mode="edit"] .meta-view-editor-header.show {
-   height: 26px;
-   min-height: 26px;
-   box-sizing: border-box;
-   background-color: var(--gray-100, #f7f8f9);
-   text-align: right;
-   font-size: 12px;
-   line-height: 26px;
-   border-radius: 2px 2px 0 0;
-   padding: 0 8px;
-   font-weight: 600;
-   display: block;
+.meta-record-view[data-layout-mode='edit'] .meta-view-editor-header.show {
+  height: 26px;
+  min-height: 26px;
+  box-sizing: border-box;
+  background-color: var(--gray-100, #f7f8f9);
+  text-align: right;
+  font-size: 12px;
+  line-height: 26px;
+  border-radius: 2px 2px 0 0;
+  padding: 0 8px;
+  font-weight: 600;
+  display: block;
 }
 
 /* Mappable Fields Formatting */
 .meta-editor-mappable-fields {
-    display: none;
-    flex-wrap: wrap;
-    gap: 1.5rem;
-    padding: 1.5rem;
-    background: var(--gray-100, #f7f8f9);
-    border: 1px solid var(--gray-200, #e7e8eb);
-    border-radius: 0.5rem;
-    margin-bottom: 2rem;
+  display: none;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  padding: 1.5rem;
+  background: var(--gray-100, #f7f8f9);
+  border: 1px solid var(--gray-200, #e7e8eb);
+  border-radius: 0.5rem;
+  margin-bottom: 2rem;
 }
 
 body.has-edit-mode-menu .meta-editor-mappable-fields,
-.meta-record-view[data-layout-mode="edit"] .meta-editor-mappable-fields {
-    display: flex;
+.meta-record-view[data-layout-mode='edit'] .meta-editor-mappable-fields {
+  display: flex;
 }
 
 .mappable-field-item {
-    flex: 1 1 200px;
-    display: flex;
-    flex-direction: column;
-    gap: 0.25rem;
+  flex: 1 1 200px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
 }
 
 .mappable-field-item label {
-    font-size: 10px;
-    font-weight: bold;
-    text-transform: uppercase;
-    color: var(--gray-600, #6b6c7e);
-    margin-bottom: 0;
+  font-size: 10px;
+  font-weight: bold;
+  text-transform: uppercase;
+  color: var(--gray-600, #6b6c7e);
+  margin-bottom: 0;
 }
 
 .meta-record-view .object-name-label {
-    font-size: var(--h2-font-size);
-    color: var(--accent-color, var(--primary));
-    font-weight: var(--font-weight-bold, 700);
+  font-size: var(--h2-font-size);
+  color: var(--accent-color, var(--primary));
+  font-weight: var(--font-weight-bold, 700);
 }
 
 .record-fields-container {
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
 }
 
 .record-row {
-    border-bottom: 1px solid var(--gray-200, #eee);
-    padding-bottom: 1rem;
+  border-bottom: 1px solid var(--gray-200, #eee);
+  padding-bottom: 1rem;
 }
 
 .record-row:last-child {
-    border-bottom: none;
+  border-bottom: none;
 }
 
 .field-label {
-    font-size: var(--font-size-xs, 0.75rem);
-    text-transform: uppercase;
-    font-weight: var(--font-weight-semi-bold, 600);
-    color: var(--label-color, var(--text-secondary-color));
-    margin-bottom: 0.25rem;
-    letter-spacing: 0.05em;
+  font-size: var(--font-size-xs, 0.75rem);
+  text-transform: uppercase;
+  font-weight: var(--font-weight-semi-bold, 600);
+  color: var(--label-color, var(--text-secondary-color));
+  margin-bottom: 0.25rem;
+  letter-spacing: 0.05em;
 }
 
 .field-value {
-    font-size: var(--font-size-base, 1rem);
-    color: var(--value-color, var(--body-color));
-    word-break: break-word;
+  font-size: var(--font-size-base, 1rem);
+  color: var(--value-color, var(--body-color));
+  word-break: break-word;
 }
 
 .meta-status {
-    font-style: italic;
-    color: var(--text-secondary-color);
+  font-style: italic;
+  color: var(--text-secondary-color);
 }
 
 .record-selector-wrap .searchable-select-container {
-    max-width: 400px;
+  max-width: 400px;
 }
 
 /* Searchable Select Shared Styles */
 .searchable-select-container {
-    position: relative;
-    width: 100%;
+  position: relative;
+  width: 100%;
 }
 
 .searchable-select-results {
-    position: absolute;
-    top: 100%;
-    left: 0;
-    width: 100%;
-    background: white;
-    border: 1px solid var(--gray-300, #ced4da);
-    border-radius: 0 0 4px 4px;
-    z-index: 1000;
-    max-height: 200px;
-    overflow-y: auto;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-    display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  background: white;
+  border: 1px solid var(--gray-300, #ced4da);
+  border-radius: 0 0 4px 4px;
+  z-index: 1000;
+  max-height: 200px;
+  overflow-y: auto;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  display: none;
 }
 
 .searchable-select-results.show {
-    display: block;
+  display: block;
 }
 
 .search-result-item {
-    padding: 8px 12px;
-    cursor: pointer;
-    transition: background 0.2s;
-    font-size: 0.9rem;
+  padding: 8px 12px;
+  cursor: pointer;
+  transition: background 0.2s;
+  font-size: 0.9rem;
 }
 
 .search-result-item:hover {
-    background: var(--gray-100, #f7f8f9);
+  background: var(--gray-100, #f7f8f9);
 }
 
 .search-result-item.no-results {
-    color: var(--gray-500);
-    font-style: italic;
-    cursor: default;
+  color: var(--gray-500);
+  font-style: italic;
+  cursor: default;
 }

@@ -1,101 +1,80 @@
-[#assign
-  menuClassesList = [
-    "fragment-menu-${fragmentEntryLinkNamespace}",
-    "fragment-menu",
-    configuration.menuStyle,
-    (configuration.separator?then('separator', ''))
-  ]?filter(x -> x?has_content),
-  menuClasses = menuClassesList?join(' '),
-
-  menuHeaderClass = 'fragment-menu-editor-padding' + (configuration.menuHeader?then(' show', '')),
-
-  dropzoneConfig = configuration.dropzoneConfig,
-  isInline = configuration.menuStyle?contains('inline'),
-  isSticky = configuration.menuStyle?contains('sticky'),
-
-  menuId = 'nav-' + fragmentEntryLinkNamespace,
-
-  langDir = (locale?starts_with("ar") || locale?starts_with("he"))?then("rtl", "ltr"),
-  htmlLang = locale?replace("_", "-")
-/]
-
-[#if configuration.menuStyle?contains('menu-inline')]
-  [#assign dropzoneConfig = 'menu-only' /]
-[/#if]
-
-[#assign
-  zoneMap = {
-    'menu-only': ['menu'],
-    'menu-left-zone': ['left', 'menu'],
-    'menu-right-zone': ['menu', 'right'],
-    'menu-both-zones': ['left', 'menu', 'right']
-  },
-  zones = zoneMap[dropzoneConfig]!['menu'],
-  dropzoneCount = zones?size
-/]
-
-[#macro ScrollToTopButton icon title]
-  <button class="fragment-scroll-to-top" title="${title}" aria-label="${title}">
-    [@clay["icon"] symbol="${icon}" /]
+[#-- prettier-ignore --] [#assign menuClassesList = [
+"fragment-menu-${fragmentEntryLinkNamespace}", "fragment-menu",
+configuration.menuStyle, (configuration.separator?then('separator', ''))
+]?filter(x -> x?has_content), menuClasses = menuClassesList?join(' '),
+menuHeaderClass = 'fragment-menu-editor-padding' +
+(configuration.menuHeader?then(' show', '')), dropzoneConfig =
+configuration.dropzoneConfig, isInline =
+configuration.menuStyle?contains('inline'), isSticky =
+configuration.menuStyle?contains('sticky'), menuId = 'nav-' +
+fragmentEntryLinkNamespace, langDir = (locale?starts_with("ar") ||
+locale?starts_with("he"))?then("rtl", "ltr"), htmlLang = locale?replace("_",
+"-") /] [#if configuration.menuStyle?contains('menu-inline')] [#assign
+dropzoneConfig = 'menu-only' /] [/#if] [#assign zoneMap = { 'menu-only':
+['menu'], 'menu-left-zone': ['left', 'menu'], 'menu-right-zone': ['menu',
+'right'], 'menu-both-zones': ['left', 'menu', 'right'] }, zones =
+zoneMap[dropzoneConfig]!['menu'], dropzoneCount = zones?size /] [#macro
+ScrollToTopButton icon title]
+<button class="fragment-scroll-to-top" title="${title}" aria-label="${title}">
+  [@clay["icon"] symbol="${icon}" /]
+</button>
+[/#macro] [#macro renderHamburgerIcon]
+<div class="hamburger">
+  <button
+    class="fragment-menu-icon"
+    type="button"
+    aria-label="Open menu"
+    aria-controls="fragmentMenuList-${fragmentEntryLinkNamespace}"
+    aria-expanded="false"
+  >
+    <span class="visually-hidden">Menu</span>
+    <span class="bar" aria-hidden="true"></span>
+    <span class="bar" aria-hidden="true"></span>
+    <span class="bar" aria-hidden="true"></span>
   </button>
-[/#macro]
-
-[#macro renderHamburgerIcon]
-  <div class="hamburger">
-    <button
-      class="fragment-menu-icon"
-      type="button"
-      aria-label="Open menu"
-      aria-controls="fragmentMenuList-${fragmentEntryLinkNamespace}"
-      aria-expanded="false">
-      <span class="visually-hidden">Menu</span>
-      <span class="bar" aria-hidden="true"></span>
-      <span class="bar" aria-hidden="true"></span>
-      <span class="bar" aria-hidden="true"></span>
-    </button>
-  </div>
-[/#macro]
-
-[#macro renderDropzone zone]
-  [#local zoneId = (zone == 'menu')?then(
-    "fragmentMenuList-${fragmentEntryLinkNamespace}",
-    "dropzone-${zone}-${fragmentEntryLinkNamespace}"
-  ) /]
-  [#if zone == 'menu']
-    <nav id="${zoneId}" class="${menuClasses} dropzone dropzone-menu" aria-label="Primary">
-      <lfr-drop-zone></lfr-drop-zone>
-    </nav>
-  [#else]
-    <section id="${zoneId}" class="dropzone dropzone-${zone}" aria-label="${zone?cap_first} zone">
-      <lfr-drop-zone></lfr-drop-zone>
-    </section>
-  [/#if]
-[/#macro]
-
-[#macro renderDropzones zones]
+</div>
+[/#macro] [#macro renderDropzone zone] [#local zoneId = (zone == 'menu')?then(
+"fragmentMenuList-${fragmentEntryLinkNamespace}",
+"dropzone-${zone}-${fragmentEntryLinkNamespace}" ) /] [#if zone == 'menu']
+<nav
+  id="${zoneId}"
+  class="${menuClasses} dropzone dropzone-menu"
+  aria-label="Primary"
+>
+  <lfr-drop-zone></lfr-drop-zone>
+</nav>
+[#else]
+<section
+  id="${zoneId}"
+  class="dropzone dropzone-${zone}"
+  aria-label="${zone?cap_first} zone"
+>
+  <lfr-drop-zone></lfr-drop-zone>
+</section>
+[/#if] [/#macro] [#macro renderDropzones zones]
+<div
+  id="${menuId}"
+  class="fragment-root-${fragmentEntryLinkNamespace} fragment-root"
+  role="navigation"
+  aria-label="Responsive Menu"
+  lang="${htmlLang}"
+  dir="${langDir}"
+  data-layout-mode="${layoutMode}"
+>
+  <div class="${menuHeaderClass}">Responsive Menu</div>
   <div
-    id="${menuId}"
-    class="fragment-root-${fragmentEntryLinkNamespace} fragment-root"
-    role="navigation"
-    aria-label="Responsive Menu"
-    lang="${htmlLang}"
-    dir="${langDir}"
-    data-layout-mode="${layoutMode}">
-    <div class="${menuHeaderClass}">Responsive Menu</div>
-    <div class="dropzone-wrapper dropzone-wrapper-${configuration.dropzoneConfig}">
-      [@renderHamburgerIcon /]
-      <div class="hamburger-zone-wrapper">
-        <div class="hamburger-zone-inner">
-          [#list zones as zone]
-            [@renderDropzone zone /]
-          [/#list]
-        </div>
+    class="dropzone-wrapper dropzone-wrapper-${configuration.dropzoneConfig}"
+  >
+    [@renderHamburgerIcon /]
+    <div class="hamburger-zone-wrapper">
+      <div class="hamburger-zone-inner">
+        [#list zones as zone] [@renderDropzone zone /] [/#list]
       </div>
     </div>
-    [#if configuration.scrollBackToTop && !isSticky]
-      [@ScrollToTopButton icon=configuration.scrollBackToTopIcon title="Scroll to top" /]
-    [/#if]
   </div>
+  [#if configuration.scrollBackToTop && !isSticky] [@ScrollToTopButton
+  icon=configuration.scrollBackToTopIcon title="Scroll to top" /] [/#if]
+</div>
 [/#macro]
 
 <style>
@@ -550,7 +529,7 @@
   body.has-control-menu .master-page .hamburger-zone-inner .${configuration.dropzoneGrower}:not(:has(.page-editor__no-fragments-state)),
   body.has-control-menu .page-editor .hamburger-zone-inner .${configuration.dropzoneGrower}:not(:has(.page-editor__no-fragments-state)) { flex-grow: 1; }
 
-  
+
   @media (prefers-reduced-motion: reduce) {
     .fragment-root { --menu-fade-duration: 0s; }
     .fragment-root .hamburger-zone-wrapper { transition: none; }

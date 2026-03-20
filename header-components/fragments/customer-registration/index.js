@@ -15,10 +15,10 @@
  */
 
 const initCustomerRegistration = () => {
-  if (layoutMode !== "preview") {
+  if (layoutMode !== 'preview') {
     const queryInnerTextAll = function (root, selector, regex) {
-      if (typeof regex === "string") {
-        regex = new RegExp(regex, "i");
+      if (typeof regex === 'string') {
+        regex = new RegExp(regex, 'i');
       }
       const elements = [...root.querySelectorAll(selector)];
       const rtn = elements.filter((element) => {
@@ -53,16 +53,16 @@ const initCustomerRegistration = () => {
     if (enableMenuText) {
       menuTextFunc = () => {
         const menuText = configuration.menuText;
-        const _navbarMenu = document.querySelector("div.navbar-menu");
-        const _registerSpan = queryInnerText(_navbarMenu, "span", menuText);
+        const _navbarMenu = document.querySelector('div.navbar-menu');
+        const _registerSpan = queryInnerText(_navbarMenu, 'span', menuText);
 
         if (_registerSpan) {
-          const _li = _registerSpan.closest("li");
+          const _li = _registerSpan.closest('li');
           if (_li) {
             if (themeDisplay.isSignedIn()) {
-              _li.style.display = "none";
+              _li.style.display = 'none';
             } else {
-              _li.style.display = "";
+              _li.style.display = '';
             }
           }
         }
@@ -73,17 +73,17 @@ const initCustomerRegistration = () => {
     if (enableRegisterPage) {
       registerPageFunc = () => {
         const registerPageUrl = configuration.registerPageUrl;
-        const _loginContainer = document.querySelector("div.login-container");
+        const _loginContainer = document.querySelector('div.login-container');
         if (_loginContainer) {
           const _createAccount = document.querySelector(
             "div.navigation a[href*='create_account']",
-            _loginContainer,
+            _loginContainer
           );
           if (_createAccount) {
             var getUrl = window.location;
             _createAccount.setAttribute(
-              "href",
-              getUrl.protocol + "//" + getUrl.host + registerPageUrl,
+              'href',
+              getUrl.protocol + '//' + getUrl.host + registerPageUrl
             );
           }
         }
@@ -92,17 +92,17 @@ const initCustomerRegistration = () => {
 
     if (menuTextFunc || registerPageFunc) {
       if (runMenuTextOnload || runRegisterPageOnload) {
-        document.addEventListener("DOMContentLoaded", () => {
+        document.addEventListener('DOMContentLoaded', () => {
           if (runMenuTextOnload && menuTextFunc) {
             if (enableDebug) {
-              console.debug("Running menu-text on load");
+              console.debug('Running menu-text on load');
             }
             menuTextFunc();
           }
 
           if (runRegisterPageOnload && registerPageFunc) {
             if (enableDebug) {
-              console.debug("Running register-page on load");
+              console.debug('Running register-page on load');
             }
             registerPageFunc();
           }
@@ -111,19 +111,19 @@ const initCustomerRegistration = () => {
 
       if (!runMenuTextOnload && menuTextFunc) {
         if (enableDebug) {
-          console.debug("Running menu-text immediately");
+          console.debug('Running menu-text immediately');
         }
         menuTextFunc();
       }
 
       if (!runRegisterPageOnload && registerPageFunc) {
         if (enableDebug) {
-          console.debug("Running register-page immediately");
+          console.debug('Running register-page immediately');
         }
         registerPageFunc();
       }
     } else if (enableDebug) {
-      console.debug("No functions enabled");
+      console.debug('No functions enabled');
     }
   }
 };

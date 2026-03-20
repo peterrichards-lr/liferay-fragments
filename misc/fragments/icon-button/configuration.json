@@ -85,6 +85,22 @@
           "description": "lfr.misc.icon-name",
           "name": "iconName",
           "type": "text"
+        },
+        {
+          "dataType": "string",
+          "defaultValue": "",
+          "label": "lfr.misc.button-link",
+          "description": "lfr.misc.button-link-description",
+          "name": "buttonLink",
+          "type": "text"
+        },
+        {
+          "dataType": "string",
+          "defaultValue": "",
+          "label": "lfr.misc.button-custom-classes",
+          "description": "lfr.misc.button-custom-classes-description",
+          "name": "buttonCustomClasses",
+          "type": "text"
         }
       ],
       "label": "lfr.misc.button-options"

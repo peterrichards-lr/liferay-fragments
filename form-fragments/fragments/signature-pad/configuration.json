@@ -1,0 +1,41 @@
+{
+  "fieldSets": [
+    {
+      "fields": [
+        {
+          "name": "strokeColor",
+          "label": "lfr.form-fragments.stroke-color",
+          "description": "lfr.form-fragments.stroke-color-description",
+          "type": "colorPicker",
+          "defaultValue": "#000000"
+        },
+        {
+          "dataType": "int",
+          "defaultValue": "2",
+          "label": "lfr.form-fragments.pen-width",
+          "description": "lfr.form-fragments.pen-width-description",
+          "name": "penWidth",
+          "type": "text"
+        },
+        {
+          "dataType": "length",
+          "defaultValue": "200px",
+          "label": "lfr.form-fragments.pad-height",
+          "description": "lfr.form-fragments.pad-height-description",
+          "name": "padHeight",
+          "type": "length"
+        },
+        {
+          "dataType": "string",
+          "defaultValue": "Clear Signature",
+          "label": "lfr.form-fragments.clear-button-text",
+          "description": "lfr.form-fragments.clear-button-text-description",
+          "localizable": true,
+          "name": "clearButtonText",
+          "type": "text"
+        }
+      ],
+      "label": "lfr.form-fragments.signature-options"
+    }
+  ]
+}

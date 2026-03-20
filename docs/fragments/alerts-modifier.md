@@ -1,6 +1,7 @@
 # Alerts Modifier
 
-The **Alerts Modifier** fragment is a specialized component within the Liferay Fragments library.
+The **Alerts Modifier** fragment is a specialized component within the Liferay
+Fragments library.
 
 ## Overview
 

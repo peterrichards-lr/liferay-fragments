@@ -1,4 +1,4 @@
-const enableDebug = configuration.enableDebug
+const enableDebug = configuration.enableDebug;
 
 const hexToRgb = (hex) => {
   var r, g, b;
@@ -20,41 +20,33 @@ const applyTint = (rgb, tint_factor) => {
   return { r: newR, g: newG, b: newB };
 };
 
-var colour = configuration.colour;;
+var colour = configuration.colour;
 if (colour.indexOf('var(') == 0) {
-	const property = colour.replace('var(','').replace(')','');
-	const style = getComputedStyle(document.body);
-	if (enableDebug)
-		console.debug('style', style);
-	const propertyValue = style.getPropertyValue(property);
-	if (enableDebug)
-		console.debug('propertyValue', propertyValue);
-	colour = propertyValue;
-} else if(colour.indexOf('#') == -1) {
-	colour = '#ffffff';
+  const property = colour.replace('var(', '').replace(')', '');
+  const style = getComputedStyle(document.body);
+  if (enableDebug) console.debug('style', style);
+  const propertyValue = style.getPropertyValue(property);
+  if (enableDebug) console.debug('propertyValue', propertyValue);
+  colour = propertyValue;
+} else if (colour.indexOf('#') == -1) {
+  colour = '#ffffff';
 }
-if (enableDebug)
-	console.debug('colour', colour);
+if (enableDebug) console.debug('colour', colour);
 
 const tint = parseFloat(configuration.tint);
-if (enableDebug)
-	console.debug('tint', tint);
+if (enableDebug) console.debug('tint', tint);
 
 const rgb = hexToRgb(colour);
-if (enableDebug)
-	console.debug('rgb', rgb);
+if (enableDebug) console.debug('rgb', rgb);
 const newRgb = applyTint(rgb, tint);
-if (enableDebug)
-	console.debug('newRgb', newRgb);
+if (enableDebug) console.debug('newRgb', newRgb);
 
 const mainContent = document.querySelector('#main-content');
-if (enableDebug)
-	console.debug('mainContent', mainContent);
+if (enableDebug) console.debug('mainContent', mainContent);
 
 const colourString = `rgb(${newRgb.r},${newRgb.g},${newRgb.b})`;
-if (enableDebug)
-	console.debug('colourString', colourString);
+if (enableDebug) console.debug('colourString', colourString);
 mainContent.style.backgroundColor = colourString;
-if (mainContent.classList.contains("layout-content") == false) {
-	mainContent.classList.add("container-fluid", "container-fluid-max-xl");
+if (mainContent.classList.contains('layout-content') == false) {
+  mainContent.classList.add('container-fluid', 'container-fluid-max-xl');
 }

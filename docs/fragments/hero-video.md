@@ -1,6 +1,7 @@
 # Hero Video
 
-The **Hero Video** fragment is a specialized component within the Liferay Fragments library.
+The **Hero Video** fragment is a specialized component within the Liferay
+Fragments library.
 
 ## Overview
 

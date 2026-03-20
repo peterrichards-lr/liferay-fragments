@@ -1,6 +1,7 @@
 # Masthead Call To Action Form Header
 
-The **Masthead Call To Action Form Header** fragment is a specialized component within the Liferay Fragments library.
+The **Masthead Call To Action Form Header** fragment is a specialized component
+within the Liferay Fragments library.
 
 ## Overview
 

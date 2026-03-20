@@ -1,0 +1,15 @@
+{
+  "configurationPath": "configuration.json",
+  "jsPath": "index.js",
+  "htmlPath": "index.ftl",
+  "cssPath": "index.css",
+  "icon": "pencil",
+  "name": "Signature Pad",
+  "typeOptions": {
+    "fieldTypes": [
+      "long-text"
+    ]
+  },
+  "type": "input",
+  "thumbnailPath": "thumbnail.png"
+}
