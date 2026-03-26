@@ -99,7 +99,17 @@ following:
     External Reference Code (ERC) for sample Objects follows a naming
     convention: uppercase with underscores (e.g., `COMPANY_MILESTONE`). This is
     for internal consistency and is not a Liferay platform requirement.
-2.  **`taskItemDelegateName` (Liferay CX Mandatory Rule)**: For the Liferay
+2.  **Object Field Standards (Liferay Platform Rules)**:
+    - **Field Names**: The `name` property of an `objectField` MUST use
+      **camelCase** (e.g., `authorName`).
+    - **Reserved Names**: The following names are RESERVED and MUST NOT be used
+      for custom fields: `id`, `externalReferenceCode`, `status`, `userName`.
+    - **Data Limits**:
+      - **Integer**: Max 9 digits.
+      - **Long / Decimal**: Max 16 digits.
+      - **Text**: Max 280 chars.
+      - **Long Text**: Max 65,000 chars.
+3.  **`taskItemDelegateName` (Liferay CX Mandatory Rule)**: For the Liferay
     Batch Engine to process Object entry imports, the `taskItemDelegateName`
     property must be explicitly defined within the `configuration` object of the
     JSON batch file. It must be set to the Object's name with a `C_` prefix

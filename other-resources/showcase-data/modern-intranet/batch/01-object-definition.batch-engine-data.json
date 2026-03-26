@@ -114,7 +114,7 @@
           "label": {
             "en_US": "Status"
           },
-          "name": "status",
+          "name": "assetStatus",
           "required": false,
           "type": "String"
         },

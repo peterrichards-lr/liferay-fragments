@@ -184,6 +184,25 @@
 - **Debug Control**: `logger.debug()` output is suppressed by default and only
   visible when the `?debugFragments` URL parameter is present.
 
+### 17. Showcase Object Standards (Batch CX)
+
+- **Requirement**: Object definitions used in showcase batch client extensions
+  MUST follow strict Liferay Object field standards.
+- **Field Naming**: The `name` property of an `objectField` MUST use
+  **camelCase** (e.g., `authorName`, `likesCount`).
+- **Reserved Names**: The following names are RESERVED and MUST NOT be used for
+  custom fields: `id`, `externalReferenceCode`, `status`, `userName`.
+- **Data Limits**:
+  - **Integer**: Maximum 9 digits.
+  - **Long / Decimal**: Maximum 16 digits.
+  - **Text**: Maximum 280 characters.
+  - **Long Text**: Maximum 65,000 characters.
+- **`taskItemDelegateName`**: MUST be explicitly defined in the `configuration`
+  of the JSON batch file, set to the Object's name with a `C_` prefix (e.g.,
+  `"taskItemDelegateName": "C_MyObject"`).
+- **Localization**: All `label` properties MUST include at least an `en_US`
+  translation.
+
 ## Build & Deployment
 
 - **create-fragment-zips.sh**: Supports `--fragments`, `--language`, and

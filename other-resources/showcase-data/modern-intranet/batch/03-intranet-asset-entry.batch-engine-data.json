@@ -14,28 +14,28 @@
     {
       "externalReferenceCode": "ASSET-01",
       "title": "Q3_Product_Roadmap_Final.pdf",
-      "status": "Pending Review",
+      "assetStatus": "Pending Review",
       "fileSize": "4.2 MB",
       "fileType": "pdf"
     },
     {
       "externalReferenceCode": "ASSET-02",
       "title": "Pricing_Model_v2.xlsx",
-      "status": "Approved",
+      "assetStatus": "Approved",
       "fileSize": "1.8 MB",
       "fileType": "xlsx"
     },
     {
       "externalReferenceCode": "ASSET-03",
       "title": "UX_Prototype_Screens.fig",
-      "status": "Approved",
+      "assetStatus": "Approved",
       "fileSize": "125 MB",
       "fileType": "figma"
     },
     {
       "externalReferenceCode": "ASSET-04",
       "title": "Market_Research_Q2.docx",
-      "status": "Pending Review",
+      "assetStatus": "Pending Review",
       "fileSize": "850 KB",
       "fileType": "docx"
     }

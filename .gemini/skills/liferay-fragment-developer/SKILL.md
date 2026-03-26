@@ -94,7 +94,7 @@ standards for building robust, modern Liferay Fragments.
 - **[UI & Interaction](./references/ui-standards.md)**: Edit mode hygiene,
   Mappable Field Ergonomics, and A11y.
 - **[Object Integration](./references/object-integration.md)**: Metadata
-  discovery and scope handling.
+  discovery, scope handling, and Object definition standards (Batch CX).
 - [Theme Standards](./references/themes.md): Multi-theme tokens and brand
   integration rules.
 - [AI Integration](./references/ai-chat-interface.md): Standard JSON interface

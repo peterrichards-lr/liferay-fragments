@@ -52,6 +52,8 @@ for building Liferay Form Fragments (Liferay 7.4 U45+).
 
 - **[Form Fragment API](./references/form-fragment-api.md)**: Details on the
   `input` object, FreeMarker/JS variables, and constraints.
+- **[Object Integration](./references/object-integration.md)**: Standards for
+  Object definitions and field naming.
 
 ### Shared Fragment Architecture
 
