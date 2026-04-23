@@ -4,13 +4,20 @@
   --top: calc(50% - (var(--font-size, 24px) / 2));
   --left: calc(50% - (var(--font-size, 24px) / 2));
   --padding: calc(var(--size) / 4.5);
-  padding-top: var(--padding);
+
+  padding: var(--spacer-2, 0.5rem);
+}
+
+.service-icon___content {
+  gap: var(--spacer-2, 0.5rem);
 }
 
 .service-icon .circle {
   height: var(--size);
   width: var(--size);
-  background-color: var(--background-color, #d7e5ff);
+  min-height: var(--size);
+  min-width: var(--size);
+  background-color: var(--background-color, var(--primary-l3, #e7f1f5));
   border-radius: 50%;
   display: block;
   margin: 0px auto;
@@ -22,32 +29,33 @@
   line-height: var(--font-size);
   top: var(--top);
   left: var(--left);
-  color: var(--icon-color, #0960ff);
+  color: var(--icon-color, var(--primary, #007dad));
+}
+
+.service-icon .text {
+  font-size: var(--font-size-sm, 0.875rem);
+  color: var(--body-color, #272833);
+  text-align: center;
+  margin-top: var(--spacer-1, 0.25rem);
+  font-weight: var(--font-weight-semi-bold, 600);
 }
 
 .service-icon a,
 a.service-icon {
   color: inherit;
-}
-
-.service-icon .text {
-  padding: var(--padding);
-  text-align: center;
-  font-size: 18px;
-  font-weight: 700;
-  line-height: 18px;
+  text-decoration: none;
 }
 
 /* Mappable Fields Formatting */
 .meta-editor-mappable-fields {
   display: none;
   flex-wrap: wrap;
-  gap: 1.5rem;
-  padding: 1.5rem;
+  gap: var(--spacer-4, 1.5rem);
+  padding: var(--spacer-4, 1.5rem);
   background: var(--gray-100, #f7f8f9);
-  border: 1px solid var(--gray-200, #e7e8eb);
-  border-radius: 0.5rem;
-  margin-top: 2rem;
+  border: 1px solid var(--gray-200, #f1f2f5);
+  border-radius: var(--border-radius-lg, 0.5rem);
+  margin-top: var(--spacer-5, 2rem);
 }
 
 body.has-edit-mode-menu .meta-editor-mappable-fields,
@@ -59,13 +67,13 @@ body.has-edit-mode-menu .meta-editor-mappable-fields,
   flex: 1 1 200px;
   display: flex;
   flex-direction: column;
-  gap: 0.25rem;
+  gap: var(--spacer-1, 0.25rem);
 }
 
 .mappable-field-item label {
-  font-size: 10px;
-  font-weight: bold;
+  font-size: var(--font-size-xs, 0.75rem);
+  font-weight: var(--font-weight-bold, 700);
   text-transform: uppercase;
-  color: var(--gray-600, #6b6c7e);
+  color: var(--secondary, #6b6c7e);
   margin-bottom: 0;
 }

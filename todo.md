@@ -234,7 +234,7 @@ typography.
 - [x] **Adopt Theme Tokens**: Replace hardcoded values with Meridian CSS
       variables.
   - [x] **Colors**: Use `var(--primary)`, `var(--secondary)`,
-        `var(--body-color)`, `var(--body-background-color)`, etc.
+        `var(--body-color)`, `var(--body-bg)`, etc.
     - [x] `finance/fragments/loan-calculator/index.css`
     - [x] `commerce/fragments/dynamic-badge-overlay/index.css`
     - [x] `header-components/fragments/navigation/index.css`

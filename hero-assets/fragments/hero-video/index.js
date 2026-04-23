@@ -40,13 +40,13 @@ const initHeroVideo = () => {
         if (video.paused) {
           video.play();
           ppbutton.innerHTML =
-            '<svg class="lexicon-icon lexicon-icon-sites" role="presentation" viewBox="0 0 512 512"><use xlink:href="/o/dialect-theme/images/clay/icons.svg#pause"></use></svg>';
+            '<svg class="lexicon-icon lexicon-icon-sites" role="presentation" viewBox="0 0 512 512"><use xlink:href="${siteSpritemap}#pause"></use></svg>';
           ppbutton.setAttribute('aria-pressed', false);
           ppbutton.setAttribute('aria-label', 'Pause');
         } else {
           video.pause();
           ppbutton.innerHTML =
-            '<svg class="lexicon-icon lexicon-icon-sites" role="presentation" viewBox="0 0 512 512"><use xlink:href="/o/dialect-theme/images/clay/icons.svg#play"></use></svg>';
+            '<svg class="lexicon-icon lexicon-icon-sites" role="presentation" viewBox="0 0 512 512"><use xlink:href="${siteSpritemap}#play"></use></svg>';
           ppbutton.setAttribute('aria-pressed', true);
           ppbutton.setAttribute('aria-label', 'Play');
         }

@@ -58,16 +58,16 @@
     {
       "fields": [
         {
-          "defaultValue": "var(--primary-l3, #d7e5ff)",
+          "defaultValue": "var(--primary-l3, #e7f1f5)",
           "label": "lfr.content.background-color",
-          "description": "lfr.content.background-color",
+          "description": "lfr.content.background-color-desc",
           "name": "backgroundColor",
           "type": "colorPicker"
         },
         {
-          "defaultValue": "var(--primary, #0b5fff)",
+          "defaultValue": "var(--primary, #007dad)",
           "label": "lfr.content.icon-color",
-          "description": "lfr.content.icon-color",
+          "description": "lfr.content.icon-color-desc",
           "name": "iconColor",
           "type": "colorPicker"
         },

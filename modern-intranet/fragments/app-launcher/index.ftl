@@ -20,7 +20,7 @@
           class="lexicon-icon lexicon-icon-${appIcon} app-launcher-icon"
           role="presentation"
         >
-          <use xlink:href="/o/classic-theme/images/clay/icons.svg#${appIcon}" />
+          <use xlink:href="${siteSpritemap}#${appIcon}" />
         </svg>
       </div>
       <span class="app-launcher-name">${appName}</span>

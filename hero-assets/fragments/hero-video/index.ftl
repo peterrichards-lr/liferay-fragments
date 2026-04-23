@@ -21,7 +21,7 @@
       role="presentation"
       viewBox="0 0 512 512"
     >
-      <use xlink:href="/o/dialect-theme/images/clay/icons.svg#pause"></use>
+      <use xlink:href="${siteSpritemap}#pause"></use>
     </svg>
   </div>
   <div class="containerBackground"></div>

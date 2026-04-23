@@ -21,7 +21,7 @@
     <div class="d-flex align-items-center p-3">
       <div class="intranet-feed-avatar mr-3">
         <img
-          src="/o/classic-theme/images/user_icon.png"
+          src="${themeDisplay.getPathThemeImages()}/user_icon.png"
           alt="User Avatar"
           class="rounded-circle"
         />
