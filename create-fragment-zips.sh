@@ -342,6 +342,12 @@ for COLLECTION_NAME in "${COLLECTIONS[@]}"; do
            fi
        done
 
+       # Flatten structure: Liferay expects fragments to be siblings of collection.json
+       if [ -d "$TEMP_COLL/$COLLECTION_NAME/fragments" ]; then
+           mv "$TEMP_COLL/$COLLECTION_NAME/fragments"/* "$TEMP_COLL/$COLLECTION_NAME/" 2>/dev/null || true
+           rm -rf "$TEMP_COLL/$COLLECTION_NAME/fragments"
+       fi
+
        # Ensure descriptor at the ROOT of the zip (sibling to collection folder)
        ensure_descriptor "$TEMP_COLL" "$COLLECTION_NAME"
        
@@ -379,6 +385,12 @@ for COLLECTION_NAME in "${COLLECTIONS[@]}"; do
                fi
            fi
        done
+
+       # Flatten structure: Liferay expects fragments to be siblings of collection.json
+       if [ -d "$BUILD_TEMP/$COLLECTION_NAME/fragments" ]; then
+           mv "$BUILD_TEMP/$COLLECTION_NAME/fragments"/* "$BUILD_TEMP/$COLLECTION_NAME/" 2>/dev/null || true
+           rm -rf "$BUILD_TEMP/$COLLECTION_NAME/fragments"
+       fi
 
        find "$BUILD_TEMP/$COLLECTION_NAME" -name "Language*.properties" -delete
        find "$BUILD_TEMP/$COLLECTION_NAME" -name "client-extension.yaml" -delete
