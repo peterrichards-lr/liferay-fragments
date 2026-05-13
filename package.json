@@ -1,6 +1,6 @@
 {
   "name": "liferay-fragments",
-  "version": "6.2.0",
+  "version": "6.3.0",
   "description": "High-fidelity Liferay DXP Fragments",
   "main": "index.js",
   "scripts": {
@@ -23,6 +23,7 @@
     "glob": "^10.3.10"
   },
   "devDependencies": {
+    "@playwright/test": "^1.60.0",
     "prettier": "^3.8.1"
   }
 }

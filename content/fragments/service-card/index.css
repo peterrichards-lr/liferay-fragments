@@ -9,12 +9,14 @@ div.service-card {
   border-radius: var(--border-radius-lg, 0.5rem);
   padding: var(--spacer-3, 1rem) var(--spacer-3, 1rem);
   background-color: var(--body-bg, #fff);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
 }
 
 .service-card:hover {
   transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
 }
 
 div.service-card___content {
