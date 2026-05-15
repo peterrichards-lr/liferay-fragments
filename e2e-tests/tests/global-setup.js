@@ -223,6 +223,9 @@ async function globalSetup(config) {
       }
     );
 
+    // Stagger page creation to reduce DB contention in dev-mode environments
+    await new Promise((resolve) => setTimeout(resolve, 200));
+
     if (!createResp.ok()) {
       const body = await createResp.text();
       if (!body.includes('Duplicate')) {

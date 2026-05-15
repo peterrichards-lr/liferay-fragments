@@ -294,9 +294,15 @@ else
     log_command "sudo chmod -R 777 \"$PROJECT_PATH\""
     sudo chmod -R 777 "$PROJECT_PATH"
 
-    echo "  -> Deploying ZIPs directly to container via docker cp..."
-    log_command "find zips/fragments -type f -name \"*.zip\" ! -name \"*pre2025q3*.zip\" -exec docker cp {} \"$LIFERAY_CONTAINER:/opt/liferay/deploy/\" \\;"
-    find zips/fragments -type f -name "*.zip" ! -name "*pre2025q3*.zip" -exec docker cp {} "$LIFERAY_CONTAINER:/opt/liferay/deploy/" \;
+    echo "  -> Deploying ZIPs directly to container (Sequential Deployment to prevent Race Conditions)..."
+    for zip_file in zips/fragments/*.zip; do
+        [[ "$zip_file" == *"-pre2025q3"* ]] && continue
+        [[ "$zip_file" == *"-debug"* ]] && continue # Skip debug zips if minified exist
+        
+        echo "     Deploying $(basename "$zip_file")..."
+        docker cp "$zip_file" "$LIFERAY_CONTAINER:/opt/liferay/deploy/"
+        sleep 2 # Throttle deployment to reduce DB contention
+    done
     
     log_command "docker exec -u 0 \"$LIFERAY_CONTAINER\" mkdir -p /opt/liferay/osgi/client-extensions"
     docker exec -u 0 "$LIFERAY_CONTAINER" mkdir -p /opt/liferay/osgi/client-extensions
