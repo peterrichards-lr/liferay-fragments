@@ -75,7 +75,8 @@ To showcase data-driven fragments like the `Object-Linked Chart`,
 definitions and datasets are provided.
 
 **Note: Liferay 2025.Q4.10 or later is required for the showcase data to work
-correctly, as it utilizes site-scoping (`siteExternalReferenceCode: L_GUEST`).**
+correctly, as it utilizes site-scoping
+(`siteExternalReferenceCode: L_GLOBAL`).**
 
 ### Deployment:
 

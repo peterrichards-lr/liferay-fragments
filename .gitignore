@@ -13,12 +13,13 @@ node_modules/**
 # Test output and state
 /playwright-report
 /test-results
-/playwright_output.log
+/**/playwright_output.log
 /e2e-tests/snapshots/
 ldm_startup.log
 state.json
 generated-test-pages.json
 /docs/test-results
+*.png
 
 # License files
 *.xml

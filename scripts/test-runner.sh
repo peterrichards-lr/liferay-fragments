@@ -11,6 +11,7 @@ PORT=8080
 VERBOSE=false
 KEEP_ALIVE=false
 EXISTING_PROJECT=false
+SKIP_DEPLOY=false
 LDM_VERBOSE=""
 
 # Parse Arguments
@@ -28,6 +29,9 @@ while [[ "$#" -gt 0 ]]; do
             EXISTING_PROJECT=true
             KEEP_ALIVE=true
             shift
+            ;;
+        -s|--skip-deploy)
+            SKIP_DEPLOY=true
             ;;
         *) 
             LIFERAY_TAG="$1" 
@@ -51,6 +55,7 @@ echo "======================================================"
 echo " Starting Liferay Fragments Automated Test Runner "
 echo " Target Liferay Tag/Prefix: $LIFERAY_TAG"
 if [ "$VERBOSE" = true ]; then echo " Verbose Mode: Enabled"; fi
+echo " (Press Ctrl+C to safely abort and cleanup at any time)"
 echo "======================================================"
 
 # 0. CI Safeguard
@@ -112,7 +117,8 @@ echo "[2/5] Configuring Environment Parameters..."
 if [ "$EXISTING_PROJECT" = true ]; then
     echo "  -> Using Existing Project: $PROJECT_NAME"
     # Resolve URL and Path for existing project
-    BASE_URL=$(ldm list | grep "$PROJECT_NAME" | awk '{print $4}' | xargs)
+    # Use grep to extract the actual HTTP URL, ignoring any ANSI color codes
+    BASE_URL=$(ldm list | grep "$PROJECT_NAME" | grep -Eo "https?://[a-zA-Z0-9.:]+" | head -n 1)
     if [ -z "$BASE_URL" ]; then
         echo "Error: Could not find URL for existing project '$PROJECT_NAME'. Is it running?"
         exit 1
@@ -199,8 +205,8 @@ if [ "$EXISTING_PROJECT" = true ]; then
     echo "  -> Skipping LDM run (using existing project $PROJECT_NAME)..."
 else
     echo "  -> Starting LDM project '$PROJECT_NAME' with $TAG_FLAG $LIFERAY_TAG on port $PORT..."
-    log_command "ldm run \"$PROJECT_NAME\" \"$TAG_FLAG\" \"$LIFERAY_TAG\" --port \"$PORT\" --non-interactive --no-captcha --sidecar --db hypersonic $LDM_VERBOSE"
-    if ! ldm run "$PROJECT_NAME" "$TAG_FLAG" "$LIFERAY_TAG" --port "$PORT" --non-interactive --no-captcha --sidecar --db hypersonic $LDM_VERBOSE > ldm_startup.log 2>&1; then
+    log_command "ldm run \"$PROJECT_NAME\" \"$TAG_FLAG\" \"$LIFERAY_TAG\" --port \"$PORT\" --non-interactive --no-captcha --sidecar --db postgresql $LDM_VERBOSE"
+    if ! ldm run "$PROJECT_NAME" "$TAG_FLAG" "$LIFERAY_TAG" --port "$PORT" --non-interactive --no-captcha --sidecar --db postgresql $LDM_VERBOSE > ldm_startup.log 2>&1; then
         echo "Error: LDM failed to start the environment."
         echo "Hint: Check ldm_startup.log or run 'ldm logs $PROJECT_NAME' for more details."
         cat <<EOF >> "$RESULTS_FILE"
@@ -253,56 +259,91 @@ RESULTS_FILE="$NEW_RESULTS_FILE"
 sed -i.bak "s/- \*\*Liferay Tag\/Prefix\*\*: .*/&\n- \*\*Realised Version\*\*: $REALISED_VERSION/" "$RESULTS_FILE" && rm "${RESULTS_FILE}.bak"
 
 # 5. Build and Deploy
-echo ""
-echo "[5/5] Building and Deploying Fragments..."
-echo "  -> Building ZIPs..."
-log_command "./create-fragment-zips.sh --all"
-./create-fragment-zips.sh --all > /dev/null
+if [ "$SKIP_DEPLOY" = true ]; then
+    echo ""
+    echo "[5/5] Skipping Build and Deploy (as requested)..."
+else
+    echo ""
+    echo "[5/5] Building and Deploying Fragments..."
+    echo "  -> Building ZIPs (Global Site Scoping: groupKey=*)..."
+    log_command "COMPANY_WEB_ID=\"*\" GROUP_KEY=\"Global\" ./create-fragment-zips.sh --all"
+    COMPANY_WEB_ID="*" GROUP_KEY="Global" ./create-fragment-zips.sh --all > /dev/null
 
-echo "  -> Deploying ZIPs to LDM project directory..."
-log_command "cp -r zips/fragments/. \"$PROJECT_PATH/deploy/\""
-cp -r zips/fragments/. "$PROJECT_PATH/deploy/"
-log_command "cp -r zips/language/. \"$PROJECT_PATH/osgi/client-extensions/\""
-cp -r zips/language/. "$PROJECT_PATH/osgi/client-extensions/"
-log_command "cp -r zips/showcase/. \"$PROJECT_PATH/osgi/client-extensions/\""
-cp -r zips/showcase/. "$PROJECT_PATH/osgi/client-extensions/"
-
-# 5.1 Wait for Fragments and Showcase Data
-echo ""
-EXPECTED_ARTIFACTS=$(ls zips/fragments/*.zip | wc -l | xargs)
-MAX_WAIT_FRAGMENTS=180
-WAIT_COUNT=0
-while [ $WAIT_COUNT -lt $MAX_WAIT_FRAGMENTS ]; do
-    # Match the pattern provided by the user: "Deployed ... successfully"
-    # We use wc -l to ensure we always get a single clean integer, and xargs to trim whitespace
-    ACTUAL_ARTIFACTS=$(ldm logs -n 1000 "$PROJECT_NAME" liferay | grep -iE "Deployed .* successfully" | wc -l | xargs || echo 0)
+    # Resolve the LDM Liferay container ID
+    # We use an exact match filter with a leading slash which is the docker naming convention
+    LIFERAY_CONTAINER=$(docker ps --filter "name=^/${PROJECT_NAME}$" -q)
     
-    echo -ne "\r  -> Waiting for Fragments to be deployed... [$ACTUAL_ARTIFACTS/$EXPECTED_ARTIFACTS] "
-    
-    if [ "$ACTUAL_ARTIFACTS" -ge "$EXPECTED_ARTIFACTS" ]; then
-        echo -e "\n  -> All $ACTUAL_ARTIFACTS Fragment artifacts deployed successfully."
-        break
+    # Fallback: try ldm- prefix if exact match fails (common in some LDM versions)
+    if [ -z "$LIFERAY_CONTAINER" ]; then
+        LIFERAY_CONTAINER=$(docker ps --filter "name=^/ldm-${PROJECT_NAME}-liferay$" -q)
     fi
-    sleep 5
-    ((WAIT_COUNT+=5))
-done
 
-echo ""
-echo "  -> Waiting for Showcase Data (Batch CX deployments)..."
-MAX_WAIT_CX=120
-WAIT_COUNT=0
-while [ $WAIT_COUNT -lt $MAX_WAIT_CX ]; do
-    if ldm logs -n 500 "$PROJECT_NAME" liferay | grep -q "STARTED.*showcase.*batch-cx"; then
-        echo "  -> Showcase data detected."
-        break
+    # Final Fallback: grep for project name and exclude database containers
+    if [ -z "$LIFERAY_CONTAINER" ]; then
+        LIFERAY_CONTAINER=$(docker ps --format '{{.Names}}' | grep "${PROJECT_NAME}" | grep -vE "\-db|\-elasticsearch" | head -n 1)
     fi
-    echo -n "."
-    sleep 5
-    ((WAIT_COUNT+=5))
-done
-echo ""
-# Final buffer to ensure database records are committed
-sleep 30
+
+    if [ -z "$LIFERAY_CONTAINER" ]; then
+        echo "Error: Could not find the Liferay Docker container for project '$PROJECT_NAME'."
+        echo "Hint: Ensure the LDM project is running and try 'docker ps' to verify container names."
+        exit 1
+    fi
+    echo "  -> Targeting Liferay Container: $LIFERAY_CONTAINER"
+
+    echo "  -> Adjusting permissions on LDM project directory (Permissions Rule-out)..."
+    log_command "sudo chmod -R 777 \"$PROJECT_PATH\""
+    sudo chmod -R 777 "$PROJECT_PATH"
+
+    echo "  -> Deploying ZIPs directly to container via docker cp..."
+    log_command "find zips/fragments -type f -name \"*.zip\" ! -name \"*pre2025q3*.zip\" -exec docker cp {} \"$LIFERAY_CONTAINER:/opt/liferay/deploy/\" \\;"
+    find zips/fragments -type f -name "*.zip" ! -name "*pre2025q3*.zip" -exec docker cp {} "$LIFERAY_CONTAINER:/opt/liferay/deploy/" \;
+    
+    log_command "docker exec -u 0 \"$LIFERAY_CONTAINER\" mkdir -p /opt/liferay/osgi/client-extensions"
+    docker exec -u 0 "$LIFERAY_CONTAINER" mkdir -p /opt/liferay/osgi/client-extensions
+    
+    log_command "docker cp zips/language/. \"$LIFERAY_CONTAINER:/opt/liferay/osgi/client-extensions/\""
+    docker cp zips/language/. "$LIFERAY_CONTAINER:/opt/liferay/osgi/client-extensions/"
+    
+    log_command "docker cp zips/showcase/. \"$LIFERAY_CONTAINER:/opt/liferay/osgi/client-extensions/\""
+    docker cp zips/showcase/. "$LIFERAY_CONTAINER:/opt/liferay/osgi/client-extensions/"
+
+    # 5.1 Wait for Fragments and Showcase Data
+    echo ""
+    EXPECTED_ARTIFACTS=$(find zips/fragments -type f -name "*.zip" ! -name "*pre2025q3*.zip" | wc -l | xargs)
+    MAX_WAIT_FRAGMENTS=180
+    WAIT_COUNT=0
+    while [ $WAIT_COUNT -lt $MAX_WAIT_FRAGMENTS ]; do
+        # Match the pattern provided by the user: "Deployed ... successfully"
+        # We use wc -l to ensure we always get a single clean integer, and xargs to trim whitespace
+        ACTUAL_ARTIFACTS=$(ldm logs -n 1000 "$PROJECT_NAME" liferay | grep -iE "Deployed .* successfully" | wc -l | xargs || echo 0)
+        
+        echo -ne "\r  -> Waiting for Fragments to be deployed... [$ACTUAL_ARTIFACTS/$EXPECTED_ARTIFACTS] "
+        
+        if [ "$ACTUAL_ARTIFACTS" -ge "$EXPECTED_ARTIFACTS" ]; then
+            echo -e "\n  -> All $ACTUAL_ARTIFACTS Fragment artifacts deployed successfully."
+            break
+        fi
+        sleep 5
+        ((WAIT_COUNT+=5))
+    done
+
+    echo ""
+    echo "  -> Waiting for Showcase Data (Batch CX deployments)..."
+    MAX_WAIT_CX=120
+    WAIT_COUNT=0
+    while [ $WAIT_COUNT -lt $MAX_WAIT_CX ]; do
+        if ldm logs -n 500 "$PROJECT_NAME" liferay | grep -q "STARTED.*showcase.*batch-cx"; then
+            echo "  -> Showcase data detected."
+            break
+        fi
+        echo -n "."
+        sleep 5
+        ((WAIT_COUNT+=5))
+    done
+    echo ""
+    # Final buffer to ensure database records are committed
+    sleep 30
+fi
 
 # 6. Execute Tests
 echo ""

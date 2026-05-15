@@ -11,7 +11,7 @@ fi
 
 # Variables mimicking your Gradle properties
 COMPANY_WEB_ID="${COMPANY_WEB_ID:-*}"
-GROUP_KEY="${GROUP_KEY:-}"
+GROUP_KEY="${GROUP_KEY:-Global}"
 
 # Robust timestamp for both macOS and Linux (numeric)
 TIMESTAMP=$(date +%s)000
@@ -210,13 +210,19 @@ ensure_descriptor() {
     if [ ! -f "$DESCRIPTOR_PATH" ]; then
         log_debug "Generating temporary descriptor for $ITEM_NAME"
         
-        # Use jq to build the JSON object with companyWebId and fragments array
         local JSON_CONTENT
-        JSON_CONTENT=$(jq -n --arg id "$COMPANY_WEB_ID" --arg item "$ITEM_NAME" \
-            '{companyWebId: $id, fragments: [$item]}')
-
-        if [[ -n "$GROUP_KEY" && "$COMPANY_WEB_ID" != "*" ]]; then
-            JSON_CONTENT=$(echo "$JSON_CONTENT" | jq --arg gk "$GROUP_KEY" '. + {groupKey: $gk}')
+        if [[ "$GROUP_KEY" == "Global" ]]; then
+            # Global Site Scoping: groupKey MUST be * and companyWebId MUST NOT be set
+            JSON_CONTENT=$(jq -n --arg gk "*" '{groupKey: $gk}')
+        elif [[ "$COMPANY_WEB_ID" == "*" && -z "$GROUP_KEY" ]]; then
+            # Global (All Instances) Scoping
+            JSON_CONTENT=$(jq -n --arg id "*" '{companyWebId: $id}')
+        else
+            # Specific Site Scoping
+            JSON_CONTENT=$(jq -n --arg id "$COMPANY_WEB_ID" '{companyWebId: $id}')
+            if [[ -n "$GROUP_KEY" ]]; then
+                JSON_CONTENT=$(echo "$JSON_CONTENT" | jq --arg gk "$GROUP_KEY" '. + {groupKey: $gk}')
+            fi
         fi
 
         echo "$JSON_CONTENT" > "$DESCRIPTOR_PATH"
@@ -342,6 +348,12 @@ for COLLECTION_NAME in "${COLLECTIONS[@]}"; do
            fi
        done
 
+       # Flatten structure: Liferay expects fragments to be siblings of collection.json
+       if [ -d "$TEMP_COLL/$COLLECTION_NAME/fragments" ]; then
+           mv "$TEMP_COLL/$COLLECTION_NAME/fragments"/* "$TEMP_COLL/$COLLECTION_NAME/" 2>/dev/null || true
+           rm -rf "$TEMP_COLL/$COLLECTION_NAME/fragments"
+       fi
+
        # Ensure descriptor at the ROOT of the zip (sibling to collection folder)
        ensure_descriptor "$TEMP_COLL" "$COLLECTION_NAME"
        
@@ -379,6 +391,12 @@ for COLLECTION_NAME in "${COLLECTIONS[@]}"; do
                fi
            fi
        done
+
+       # Flatten structure: Liferay expects fragments to be siblings of collection.json
+       if [ -d "$BUILD_TEMP/$COLLECTION_NAME/fragments" ]; then
+           mv "$BUILD_TEMP/$COLLECTION_NAME/fragments"/* "$BUILD_TEMP/$COLLECTION_NAME/" 2>/dev/null || true
+           rm -rf "$BUILD_TEMP/$COLLECTION_NAME/fragments"
+       fi
 
        find "$BUILD_TEMP/$COLLECTION_NAME" -name "Language*.properties" -delete
        find "$BUILD_TEMP/$COLLECTION_NAME" -name "client-extension.yaml" -delete

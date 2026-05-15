@@ -4,7 +4,7 @@
     "parameters": {
       "containsHeaders": "true",
       "createStrategy": "UPSERT",
-      "siteExternalReferenceCode": "L_GUEST",
+      "siteExternalReferenceCode": "L_GLOBAL",
       "importStrategy": "ON_ERROR_CONTINUE",
       "updateStrategy": "UPDATE"
     },
