@@ -77,7 +77,9 @@ async function globalSetup(config) {
     },
   });
 
-  // 1. Fetch the default Site (Global)
+  // 1. Fetch the Target Site for Page Generation (Guest/Liferay)
+  // Fragments are deployed to 'Global' but we verify them on the 'Guest' site
+  // because the Global site often restricts Headless Page creation.
   const siteResp = await apiContext.get('/o/headless-admin-site/v1.0/sites');
   if (!siteResp.ok()) {
     throw new Error(
@@ -85,21 +87,17 @@ async function globalSetup(config) {
     );
   }
   const siteData = await siteResp.json();
-  const globalSite =
-    siteData.items.find(
-      (s) => s.name === 'Global' || s.friendlyUrlPath === '/global'
-    ) ||
+  const targetSite =
     siteData.items.find(
       (s) =>
         s.name === 'Guest' ||
         s.name === 'Liferay' ||
         s.friendlyUrlPath === '/guest'
-    ) ||
-    siteData.items[0];
-  const siteId = globalSite.id;
-  const siteERC = globalSite.externalReferenceCode;
+    ) || siteData.items[0];
+  const siteId = targetSite.id;
+  const siteERC = targetSite.externalReferenceCode;
   console.log(
-    `Using Site: ${globalSite.name} (ID: ${siteId}, ERC: ${siteERC})`
+    `Testing Global Fragments on Site: ${targetSite.name} (ID: ${siteId}, ERC: ${siteERC})`
   );
 
   // 2. Discover Fragments Locally

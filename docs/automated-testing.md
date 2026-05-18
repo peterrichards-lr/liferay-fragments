@@ -82,12 +82,16 @@ specifically looks for it in `~/.ldm/common/`.
 ### 3. Install Playwright Dependencies
 
 If this is your first time running the tests, install the Node dependencies and
-Playwright browsers from the root of the workspace:
+all required Playwright browsers from the root of the workspace:
 
 ```bash
 npm install
-npx playwright install chromium
+npx playwright install --with-deps
 ```
+
+_Note: `--with-deps` installs any missing system-level libraries required by the
+browsers (Linux only). On macOS/Windows, `npx playwright install` is usually
+sufficient._
 
 ## Running the Tests
 
@@ -155,10 +159,11 @@ LIFERAY_USER="admin@mycompany.com" LIFERAY_PASSWORD="MySecurePassword123" ./scri
   computational load and infrastructure requirements (LDM). It contains a
   safeguard to prevent execution in CI environments (e.g., GitHub Actions, where
   `CI=true`).
-- **Deployment Scoping**: To ensure fragments are visible and editable in the
-  test environment, the script auto-deploys them specifically to the **Global**
-  site (`groupKey: "*"`). Deploying fragments globally (`*`) can cause them to
-  appear as empty collections in the site-level Fragments UI.
+- **Deployment Scoping**: To ensure fragments are visible and editable
+  universally, the script auto-deploys them specifically to the **Global** site
+  (`groupKey: "*"`). However, the automated test suite verifies these fragments
+  by programmatically creating test pages on the **Guest** site, as the Global
+  site typically restricts Headless Page creation.
 
 - **ZIP Structure (Flattening):** Liferay's `FragmentFileInstaller`
   (Auto-Deploy) requires a flat directory structure. The build script

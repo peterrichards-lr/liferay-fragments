@@ -55,7 +55,9 @@
 - **Auto-Deploy Scoping**: ZIPs must be auto-deployed specifically to the
   **Global** site (`groupKey: "*"`) and must use a **flattened** directory
   structure (fragments as siblings to `collection.json`) to be correctly
-  registered by Liferay.
+  registered by Liferay. Verified via programmatic page generation on the
+  **Guest** site.
+
 - **API-Driven Scaffolding**: Test pages must be programmatically generated via
   the **Headless Delivery API** (Page Management API) using
   `pageType: 'content'` and `pageDefinition` payloads.

@@ -80,6 +80,13 @@ for cmd in ldm jq curl node npm docker; do
     check_dependency "$cmd"
 done
 
+# Check Playwright Browsers
+if ! npx playwright test --version &> /dev/null; then
+    echo "Error: Playwright is not initialized."
+    echo "Hint: Run 'npm install' to install dependencies."
+    exit 1
+fi
+
 # LDM Version check
 LDM_VERSION=$(ldm --version | awk '{print $2}')
 if [ -z "$LDM_VERSION" ]; then
