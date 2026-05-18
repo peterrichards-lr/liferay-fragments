@@ -156,38 +156,39 @@ async function globalSetup(config) {
     );
 
     // payload based on Liferay Page Management API (LPD-35443)
-    // Hardened with mandatory properties to prevent NPE in Layout Importers
+    // Reverted to Capitalized types to match Liferay official schema and docs
     const payload = {
       title: pageTitle,
       friendlyUrlPath: friendlyUrl,
       pageType: 'content',
       pageDefinition: {
         pageElement: {
-          type: 'root',
+          type: 'Root',
           pageElements: [
             {
-              type: 'section',
+              type: 'Section',
               definition: {
                 layout: {
-                  widthType: 'fluid',
+                  widthType: 'Fluid',
                 },
               },
               pageElements: [
                 {
-                  type: 'row',
+                  type: 'Row',
                   definition: {
                     gutters: true,
+                    columnsSpacing: true,
                     numberOfColumns: 1,
                   },
                   pageElements: [
                     {
-                      type: 'column',
+                      type: 'Column',
                       definition: {
                         size: 12,
                       },
                       pageElements: [
                         {
-                          type: 'fragment',
+                          type: 'Fragment',
                           definition: {
                             fragment: {
                               key: fragmentKey,

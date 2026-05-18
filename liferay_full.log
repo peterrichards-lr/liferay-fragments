@@ -1,0 +1,74 @@
+[LIFERAY] To SSH into this container, run: "docker exec -it 4dd49823d86c /bin/bash".
+
+[LIFERAY] Using zulu21 JDK. You can use another JDK by setting the "JAVA_VERSION" environment variable.
+[LIFERAY] Available JDKs: zulu21.
+[LIFERAY] Copying files from /mnt/liferay/files:
+
+/mnt/liferay/files
+└── portal-ext.properties
+
+[LIFERAY] ... into /opt/liferay.
+
+[LIFERAY] The directory /mnt/liferay/deploy is ready. Copy files to $(pwd)/xyz123/deploy on the host operating system to deploy modules to Liferay DXP at runtime.
+
+
+[LIFERAY] Starting Liferay DXP. To stop the container with CTRL-C, run this container with the option "-it".
+
+Loading jar:file:/opt/liferay/tomcat/webapps/ROOT/WEB-INF/shielded-container-lib/portal-impl.jar!/system.properties
+14:04:28,853 WARN  [EnvPropertiesUtil:54] Unable to decode part "status" from "container_status_enabled", preserve it literally
+14:04:28,854 WARN  [EnvPropertiesUtil:54] Unable to decode part "status" from "container_status_request_timeout", preserve it literally
+14:04:28,854 WARN  [EnvPropertiesUtil:54] Unable to decode part "tomcat" from "container_tomcat_thread_active_count_enabled", preserve it literally
+14:04:28,854 WARN  [EnvPropertiesUtil:54] Unable to decode part "active" from "container_tomcat_thread_active_count_enabled", preserve it literally
+14:04:28,854 WARN  [EnvPropertiesUtil:54] Unable to decode part "status" from "container_status_request_content", preserve it literally
+14:04:28,855 WARN  [EnvPropertiesUtil:54] Unable to decode part "startup" from "container_startup_lock_file", preserve it literally
+14:04:28,855 WARN  [EnvPropertiesUtil:54] Unable to decode part "thread" from "container_thread_dump_interval_file", preserve it literally
+14:04:28,855 WARN  [EnvPropertiesUtil:54] Unable to decode part "interval" from "container_thread_dump_interval_file", preserve it literally
+14:04:28,855 WARN  [EnvPropertiesUtil:54] Unable to decode part "status" from "container_status_active_modules", preserve it literally
+14:04:28,855 WARN  [EnvPropertiesUtil:54] Unable to decode part "trial" from "disable_trial_license", preserve it literally
+14:04:28,855 WARN  [EnvPropertiesUtil:54] Unable to decode part "configuration" from "log4j2_configuration_file", preserve it literally
+14:04:28,856 WARN  [EnvPropertiesUtil:54] Unable to decode part "tomcat" from "container_tomcat_thread_active_count_threshold", preserve it literally
+14:04:28,856 WARN  [EnvPropertiesUtil:54] Unable to decode part "active" from "container_tomcat_thread_active_count_threshold", preserve it literally
+14:04:28,856 WARN  [EnvPropertiesUtil:54] Unable to decode part "status" from "container_status_request_url", preserve it literally
+14:04:28,856 WARN  [EnvPropertiesUtil:54] Unable to decode part "thread" from "container_thread_dumps_directory", preserve it literally
+14:04:28,856 WARN  [EnvPropertiesUtil:54] Unable to decode part "startup" from "container_startup_lock_enabled", preserve it literally
+14:04:28,856 WARN  [EnvPropertiesUtil:54] Unable to decode part "kill" from "container_kill_on_failure", preserve it literally
+Loading jar:file:/opt/liferay/tomcat/webapps/ROOT/WEB-INF/shielded-container-lib/portal-impl.jar!/portal.properties
+Loading file:/opt/liferay/portal-ext.properties
+2026-05-18 14:04:28.977 INFO  [main][PortalContextLoaderListener:531] JVM arguments: --add-opens=java.base/java.lang=ALL-UNNAMED --add-opens=java.base/java.lang.invoke=ALL-UNNAMED --add-opens=java.base/java.lang.reflect=ALL-UNNAMED --add-opens=java.base/java.net=ALL-UNNAMED --add-opens=java.base/java.util=ALL-UNNAMED --add-opens=java.base/sun.net.www.protocol.http=ALL-UNNAMED --add-opens=java.base/sun.net.www.protocol.https=ALL-UNNAMED --add-opens=java.base/sun.util.calendar=ALL-UNNAMED --add-opens=java.rmi/sun.rmi.transport=ALL-UNNAMED --add-opens=jdk.zipfs/jdk.nio.zipfs=ALL-UNNAMED -Djava.util.logging.config.file=/opt/liferay/tomcat/conf/logging.properties -Djava.util.logging.manager=org.apache.juli.ClassLoaderLogManager -Djdk.tls.ephemeralDHKeySize=2048 -Djava.protocol.handler.pkgs=org.apache.catalina.webresources -Dsun.io.useCanonCaches=false -Dorg.apache.catalina.security.SecurityListener.UMASK=0027 --add-opens=java.base/java.lang=ALL-UNNAMED --add-opens=java.base/java.lang.reflect=ALL-UNNAMED --add-opens=java.base/java.io=ALL-UNNAMED --add-opens=java.base/java.util=ALL-UNNAMED --add-opens=java.base/java.util.concurrent=ALL-UNNAMED --add-opens=java.rmi/sun.rmi.transport=ALL-UNNAMED -Dfile.encoding=UTF-8 -Djava.net.preferIPv4Stack=true -Duser.timezone=GMT -Xms2560m -Xmx2560m -XX:MaxNewSize=1536m -XX:MaxMetaspaceSize=768m -XX:MetaspaceSize=768m -XX:NewSize=1536m -XX:SurvivorRatio=7 -Xmx4096m -XX:MaxMetaspaceSize=768m -XX:MetaspaceSize=768m -XX:NewSize=1536m -XX:MaxNewSize=1536m -XX:TieredStopAtLevel=1 -Xverify:none -Dfile.encoding=UTF8 -Duser.timezone=GMT --add-opens=java.base/java.lang=ALL-UNNAMED --add-opens=java.base/java.lang.reflect=ALL-UNNAMED --add-opens=java.base/java.net=ALL-UNNAMED --add-opens=java.base/java.util=ALL-UNNAMED --add-opens=java.base/java.util.concurrent=ALL-UNNAMED --add-opens=java.base/java.text=ALL-UNNAMED --add-opens=java.base/java.time=ALL-UNNAMED --add-opens=java.base/sun.net.www.protocol.http=ALL-UNNAMED --add-opens=java.base/sun.net.www.protocol.https=ALL-UNNAMED --add-opens=java.base/sun.nio.ch=ALL-UNNAMED --add-opens=java.base/sun.security.action=ALL-UNNAMED --add-opens=java.base/sun.security.ssl=ALL-UNNAMED --add-opens=java.base/sun.security.util=ALL-UNNAMED --add-opens=java.base/sun.security.x509=ALL-UNNAMED --add-opens=java.base/sun.util.calendar=ALL-UNNAMED --add-opens=java.security.sasl/conf=ALL-UNNAMED --add-opens=java.management/sun.management=ALL-UNNAMED --add-opens=jdk.management/com.sun.management.internal=ALL-UNNAMED -Djdk.util.zip.disableZip64ExtraFieldValidation=true -Dcatalina.base=/opt/liferay/tomcat -Dcatalina.home=/opt/liferay/tomcat -Djava.io.tmpdir=/opt/liferay/tomcat/temp
+2026-05-18 14:04:29.004 INFO  [main][AutoDeployDir:306] Processing trial-dxp-license-1778776154000.xml
+2026-05-18 14:04:29.260 INFO  [SystemExecutorServiceUtil-1][DataSourceFactoryUtil:426] Rewrote JDBC URL from jdbc:postgresql://db:5432/lportal to jdbc:postgresql://db:5432/lportal?reWriteBatchedInserts=true
+2026-05-18 14:04:29.380 INFO  [SystemExecutorServiceUtil-1][DialectDetector:134] Using dialect org.hibernate.dialect.PostgreSQL10Dialect for PostgreSQL 16.2
+2026-05-18 14:04:30.268 INFO  [main][ModuleFrameworkImpl:1355] Starting initial bundles
+2026-05-18 14:04:30.335 INFO  [main][InterpolationConfigurationPlugin:109] Configured directory for secrets: /opt/liferay/osgi/configs
+2026-05-18 14:04:30.670 INFO  [main][ModuleFrameworkImpl:1645] Started initial bundles
+2026-05-18 14:04:30.671 INFO  [main][ModuleFrameworkImpl:1684] Starting dynamic bundles
+2026-05-18 14:04:31.614 WARN  [Start Level: Equinox Container: a9ec05cf-9bdc-4b31-b395-548b47768cde][SidecarManager:79] Liferay automatically starts a child process of Elasticsearch named sidecar for convenient development and demonstration purposes. Do NOT use sidecar in production. Refer to the documentation for details on the limitations of sidecar and instructions on configuring a remote Elasticsearch connection in the Control Panel.
+2026-05-18 14:04:34.196 INFO  [main][ModuleFrameworkImpl:1707] Started dynamic bundles
+2026-05-18 14:04:34.199 INFO  [main][ModuleFrameworkImpl:1714] Starting web bundles
+2026-05-18 14:04:35.662 INFO  [SystemExecutorServiceUtil-2][Sidecar:210] Sidecar Elasticsearch 8.19.11 liferay_sidecar started at 127.0.0.1:9201
+2026-05-18 14:04:36.161 INFO  [main][ModuleFrameworkImpl:1768] Started web bundles
+2026-05-18 14:04:36.354 INFO  [main][ModuleFrameworkImpl:283] Navigate to Control Panel > System > Gogo Shell and enter "lb" to see all bundles
+
+    __    ____________________  _____  __
+   / /   /  _/ ____/ ____/ __ \/   \ \/ /
+  / /    / // /_  / __/ / /_/ / /| |\  /
+ / /____/ // __/ / /___/ _, _/ ___ |/ /
+/_____/___/_/   /_____/_/ |_/_/  |_/_/
+
+Starting Liferay Digital Experience Platform 2026.Q1.7 LTS (May 12, 2026)
+
+2026-05-18 14:04:37.255 INFO  [main][StartupHelperUtil:102] There are no patches installed
+2026-05-18 14:04:37.304 INFO  [main][c:-1] DXP Development license validation passed
+2026-05-18 14:04:37.474 INFO  [main][AutoDeployDir:207] Auto deploy scanner started for /opt/liferay/deploy
+2026-05-18 14:04:41.219 INFO  [fileinstall-directory-watcher][BaseAutoDeployListener:34] Copying themes for /opt/liferay/tomcat/temp/20260518140441197NQUREJTZ/admin-theme.war
+2026-05-18 14:04:41.532 INFO  [fileinstall-directory-watcher][BaseAutoDeployListener:41] Themes for /opt/liferay/tomcat/temp/20260518140441197NQUREJTZ/admin-theme.war copied successfully
+2026-05-18 14:04:42.311 INFO  [fileinstall-directory-watcher][BaseAutoDeployListener:34] Copying themes for /opt/liferay/tomcat/temp/20260518140442305FWYAFJXZ/classic-theme.war
+2026-05-18 14:04:42.675 INFO  [fileinstall-directory-watcher][BaseAutoDeployListener:41] Themes for /opt/liferay/tomcat/temp/20260518140442305FWYAFJXZ/classic-theme.war copied successfully
+2026-05-18 14:04:43.152 INFO  [fileinstall-directory-watcher][BaseAutoDeployListener:34] Copying themes for /opt/liferay/tomcat/temp/20260518140443145TELIQZTX/cms-theme.war
+2026-05-18 14:04:43.429 INFO  [fileinstall-directory-watcher][BaseAutoDeployListener:41] Themes for /opt/liferay/tomcat/temp/20260518140443145TELIQZTX/cms-theme.war copied successfully
+2026-05-18 14:04:43.917 INFO  [fileinstall-directory-watcher][BaseAutoDeployListener:34] Copying themes for /opt/liferay/tomcat/temp/20260518140443911XISEJBVU/dialect-theme.war
+2026-05-18 14:04:44.329 INFO  [fileinstall-directory-watcher][BaseAutoDeployListener:41] Themes for /opt/liferay/tomcat/temp/20260518140443911XISEJBVU/dialect-theme.war copied successfully
+2026-05-18 14:04:44.820 INFO  [fileinstall-directory-watcher][BaseAutoDeployListener:34] Copying themes for /opt/liferay/tomcat/temp/20260518140444812IFZUYVZH/minium-theme.war
+2026-05-18 14:04:45.240 INFO  [fileinstall-directory-watcher][BaseAutoDeployListener:41] Themes for /opt/liferay/tomcat/temp/20260518140444812IFZUYVZH/minium-theme.war copied successfully
+2026-05-18 14:04:46.028 INFO  [fileinstall-directory-watcher][BaseAutoDeployListener:34] Copying themes for /opt/liferay/tomcat/temp/20260518140446021DGXUWOOE/speedwell-theme.war
+2026-05-18 14:04:46.335 INFO  [fileinstall-directory-watcher][BaseAutoDeployListener:41] Themes for /opt/liferay/tomcat/temp/20260518140446021DGXUWOOE/speedwell-theme.war copied successfully

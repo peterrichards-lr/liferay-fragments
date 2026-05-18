@@ -385,9 +385,26 @@ else
         sleep 5
         ((WAIT_COUNT+=5))
     done
+
+    echo "  -> Waiting for system to settle (Ensuring OSGi stability)..."
+    # Wait for a period of log silence to ensure background tasks are truly finished
+    MAX_SETTLE=60
+    SETTLE_COUNT=0
+    while [ $SETTLE_COUNT -lt $MAX_SETTLE ]; do
+        # Check if logs have slowed down (no new STARTED or Finished batch in last 10s)
+        NEW_LOGS=$(ldm logs -n 5 "$PROJECT_NAME" liferay | grep -iE "STARTED|Finished" | wc -l | xargs)
+        if [ "$NEW_LOGS" -eq 0 ]; then
+             echo "  -> System has settled."
+             break
+        fi
+        echo -n "s"
+        sleep 10
+        ((SETTLE_COUNT+=10))
+    done
+    
     echo ""
-    # Final buffer to ensure database records are committed
-    sleep 30
+    # Final safety buffer
+    sleep 10
 fi
 
 # 6. Execute Tests
