@@ -214,6 +214,7 @@ async function globalSetup(config) {
     };
 
     // Use the Headless Delivery endpoint (Page Management API)
+    // This is the modern standard for pageDefinitions and ERC-based management
     const createResp = await apiContext.post(
       `/o/headless-delivery/v1.0/sites/${siteId}/site-pages`,
       {

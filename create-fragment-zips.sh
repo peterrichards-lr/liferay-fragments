@@ -212,8 +212,8 @@ ensure_descriptor() {
         
         local JSON_CONTENT
         if [[ "$GROUP_KEY" == "Global" ]]; then
-            # Global Site Scoping: groupKey MUST be * and companyWebId MUST NOT be set
-            JSON_CONTENT=$(jq -n --arg gk "*" '{groupKey: $gk}')
+            # Global Site Scoping: groupKey MUST be Global and companyWebId MUST NOT be set
+            JSON_CONTENT=$(jq -n --arg gk "Global" '{groupKey: $gk}')
         elif [[ "$COMPANY_WEB_ID" == "*" && -z "$GROUP_KEY" ]]; then
             # Global (All Instances) Scoping
             JSON_CONTENT=$(jq -n --arg id "*" '{companyWebId: $id}')

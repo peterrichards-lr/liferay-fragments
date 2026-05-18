@@ -165,9 +165,18 @@ echo "  -> Initializing LDM common assets..."
 log_command "ldm init-common -y"
 ldm init-common -y > /dev/null 2>&1
 
-echo "  -> Enabling Page Management API feature flag in common properties..."
+echo "  -> Enabling modern Headless API feature flags in common properties..."
+# Ensure file ends with newline before appending
+[ -f ~/.ldm/common/portal-ext.properties ] && sed -i '' -e '$a\' ~/.ldm/common/portal-ext.properties 2>/dev/null || true
+
+# LPD-35443: Page Management API
 if ! grep -q "feature.flag.LPD-35443=true" ~/.ldm/common/portal-ext.properties; then
     echo "feature.flag.LPD-35443=true" >> ~/.ldm/common/portal-ext.properties
+fi
+
+# LPS-178052: Headless Site Pages
+if ! grep -q "feature.flag.LPS-178052=true" ~/.ldm/common/portal-ext.properties; then
+    echo "feature.flag.LPS-178052=true" >> ~/.ldm/common/portal-ext.properties
 fi
 
 echo "  -> Verifying Liferay DXP activation key..."
