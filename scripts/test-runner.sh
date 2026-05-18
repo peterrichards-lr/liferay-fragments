@@ -376,7 +376,8 @@ else
     MAX_WAIT_CX=120
     WAIT_COUNT=0
     while [ $WAIT_COUNT -lt $MAX_WAIT_CX ]; do
-        if ldm logs -n 500 "$PROJECT_NAME" liferay | grep -q "STARTED.*showcase.*batch-cx"; then
+        # Use a more lenient pattern that matches the actual Bundle-SymbolicName
+        if ldm logs -n 500 "$PROJECT_NAME" liferay | grep -qE "STARTED.*(product-showcase|water-readings|modern-intranet)"; then
             echo "  -> Showcase data detected."
             break
         fi
