@@ -215,24 +215,41 @@ async function globalSetup(config) {
 
     // Use the Headless Delivery endpoint (Page Management API)
     // This is the modern standard for pageDefinitions and ERC-based management
-    const createResp = await apiContext.post(
-      `/o/headless-delivery/v1.0/sites/${siteId}/site-pages`,
-      {
-        data: payload,
-      }
-    );
 
-    // Stagger page creation to reduce DB contention in dev-mode environments
-    await new Promise((resolve) => setTimeout(resolve, 200));
+    let success = false;
+    let attempts = 0;
+    const maxAttempts = 3;
 
-    if (!createResp.ok()) {
-      const body = await createResp.text();
-      if (!body.includes('Duplicate')) {
-        console.error(
-          `     Failed to create page for ${fragmentName}: ${createResp.status()} - ${body}`
-        );
+    while (attempts < maxAttempts && !success) {
+      attempts++;
+      const createResp = await apiContext.post(
+        `/o/headless-delivery/v1.0/sites/${siteId}/site-pages`,
+        {
+          data: payload,
+        }
+      );
+
+      if (createResp.ok()) {
+        success = true;
+      } else {
+        const body = await createResp.text();
+        if (body.includes('Duplicate')) {
+          success = true; // Count duplicate as success
+        } else {
+          console.warn(
+            `     [Attempt ${attempts}] Failed to create page for ${fragmentName}: ${createResp.status()} - ${body}`
+          );
+          if (attempts < maxAttempts) {
+            console.log(`     Retrying in 2 seconds...`);
+            await new Promise((resolve) => setTimeout(resolve, 2000));
+          }
+        }
       }
     }
+
+    // Stagger page creation strictly to reduce DB contention on PortalPreferenceValue
+    // Increased to 1s based on forensic log analysis
+    await new Promise((resolve) => setTimeout(resolve, 1000));
 
     testPagesMap.push({
       collectionName: collectionName,
