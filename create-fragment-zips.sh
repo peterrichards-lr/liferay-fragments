@@ -57,6 +57,19 @@ while [[ "$#" -gt 0 ]]; do
             BUILD_SHOWCASE=true
             CATEGORY_SELECTED=true
             ;;
+        --global)
+            COMPANY_WEB_ID="*"
+            GROUP_KEY="Global"
+            ;;
+        --instance)
+            COMPANY_WEB_ID="$2"
+            GROUP_KEY=""
+            shift
+            ;;
+        --site)
+            GROUP_KEY="$2"
+            shift
+            ;;
         *)
             TARGET_ITEMS+=("$1")
             ;;
