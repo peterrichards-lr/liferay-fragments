@@ -156,57 +156,49 @@ async function globalSetup(config) {
     );
 
     // payload based on Liferay Page Management API (LPD-35443)
+    // Hardened with mandatory properties to prevent NPE in Layout Importers
     const payload = {
       title: pageTitle,
       friendlyUrlPath: friendlyUrl,
       pageType: 'content',
       pageDefinition: {
         pageElement: {
-          type: 'Root',
+          type: 'root',
           pageElements: [
             {
+              type: 'section',
               definition: {
                 layout: {
-                  widthType: 'Fluid',
+                  widthType: 'fluid',
                 },
               },
               pageElements: [
                 {
+                  type: 'row',
                   definition: {
-                    layout: {
-                      widthType: 'Fixed',
-                    },
+                    gutters: true,
+                    numberOfColumns: 1,
                   },
                   pageElements: [
                     {
+                      type: 'column',
                       definition: {
-                        numberOfColumns: 1,
+                        size: 12,
                       },
                       pageElements: [
                         {
+                          type: 'fragment',
                           definition: {
-                            size: 12,
-                          },
-                          pageElements: [
-                            {
-                              definition: {
-                                fragment: {
-                                  key: fragmentKey,
-                                },
-                              },
-                              type: 'Fragment',
+                            fragment: {
+                              key: fragmentKey,
                             },
-                          ],
-                          type: 'Column',
+                          },
                         },
                       ],
-                      type: 'Row',
                     },
                   ],
-                  type: 'Section',
                 },
               ],
-              type: 'Section',
             },
           ],
         },
