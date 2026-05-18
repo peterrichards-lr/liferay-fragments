@@ -303,10 +303,6 @@ else
     fi
     echo "  -> Targeting Liferay Container: $LIFERAY_CONTAINER"
 
-    echo "  -> Adjusting permissions on LDM project directory (Permissions Rule-out)..."
-    log_command "sudo chmod -R 777 \"$PROJECT_PATH\""
-    sudo chmod -R 777 "$PROJECT_PATH"
-
     echo "  -> Preparing staging area in container..."
     log_command "docker exec -u 0 \"$LIFERAY_CONTAINER\" mkdir -p /tmp/fragment-staging"
     docker exec -u 0 "$LIFERAY_CONTAINER" mkdir -p /tmp/fragment-staging
