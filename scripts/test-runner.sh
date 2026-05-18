@@ -294,24 +294,44 @@ else
     log_command "sudo chmod -R 777 \"$PROJECT_PATH\""
     sudo chmod -R 777 "$PROJECT_PATH"
 
-    echo "  -> Deploying ZIPs directly to container (Sequential Deployment to prevent Race Conditions)..."
+    echo "  -> Preparing staging area in container..."
+    log_command "docker exec -u 0 \"$LIFERAY_CONTAINER\" mkdir -p /tmp/fragment-staging"
+    docker exec -u 0 "$LIFERAY_CONTAINER" mkdir -p /tmp/fragment-staging
+
+    echo "  -> Deploying ZIPs via staging area (Preventing lchown Race Conditions)..."
     for zip_file in zips/fragments/*.zip; do
         [[ "$zip_file" == *"-pre2025q3"* ]] && continue
         [[ "$zip_file" == *"-debug"* ]] && continue # Skip debug zips if minified exist
         
-        echo "     Deploying $(basename "$zip_file")..."
-        docker cp "$zip_file" "$LIFERAY_CONTAINER:/opt/liferay/deploy/"
+        ZIP_NAME=$(basename "$zip_file")
+        echo "     Staging $ZIP_NAME..."
+        # Copy to staging (not watched by Liferay)
+        docker cp "$zip_file" "$LIFERAY_CONTAINER:/tmp/fragment-staging/"
+        # Move to deploy (atomic, prevents metadata race condition)
+        docker exec -u 0 "$LIFERAY_CONTAINER" mv "/tmp/fragment-staging/$ZIP_NAME" "/opt/liferay/deploy/"
+        
         sleep 2 # Throttle deployment to reduce DB contention
     done
     
     log_command "docker exec -u 0 \"$LIFERAY_CONTAINER\" mkdir -p /opt/liferay/osgi/client-extensions"
     docker exec -u 0 "$LIFERAY_CONTAINER" mkdir -p /opt/liferay/osgi/client-extensions
     
-    log_command "docker cp zips/language/. \"$LIFERAY_CONTAINER:/opt/liferay/osgi/client-extensions/\""
-    docker cp zips/language/. "$LIFERAY_CONTAINER:/opt/liferay/osgi/client-extensions/"
-    
-    log_command "docker cp zips/showcase/. \"$LIFERAY_CONTAINER:/opt/liferay/osgi/client-extensions/\""
-    docker cp zips/showcase/. "$LIFERAY_CONTAINER:/opt/liferay/osgi/client-extensions/"
+    # Language and Showcase use the same staging pattern for robustness
+    echo "  -> Deploying Language and Showcase extensions via staging area..."
+    for cx_dir in zips/language zips/showcase; do
+        [ -d "$cx_dir" ] || continue
+        CX_TYPE=$(basename "$cx_dir")
+        for cx_zip in "$cx_dir"/*.zip; do
+            [ -f "$cx_zip" ] || continue
+            CX_ZIP_NAME=$(basename "$cx_zip")
+            echo "     Staging $CX_ZIP_NAME ($CX_TYPE)..."
+            docker cp "$cx_zip" "$LIFERAY_CONTAINER:/tmp/fragment-staging/"
+            docker exec -u 0 "$LIFERAY_CONTAINER" mv "/tmp/fragment-staging/$CX_ZIP_NAME" "/opt/liferay/osgi/client-extensions/"
+        done
+    done
+
+    # Clean up staging area
+    docker exec -u 0 "$LIFERAY_CONTAINER" rm -rf /tmp/fragment-staging
 
     # 5.1 Wait for Fragments and Showcase Data
     echo ""
