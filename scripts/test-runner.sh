@@ -165,6 +165,11 @@ echo "  -> Initializing LDM common assets..."
 log_command "ldm init-common -y"
 ldm init-common -y > /dev/null 2>&1
 
+echo "  -> Enabling Page Management API feature flag in common properties..."
+if ! grep -q "feature.flag.LPD-35443=true" ~/.ldm/common/portal-ext.properties; then
+    echo "feature.flag.LPD-35443=true" >> ~/.ldm/common/portal-ext.properties
+fi
+
 echo "  -> Verifying Liferay DXP activation key..."
 if ! ls ~/.ldm/common/*.xml 1> /dev/null 2>&1; then
     echo "Error: No activation key (.xml) found in ~/.ldm/common."
@@ -212,8 +217,9 @@ if [ "$EXISTING_PROJECT" = true ]; then
     echo "  -> Skipping LDM run (using existing project $PROJECT_NAME)..."
 else
     echo "  -> Starting LDM project '$PROJECT_NAME' with $TAG_FLAG $LIFERAY_TAG on port $PORT..."
-    log_command "ldm run \"$PROJECT_NAME\" \"$TAG_FLAG\" \"$LIFERAY_TAG\" --port \"$PORT\" --non-interactive --no-captcha --sidecar --db postgresql $LDM_VERBOSE"
-    if ! ldm run "$PROJECT_NAME" "$TAG_FLAG" "$LIFERAY_TAG" --port "$PORT" --non-interactive --no-captcha --sidecar --db postgresql $LDM_VERBOSE > ldm_startup.log 2>&1; then
+    # Increase CodeCache and Memory to prevent JIT stalls. 
+    log_command "ldm run \"$PROJECT_NAME\" \"$TAG_FLAG\" \"$LIFERAY_TAG\" --port \"$PORT\" --non-interactive --no-captcha --sidecar --db postgresql $LDM_VERBOSE --env \"LIFERAY_JVM_OPTS=-Xms2g -Xmx4g -XX:ReservedCodeCacheSize=512m\""
+    if ! ldm run "$PROJECT_NAME" "$TAG_FLAG" "$LIFERAY_TAG" --port "$PORT" --non-interactive --no-captcha --sidecar --db postgresql $LDM_VERBOSE --env "LIFERAY_JVM_OPTS=-Xms2g -Xmx4g -XX:ReservedCodeCacheSize=512m" > ldm_startup.log 2>&1; then
         echo "Error: LDM failed to start the environment."
         echo "Hint: Check ldm_startup.log or run 'ldm logs $PROJECT_NAME' for more details."
         cat <<EOF >> "$RESULTS_FILE"
