@@ -98,4 +98,11 @@ Use the automated deployment script to push assets to your Liferay instance:
 ./deploy-fragment-zips.sh /path/to/liferay/root gemini-generated loan-calculator
 ```
 
+> **⚠️ WARNING FOR LIFERAY 2026.Q1 LTS USERS** There is a known bug in Liferay
+> 2026.Q1 LTS that causes system-wide auto-deployment (`--global`) to fail or
+> silently drop fragments. If you require these fragments to be available
+> system-wide (on the **Global Site**) in version 2026.Q1, **do not use the
+> auto-deploy scripts**. You must navigate to the Global Site in the Liferay UI
+> and use the **Manual Import** feature to upload the ZIP files.
+
 _For more details, see the [Full Documentation](./docs/README.md)._
