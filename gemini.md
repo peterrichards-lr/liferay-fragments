@@ -52,11 +52,12 @@
   Tablet (768x1024), and Mobile (375x812) viewports.
 - **Verification Criteria**: No fatal JS console errors (`TypeError`,
   `ReferenceError`) and successful rendering of the main wrapper.
-- **Auto-Deploy Scoping**: ZIPs must be auto-deployed specifically to the
-  **Global** site (`groupKey: "*"`) and must use a **flattened** directory
-  structure (fragments as siblings to `collection.json`) to be correctly
-  registered by Liferay. Verified via programmatic page generation on the
-  **Guest** site.
+- **Auto-Deploy Scoping (2026.Q1 Workaround)**: Due to a confirmed bug in
+  Liferay 2026.Q1 LTS preventing system-wide deployments, ZIPs are currently
+  auto-deployed specifically to the **Guest** site (`companyWebId: liferay.com`,
+  `groupKey: Guest`). This should be reverted to **System-Wide**
+  (`companyWebId: "*"`) once fixed upstream. All ZIPs must use a **flattened**
+  directory structure to be registered by Liferay.
 
 - **API-Driven Scaffolding**: Test pages must be programmatically generated via
   the **Headless Delivery API** (Page Management API) using

@@ -159,11 +159,13 @@ LIFERAY_USER="admin@mycompany.com" LIFERAY_PASSWORD="MySecurePassword123" ./scri
   computational load and infrastructure requirements (LDM). It contains a
   safeguard to prevent execution in CI environments (e.g., GitHub Actions, where
   `CI=true`).
-- **Deployment Scoping**: To ensure fragments are visible and editable
-  universally, the script auto-deploys them specifically to the **Global** site
-  (`groupKey: "*"`). However, the automated test suite verifies these fragments
-  by programmatically creating test pages on the **Guest** site, as the Global
-  site typically restricts Headless Page creation.
+- **Deployment Scoping & 2026.Q1 Bug**: There is a known bug in Liferay 2026.Q1
+  LTS where deploying fragment ZIPs with a system-wide scope
+  (`companyWebId: "*"`) fails to register the fragments correctly in the UI.
+  Because of this, the test runner currently deploys all fragments specifically
+  to the **Guest** site (`--instance liferay.com --site Guest`) as a workaround.
+  Once this bug is fixed upstream, the test runner should be reverted to deploy
+  fragments system-wide to ensure they are verified as universally available.
 
 - **ZIP Structure (Flattening):** Liferay's `FragmentFileInstaller`
   (Auto-Deploy) requires a flat directory structure. The build script
