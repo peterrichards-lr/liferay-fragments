@@ -224,14 +224,11 @@ ensure_descriptor() {
         log_debug "Generating temporary descriptor for $ITEM_NAME"
         
         local JSON_CONTENT
-        if [[ "$GROUP_KEY" == "Global" ]]; then
-            # Global Site Scoping: scopeKey MUST be * and companyWebId MUST NOT be set
-            JSON_CONTENT=$(jq -n --arg sk "*" '{scopeKey: $sk}')
-        elif [[ "$COMPANY_WEB_ID" == "*" && -z "$GROUP_KEY" ]]; then
-            # Global (All Instances) Scoping
+        if [[ "$GROUP_KEY" == "Global" ]] || [[ "$COMPANY_WEB_ID" == "*" && -z "$GROUP_KEY" ]]; then
+            # System-wide (All Instances) / Global Scoping
             JSON_CONTENT=$(jq -n --arg id "*" '{companyWebId: $id}')
         else
-            # Specific Site Scoping
+            # Specific Site or Company Scoping
             JSON_CONTENT=$(jq -n --arg id "$COMPANY_WEB_ID" '{companyWebId: $id}')
             if [[ -n "$GROUP_KEY" ]]; then
                 JSON_CONTENT=$(echo "$JSON_CONTENT" | jq --arg gk "$GROUP_KEY" '. + {groupKey: $gk}')
