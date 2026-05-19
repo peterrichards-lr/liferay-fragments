@@ -287,9 +287,9 @@ if [ "$SKIP_DEPLOY" = true ]; then
 else
     echo ""
     echo "[5/5] Building and Deploying Fragments..."
-    echo "  -> Building ZIPs (Specific Site Scoping: liferay.com / Guest)..."
-    log_command "./create-fragment-zips.sh --all --instance \"liferay.com\" --site \"Guest\""
-    ./create-fragment-zips.sh --all --instance "liferay.com" --site "Guest" > /dev/null
+    echo "  -> Building ZIPs (Default Scoping: liferay.com / Guest)..."
+    log_command "./create-fragment-zips.sh --all"
+    ./create-fragment-zips.sh --all > /dev/null
 
     # Resolve the LDM Liferay container ID
     # We use an exact match filter with a leading slash which is the docker naming convention

@@ -10,8 +10,9 @@ if ! command -v jq &> /dev/null; then
 fi
 
 # Variables mimicking your Gradle properties
-COMPANY_WEB_ID="${COMPANY_WEB_ID:-*}"
-GROUP_KEY="${GROUP_KEY:-Global}"
+# Defaulting to Guest site as a workaround for Liferay 2026.Q1 system-wide deployment bug
+COMPANY_WEB_ID="${COMPANY_WEB_ID:-liferay.com}"
+GROUP_KEY="${GROUP_KEY:-Guest}"
 
 # Robust timestamp for both macOS and Linux (numeric)
 TIMESTAMP=$(date +%s)000
