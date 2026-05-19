@@ -229,17 +229,24 @@ ensure_descriptor() {
         log_debug "Generating temporary descriptor for $ITEM_NAME"
         
         local JSON_CONTENT
-        if [[ "$GROUP_KEY" == "Global" ]] || [[ "$COMPANY_WEB_ID" == "*" && -z "$GROUP_KEY" ]]; then
+        
+        # 1. System-wide Scoping (Explicitly requested or Default fallback)
+        if [[ "$COMPANY_WEB_ID" == "*" ]]; then
             if [ "$HAS_RESOURCES" = true ]; then
-                log_warn "Fragment/Collection '$ITEM_NAME' contains resources. Falling back to default site scoping (liferay.com / Guest)."
-                JSON_CONTENT=$(jq -n --arg id "liferay.com" --arg gk "Guest" '{companyWebId: $id, groupKey: $gk}')
-            else
-                # System-wide (All Instances) / Global Scoping
-                JSON_CONTENT=$(jq -n --arg id "*" '{companyWebId: $id}')
+                log_error "Fragment/Collection '$ITEM_NAME' contains a 'resources' directory."
+                log_error "Liferay does not support system-level deployment (companyWebId: \"*\") of fragments with resources."
+                log_error "Please build this collection with a specific --instance or --site target."
+                exit 1
             fi
+            
+            # System-wide scope only uses companyWebId
+            JSON_CONTENT=$(jq -n --arg id "*" '{companyWebId: $id}')
+            
+        # 2. Specific Site or Company Scoping
         else
-            # Specific Site or Company Scoping
             JSON_CONTENT=$(jq -n --arg id "$COMPANY_WEB_ID" '{companyWebId: $id}')
+            
+            # Only append groupKey if it's explicitly set
             if [[ -n "$GROUP_KEY" ]]; then
                 JSON_CONTENT=$(echo "$JSON_CONTENT" | jq --arg gk "$GROUP_KEY" '. + {groupKey: $gk}')
             fi
