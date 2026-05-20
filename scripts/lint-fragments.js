@@ -393,9 +393,9 @@ const expectedGalleryContent = generateGallery();
 const normalize = (str) => str.trim().replace(/\s+/g, ' ');
 
 if (normalize(currentGalleryContent) !== normalize(expectedGalleryContent)) {
-  logError(
+  logWarn(
     'Documentation',
-    "Gallery is out of sync. Please run 'npm run docs:gallery' to update it."
+    "Gallery is out of sync. Please run 'node scripts/generate-gallery.js' to update it."
   );
 } else {
   console.log('Gallery is in sync.\n');
