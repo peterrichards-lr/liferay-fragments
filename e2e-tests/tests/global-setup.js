@@ -120,11 +120,12 @@ async function globalSetup(config) {
     const fragmentData = JSON.parse(fs.readFileSync(file, 'utf8'));
     const fragmentName = fragmentData.name;
     // Liferay fragment keys are typically derived from the folder name or explicitly defined.
-    let fragmentKey = fragmentData.key || path.basename(path.dirname(file));
+    let baseFragmentKey = fragmentData.key || path.basename(path.dirname(file));
 
     // Find the nearest collection.json
     let currentDir = path.dirname(file);
     let collectionName = 'Standalone';
+    let collectionDirName = '';
     let collectionFound = false;
 
     while (currentDir !== '..' && currentDir !== '/' && currentDir !== '.') {
@@ -132,6 +133,7 @@ async function globalSetup(config) {
       if (fs.existsSync(collectionFile)) {
         const collData = JSON.parse(fs.readFileSync(collectionFile, 'utf8'));
         collectionName = collData.name;
+        collectionDirName = path.basename(currentDir);
         collectionFound = true;
         break;
       }
@@ -145,11 +147,22 @@ async function globalSetup(config) {
       const parentDirName = path.basename(path.dirname(path.dirname(file)));
       if (parentDirName !== 'fragments' && parentDirName !== '..') {
         collectionName = parentDirName;
+        collectionDirName = parentDirName;
       }
     }
 
+    // Crucial Fix: Liferay prefixes the fragment key with the collection's directory name when importing ZIPs
+    let fragmentKey = baseFragmentKey;
+    if (
+      collectionDirName &&
+      collectionDirName !== 'Standalone' &&
+      collectionDirName !== '.'
+    ) {
+      fragmentKey = `${collectionDirName}-${baseFragmentKey}`;
+    }
+
     const pageTitle = `Test: ${fragmentName}`;
-    const friendlyUrl = `/test-${fragmentKey}`;
+    const friendlyUrl = `/test-${baseFragmentKey}`;
 
     console.log(
       `  -> Creating page for ${fragmentName} (${fragmentKey}) in ${collectionName}...`

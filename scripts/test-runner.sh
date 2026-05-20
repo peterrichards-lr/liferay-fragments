@@ -162,6 +162,11 @@ echo "  -> Enabling modern Headless API feature flags in common properties..."
 # Ensure file ends with newline before appending
 [ -f ~/.ldm/common/portal-ext.properties ] && sed -i '' -e '$a\' ~/.ldm/common/portal-ext.properties 2>/dev/null || true
 
+# Disable Terms of Use to prevent modal from blocking E2E screenshots
+if ! grep -q "terms.of.use.required=false" ~/.ldm/common/portal-ext.properties; then
+    echo "terms.of.use.required=false" >> ~/.ldm/common/portal-ext.properties
+fi
+
 # LPD-35443: Page Management API
 if ! grep -q "feature.flag.LPD-35443=true" ~/.ldm/common/portal-ext.properties; then
     echo "feature.flag.LPD-35443=true" >> ~/.ldm/common/portal-ext.properties
