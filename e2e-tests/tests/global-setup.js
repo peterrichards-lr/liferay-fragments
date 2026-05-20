@@ -162,7 +162,11 @@ async function globalSetup(config) {
     }
 
     const pageTitle = `Test: ${fragmentName}`;
-    const friendlyUrl = `/test-${baseFragmentKey}`;
+    const sanitizedKey = baseFragmentKey
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, '-')
+      .replace(/(^-|-$)/g, '');
+    let friendlyUrl = `/test-${sanitizedKey}`;
 
     console.log(
       `  -> Creating page for ${fragmentName} (${fragmentKey}) in ${collectionName}...`
@@ -235,6 +239,10 @@ async function globalSetup(config) {
 
       if (createResp.ok()) {
         success = true;
+        const responseJson = await createResp.json();
+        if (responseJson.friendlyUrlPath) {
+          friendlyUrl = responseJson.friendlyUrlPath;
+        }
       } else {
         const body = await createResp.text();
         if (body.includes('Duplicate')) {
