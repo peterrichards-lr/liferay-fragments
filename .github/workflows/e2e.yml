@@ -47,10 +47,10 @@ jobs:
         run: ./scripts/test-runner.sh
 
       - name: Upload Test Artifacts
-        if: failure()
+        if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: playwright-failure-artifacts
+          name: playwright-test-artifacts
           path: |
             e2e-tests/playwright-report/
             e2e-tests/playwright_output.log
