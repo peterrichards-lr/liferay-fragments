@@ -10,29 +10,25 @@ jobs:
     steps:
       - name: Check out repository code
         uses: actions/checkout@v4
+      
       - name: Install dependencies
         run: sudo apt-get install jq
+      
       - name: Create zip files
-        run: ./create-fragment-zips.sh
-      - name: Create Release
-        id: create_release
-        uses: actions/create-release@v1
+        # Ensure it creates the zips using the safe default site scoping
+        run: ./create-fragment-zips.sh --all
+      
+      - name: Create Release and Upload Assets
+        uses: softprops/action-gh-release@v2
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: ${{ github.ref }}
-          release_name: Release ${{ github.ref }}
-          body: |
-            This is a release for ${{ github.ref }}
-          draft: false
-          prerelease: false
-          owner: peterrichards-lr
-          repo: liferay-fragments
-      - name: Upload Release Assets
-        uses: alexellis/upload-assets@0.4.0
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          asset_paths:
-            '["./zips/fragments/*.zip", "./zips/language/*.zip",
-            "./zips/showcase/*.zip", "./other-resources/*.zip"]'
+          name: Release ${{ github.ref_name }}
+          # Automatically mark as pre-release if the tag contains a hyphen (e.g., v1.0.0-rc.1)
+          prerelease: ${{ contains(github.ref_name, '-') }}
+          generate_release_notes: true
+          files: |
+            ./zips/fragments/*.zip
+            ./zips/language/*.zip
+            ./zips/showcase/*.zip
+            ./other-resources/*.zip
