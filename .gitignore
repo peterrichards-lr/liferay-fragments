@@ -20,6 +20,7 @@ state.json
 generated-test-pages.json
 /docs/test-results
 *.png
+!/docs/images/live/
 
 # License files
 *.xml

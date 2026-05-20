@@ -5,6 +5,7 @@ const { globSync } = require('glob');
 const DOCS_DIR = path.join(process.cwd(), 'docs');
 const GALLERY_FILE = path.join(DOCS_DIR, 'gallery.md');
 const IMAGES_DIR = path.join(DOCS_DIR, 'images');
+const LIVE_IMAGES_DIR = path.join(IMAGES_DIR, 'live');
 const SNAPSHOTS_DIR = path.join(process.cwd(), 'e2e-tests', 'snapshots');
 const TEST_RESULTS_DIR = path.join(DOCS_DIR, 'test-results');
 
@@ -14,6 +15,11 @@ const TEST_RESULTS_DIR = path.join(DOCS_DIR, 'test-results');
 function generateGallery() {
   // 1. Find all collections
   const collections = globSync('*/collection.json');
+
+  // Ensure live images directory exists
+  if (!fs.existsSync(LIVE_IMAGES_DIR)) {
+    fs.mkdirSync(LIVE_IMAGES_DIR, { recursive: true });
+  }
 
   // Determine latest tested version and status
   let testedVersion = 'Unknown';
@@ -84,7 +90,17 @@ function generateGallery() {
 
       if (testsPassed && fs.existsSync(e2eSnapshot)) {
         // Use the live E2E mobile snapshot if the test suite passed
-        imgPath = path.relative(DOCS_DIR, e2eSnapshot);
+        // Copy it to the tracked docs/images/live folder for portability
+        const safeCollectionName = collectionMetadata.name
+          .replace(/[^a-z0-9]+/gi, '-')
+          .toLowerCase();
+        const safeFragmentName = fragMetadata.name
+          .replace(/[^a-z0-9]+/gi, '-')
+          .toLowerCase();
+        const liveFileName = `${safeCollectionName}-${safeFragmentName}-mobile.png`;
+        const liveDest = path.join(LIVE_IMAGES_DIR, liveFileName);
+        fs.copyFileSync(e2eSnapshot, liveDest);
+        imgPath = `./images/live/${liveFileName}`;
       } else if (fs.existsSync(manualImg)) {
         imgPath = `./images/${fragSafeName}.png`;
       } else if (fs.existsSync(path.join(fragDir, 'screenshot.png'))) {

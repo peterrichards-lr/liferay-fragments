@@ -357,7 +357,7 @@ else
     while [ $WAIT_COUNT -lt $MAX_WAIT_FRAGMENTS ]; do
         # Match the pattern provided by the user: "Deployed ... successfully"
         # We use wc -l to ensure we always get a single clean integer, and xargs to trim whitespace
-        ACTUAL_ARTIFACTS=$(ldm logs -n 1000 "$PROJECT_NAME" liferay | grep -iE "Deployed .* successfully" | wc -l | xargs || echo 0)
+        ACTUAL_ARTIFACTS=$(docker logs --tail 1000 "$LIFERAY_CONTAINER" | grep -iE "Deployed .* successfully" | wc -l | xargs || echo 0)
         
         echo -ne "\r  -> Waiting for Fragments to be deployed... [$ACTUAL_ARTIFACTS/$EXPECTED_ARTIFACTS] "
         
@@ -375,7 +375,7 @@ else
     WAIT_COUNT=0
     while [ $WAIT_COUNT -lt $MAX_WAIT_CX ]; do
         # Use a more lenient pattern that matches the actual Bundle-SymbolicName
-        if ldm logs -n 500 "$PROJECT_NAME" liferay | grep -qE "STARTED.*(product-showcase|water-readings|modern-intranet)"; then
+        if docker logs --tail 500 "$LIFERAY_CONTAINER" | grep -qE "STARTED.*(product-showcase|water-readings|modern-intranet)"; then
             echo "  -> Showcase data detected."
             break
         fi
@@ -390,7 +390,7 @@ else
     SETTLE_COUNT=0
     while [ $SETTLE_COUNT -lt $MAX_SETTLE ]; do
         # Check if logs have slowed down (no new STARTED or Finished batch in last 10s)
-        NEW_LOGS=$(ldm logs -n 5 "$PROJECT_NAME" liferay | grep -iE "STARTED|Finished" | wc -l | xargs)
+        NEW_LOGS=$(docker logs --tail 5 "$LIFERAY_CONTAINER" | grep -iE "STARTED|Finished" | wc -l | xargs)
         if [ "$NEW_LOGS" -eq 0 ]; then
              echo "  -> System has settled."
              break
