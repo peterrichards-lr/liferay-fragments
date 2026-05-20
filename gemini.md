@@ -72,6 +72,13 @@
   - **Atomic Deployment**: Fragment ZIPs must be deployed via an atomic staging
     pattern (`cp` to `/tmp` -> `mv` to `/deploy`) to prevent `lchown` metadata
     race conditions in Docker.
+- **API Standards**:
+  - **JSON WS Prohibited**: Fragments and automation scripts MUST NOT use
+    Liferay's legacy `/api/jsonws` endpoints. Prioritize **REST**
+    (`/o/v1.0/...`) and **GraphQL** (`/o/graphql`) for all data operations.
+  - **Deprecated References**: The **'Module'** reference type (previously used
+    for certain layout elements) is non-functional and strictly prohibited. Use
+    `Fragment`, `Section`, or `Column` as defined in the modern schema.
 
 ### 7. Robust Identifier Validation
 
