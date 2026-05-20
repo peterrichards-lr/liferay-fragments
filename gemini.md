@@ -48,22 +48,32 @@
   the automated test suite (`scripts/test-runner.sh`).
 - **Infrastructure**: Provisioned via **Liferay Docker Manager (LDM)** using
   PostgreSQL, Sidecar, and Seeded mode.
+- **JVM Stability Rule**: To prevent JIT compiler stalls in 2026.Q1, the Liferay
+  container MUST be provisioned with at least `-Xmx4g` and
+  `-XX:ReservedCodeCacheSize=512m`.
 - **Responsive Standard**: Fragments must be tested across Desktop (1920x1080),
   Tablet (768x1024), and Mobile (375x812) viewports.
 - **Verification Criteria**: No fatal JS console errors (`TypeError`,
   `ReferenceError`) and successful rendering of the main wrapper.
-- **Auto-Deploy Scoping (2026.Q1 Workaround)**: Due to a confirmed bug in
-  Liferay 2026.Q1 LTS preventing system-wide deployments, ZIPs are currently
-  auto-deployed specifically to the **Guest** site (`companyWebId: liferay.com`,
-  `groupKey: Guest`). This should be reverted to **System-Wide**
-  (`companyWebId: "*"`) once fixed upstream. All ZIPs must use a **flattened**
-  directory structure to be registered by Liferay.
 
-- **API-Driven Scaffolding**: Test pages must be programmatically generated via
-  the **Headless Delivery API** (Page Management API) using
-  `pageType: 'content'` and `pageDefinition` payloads.
+### 6. Headless API & Scoping (Stability Rules)
 
-### 6. Robust Identifier Validation
+- **Payload Strictness**: `pageDefinition` JSON element types (Root, Section,
+  Row, Column, Fragment) MUST be **Capitalized**. Case-mismatch triggers a
+  `NullPointerException` in Java-side importers.
+- **Mandatory Metadata**: Row definitions MUST include `gutters: true` and
+  `columnsSpacing: true` to satisfy 2026.Q1 validation requirements.
+- **Scoping Rule**: When programmatically creating test pages, always use the
+  explicit `siteERC` in the fragment reference `siteKey` property.
+- **Race Condition Prevention**:
+  - **Sequential Creation**: Programmatic page creation MUST be executed
+    sequentially (one-by-one) with a minimum 1s stagger to prevent duplicate key
+    violations in the `PortalPreferenceValue` table.
+  - **Atomic Deployment**: Fragment ZIPs must be deployed via an atomic staging
+    pattern (`cp` to `/tmp` -> `mv` to `/deploy`) to prevent `lchown` metadata
+    race conditions in Docker.
+
+### 7. Robust Identifier Validation
 
 - **Requirement**: Use a strict validation helper (`isValidIdentifier()`) before
   using record IDs or ERCs in API calls.

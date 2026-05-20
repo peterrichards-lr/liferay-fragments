@@ -77,7 +77,43 @@ Stock" badges without manual editing.
 
 ---
 
-## 4. Dynamic Data Dashboards
+## 4. Custom Headless Search Layouts
+
+**Goal**: Create high-fidelity, brand-aligned search result lists using
+Liferay's Search Results widget and custom FTL templates.
+
+### The Pattern:
+
+Use the `liferay_ui["search-container"]` and
+`liferay_ui["search-container-row"]` tags within your fragment's FreeMarker to
+handle result iteration while retaining full control over the HTML structure.
+
+### Example Template (FTL):
+
+```html
+<@liferay_ui["search-container"]
+    id="searchContainer"
+    searchContainer="${searchContainer}"
+>
+    <@liferay_ui["search-container-row"]
+        className="com.liferay.portal.kernel.search.Document"
+        modelVar="document"
+    >
+        <div class="search-result-card">
+            <h4 class="title">${document.get("title")}</h4>
+            <div class="excerpt">${document.get("content")}</div>
+            <a class="btn btn-primary" href="${document.get("viewURL")}">
+                View Details
+            </a>
+        </div>
+    </@liferay_ui["search-container-row"]
+
+    <@liferay_ui["search-iterator"]
+        displayStyle="descriptive"
+        markupView="lexicon"
+    />
+</@liferay_ui["search-container"]
+```
 
 ---
 

@@ -135,12 +135,39 @@ Definition** API.
 
 ---
 
-## 5. UI & Layout
+## 6. Deployment & Infrastructure
 
-### Responsive Menus look broken on mobile
+### Fragments appear as "Empty Collections" in LDM
 
-- **Master Page Wrapper**: These fragments work best when placed inside a
-  Liferay Master Page. Ensure your master page has the standard Liferay
-  wrappers.
-- **CSS Collisions**: Your site's theme may be overriding the menu's CSS. Check
-  the "Style" tab in the fragment for overrides.
+If the collection name exists but the list of fragments is blank, it is likely
+due to a **Transaction Race Condition** during auto-deployment.
+
+- **Check DB Constraint**: Look in the Liferay logs for
+  `ERROR: duplicate key value violates unique constraint "ix_8cceb8cb"`.
+- **Cause**: Simultaneous processing of multiple fragment ZIPs can cause threads
+  to collide while initializing default portlet preferences.
+- **Solution**: Re-run the build using the `staging area` pattern (implemented
+  in `test-runner.sh`) which uses atomic `mv` operations to ensure Liferay only
+  sees one completed file at a time.
+
+### Error response from daemon: failed to Lchown
+
+- **Cause**: A race condition where Liferay's auto-deployer deletes a file
+  faster than `docker cp` can finalize its metadata.
+- **Solution**: Deploy ZIPs to a non-watched directory (like `/tmp/`) first,
+  then move them to `/deploy/` using `docker exec`.
+
+### 500 Internal Server Error during page creation
+
+If the E2E setup script fails with a 500 error while calling the Headless
+Delivery API:
+
+- **Check NullPointerException**: Look for `java.lang.NullPointerException` in
+  the logs pointing to `RowLayoutStructureItemImporter`.
+- **Cause**: This is usually a case-sensitivity issue in the JSON payload.
+  Elements like `Row` and `Column` must be **Capitalized**.
+- **Missing Properties**: Ensure mandatory row properties like `gutters` and
+  `columnsSpacing` are present in the JSON definition.
+- **CodeCache Full**: If you see `CodeCache is full. Compiler has been disabled`
+  in the logs, the JVM has stalled. Increase `ReservedCodeCacheSize` to 512m in
+  the LDM environment settings.

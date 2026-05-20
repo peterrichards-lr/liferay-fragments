@@ -700,6 +700,12 @@ Prominent visuals, such as videos or banners, that capture attention and define 
 
 --- 
 
+### Test Fragment (Manual Check)
+
+*No image available*
+
+--- 
+
 ### Trigger Ray
 
 ![Trigger Ray](./images/live/miscellaneous-trigger-ray-mobile.png)
