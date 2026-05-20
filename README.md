@@ -71,6 +71,8 @@ Explore our comprehensive documentation to get started:
   tokens.
 - **[⚙️ Setup & Prerequisites](./docs/setup.md)**: Mandatory Liferay
   configurations.
+- **[🔌 JSON WS Reference](./docs/json-ws-reference.md)**: Useful legacy API
+  endpoints for diagnostics.
 - **[❓ Troubleshooting & FAQ](./docs/troubleshooting.md)**: Solutions to common
   configuration issues.
 
