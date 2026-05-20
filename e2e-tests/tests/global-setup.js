@@ -138,13 +138,13 @@ async function globalSetup(config) {
   for (const file of fragmentFiles) {
     const fragmentData = JSON.parse(fs.readFileSync(file, 'utf8'));
     const fragmentName = fragmentData.name;
+
     // Liferay fragment keys are typically derived from the folder name or explicitly defined.
     let baseFragmentKey = fragmentData.key || path.basename(path.dirname(file));
 
     // Find the nearest collection.json
     let currentDir = path.dirname(file);
     let collectionName = 'Standalone';
-    let collectionDirName = '';
     let collectionFound = false;
 
     while (currentDir !== '..' && currentDir !== '/' && currentDir !== '.') {
@@ -152,7 +152,6 @@ async function globalSetup(config) {
       if (fs.existsSync(collectionFile)) {
         const collData = JSON.parse(fs.readFileSync(collectionFile, 'utf8'));
         collectionName = collData.name;
-        collectionDirName = path.basename(currentDir);
         collectionFound = true;
         break;
       }
@@ -166,19 +165,11 @@ async function globalSetup(config) {
       const parentDirName = path.basename(path.dirname(path.dirname(file)));
       if (parentDirName !== 'fragments' && parentDirName !== '..') {
         collectionName = parentDirName;
-        collectionDirName = parentDirName;
       }
     }
 
-    // Crucial Fix: Liferay prefixes the fragment key with the collection's directory name when importing ZIPs
-    let fragmentKey = baseFragmentKey;
-    if (
-      collectionDirName &&
-      collectionDirName !== 'Standalone' &&
-      collectionDirName !== '.'
-    ) {
-      fragmentKey = `${collectionDirName}-${baseFragmentKey}`;
-    }
+    // Correct fragment key as verified in Liferay DB
+    const fragmentKey = baseFragmentKey;
 
     const pageTitle = `Test: ${fragmentName}`;
     const sanitizedKey = baseFragmentKey
@@ -192,7 +183,7 @@ async function globalSetup(config) {
     );
 
     // payload based on Liferay Page Management API (LPD-35443)
-    // Reverted to Capitalized types to match Liferay official schema and docs
+    // Hardened based on inspecting manually created pages on Liferay 2026.Q1
     const payload = {
       title: pageTitle,
       friendlyUrlPath: friendlyUrl,
@@ -228,8 +219,9 @@ async function globalSetup(config) {
                           definition: {
                             fragment: {
                               key: fragmentKey,
-                              fragmentEntryKey: fragmentKey,
+                              siteKey: 'Guest',
                             },
+                            indexed: true,
                           },
                         },
                       ],
