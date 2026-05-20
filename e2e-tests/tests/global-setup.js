@@ -45,6 +45,25 @@ async function globalSetup(config) {
     );
   }
 
+  // Handle "Terms of Use" page if it appears
+  try {
+    if (page.url().includes('update_terms_of_use')) {
+      console.log('Terms of Use page detected. Attempting to accept...');
+      const agreeButton = page.locator(
+        'button:has-text("I Agree"), input[value="I Agree"]'
+      );
+      if ((await agreeButton.count()) > 0) {
+        await Promise.all([
+          page.waitForNavigation({ waitUntil: 'networkidle' }),
+          agreeButton.first().click(),
+        ]);
+        console.log('Terms of Use accepted.');
+      }
+    }
+  } catch (e) {
+    console.warn('Error while trying to accept Terms of Use:', e);
+  }
+
   // Wait for navigation or a known element on the dashboard to confirm login
   try {
     await page.waitForSelector('.control-menu, .c-admin-user-personal-bar', {
