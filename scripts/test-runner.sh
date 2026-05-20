@@ -58,13 +58,6 @@ if [ "$VERBOSE" = true ]; then echo " Verbose Mode: Enabled"; fi
 echo " (Press Ctrl+C to safely abort and cleanup at any time)"
 echo "======================================================"
 
-# 0. CI Safeguard
-if [ "$CI" = "true" ] || [ "$GITHUB_ACTIONS" = "true" ]; then
-    echo "Notice: This script is intended for local execution only due to high computational load."
-    echo "Skipping execution in CI/GitHub Actions."
-    exit 0
-fi
-
 # 1. Dependency Validation (Fail Fast)
 echo "[1/5] Validating dependencies..."
 
