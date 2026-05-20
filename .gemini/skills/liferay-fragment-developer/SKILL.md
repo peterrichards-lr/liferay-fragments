@@ -79,6 +79,29 @@ standards for building robust, modern Liferay Fragments.
   explaining the reason and recommending modern alternatives.
 - **Audit**: Mark the fragment as `DEPR` in the `todo.md` readiness audit.
 
+### 4. Verification & Testing (Mandatory Gate)
+
+Every new or significantly modified fragment MUST pass the automated E2E gate
+before being considered "Done".
+
+- **Playwright-First Verification**:
+  - Run the test suite: `./scripts/test-runner.sh -k`.
+  - Ensure the fragment renders its full UI across Desktop, Tablet, and Mobile.
+  - Verify that no "Fragment is unavailable" errors appear in the screenshots.
+- **Headless API Payload Strictness**:
+  - When programmatically creating test pages, the `pageDefinition` JSON MUST
+    use **Capitalized** element types (`Root`, `Section`, `Row`, `Column`,
+    `Fragment`).
+  - Fragment references MUST use the nested structure:
+    `"fragment": { "key": "fragment-key", "siteKey": "site-erc" }`.
+- **JSON WS Registration Check**:
+  - Use the `fragment.fragmententry/get-fragment-entries` JSON WS endpoint
+    during setup to verify the ZIP was actually registered by the database.
+- **Visual Gallery Sync**:
+  - After a successful test pass (`Status: Completed`), manually run
+    `node scripts/generate-gallery.js` to update the visual documentation with
+    the new Playwright snapshots.
+
 ## Specialized Skills
 
 - **[Liferay Form Fragment Developer](liferay-form-fragment-developer)**: Use
@@ -89,6 +112,10 @@ standards for building robust, modern Liferay Fragments.
 
 - **[Lifecycle & Environment](./references/lifecycle.md)**: Global objects,
   initialization, and FreeMarker rules.
+- **[Verification & E2E Strategy](../../../docs/automated-testing.md)**:
+  Playwright lifecycle, responsive standards, and automated cleanup.
+- **[Headless API & JSON WS](../../../docs/json-ws-reference.md)**: Modern REST
+  prioritization and legacy verification endpoints.
 - **[Best Practices](./references/best-practices.md)**: Configuration nesting,
   dependencies, and scoping.
 - **[UI & Interaction](./references/ui-standards.md)**: Edit mode hygiene,

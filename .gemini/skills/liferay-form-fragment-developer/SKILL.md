@@ -46,6 +46,20 @@ for building Liferay Form Fragments (Liferay 7.4 U45+).
 - **General Fragment Standards**: Adhere to the core architectural standards
   defined in the base reference guides.
 
+### 3. Verification & Visual Standards
+
+All form fragments must be visually and functionally verified in a live
+environment before release.
+
+- **E2E Gate**: Execute the automated test suite using
+  `./scripts/test-runner.sh`.
+- **Validation**: Ensure that `input.errorMessage` displays correctly when
+  invalid data is provided. Verify this in the Playwright logs/snapshots.
+- **Rendering**: Confirm the fragment appears within its Form Container and is
+  not replaced by Liferay's fallback text.
+- **Gallery Inclusion**: Once verified, run `node scripts/generate-gallery.js`
+  to add the mobile render to the repository's documentation.
+
 ## Reference Guides
 
 ### Form Specifics
@@ -57,6 +71,10 @@ for building Liferay Form Fragments (Liferay 7.4 U45+).
 
 ### Shared Fragment Architecture
 
+- **[Verification & E2E Strategy](../../../docs/automated-testing.md)**:
+  Playwright lifecycle, responsive standards, and automated cleanup.
+- **[Headless API & JSON WS](../../../docs/json-ws-reference.md)**: Modern REST
+  prioritization and legacy verification endpoints.
 - **[Lifecycle & Environment](./references/lifecycle.md)**: Global objects,
   initialization, and FreeMarker rules.
 - **[Best Practices](./references/best-practices.md)**: Configuration nesting,
