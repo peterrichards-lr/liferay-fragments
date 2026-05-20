@@ -1,0 +1,54 @@
+name: E2E Integration Tests
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch: # Allows manual triggering from the GitHub UI
+
+jobs:
+  playwright-ldm:
+    name: Playwright Tests (LDM)
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install Project Dependencies
+        run: npm ci
+
+      - name: Install Playwright Browsers
+        run: npx playwright install --with-deps
+
+      - name: Install Latest LDM (Liferay Docker Manager)
+        run: npm install -g liferay-docker-manager@latest
+
+      - name: Provide Dummy LDM License
+        # The test runner checks for an XML file in ~/.ldm/common/ to authorize DXP startup
+        run: |
+          mkdir -p ~/.ldm/common/
+          echo "<license>Dummy License for CI</license>" > ~/.ldm/common/dummy-license.xml
+
+      - name: Run E2E Test Suite
+        # test-runner.sh handles building ZIPs, provisioning LDM, deploying, and triggering Playwright
+        run: ./scripts/test-runner.sh
+
+      - name: Upload Test Artifacts
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-failure-artifacts
+          path: |
+            e2e-tests/playwright-report/
+            e2e-tests/playwright_output.log
+            docs/test-results/
+            e2e-tests/snapshots/
+          retention-days: 7
