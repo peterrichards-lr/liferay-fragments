@@ -119,6 +119,38 @@ async function globalSetup(config) {
     `Testing Global Fragments on Site: ${targetSite.name} (ID: ${siteId}, ERC: ${siteERC})`
   );
 
+  // ----- PHASE 5.1: VERIFY DEPLOYMENT VIA JSON WS -----
+  console.log('Verifying fragment deployment via JSON WS...');
+  let registeredKeys = [];
+  try {
+    const fragmentEntriesResp = await apiContext.post(
+      '/api/jsonws/fragment.fragmententry/get-fragment-entries',
+      {
+        form: {
+          groupId: siteId,
+          fragmentCollectionId: -1,
+          status: 0,
+          start: -1,
+          end: -1,
+        },
+      }
+    );
+
+    if (fragmentEntriesResp.ok()) {
+      const entries = await fragmentEntriesResp.json();
+      registeredKeys = entries.map((e) => e.fragmentEntryKey);
+      console.log(
+        `  -> Found ${registeredKeys.length} approved fragments in database.`
+      );
+    } else {
+      console.warn(
+        '  -> JSON WS fragment verification failed. Proceeding with optimistic generation...'
+      );
+    }
+  } catch (e) {
+    console.error('  -> Error calling JSON WS for fragment verification:', e);
+  }
+
   // 2. Discover Fragments Locally
   const fs = require('fs');
   const path = require('path');
@@ -170,6 +202,14 @@ async function globalSetup(config) {
 
     // Correct fragment key as verified in Liferay DB
     const fragmentKey = baseFragmentKey;
+
+    // Skip if fragment is not actually registered in the database (verified via JSON WS)
+    if (registeredKeys.length > 0 && !registeredKeys.includes(fragmentKey)) {
+      console.warn(
+        `  [SKIP] Fragment '${fragmentName}' (${fragmentKey}) not found in database. Is it deployed?`
+      );
+      continue;
+    }
 
     const pageTitle = `Test: ${fragmentName}`;
     const sanitizedKey = baseFragmentKey

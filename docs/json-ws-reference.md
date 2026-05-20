@@ -68,21 +68,51 @@ Fetch the full page tree for a site.
 
 ---
 
-## 4. User & Auth Diagnostics
+## 4. System & Version Diagnostics
 
-Verifying credentials and permissions.
+Verifying the environment state and Liferay version.
 
-### `UserService.get-user-by-email-address`
+### `PortalService.get-version`
 
-Retrieve user metadata via email.
+Retrieve the literal version string of the portal.
 
-- **Parameters**: `companyId`, `emailAddress`
-- **Use Case**: Resolving the technical `userId` for audit logs or permission
-  checks.
+- **Use Case**: Automatically populating the "Tested Against" version in
+  documentation.
+
+### `PortalService.get-build-number`
+
+Retrieve the internal build number.
+
+- **Use Case**: Conditional logic in tests that target specific Liferay Fix
+  Packs or Updates.
 
 ---
 
-## 5. Usage & Authentication
+## 5. E2E Test Verification (The "E2E Bridge")
+
+While REST/GraphQL are used for data creation, JSON WS is permitted in the E2E
+suite for low-level environment verification.
+
+### Scenario A: Confirming Deployment Success
+
+Before creating test pages, use `FragmentEntryService.get-fragment-entries` to
+verify that the Auto-Deployer has actually registered the fragments in the
+database.
+
+- **Verification**: Ensure the `fragmentEntryKey` exists and the `status` is `0`
+  (Approved).
+
+### Scenario B: Confirming Page Integrity
+
+After page creation, use `LayoutService.get-layouts` to audit the technical
+layout metadata.
+
+- **Verification**: Confirm that the layout's `typeSettings` contains the
+  expected fragment links and no raw placeholder text remains.
+
+---
+
+## 6. Usage & Authentication
 
 All JSON WS endpoints are accessible via: `http://localhost:8080/api/jsonws`
 
