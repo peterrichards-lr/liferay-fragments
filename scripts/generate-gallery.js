@@ -15,8 +15,10 @@ function generateGallery() {
   // 1. Find all collections
   const collections = globSync('*/collection.json');
 
-  // Determine latest tested version
+  // Determine latest tested version and status
   let testedVersion = 'Unknown';
+  let testsPassed = false;
+
   if (fs.existsSync(TEST_RESULTS_DIR)) {
     const resultFiles = globSync(`${TEST_RESULTS_DIR}/results-*.md`);
     if (resultFiles.length > 0) {
@@ -26,17 +28,28 @@ function generateGallery() {
           fs.statSync(b).mtime.getTime() - fs.statSync(a).mtime.getTime()
       );
       const latestResult = fs.readFileSync(resultFiles[0], 'utf8');
+
       const versionMatch = latestResult.match(
         /- \*\*Realised Version\*\*: (.*)/
       );
       if (versionMatch) {
         testedVersion = versionMatch[1].trim();
       }
+
+      // Safeguard: Only use snapshots if the test suite completed successfully
+      const statusMatch = latestResult.match(/- \*\*Status\*\*: (.*)/);
+      if (statusMatch && statusMatch[1].trim() === 'Completed') {
+        testsPassed = true;
+      }
     }
   }
 
   let markdown = `# Fragment Visual Gallery\n\nA visual reference for the high-fidelity fragments available in this Liferay DXP repository. Generated automatically.\n\n`;
-  markdown += `**Last Tested Against Liferay Version:** \`${testedVersion}\`\n\n`;
+  markdown += `**Last Tested Against Liferay Version:** \`${testedVersion}\`\n`;
+  if (!testsPassed) {
+    markdown += `*(Note: Live snapshots disabled due to pending or failed test suite)*\n`;
+  }
+  markdown += `\n`;
 
   collections.sort().forEach((collectionFile) => {
     const collectionDir = path.dirname(collectionFile);
@@ -69,8 +82,8 @@ function generateGallery() {
         `${fragMetadata.name}-mobile.png`
       );
 
-      if (fs.existsSync(e2eSnapshot)) {
-        // Use the live E2E mobile snapshot if available
+      if (testsPassed && fs.existsSync(e2eSnapshot)) {
+        // Use the live E2E mobile snapshot if the test suite passed
         imgPath = path.relative(DOCS_DIR, e2eSnapshot);
       } else if (fs.existsSync(manualImg)) {
         imgPath = `./images/${fragSafeName}.png`;
