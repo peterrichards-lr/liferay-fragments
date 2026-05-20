@@ -7,6 +7,11 @@ on:
     branches: [main]
   workflow_dispatch: # Allows manual triggering from the GitHub UI
 
+# Optimize resources by canceling redundant runs for the same branch/PR
+concurrency:
+  group: e2e-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   playwright-ldm:
     name: Playwright Tests (LDM)
