@@ -285,6 +285,7 @@ async function globalSetup(config) {
 
     let success = false;
     let attempts = 0;
+    let pageId = null;
     const maxAttempts = 3;
 
     while (attempts < maxAttempts && !success) {
@@ -302,6 +303,7 @@ async function globalSetup(config) {
         if (responseJson.friendlyUrlPath) {
           friendlyUrl = responseJson.friendlyUrlPath;
         }
+        pageId = responseJson.id;
       } else {
         const body = await createResp.text();
         if (body.includes('Duplicate')) {
@@ -326,6 +328,7 @@ async function globalSetup(config) {
       collectionName: collectionName,
       fragmentName: fragmentName,
       url: friendlyUrl,
+      id: pageId,
     });
   }
 

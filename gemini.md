@@ -117,6 +117,27 @@
   fragment-to-fragment communication with `{ sticky: true }` for broadcasts and
   `{ replay: true }` for subscribers.
 
+## E2E Testing Philosophy
+
+### 1. Playwright-First Strategy
+
+Playwright is the primary engine for all functional and visual E2E verification.
+Tests must focus on:
+
+- **Responsive Rendering**: Ensuring fragments scale across viewports.
+- **Visual Regression**: Capturing snapshots to detect unintended UI drift.
+- **Client-Side Logic**: Verifying Event Bus, Discovery, and API interactions.
+
+### 2. The "Clean Data" Principle
+
+Following Liferay's core engineering standards, every test run MUST clean up
+after itself.
+
+- **Automated Teardown**: All programmatically created test pages must be
+  deleted via the Headless Delivery API in the `global-teardown.js` phase.
+- **Clutter Prevention**: This ensures CI environments remain stable and
+  accessible without thousands of orphaned test pages.
+
 ## Build & Deployment
 
 - **create-fragment-zips.sh**: Automates the generation of flattened,

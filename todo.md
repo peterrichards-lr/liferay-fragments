@@ -233,13 +233,17 @@ typography.
 
 - [x] **Adopt Theme Tokens**: Replace hardcoded values with Meridian CSS
       variables.
-  - [x] **Colors**: Use `var(--primary)`, `var(--secondary)`,
-        `var(--body-color)`, `var(--body-bg)`, etc.
-    - [x] `finance/fragments/loan-calculator/index.css`
-    - [x] `commerce/fragments/dynamic-badge-overlay/index.css`
-    - [x] `header-components/fragments/navigation/index.css`
-    - [x] `layout-components/fragments/primary-card/index.css`
-    - [x] `layout-components/fragments/secondary-card/index.css`
+- [ ] **Align with Clay UI Standards**: Refactor
+      `form-fragments/fragments/toggle-switch` to use the standard Clay HTML
+      structure (Snippet 17: `toggle-switch-check`, `toggle-switch-bar`,
+      `toggle-switch-handle`) instead of the current custom CSS slider.
+- [x] **Colors**: Use `var(--primary)`, `var(--secondary)`, `var(--body-color)`,
+      `var(--body-bg)`, etc.
+  - [x] `finance/fragments/loan-calculator/index.css`
+  - [x] `commerce/fragments/dynamic-badge-overlay/index.css`
+  - [x] `header-components/fragments/navigation/index.css`
+  - [x] `layout-components/fragments/primary-card/index.css`
+  - [x] `layout-components/fragments/secondary-card/index.css`
   - [x] **Spacers**: Use `var(--spacer-1)` through `var(--spacer-10)` instead of
         absolute `rem` or `px` values.
     - [x] `finance/fragments/loan-calculator/index.css`
