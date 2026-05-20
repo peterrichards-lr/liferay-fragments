@@ -226,7 +226,10 @@ async function globalSetup(config) {
                         {
                           type: 'Fragment',
                           definition: {
-                            fragmentEntryKey: fragmentKey,
+                            fragment: {
+                              key: fragmentKey,
+                              fragmentEntryKey: fragmentKey,
+                            },
                           },
                         },
                       ],
