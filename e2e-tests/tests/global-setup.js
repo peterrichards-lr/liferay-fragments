@@ -195,9 +195,8 @@ async function globalSetup(config) {
             {
               type: 'Section',
               definition: {
-                layout: {
-                  widthType: 'Fluid',
-                },
+                indexed: true,
+                layout: {},
               },
               pageElements: [
                 {
@@ -219,8 +218,10 @@ async function globalSetup(config) {
                           definition: {
                             fragment: {
                               key: fragmentKey,
-                              siteKey: 'Guest',
+                              siteKey: siteERC,
                             },
+                            fragmentConfig: {},
+                            fragmentFields: [],
                             indexed: true,
                           },
                         },
@@ -231,6 +232,10 @@ async function globalSetup(config) {
               ],
             },
           ],
+        },
+        settings: {
+          colorSchemeName: '01',
+          themeName: 'Classic',
         },
       },
     };
