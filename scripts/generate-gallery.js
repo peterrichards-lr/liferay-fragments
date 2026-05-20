@@ -5,6 +5,8 @@ const { globSync } = require('glob');
 const DOCS_DIR = path.join(process.cwd(), 'docs');
 const GALLERY_FILE = path.join(DOCS_DIR, 'gallery.md');
 const IMAGES_DIR = path.join(DOCS_DIR, 'images');
+const SNAPSHOTS_DIR = path.join(process.cwd(), 'e2e-tests', 'snapshots');
+const TEST_RESULTS_DIR = path.join(DOCS_DIR, 'test-results');
 
 /**
  * Fragment Gallery Generator Logic
@@ -13,7 +15,28 @@ function generateGallery() {
   // 1. Find all collections
   const collections = globSync('*/collection.json');
 
+  // Determine latest tested version
+  let testedVersion = 'Unknown';
+  if (fs.existsSync(TEST_RESULTS_DIR)) {
+    const resultFiles = globSync(`${TEST_RESULTS_DIR}/results-*.md`);
+    if (resultFiles.length > 0) {
+      // Sort by modified time descending to get the latest
+      resultFiles.sort(
+        (a, b) =>
+          fs.statSync(b).mtime.getTime() - fs.statSync(a).mtime.getTime()
+      );
+      const latestResult = fs.readFileSync(resultFiles[0], 'utf8');
+      const versionMatch = latestResult.match(
+        /- \*\*Realised Version\*\*: (.*)/
+      );
+      if (versionMatch) {
+        testedVersion = versionMatch[1].trim();
+      }
+    }
+  }
+
   let markdown = `# Fragment Visual Gallery\n\nA visual reference for the high-fidelity fragments available in this Liferay DXP repository. Generated automatically.\n\n`;
+  markdown += `**Last Tested Against Liferay Version:** \`${testedVersion}\`\n\n`;
 
   collections.sort().forEach((collectionFile) => {
     const collectionDir = path.dirname(collectionFile);
@@ -40,8 +63,16 @@ function generateGallery() {
 
       let imgPath = '';
       const manualImg = path.join(IMAGES_DIR, `${fragSafeName}.png`);
+      const e2eSnapshot = path.join(
+        SNAPSHOTS_DIR,
+        collectionMetadata.name,
+        `${fragMetadata.name}-mobile.png`
+      );
 
-      if (fs.existsSync(manualImg)) {
+      if (fs.existsSync(e2eSnapshot)) {
+        // Use the live E2E mobile snapshot if available
+        imgPath = path.relative(DOCS_DIR, e2eSnapshot);
+      } else if (fs.existsSync(manualImg)) {
         imgPath = `./images/${fragSafeName}.png`;
       } else if (fs.existsSync(path.join(fragDir, 'screenshot.png'))) {
         imgPath = path.relative(DOCS_DIR, path.join(fragDir, 'screenshot.png'));

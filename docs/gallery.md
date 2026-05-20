@@ -2,6 +2,8 @@
 
 A visual reference for the high-fidelity fragments available in this Liferay DXP repository. Generated automatically.
 
+**Last Tested Against Liferay Version:** `2026.q1.7-lts`
+
 ## Aura Design System
 
 A lifestyle-focused design system with a scoped container architecture, high-fidelity design tokens, and modern product showcase components.
