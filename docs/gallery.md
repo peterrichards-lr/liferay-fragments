@@ -3,6 +3,7 @@
 A visual reference for the high-fidelity fragments available in this Liferay DXP repository. Generated automatically.
 
 **Last Tested Against Liferay Version:** `2026.q1.7-lts`
+*(Note: Live snapshots disabled due to pending or failed test suite)*
 
 ## Aura Design System
 
@@ -10,31 +11,31 @@ A lifestyle-focused design system with a scoped container architecture, high-fid
 
 ### Aura - Final CTA Banner
 
-![Aura - Final CTA Banner](./images/live/aura-design-system-aura-final-cta-banner-mobile.png)
+![Aura - Final CTA Banner](../aura/fragments/aura-final-cta/thumbnail.png)
 
 --- 
 
 ### Aura - Lookbook Row
 
-![Aura - Lookbook Row](./images/live/aura-design-system-aura-lookbook-row-mobile.png)
+![Aura - Lookbook Row](../aura/fragments/aura-lookbook/thumbnail.png)
 
 --- 
 
 ### Aura - Product Gallery
 
-![Aura - Product Gallery](./images/live/aura-design-system-aura-product-gallery-mobile.png)
+![Aura - Product Gallery](../aura/fragments/aura-product-gallery/thumbnail.png)
 
 --- 
 
 ### Aura - Scoped Container
 
-![Aura - Scoped Container](./images/live/aura-design-system-aura-scoped-container-mobile.png)
+![Aura - Scoped Container](../aura/fragments/aura-scoped-container/thumbnail.png)
 
 --- 
 
 ### Aura - USP Grid
 
-![Aura - USP Grid](./images/live/aura-design-system-aura-usp-grid-mobile.png)
+![Aura - USP Grid](../aura/fragments/aura-usp-grid/thumbnail.png)
 
 --- 
 
@@ -42,7 +43,7 @@ A lifestyle-focused design system with a scoped container architecture, high-fid
 
 ### Dynamic Badge Overlay
 
-![Dynamic Badge Overlay](./images/live/commerce-dynamic-badge-overlay-mobile.png)
+![Dynamic Badge Overlay](./images/dynamic-badge-overlay.png)
 
 [Detailed Documentation](./fragments/dynamic-badge-overlay.md)
 
@@ -50,7 +51,7 @@ A lifestyle-focused design system with a scoped container architecture, high-fid
 
 ### Purchased Products
 
-![Purchased Products](./images/live/commerce-purchased-products-mobile.png)
+![Purchased Products](../commerce/fragments/purchased-products/thumbnail.png)
 
 [Detailed Documentation](./fragments/purchased-products.md)
 
@@ -60,7 +61,7 @@ A lifestyle-focused design system with a scoped container architecture, high-fid
 
 ### Content Map
 
-![Content Map](./images/live/content-content-map-mobile.png)
+![Content Map](./images/content-map.png)
 
 [Detailed Documentation](./fragments/content-map.md)
 
@@ -68,7 +69,7 @@ A lifestyle-focused design system with a scoped container architecture, high-fid
 
 ### Service Card
 
-![Service Card](./images/live/content-service-card-mobile.png)
+![Service Card](../content/fragments/service-card/thumbnail.png)
 
 [Detailed Documentation](./fragments/service-card.md)
 
@@ -76,7 +77,7 @@ A lifestyle-focused design system with a scoped container architecture, high-fid
 
 ### Service Icon
 
-![Service Icon](./images/live/content-service-icon-mobile.png)
+![Service Icon](../content/fragments/service-icon/thumbnail.png)
 
 [Detailed Documentation](./fragments/service-icon.md)
 
@@ -84,7 +85,7 @@ A lifestyle-focused design system with a scoped container architecture, high-fid
 
 ### Service Link Button
 
-![Service Link Button](./images/live/content-service-link-button-mobile.png)
+*No image available*
 
 [Detailed Documentation](./fragments/service-link-button.md)
 
@@ -94,7 +95,7 @@ A lifestyle-focused design system with a scoped container architecture, high-fid
 
 ### Dashboard Container
 
-![Dashboard Container](./images/live/heathcare-portal-dashboard-container-mobile.png)
+*No image available*
 
 [Detailed Documentation](./fragments/dashboard-container.md)
 
@@ -102,7 +103,7 @@ A lifestyle-focused design system with a scoped container architecture, high-fid
 
 ### Dashboard Filter
 
-![Dashboard Filter](./images/live/heathcare-portal-dashboard-filter-mobile.png)
+*No image available*
 
 [Detailed Documentation](./fragments/dashboard-filter.md)
 
@@ -112,7 +113,7 @@ A lifestyle-focused design system with a scoped container architecture, high-fid
 
 ### Date Display (Collection Display) (DEPRECATED)
 
-![Date Display (Collection Display) (DEPRECATED)](./images/live/date-display-date-display-collection-display-deprecated--mobile.png)
+![Date Display (Collection Display) (DEPRECATED)](../date-display/fragments/date-display-collection-display/thumbnail.png)
 
 [Detailed Documentation](./fragments/date-display-collection-display.md)
 
@@ -120,7 +121,7 @@ A lifestyle-focused design system with a scoped container architecture, high-fid
 
 ### Data Display (Static) (DEPRECATED)
 
-![Data Display (Static) (DEPRECATED)](./images/live/date-display-data-display-static-deprecated--mobile.png)
+![Data Display (Static) (DEPRECATED)](../date-display/fragments/date-display-static/thumbnail.png)
 
 [Detailed Documentation](./fragments/date-display-static.md)
 
@@ -130,7 +131,7 @@ A lifestyle-focused design system with a scoped container architecture, high-fid
 
 ### Loan Application Calculator
 
-![Loan Application Calculator](./images/live/finance-loan-application-calculator-mobile.png)
+![Loan Application Calculator](./images/loan-application-calculator.png)
 
 [Detailed Documentation](./fragments/loan-application-calculator.md)
 
@@ -138,7 +139,7 @@ A lifestyle-focused design system with a scoped container architecture, high-fid
 
 ### Loan Calculator
 
-![Loan Calculator](./images/live/finance-loan-calculator-mobile.png)
+![Loan Calculator](./images/loan-calculator.png)
 
 [Detailed Documentation](./fragments/loan-calculator.md)
 
@@ -148,13 +149,13 @@ A lifestyle-focused design system with a scoped container architecture, high-fid
 
 ### Address Autocomplete
 
-![Address Autocomplete](./images/live/forms-fragments-address-autocomplete-mobile.png)
+*No image available*
 
 --- 
 
 ### Autocomplete (Object)
 
-![Autocomplete (Object)](./images/live/forms-fragments-autocomplete-object--mobile.png)
+![Autocomplete (Object)](../form-fragments/fragments/autocomplete-(object)/thumbnail.png)
 
 [Detailed Documentation](./fragments/autocomplete-(object).md)
 
@@ -162,7 +163,7 @@ A lifestyle-focused design system with a scoped container architecture, high-fid
 
 ### Autocomplete (Picklist)
 
-![Autocomplete (Picklist)](./images/live/forms-fragments-autocomplete-picklist--mobile.png)
+![Autocomplete (Picklist)](../form-fragments/fragments/autocomplete-(picklist)/thumbnail.png)
 
 [Detailed Documentation](./fragments/autocomplete-(picklist).md)
 
@@ -170,13 +171,13 @@ A lifestyle-focused design system with a scoped container architecture, high-fid
 
 ### Color Swatches
 
-![Color Swatches](./images/live/forms-fragments-color-swatches-mobile.png)
+*No image available*
 
 --- 
 
 ### Confirmation Field
 
-![Confirmation Field](./images/live/forms-fragments-confirmation-field-mobile.png)
+![Confirmation Field](../form-fragments/fragments/confirmation-field/thumbnail.png)
 
 [Detailed Documentation](./fragments/confirmation-field.md)
 
@@ -184,19 +185,19 @@ A lifestyle-focused design system with a scoped container architecture, high-fid
 
 ### Currency Masked Input
 
-![Currency Masked Input](./images/live/forms-fragments-currency-masked-input-mobile.png)
+*No image available*
 
 --- 
 
 ### File Drop Zone
 
-![File Drop Zone](./images/live/forms-fragments-file-drop-zone-mobile.png)
+*No image available*
 
 --- 
 
 ### Hidden Relationship
 
-![Hidden Relationship](./images/live/forms-fragments-hidden-relationship-mobile.png)
+![Hidden Relationship](./images/hidden-relationship.png)
 
 [Detailed Documentation](./fragments/hidden-relationship.md)
 
@@ -204,13 +205,13 @@ A lifestyle-focused design system with a scoped container architecture, high-fid
 
 ### Image Choice
 
-![Image Choice](./images/live/forms-fragments-image-choice-mobile.png)
+*No image available*
 
 --- 
 
 ### Listbox Multiselect
 
-![Listbox Multiselect](./images/live/forms-fragments-listbox-multiselect-mobile.png)
+![Listbox Multiselect](./images/listbox-multiselect.png)
 
 [Detailed Documentation](./fragments/listbox-multiselect.md)
 
@@ -218,19 +219,19 @@ A lifestyle-focused design system with a scoped container architecture, high-fid
 
 ### OTP / Verification Code
 
-![OTP / Verification Code](./images/live/forms-fragments-otp-verification-code-mobile.png)
+*No image available*
 
 --- 
 
 ### Password Strength
 
-![Password Strength](./images/live/forms-fragments-password-strength-mobile.png)
+*No image available*
 
 --- 
 
 ### Range
 
-![Range](./images/live/forms-fragments-range-mobile.png)
+![Range](../form-fragments/fragments/range/thumbnail.png)
 
 [Detailed Documentation](./fragments/range.md)
 
@@ -238,7 +239,7 @@ A lifestyle-focused design system with a scoped container architecture, high-fid
 
 ### Segmented Numeric
 
-![Segmented Numeric](./images/live/forms-fragments-segmented-numeric-mobile.png)
+![Segmented Numeric](./images/segmented-numeric.png)
 
 [Detailed Documentation](./fragments/segmented-numeric.md)
 
@@ -246,13 +247,13 @@ A lifestyle-focused design system with a scoped container architecture, high-fid
 
 ### Signature Pad
 
-![Signature Pad](./images/live/forms-fragments-signature-pad-mobile.png)
+*No image available*
 
 --- 
 
 ### Star Rating
 
-![Star Rating](./images/live/forms-fragments-star-rating-mobile.png)
+![Star Rating](./images/star-rating.png)
 
 [Detailed Documentation](./fragments/star-rating.md)
 
@@ -260,7 +261,7 @@ A lifestyle-focused design system with a scoped container architecture, high-fid
 
 ### Submit Button (Confirmation)
 
-![Submit Button (Confirmation)](./images/live/forms-fragments-submit-button-confirmation--mobile.png)
+*No image available*
 
 [Detailed Documentation](./fragments/submit-button.md)
 
@@ -268,7 +269,7 @@ A lifestyle-focused design system with a scoped container architecture, high-fid
 
 ### Toggle Switch
 
-![Toggle Switch](./images/live/forms-fragments-toggle-switch-mobile.png)
+![Toggle Switch](./images/toggle-switch.png)
 
 [Detailed Documentation](./fragments/toggle-switch.md)
 
@@ -276,7 +277,7 @@ A lifestyle-focused design system with a scoped container architecture, high-fid
 
 ### URL Populated Hidden Relationship
 
-![URL Populated Hidden Relationship](./images/live/forms-fragments-url-populated-hidden-relationship-mobile.png)
+*No image available*
 
 [Detailed Documentation](./fragments/url-populated-hidden-relationship.md)
 
@@ -284,7 +285,7 @@ A lifestyle-focused design system with a scoped container architecture, high-fid
 
 ### User Attribute
 
-![User Attribute](./images/live/forms-fragments-user-attribute-mobile.png)
+*No image available*
 
 [Detailed Documentation](./fragments/user-field.md)
 
@@ -294,7 +295,7 @@ A lifestyle-focused design system with a scoped container architecture, high-fid
 
 ### Form Populator (DEPRECATED)
 
-![Form Populator (DEPRECATED)](./images/live/forms-form-populator-deprecated--mobile.png)
+![Form Populator (DEPRECATED)](./images/form-populator.png)
 
 [Detailed Documentation](./fragments/form-populator.md)
 
@@ -302,7 +303,7 @@ A lifestyle-focused design system with a scoped container architecture, high-fid
 
 ### Link Form to Applicant
 
-![Link Form to Applicant](./images/live/forms-link-form-to-applicant-mobile.png)
+*No image available*
 
 [Detailed Documentation](./fragments/form-session-id.md)
 
@@ -310,7 +311,7 @@ A lifestyle-focused design system with a scoped container architecture, high-fid
 
 ### Generate Form Session Id
 
-![Generate Form Session Id](./images/live/forms-generate-form-session-id-mobile.png)
+*No image available*
 
 [Detailed Documentation](./fragments/generate-form-session-id.md)
 
@@ -318,7 +319,7 @@ A lifestyle-focused design system with a scoped container architecture, high-fid
 
 ### Masthead Call to Action Form Holder
 
-![Masthead Call to Action Form Holder](./images/live/forms-masthead-call-to-action-form-holder-mobile.png)
+*No image available*
 
 [Detailed Documentation](./fragments/masthead-call-to-action-form-header.md)
 
@@ -326,7 +327,7 @@ A lifestyle-focused design system with a scoped container architecture, high-fid
 
 ### Redirect Page
 
-![Redirect Page](./images/live/forms-redirect-page-mobile.png)
+*No image available*
 
 [Detailed Documentation](./fragments/redirect-page.md)
 
@@ -334,7 +335,7 @@ A lifestyle-focused design system with a scoped container architecture, high-fid
 
 ### Refresh Page
 
-![Refresh Page](./images/live/forms-refresh-page-mobile.png)
+![Refresh Page](../forms/fragments/refresh-page/thumbnail.png)
 
 [Detailed Documentation](./fragments/refresh-page.md)
 
@@ -346,7 +347,7 @@ Visually appealing fragments generated by Gemini.
 
 ### Activity Heatmap
 
-![Activity Heatmap](./images/live/gemini-generated-activity-heatmap-mobile.png)
+![Activity Heatmap](./images/activity-heatmap.png)
 
 [Detailed Documentation](./fragments/activity-heatmap.md)
 
@@ -354,7 +355,7 @@ Visually appealing fragments generated by Gemini.
 
 ### AI Assistant Chat UI
 
-![AI Assistant Chat UI](./images/live/gemini-generated-ai-assistant-chat-ui-mobile.png)
+*No image available*
 
 [Detailed Documentation](./fragments/ai-chat-ui.md)
 
@@ -362,7 +363,7 @@ Visually appealing fragments generated by Gemini.
 
 ### Animated Metric Counter
 
-![Animated Metric Counter](./images/live/gemini-generated-animated-metric-counter-mobile.png)
+![Animated Metric Counter](./images/animated-metric-counter.png)
 
 [Detailed Documentation](./fragments/animated-metric-counter.md)
 
@@ -370,7 +371,7 @@ Visually appealing fragments generated by Gemini.
 
 ### Dynamic Collection Slider
 
-![Dynamic Collection Slider](./images/live/gemini-generated-dynamic-collection-slider-mobile.png)
+![Dynamic Collection Slider](./images/dynamic-collection-slider.png)
 
 [Detailed Documentation](./fragments/dynamic-collection-slider.md)
 
@@ -378,7 +379,7 @@ Visually appealing fragments generated by Gemini.
 
 ### Dynamic Object Gallery
 
-![Dynamic Object Gallery](./images/live/gemini-generated-dynamic-object-gallery-mobile.png)
+![Dynamic Object Gallery](./images/dynamic-object-gallery.png)
 
 [Detailed Documentation](./fragments/dynamic-object-gallery.md)
 
@@ -386,7 +387,7 @@ Visually appealing fragments generated by Gemini.
 
 ### Interactive Event Timeline
 
-![Interactive Event Timeline](./images/live/gemini-generated-interactive-event-timeline-mobile.png)
+![Interactive Event Timeline](./images/interactive-event-timeline.png)
 
 [Detailed Documentation](./fragments/interactive-event-timeline.md)
 
@@ -394,7 +395,7 @@ Visually appealing fragments generated by Gemini.
 
 ### Interactive Wizard
 
-![Interactive Wizard](./images/live/gemini-generated-interactive-wizard-mobile.png)
+*No image available*
 
 [Detailed Documentation](./fragments/interactive-wizard.md)
 
@@ -402,7 +403,7 @@ Visually appealing fragments generated by Gemini.
 
 ### Meta-Object Form
 
-![Meta-Object Form](./images/live/gemini-generated-meta-object-form-mobile.png)
+![Meta-Object Form](./images/meta-object-form.png)
 
 [Detailed Documentation](./fragments/meta-object-form.md)
 
@@ -410,7 +411,7 @@ Visually appealing fragments generated by Gemini.
 
 ### Meta-Object Record View
 
-![Meta-Object Record View](./images/live/gemini-generated-meta-object-record-view-mobile.png)
+![Meta-Object Record View](./images/meta-object-record-view.png)
 
 [Detailed Documentation](./fragments/meta-object-record-view.md)
 
@@ -418,7 +419,7 @@ Visually appealing fragments generated by Gemini.
 
 ### Meta-Object Table
 
-![Meta-Object Table](./images/live/gemini-generated-meta-object-table-mobile.png)
+![Meta-Object Table](./images/meta-object-table.png)
 
 [Detailed Documentation](./fragments/meta-object-table.md)
 
@@ -426,7 +427,7 @@ Visually appealing fragments generated by Gemini.
 
 ### Modern Parallax Hero
 
-![Modern Parallax Hero](./images/live/gemini-generated-modern-parallax-hero-mobile.png)
+![Modern Parallax Hero](./images/modern-parallax-hero.png)
 
 [Detailed Documentation](./fragments/modern-parallax-hero.md)
 
@@ -434,7 +435,7 @@ Visually appealing fragments generated by Gemini.
 
 ### Object-Linked Chart
 
-![Object-Linked Chart](./images/live/gemini-generated-object-linked-chart-mobile.png)
+![Object-Linked Chart](./images/object-linked-chart.png)
 
 [Detailed Documentation](./fragments/object-linked-chart.md)
 
@@ -442,7 +443,7 @@ Visually appealing fragments generated by Gemini.
 
 ### Pricing Comparison Grid
 
-![Pricing Comparison Grid](./images/live/gemini-generated-pricing-comparison-grid-mobile.png)
+![Pricing Comparison Grid](./images/pricing-comparison-grid.png)
 
 [Detailed Documentation](./fragments/pricing-comparison-grid.md)
 
@@ -450,7 +451,7 @@ Visually appealing fragments generated by Gemini.
 
 ### Radial KPI Gauge
 
-![Radial KPI Gauge](./images/live/gemini-generated-radial-kpi-gauge-mobile.png)
+![Radial KPI Gauge](./images/radial-kpi-gauge.png)
 
 [Detailed Documentation](./fragments/radial-kpi-gauge.md)
 
@@ -458,7 +459,7 @@ Visually appealing fragments generated by Gemini.
 
 ### Modern Search Overlay
 
-![Modern Search Overlay](./images/live/gemini-generated-modern-search-overlay-mobile.png)
+*No image available*
 
 [Detailed Documentation](./fragments/search-overlay.md)
 
@@ -468,7 +469,7 @@ Visually appealing fragments generated by Gemini.
 
 ### Customer Registration (Header) (Deprecated)
 
-![Customer Registration (Header) (Deprecated)](./images/live/header-components-customer-registration-header-deprecated--mobile.png)
+*No image available*
 
 [Detailed Documentation](./fragments/customer-registration.md)
 
@@ -476,7 +477,7 @@ Visually appealing fragments generated by Gemini.
 
 ### Linear Gradient Container
 
-![Linear Gradient Container](./images/live/header-components-linear-gradient-container-mobile.png)
+*No image available*
 
 [Detailed Documentation](./fragments/linear-gradient-container-(custom).md)
 
@@ -484,7 +485,7 @@ Visually appealing fragments generated by Gemini.
 
 ### Linear Gradient Container (Deprecated)
 
-![Linear Gradient Container (Deprecated)](./images/live/header-components-linear-gradient-container-deprecated--mobile.png)
+![Linear Gradient Container (Deprecated)](./images/linear-gradient-container.png)
 
 [Detailed Documentation](./fragments/linear-gradient-container.md)
 
@@ -492,7 +493,7 @@ Visually appealing fragments generated by Gemini.
 
 ### Login and User Menu
 
-![Login and User Menu](./images/live/header-components-login-and-user-menu-mobile.png)
+![Login and User Menu](../header-components/fragments/login-and-user-menu/thumbnail.png)
 
 [Detailed Documentation](./fragments/login-and-user-menu.md)
 
@@ -500,7 +501,7 @@ Visually appealing fragments generated by Gemini.
 
 ### Login Card (Deprecated)
 
-![Login Card (Deprecated)](./images/live/header-components-login-card-deprecated--mobile.png)
+*No image available*
 
 [Detailed Documentation](./fragments/login-card.md)
 
@@ -508,7 +509,7 @@ Visually appealing fragments generated by Gemini.
 
 ### Site Logo
 
-![Site Logo](./images/live/header-components-site-logo-mobile.png)
+![Site Logo](../header-components/fragments/logo/thumbnail.png)
 
 [Detailed Documentation](./fragments/logo.md)
 
@@ -516,7 +517,7 @@ Visually appealing fragments generated by Gemini.
 
 ### Lower Header Bar
 
-![Lower Header Bar](./images/live/header-components-lower-header-bar-mobile.png)
+![Lower Header Bar](./images/lower-header-layout.png)
 
 [Detailed Documentation](./fragments/lower-header-layout.md)
 
@@ -524,7 +525,7 @@ Visually appealing fragments generated by Gemini.
 
 ### Navigation (Deprecated)
 
-![Navigation (Deprecated)](./images/live/header-components-navigation-deprecated--mobile.png)
+![Navigation (Deprecated)](../header-components/fragments/navigation/thumbnail.png)
 
 [Detailed Documentation](./fragments/navigation.md)
 
@@ -532,7 +533,7 @@ Visually appealing fragments generated by Gemini.
 
 ### Search Bar
 
-![Search Bar](./images/live/header-components-search-bar-mobile.png)
+![Search Bar](../header-components/fragments/search-bar/thumbnail.png)
 
 [Detailed Documentation](./fragments/search-bar.md)
 
@@ -540,7 +541,7 @@ Visually appealing fragments generated by Gemini.
 
 ### Search Button
 
-![Search Button](./images/live/header-components-search-button-mobile.png)
+![Search Button](../header-components/fragments/search-button/thumbnail.png)
 
 [Detailed Documentation](./fragments/search-button.md)
 
@@ -548,7 +549,7 @@ Visually appealing fragments generated by Gemini.
 
 ### Site Name
 
-![Site Name](./images/live/header-components-site-name-mobile.png)
+![Site Name](../header-components/fragments/site-name/thumbnail.png)
 
 [Detailed Documentation](./fragments/site-name.md)
 
@@ -556,7 +557,7 @@ Visually appealing fragments generated by Gemini.
 
 ### Upper Header Bar Layout
 
-![Upper Header Bar Layout](./images/live/header-components-upper-header-bar-layout-mobile.png)
+![Upper Header Bar Layout](../header-components/fragments/upper-header-layout/thumbnail.png)
 
 [Detailed Documentation](./fragments/upper-header-layout.md)
 
@@ -564,7 +565,7 @@ Visually appealing fragments generated by Gemini.
 
 ### User Personal Bar
 
-![User Personal Bar](./images/live/header-components-user-personal-bar-mobile.png)
+![User Personal Bar](../header-components/fragments/user-bar/thumbnail.png)
 
 [Detailed Documentation](./fragments/user-bar.md)
 
@@ -576,7 +577,7 @@ Prominent visuals, such as videos or banners, that capture attention and define 
 
 ### Banner Video
 
-![Banner Video](./images/live/hero-assets-banner-video-mobile.png)
+![Banner Video](../hero-assets/fragments/hero-video/thumbnail.png)
 
 [Detailed Documentation](./fragments/hero-video.md)
 
@@ -584,7 +585,7 @@ Prominent visuals, such as videos or banners, that capture attention and define 
 
 ### Overlay Background
 
-![Overlay Background](./images/live/hero-assets-overlay-background-mobile.png)
+![Overlay Background](../hero-assets/fragments/overlay-background/thumbnail.png)
 
 [Detailed Documentation](./fragments/overlay-background.md)
 
@@ -594,7 +595,7 @@ Prominent visuals, such as videos or banners, that capture attention and define 
 
 ### Card Content
 
-![Card Content](./images/live/layout-components-card-content-mobile.png)
+*No image available*
 
 [Detailed Documentation](./fragments/card-content.md)
 
@@ -602,7 +603,7 @@ Prominent visuals, such as videos or banners, that capture attention and define 
 
 ### Primary Card
 
-![Primary Card](./images/live/layout-components-primary-card-mobile.png)
+![Primary Card](../layout-components/fragments/primary-card/thumbnail.png)
 
 [Detailed Documentation](./fragments/primary-card.md)
 
@@ -610,7 +611,7 @@ Prominent visuals, such as videos or banners, that capture attention and define 
 
 ### Secondary Card
 
-![Secondary Card](./images/live/layout-components-secondary-card-mobile.png)
+![Secondary Card](../layout-components/fragments/secondary-card/thumbnail.png)
 
 [Detailed Documentation](./fragments/secondary-card.md)
 
@@ -620,7 +621,7 @@ Prominent visuals, such as videos or banners, that capture attention and define 
 
 ### Meter Reading
 
-![Meter Reading](./images/live/meter-reading-meter-reading-mobile.png)
+![Meter Reading](../meter-reading/fragments/meter-reading/thumbnail.png)
 
 [Detailed Documentation](./fragments/meter-reading.md)
 
@@ -630,7 +631,7 @@ Prominent visuals, such as videos or banners, that capture attention and define 
 
 ### Back Button
 
-![Back Button](./images/live/miscellaneous-back-button-mobile.png)
+*No image available*
 
 [Detailed Documentation](./fragments/back-button.md)
 
@@ -638,7 +639,7 @@ Prominent visuals, such as videos or banners, that capture attention and define 
 
 ### Custom Tabs
 
-![Custom Tabs](./images/live/miscellaneous-custom-tabs-mobile.png)
+![Custom Tabs](../misc/fragments/custom-tabs/thumbnail.png)
 
 [Detailed Documentation](./fragments/custom-tabs.md)
 
@@ -646,7 +647,7 @@ Prominent visuals, such as videos or banners, that capture attention and define 
 
 ### Customer Registration (Misc) (Deprecated)
 
-![Customer Registration (Misc) (Deprecated)](./images/live/miscellaneous-customer-registration-misc-deprecated--mobile.png)
+*No image available*
 
 [Detailed Documentation](./fragments/customer-registration.md)
 
@@ -654,7 +655,7 @@ Prominent visuals, such as videos or banners, that capture attention and define 
 
 ### Dynamic Copyright
 
-![Dynamic Copyright](./images/live/miscellaneous-dynamic-copyright-mobile.png)
+![Dynamic Copyright](./images/dynamic-copyright.png)
 
 [Detailed Documentation](./fragments/dynamic-copyright.md)
 
@@ -662,7 +663,7 @@ Prominent visuals, such as videos or banners, that capture attention and define 
 
 ### Hide Control Menu
 
-![Hide Control Menu](./images/live/miscellaneous-hide-control-menu-mobile.png)
+*No image available*
 
 [Detailed Documentation](./fragments/hide-control-menu.md)
 
@@ -670,7 +671,7 @@ Prominent visuals, such as videos or banners, that capture attention and define 
 
 ### Icon Button
 
-![Icon Button](./images/live/miscellaneous-icon-button-mobile.png)
+![Icon Button](./images/icon-button.png)
 
 [Detailed Documentation](./fragments/icon-button.md)
 
@@ -678,7 +679,7 @@ Prominent visuals, such as videos or banners, that capture attention and define 
 
 ### Launch Analytics Cloud
 
-![Launch Analytics Cloud](./images/live/miscellaneous-launch-analytics-cloud-mobile.png)
+![Launch Analytics Cloud](../misc/fragments/launch-analytics-cloud/thumbnail.png)
 
 [Detailed Documentation](./fragments/launch-analytics-cloud.md)
 
@@ -686,7 +687,7 @@ Prominent visuals, such as videos or banners, that capture attention and define 
 
 ### Modify My Profile Link
 
-![Modify My Profile Link](./images/live/miscellaneous-modify-my-profile-link-mobile.png)
+*No image available*
 
 [Detailed Documentation](./fragments/modify-my-profile-link.md)
 
@@ -694,7 +695,7 @@ Prominent visuals, such as videos or banners, that capture attention and define 
 
 ### My Dashboard Link
 
-![My Dashboard Link](./images/live/miscellaneous-my-dashboard-link-mobile.png)
+*No image available*
 
 [Detailed Documentation](./fragments/my-dashboard-link.md)
 
@@ -708,7 +709,7 @@ Prominent visuals, such as videos or banners, that capture attention and define 
 
 ### Trigger Ray
 
-![Trigger Ray](./images/live/miscellaneous-trigger-ray-mobile.png)
+*No image available*
 
 [Detailed Documentation](./fragments/trigger-ray.md)
 
@@ -720,43 +721,43 @@ A collection of high-fidelity fragments for constructing modern corporate intran
 
 ### App Launcher
 
-![App Launcher](./images/live/modern-intranet-app-launcher-mobile.png)
+*No image available*
 
 --- 
 
 ### Course Progress Card
 
-![Course Progress Card](./images/live/modern-intranet-course-progress-card-mobile.png)
+*No image available*
 
 --- 
 
 ### File Repository List
 
-![File Repository List](./images/live/modern-intranet-file-repository-list-mobile.png)
+*No image available*
 
 --- 
 
 ### Intranet Feed
 
-![Intranet Feed](./images/live/modern-intranet-intranet-feed-mobile.png)
+*No image available*
 
 --- 
 
 ### News Hero
 
-![News Hero](./images/live/modern-intranet-news-hero-mobile.png)
+*No image available*
 
 --- 
 
 ### Stat Card
 
-![Stat Card](./images/live/modern-intranet-stat-card-mobile.png)
+*No image available*
 
 --- 
 
 ### Welcome Banner
 
-![Welcome Banner](./images/live/modern-intranet-welcome-banner-mobile.png)
+*No image available*
 
 --- 
 
@@ -764,7 +765,7 @@ A collection of high-fidelity fragments for constructing modern corporate intran
 
 ### Audit Button
 
-![Audit Button](./images/live/forms-audit-button-mobile.png)
+![Audit Button](../objects/fragments/audit-button/thumbnail.png)
 
 [Detailed Documentation](./fragments/audit-button.md)
 
@@ -772,7 +773,7 @@ A collection of high-fidelity fragments for constructing modern corporate intran
 
 ### Comment
 
-![Comment](./images/live/forms-comment-mobile.png)
+![Comment](./images/comment.png)
 
 [Detailed Documentation](./fragments/comment.md)
 
@@ -780,7 +781,7 @@ A collection of high-fidelity fragments for constructing modern corporate intran
 
 ### View Comments
 
-![View Comments](./images/live/forms-view-comments-mobile.png)
+![View Comments](./images/public-comments.png)
 
 [Detailed Documentation](./fragments/public-comments.md)
 
@@ -790,7 +791,7 @@ A collection of high-fidelity fragments for constructing modern corporate intran
 
 ### Populate Select
 
-![Populate Select](./images/live/populated-form-fields-populate-select-mobile.png)
+![Populate Select](./images/populate-select.png)
 
 [Detailed Documentation](./fragments/populate-select.md)
 
@@ -798,7 +799,7 @@ A collection of high-fidelity fragments for constructing modern corporate intran
 
 ### Populated Range
 
-![Populated Range](./images/live/populated-form-fields-populated-range-mobile.png)
+![Populated Range](./images/populated-range.png)
 
 [Detailed Documentation](./fragments/populated-range.md)
 
@@ -806,7 +807,7 @@ A collection of high-fidelity fragments for constructing modern corporate intran
 
 ### Store Default Value
 
-![Store Default Value](./images/live/populated-form-fields-store-default-value-mobile.png)
+![Store Default Value](./images/store-default-value.png)
 
 [Detailed Documentation](./fragments/store-default-value.md)
 
@@ -814,7 +815,7 @@ A collection of high-fidelity fragments for constructing modern corporate intran
 
 ### Store Form Field Values
 
-![Store Form Field Values](./images/live/populated-form-fields-store-form-field-values-mobile.png)
+*No image available*
 
 [Detailed Documentation](./fragments/store-form-field-values.md)
 
@@ -822,7 +823,7 @@ A collection of high-fidelity fragments for constructing modern corporate intran
 
 ### Text (Derived Value)
 
-![Text (Derived Value)](./images/live/populated-form-fields-text-derived-value--mobile.png)
+*No image available*
 
 [Detailed Documentation](./fragments/text-derived-value.md)
 
@@ -832,7 +833,7 @@ A collection of high-fidelity fragments for constructing modern corporate intran
 
 ### Customer Profile (DEPRECATED)
 
-![Customer Profile (DEPRECATED)](./images/live/profile-customer-profile-deprecated--mobile.png)
+![Customer Profile (DEPRECATED)](../profile/fragments/customer-profile/thumbnail.png)
 
 [Detailed Documentation](./fragments/customer-profile.md)
 
@@ -840,7 +841,7 @@ A collection of high-fidelity fragments for constructing modern corporate intran
 
 ### PDF Export (Dashboard) (Deprecated)
 
-![PDF Export (Dashboard) (Deprecated)](./images/live/profile-pdf-export-dashboard-deprecated--mobile.png)
+![PDF Export (Dashboard) (Deprecated)](../profile/fragments/pdf-export-(dashboard)/thumbnail.png)
 
 [Detailed Documentation](./fragments/pdf-export-(dashboard).md)
 
@@ -848,7 +849,7 @@ A collection of high-fidelity fragments for constructing modern corporate intran
 
 ### PDF Export (DEPRECATED)
 
-![PDF Export (DEPRECATED)](./images/live/profile-pdf-export-deprecated--mobile.png)
+![PDF Export (DEPRECATED)](./images/pdf-export.png)
 
 [Detailed Documentation](./fragments/pdf-export.md)
 
@@ -856,7 +857,7 @@ A collection of high-fidelity fragments for constructing modern corporate intran
 
 ### Profile Detail (Dashboard) (Deprecated)
 
-![Profile Detail (Dashboard) (Deprecated)](./images/live/profile-profile-detail-dashboard-deprecated--mobile.png)
+*No image available*
 
 [Detailed Documentation](./fragments/profile-detail-(dashboard).md)
 
@@ -864,7 +865,7 @@ A collection of high-fidelity fragments for constructing modern corporate intran
 
 ### Profile Detail (DEPRECATED)
 
-![Profile Detail (DEPRECATED)](./images/live/profile-profile-detail-deprecated--mobile.png)
+![Profile Detail (DEPRECATED)](../profile/fragments/profile-detail/thumbnail.png)
 
 [Detailed Documentation](./fragments/profile-detail.md)
 
@@ -872,7 +873,7 @@ A collection of high-fidelity fragments for constructing modern corporate intran
 
 ### Profile Summary (Dashboard) (DEPRECATED)
 
-![Profile Summary (Dashboard) (DEPRECATED)](./images/live/profile-profile-summary-dashboard-deprecated--mobile.png)
+*No image available*
 
 [Detailed Documentation](./fragments/profile-summary-(dashboard).md)
 
@@ -880,7 +881,7 @@ A collection of high-fidelity fragments for constructing modern corporate intran
 
 ### Profile Summary (DEPRECATED)
 
-![Profile Summary (DEPRECATED)](./images/live/profile-profile-summary-deprecated--mobile.png)
+![Profile Summary (DEPRECATED)](../profile/fragments/profile-summary/thumbnail.png)
 
 [Detailed Documentation](./fragments/profile-summary.md)
 
@@ -890,7 +891,7 @@ A collection of high-fidelity fragments for constructing modern corporate intran
 
 ### Campaign Initialiser
 
-![Campaign Initialiser](./images/live/pulse-campaign-initialiser-mobile.png)
+*No image available*
 
 [Detailed Documentation](./fragments/campaign-initialiser.md)
 
@@ -898,7 +899,7 @@ A collection of high-fidelity fragments for constructing modern corporate intran
 
 ### Campaign Insights
 
-![Campaign Insights](./images/live/pulse-campaign-insights-mobile.png)
+*No image available*
 
 [Detailed Documentation](./fragments/cookie-sniffer.md)
 
@@ -906,7 +907,7 @@ A collection of high-fidelity fragments for constructing modern corporate intran
 
 ### Custom Event Listener
 
-![Custom Event Listener](./images/live/pulse-custom-event-listener-mobile.png)
+*No image available*
 
 [Detailed Documentation](./fragments/custom-event-listener.md)
 
@@ -914,7 +915,7 @@ A collection of high-fidelity fragments for constructing modern corporate intran
 
 ### Pulse Button
 
-![Pulse Button](./images/live/pulse-pulse-button-mobile.png)
+![Pulse Button](../pulse/fragments/pulse-button/thumbnail.png)
 
 [Detailed Documentation](./fragments/pulse-button.md)
 
@@ -924,7 +925,7 @@ A collection of high-fidelity fragments for constructing modern corporate intran
 
 ### Logo Zone
 
-![Logo Zone](./images/live/responsive-menus-logo-zone-mobile.png)
+*No image available*
 
 [Detailed Documentation](./fragments/logo-zone.md)
 
@@ -932,7 +933,7 @@ A collection of high-fidelity fragments for constructing modern corporate intran
 
 ### Responsive Menu
 
-![Responsive Menu](./images/live/responsive-menus-responsive-menu-mobile.png)
+![Responsive Menu](../responsive-menus/fragments/responsive-menu/thumbnail.png)
 
 [Detailed Documentation](./fragments/responsive-menu.md)
 
@@ -940,7 +941,7 @@ A collection of high-fidelity fragments for constructing modern corporate intran
 
 ### Responsive Side Menu
 
-![Responsive Side Menu](./images/live/responsive-menus-responsive-side-menu-mobile.png)
+![Responsive Side Menu](../responsive-menus/fragments/responsive-side-menu/thumbnail.png)
 
 [Detailed Documentation](./fragments/responsive-side-menu.md)
 
@@ -948,7 +949,7 @@ A collection of high-fidelity fragments for constructing modern corporate intran
 
 ### Zone Layout
 
-![Zone Layout](./images/live/responsive-menus-zone-layout-mobile.png)
+*No image available*
 
 [Detailed Documentation](./fragments/zone-layout.md)
 
@@ -958,7 +959,7 @@ A collection of high-fidelity fragments for constructing modern corporate intran
 
 ### My Rights
 
-![My Rights](./images/live/user-account-my-rights-mobile.png)
+*No image available*
 
 [Detailed Documentation](./fragments/my-rights.md)
 
@@ -966,7 +967,7 @@ A collection of high-fidelity fragments for constructing modern corporate intran
 
 ### Ping
 
-![Ping](./images/live/user-account-ping-mobile.png)
+*No image available*
 
 [Detailed Documentation](./fragments/ping.md)
 
@@ -974,7 +975,7 @@ A collection of high-fidelity fragments for constructing modern corporate intran
 
 ### Who Am I
 
-![Who Am I](./images/live/user-account-who-am-i-mobile.png)
+*No image available*
 
 [Detailed Documentation](./fragments/who-am-i.md)
 
@@ -984,7 +985,7 @@ A collection of high-fidelity fragments for constructing modern corporate intran
 
 ### Announcements Modifier
 
-![Announcements Modifier](./images/live/widget-modifiers-announcements-modifier-mobile.png)
+![Announcements Modifier](../widget-modifiers/fragments/alerts-modifier/thumbnail.png)
 
 [Detailed Documentation](./fragments/alerts-modifier.md)
 

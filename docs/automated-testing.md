@@ -28,17 +28,27 @@ The automated testing process follows these steps when
 4. **Data Sync Buffer:** Polls the Liferay logs to ensure the Headless Batch
    Engine has finished seeding the Showcase Data (Object definitions, Commerce
    data, etc.) before proceeding.
-5. **Dynamic Page Generation (Playwright Setup):** A `global-setup.js` script
-   logs into Liferay as the Omni Admin. It then uses the **Headless Admin Site
-   API** to dynamically construct a dedicated Content Page for every deployed
-   fragment using the `ContentPageSpecification` payload.
-6. **Responsive UI Testing:** Playwright runs the `fragments.spec.js` test
-   suite, navigating directly to each generated page concurrently across three
-   viewports (Desktop, Tablet, Mobile), asserting against severe JavaScript
-   console errors (`TypeError`, `ReferenceError`) and ensuring the fragment
-   wrapper renders successfully.
-7. **Reporting & Teardown:** A Markdown report is generated in
-   `docs/test-results/`, and the LDM environment is cleanly destroyed.
+5. **Verification & Dynamic Page Generation (Playwright Setup):** A
+   `global-setup.js` script logs into Liferay and establishes an **"E2E
+   Bridge"** using **JSON WS**. It queries
+   `fragment.fragmententry/get-fragment-entries` to verify that the fragments
+   were actually registered by the database.
+   - **Safety Gate**: If a fragment is not found in the database, it is skipped
+     to prevent downstream 404s.
+   - **Page Creation**: For registered fragments, the script programmatically
+     constructs a dedicated Content Page via the **Headless Delivery API**.
+6. **Responsive UI Testing:** Playwright runs the `fragments.spec.js` suite
+   across three viewports.
+   - **Hardened Assertions**: Tests no longer just check for a container; they
+     actively scan for Liferay error text (e.g., "Fragment is unavailable") and
+     verify the presence of successful rendering classes.
+   - **Visual Regression**: High-fidelity snapshots are captured for every
+     fragment.
+7. **Automated Teardown & Reporting:**
+   - **Cleanup**: The `global-teardown.js` hook automatically deletes all
+     programmatically created test pages to keep the environment clean.
+   - **Reporting**: A Markdown report and visual artifacts are generated.
+     `docs/test-results/`, and the LDM environment is cleanly destroyed.
 
 ## Prerequisites
 
