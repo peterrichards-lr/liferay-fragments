@@ -35,9 +35,25 @@ test.describe('Responsive Fragment Rendering', () => {
       // 2. Wait for the page to load
       await page.waitForLoadState('networkidle');
 
-      // 3. Verify a typical layout wrapper exists
+      // 3. Verify actual fragment rendering
+      // In Liferay, a successfully rendered fragment will have these markers
+      const fragmentSelector =
+        '.lfr-layout-structure-item-fragment, .lfr-fragment-entry';
       const wrapper = page.locator('#wrapper, .portlet-layout');
+
+      // Ensure the main wrapper is visible
       await expect(wrapper.first()).toBeVisible({ timeout: 15000 });
+
+      // FAIL if we see "Fragment is unavailable" or "not found" text patterns
+      const failureText = page.locator(
+        'text=/Fragment (is unavailable|not found)/i'
+      );
+      const failureCount = await failureText.count();
+      if (failureCount > 0) {
+        throw new Error(
+          `Fragment '${pageInfo.fragmentName}' failed to render! Found Liferay error text on page.`
+        );
+      }
 
       // 4. Capture Visual Snapshot
       // Create a clean filename: collection-fragment-viewport.png
