@@ -28,8 +28,11 @@ jobs:
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps
 
-      - name: Install Latest LDM (Liferay Docker Manager)
-        run: npm install -g liferay-docker-manager@latest
+      - name: Install Latest LDM Binary
+        run: |
+          wget -q https://github.com/peterrichards-lr/liferay-docker-manager/releases/download/latest/ldm-linux
+          chmod +x ldm-linux
+          sudo mv ldm-linux /usr/local/bin/ldm
 
       - name: Provide Dummy LDM License
         # The test runner checks for an XML file in ~/.ldm/common/ to authorize DXP startup
