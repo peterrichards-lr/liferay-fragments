@@ -80,39 +80,70 @@ function generateGallery() {
 
       markdown += `### ${fragMetadata.name}\n\n`;
 
-      let imgPath = '';
       const manualImg = path.join(IMAGES_DIR, `${fragSafeName}.png`);
-      const e2eSnapshot = path.join(
-        SNAPSHOTS_DIR,
-        collectionMetadata.name,
-        `${fragMetadata.name}-mobile.png`
-      );
+      const viewports = ['desktop', 'tablet', 'mobile'];
+      const liveImages = {};
 
-      if (testsPassed && fs.existsSync(e2eSnapshot)) {
-        // Use the live E2E mobile snapshot if the test suite passed
-        // Copy it to the tracked docs/images/live folder for portability
+      if (testsPassed) {
         const safeCollectionName = collectionMetadata.name
           .replace(/[^a-z0-9]+/gi, '-')
           .toLowerCase();
         const safeFragmentName = fragMetadata.name
           .replace(/[^a-z0-9]+/gi, '-')
           .toLowerCase();
-        const liveFileName = `${safeCollectionName}-${safeFragmentName}-mobile.png`;
-        const liveDest = path.join(LIVE_IMAGES_DIR, liveFileName);
-        fs.copyFileSync(e2eSnapshot, liveDest);
-        imgPath = `./images/live/${liveFileName}`;
-      } else if (fs.existsSync(manualImg)) {
-        imgPath = `./images/${fragSafeName}.png`;
-      } else if (fs.existsSync(path.join(fragDir, 'screenshot.png'))) {
-        imgPath = path.relative(DOCS_DIR, path.join(fragDir, 'screenshot.png'));
-      } else if (fs.existsSync(path.join(fragDir, 'thumbnail.png'))) {
-        imgPath = path.relative(DOCS_DIR, path.join(fragDir, 'thumbnail.png'));
+
+        viewports.forEach((vp) => {
+          const e2eSnapshot = path.join(
+            SNAPSHOTS_DIR,
+            collectionMetadata.name,
+            `${fragMetadata.name}-${vp}.png`
+          );
+          if (fs.existsSync(e2eSnapshot)) {
+            const liveFileName = `${safeCollectionName}-${safeFragmentName}-${vp}.png`;
+            const liveDest = path.join(LIVE_IMAGES_DIR, liveFileName);
+            fs.copyFileSync(e2eSnapshot, liveDest);
+            liveImages[vp] = `./images/live/${liveFileName}`;
+          }
+        });
       }
 
-      if (imgPath) {
-        markdown += `![${fragMetadata.name}](${imgPath})\n\n`;
+      if (Object.keys(liveImages).length > 0) {
+        let tableHeader = '|';
+        let tableDivider = '|';
+        let tableRow = '|';
+
+        if (liveImages.desktop) {
+          tableHeader += ' Desktop (1920px) |';
+          tableDivider += ' :---: |';
+          tableRow += ` <img src="${liveImages.desktop}" width="350" alt="Desktop"> |`;
+        }
+        if (liveImages.tablet) {
+          tableHeader += ' Tablet (768px) |';
+          tableDivider += ' :---: |';
+          tableRow += ` <img src="${liveImages.tablet}" width="200" alt="Tablet"> |`;
+        }
+        if (liveImages.mobile) {
+          tableHeader += ' Mobile (375px) |';
+          tableDivider += ' :---: |';
+          tableRow += ` <img src="${liveImages.mobile}" width="120" alt="Mobile"> |`;
+        }
+
+        markdown += `${tableHeader}\n${tableDivider}\n${tableRow}\n\n`;
       } else {
-        markdown += `*No image available*\n\n`;
+        let fallbackPath = '';
+        if (fs.existsSync(manualImg)) {
+          fallbackPath = `./images/${fragSafeName}.png`;
+        } else if (fs.existsSync(path.join(fragDir, 'screenshot.png'))) {
+          fallbackPath = path.relative(DOCS_DIR, path.join(fragDir, 'screenshot.png'));
+        } else if (fs.existsSync(path.join(fragDir, 'thumbnail.png'))) {
+          fallbackPath = path.relative(DOCS_DIR, path.join(fragDir, 'thumbnail.png'));
+        }
+
+        if (fallbackPath) {
+          markdown += `![${fragMetadata.name}](${fallbackPath})\n\n`;
+        } else {
+          markdown += `*No image available*\n\n`;
+        }
       }
 
       const docFile = path.join(DOCS_DIR, 'fragments', `${fragSafeName}.md`);

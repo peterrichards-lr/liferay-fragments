@@ -186,6 +186,74 @@ LIFERAY_USER="admin@mycompany.com" LIFERAY_PASSWORD="MySecurePassword123" ./scri
   all resolved parameters (ports, tags, paths). This allows for easy manual
   replication and transparent debugging of the provisioning process.
 
+## Lessons Learned & Guest Rendering Standards
+
+During the implementation of the visual fragment testing suite, several critical
+architectural constraints were resolved regarding guest permissions, admin
+panels, and layout styling:
+
+### 1. Unauthenticated Guest Contexts
+
+By default, the Playwright project is configured to use the authenticated admin
+session state (`state.json`). However, this causes visual screenshots to capture
+the Liferay control menus, edit mode margins, and fixed sidebar navigation
+overlays (which are particularly intrusive on tablet and mobile viewports).
+
+To ensure high-fidelity, clean visual regression captures representing the true
+end-user experience, all responsive fragment specs must run in an
+unauthenticated guest context by defining:
+
+```javascript
+test.describe('Responsive Fragment Rendering', () => {
+  // Run all tests as Guest (unauthenticated) to check true visitor experience and prevent admin menus
+  test.use({ storageState: { cookies: [], origins: [] } });
+
+  // Test iterations...
+});
+```
+
+### 2. Seeding Assets with Guest Permissions
+
+When seeding showcase data (collections, articles, documents, custom objects)
+for dynamic fragments, you must explicitly configure Guest permissions so they
+can render successfully in the guest viewport checks:
+
+- **Documents & Media**: Avoid external image URLs to prevent 404s and network
+  latency. Upload mock files programmatically to the Liferay instance, then
+  patch the document's view permission to `Anyone` via
+  `/o/headless-delivery/v1.0/documents/{documentId}` using REST.
+- **Web Content Articles**: Set the `viewableBy` property to `"Anyone"` in the
+  structured content payloads.
+- **Asset Collections**: Pass the `serviceContext` parameter with
+  `{ addGuestPermissions: true, addGroupPermissions: true }` in JSON WS calls
+  (e.g. `assetlist.assetlistentry/add-manual-asset-list-entry`).
+
+### 3. Service Access Policies (SAP)
+
+By default, Liferay blocks unauthenticated Guest access to many headless
+endpoints (such as
+`/o/headless-delivery/v1.0/content-sets/{id}/content-set-elements`). To prevent
+`403 Forbidden` API failures during guest rendering, the setup phase must
+configure the `SYSTEM_DEFAULT` Service Access Policy:
+
+- Navigate to the **Service Access Policies** control panel page.
+- Select the `SYSTEM_DEFAULT` policy.
+- Ensure the resource implementation class (e.g.
+  `com.liferay.headless.delivery.internal.resource.v1_0.ContentSetElementResourceImpl`)
+  is added with the action method wildcard `*`.
+
+### 4. Emulated Device User-Agents
+
+Liferay evaluates session contexts for CSRF security. When Playwright emulates
+viewports (like tablet or mobile) with default emulated user-agents, Liferay may
+reject API calls with a `403 Forbidden` session mismatch if the user-agent
+changes across requests in the same browser context.
+
+- **Standard**: Always override the `userAgent` configuration for emulated
+  tablet/mobile projects in
+  [playwright.config.js](file:///Volumes/SanDisk/repos/liferay-fragments/e2e-tests/playwright.config.js)
+  to match the `Desktop Chrome` user-agent.
+
 ## Reviewing Results
 
 After the suite completes (or if it fails), a Markdown report will be generated

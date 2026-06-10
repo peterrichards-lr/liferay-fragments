@@ -153,7 +153,24 @@ after itself.
 - [x] Fix Fragment ZIP structure (flattening) for Auto-Deploy compatibility.
 - [x] Resolve Auto-Deploy scoping issues (Targeting Global site).
 - [x] Document E2E testing architecture in `docs/automated-testing.md`.
-- [ ] Finalize missing visuals for Dashboard, Gemini, and User Account
+- [x] Hide generated test pages from Liferay navigation menu using
+      pageSettings.hiddenFromNavigation via a two-phase API flow
+      (headless-delivery POST + headless-admin-site PATCH).
+- [x] Provision custom object definitions (batch client extensions) for missing
+      object dependencies (comments, auditentries, campaigns,
+      campaigninteractions) to avoid networkidle timeouts in E2E.
+- [x] Resolve REST API path discrepancies
+      (web-content-structures/web-content-articles to
+      content-structures/structured-contents) and implement JSON WS fallback for
+      Collections (Content Sets) seeding in global-setup/teardown.
+- [x] Update Dynamic Collection Slider fragment to fetch items via the correct
+      /o/headless-delivery/v1.0/content-sets/{id}/content-set-elements endpoint.
+- [x] Create unified query-liferay.js script for non-interactive diagnostics of
+      site structures, articles, and collections.
+- [x] Optimize duplicate page detection (handling
+      LayoutFriendlyURLException/LayoutFriendlyURLsException) in global-setup.js
+      to prevent long retry delays.
+- [x] Finalize missing visuals for Dashboard, Gemini, and User Account
       fragments.
 - [ ] Restore missing configuration fields and localizations across all
       fragments.
@@ -161,3 +178,77 @@ after itself.
       updated.
 - [ ] Investigate Liferay Auto-Deploy bug (Empty Collections vs Manual UI
       Import).
+- [x] Optimize fragment selector in Playwright to match Liferay 2026.Q1
+      structure items (using div[id^="fragment-"]), resolving 15s timeouts and
+      speeding up tests.
+- [x] Define E2E test-data manifests (test-data.json) for other gemini-generated
+      fragments (dynamic-object-gallery, activity-heatmap, radial-kpi-gauge,
+      object-linked-chart, etc.).
+- [x] Research and test JSON WS ddm.ddmstructure/add-structure and
+      fetch-structure-by-external-reference-code endpoints with proper
+      fieldReference and defaultLocale mappings.
+- [x] Integrate programmatic DDM Structure creation in global-setup.js using
+      JSON WS fallback.
+- [x] Integrate programmatic DDM Structure deletion in global-teardown.js using
+      JSON WS fallback.
+
+- [x] In `global-setup.js`, add `fieldReference` to `contentFields` payload for
+      structured contents.
+- [x] In `test-data.json`, change image field type from `image` to `text` to
+      bind path strings correctly.
+- [x] Update `test-data.json` structure key to `SLIDER-SLIDE-STRUCT-V3` to force
+      recreation.
+- [x] Use `Liferay.Util.fetch` instead of `fetch` in
+      `dynamic-collection-slider/index.js` to avoid 403 Forbidden CSRF issues
+      during E2E page rendering.
+- [x] Automate adding
+      `com.liferay.headless.delivery.internal.resource.v1_0.ContentSetElementResourceImpl#*`
+      to `SYSTEM_DEFAULT` SAP policy via Playwright in the setup phase to allow
+      Guest access.
+- [x] Configure guest view permissions for seeded Collections in
+      `global-setup.js` using `addGuestPermissions: true` in `serviceContext`.
+- [x] Configure guest view permissions (viewableBy: 'Anyone') for seeded Web
+      Content Articles in `global-setup.js`.
+- [x] Add network response logging to `fragments.spec.js` to inspect the exact
+      JSON payload returned to the browser for the collection elements endpoint.
+- [x] Run the E2E test and inspect the network response logs to verify guest
+      access payload.
+- [x] Delete pre-existing duplicate pages in global-setup.js and recreate them
+      fresh to ensure configuration overrides are always up to date.
+- [x] Query layouts via JSON WS instead of site-pages REST endpoint in
+      global-setup.js to find and delete hidden pages.
+- [x] Use JSON WS delete-layout instead of Headless REST delete page in
+      global-setup.js to bypass 404 Not Found issues on pre-existing layouts.
+- [x] Use JSON WS delete-layout instead of Headless REST delete page in
+      global-teardown.js to bypass 404 Not Found issues.
+- [x] Override Playwright emulated projects userAgent to prevent Liferay 403
+      session mismatch.
+- [x] Upload mock images to Documents and Media and map them dynamically in
+      global-setup.js.
+- [x] Override storageState to empty/Guest session in fragments.spec.js to
+      capture clean screenshots without admin control menu overlays.
+
+- [x] Set up project-local secret detection using a custom Node.js pre-commit
+      hook and scanner to use project/repo dependencies only.
+
+- [x] Add .gitleaksignore file support to scripts/detect-secrets.js to filter out common mock tokens/hashes.
+
+- [x] Fix configuration validation issues in otp-input, signature-pad, color-swatches, file-drop-zone, password-strength, custom-tabs, and meter-reading fragments.
+- [x] Fix dataType default value mismatches (converting string default values to numbers/booleans where dataType is number/boolean) across all fragment configuration.json files.
+
+
+- [x] Modify `scripts/generate-gallery.js` to support Desktop, Tablet, and Mobile viewports side-by-side in HTML tables.
+- [x] Replace `"dataType": "int"` with `"dataType": "number"` across all fragment `configuration.json` files to resolve page creation 500 errors.
+- [x] Optimize duplicate page detection in `global-setup.js` by fetching all layouts once before the main loop to speed up E2E page setup.
+
+
+### Active Fix (In Progress)
+
+- [x] Update `~/.ldm/registry.json` to properly map `liferay-ai-commerce-accelerator` and `aica` projects.
+- [ ] Run automated E2E tests using `./scripts/test-runner.sh -p liferay-ai-commerce-accelerator` or equivalent command.
+- [x] Regenerate `docs/gallery.md` using `npm run docs:gallery` and verify output layout.
+
+
+### Backward-Compatibility Rule (dataType number -> int)
+- **Requirement**: For legacy pre-2025q3 ZIP generation, the build script `create-fragment-zips.sh` must dynamically transform `"dataType": "number"` to `"dataType": "int"` in configuration files to prevent importing failures on older Liferay versions.
+
