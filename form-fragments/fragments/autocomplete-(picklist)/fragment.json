@@ -6,9 +6,7 @@
   "icon": "list-ol",
   "name": "Autocomplete (Picklist)",
   "typeOptions": {
-    "fieldTypes": [
-      "text"
-    ]
+    "fieldTypes": ["text"]
   },
   "type": "input",
   "thumbnailPath": "thumbnail.png"

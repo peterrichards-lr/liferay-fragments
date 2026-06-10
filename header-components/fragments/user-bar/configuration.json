@@ -10,8 +10,8 @@
           "type": "checkbox"
         },
         {
-          "dataType": "int",
-          "defaultValue": "0",
+          "dataType": "number",
+          "defaultValue": 0,
           "description": "lfr.header-components.notification-count-description",
           "label": "lfr.header-components.notification-count",
           "name": "notificationCount",

@@ -58,12 +58,12 @@
           "type": "checkbox"
         },
         {
-          "defaultValue": "10",
+          "defaultValue": 10,
           "label": "lfr.gemini-generated.page-size",
           "description": "lfr.gemini-generated.page-size-description",
           "name": "pageSize",
           "type": "text",
-          "dataType": "int"
+          "dataType": "number"
         }
       ],
       "label": "lfr.gemini-generated.display"

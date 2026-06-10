@@ -3,8 +3,8 @@
     {
       "fields": [
         {
-          "dataType": "int",
-          "defaultValue": "4",
+          "dataType": "number",
+          "defaultValue": 4,
           "label": "lfr.misc.number-of-tabs",
           "description": "lfr.misc.number-of-tabs",
           "name": "numberOfTabs",
@@ -17,7 +17,7 @@
           }
         },
         {
-          "defaultValue": "true",
+          "defaultValue": true,
           "description": "lfr.misc.persist-selected-tab-description",
           "label": "lfr.misc.persist-selected-tab",
           "name": "persistSelectedTab",

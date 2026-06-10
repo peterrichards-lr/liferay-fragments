@@ -62,12 +62,12 @@
           }
         },
         {
-          "defaultValue": "-1",
+          "defaultValue": -1,
           "label": "lfr.objects.path-position",
           "description": "lfr.objects.path-position-description",
           "name": "pathPosition",
           "type": "text",
-          "dataType": "int"
+          "dataType": "number"
         },
         {
           "defaultValue": "id",
@@ -77,6 +77,7 @@
           "type": "text"
         },
         {
+          "dataType": "boolean",
           "defaultValue": true,
           "label": "lfr.objects.use-dummy-id",
           "description": "lfr.objects.use-dummy-id-description",

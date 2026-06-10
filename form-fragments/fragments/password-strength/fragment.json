@@ -6,9 +6,7 @@
   "icon": "password",
   "name": "Password Strength",
   "typeOptions": {
-    "fieldTypes": [
-      "text"
-    ]
+    "fieldTypes": ["text"]
   },
   "type": "input",
   "thumbnailPath": "thumbnail.png"

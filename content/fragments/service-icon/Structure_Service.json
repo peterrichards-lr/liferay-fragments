@@ -1,7 +1,5 @@
 {
-  "availableLanguageIds": [
-    "en_US"
-  ],
+  "availableLanguageIds": ["en_US"],
   "contentType": "journal",
   "dataDefinitionFields": [
     {
@@ -29,9 +27,7 @@
           "en_US": ""
         },
         "htmlAutocompleteAttribute": "",
-        "direction": [
-          "vertical"
-        ]
+        "direction": ["vertical"]
       },
       "defaultValue": {
         "en_US": ""
@@ -78,9 +74,7 @@
           "en_US": ""
         },
         "htmlAutocompleteAttribute": "",
-        "direction": [
-          "vertical"
-        ]
+        "direction": ["vertical"]
       },
       "defaultValue": {
         "en_US": ""
@@ -127,9 +121,7 @@
           "en_US": ""
         },
         "htmlAutocompleteAttribute": "",
-        "direction": [
-          "vertical"
-        ]
+        "direction": ["vertical"]
       },
       "defaultValue": {
         "en_US": ""
@@ -176,9 +168,7 @@
           "en_US": ""
         },
         "htmlAutocompleteAttribute": "",
-        "direction": [
-          "vertical"
-        ]
+        "direction": ["vertical"]
       },
       "defaultValue": {
         "en_US": ""
@@ -214,9 +204,7 @@
             "columns": [
               {
                 "size": 12,
-                "fields": [
-                  "Numeric47620052"
-                ]
+                "fields": ["Numeric47620052"]
               }
             ]
           },
@@ -224,9 +212,7 @@
             "columns": [
               {
                 "size": 12,
-                "fields": [
-                  "Text16646748"
-                ]
+                "fields": ["Text16646748"]
               }
             ]
           }
@@ -288,9 +274,7 @@
               }
             },
             "htmlAutocompleteAttribute": "",
-            "direction": [
-              "vertical"
-            ]
+            "direction": ["vertical"]
           },
           "defaultValue": {
             "en_US": ""
@@ -341,9 +325,7 @@
               "en_US": ""
             },
             "htmlAutocompleteAttribute": "",
-            "direction": [
-              "vertical"
-            ]
+            "direction": ["vertical"]
           },
           "defaultValue": {
             "en_US": ""
@@ -385,9 +367,7 @@
             "dataLayoutColumns": [
               {
                 "columnSize": 12,
-                "fieldNames": [
-                  "Text45536745"
-                ]
+                "fieldNames": ["Text45536745"]
               }
             ]
           },
@@ -395,9 +375,7 @@
             "dataLayoutColumns": [
               {
                 "columnSize": 12,
-                "fieldNames": [
-                  "Text33624891"
-                ]
+                "fieldNames": ["Text33624891"]
               }
             ]
           },
@@ -405,9 +383,7 @@
             "dataLayoutColumns": [
               {
                 "columnSize": 12,
-                "fieldNames": [
-                  "Text53446458"
-                ]
+                "fieldNames": ["Text53446458"]
               }
             ]
           },
@@ -415,9 +391,7 @@
             "dataLayoutColumns": [
               {
                 "columnSize": 12,
-                "fieldNames": [
-                  "Text49702478"
-                ]
+                "fieldNames": ["Text49702478"]
               }
             ]
           },
@@ -425,9 +399,7 @@
             "dataLayoutColumns": [
               {
                 "columnSize": 12,
-                "fieldNames": [
-                  "Fieldset02164987"
-                ]
+                "fieldNames": ["Fieldset02164987"]
               }
             ]
           }

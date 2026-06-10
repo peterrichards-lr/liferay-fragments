@@ -93,8 +93,8 @@
           "type": "text"
         },
         {
-          "dataType": "int",
-          "defaultValue": "14",
+          "dataType": "number",
+          "defaultValue": 14,
           "description": "lfr.commerce.new-product-freshness-description",
           "label": "lfr.commerce.new-product-freshness",
           "name": "newProductFreshness",
@@ -123,8 +123,8 @@
           "type": "text"
         },
         {
-          "dataType": "int",
-          "defaultValue": "10",
+          "dataType": "number",
+          "defaultValue": 10,
           "description": "lfr.commerce.stock-level-threshold-description",
           "label": "lfr.commerce.stock-level-threshold",
           "name": "limitedStockLevelThreshold",

@@ -6,9 +6,7 @@
   "icon": "list",
   "name": "Listbox Multiselect",
   "typeOptions": {
-    "fieldTypes": [
-      "multiselect"
-    ]
+    "fieldTypes": ["multiselect"]
   },
   "type": "input",
   "thumbnailPath": "thumbnail.png"

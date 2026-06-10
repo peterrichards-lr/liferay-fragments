@@ -20,24 +20,24 @@
           "type": "checkbox"
         },
         {
-          "dataType": "int",
-          "defaultValue": "0",
+          "dataType": "number",
+          "defaultValue": 0,
           "label": "lfr.form-fragments.min",
           "description": "lfr.form-fragments.min",
           "name": "min",
           "type": "text"
         },
         {
-          "dataType": "int",
-          "defaultValue": "10",
+          "dataType": "number",
+          "defaultValue": 10,
           "label": "lfr.form-fragments.max",
           "description": "lfr.form-fragments.max",
           "name": "max",
           "type": "text"
         },
         {
-          "dataType": "int",
-          "defaultValue": "1",
+          "dataType": "number",
+          "defaultValue": 1,
           "label": "lfr.form-fragments.step",
           "description": "lfr.form-fragments.step",
           "name": "step",

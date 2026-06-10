@@ -6,9 +6,7 @@
   "icon": "number",
   "name": "Segmented Numeric",
   "typeOptions": {
-    "fieldTypes": [
-      "number"
-    ]
+    "fieldTypes": ["number"]
   },
   "type": "input",
   "thumbnailPath": "thumbnail.png"

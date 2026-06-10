@@ -56,7 +56,6 @@
           }
         },
         {
-          "dataType": "bool",
           "defaultValue": true,
           "label": "lfr.form-fragments.show-value",
           "description": "lfr.form-fragments.show-value-description",

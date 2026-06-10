@@ -6,10 +6,7 @@
   "icon": "star",
   "name": "Star Rating",
   "typeOptions": {
-    "fieldTypes": [
-      "select",
-      "number"
-    ]
+    "fieldTypes": ["select", "number"]
   },
   "type": "input",
   "thumbnailPath": "thumbnail.png"

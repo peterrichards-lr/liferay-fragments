@@ -651,8 +651,8 @@
           "type": "checkbox"
         },
         {
-          "dataType": "int",
-          "defaultValue": "100",
+          "dataType": "number",
+          "defaultValue": 100,
           "description": "lfr.responsive-menus.initialize-delay-description",
           "label": "lfr.responsive-menus.initialize-delay",
           "name": "initializeDelay",

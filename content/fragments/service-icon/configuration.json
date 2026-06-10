@@ -3,7 +3,7 @@
     {
       "fields": [
         {
-          "dataType": "int",
+          "dataType": "number",
           "label": "lfr.content.content-structure-id",
           "description": "lfr.content.content-structure-id",
           "name": "contentStructureId",
@@ -17,7 +17,7 @@
           "type": "checkbox"
         },
         {
-          "dataType": "int",
+          "dataType": "number",
           "description": "lfr.content.asset-library-id-description",
           "label": "lfr.content.asset-library-id",
           "name": "assetLibraryId",

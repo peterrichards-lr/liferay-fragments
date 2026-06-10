@@ -6,9 +6,7 @@
   "icon": "bolt",
   "name": "Confirmation Field",
   "typeOptions": {
-    "fieldTypes": [
-      "text"
-    ]
+    "fieldTypes": ["text"]
   },
   "type": "input",
   "thumbnailPath": "thumbnail.png"

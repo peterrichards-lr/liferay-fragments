@@ -12,7 +12,7 @@
           "type": "text"
         },
         {
-          "dataType": "string",
+          "dataType": "boolean",
           "defaultValue": false,
           "label": "lfr.populated-form-fields.custom-range",
           "description": "lfr.populated-form-fields.custom-range",
@@ -20,31 +20,31 @@
           "type": "checkbox"
         },
         {
-          "dataType": "int",
-          "defaultValue": "0",
+          "dataType": "number",
+          "defaultValue": 0,
           "label": "lfr.populated-form-fields.min",
           "description": "lfr.populated-form-fields.min",
           "name": "min",
           "type": "text"
         },
         {
-          "dataType": "int",
-          "defaultValue": "10",
+          "dataType": "number",
+          "defaultValue": 10,
           "label": "lfr.populated-form-fields.max",
           "description": "lfr.populated-form-fields.max",
           "name": "max",
           "type": "text"
         },
         {
-          "dataType": "int",
-          "defaultValue": "1",
+          "dataType": "number",
+          "defaultValue": 1,
           "label": "lfr.populated-form-fields.step",
           "description": "lfr.populated-form-fields.step",
           "name": "step",
           "type": "text"
         },
         {
-          "dataType": "string",
+          "dataType": "boolean",
           "defaultValue": true,
           "label": "lfr.populated-form-fields.display-value",
           "description": "lfr.populated-form-fields.display-value",
@@ -68,7 +68,7 @@
           "type": "text"
         },
         {
-          "dataType": "string",
+          "dataType": "boolean",
           "defaultValue": false,
           "label": "lfr.populated-form-fields.add-id",
           "description": "lfr.populated-form-fields.add-id",
@@ -89,6 +89,7 @@
     {
       "fields": [
         {
+          "dataType": "boolean",
           "defaultValue": false,
           "label": "lfr.populated-form-fields.use-storage-value",
           "description": "lfr.populated-form-fields.use-storage-value",
@@ -103,6 +104,7 @@
           "type": "text"
         },
         {
+          "dataType": "boolean",
           "defaultValue": false,
           "label": "lfr.populated-form-fields.use-specific-storage-key",
           "description": "lfr.populated-form-fields.use-specific-storage-key",

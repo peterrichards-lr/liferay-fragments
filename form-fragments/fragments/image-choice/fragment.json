@@ -6,10 +6,7 @@
   "icon": "picture",
   "name": "Image Choice",
   "typeOptions": {
-    "fieldTypes": [
-      "text",
-      "multiselect"
-    ]
+    "fieldTypes": ["text", "multiselect"]
   },
   "type": "input",
   "thumbnailPath": "thumbnail.png"

@@ -36,12 +36,12 @@
           "type": "length"
         },
         {
-          "defaultValue": "5",
+          "defaultValue": 5,
           "label": "lfr.form-fragments.integer-digit-count",
           "description": "lfr.form-fragments.integer-digit-count",
           "name": "integerDigitCount",
           "type": "text",
-          "dataType": "int"
+          "dataType": "number"
         },
         {
           "label": "lfr.form-fragments.integer-fg-color",
@@ -58,12 +58,12 @@
           "defaultValue": "var(--black, #000000)"
         },
         {
-          "defaultValue": "3",
+          "defaultValue": 3,
           "label": "lfr.form-fragments.decimal-digit-count",
           "description": "lfr.form-fragments.decimal-digit-count",
           "name": "decimalDigitCount",
           "type": "text",
-          "dataType": "int"
+          "dataType": "number"
         },
         {
           "label": "lfr.form-fragments.decimal-fg-color",

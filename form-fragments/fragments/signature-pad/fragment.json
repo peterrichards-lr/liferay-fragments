@@ -6,9 +6,7 @@
   "icon": "pencil",
   "name": "Signature Pad",
   "typeOptions": {
-    "fieldTypes": [
-      "long-text"
-    ]
+    "fieldTypes": ["long-text"]
   },
   "type": "input",
   "thumbnailPath": "thumbnail.png"

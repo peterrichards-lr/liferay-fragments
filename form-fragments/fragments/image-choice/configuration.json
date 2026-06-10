@@ -12,8 +12,8 @@
           "type": "text"
         },
         {
-          "dataType": "int",
-          "defaultValue": "3",
+          "dataType": "number",
+          "defaultValue": 3,
           "label": "lfr.form-fragments.grid-columns",
           "description": "lfr.form-fragments.grid-columns-description",
           "name": "gridColumns",

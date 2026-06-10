@@ -1,5 +1,3 @@
 {
-  "sharedResources": [
-    "localization.js"
-  ]
+  "sharedResources": ["localization.js"]
 }

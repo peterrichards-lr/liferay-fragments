@@ -6,9 +6,7 @@
   "icon": "bolt",
   "name": "Hidden Relationship",
   "typeOptions": {
-    "fieldTypes": [
-      "relationship"
-    ]
+    "fieldTypes": ["relationship"]
   },
   "type": "input",
   "thumbnailPath": "thumbnail.png"

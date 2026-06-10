@@ -6,9 +6,7 @@
   "icon": "upload",
   "name": "File Drop Zone",
   "typeOptions": {
-    "fieldTypes": [
-      "file"
-    ]
+    "fieldTypes": ["file"]
   },
   "type": "input",
   "thumbnailPath": "thumbnail.png"

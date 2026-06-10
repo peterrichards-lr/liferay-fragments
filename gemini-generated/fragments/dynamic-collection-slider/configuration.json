@@ -191,12 +191,12 @@
     {
       "fields": [
         {
-          "defaultValue": "3",
+          "defaultValue": 3,
           "description": "lfr.gemini-generated.slides-per-view-description",
           "label": "lfr.gemini-generated.slides-per-view",
           "name": "slidesPerView",
           "type": "text",
-          "dataType": "int"
+          "dataType": "number"
         },
         {
           "defaultValue": true,

@@ -4,9 +4,7 @@
       "respectGeminiIgnore": true,
       "respectGitIgnore": false
     },
-    "fileName": [
-      "gemini.md"
-    ]
+    "fileName": ["gemini.md"]
   },
   "general": {
     "checkpointing": {

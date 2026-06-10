@@ -3,8 +3,8 @@
     {
       "fields": [
         {
-          "dataType": "int",
-          "defaultValue": "5",
+          "dataType": "number",
+          "defaultValue": 5,
           "label": "lfr.form-fragments.number-of-stars",
           "name": "numberOfStars",
           "description": "lfr.form-fragments.number-of-stars",

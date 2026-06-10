@@ -1,5 +1,3 @@
 {
-  "sharedResources": [
-    "logger.js"
-  ]
+  "sharedResources": ["logger.js"]
 }

@@ -412,16 +412,16 @@
           "type": "checkbox"
         },
         {
-          "dataType": "int",
-          "defaultValue": "0",
+          "dataType": "number",
+          "defaultValue": 0,
           "description": "lfr.responsive-menus.debounce-delay-description",
           "label": "lfr.responsive-menus.debounce-delay",
           "name": "debounceDelay",
           "type": "text"
         },
         {
-          "dataType": "int",
-          "defaultValue": "100",
+          "dataType": "number",
+          "defaultValue": 100,
           "description": "lfr.responsive-menus.initialize-delay-description",
           "label": "lfr.responsive-menus.initialize-delay",
           "name": "initializeDelay",

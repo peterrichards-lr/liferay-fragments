@@ -10,15 +10,14 @@
           "defaultValue": "#000000"
         },
         {
-          "dataType": "int",
-          "defaultValue": "2",
+          "dataType": "number",
+          "defaultValue": 2,
           "label": "lfr.form-fragments.pen-width",
           "description": "lfr.form-fragments.pen-width-description",
           "name": "penWidth",
           "type": "text"
         },
         {
-          "dataType": "length",
           "defaultValue": "200px",
           "label": "lfr.form-fragments.pad-height",
           "description": "lfr.form-fragments.pad-height-description",

@@ -1,5 +1,3 @@
 {
-  "sharedResources": [
-    "data.js"
-  ]
+  "sharedResources": ["data.js"]
 }

@@ -6,9 +6,7 @@
   "icon": "change",
   "name": "Toggle Switch",
   "typeOptions": {
-    "fieldTypes": [
-      "boolean"
-    ]
+    "fieldTypes": ["boolean"]
   },
   "type": "input",
   "thumbnailPath": "thumbnail.png"

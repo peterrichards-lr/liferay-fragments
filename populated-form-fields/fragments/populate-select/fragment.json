@@ -6,10 +6,7 @@
   "icon": "bolt",
   "name": "Populate Select",
   "typeOptions": {
-    "fieldTypes": [
-      "relationship",
-      "select"
-    ]
+    "fieldTypes": ["relationship", "select"]
   },
   "type": "input",
   "thumbnailPath": "thumbnail.png"

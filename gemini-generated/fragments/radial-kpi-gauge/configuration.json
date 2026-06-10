@@ -17,12 +17,12 @@
           "type": "text"
         },
         {
-          "defaultValue": "5000",
+          "defaultValue": 5000,
           "label": "lfr.gemini-generated.target-value",
           "description": "lfr.gemini-generated.target-value-description",
           "name": "targetValue",
           "type": "text",
-          "dataType": "int"
+          "dataType": "number"
         }
       ],
       "label": "lfr.gemini-generated.data"

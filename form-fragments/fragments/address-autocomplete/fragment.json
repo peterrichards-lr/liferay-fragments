@@ -6,10 +6,7 @@
   "icon": "geolocation",
   "name": "Address Autocomplete",
   "typeOptions": {
-    "fieldTypes": [
-      "text",
-      "long-text"
-    ]
+    "fieldTypes": ["text", "long-text"]
   },
   "type": "input",
   "thumbnailPath": "thumbnail.png"

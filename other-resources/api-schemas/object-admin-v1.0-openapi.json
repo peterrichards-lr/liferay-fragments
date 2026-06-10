@@ -17,9 +17,7 @@
   "paths": {
     "/v1.0/object-actions/{objectActionId}": {
       "get": {
-        "tags": [
-          "ObjectAction"
-        ],
+        "tags": ["ObjectAction"],
         "operationId": "getObjectAction",
         "parameters": [
           {
@@ -50,9 +48,7 @@
         }
       },
       "put": {
-        "tags": [
-          "ObjectAction"
-        ],
+        "tags": ["ObjectAction"],
         "operationId": "putObjectAction",
         "parameters": [
           {
@@ -97,9 +93,7 @@
         }
       },
       "delete": {
-        "tags": [
-          "ObjectAction"
-        ],
+        "tags": ["ObjectAction"],
         "operationId": "deleteObjectAction",
         "parameters": [
           {
@@ -122,9 +116,7 @@
         }
       },
       "patch": {
-        "tags": [
-          "ObjectAction"
-        ],
+        "tags": ["ObjectAction"],
         "operationId": "patchObjectAction",
         "parameters": [
           {
@@ -171,9 +163,7 @@
     },
     "/v1.0/object-actions/batch": {
       "put": {
-        "tags": [
-          "ObjectAction"
-        ],
+        "tags": ["ObjectAction"],
         "operationId": "putObjectActionBatch",
         "parameters": [
           {
@@ -203,9 +193,7 @@
         }
       },
       "delete": {
-        "tags": [
-          "ObjectAction"
-        ],
+        "tags": ["ObjectAction"],
         "operationId": "deleteObjectActionBatch",
         "parameters": [
           {
@@ -237,9 +225,7 @@
     },
     "/v1.0/object-definitions/by-external-reference-code/{externalReferenceCode}/object-actions": {
       "get": {
-        "tags": [
-          "ObjectAction"
-        ],
+        "tags": ["ObjectAction"],
         "operationId": "getObjectDefinitionByExternalReferenceCodeObjectActionsPage",
         "parameters": [
           {
@@ -298,9 +284,7 @@
         }
       },
       "post": {
-        "tags": [
-          "ObjectAction"
-        ],
+        "tags": ["ObjectAction"],
         "operationId": "postObjectDefinitionByExternalReferenceCodeObjectAction",
         "parameters": [
           {
@@ -347,9 +331,7 @@
     },
     "/v1.0/object-definitions/{objectDefinitionId}/object-actions": {
       "get": {
-        "tags": [
-          "ObjectAction"
-        ],
+        "tags": ["ObjectAction"],
         "operationId": "getObjectDefinitionObjectActionsPage",
         "parameters": [
           {
@@ -408,9 +390,7 @@
         }
       },
       "post": {
-        "tags": [
-          "ObjectAction"
-        ],
+        "tags": ["ObjectAction"],
         "operationId": "postObjectDefinitionObjectAction",
         "parameters": [
           {
@@ -457,9 +437,7 @@
     },
     "/v1.0/object-definitions/{objectDefinitionId}/object-actions/batch": {
       "post": {
-        "tags": [
-          "ObjectAction"
-        ],
+        "tags": ["ObjectAction"],
         "operationId": "postObjectDefinitionObjectActionBatch",
         "parameters": [
           {
@@ -499,9 +477,7 @@
     },
     "/v1.0/object-definitions/{objectDefinitionId}/object-actions/export-batch": {
       "post": {
-        "tags": [
-          "ObjectAction"
-        ],
+        "tags": ["ObjectAction"],
         "operationId": "postObjectDefinitionObjectActionsPageExportBatch",
         "parameters": [
           {
@@ -560,9 +536,7 @@
     },
     "/v1.0/object-definitions/{objectDefinitionId}": {
       "get": {
-        "tags": [
-          "ObjectDefinition"
-        ],
+        "tags": ["ObjectDefinition"],
         "operationId": "getObjectDefinition",
         "parameters": [
           {
@@ -593,9 +567,7 @@
         }
       },
       "put": {
-        "tags": [
-          "ObjectDefinition"
-        ],
+        "tags": ["ObjectDefinition"],
         "operationId": "putObjectDefinition",
         "parameters": [
           {
@@ -640,9 +612,7 @@
         }
       },
       "delete": {
-        "tags": [
-          "ObjectDefinition"
-        ],
+        "tags": ["ObjectDefinition"],
         "operationId": "deleteObjectDefinition",
         "parameters": [
           {
@@ -665,9 +635,7 @@
         }
       },
       "patch": {
-        "tags": [
-          "ObjectDefinition"
-        ],
+        "tags": ["ObjectDefinition"],
         "operationId": "patchObjectDefinition",
         "parameters": [
           {
@@ -714,9 +682,7 @@
     },
     "/v1.0/object-definitions/batch": {
       "put": {
-        "tags": [
-          "ObjectDefinition"
-        ],
+        "tags": ["ObjectDefinition"],
         "operationId": "putObjectDefinitionBatch",
         "parameters": [
           {
@@ -746,9 +712,7 @@
         }
       },
       "post": {
-        "tags": [
-          "ObjectDefinition"
-        ],
+        "tags": ["ObjectDefinition"],
         "operationId": "postObjectDefinitionBatch",
         "parameters": [
           {
@@ -778,9 +742,7 @@
         }
       },
       "delete": {
-        "tags": [
-          "ObjectDefinition"
-        ],
+        "tags": ["ObjectDefinition"],
         "operationId": "deleteObjectDefinitionBatch",
         "parameters": [
           {
@@ -812,9 +774,7 @@
     },
     "/v1.0/object-definitions/by-external-reference-code/{externalReferenceCode}": {
       "get": {
-        "tags": [
-          "ObjectDefinition"
-        ],
+        "tags": ["ObjectDefinition"],
         "operationId": "getObjectDefinitionByExternalReferenceCode",
         "parameters": [
           {
@@ -845,9 +805,7 @@
         }
       },
       "put": {
-        "tags": [
-          "ObjectDefinition"
-        ],
+        "tags": ["ObjectDefinition"],
         "operationId": "putObjectDefinitionByExternalReferenceCode",
         "parameters": [
           {
@@ -902,9 +860,7 @@
     },
     "/v1.0/object-definitions": {
       "get": {
-        "tags": [
-          "ObjectDefinition"
-        ],
+        "tags": ["ObjectDefinition"],
         "operationId": "getObjectDefinitionsPage",
         "parameters": [
           {
@@ -999,9 +955,7 @@
         }
       },
       "post": {
-        "tags": [
-          "ObjectDefinition"
-        ],
+        "tags": ["ObjectDefinition"],
         "operationId": "postObjectDefinition",
         "parameters": [
           {
@@ -1048,9 +1002,7 @@
     },
     "/v1.0/object-definitions/{objectDefinitionId}/publish": {
       "post": {
-        "tags": [
-          "ObjectDefinition"
-        ],
+        "tags": ["ObjectDefinition"],
         "operationId": "postObjectDefinitionPublish",
         "parameters": [
           {
@@ -1083,9 +1035,7 @@
     },
     "/v1.0/object-definitions/export-batch": {
       "post": {
-        "tags": [
-          "ObjectDefinition"
-        ],
+        "tags": ["ObjectDefinition"],
         "operationId": "postObjectDefinitionsPageExportBatch",
         "parameters": [
           {
@@ -1173,9 +1123,7 @@
     },
     "/v1.0/object-fields/{objectFieldId}": {
       "get": {
-        "tags": [
-          "ObjectField"
-        ],
+        "tags": ["ObjectField"],
         "operationId": "getObjectField",
         "parameters": [
           {
@@ -1206,9 +1154,7 @@
         }
       },
       "put": {
-        "tags": [
-          "ObjectField"
-        ],
+        "tags": ["ObjectField"],
         "operationId": "putObjectField",
         "parameters": [
           {
@@ -1253,9 +1199,7 @@
         }
       },
       "delete": {
-        "tags": [
-          "ObjectField"
-        ],
+        "tags": ["ObjectField"],
         "operationId": "deleteObjectField",
         "parameters": [
           {
@@ -1278,9 +1222,7 @@
         }
       },
       "patch": {
-        "tags": [
-          "ObjectField"
-        ],
+        "tags": ["ObjectField"],
         "operationId": "patchObjectField",
         "parameters": [
           {
@@ -1327,9 +1269,7 @@
     },
     "/v1.0/object-fields/batch": {
       "put": {
-        "tags": [
-          "ObjectField"
-        ],
+        "tags": ["ObjectField"],
         "operationId": "putObjectFieldBatch",
         "parameters": [
           {
@@ -1359,9 +1299,7 @@
         }
       },
       "delete": {
-        "tags": [
-          "ObjectField"
-        ],
+        "tags": ["ObjectField"],
         "operationId": "deleteObjectFieldBatch",
         "parameters": [
           {
@@ -1393,9 +1331,7 @@
     },
     "/v1.0/object-definitions/by-external-reference-code/{externalReferenceCode}/object-fields": {
       "get": {
-        "tags": [
-          "ObjectField"
-        ],
+        "tags": ["ObjectField"],
         "operationId": "getObjectDefinitionByExternalReferenceCodeObjectFieldsPage",
         "parameters": [
           {
@@ -1472,9 +1408,7 @@
         }
       },
       "post": {
-        "tags": [
-          "ObjectField"
-        ],
+        "tags": ["ObjectField"],
         "operationId": "postObjectDefinitionByExternalReferenceCodeObjectField",
         "parameters": [
           {
@@ -1521,9 +1455,7 @@
     },
     "/v1.0/object-definitions/{objectDefinitionId}/object-fields": {
       "get": {
-        "tags": [
-          "ObjectField"
-        ],
+        "tags": ["ObjectField"],
         "operationId": "getObjectDefinitionObjectFieldsPage",
         "parameters": [
           {
@@ -1600,9 +1532,7 @@
         }
       },
       "post": {
-        "tags": [
-          "ObjectField"
-        ],
+        "tags": ["ObjectField"],
         "operationId": "postObjectDefinitionObjectField",
         "parameters": [
           {
@@ -1649,9 +1579,7 @@
     },
     "/v1.0/object-definitions/{objectDefinitionId}/object-fields/batch": {
       "post": {
-        "tags": [
-          "ObjectField"
-        ],
+        "tags": ["ObjectField"],
         "operationId": "postObjectDefinitionObjectFieldBatch",
         "parameters": [
           {
@@ -1691,9 +1619,7 @@
     },
     "/v1.0/object-definitions/{objectDefinitionId}/object-fields/export-batch": {
       "post": {
-        "tags": [
-          "ObjectField"
-        ],
+        "tags": ["ObjectField"],
         "operationId": "postObjectDefinitionObjectFieldsPageExportBatch",
         "parameters": [
           {
@@ -1770,9 +1696,7 @@
     },
     "/v1.0/object-folders/{objectFolderId}": {
       "get": {
-        "tags": [
-          "ObjectFolder"
-        ],
+        "tags": ["ObjectFolder"],
         "operationId": "getObjectFolder",
         "parameters": [
           {
@@ -1803,9 +1727,7 @@
         }
       },
       "put": {
-        "tags": [
-          "ObjectFolder"
-        ],
+        "tags": ["ObjectFolder"],
         "operationId": "putObjectFolder",
         "parameters": [
           {
@@ -1850,9 +1772,7 @@
         }
       },
       "delete": {
-        "tags": [
-          "ObjectFolder"
-        ],
+        "tags": ["ObjectFolder"],
         "operationId": "deleteObjectFolder",
         "parameters": [
           {
@@ -1875,9 +1795,7 @@
         }
       },
       "patch": {
-        "tags": [
-          "ObjectFolder"
-        ],
+        "tags": ["ObjectFolder"],
         "operationId": "patchObjectFolder",
         "parameters": [
           {
@@ -1924,9 +1842,7 @@
     },
     "/v1.0/object-folders/batch": {
       "put": {
-        "tags": [
-          "ObjectFolder"
-        ],
+        "tags": ["ObjectFolder"],
         "operationId": "putObjectFolderBatch",
         "parameters": [
           {
@@ -1956,9 +1872,7 @@
         }
       },
       "post": {
-        "tags": [
-          "ObjectFolder"
-        ],
+        "tags": ["ObjectFolder"],
         "operationId": "postObjectFolderBatch",
         "parameters": [
           {
@@ -1988,9 +1902,7 @@
         }
       },
       "delete": {
-        "tags": [
-          "ObjectFolder"
-        ],
+        "tags": ["ObjectFolder"],
         "operationId": "deleteObjectFolderBatch",
         "parameters": [
           {
@@ -2022,9 +1934,7 @@
     },
     "/v1.0/object-folders/by-external-reference-code/{externalReferenceCode}": {
       "get": {
-        "tags": [
-          "ObjectFolder"
-        ],
+        "tags": ["ObjectFolder"],
         "operationId": "getObjectFolderByExternalReferenceCode",
         "parameters": [
           {
@@ -2055,9 +1965,7 @@
         }
       },
       "put": {
-        "tags": [
-          "ObjectFolder"
-        ],
+        "tags": ["ObjectFolder"],
         "operationId": "putObjectFolderByExternalReferenceCode",
         "parameters": [
           {
@@ -2104,9 +2012,7 @@
     },
     "/v1.0/object-folders": {
       "get": {
-        "tags": [
-          "ObjectFolder"
-        ],
+        "tags": ["ObjectFolder"],
         "operationId": "getObjectFoldersPage",
         "parameters": [
           {
@@ -2150,9 +2056,7 @@
         }
       },
       "post": {
-        "tags": [
-          "ObjectFolder"
-        ],
+        "tags": ["ObjectFolder"],
         "operationId": "postObjectFolder",
         "requestBody": {
           "content": {
@@ -2189,9 +2093,7 @@
     },
     "/v1.0/object-folders/export-batch": {
       "post": {
-        "tags": [
-          "ObjectFolder"
-        ],
+        "tags": ["ObjectFolder"],
         "operationId": "postObjectFoldersPageExportBatch",
         "parameters": [
           {
@@ -2235,9 +2137,7 @@
     },
     "/v1.0/object-layouts/{objectLayoutId}": {
       "get": {
-        "tags": [
-          "ObjectLayout"
-        ],
+        "tags": ["ObjectLayout"],
         "operationId": "getObjectLayout",
         "parameters": [
           {
@@ -2268,9 +2168,7 @@
         }
       },
       "put": {
-        "tags": [
-          "ObjectLayout"
-        ],
+        "tags": ["ObjectLayout"],
         "operationId": "putObjectLayout",
         "parameters": [
           {
@@ -2315,9 +2213,7 @@
         }
       },
       "delete": {
-        "tags": [
-          "ObjectLayout"
-        ],
+        "tags": ["ObjectLayout"],
         "operationId": "deleteObjectLayout",
         "parameters": [
           {
@@ -2342,9 +2238,7 @@
     },
     "/v1.0/object-layouts/batch": {
       "put": {
-        "tags": [
-          "ObjectLayout"
-        ],
+        "tags": ["ObjectLayout"],
         "operationId": "putObjectLayoutBatch",
         "parameters": [
           {
@@ -2374,9 +2268,7 @@
         }
       },
       "delete": {
-        "tags": [
-          "ObjectLayout"
-        ],
+        "tags": ["ObjectLayout"],
         "operationId": "deleteObjectLayoutBatch",
         "parameters": [
           {
@@ -2408,9 +2300,7 @@
     },
     "/v1.0/object-definitions/by-external-reference-code/{externalReferenceCode}/object-layouts": {
       "get": {
-        "tags": [
-          "ObjectLayout"
-        ],
+        "tags": ["ObjectLayout"],
         "operationId": "getObjectDefinitionByExternalReferenceCodeObjectLayoutsPage",
         "parameters": [
           {
@@ -2469,9 +2359,7 @@
         }
       },
       "post": {
-        "tags": [
-          "ObjectLayout"
-        ],
+        "tags": ["ObjectLayout"],
         "operationId": "postObjectDefinitionByExternalReferenceCodeObjectLayout",
         "parameters": [
           {
@@ -2518,9 +2406,7 @@
     },
     "/v1.0/object-definitions/{objectDefinitionId}/object-layouts": {
       "get": {
-        "tags": [
-          "ObjectLayout"
-        ],
+        "tags": ["ObjectLayout"],
         "operationId": "getObjectDefinitionObjectLayoutsPage",
         "parameters": [
           {
@@ -2579,9 +2465,7 @@
         }
       },
       "post": {
-        "tags": [
-          "ObjectLayout"
-        ],
+        "tags": ["ObjectLayout"],
         "operationId": "postObjectDefinitionObjectLayout",
         "parameters": [
           {
@@ -2628,9 +2512,7 @@
     },
     "/v1.0/object-definitions/{objectDefinitionId}/object-layouts/batch": {
       "post": {
-        "tags": [
-          "ObjectLayout"
-        ],
+        "tags": ["ObjectLayout"],
         "operationId": "postObjectDefinitionObjectLayoutBatch",
         "parameters": [
           {
@@ -2670,9 +2552,7 @@
     },
     "/v1.0/object-definitions/{objectDefinitionId}/object-layouts/export-batch": {
       "post": {
-        "tags": [
-          "ObjectLayout"
-        ],
+        "tags": ["ObjectLayout"],
         "operationId": "postObjectDefinitionObjectLayoutsPageExportBatch",
         "parameters": [
           {
@@ -2731,9 +2611,7 @@
     },
     "/v1.0/object-relationships/{objectRelationshipId}": {
       "get": {
-        "tags": [
-          "ObjectRelationship"
-        ],
+        "tags": ["ObjectRelationship"],
         "operationId": "getObjectRelationship",
         "parameters": [
           {
@@ -2764,9 +2642,7 @@
         }
       },
       "put": {
-        "tags": [
-          "ObjectRelationship"
-        ],
+        "tags": ["ObjectRelationship"],
         "operationId": "putObjectRelationship",
         "parameters": [
           {
@@ -2811,9 +2687,7 @@
         }
       },
       "delete": {
-        "tags": [
-          "ObjectRelationship"
-        ],
+        "tags": ["ObjectRelationship"],
         "operationId": "deleteObjectRelationship",
         "parameters": [
           {
@@ -2838,9 +2712,7 @@
     },
     "/v1.0/object-relationships/batch": {
       "put": {
-        "tags": [
-          "ObjectRelationship"
-        ],
+        "tags": ["ObjectRelationship"],
         "operationId": "putObjectRelationshipBatch",
         "parameters": [
           {
@@ -2870,9 +2742,7 @@
         }
       },
       "delete": {
-        "tags": [
-          "ObjectRelationship"
-        ],
+        "tags": ["ObjectRelationship"],
         "operationId": "deleteObjectRelationshipBatch",
         "parameters": [
           {
@@ -2904,9 +2774,7 @@
     },
     "/v1.0/object-definitions/by-external-reference-code/{externalReferenceCode}/object-relationships": {
       "get": {
-        "tags": [
-          "ObjectRelationship"
-        ],
+        "tags": ["ObjectRelationship"],
         "operationId": "getObjectDefinitionByExternalReferenceCodeObjectRelationshipsPage",
         "parameters": [
           {
@@ -2995,9 +2863,7 @@
         }
       },
       "post": {
-        "tags": [
-          "ObjectRelationship"
-        ],
+        "tags": ["ObjectRelationship"],
         "operationId": "postObjectDefinitionByExternalReferenceCodeObjectRelationship",
         "parameters": [
           {
@@ -3044,9 +2910,7 @@
     },
     "/v1.0/object-definitions/{objectDefinitionId}/object-relationships": {
       "get": {
-        "tags": [
-          "ObjectRelationship"
-        ],
+        "tags": ["ObjectRelationship"],
         "operationId": "getObjectDefinitionObjectRelationshipsPage",
         "parameters": [
           {
@@ -3135,9 +2999,7 @@
         }
       },
       "post": {
-        "tags": [
-          "ObjectRelationship"
-        ],
+        "tags": ["ObjectRelationship"],
         "operationId": "postObjectDefinitionObjectRelationship",
         "parameters": [
           {
@@ -3184,9 +3046,7 @@
     },
     "/v1.0/object-definitions/{objectDefinitionId}/object-relationships/batch": {
       "post": {
-        "tags": [
-          "ObjectRelationship"
-        ],
+        "tags": ["ObjectRelationship"],
         "operationId": "postObjectDefinitionObjectRelationshipBatch",
         "parameters": [
           {
@@ -3226,9 +3086,7 @@
     },
     "/v1.0/object-definitions/{objectDefinitionId}/object-relationships/export-batch": {
       "post": {
-        "tags": [
-          "ObjectRelationship"
-        ],
+        "tags": ["ObjectRelationship"],
         "operationId": "postObjectDefinitionObjectRelationshipsPageExportBatch",
         "parameters": [
           {
@@ -3317,9 +3175,7 @@
     },
     "/v1.0/object-relationships/by-external-reference-code/{externalReferenceCode}": {
       "put": {
-        "tags": [
-          "ObjectRelationship"
-        ],
+        "tags": ["ObjectRelationship"],
         "operationId": "putObjectRelationshipByExternalReferenceCode",
         "parameters": [
           {
@@ -3366,9 +3222,7 @@
     },
     "/v1.0/object-validation-rules/{objectValidationRuleId}": {
       "get": {
-        "tags": [
-          "ObjectValidationRule"
-        ],
+        "tags": ["ObjectValidationRule"],
         "operationId": "getObjectValidationRule",
         "parameters": [
           {
@@ -3399,9 +3253,7 @@
         }
       },
       "put": {
-        "tags": [
-          "ObjectValidationRule"
-        ],
+        "tags": ["ObjectValidationRule"],
         "operationId": "putObjectValidationRule",
         "parameters": [
           {
@@ -3446,9 +3298,7 @@
         }
       },
       "delete": {
-        "tags": [
-          "ObjectValidationRule"
-        ],
+        "tags": ["ObjectValidationRule"],
         "operationId": "deleteObjectValidationRule",
         "parameters": [
           {
@@ -3471,9 +3321,7 @@
         }
       },
       "patch": {
-        "tags": [
-          "ObjectValidationRule"
-        ],
+        "tags": ["ObjectValidationRule"],
         "operationId": "patchObjectValidationRule",
         "parameters": [
           {
@@ -3520,9 +3368,7 @@
     },
     "/v1.0/object-validation-rules/batch": {
       "put": {
-        "tags": [
-          "ObjectValidationRule"
-        ],
+        "tags": ["ObjectValidationRule"],
         "operationId": "putObjectValidationRuleBatch",
         "parameters": [
           {
@@ -3552,9 +3398,7 @@
         }
       },
       "delete": {
-        "tags": [
-          "ObjectValidationRule"
-        ],
+        "tags": ["ObjectValidationRule"],
         "operationId": "deleteObjectValidationRuleBatch",
         "parameters": [
           {
@@ -3586,9 +3430,7 @@
     },
     "/v1.0/object-definitions/by-external-reference-code/{externalReferenceCode}/object-validation-rules": {
       "get": {
-        "tags": [
-          "ObjectValidationRule"
-        ],
+        "tags": ["ObjectValidationRule"],
         "operationId": "getObjectDefinitionByExternalReferenceCodeObjectValidationRulesPage",
         "parameters": [
           {
@@ -3647,9 +3489,7 @@
         }
       },
       "post": {
-        "tags": [
-          "ObjectValidationRule"
-        ],
+        "tags": ["ObjectValidationRule"],
         "operationId": "postObjectDefinitionByExternalReferenceCodeObjectValidationRule",
         "parameters": [
           {
@@ -3696,9 +3536,7 @@
     },
     "/v1.0/object-definitions/{objectDefinitionId}/object-validation-rules": {
       "get": {
-        "tags": [
-          "ObjectValidationRule"
-        ],
+        "tags": ["ObjectValidationRule"],
         "operationId": "getObjectDefinitionObjectValidationRulesPage",
         "parameters": [
           {
@@ -3757,9 +3595,7 @@
         }
       },
       "post": {
-        "tags": [
-          "ObjectValidationRule"
-        ],
+        "tags": ["ObjectValidationRule"],
         "operationId": "postObjectDefinitionObjectValidationRule",
         "parameters": [
           {
@@ -3806,9 +3642,7 @@
     },
     "/v1.0/object-definitions/{objectDefinitionId}/object-validation-rules/batch": {
       "post": {
-        "tags": [
-          "ObjectValidationRule"
-        ],
+        "tags": ["ObjectValidationRule"],
         "operationId": "postObjectDefinitionObjectValidationRuleBatch",
         "parameters": [
           {
@@ -3848,9 +3682,7 @@
     },
     "/v1.0/object-definitions/{objectDefinitionId}/object-validation-rules/export-batch": {
       "post": {
-        "tags": [
-          "ObjectValidationRule"
-        ],
+        "tags": ["ObjectValidationRule"],
         "operationId": "postObjectDefinitionObjectValidationRulesPageExportBatch",
         "parameters": [
           {
@@ -3909,9 +3741,7 @@
     },
     "/v1.0/object-views/{objectViewId}": {
       "get": {
-        "tags": [
-          "ObjectView"
-        ],
+        "tags": ["ObjectView"],
         "operationId": "getObjectView",
         "parameters": [
           {
@@ -3942,9 +3772,7 @@
         }
       },
       "put": {
-        "tags": [
-          "ObjectView"
-        ],
+        "tags": ["ObjectView"],
         "operationId": "putObjectView",
         "parameters": [
           {
@@ -3989,9 +3817,7 @@
         }
       },
       "delete": {
-        "tags": [
-          "ObjectView"
-        ],
+        "tags": ["ObjectView"],
         "operationId": "deleteObjectView",
         "parameters": [
           {
@@ -4016,9 +3842,7 @@
     },
     "/v1.0/object-views/batch": {
       "put": {
-        "tags": [
-          "ObjectView"
-        ],
+        "tags": ["ObjectView"],
         "operationId": "putObjectViewBatch",
         "parameters": [
           {
@@ -4048,9 +3872,7 @@
         }
       },
       "delete": {
-        "tags": [
-          "ObjectView"
-        ],
+        "tags": ["ObjectView"],
         "operationId": "deleteObjectViewBatch",
         "parameters": [
           {
@@ -4082,9 +3904,7 @@
     },
     "/v1.0/object-definitions/by-external-reference-code/{externalReferenceCode}/object-views": {
       "get": {
-        "tags": [
-          "ObjectView"
-        ],
+        "tags": ["ObjectView"],
         "operationId": "getObjectDefinitionByExternalReferenceCodeObjectViewsPage",
         "parameters": [
           {
@@ -4143,9 +3963,7 @@
         }
       },
       "post": {
-        "tags": [
-          "ObjectView"
-        ],
+        "tags": ["ObjectView"],
         "operationId": "postObjectDefinitionByExternalReferenceCodeObjectView",
         "parameters": [
           {
@@ -4192,9 +4010,7 @@
     },
     "/v1.0/object-definitions/{objectDefinitionId}/object-views": {
       "get": {
-        "tags": [
-          "ObjectView"
-        ],
+        "tags": ["ObjectView"],
         "operationId": "getObjectDefinitionObjectViewsPage",
         "parameters": [
           {
@@ -4253,9 +4069,7 @@
         }
       },
       "post": {
-        "tags": [
-          "ObjectView"
-        ],
+        "tags": ["ObjectView"],
         "operationId": "postObjectDefinitionObjectView",
         "parameters": [
           {
@@ -4302,9 +4116,7 @@
     },
     "/v1.0/object-definitions/{objectDefinitionId}/object-views/batch": {
       "post": {
-        "tags": [
-          "ObjectView"
-        ],
+        "tags": ["ObjectView"],
         "operationId": "postObjectDefinitionObjectViewBatch",
         "parameters": [
           {
@@ -4344,9 +4156,7 @@
     },
     "/v1.0/object-definitions/{objectDefinitionId}/object-views/export-batch": {
       "post": {
-        "tags": [
-          "ObjectView"
-        ],
+        "tags": ["ObjectView"],
         "operationId": "postObjectDefinitionObjectViewsPageExportBatch",
         "parameters": [
           {
@@ -4405,9 +4215,7 @@
     },
     "/v1.0/object-views/{objectViewId}/copy": {
       "post": {
-        "tags": [
-          "ObjectView"
-        ],
+        "tags": ["ObjectView"],
         "operationId": "postObjectViewCopy",
         "parameters": [
           {
@@ -5101,19 +4909,12 @@
           },
           "readOnly": {
             "type": "string",
-            "enum": [
-              "conditional",
-              "false",
-              "true"
-            ]
+            "enum": ["conditional", "false", "true"]
           },
           "relationshipType": {
             "type": "string",
             "readOnly": true,
-            "enum": [
-              "oneToMany",
-              "oneToOne"
-            ]
+            "enum": ["oneToMany", "oneToOne"]
           },
           "type": {
             "type": "string",
@@ -5274,11 +5075,7 @@
           },
           "type": {
             "type": "string",
-            "enum": [
-              "categorization",
-              "regular",
-              "seo"
-            ]
+            "enum": ["categorization", "regular", "seo"]
           }
         },
         "xml": {
@@ -5470,19 +5267,11 @@
           },
           "deletionType": {
             "type": "string",
-            "enum": [
-              "cascade",
-              "disassociate",
-              "prevent"
-            ]
+            "enum": ["cascade", "disassociate", "prevent"]
           },
           "type": {
             "type": "string",
-            "enum": [
-              "oneToMany",
-              "oneToOne",
-              "manyToMany"
-            ]
+            "enum": ["oneToMany", "oneToOne", "manyToMany"]
           }
         },
         "xml": {
@@ -5591,10 +5380,7 @@
           },
           "outputType": {
             "type": "string",
-            "enum": [
-              "fullValidation",
-              "partialValidation"
-            ]
+            "enum": ["fullValidation", "partialValidation"]
           }
         },
         "xml": {
@@ -5760,10 +5546,7 @@
           },
           "filterType": {
             "type": "string",
-            "enum": [
-              "excludes",
-              "includes"
-            ]
+            "enum": ["excludes", "includes"]
           }
         },
         "xml": {
@@ -5793,10 +5576,7 @@
           },
           "sortOrder": {
             "type": "string",
-            "enum": [
-              "asc",
-              "desc"
-            ]
+            "enum": ["asc", "desc"]
           }
         },
         "xml": {

@@ -27,8 +27,8 @@
           "type": "text"
         },
         {
-          "dataType": "int",
-          "defaultValue": "2",
+          "dataType": "number",
+          "defaultValue": 2,
           "label": "lfr.form-fragments.decimal-places",
           "description": "lfr.form-fragments.decimal-places-description",
           "name": "decimalPlaces",

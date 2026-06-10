@@ -2,54 +2,70 @@
 
 ## Phase 1: Infrastructure Setup (LDM + Bash)
 
-- [ ] Create `scripts/test-runner.sh`.
-- [ ] Implement dependency validation: check for `ldm`, `jq`, `curl`, `node`,
+- [x] Create `scripts/test-runner.sh`.
+- [x] Implement dependency validation: check for `ldm`, `jq`, `curl`, `node`,
       `npm`.
-- [ ] Implement minimum version validation for `ldm` (fail fast if not met).
-- [ ] Accept a Liferay tag argument (e.g.,
-      `./scripts/test-runner.sh 2026.q1.0`).
-- [ ] Implement LDM startup logic:
-      `ldm run liferay-test --tag <TAG> --non-interactive --no-captcha`.
-- [ ] Implement wait-for-startup logic (polling
-      `http://localhost:8080/c/portal/login` or checking `ldm logs`).
-- [ ] Automate the build (`./create-fragment-zips.sh --all`) and deployment
-      (`./deploy-fragment-zips.sh <path-to-ldm-volume> --all`).
-- [ ] Implement cleanup logic (trap
-      `ldm stop liferay-test && ldm rm liferay-test` on script exit).
+- [x] Implement minimum version validation for `ldm` to 2.8.0.
+- [x] Accept a Liferay tag argument.
+- [x] Implement LDM startup logic with strict memory profile enforcement
+      (`LIFERAY_JVM_OPTS`).
+- [x] Implement 3-Phase wait-for-startup logic via `ldm wait`.
+- [x] Automate the build (`./create-fragment-zips.sh --all`) and deployment via
+      bind mounts.
+- [x] Implement cleanup logic (trap).
 
 ## Phase 2: Playwright Integration
 
-- [ ] Add `@playwright/test` to `devDependencies` in `package.json`.
-- [ ] Initialize `playwright.config.js` with `baseURL: 'http://localhost:8080'`
-      and setup to run against local Chromium.
-- [ ] Create a global setup script for Playwright to handle the initial Liferay
-      Admin login and save the auth state (bypassing login for each test).
+- [x] Add `@playwright/test` to `devDependencies` in `package.json`.
+- [x] Initialize `playwright.config.js`.
+- [x] Create a global setup script for Playwright to handle login and auth state
+      saving.
 
-## Phase 3: Core Test Suite & Reporting
+## Phase 3: Core Test Suite & Page Generation
 
-- [ ] Write a utility to programmatically create Liferay Content Pages via
-      Headless API (faster and more reliable than UI automation).
-- [ ] Write a utility to map fragments to these pages via API.
-- [ ] Create the primary Playwright test loop: read `fragment.json` files,
-      navigate to generated pages, and assert.
-- [ ] Implement a custom Playwright reporter or post-run script to generate
-      `docs/test-results/results-<TAG>.md` containing pass/fail status, error
-      reasons, and hints.
+- [x] Write utility to programmatically create Liferay Content Pages via
+      Headless API using GraphQL verification.
+- [x] Stagger page creation with 5s delays to prevent Liferay OOM crashes.
+- [x] Create the primary Playwright test loop.
+- [x] Implement a custom Markdown reporter in `docs/test-results/`.
 
-## Phase 4: Data-Dependent Fragments
+## Phase 4: Iterative Isolation Strategy (Current Focus)
 
-- [ ] Group fragments that need Showcase data (Objects, Commerce).
-- [ ] Ensure the LDM instance waits for Batch CX (Showcase) jobs to complete
-      before running tests for these specific fragments.
-- [ ] Write targeted Playwright interactions for complex form fragments to test
-      functional inputs.
+The strategy shifts from testing everything blindly to an iterative approach. We
+will categorize fragments into tiers based on their dependencies.
 
-## Phase 5: Responsive API-Driven Testing (Future Enhancement)
+- [ ] **Task 1:** Add a Fragment Filter argument (`-f <fragment-name>`) to
+      `test-runner.sh` and pass it to Playwright to isolate test runs.
+- [ ] **Task 2:** Refactor `global-setup.js` to respect the filter (skip
+      generating pages for ignored fragments).
+- [ ] **Task 3:** Implement the "Fixture Pattern" in
+      `e2e-tests/tests/fixtures/`. If a fragment has a `.setup.js` file, execute
+      it to inject prerequisites (Objects, Form Containers) before page
+      generation.
 
-- [ ] Utilize the `page-definition.json` structure (`Root` > `Section` >
-      `Column` > `Fragment`) via Headless Batch APIs to programmatically
-      generate a dedicated Content Page for each fragment.
-- [ ] Refactor Playwright tests to navigate to these generated site pages
-      instead of the Fragment Editor.
-- [ ] Configure Playwright to run the visual rendering tests across multiple
-      viewports: Desktop (1920x1080), Tablet (768x1024), and Mobile (375x812).
+## Phase 5: Tier 1 - Standalone Fragments
+
+Test fragments that require zero dependencies. They can be safely dropped onto a
+blank Content Page. **Targets:**
+
+- `layout-components` (e.g., `primary-card`, `secondary-card`)
+- `hero-assets` (e.g., `banner-video`, `overlay-background`)
+- `header-components` (e.g., `site-name`, `logo`)
+- `misc` (e.g., `back-button`, `icon-button`)
+- `modern-intranet` (e.g., `welcome-banner`, `stat-card`)
+- [ ] Create tests and assert successful rendering for Tier 1 fragments.
+
+## Phase 6: Tier 2 - Content-Dependent Fragments
+
+Fragments requiring simple content like Web Content Articles or Documents.
+
+- [ ] Create a shared `fixtures/content.setup.js` to seed dummy articles/images.
+- [ ] Test `dashboard-components` and basic `content` fragments.
+
+## Phase 7: Tier 3 - Object & Form-Dependent Fragments
+
+The most complex fragments requiring Objects, Form Containers, and mapped
+fields.
+
+- [ ] Create dedicated setup fixtures for `form-fragments` and `forms`.
+- [ ] Test `populated-form-fields`.
