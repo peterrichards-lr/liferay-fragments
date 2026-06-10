@@ -55,6 +55,33 @@ _Note: This check is enforced via GitHub Actions on every push._
 Leverage shared logic for Object discovery and identifier validation by linking
 to the shared resource: `misc/resources/commons.js`
 
+### 4. Secret Detection
+
+This repository enforces **zero-dependency, project-local secret detection** to
+prevent credentials, API keys, private keys, or private tokens from ever being
+committed to Git.
+
+The hook runs automatically on every `git commit` by scanning staged changes and
+blocking the commit if new secrets are detected.
+
+- **Automatic Setup**: Running `npm install` automatically registers the
+  pre-commit hook via the `"prepare"` script.
+- **Manual Hook Install**: Re-install git hooks manually at any time:
+  ```bash
+  node scripts/install-git-hooks.js
+  ```
+- **Updating the Baseline**: If you introduce mock variables/test hashes that
+  are safe to commit, regenerate the baseline exception file:
+  ```bash
+  npm run detect-secrets scan
+  ```
+  This updates `.secrets.baseline` containing SHA-1 hashes of approved
+  exceptions.
+- **Ignoring Mock Tokens**: You can add plain text mock tokens or hashes to
+  `.gitleaksignore` in the project root to ignore them project-wide.
+- **Inline Exceptions**: Add `// pragma: allowlist secret` to the line
+  containing a false positive to bypass the scanner locally.
+
 ---
 
 ## 📖 Documentation & Resources

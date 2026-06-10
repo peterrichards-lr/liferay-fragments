@@ -1,0 +1,5 @@
+# Gitleaks Ignore File
+# Add mock tokens or hashes here to prevent them from blocking commits.
+
+# Mock SE Client Token (used in examples, README.md, and local testing)
+mock-se-client-token-12345

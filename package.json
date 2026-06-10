@@ -9,6 +9,8 @@
     "format:check": "prettier --check .",
     "create-fragment": "node scripts/create-fragment.js",
     "docs:gallery": "node scripts/generate-gallery.js",
+    "detect-secrets": "node scripts/detect-secrets.js",
+    "prepare": "node scripts/install-git-hooks.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
