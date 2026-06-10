@@ -1,0 +1,16 @@
+{
+  "pageConfig": {
+    "fragmentConfig": {
+      "objectERC": "COMPANY_MILESTONE",
+      "customizeColumns": true,
+      "columnsToDisplay": "date,title,description",
+      "showFragmentHeader": true,
+      "tableTitle": "Milestones Table",
+      "enablePagination": true,
+      "pageSize": 10,
+      "enableView": true,
+      "enableEdit": false,
+      "enableAdd": true
+    }
+  }
+}

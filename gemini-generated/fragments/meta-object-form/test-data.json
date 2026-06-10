@@ -1,0 +1,14 @@
+{
+  "pageConfig": {
+    "fragmentConfig": {
+      "objectERC": "COMPANY_MILESTONE",
+      "enableAddNew": true,
+      "enableRecordSelection": false,
+      "fixedRecordIdentifier": "",
+      "fixedRecordIdentifierType": "id",
+      "submitButtonText": "Submit Milestone",
+      "successBehavior": "message",
+      "successMessage": "Milestone submitted successfully!"
+    }
+  }
+}

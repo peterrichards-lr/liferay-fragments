@@ -1,0 +1,11 @@
+{
+  "pageConfig": {
+    "fragmentConfig": {
+      "objectERC": "PRODUCT_SHOWCASE",
+      "imageField": "imageUrl",
+      "titleField": "title",
+      "descriptionField": "description",
+      "columns": "3"
+    }
+  }
+}

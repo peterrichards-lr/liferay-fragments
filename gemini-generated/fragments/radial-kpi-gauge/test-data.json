@@ -1,0 +1,10 @@
+{
+  "pageConfig": {
+    "fragmentConfig": {
+      "objectERC": "WATER_READING",
+      "valueField": "reading",
+      "targetValue": 5000,
+      "gaugeColor": "var(--primary)"
+    }
+  }
+}

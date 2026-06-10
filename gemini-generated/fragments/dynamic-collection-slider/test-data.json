@@ -1,0 +1,131 @@
+{
+  "webContentStructures": [
+    {
+      "externalReferenceCode": "SLIDER-SLIDE-STRUCT-V3",
+      "name": "Slider Slide Structure",
+      "description": "Structure for slides in the Dynamic Collection Slider",
+      "fields": [
+        {
+          "name": "title",
+          "type": "text",
+          "label": "Title"
+        },
+        {
+          "name": "description",
+          "type": "text",
+          "label": "Description"
+        },
+        {
+          "name": "image",
+          "type": "text",
+          "label": "Slide Image"
+        }
+      ]
+    }
+  ],
+  "documents": [
+    {
+      "externalReferenceCode": "SLIDE-IMG-01",
+      "title": "gravity_recommendation.png",
+      "filePath": "e2e-tests/assets/gravity_recommendation.png"
+    },
+    {
+      "externalReferenceCode": "SLIDE-IMG-02",
+      "title": "coffee_authentication.png",
+      "filePath": "e2e-tests/assets/coffee_authentication.png"
+    },
+    {
+      "externalReferenceCode": "SLIDE-IMG-03",
+      "title": "polite_ai_agent.png",
+      "filePath": "e2e-tests/assets/polite_ai_agent.png"
+    }
+  ],
+  "webContentArticles": [
+    {
+      "externalReferenceCode": "SLIDE-ARTICLE-01",
+      "structureERC": "SLIDER-SLIDE-STRUCT-V3",
+      "title": "Slide 1: Recommendation Gravity",
+      "contentFields": [
+        {
+          "name": "title",
+          "value": "Gravity Discovered to be a Recommendation, Not a Rule"
+        },
+        {
+          "name": "description",
+          "value": "Local engineering team successfully runs code upside-down. Application compiles 12% faster when floating."
+        },
+        {
+          "name": "image",
+          "value": "SLIDE-IMG-01"
+        }
+      ]
+    },
+    {
+      "externalReferenceCode": "SLIDE-ARTICLE-02",
+      "structureERC": "SLIDER-SLIDE-STRUCT-V3",
+      "title": "Slide 2: Auth For Coffee",
+      "contentFields": [
+        {
+          "name": "title",
+          "value": "Office Coffee Machine Demands OAuth2 Authentication"
+        },
+        {
+          "name": "description",
+          "value": "Espresso engine refuses to brew until provided with a valid Bearer Token. Baristas scrambling to implement authorization code flow."
+        },
+        {
+          "name": "image",
+          "value": "SLIDE-IMG-02"
+        }
+      ]
+    },
+    {
+      "externalReferenceCode": "SLIDE-ARTICLE-03",
+      "structureERC": "SLIDER-SLIDE-STRUCT-V3",
+      "title": "Slide 3: Polite AI Bot",
+      "contentFields": [
+        {
+          "name": "title",
+          "value": "AI Agent Accused of Excessive Complimenting"
+        },
+        {
+          "name": "description",
+          "value": "E2E testing suite stalls after logs show the assistant called the local DXP portal 'an absolute masterpiece of digital craftsmanship' 47 times."
+        },
+        {
+          "name": "image",
+          "value": "SLIDE-IMG-03"
+        }
+      ]
+    }
+  ],
+  "collections": [
+    {
+      "externalReferenceCode": "SLIDER-E2E-COLL",
+      "name": "E2E Slider Collection",
+      "description": "Collection for dynamic slider testing",
+      "assetType": "journal-article",
+      "items": [
+        {
+          "type": "journal-article",
+          "externalReferenceCode": "SLIDE-ARTICLE-01"
+        },
+        {
+          "type": "journal-article",
+          "externalReferenceCode": "SLIDE-ARTICLE-02"
+        },
+        {
+          "type": "journal-article",
+          "externalReferenceCode": "SLIDE-ARTICLE-03"
+        }
+      ]
+    }
+  ],
+  "pageConfig": {
+    "fragmentConfig": {
+      "collectionId": "SLIDER-E2E-COLL",
+      "displayStyle": "split",
+      "autoplayInterval": "5000"
+    }
+  }
+}

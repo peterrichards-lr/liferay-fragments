@@ -1,0 +1,12 @@
+{
+  "pageConfig": {
+    "fragmentConfig": {
+      "objectERC": "ACTIVITY_LOG",
+      "dateField": "logDate",
+      "daysToDisplay": "90",
+      "showSizeSelector": false,
+      "chartTitle": "Activity Heatmap",
+      "baseColor": "var(--primary)"
+    }
+  }
+}

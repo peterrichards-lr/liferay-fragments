@@ -25,7 +25,27 @@ async function globalTeardown(config) {
     extraHTTPHeaders: {
       Authorization: `Basic ${basicAuth}`,
     },
+    ignoreHTTPSErrors: true,
   });
+
+  console.log('Retrieving CSRF token for layout deletion...');
+  let pAuthToken = '';
+  try {
+    const tokenResp = await apiContext.get('/api/jsonws');
+    if (tokenResp.ok()) {
+      const tokenHtml = await tokenResp.text();
+      const tokenMatch = tokenHtml.match(/authToken:\s*['"](.*?)['"]/);
+      if (tokenMatch) {
+        pAuthToken = tokenMatch[1];
+        console.log(`  -> Retrieved CSRF Token: ${pAuthToken}`);
+      }
+    }
+  } catch (e) {
+    console.warn(
+      '  [WARN] Failed to retrieve CSRF token from /api/jsonws:',
+      e.message
+    );
+  }
 
   console.log('Cleaning up programmatically created test pages...');
 
@@ -33,8 +53,13 @@ async function globalTeardown(config) {
     if (!pageInfo.id) continue;
 
     try {
-      const deleteResp = await apiContext.delete(
-        `/o/headless-delivery/v1.0/site-pages/${pageInfo.id}`
+      const deleteResp = await apiContext.post(
+        `/api/jsonws/layout/delete-layout?p_auth=${pAuthToken}`,
+        {
+          form: {
+            plid: pageInfo.id,
+          },
+        }
       );
 
       if (deleteResp.ok()) {

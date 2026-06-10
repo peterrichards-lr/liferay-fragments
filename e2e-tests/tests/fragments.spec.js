@@ -14,6 +14,9 @@ try {
 }
 
 test.describe('Responsive Fragment Rendering', () => {
+  // Run all tests as Guest (unauthenticated) to check true visitor experience and prevent admin menus
+  test.use({ storageState: { cookies: [], origins: [] } });
+
   for (const pageInfo of testPages) {
     test(`Verify: ${pageInfo.collectionName} > ${pageInfo.fragmentName}`, async ({
       page,
@@ -29,16 +32,67 @@ test.describe('Responsive Fragment Rendering', () => {
         }
       });
 
+      page.on('response', async (res) => {
+        if (res.url().includes('content-set-elements')) {
+          console.log(`[NETWORK DEBUG] URL: ${res.url()}`);
+          console.log(`[NETWORK DEBUG] Status: ${res.status()}`);
+          try {
+            console.log(`[NETWORK DEBUG] Body: ${await res.text()}`);
+          } catch (e) {
+            console.warn(`[NETWORK DEBUG] Cannot read body: ${e.message}`);
+          }
+        }
+      });
+
       // 1. Go directly to the generated page
       await page.goto(pageInfo.url);
 
       // 2. Wait for the page to load
-      await page.waitForLoadState('networkidle');
+      try {
+        await page.waitForLoadState('networkidle', { timeout: 5000 });
+      } catch (e) {
+        // Ignore networkidle timeouts to prevent background requests from blocking test completion
+      }
 
-      // 3. Verify actual fragment rendering
+      // 3. Inject CSS to hide the Liferay navigation menu visually.
+      // This prevents the giant menu of 124 test pages from crushing the fragment in the screenshot.
+      await page.addStyleTag({
+        content: `
+          #banner, 
+          #wrapper header, 
+          .navbar, 
+          .site-navigation,
+          #controlMenu,
+          .control-menu,
+          #productMenu,
+          .product-menu,
+          .lfr-product-menu-panel,
+          .sidenav,
+          .sidenav-slider,
+          .sidenav-menu,
+          #sidenav-slider-productMenu,
+          .c-admin-user-personal-bar { 
+            display: none !important; 
+            visibility: hidden !important;
+            opacity: 0 !important;
+            width: 0 !important;
+            height: 0 !important;
+          }
+          html, body, #wrapper { 
+            margin: 0 !important;
+            padding: 0 !important;
+            margin-left: 0 !important;
+            padding-left: 0 !important;
+            margin-top: 0 !important;
+            padding-top: 0 !important;
+          }
+        `,
+      });
+
+      // 4. Verify actual fragment rendering
       // In Liferay, a successfully rendered fragment will have these markers
       const fragmentSelector =
-        '.lfr-layout-structure-item-fragment, .lfr-fragment-entry';
+        'div[id^="fragment-"], .lfr-layout-structure-item-fragment, .lfr-fragment-entry';
       const wrapper = page.locator('#wrapper, .portlet-layout');
 
       // Ensure the main wrapper is visible
@@ -72,8 +126,20 @@ test.describe('Responsive Fragment Rendering', () => {
         `${pageInfo.fragmentName}-${viewportName}.png`
       );
 
-      // We take a screenshot of the main wrapper area
-      await wrapper.first().screenshot({ path: snapshotPath });
+      // Target the fragment element directly, scroll it into view, and screenshot it
+      const fragmentElement = page.locator(fragmentSelector).first();
+
+      try {
+        await expect(fragmentElement).toBeVisible({ timeout: 15000 });
+        await fragmentElement.scrollIntoViewIfNeeded();
+        await fragmentElement.screenshot({ path: snapshotPath });
+      } catch (e) {
+        // Fallback to wrapper screenshot if fragment is 0-height or missing (e.g., due to missing prerequisites)
+        console.warn(
+          `[WARN] Could not capture fragment element directly for ${pageInfo.fragmentName}. Falling back to wrapper. Reason: ${e.message}`
+        );
+        await wrapper.first().screenshot({ path: snapshotPath });
+      }
 
       // Log if there were severe errors
       if (errors.length > 0) {

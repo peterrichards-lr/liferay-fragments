@@ -4,7 +4,7 @@
 
 set -e
 
-MIN_LDM_VERSION="2.5.0"
+MIN_LDM_VERSION="2.8.0"
 LIFERAY_TAG="2026.q1"
 PROJECT_NAME="fragments-test-env"
 PORT=8080
@@ -106,6 +106,7 @@ echo "  -> All dependencies met. LDM version: $LDM_VERSION"
 # 1.1 Pre-Run Cleanup
 echo ""
 echo "Cleaning up previous test artifacts..."
+echo "  -> Purging old visual snapshots..."
 rm -rf e2e-tests/snapshots/ e2e-tests/playwright-report/ e2e-tests/playwright_output.log \
        playwright-report/ test-results/ state.json ldm_startup.log
 echo "  -> Old logs and reports cleared."
@@ -118,7 +119,7 @@ if [ "$EXISTING_PROJECT" = true ]; then
     echo "  -> Using Existing Project: $PROJECT_NAME"
     # Resolve URL and Path for existing project
     # Use grep to extract the actual HTTP URL, ignoring any ANSI color codes
-    BASE_URL=$(ldm list | grep "$PROJECT_NAME" | grep -Eo "https?://[a-zA-Z0-9.:]+" | head -n 1)
+    BASE_URL=$(ldm list | grep "$PROJECT_NAME" | grep -Eo "https?://[a-zA-Z0-9.:-]+" | head -n 1)
     if [ -z "$BASE_URL" ]; then
         echo "Error: Could not find URL for existing project '$PROJECT_NAME'. Is it running?"
         exit 1
@@ -225,8 +226,8 @@ if [ "$EXISTING_PROJECT" = true ]; then
 else
     echo "  -> Starting LDM project '$PROJECT_NAME' with $TAG_FLAG $LIFERAY_TAG on port $PORT..."
     # Increase CodeCache and Memory to prevent JIT stalls. 
-    log_command "ldm run \"$PROJECT_NAME\" \"$TAG_FLAG\" \"$LIFERAY_TAG\" --port \"$PORT\" --non-interactive --no-captcha --sidecar --db postgresql $LDM_VERBOSE --env \"LIFERAY_JVM_OPTS=-Xms2g -Xmx4g -XX:ReservedCodeCacheSize=512m\""
-    if ! ldm run "$PROJECT_NAME" "$TAG_FLAG" "$LIFERAY_TAG" --port "$PORT" --non-interactive --no-captcha --sidecar --db postgresql $LDM_VERBOSE --env "LIFERAY_JVM_OPTS=-Xms2g -Xmx4g -XX:ReservedCodeCacheSize=512m" > ldm_startup.log 2>&1; then
+    log_command "ldm run \"$PROJECT_NAME\" \"$TAG_FLAG\" \"$LIFERAY_TAG\" --port \"$PORT\" --non-interactive --no-captcha --fast-login --sidecar --db postgresql $LDM_VERBOSE --env \"LIFERAY_JVM_OPTS=-Xms2g -Xmx4g -XX:ReservedCodeCacheSize=512m\""
+    if ! ldm run "$PROJECT_NAME" "$TAG_FLAG" "$LIFERAY_TAG" --port "$PORT" --non-interactive --no-captcha --fast-login --sidecar --db postgresql $LDM_VERBOSE --env "LIFERAY_JVM_OPTS=-Xms2g -Xmx4g -XX:ReservedCodeCacheSize=512m" > ldm_startup.log 2>&1; then
         echo "Error: LDM failed to start the environment."
         echo "Hint: Check ldm_startup.log or run 'ldm logs $PROJECT_NAME' for more details."
         cat <<EOF >> "$RESULTS_FILE"
@@ -251,17 +252,9 @@ fi
 echo "  -> LDM Project Path: $PROJECT_PATH"
 
 echo "  -> Waiting for Liferay to become ready..."
-MAX_RETRIES=60
-RETRY_COUNT=0
-until curl -s -f -o /dev/null "$BASE_URL/c/portal/login" || [ $RETRY_COUNT -eq $MAX_RETRIES ]; do
-    echo -n "."
-    sleep 5
-    ((RETRY_COUNT++))
-done
-
-echo ""
-if [ $RETRY_COUNT -eq $MAX_RETRIES ]; then
-    echo "Error: Liferay did not start within the expected time."
+log_command "ldm wait \"$PROJECT_NAME\""
+if ! ldm wait "$PROJECT_NAME"; then
+    echo "Error: Liferay did not start within the expected time or failed readiness checks."
     exit 1
 fi
 echo "  -> Liferay is up and running at $BASE_URL!"
@@ -295,120 +288,41 @@ else
     log_command "./create-fragment-zips.sh --all"
     ./create-fragment-zips.sh --all > /dev/null
 
-    # Resolve the LDM Liferay container ID
-    # We use an exact match filter with a leading slash which is the docker naming convention
-    LIFERAY_CONTAINER=$(docker ps --filter "name=^/${PROJECT_NAME}$" -q)
-    
-    # Fallback: try ldm- prefix if exact match fails (common in some LDM versions)
-    if [ -z "$LIFERAY_CONTAINER" ]; then
-        LIFERAY_CONTAINER=$(docker ps --filter "name=^/ldm-${PROJECT_NAME}-liferay$" -q)
-    fi
-
-    # Final Fallback: grep for project name and exclude database containers
-    if [ -z "$LIFERAY_CONTAINER" ]; then
-        LIFERAY_CONTAINER=$(docker ps --format '{{.Names}}' | grep "${PROJECT_NAME}" | grep -vE "\-db|\-elasticsearch" | head -n 1)
-    fi
-
-    if [ -z "$LIFERAY_CONTAINER" ]; then
-        echo "Error: Could not find the Liferay Docker container for project '$PROJECT_NAME'."
-        echo "Hint: Ensure the LDM project is running and try 'docker ps' to verify container names."
-        exit 1
-    fi
-    echo "  -> Targeting Liferay Container: $LIFERAY_CONTAINER"
-
-    echo "  -> Preparing staging area in container..."
-    log_command "docker exec -u 0 \"$LIFERAY_CONTAINER\" mkdir -p /tmp/fragment-staging"
-    docker exec -u 0 "$LIFERAY_CONTAINER" mkdir -p /tmp/fragment-staging
-
-    echo "  -> Deploying ZIPs via staging area (Preventing lchown Race Conditions)..."
+    echo "  -> Deploying ZIPs (Zero-Race Atomic Deployments via LDM bind mount)..."
     for zip_file in zips/fragments/*.zip; do
         [[ "$zip_file" == *"-pre2025q3"* ]] && continue
         [[ "$zip_file" == *"-debug"* ]] && continue # Skip debug zips if minified exist
         
         ZIP_NAME=$(basename "$zip_file")
-        echo "     Staging $ZIP_NAME..."
-        # Copy to staging (not watched by Liferay)
-        docker cp "$zip_file" "$LIFERAY_CONTAINER:/tmp/fragment-staging/"
-        # Move to deploy (atomic, prevents metadata race condition)
-        docker exec -u 0 "$LIFERAY_CONTAINER" mv "/tmp/fragment-staging/$ZIP_NAME" "/opt/liferay/deploy/"
-        
+        echo "     Deploying $ZIP_NAME..."
+        cp "$zip_file" "$PROJECT_PATH/deploy/"
         sleep 2 # Throttle deployment to reduce DB contention
     done
     
-    log_command "docker exec -u 0 \"$LIFERAY_CONTAINER\" mkdir -p /opt/liferay/osgi/client-extensions"
-    docker exec -u 0 "$LIFERAY_CONTAINER" mkdir -p /opt/liferay/osgi/client-extensions
-    
-    # Language and Showcase use the same staging pattern for robustness
-    echo "  -> Deploying Language and Showcase extensions via staging area..."
+    echo "  -> Deploying Language and Showcase extensions..."
     for cx_dir in zips/language zips/showcase; do
         [ -d "$cx_dir" ] || continue
         CX_TYPE=$(basename "$cx_dir")
         for cx_zip in "$cx_dir"/*.zip; do
             [ -f "$cx_zip" ] || continue
             CX_ZIP_NAME=$(basename "$cx_zip")
-            echo "     Staging $CX_ZIP_NAME ($CX_TYPE)..."
-            docker cp "$cx_zip" "$LIFERAY_CONTAINER:/tmp/fragment-staging/"
-            docker exec -u 0 "$LIFERAY_CONTAINER" mv "/tmp/fragment-staging/$CX_ZIP_NAME" "/opt/liferay/osgi/client-extensions/"
+            echo "     Deploying $CX_ZIP_NAME ($CX_TYPE)..."
+            cp "$cx_zip" "$PROJECT_PATH/deploy/"
         done
     done
 
-    # Clean up staging area
-    docker exec -u 0 "$LIFERAY_CONTAINER" rm -rf /tmp/fragment-staging
-
-    # 5.1 Wait for Fragments and Showcase Data
+    # 5.1 Wait for Deployments and System to Settle
     echo ""
-    EXPECTED_ARTIFACTS=$(find zips/fragments -type f -name "*.zip" ! -name "*pre2025q3*.zip" | wc -l | xargs)
-    MAX_WAIT_FRAGMENTS=180
-    WAIT_COUNT=0
-    while [ $WAIT_COUNT -lt $MAX_WAIT_FRAGMENTS ]; do
-        # Match the pattern provided by the user: "Deployed ... successfully"
-        # We use wc -l to ensure we always get a single clean integer, and xargs to trim whitespace
-        ACTUAL_ARTIFACTS=$(docker logs --tail 1000 "$LIFERAY_CONTAINER" | grep -iE "Deployed .* successfully" | wc -l | xargs || echo 0)
-        
-        echo -ne "\r  -> Waiting for Fragments to be deployed... [$ACTUAL_ARTIFACTS/$EXPECTED_ARTIFACTS] "
-        
-        if [ "$ACTUAL_ARTIFACTS" -ge "$EXPECTED_ARTIFACTS" ]; then
-            echo -e "\n  -> All $ACTUAL_ARTIFACTS Fragment artifacts deployed successfully."
-            break
-        fi
-        sleep 5
-        ((WAIT_COUNT+=5))
-    done
-
-    echo ""
-    echo "  -> Waiting for Showcase Data (Batch CX deployments)..."
-    MAX_WAIT_CX=120
-    WAIT_COUNT=0
-    while [ $WAIT_COUNT -lt $MAX_WAIT_CX ]; do
-        # Use a more lenient pattern that matches the actual Bundle-SymbolicName
-        if docker logs --tail 500 "$LIFERAY_CONTAINER" | grep -qE "STARTED.*(product-showcase|water-readings|modern-intranet)"; then
-            echo "  -> Showcase data detected."
-            break
-        fi
-        echo -n "."
-        sleep 5
-        ((WAIT_COUNT+=5))
-    done
-
-    echo "  -> Waiting for system to settle (Ensuring OSGi stability)..."
-    # Wait for a period of log silence to ensure background tasks are truly finished
-    MAX_SETTLE=60
-    SETTLE_COUNT=0
-    while [ $SETTLE_COUNT -lt $MAX_SETTLE ]; do
-        # Check if logs have slowed down (no new STARTED or Finished batch in last 10s)
-        NEW_LOGS=$(docker logs --tail 5 "$LIFERAY_CONTAINER" | grep -iE "STARTED|Finished" | wc -l | xargs)
-        if [ "$NEW_LOGS" -eq 0 ]; then
-             echo "  -> System has settled."
-             break
-        fi
-        echo -n "s"
-        sleep 10
-        ((SETTLE_COUNT+=10))
-    done
+    echo "  -> Giving Liferay Auto-Deploy Scanner time to pick up files..."
+    sleep 30
     
-    echo ""
-    # Final safety buffer
-    sleep 10
+    echo "  -> Waiting for system to settle (Monitoring CPU and OSGi wiring)..."
+    log_command "ldm wait \"$PROJECT_NAME\""
+    if ! ldm wait "$PROJECT_NAME"; then
+        echo "Error: System did not settle properly after deployment."
+        exit 1
+    fi
+    echo "  -> System has settled."
 fi
 
 # 6. Execute Tests

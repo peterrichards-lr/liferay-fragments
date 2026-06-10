@@ -1,0 +1,11 @@
+{
+  "pageConfig": {
+    "fragmentConfig": {
+      "objectERC": "COMPANY_MILESTONE",
+      "dateField": "date",
+      "titleField": "title",
+      "descriptionField": "description",
+      "baseColor": "var(--primary)"
+    }
+  }
+}

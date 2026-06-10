@@ -1,0 +1,18 @@
+{
+  "pageConfig": {
+    "fragmentConfig": {
+      "objectERC": "SALES_REPORT",
+      "labelField": "salesRegion",
+      "valueFields": "revenue,unitsSold",
+      "aggregationType": "sum",
+      "sortOrder": "none",
+      "showFragmentHeader": true,
+      "chartTitle": "Regional Sales Performance",
+      "xAxisLabel": "Region",
+      "yAxisLabel": "Values",
+      "enableSecondaryYAxis": false,
+      "chartType": "bar",
+      "showLegend": true
+    }
+  }
+}

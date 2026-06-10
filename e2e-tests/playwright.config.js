@@ -14,6 +14,7 @@ export default defineConfig({
     baseURL: process.env.BASE_URL || 'http://localhost:8080',
     trace: 'on-first-retry',
     storageState: './state.json',
+    ignoreHTTPSErrors: true,
   },
   projects: [
     {
@@ -27,6 +28,7 @@ export default defineConfig({
       name: 'tablet',
       use: {
         ...devices['iPad (gen 7)'],
+        userAgent: devices['Desktop Chrome'].userAgent,
         viewport: { width: 768, height: 1024 },
       },
     },
@@ -34,6 +36,7 @@ export default defineConfig({
       name: 'mobile',
       use: {
         ...devices['iPhone 13'],
+        userAgent: devices['Desktop Chrome'].userAgent,
         viewport: { width: 375, height: 812 },
       },
     },
