@@ -395,51 +395,92 @@ for COLLECTION_NAME in "${COLLECTIONS[@]}"; do
        (cd "$TEMP_COLL" && zip -qr "$OUTPUT_ZIP_ABS" . -x "*.DS_Store" -x "$COLLECTION_NAME/Language*.properties" -x "$COLLECTION_NAME/client-extension.yaml" -x "$COLLECTION_NAME/fragment-build.json" -x "$COLLECTION_NAME/collection-build.json" -x "*/test-data.json" -x "*/test-data.yaml")
        rm -rf "$TEMP_COLL"
        
-       # --- C. Legacy Collection ---
-       BUILD_TEMP="temp_legacy_${COLLECTION_NAME}"
-       mkdir -p "$BUILD_TEMP/$COLLECTION_NAME"
-       cp -r "$COLLECTION_NAME/." "$BUILD_TEMP/$COLLECTION_NAME/"
-       
-       if [ "$INCLUDE_DEPRECATED" = false ]; then
-           # Remove deprecated fragments from legacy zip too
-           for FRAG_PATH in "$BUILD_TEMP/$COLLECTION_NAME/fragments"/*; do
-               if [ -d "$FRAG_PATH" ] && is_deprecated "$FRAG_PATH"; then
-                   rm -rf "$FRAG_PATH"
-               fi
-           done
-       fi
+        # --- C. Legacy (pre2025q3) Collection ---
+        BUILD_TEMP="temp_legacy_${COLLECTION_NAME}"
+        mkdir -p "$BUILD_TEMP/$COLLECTION_NAME"
+        cp -r "$COLLECTION_NAME/." "$BUILD_TEMP/$COLLECTION_NAME/"
+        
+        if [ "$INCLUDE_DEPRECATED" = false ]; then
+            # Remove deprecated fragments from legacy zip too
+            for FRAG_PATH in "$BUILD_TEMP/$COLLECTION_NAME/fragments"/*; do
+                if [ -d "$FRAG_PATH" ] && is_deprecated "$FRAG_PATH"; then
+                    rm -rf "$FRAG_PATH"
+                fi
+            done
+        fi
 
-       # Shared resources injection for legacy too (Liferay requirement)
-       for FRAG_PATH in "$BUILD_TEMP/$COLLECTION_NAME/fragments"/*; do
-           if [ -d "$FRAG_PATH" ]; then
-               handle_shared_resources "$FRAG_PATH" "$BUILD_TEMP/$COLLECTION_NAME"
-               # Safety: Remove index.html if index.ftl exists
-               if [ -f "$FRAG_PATH/index.ftl" ]; then
-                   rm -f "$FRAG_PATH/index.html"
-               fi
-           fi
-       done
+        # Shared resources injection for legacy too (Liferay requirement)
+        for FRAG_PATH in "$BUILD_TEMP/$COLLECTION_NAME/fragments"/*; do
+            if [ -d "$FRAG_PATH" ]; then
+                handle_shared_resources "$FRAG_PATH" "$BUILD_TEMP/$COLLECTION_NAME"
+                # Safety: Remove index.html if index.ftl exists
+                if [ -f "$FRAG_PATH/index.ftl" ]; then
+                    rm -f "$FRAG_PATH/index.html"
+                fi
+            fi
+        done
 
-       # Flatten structure: Liferay expects fragments to be siblings of collection.json
-       if [ -d "$BUILD_TEMP/$COLLECTION_NAME/fragments" ]; then
-           mv "$BUILD_TEMP/$COLLECTION_NAME/fragments"/* "$BUILD_TEMP/$COLLECTION_NAME/" 2>/dev/null || true
-           rm -rf "$BUILD_TEMP/$COLLECTION_NAME/fragments"
-       fi
+        # Flatten structure: Liferay expects fragments to be siblings of collection.json
+        if [ -d "$BUILD_TEMP/$COLLECTION_NAME/fragments" ]; then
+            mv "$BUILD_TEMP/$COLLECTION_NAME/fragments"/* "$BUILD_TEMP/$COLLECTION_NAME/" 2>/dev/null || true
+            rm -rf "$BUILD_TEMP/$COLLECTION_NAME/fragments"
+        fi
 
-       find "$BUILD_TEMP/$COLLECTION_NAME" -name "Language*.properties" -delete
-       find "$BUILD_TEMP/$COLLECTION_NAME" -name "client-extension.yaml" -delete
-       find "$BUILD_TEMP/$COLLECTION_NAME" -name "configuration.json" -exec sh -c 'jq "del(.fieldSets[].fields[].typeOptions.dependency) | (.. | objects | select(.dataType == \"number\")) .dataType = \"int\"" "$1" > "$1.tmp" && mv "$1.tmp" "$1"' -- {} \;
-       process_dir "$BUILD_TEMP/$COLLECTION_NAME" "$COLLECTION_NAME"
-       
-       # Ensure descriptor at the ROOT of the legacy zip
-       ensure_descriptor "$BUILD_TEMP" "$COLLECTION_NAME"
+        find "$BUILD_TEMP/$COLLECTION_NAME" -name "Language*.properties" -delete
+        find "$BUILD_TEMP/$COLLECTION_NAME" -name "client-extension.yaml" -delete
+        # Transform number/boolean defaultValue to strings, and number dataType to int for pre2025q3
+        find "$BUILD_TEMP/$COLLECTION_NAME" -name "configuration.json" -exec sh -c 'jq "del(.fieldSets[].fields[].typeOptions.dependency) | (.. | objects | select(.dataType == \"number\" and .defaultValue != null)) .defaultValue |= tostring | (.. | objects | select(.dataType == \"boolean\" and .defaultValue != null)) .defaultValue |= tostring | (.. | objects | select(.dataType == \"number\")) .dataType = \"int\"" "$1" > "$1.tmp" && mv "$1.tmp" "$1"' -- {} \;
+        process_dir "$BUILD_TEMP/$COLLECTION_NAME" "$COLLECTION_NAME"
+        
+        # Ensure descriptor at the ROOT of the legacy zip
+        ensure_descriptor "$BUILD_TEMP" "$COLLECTION_NAME"
 
-       # Clean up OS-specific files from temp dir
-       find "$BUILD_TEMP" -name ".DS_Store" -delete
+        # Clean up OS-specific files from temp dir
+        find "$BUILD_TEMP" -name ".DS_Store" -delete
 
-       OUTPUT_ZIP_LEGACY_ABS="$ZIPS_ROOT/fragments/${COLLECTION_NAME}-pre2025q3${BUILD_SUFFIX}.zip"
-       (cd "$BUILD_TEMP" && zip -qr "$OUTPUT_ZIP_LEGACY_ABS" . -x "*.DS_Store" -x "*/test-data.json" -x "*/test-data.yaml")
-       rm -rf "$BUILD_TEMP"
+        OUTPUT_ZIP_LEGACY_ABS="$ZIPS_ROOT/fragments/${COLLECTION_NAME}-pre2025q3${BUILD_SUFFIX}.zip"
+        (cd "$BUILD_TEMP" && zip -qr "$OUTPUT_ZIP_LEGACY_ABS" . -x "*.DS_Store" -x "*/test-data.json" -x "*/test-data.yaml")
+        rm -rf "$BUILD_TEMP"
+        
+        # --- D. Legacy (pre2026q1) Collection ---
+        BUILD_TEMP_2026="temp_pre2026q1_${COLLECTION_NAME}"
+        mkdir -p "$BUILD_TEMP_2026/$COLLECTION_NAME"
+        cp -r "$COLLECTION_NAME/." "$BUILD_TEMP_2026/$COLLECTION_NAME/"
+        
+        if [ "$INCLUDE_DEPRECATED" = false ]; then
+            for FRAG_PATH in "$BUILD_TEMP_2026/$COLLECTION_NAME/fragments"/*; do
+                if [ -d "$FRAG_PATH" ] && is_deprecated "$FRAG_PATH"; then
+                    rm -rf "$FRAG_PATH"
+                fi
+            done
+        fi
+
+        for FRAG_PATH in "$BUILD_TEMP_2026/$COLLECTION_NAME/fragments"/*; do
+            if [ -d "$FRAG_PATH" ]; then
+                handle_shared_resources "$FRAG_PATH" "$BUILD_TEMP_2026/$COLLECTION_NAME"
+                if [ -f "$FRAG_PATH/index.ftl" ]; then
+                    rm -f "$FRAG_PATH/index.html"
+                fi
+            fi
+        done
+
+        if [ -d "$BUILD_TEMP_2026/$COLLECTION_NAME/fragments" ]; then
+            mv "$BUILD_TEMP_2026/$COLLECTION_NAME/fragments"/* "$BUILD_TEMP_2026/$COLLECTION_NAME/" 2>/dev/null || true
+            rm -rf "$BUILD_TEMP_2026/$COLLECTION_NAME/fragments"
+        fi
+
+        find "$BUILD_TEMP_2026/$COLLECTION_NAME" -name "Language*.properties" -delete
+        find "$BUILD_TEMP_2026/$COLLECTION_NAME" -name "client-extension.yaml" -delete
+        # Transform number/boolean defaultValue to strings for pre-2026q1 compatibility
+        find "$BUILD_TEMP_2026/$COLLECTION_NAME" -name "configuration.json" -exec sh -c 'jq "(.. | objects | select(.dataType == \"number\" and .defaultValue != null)) .defaultValue |= tostring | (.. | objects | select(.dataType == \"boolean\" and .defaultValue != null)) .defaultValue |= tostring" "$1" > "$1.tmp" && mv "$1.tmp" "$1"' -- {} \;
+        process_dir "$BUILD_TEMP_2026/$COLLECTION_NAME" "$COLLECTION_NAME"
+        
+        ensure_descriptor "$BUILD_TEMP_2026" "$COLLECTION_NAME"
+        find "$BUILD_TEMP_2026" -name ".DS_Store" -delete
+
+        OUTPUT_ZIP_2026_ABS="$ZIPS_ROOT/fragments/${COLLECTION_NAME}-pre2026q1${BUILD_SUFFIX}.zip"
+        (cd "$BUILD_TEMP_2026" && zip -qr "$OUTPUT_ZIP_2026_ABS" . -x "*.DS_Store" -x "*/test-data.json" -x "*/test-data.yaml")
+        rm -rf "$BUILD_TEMP_2026"
    fi
 done
 

@@ -249,6 +249,9 @@ after itself.
 - [x] Regenerate `docs/gallery.md` using `npm run docs:gallery` and verify output layout.
 
 
-### Backward-Compatibility Rule (dataType number -> int)
-- **Requirement**: For legacy pre-2025q3 ZIP generation, the build script `create-fragment-zips.sh` must dynamically transform `"dataType": "number"` to `"dataType": "int"` in configuration files to prevent importing failures on older Liferay versions.
+### Backward-Compatibility Rules (Three-Target ZIP Build)
+- **Requirement**: The build script `create-fragment-zips.sh` must generate three versions of each collection ZIP to accommodate different target Liferay versions:
+  1. **Latest** (`-collection-min.zip`): Uses `"dataType": "number"` and actual numeric/boolean types for default values (required for Liferay 2026.Q1+).
+  2. **pre2026q1** (`-pre2026q1-collection-min.zip`): Uses `"dataType": "number"` but converts numeric and boolean default values back to string representations (required for intermediate Liferay versions).
+  3. **pre2025q3** (`-pre2025q3-collection-min.zip`): Uses `"dataType": "int"` (converting from `"number"`) and string representations for default values (required for older Liferay versions).
 
