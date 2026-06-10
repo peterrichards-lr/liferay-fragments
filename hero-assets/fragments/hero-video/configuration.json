@@ -16,28 +16,32 @@
           "label": "lfr.hero-assets.autoplay",
           "description": "lfr.hero-assets.autoplay-description",
           "name": "autoplay",
-          "type": "checkbox"
+          "type": "checkbox",
+          "dataType": "boolean"
         },
         {
           "defaultValue": true,
           "label": "lfr.hero-assets.muted",
           "description": "lfr.hero-assets.muted-description",
           "name": "muted",
-          "type": "checkbox"
+          "type": "checkbox",
+          "dataType": "boolean"
         },
         {
           "defaultValue": true,
           "label": "lfr.hero-assets.loop",
           "description": "lfr.hero-assets.loop-description",
           "name": "loop",
-          "type": "checkbox"
+          "type": "checkbox",
+          "dataType": "boolean"
         },
         {
           "defaultValue": true,
           "label": "lfr.hero-assets.controls-label",
           "description": "lfr.hero-assets.controls-label-description",
           "name": "controls",
-          "type": "checkbox"
+          "type": "checkbox",
+          "dataType": "boolean"
         },
         {
           "dataType": "string",
@@ -73,7 +77,8 @@
           "label": "lfr.hero-assets.use-custom-control",
           "description": "lfr.hero-assets.use-custom-control-description",
           "name": "useCustomControls",
-          "type": "checkbox"
+          "type": "checkbox",
+          "dataType": "boolean"
         },
         {
           "defaultValue": "var(--primary)",
@@ -152,7 +157,8 @@
           "label": "lfr.hero-assets.enable-debug",
           "description": "lfr.hero-assets.enable-debug-description",
           "name": "enableDebug",
-          "type": "checkbox"
+          "type": "checkbox",
+          "dataType": "boolean"
         }
       ],
       "label": "lfr.hero-assets.debugging"

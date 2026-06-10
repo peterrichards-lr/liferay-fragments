@@ -3,14 +3,11 @@
   configuration.contentDisplay?contains('row') displayValue = isFlex?then('flex',
   ,
 'block') flexDirection = isFlex?then(isRow?then('row', 'column'),
-  ,
   !configuration.allowMenuOverride cssImportant = lockStyles?then(' !important',
-  ,
   "zone-layout-${fragmentEntryLinkNamespace}"
 zoneLayoutClassList = [ "zone-layout", "zone-layout-fragment",
 zoneLayoutNamespace, (lockStyles?then('', 'allow-override')) ]?filter(x ->
 x?has_content),
-  ,
   zoneLayoutClassList?join(' ')
 zoneLayoutHeaderClass = "zone-layout-editor-padding" +
 (configuration.zoneLayoutHeader?then(" show", ""))

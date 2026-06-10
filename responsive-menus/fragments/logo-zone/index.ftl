@@ -2,11 +2,9 @@
 [#assign
   logoClass = configuration.logoAdaption +
 (configuration.alwaysDisplayLogo?then(" logo-always",
-  ,
   configuration.contentDisplay?contains('row') displayValue = isFlex?then('flex',
   ,
 'block') flexDirection = isFlex?then(isRow?then('row', 'column'),
-  ,
   !configuration.allowMenuOverride logoZoneHeaderClass =
 "logo-zone-editor-padding" + (configuration.logoZoneHeader?then(" show", ""))
 /]

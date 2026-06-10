@@ -157,7 +157,7 @@
           }
         },
         {
-          "dataType": "string",
+          "dataType": "boolean",
           "defaultValue": false,
           "label": "lfr.layout-components.inverted",
           "description": "lfr.layout-components.inverted-description",
@@ -165,7 +165,7 @@
           "type": "checkbox"
         },
         {
-          "dataType": "string",
+          "dataType": "boolean",
           "defaultValue": false,
           "label": "lfr.layout-components.uppercase",
           "description": "lfr.layout-components.uppercase-description",

@@ -11,7 +11,7 @@
           "type": "text"
         },
         {
-          "dataType": "string",
+          "dataType": "boolean",
           "defaultValue": false,
           "label": "lfr.finance.show",
           "description": "lfr.finance.show-description",
@@ -95,7 +95,7 @@
           }
         },
         {
-          "dataType": "string",
+          "dataType": "boolean",
           "defaultValue": false,
           "label": "lfr.finance.inverted",
           "description": "lfr.finance.inverted-description",
@@ -103,7 +103,7 @@
           "type": "checkbox"
         },
         {
-          "dataType": "string",
+          "dataType": "boolean",
           "defaultValue": false,
           "label": "lfr.finance.uppercase",
           "description": "lfr.finance.uppercase-description",

@@ -112,7 +112,8 @@
           "label": "lfr.misc.enable-debug",
           "description": "lfr.misc.enable-debug",
           "name": "enableDebug",
-          "type": "checkbox"
+          "type": "checkbox",
+          "dataType": "boolean"
         }
       ],
       "label": "lfr.misc.debugging"

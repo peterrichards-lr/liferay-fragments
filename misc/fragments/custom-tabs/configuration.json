@@ -21,7 +21,8 @@
           "description": "lfr.misc.persist-selected-tab-description",
           "label": "lfr.misc.persist-selected-tab",
           "name": "persistSelectedTab",
-          "type": "checkbox"
+          "type": "checkbox",
+          "dataType": "boolean"
         }
       ],
       "label": "lfr.misc.tabs-options"

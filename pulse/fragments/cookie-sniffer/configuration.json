@@ -39,7 +39,8 @@
           "label": "lfr.pulse.enable-debug",
           "description": "lfr.pulse.enable-debug-desc",
           "name": "enableDebug",
-          "type": "checkbox"
+          "type": "checkbox",
+          "dataType": "boolean"
         }
       ],
       "label": "lfr.pulse.general"

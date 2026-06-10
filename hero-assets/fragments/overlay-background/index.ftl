@@ -5,11 +5,9 @@
 ({"0":0,"1":1,"2":2,"3":3,"4":4,"5":5,"6":6,"7":7,"8":8,"9":9,"a":10,"b":11,"c":12,"d":13,"e":14,"f":15})[c]!0]
 [/#function] [#function _hexPairToInt pair] [#return
 _hexDigit(pair?substring(0,1)) * 16 + _hexDigit(pair?substring(1,
-  ,
   1]
 [/#if] [#assign h =
 hex?replace("^#", "",
-  ,
   3] [#assign h =
 h?substring(0,1) + h?substring(0,1) + h?substring(1,2) + h?substring(1,2) +
 h?substring(2,3) + h?substring(2,
@@ -22,7 +20,6 @@ h?substring(2,3) + h?substring(2,
 [#assign g = _hexPairToInt(h?substring(2,
   ,4))] [#assign b =
 _hexPairToInt(h?substring(4,6))] [#return "rgba(" + r + "," + g + "," + b + ",
-  ,
   0]
 [/#if] [#if a > 1]
 [#assign a = 1]
@@ -32,9 +29,7 @@ _hexPairToInt(h?substring(4,6))] [#return "rgba(" + r + "," + g + "," + b + ",
   ," + a + ")"] [#else] [#assign pct = (a *
 100)?string["0.##"] + "%"] [#return "color-mix(in srgb, " + color + " " + pct +
 ", transparent)"]
-[/#if] [#else]
-[#return hexToRgba(color,
-  ,
+[/#if] [#else] [#return hexToRgba(color,
   configuration.alpha?number / 100] [#assign
 overlayColor = overlayWithAlpha(configuration.overlayColor,
   , alpha)]

@@ -7,7 +7,8 @@
           "label": "lfr.commerce.use-commerce-context",
           "description": "lfr.commerce.use-commerce-context-description",
           "name": "useCommerceContext",
-          "type": "checkbox"
+          "type": "checkbox",
+          "dataType": "boolean"
         },
         {
           "label": "lfr.commerce.account-id",
@@ -38,7 +39,8 @@
           "label": "lfr.commerce.enable-cookie",
           "description": "lfr.commerce.enable-cookie-description",
           "name": "enableCookie",
-          "type": "checkbox"
+          "type": "checkbox",
+          "dataType": "boolean"
         },
         {
           "label": "lfr.commerce.cookie-expiry-seconds",

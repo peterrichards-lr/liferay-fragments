@@ -2,7 +2,6 @@
   "${fragmentEntryLinkNamespace}-range-input" id="${fragmentEntryLinkNamespace}-range-input-label">
 			${htmlUtil.escape(input.label)}
 [#if readOnly](${languageUtil.get(locale,
-  ,
   "reference-mark" symbol="asterisk"
 /]
 [/#if]
