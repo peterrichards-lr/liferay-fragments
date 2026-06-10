@@ -12,13 +12,16 @@
           "typeOptions": {
             "validValues": [
               {
-                "value": "block"
+                "value": "block",
+                "label": "lfr.responsive-menus.block"
               },
               {
-                "value": "flex-row"
+                "value": "flex-row",
+                "label": "lfr.responsive-menus.flex-row"
               },
               {
-                "value": "flex-column"
+                "value": "flex-column",
+                "label": "lfr.responsive-menus.flex-column"
               }
             ]
           }
@@ -33,13 +36,16 @@
           "typeOptions": {
             "validValues": [
               {
-                "value": "nowrap"
+                "value": "nowrap",
+                "label": "lfr.responsive-menus.nowrap"
               },
               {
-                "value": "wrap"
+                "value": "wrap",
+                "label": "lfr.responsive-menus.wrap"
               },
               {
-                "value": "wrap-reverse"
+                "value": "wrap-reverse",
+                "label": "lfr.responsive-menus.wrap-reverse"
               }
             ]
           }
@@ -54,19 +60,24 @@
           "typeOptions": {
             "validValues": [
               {
-                "value": "start"
+                "value": "start",
+                "label": "lfr.responsive-menus.start"
               },
               {
-                "value": "center"
+                "value": "center",
+                "label": "lfr.responsive-menus.center"
               },
               {
-                "value": "end"
+                "value": "end",
+                "label": "lfr.responsive-menus.end"
               },
               {
-                "value": "stretch"
+                "value": "stretch",
+                "label": "lfr.responsive-menus.stretch"
               },
               {
-                "value": "baseline"
+                "value": "baseline",
+                "label": "lfr.responsive-menus.baseline"
               }
             ]
           }
@@ -81,19 +92,24 @@
           "typeOptions": {
             "validValues": [
               {
-                "value": "start"
+                "value": "start",
+                "label": "lfr.responsive-menus.start"
               },
               {
-                "value": "center"
+                "value": "center",
+                "label": "lfr.responsive-menus.center"
               },
               {
-                "value": "end"
+                "value": "end",
+                "label": "lfr.responsive-menus.end"
               },
               {
-                "value": "between"
+                "value": "between",
+                "label": "lfr.responsive-menus.between"
               },
               {
-                "value": "around"
+                "value": "around",
+                "label": "lfr.responsive-menus.around"
               }
             ]
           }
@@ -128,10 +144,12 @@
           "typeOptions": {
             "validValues": [
               {
-                "value": "reduce-logo"
+                "value": "reduce-logo",
+                "label": "lfr.responsive-menus.reduce-logo"
               },
               {
-                "value": "increase-hamburger"
+                "value": "increase-hamburger",
+                "label": "lfr.responsive-menus.increase-hamburger"
               }
             ]
           }

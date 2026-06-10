@@ -12,13 +12,16 @@
           "typeOptions": {
             "validValues": [
               {
-                "value": "menu-top"
+                "value": "menu-top",
+                "label": "lfr.responsive-menus.menu-top"
               },
               {
-                "value": "menu-inline"
+                "value": "menu-inline",
+                "label": "lfr.responsive-menus.menu-inline"
               },
               {
-                "value": "menu-top sticky"
+                "value": "menu-top sticky",
+                "label": "lfr.responsive-menus.menu-top-sticky"
               }
             ]
           }
@@ -33,16 +36,20 @@
           "typeOptions": {
             "validValues": [
               {
-                "value": "clip"
+                "value": "clip",
+                "label": "lfr.responsive-menus.clip"
               },
               {
-                "value": "ellipsis"
+                "value": "ellipsis",
+                "label": "lfr.responsive-menus.ellipsis"
               },
               {
-                "value": "wrap"
+                "value": "wrap",
+                "label": "lfr.responsive-menus.wrap"
               },
               {
-                "value": "none"
+                "value": "none",
+                "label": "lfr.responsive-menus.none"
               }
             ]
           }
@@ -157,16 +164,20 @@
           "typeOptions": {
             "validValues": [
               {
-                "value": "menu-only"
+                "value": "menu-only",
+                "label": "lfr.responsive-menus.menu-only"
               },
               {
-                "value": "menu-left-zone"
+                "value": "menu-left-zone",
+                "label": "lfr.responsive-menus.menu-left-zone"
               },
               {
-                "value": "menu-right-zone"
+                "value": "menu-right-zone",
+                "label": "lfr.responsive-menus.menu-right-zone"
               },
               {
-                "value": "menu-both-zones"
+                "value": "menu-both-zones",
+                "label": "lfr.responsive-menus.menu-both-zones"
               }
             ]
           }
@@ -181,13 +192,16 @@
           "typeOptions": {
             "validValues": [
               {
-                "value": "dropzone-menu"
+                "value": "dropzone-menu",
+                "label": "lfr.responsive-menus.dropzone-menu"
               },
               {
-                "value": "dropzone-left"
+                "value": "dropzone-left",
+                "label": "lfr.responsive-menus.dropzone-left"
               },
               {
-                "value": "dropzone-right"
+                "value": "dropzone-right",
+                "label": "lfr.responsive-menus.dropzone-right"
               }
             ]
           }
@@ -209,22 +223,28 @@
           "typeOptions": {
             "validValues": [
               {
-                "value": "center"
+                "value": "center",
+                "label": "lfr.responsive-menus.center"
               },
               {
-                "value": "flex-start"
+                "value": "flex-start",
+                "label": "lfr.responsive-menus.flex-start"
               },
               {
-                "value": "flex-end"
+                "value": "flex-end",
+                "label": "lfr.responsive-menus.flex-end"
               },
               {
-                "value": "stretch"
+                "value": "stretch",
+                "label": "lfr.responsive-menus.stretch"
               },
               {
-                "value": "baseline"
+                "value": "baseline",
+                "label": "lfr.responsive-menus.baseline"
               },
               {
-                "value": "normal"
+                "value": "normal",
+                "label": "lfr.responsive-menus.normal"
               }
             ]
           }
@@ -278,13 +298,16 @@
           "typeOptions": {
             "validValues": [
               {
-                "value": "top"
+                "value": "top",
+                "label": "lfr.responsive-menus.top"
               },
               {
-                "value": "middle"
+                "value": "middle",
+                "label": "lfr.responsive-menus.middle"
               },
               {
-                "value": "bottom"
+                "value": "bottom",
+                "label": "lfr.responsive-menus.bottom"
               }
             ]
           }
@@ -359,31 +382,40 @@
           "typeOptions": {
             "validValues": [
               {
-                "value": "dotted"
+                "value": "dotted",
+                "label": "lfr.responsive-menus.dotted"
               },
               {
-                "value": "dashed"
+                "value": "dashed",
+                "label": "lfr.responsive-menus.dashed"
               },
               {
-                "value": "solid"
+                "value": "solid",
+                "label": "lfr.responsive-menus.solid"
               },
               {
-                "value": "double"
+                "value": "double",
+                "label": "lfr.responsive-menus.double"
               },
               {
-                "value": "groove"
+                "value": "groove",
+                "label": "lfr.responsive-menus.groove"
               },
               {
-                "value": "ridge"
+                "value": "ridge",
+                "label": "lfr.responsive-menus.ridge"
               },
               {
-                "value": "inset"
+                "value": "inset",
+                "label": "lfr.responsive-menus.inset"
               },
               {
-                "value": "outset"
+                "value": "outset",
+                "label": "lfr.responsive-menus.outset"
               },
               {
-                "value": "none"
+                "value": "none",
+                "label": "lfr.responsive-menus.none"
               }
             ]
           }

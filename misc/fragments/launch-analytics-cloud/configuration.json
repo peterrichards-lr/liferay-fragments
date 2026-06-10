@@ -12,22 +12,28 @@
           "typeOptions": {
             "validValues": [
               {
-                "value": "h1"
+                "value": "h1",
+                "label": "lfr.misc.h1"
               },
               {
-                "value": "h2"
+                "value": "h2",
+                "label": "lfr.misc.h2"
               },
               {
-                "value": "h3"
+                "value": "h3",
+                "label": "lfr.misc.h3"
               },
               {
-                "value": "h4"
+                "value": "h4",
+                "label": "lfr.misc.h4"
               },
               {
-                "value": "h5"
+                "value": "h5",
+                "label": "lfr.misc.h5"
               },
               {
-                "value": "h6"
+                "value": "h6",
+                "label": "lfr.misc.h6"
               }
             ]
           }

@@ -116,19 +116,24 @@
           "typeOptions": {
             "validValues": [
               {
-                "value": "primary"
+                "value": "primary",
+                "label": "lfr.widget-modifiers.primary"
               },
               {
-                "value": "secondary"
+                "value": "secondary",
+                "label": "lfr.widget-modifiers.secondary"
               },
               {
-                "value": "link"
+                "value": "link",
+                "label": "lfr.widget-modifiers.link"
               },
               {
-                "value": "outline-primary"
+                "value": "outline-primary",
+                "label": "lfr.widget-modifiers.outline-primary"
               },
               {
-                "value": "outline-secondary"
+                "value": "outline-secondary",
+                "label": "lfr.widget-modifiers.outline-secondary"
               }
             ]
           }

@@ -42,19 +42,24 @@
           "typeOptions": {
             "validValues": [
               {
-                "value": "primary"
+                "value": "primary",
+                "label": "lfr.pulse.primary"
               },
               {
-                "value": "secondary"
+                "value": "secondary",
+                "label": "lfr.pulse.secondary"
               },
               {
-                "value": "link"
+                "value": "link",
+                "label": "lfr.pulse.link"
               },
               {
-                "value": "outline-primary"
+                "value": "outline-primary",
+                "label": "lfr.pulse.outline-primary"
               },
               {
-                "value": "outline-secondary"
+                "value": "outline-secondary",
+                "label": "lfr.pulse.outline-secondary"
               }
             ]
           }

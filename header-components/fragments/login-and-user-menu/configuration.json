@@ -20,19 +20,24 @@
           "typeOptions": {
             "validValues": [
               {
-                "value": "1rem"
+                "value": "1rem",
+                "label": "lfr.header-components.1rem"
               },
               {
-                "value": "1.5rem"
+                "value": "1.5rem",
+                "label": "lfr.header-components.1-5rem"
               },
               {
-                "value": "2rem"
+                "value": "2rem",
+                "label": "lfr.header-components.2rem"
               },
               {
-                "value": "2.5rem"
+                "value": "2.5rem",
+                "label": "lfr.header-components.2-5rem"
               },
               {
-                "value": "3rem"
+                "value": "3rem",
+                "label": "lfr.header-components.3rem"
               }
             ]
           }

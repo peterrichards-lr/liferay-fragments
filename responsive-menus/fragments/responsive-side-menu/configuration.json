@@ -12,10 +12,12 @@
           "typeOptions": {
             "validValues": [
               {
-                "value": "menu-left sticky"
+                "value": "menu-left sticky",
+                "label": "lfr.responsive-menus.menu-left-sticky"
               },
               {
-                "value": "menu-right sticky"
+                "value": "menu-right sticky",
+                "label": "lfr.responsive-menus.menu-right-sticky"
               }
             ]
           }
@@ -30,16 +32,20 @@
           "typeOptions": {
             "validValues": [
               {
-                "value": "clip"
+                "value": "clip",
+                "label": "lfr.responsive-menus.clip"
               },
               {
-                "value": "ellipsis"
+                "value": "ellipsis",
+                "label": "lfr.responsive-menus.ellipsis"
               },
               {
-                "value": "wrap"
+                "value": "wrap",
+                "label": "lfr.responsive-menus.wrap"
               },
               {
-                "value": "none"
+                "value": "none",
+                "label": "lfr.responsive-menus.none"
               }
             ]
           }
@@ -74,16 +80,20 @@
           "typeOptions": {
             "validValues": [
               {
-                "value": "menu-only"
+                "value": "menu-only",
+                "label": "lfr.responsive-menus.menu-only"
               },
               {
-                "value": "menu-upper-zone"
+                "value": "menu-upper-zone",
+                "label": "lfr.responsive-menus.menu-upper-zone"
               },
               {
-                "value": "menu-lower-zone"
+                "value": "menu-lower-zone",
+                "label": "lfr.responsive-menus.menu-lower-zone"
               },
               {
-                "value": "menu-both-zones"
+                "value": "menu-both-zones",
+                "label": "lfr.responsive-menus.menu-both-zones"
               }
             ]
           }
@@ -98,13 +108,16 @@
           "typeOptions": {
             "validValues": [
               {
-                "value": "dropzone-menu"
+                "value": "dropzone-menu",
+                "label": "lfr.responsive-menus.dropzone-menu"
               },
               {
-                "value": "dropzone-upper"
+                "value": "dropzone-upper",
+                "label": "lfr.responsive-menus.dropzone-upper"
               },
               {
-                "value": "dropzone-lower"
+                "value": "dropzone-lower",
+                "label": "lfr.responsive-menus.dropzone-lower"
               }
             ]
           }
@@ -226,31 +239,40 @@
           "typeOptions": {
             "validValues": [
               {
-                "value": "dotted"
+                "value": "dotted",
+                "label": "lfr.responsive-menus.dotted"
               },
               {
-                "value": "dashed"
+                "value": "dashed",
+                "label": "lfr.responsive-menus.dashed"
               },
               {
-                "value": "solid"
+                "value": "solid",
+                "label": "lfr.responsive-menus.solid"
               },
               {
-                "value": "double"
+                "value": "double",
+                "label": "lfr.responsive-menus.double"
               },
               {
-                "value": "groove"
+                "value": "groove",
+                "label": "lfr.responsive-menus.groove"
               },
               {
-                "value": "ridge"
+                "value": "ridge",
+                "label": "lfr.responsive-menus.ridge"
               },
               {
-                "value": "inset"
+                "value": "inset",
+                "label": "lfr.responsive-menus.inset"
               },
               {
-                "value": "outset"
+                "value": "outset",
+                "label": "lfr.responsive-menus.outset"
               },
               {
-                "value": "none"
+                "value": "none",
+                "label": "lfr.responsive-menus.none"
               }
             ]
           }

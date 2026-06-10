@@ -201,19 +201,24 @@
           "typeOptions": {
             "validValues": [
               {
-                "value": "primary"
+                "value": "primary",
+                "label": "lfr.meter-reading.primary"
               },
               {
-                "value": "secondary"
+                "value": "secondary",
+                "label": "lfr.meter-reading.secondary"
               },
               {
-                "value": "link"
+                "value": "link",
+                "label": "lfr.meter-reading.link"
               },
               {
-                "value": "outline-primary"
+                "value": "outline-primary",
+                "label": "lfr.meter-reading.outline-primary"
               },
               {
-                "value": "outline-secondary"
+                "value": "outline-secondary",
+                "label": "lfr.meter-reading.outline-secondary"
               }
             ]
           }
