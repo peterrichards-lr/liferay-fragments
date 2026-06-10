@@ -1,10 +1,15 @@
-[#-- prettier-ignore --] [#assign logoClass = configuration.logoAdaption +
-(configuration.alwaysDisplayLogo?then(" logo-always", "")) isFlex =
-configuration.contentDisplay?contains('flex') isRow =
-configuration.contentDisplay?contains('row') displayValue = isFlex?then('flex',
-'block') flexDirection = isFlex?then(isRow?then('row', 'column'), '') lockStyles
-= !configuration.allowMenuOverride logoZoneHeaderClass =
-"logo-zone-editor-padding" + (configuration.logoZoneHeader?then(" show", "")) /]
+[#-- prettier-ignore --]
+[#assign
+  logoClass = configuration.logoAdaption +
+(configuration.alwaysDisplayLogo?then(" logo-always",
+  ,
+  configuration.contentDisplay?contains('row') displayValue = isFlex?then('flex',
+  ,
+'block') flexDirection = isFlex?then(isRow?then('row', 'column'),
+  ,
+  !configuration.allowMenuOverride logoZoneHeaderClass =
+"logo-zone-editor-padding" + (configuration.logoZoneHeader?then(" show", ""))
+/]
 
 <div class="${logoZoneHeaderClass}">Logo Zone</div>
 

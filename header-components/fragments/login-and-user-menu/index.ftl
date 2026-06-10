@@ -1,4 +1,6 @@
-[#assign hrefSignIn = themeDisplay.getPortalURL() + "/c/portal/login" /] [#if
+[#assign
+  hrefSignIn = themeDisplay.getPortalURL() + "/c/portal/login"
+/] [#if
 !themeDisplay.isSignedIn()]
 <div class="component-button text-break">
   <a

@@ -1,7 +1,11 @@
-[#assign readOnly = input.attributes.readOnly?? && input.attributes.readOnly /]
+[#assign
+  readOnly = input.attributes.readOnly?? && input.attributes.readOnly
+/]
 [#assign options = [] /] [#if configuration.optionsJSON?has_content] [#attempt]
 [#assign options = configuration.optionsJSON?eval_json /] [#recover] [#assign
-options = [] /] [/#attempt] [/#if]
+options = [] /]
+[/#attempt]
+[/#if]
 
 <div
   class="image-choice-input"
@@ -11,13 +15,18 @@ options = [] /] [/#attempt] [/#if]
     class="form-group [#if input.errorMessage?has_content]has-error[/#if] mb-0"
   >
     <label
-      class="[#if !input.showLabel || !input.label?has_content]sr-only[/#if]"
+      class="
+[#if !input.showLabel || !input.label?has_content]sr-only[/#if]
+"
       for="${fragmentEntryLinkNamespace}-image-choice"
       id="${fragmentEntryLinkNamespace}-image-choice-label"
     >
-      ${htmlUtil.escape(input.label)} [#if readOnly](${languageUtil.get(locale,
-      "read-only")})[#elseif input.required][@clay["icon"]
-      className="reference-mark" symbol="asterisk" /][/#if]
+      ${htmlUtil.escape(input.label)}
+[#if readOnly](${languageUtil.get(locale,
+      "read-only")})
+[#elseif input.required][@clay["icon"]
+      className="reference-mark" symbol="asterisk" /]
+[/#if]
     </label>
 
     <div class="image-grid" id="${fragmentEntryLinkNamespace}-image-choice">

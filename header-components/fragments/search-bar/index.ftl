@@ -1,9 +1,13 @@
-[#assign preferences =
+[#assign
+  preferences =
 freeMarkerPortletPreferences.getPreferences({"portletSetupPortletDecoratorId":
-"barebone", "destination": "/search"}) /]
+"barebone", "destination": "/search"})
+/]
 <div class="collapse md-hide" id="searchBar">
   <div role="search">
     [#if configuration.useCommerceSearch] [@liferay_commerce_ui["search-bar"] /]
-    [#else] [@liferay.search_bar default_preferences="${preferences}" /] [/#if]
+    [#else]
+[@liferay.search_bar default_preferences="${preferences}" /]
+[/#if]
   </div>
 </div>

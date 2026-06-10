@@ -1,8 +1,17 @@
 [#assign trackerStepContentClassList = "tracker-step-content"/] [#if
-configuration.leftArrow] [#assign trackerStepContentClassList =
-trackerStepContentClassList + " left-arrow"/] [/#if] [#if
-configuration.rightArrow] [#assign trackerStepContentClassList =
-trackerStepContentClassList + " right-arrow"/] [/#if] [#assign contentClassList
+configuration.leftArrow]
+[#assign
+  trackerStepContentClassList =
+trackerStepContentClassList + " left-arrow"
+/]
+[/#if] [#if
+configuration.rightArrow]
+[#assign
+  trackerStepContentClassList =
+trackerStepContentClassList + " right-arrow"
+/]
+[/#if]
+[#assign contentClassList
 = "content " + configuration.stepState /]
 <div class="tracker-step">
   <div class="${trackerStepContentClassList}">

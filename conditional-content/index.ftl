@@ -7,7 +7,8 @@
   >
     <lfr-drop-zone></lfr-drop-zone>
   </div>
-  [/#list] [/#if]
+  [/#list]
+[/#if]
   <div class="config">
     <span
       class="outcome-value"

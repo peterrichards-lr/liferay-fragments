@@ -427,7 +427,9 @@ async function globalSetup(config) {
     );
     if (pageSearchResp.ok()) {
       existingLayouts = await pageSearchResp.json();
-      console.log(`  -> Retrieved ${existingLayouts.length} existing layouts to optimize lookup.`);
+      console.log(
+        `  -> Retrieved ${existingLayouts.length} existing layouts to optimize lookup.`
+      );
     } else {
       console.warn(
         `  -> [WARN] Failed to fetch existing layouts to optimize lookup: ${pageSearchResp.status()}`
@@ -1270,7 +1272,9 @@ async function globalSetup(config) {
                   `     Successfully deleted existing page ${deleteId}. Will retry creation...`
                 );
                 // Remove deleted layout from cache
-                existingLayouts = existingLayouts.filter((l) => l.plid !== deleteId);
+                existingLayouts = existingLayouts.filter(
+                  (l) => l.plid !== deleteId
+                );
                 // Wait a brief moment to ensure DB consistency
                 await new Promise((resolve) => setTimeout(resolve, 1500));
               } else {

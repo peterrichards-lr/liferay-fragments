@@ -1,4 +1,5 @@
-[#assign containerId = 'fragment-' + fragmentEntryLinkNamespace + '-container'
+[#assign
+  containerId = 'fragment-' + fragmentEntryLinkNamespace + '-container'
 /]
 <style>
   #${containerId} {

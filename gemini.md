@@ -231,27 +231,44 @@ after itself.
 - [x] Set up project-local secret detection using a custom Node.js pre-commit
       hook and scanner to use project/repo dependencies only.
 
-- [x] Add .gitleaksignore file support to scripts/detect-secrets.js to filter out common mock tokens/hashes.
+- [x] Add .gitleaksignore file support to scripts/detect-secrets.js to filter
+      out common mock tokens/hashes.
 
-- [x] Fix configuration validation issues in otp-input, signature-pad, color-swatches, file-drop-zone, password-strength, custom-tabs, and meter-reading fragments.
-- [x] Fix dataType default value mismatches (converting string default values to numbers/booleans where dataType is number/boolean) across all fragment configuration.json files.
+- [x] Fix configuration validation issues in otp-input, signature-pad,
+      color-swatches, file-drop-zone, password-strength, custom-tabs, and
+      meter-reading fragments.
+- [x] Fix dataType default value mismatches (converting string default values to
+      numbers/booleans where dataType is number/boolean) across all fragment
+      configuration.json files.
 
-
-- [x] Modify `scripts/generate-gallery.js` to support Desktop, Tablet, and Mobile viewports side-by-side in HTML tables.
-- [x] Replace `"dataType": "int"` with `"dataType": "number"` across all fragment `configuration.json` files to resolve page creation 500 errors.
-- [x] Optimize duplicate page detection in `global-setup.js` by fetching all layouts once before the main loop to speed up E2E page setup.
-
+- [x] Modify `scripts/generate-gallery.js` to support Desktop, Tablet, and
+      Mobile viewports side-by-side in HTML tables.
+- [x] Replace `"dataType": "int"` with `"dataType": "number"` across all
+      fragment `configuration.json` files to resolve page creation 500 errors.
+- [x] Optimize duplicate page detection in `global-setup.js` by fetching all
+      layouts once before the main loop to speed up E2E page setup.
 
 ### Active Fix (In Progress)
 
-- [x] Update `~/.ldm/registry.json` to properly map `liferay-ai-commerce-accelerator` and `aica` projects.
-- [ ] Run automated E2E tests using `./scripts/test-runner.sh -p liferay-ai-commerce-accelerator` or equivalent command.
-- [x] Regenerate `docs/gallery.md` using `npm run docs:gallery` and verify output layout.
-
+- [x] Update `~/.ldm/registry.json` to properly map
+      `liferay-ai-commerce-accelerator` and `aica` projects.
+- [ ] Run automated E2E tests using
+- [x] Integrate Prettier formatting into the local pre-commit hook.
+      `./scripts/test-runner.sh -p liferay-ai-commerce-accelerator` or
+      equivalent command.
+- [x] Regenerate `docs/gallery.md` using `npm run docs:gallery` and verify
+      output layout.
 
 ### Backward-Compatibility Rules (Three-Target ZIP Build)
-- **Requirement**: The build script `create-fragment-zips.sh` must generate three versions of each collection ZIP to accommodate different target Liferay versions:
-  1. **Latest** (`-collection-min.zip`): Uses `"dataType": "number"` and actual numeric/boolean types for default values (required for Liferay 2026.Q1+).
-  2. **pre2026q1** (`-pre2026q1-collection-min.zip`): Uses `"dataType": "number"` but converts numeric and boolean default values back to string representations (required for intermediate Liferay versions).
-  3. **pre2025q3** (`-pre2025q3-collection-min.zip`): Uses `"dataType": "int"` (converting from `"number"`) and string representations for default values (required for older Liferay versions).
 
+- **Requirement**: The build script `create-fragment-zips.sh` must generate
+  three versions of each collection ZIP to accommodate different target Liferay
+  versions:
+  1. **Latest** (`-collection-min.zip`): Uses `"dataType": "number"` and actual
+     numeric/boolean types for default values (required for Liferay 2026.Q1+).
+  2. **pre2026q1** (`-pre2026q1-collection-min.zip`): Uses
+     `"dataType": "number"` but converts numeric and boolean default values back
+     to string representations (required for intermediate Liferay versions).
+  3. **pre2025q3** (`-pre2025q3-collection-min.zip`): Uses `"dataType": "int"`
+     (converting from `"number"`) and string representations for default values
+     (required for older Liferay versions).

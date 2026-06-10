@@ -1,5 +1,8 @@
-[#if user??] [#assign divId = "pdf-wrapper-" +
-user.getScreenName()?replace('.','-') /]
+[#if user??]
+[#assign
+  divId = "pdf-wrapper-" +
+user.getScreenName()?replace('.','-')
+/]
 <div id="${fragmentEntryLinkNamespace}-pdf-export">
   <button
     class="pdf-export"

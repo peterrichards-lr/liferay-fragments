@@ -3,9 +3,12 @@
   class="lower-header lower-header-bg lower-header-text-color navbar"
   id="lowerHeader"
 >
-  [#if is_setup_complete] [#assign preferences =
+  [#if is_setup_complete]
+[#assign
+  preferences =
   freeMarkerPortletPreferences.getPreferences({"portletSetupPortletDecoratorId":
-  "barebone", "destination": "/search"}) /]
+  "barebone", "destination": "/search"})
+/]
   <div class="align-items-start bg-transparent container-fluid mr-5">
     <div class="col">
       <div class="navbar navbar-expand-xl">

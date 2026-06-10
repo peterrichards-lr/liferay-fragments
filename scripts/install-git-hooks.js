@@ -18,7 +18,26 @@ function installGitHooks() {
   const preCommitHookPath = path.join(hooksDir, 'pre-commit');
 
   const hookContent = `#!/bin/sh
-# Auto-generated pre-commit hook for secret detection
+# Auto-generated pre-commit hook for formatting and secret detection
+
+# 1. Format staged JS, JSON, CSS, HTML, and MD files using Prettier
+STAGED_FILES=\$(git diff --cached --name-only --diff-filter=ACMR | grep -E '\\.(js|json|css|html|md)\$')
+if [ -n "\$STAGED_FILES" ]; then
+    echo "Formatting staged files with Prettier..."
+    echo "\$STAGED_FILES" | xargs npx prettier --write
+    echo "\$STAGED_FILES" | xargs git add
+fi
+
+# 2. Format FreeMarker files
+echo "Formatting FreeMarker templates..."
+node scripts/format-ftl.js
+# Stage any FTL files that were modified by format-ftl.js
+STAGED_FTL_FILES=\$(git diff --cached --name-only --diff-filter=ACMR | grep -E '\\.ftl\$')
+if [ -n "\$STAGED_FTL_FILES" ]; then
+    echo "\$STAGED_FTL_FILES" | xargs git add
+fi
+
+# 3. Secret Detection
 node scripts/detect-secrets.js pre-commit
 `;
 

@@ -1,12 +1,25 @@
-[#assign logoLink = "" /] [#assign logoTitle = "" /] [#if
-configuration.enableLink] [#assign logoLink = configuration.linkUrl /] [#assign
-logoTitle = configuration.logoTitle /] [/#if] [#assign logoAltText =
+[#assign logoLink = "" /]
+[#assign logoTitle = "" /] [#if
+configuration.enableLink]
+[#assign logoLink = configuration.linkUrl /]
+[#assign
+logoTitle = configuration.logoTitle /]
+[/#if]
+[#assign logoAltText =
 configuration.logoAltText /] [#if configuration.overrideSiteConfig] [#if
-configuration.showSiteName] [#assign siteName = configuration.siteName /] [/#if]
-[#else] [#if configuration.showSiteName] [#assign pageGroup = layout.getGroup()
-/] [#assign siteName = htmlUtil.escape(pageGroup.getDescriptiveName()) /] [#if
-!logoAltText?has_content] [#assign logoAltText = siteName /] [/#if] [/#if]
-[#assign logoUrl = htmlUtil.escape(themeDisplay.getCompanyLogo()) /] [/#if]
+configuration.showSiteName]
+[#assign siteName = configuration.siteName /]
+[/#if]
+[#else] [#if configuration.showSiteName]
+[#assign pageGroup = layout.getGroup()
+/]
+[#assign siteName = htmlUtil.escape(pageGroup.getDescriptiveName()) /] [#if
+!logoAltText?has_content]
+[#assign logoAltText = siteName /]
+[/#if]
+[/#if]
+[#assign logoUrl = htmlUtil.escape(themeDisplay.getCompanyLogo()) /]
+[/#if]
 
 <style>
   :root {
@@ -79,5 +92,6 @@ configuration.showSiteName] [#assign siteName = configuration.siteName /] [/#if]
     </h2>
     [/#if]
   </span>
-  [/#if] [/#if]
+  [/#if]
+[/#if]
 </div>

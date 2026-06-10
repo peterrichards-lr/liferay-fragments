@@ -1,19 +1,28 @@
-[#-- prettier-ignore --] [#assign isFlex =
-configuration.contentDisplay?contains('flex') isRow =
-configuration.contentDisplay?contains('row') displayValue = isFlex?then('flex',
-'block') flexDirection = isFlex?then(isRow?then('row', 'column'), '') lockStyles
-= !configuration.allowMenuOverride cssImportant = lockStyles?then(' !important',
-'') zoneLayoutNamespace = "zone-layout-${fragmentEntryLinkNamespace}"
+[#-- prettier-ignore --]
+[#assign
+  configuration.contentDisplay?contains('row') displayValue = isFlex?then('flex',
+  ,
+'block') flexDirection = isFlex?then(isRow?then('row', 'column'),
+  ,
+  !configuration.allowMenuOverride cssImportant = lockStyles?then(' !important',
+  ,
+  "zone-layout-${fragmentEntryLinkNamespace}"
 zoneLayoutClassList = [ "zone-layout", "zone-layout-fragment",
 zoneLayoutNamespace, (lockStyles?then('', 'allow-override')) ]?filter(x ->
-x?has_content), zoneLayoutClass = zoneLayoutClassList?join(' ')
+x?has_content),
+  ,
+  zoneLayoutClassList?join(' ')
 zoneLayoutHeaderClass = "zone-layout-editor-padding" +
-(configuration.zoneLayoutHeader?then(" show", "")) /]
+(configuration.zoneLayoutHeader?then(" show", ""))
+/]
 
 <style>
-  .${zoneLayoutNamespace}[data-layout-mode="edit"] :is(lfr-drop-zone .page-editor > div, lfr-drop-zone .lfr-tooltip-scope > div),
-  .${zoneLayoutNamespace}[data-layout-mode="view"] :is(lfr-drop-zone .lfr-tooltip-scope > div),
-  .${zoneLayoutNamespace}[data-layout-mode="view"] > div {
+  .${zoneLayoutNamespace}
+[data-layout-mode="edit"] :is(lfr-drop-zone .page-editor > div, lfr-drop-zone .lfr-tooltip-scope > div),
+  .${zoneLayoutNamespace}
+[data-layout-mode="view"] :is(lfr-drop-zone .lfr-tooltip-scope > div),
+  .${zoneLayoutNamespace}
+[data-layout-mode="view"] > div {
     display: ${displayValue}${cssImportant};
     flex-direction: ${flexDirection?has_content?then(flexDirection, 'unset')}${cssImportant};
     flex-wrap: ${isFlex?then(configuration.flexWrap, 'unset')}${cssImportant};
@@ -23,9 +32,12 @@ zoneLayoutHeaderClass = "zone-layout-editor-padding" +
   }
 
   @media only screen and (max-width: ${configuration.landscapePhoneBreakpoint}) {
-    .${zoneLayoutNamespace}[data-layout-mode="edit"]:not(.allow-override) :is(lfr-drop-zone .page-editor > div, lfr-drop-zone .lfr-tooltip-scope > div),
-    .${zoneLayoutNamespace}[data-layout-mode="view"]:not(.allow-override) :is(lfr-drop-zone .lfr-tooltip-scope > div),
-    .${zoneLayoutNamespace}[data-layout-mode="view"]:not(.allow-override) > div {
+    .${zoneLayoutNamespace}
+[data-layout-mode="edit"]:not(.allow-override) :is(lfr-drop-zone .page-editor > div, lfr-drop-zone .lfr-tooltip-scope > div),
+    .${zoneLayoutNamespace}
+[data-layout-mode="view"]:not(.allow-override) :is(lfr-drop-zone .lfr-tooltip-scope > div),
+    .${zoneLayoutNamespace}
+[data-layout-mode="view"]:not(.allow-override) > div {
       flex-wrap: ${isFlex?then(configuration.flexWrap, 'unset')}
       align-items: ${isFlex?then(configuration.justifyContent, 'unset')}
       justify-content: ${isFlex?then(configuration.alignItems, 'unset')}

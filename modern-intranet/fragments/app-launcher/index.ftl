@@ -25,6 +25,7 @@
       </div>
       <span class="app-launcher-name">${appName}</span>
     </a>
-    [/#if] [/#list]
+    [/#if]
+[/#list]
   </div>
 </div>

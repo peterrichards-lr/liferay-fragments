@@ -134,9 +134,15 @@ function generateGallery() {
         if (fs.existsSync(manualImg)) {
           fallbackPath = `./images/${fragSafeName}.png`;
         } else if (fs.existsSync(path.join(fragDir, 'screenshot.png'))) {
-          fallbackPath = path.relative(DOCS_DIR, path.join(fragDir, 'screenshot.png'));
+          fallbackPath = path.relative(
+            DOCS_DIR,
+            path.join(fragDir, 'screenshot.png')
+          );
         } else if (fs.existsSync(path.join(fragDir, 'thumbnail.png'))) {
-          fallbackPath = path.relative(DOCS_DIR, path.join(fragDir, 'thumbnail.png'));
+          fallbackPath = path.relative(
+            DOCS_DIR,
+            path.join(fragDir, 'thumbnail.png')
+          );
         }
 
         if (fallbackPath) {

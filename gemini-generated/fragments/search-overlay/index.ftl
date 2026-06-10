@@ -13,10 +13,10 @@
                 <svg class="lexicon-icon lexicon-icon-search search-icon-lg" role="presentation">
                     <use xlink:href="${siteSpritemap}#search"></use>
                 </svg>
-                <input 
-                    type="text" 
-                    class="search-input" 
-                    placeholder="${configuration.placeholder!}" 
+                <input
+                    type="text"
+                    class="search-input"
+                    placeholder="${configuration.placeholder!}"
                     aria-label="Search Input"
                     autocomplete="off"
                 />

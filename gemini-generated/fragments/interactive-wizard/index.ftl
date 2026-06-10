@@ -11,7 +11,8 @@
     <ul class="wizard-steps list-unstyled">
       [#list 1..configuration.numberOfSteps as i]
       <li
-        class="step-item [#if i == 1]active[/#if]"
+        class="step-item [#if i == 1]active[/#if]
+"
         id="step-indicator-${i}-${fragmentEntryLinkNamespace}"
         aria-current="${(i == 1)?then('step', 'false')}"
       >
@@ -26,7 +27,8 @@
   <div class="wizard-content">
     [#list 1..configuration.numberOfSteps as i]
     <div
-      class="step-panel [#if i > 1]d-none[/#if]"
+      class="step-panel [#if i > 1]d-none[/#if]
+"
       id="step-panel-${i}-${fragmentEntryLinkNamespace}"
       role="tabpanel"
       aria-labelledby="step-indicator-${i}-${fragmentEntryLinkNamespace}"

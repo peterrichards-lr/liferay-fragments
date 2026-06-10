@@ -1,7 +1,10 @@
-[#assign is_signed_in = themeDisplay.isSignedIn()] [#if !is_signed_in] [#assign
+[#assign
+  themeDisplay.isSignedIn()] [#if !is_signed_in]
+[#assign
 preferences =
 freeMarkerPortletPreferences.getPreferences("portletSetupPortletDecoratorId",
-"barebone") /]
+"barebone")
+/]
 <div id="loginCardContainer">
   <div class="close-button">
     <a

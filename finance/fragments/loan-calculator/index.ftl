@@ -59,10 +59,13 @@
       </p>
     </div>
     <div
-      class="component-button text-break [#if !configuration.show]d-none[/#if]"
+      class="component-button text-break [#if !configuration.show]d-none[/#if]
+"
     >
       <a
-        class="btn ${configuration.buttonSize!} btn-style-${configuration.style!} btn-${configuration.type!} [#if configuration.inverted]btn-inverted[/#if] [#if configuration.uppercase]text-uppercase[/#if]"
+        class="btn ${configuration.buttonSize!} btn-style-${configuration.style!} btn-${configuration.type!}
+[#if configuration.inverted]btn-inverted[/#if] [#if configuration.uppercase]text-uppercase[/#if]
+"
         data-lfr-editable-id="link"
         data-lfr-editable-type="link"
         href=""

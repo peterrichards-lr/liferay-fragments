@@ -1,6 +1,11 @@
-[#attempt] [#assign displayFragmentName = fragmentName /] [#recover] [#assign
-displayFragmentName = "" /] [/#attempt] [#if !displayFragmentName?has_content]
-[#assign displayFragmentName = "Meta-Object Table" /] [/#if] [#assign
+[#attempt]
+[#assign displayFragmentName = fragmentName /] [#recover]
+[#assign
+displayFragmentName = "" /]
+[/#attempt] [#if !displayFragmentName?has_content]
+[#assign displayFragmentName = "Meta-Object Table" /]
+[/#if]
+[#assign
 showFragmentHeader = configuration.showFragmentHeader!true /] [#if layoutMode ==
 'edit']
 <div class="meta-table-editor-header ${showFragmentHeader?then('show', '')}">
@@ -64,7 +69,8 @@ showFragmentHeader = configuration.showFragmentHeader!true /] [#if layoutMode ==
 
   <div class="table-responsive">
     <table
-      class="table table-autofit show-quick-actions-on-hover table-hover table-list [#if configuration.enableStriped!false]table-striped[/#if]"
+      class="table table-autofit show-quick-actions-on-hover table-hover table-list [#if configuration.enableStriped!false]table-striped[/#if]
+"
       id="table-${fragmentEntryLinkNamespace}"
       aria-labelledby="table-title-${fragmentEntryLinkNamespace}"
     >
@@ -113,7 +119,8 @@ showFragmentHeader = configuration.showFragmentHeader!true /] [#if layoutMode ==
   <!-- Add Modal Structure -->
   [#if (configuration.enableAdd!false) && (configuration.addMode!"") == 'modal']
   <div
-    class="meta-modal-overlay [#if layoutMode == 'view']d-none[/#if]"
+    class="meta-modal-overlay [#if layoutMode == 'view']d-none[/#if]
+"
     id="overlay-add-${fragmentEntryLinkNamespace}"
     role="dialog"
     aria-modal="true"
@@ -161,7 +168,8 @@ showFragmentHeader = configuration.showFragmentHeader!true /] [#if layoutMode ==
   [#if (configuration.enableView!false) && (configuration.viewMode!"") ==
   'modal']
   <div
-    class="meta-modal-overlay [#if layoutMode == 'view']d-none[/#if]"
+    class="meta-modal-overlay [#if layoutMode == 'view']d-none[/#if]
+"
     id="overlay-view-${fragmentEntryLinkNamespace}"
     role="dialog"
     aria-modal="true"
@@ -209,7 +217,8 @@ showFragmentHeader = configuration.showFragmentHeader!true /] [#if layoutMode ==
   [#if (configuration.enableEdit!false) && (configuration.editMode!"") ==
   'modal']
   <div
-    class="meta-modal-overlay [#if layoutMode == 'view']d-none[/#if]"
+    class="meta-modal-overlay [#if layoutMode == 'view']d-none[/#if]
+"
     id="overlay-edit-${fragmentEntryLinkNamespace}"
     role="dialog"
     aria-modal="true"

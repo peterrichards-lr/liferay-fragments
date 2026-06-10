@@ -1,43 +1,45 @@
 # Fragment Visual Gallery
 
-A visual reference for the high-fidelity fragments available in this Liferay DXP repository. Generated automatically.
+A visual reference for the high-fidelity fragments available in this Liferay DXP
+repository. Generated automatically.
 
-**Last Tested Against Liferay Version:** `[0;36maica[0m`
-*(Note: Live snapshots disabled due to pending or failed test suite)*
+**Last Tested Against Liferay Version:** `[0;36maica[0m` _(Note: Live snapshots
+disabled due to pending or failed test suite)_
 
 ## Aura Design System
 
-A lifestyle-focused design system with a scoped container architecture, high-fidelity design tokens, and modern product showcase components.
+A lifestyle-focused design system with a scoped container architecture,
+high-fidelity design tokens, and modern product showcase components.
 
 ### Aura - Final CTA Banner
 
 ![Aura - Final CTA Banner](../aura/fragments/aura-final-cta/thumbnail.png)
 
---- 
+---
 
 ### Aura - Lookbook Row
 
 ![Aura - Lookbook Row](../aura/fragments/aura-lookbook/thumbnail.png)
 
---- 
+---
 
 ### Aura - Product Gallery
 
 ![Aura - Product Gallery](../aura/fragments/aura-product-gallery/thumbnail.png)
 
---- 
+---
 
 ### Aura - Scoped Container
 
 ![Aura - Scoped Container](../aura/fragments/aura-scoped-container/thumbnail.png)
 
---- 
+---
 
 ### Aura - USP Grid
 
 ![Aura - USP Grid](../aura/fragments/aura-usp-grid/thumbnail.png)
 
---- 
+---
 
 ## Commerce
 
@@ -47,7 +49,7 @@ A lifestyle-focused design system with a scoped container architecture, high-fid
 
 [Detailed Documentation](./fragments/dynamic-badge-overlay.md)
 
---- 
+---
 
 ### Purchased Products
 
@@ -55,7 +57,7 @@ A lifestyle-focused design system with a scoped container architecture, high-fid
 
 [Detailed Documentation](./fragments/purchased-products.md)
 
---- 
+---
 
 ## Content
 
@@ -65,7 +67,7 @@ A lifestyle-focused design system with a scoped container architecture, high-fid
 
 [Detailed Documentation](./fragments/content-map.md)
 
---- 
+---
 
 ### Service Card
 
@@ -73,7 +75,7 @@ A lifestyle-focused design system with a scoped container architecture, high-fid
 
 [Detailed Documentation](./fragments/service-card.md)
 
---- 
+---
 
 ### Service Icon
 
@@ -81,33 +83,33 @@ A lifestyle-focused design system with a scoped container architecture, high-fid
 
 [Detailed Documentation](./fragments/service-icon.md)
 
---- 
+---
 
 ### Service Link Button
 
-*No image available*
+_No image available_
 
 [Detailed Documentation](./fragments/service-link-button.md)
 
---- 
+---
 
 ## Heathcare Portal
 
 ### Dashboard Container
 
-*No image available*
+_No image available_
 
 [Detailed Documentation](./fragments/dashboard-container.md)
 
---- 
+---
 
 ### Dashboard Filter
 
-*No image available*
+_No image available_
 
 [Detailed Documentation](./fragments/dashboard-filter.md)
 
---- 
+---
 
 ## Date Display
 
@@ -117,7 +119,7 @@ A lifestyle-focused design system with a scoped container architecture, high-fid
 
 [Detailed Documentation](./fragments/date-display-collection-display.md)
 
---- 
+---
 
 ### Data Display (Static) (DEPRECATED)
 
@@ -125,7 +127,7 @@ A lifestyle-focused design system with a scoped container architecture, high-fid
 
 [Detailed Documentation](./fragments/date-display-static.md)
 
---- 
+---
 
 ## Finance
 
@@ -135,7 +137,7 @@ A lifestyle-focused design system with a scoped container architecture, high-fid
 
 [Detailed Documentation](./fragments/loan-application-calculator.md)
 
---- 
+---
 
 ### Loan Calculator
 
@@ -143,37 +145,37 @@ A lifestyle-focused design system with a scoped container architecture, high-fid
 
 [Detailed Documentation](./fragments/loan-calculator.md)
 
---- 
+---
 
 ## Forms Fragments
 
 ### Address Autocomplete
 
-*No image available*
+_No image available_
 
---- 
+---
 
 ### Autocomplete (Object)
 
-![Autocomplete (Object)](../form-fragments/fragments/autocomplete-(object)/thumbnail.png)
+![Autocomplete (Object)](<../form-fragments/fragments/autocomplete-(object)/thumbnail.png>)
 
-[Detailed Documentation](./fragments/autocomplete-(object).md)
+[Detailed Documentation](<./fragments/autocomplete-(object).md>)
 
---- 
+---
 
 ### Autocomplete (Picklist)
 
-![Autocomplete (Picklist)](../form-fragments/fragments/autocomplete-(picklist)/thumbnail.png)
+![Autocomplete (Picklist)](<../form-fragments/fragments/autocomplete-(picklist)/thumbnail.png>)
 
-[Detailed Documentation](./fragments/autocomplete-(picklist).md)
+[Detailed Documentation](<./fragments/autocomplete-(picklist).md>)
 
---- 
+---
 
 ### Color Swatches
 
-*No image available*
+_No image available_
 
---- 
+---
 
 ### Confirmation Field
 
@@ -181,19 +183,19 @@ A lifestyle-focused design system with a scoped container architecture, high-fid
 
 [Detailed Documentation](./fragments/confirmation-field.md)
 
---- 
+---
 
 ### Currency Masked Input
 
-*No image available*
+_No image available_
 
---- 
+---
 
 ### File Drop Zone
 
-*No image available*
+_No image available_
 
---- 
+---
 
 ### Hidden Relationship
 
@@ -201,13 +203,13 @@ A lifestyle-focused design system with a scoped container architecture, high-fid
 
 [Detailed Documentation](./fragments/hidden-relationship.md)
 
---- 
+---
 
 ### Image Choice
 
-*No image available*
+_No image available_
 
---- 
+---
 
 ### Listbox Multiselect
 
@@ -215,19 +217,19 @@ A lifestyle-focused design system with a scoped container architecture, high-fid
 
 [Detailed Documentation](./fragments/listbox-multiselect.md)
 
---- 
+---
 
 ### OTP / Verification Code
 
-*No image available*
+_No image available_
 
---- 
+---
 
 ### Password Strength
 
-*No image available*
+_No image available_
 
---- 
+---
 
 ### Range
 
@@ -235,7 +237,7 @@ A lifestyle-focused design system with a scoped container architecture, high-fid
 
 [Detailed Documentation](./fragments/range.md)
 
---- 
+---
 
 ### Segmented Numeric
 
@@ -243,13 +245,13 @@ A lifestyle-focused design system with a scoped container architecture, high-fid
 
 [Detailed Documentation](./fragments/segmented-numeric.md)
 
---- 
+---
 
 ### Signature Pad
 
-*No image available*
+_No image available_
 
---- 
+---
 
 ### Star Rating
 
@@ -257,15 +259,15 @@ A lifestyle-focused design system with a scoped container architecture, high-fid
 
 [Detailed Documentation](./fragments/star-rating.md)
 
---- 
+---
 
 ### Submit Button (Confirmation)
 
-*No image available*
+_No image available_
 
 [Detailed Documentation](./fragments/submit-button.md)
 
---- 
+---
 
 ### Toggle Switch
 
@@ -273,23 +275,23 @@ A lifestyle-focused design system with a scoped container architecture, high-fid
 
 [Detailed Documentation](./fragments/toggle-switch.md)
 
---- 
+---
 
 ### URL Populated Hidden Relationship
 
-*No image available*
+_No image available_
 
 [Detailed Documentation](./fragments/url-populated-hidden-relationship.md)
 
---- 
+---
 
 ### User Attribute
 
-*No image available*
+_No image available_
 
 [Detailed Documentation](./fragments/user-field.md)
 
---- 
+---
 
 ## Forms
 
@@ -299,39 +301,39 @@ A lifestyle-focused design system with a scoped container architecture, high-fid
 
 [Detailed Documentation](./fragments/form-populator.md)
 
---- 
+---
 
 ### Link Form to Applicant
 
-*No image available*
+_No image available_
 
 [Detailed Documentation](./fragments/form-session-id.md)
 
---- 
+---
 
 ### Generate Form Session Id
 
-*No image available*
+_No image available_
 
 [Detailed Documentation](./fragments/generate-form-session-id.md)
 
---- 
+---
 
 ### Masthead Call to Action Form Holder
 
-*No image available*
+_No image available_
 
 [Detailed Documentation](./fragments/masthead-call-to-action-form-header.md)
 
---- 
+---
 
 ### Redirect Page
 
-*No image available*
+_No image available_
 
 [Detailed Documentation](./fragments/redirect-page.md)
 
---- 
+---
 
 ### Refresh Page
 
@@ -339,7 +341,7 @@ A lifestyle-focused design system with a scoped container architecture, high-fid
 
 [Detailed Documentation](./fragments/refresh-page.md)
 
---- 
+---
 
 ## Gemini Generated
 
@@ -351,15 +353,15 @@ Visually appealing fragments generated by Gemini.
 
 [Detailed Documentation](./fragments/activity-heatmap.md)
 
---- 
+---
 
 ### AI Assistant Chat UI
 
-*No image available*
+_No image available_
 
 [Detailed Documentation](./fragments/ai-chat-ui.md)
 
---- 
+---
 
 ### Animated Metric Counter
 
@@ -367,7 +369,7 @@ Visually appealing fragments generated by Gemini.
 
 [Detailed Documentation](./fragments/animated-metric-counter.md)
 
---- 
+---
 
 ### Dynamic Collection Slider
 
@@ -375,7 +377,7 @@ Visually appealing fragments generated by Gemini.
 
 [Detailed Documentation](./fragments/dynamic-collection-slider.md)
 
---- 
+---
 
 ### Dynamic Object Gallery
 
@@ -383,7 +385,7 @@ Visually appealing fragments generated by Gemini.
 
 [Detailed Documentation](./fragments/dynamic-object-gallery.md)
 
---- 
+---
 
 ### Interactive Event Timeline
 
@@ -391,15 +393,15 @@ Visually appealing fragments generated by Gemini.
 
 [Detailed Documentation](./fragments/interactive-event-timeline.md)
 
---- 
+---
 
 ### Interactive Wizard
 
-*No image available*
+_No image available_
 
 [Detailed Documentation](./fragments/interactive-wizard.md)
 
---- 
+---
 
 ### Meta-Object Form
 
@@ -407,7 +409,7 @@ Visually appealing fragments generated by Gemini.
 
 [Detailed Documentation](./fragments/meta-object-form.md)
 
---- 
+---
 
 ### Meta-Object Record View
 
@@ -415,7 +417,7 @@ Visually appealing fragments generated by Gemini.
 
 [Detailed Documentation](./fragments/meta-object-record-view.md)
 
---- 
+---
 
 ### Meta-Object Table
 
@@ -423,7 +425,7 @@ Visually appealing fragments generated by Gemini.
 
 [Detailed Documentation](./fragments/meta-object-table.md)
 
---- 
+---
 
 ### Modern Parallax Hero
 
@@ -431,7 +433,7 @@ Visually appealing fragments generated by Gemini.
 
 [Detailed Documentation](./fragments/modern-parallax-hero.md)
 
---- 
+---
 
 ### Object-Linked Chart
 
@@ -439,7 +441,7 @@ Visually appealing fragments generated by Gemini.
 
 [Detailed Documentation](./fragments/object-linked-chart.md)
 
---- 
+---
 
 ### Pricing Comparison Grid
 
@@ -447,7 +449,7 @@ Visually appealing fragments generated by Gemini.
 
 [Detailed Documentation](./fragments/pricing-comparison-grid.md)
 
---- 
+---
 
 ### Radial KPI Gauge
 
@@ -455,33 +457,33 @@ Visually appealing fragments generated by Gemini.
 
 [Detailed Documentation](./fragments/radial-kpi-gauge.md)
 
---- 
+---
 
 ### Modern Search Overlay
 
-*No image available*
+_No image available_
 
 [Detailed Documentation](./fragments/search-overlay.md)
 
---- 
+---
 
 ## Header Components
 
 ### Customer Registration (Header) (Deprecated)
 
-*No image available*
+_No image available_
 
 [Detailed Documentation](./fragments/customer-registration.md)
 
---- 
+---
 
 ### Linear Gradient Container
 
-*No image available*
+_No image available_
 
-[Detailed Documentation](./fragments/linear-gradient-container-(custom).md)
+[Detailed Documentation](<./fragments/linear-gradient-container-(custom).md>)
 
---- 
+---
 
 ### Linear Gradient Container (Deprecated)
 
@@ -489,7 +491,7 @@ Visually appealing fragments generated by Gemini.
 
 [Detailed Documentation](./fragments/linear-gradient-container.md)
 
---- 
+---
 
 ### Login and User Menu
 
@@ -497,15 +499,15 @@ Visually appealing fragments generated by Gemini.
 
 [Detailed Documentation](./fragments/login-and-user-menu.md)
 
---- 
+---
 
 ### Login Card (Deprecated)
 
-*No image available*
+_No image available_
 
 [Detailed Documentation](./fragments/login-card.md)
 
---- 
+---
 
 ### Site Logo
 
@@ -513,7 +515,7 @@ Visually appealing fragments generated by Gemini.
 
 [Detailed Documentation](./fragments/logo.md)
 
---- 
+---
 
 ### Lower Header Bar
 
@@ -521,7 +523,7 @@ Visually appealing fragments generated by Gemini.
 
 [Detailed Documentation](./fragments/lower-header-layout.md)
 
---- 
+---
 
 ### Navigation (Deprecated)
 
@@ -529,7 +531,7 @@ Visually appealing fragments generated by Gemini.
 
 [Detailed Documentation](./fragments/navigation.md)
 
---- 
+---
 
 ### Search Bar
 
@@ -537,7 +539,7 @@ Visually appealing fragments generated by Gemini.
 
 [Detailed Documentation](./fragments/search-bar.md)
 
---- 
+---
 
 ### Search Button
 
@@ -545,7 +547,7 @@ Visually appealing fragments generated by Gemini.
 
 [Detailed Documentation](./fragments/search-button.md)
 
---- 
+---
 
 ### Site Name
 
@@ -553,7 +555,7 @@ Visually appealing fragments generated by Gemini.
 
 [Detailed Documentation](./fragments/site-name.md)
 
---- 
+---
 
 ### Upper Header Bar Layout
 
@@ -561,7 +563,7 @@ Visually appealing fragments generated by Gemini.
 
 [Detailed Documentation](./fragments/upper-header-layout.md)
 
---- 
+---
 
 ### User Personal Bar
 
@@ -569,11 +571,12 @@ Visually appealing fragments generated by Gemini.
 
 [Detailed Documentation](./fragments/user-bar.md)
 
---- 
+---
 
 ## Hero Assets
 
-Prominent visuals, such as videos or banners, that capture attention and define page impact.
+Prominent visuals, such as videos or banners, that capture attention and define
+page impact.
 
 ### Banner Video
 
@@ -581,7 +584,7 @@ Prominent visuals, such as videos or banners, that capture attention and define 
 
 [Detailed Documentation](./fragments/hero-video.md)
 
---- 
+---
 
 ### Overlay Background
 
@@ -589,17 +592,17 @@ Prominent visuals, such as videos or banners, that capture attention and define 
 
 [Detailed Documentation](./fragments/overlay-background.md)
 
---- 
+---
 
 ## Layout Components
 
 ### Card Content
 
-*No image available*
+_No image available_
 
 [Detailed Documentation](./fragments/card-content.md)
 
---- 
+---
 
 ### Primary Card
 
@@ -607,7 +610,7 @@ Prominent visuals, such as videos or banners, that capture attention and define 
 
 [Detailed Documentation](./fragments/primary-card.md)
 
---- 
+---
 
 ### Secondary Card
 
@@ -615,7 +618,7 @@ Prominent visuals, such as videos or banners, that capture attention and define 
 
 [Detailed Documentation](./fragments/secondary-card.md)
 
---- 
+---
 
 ## Meter Reading
 
@@ -625,17 +628,17 @@ Prominent visuals, such as videos or banners, that capture attention and define 
 
 [Detailed Documentation](./fragments/meter-reading.md)
 
---- 
+---
 
 ## Miscellaneous
 
 ### Back Button
 
-*No image available*
+_No image available_
 
 [Detailed Documentation](./fragments/back-button.md)
 
---- 
+---
 
 ### Custom Tabs
 
@@ -643,15 +646,15 @@ Prominent visuals, such as videos or banners, that capture attention and define 
 
 [Detailed Documentation](./fragments/custom-tabs.md)
 
---- 
+---
 
 ### Customer Registration (Misc) (Deprecated)
 
-*No image available*
+_No image available_
 
 [Detailed Documentation](./fragments/customer-registration.md)
 
---- 
+---
 
 ### Dynamic Copyright
 
@@ -659,15 +662,15 @@ Prominent visuals, such as videos or banners, that capture attention and define 
 
 [Detailed Documentation](./fragments/dynamic-copyright.md)
 
---- 
+---
 
 ### Hide Control Menu
 
-*No image available*
+_No image available_
 
 [Detailed Documentation](./fragments/hide-control-menu.md)
 
---- 
+---
 
 ### Icon Button
 
@@ -675,7 +678,7 @@ Prominent visuals, such as videos or banners, that capture attention and define 
 
 [Detailed Documentation](./fragments/icon-button.md)
 
---- 
+---
 
 ### Launch Analytics Cloud
 
@@ -683,83 +686,85 @@ Prominent visuals, such as videos or banners, that capture attention and define 
 
 [Detailed Documentation](./fragments/launch-analytics-cloud.md)
 
---- 
+---
 
 ### Modify My Profile Link
 
-*No image available*
+_No image available_
 
 [Detailed Documentation](./fragments/modify-my-profile-link.md)
 
---- 
+---
 
 ### My Dashboard Link
 
-*No image available*
+_No image available_
 
 [Detailed Documentation](./fragments/my-dashboard-link.md)
 
---- 
+---
 
 ### Test Fragment (Manual Check)
 
-*No image available*
+_No image available_
 
---- 
+---
 
 ### Trigger Ray
 
-*No image available*
+_No image available_
 
 [Detailed Documentation](./fragments/trigger-ray.md)
 
---- 
+---
 
 ## Modern Intranet
 
-A collection of high-fidelity fragments for constructing modern corporate intranet pages, including social feeds, learning centers, and personalized dashboards.
+A collection of high-fidelity fragments for constructing modern corporate
+intranet pages, including social feeds, learning centers, and personalized
+dashboards.
 
 ### App Launcher
 
-*No image available*
+_No image available_
 
---- 
+---
 
 ### Course Progress Card
 
-*No image available*
+_No image available_
 
---- 
+---
 
 ### File Repository List
 
-*No image available*
+_No image available_
 
---- 
+---
 
 ### Intranet Feed
 
-*No image available*
+_No image available_
 
---- 
+---
 
 ### News Hero
 
-*No image available*
+_No image available_
 
---- 
+---
 
 ### Stat Card
 
-*No image available*
+_No image available_
 
---- 
+---
 
 ### Welcome Banner
 
-*No image available*
+_No image available_
 
---- 
+---
 
 ## Forms
 
@@ -769,7 +774,7 @@ A collection of high-fidelity fragments for constructing modern corporate intran
 
 [Detailed Documentation](./fragments/audit-button.md)
 
---- 
+---
 
 ### Comment
 
@@ -777,7 +782,7 @@ A collection of high-fidelity fragments for constructing modern corporate intran
 
 [Detailed Documentation](./fragments/comment.md)
 
---- 
+---
 
 ### View Comments
 
@@ -785,7 +790,7 @@ A collection of high-fidelity fragments for constructing modern corporate intran
 
 [Detailed Documentation](./fragments/public-comments.md)
 
---- 
+---
 
 ## Populated Form Fields
 
@@ -795,7 +800,7 @@ A collection of high-fidelity fragments for constructing modern corporate intran
 
 [Detailed Documentation](./fragments/populate-select.md)
 
---- 
+---
 
 ### Populated Range
 
@@ -803,7 +808,7 @@ A collection of high-fidelity fragments for constructing modern corporate intran
 
 [Detailed Documentation](./fragments/populated-range.md)
 
---- 
+---
 
 ### Store Default Value
 
@@ -811,23 +816,23 @@ A collection of high-fidelity fragments for constructing modern corporate intran
 
 [Detailed Documentation](./fragments/store-default-value.md)
 
---- 
+---
 
 ### Store Form Field Values
 
-*No image available*
+_No image available_
 
 [Detailed Documentation](./fragments/store-form-field-values.md)
 
---- 
+---
 
 ### Text (Derived Value)
 
-*No image available*
+_No image available_
 
 [Detailed Documentation](./fragments/text-derived-value.md)
 
---- 
+---
 
 ## Profile
 
@@ -837,15 +842,15 @@ A collection of high-fidelity fragments for constructing modern corporate intran
 
 [Detailed Documentation](./fragments/customer-profile.md)
 
---- 
+---
 
 ### PDF Export (Dashboard) (Deprecated)
 
-![PDF Export (Dashboard) (Deprecated)](../profile/fragments/pdf-export-(dashboard)/thumbnail.png)
+![PDF Export (Dashboard) (Deprecated)](<../profile/fragments/pdf-export-(dashboard)/thumbnail.png>)
 
-[Detailed Documentation](./fragments/pdf-export-(dashboard).md)
+[Detailed Documentation](<./fragments/pdf-export-(dashboard).md>)
 
---- 
+---
 
 ### PDF Export (DEPRECATED)
 
@@ -853,15 +858,15 @@ A collection of high-fidelity fragments for constructing modern corporate intran
 
 [Detailed Documentation](./fragments/pdf-export.md)
 
---- 
+---
 
 ### Profile Detail (Dashboard) (Deprecated)
 
-*No image available*
+_No image available_
 
-[Detailed Documentation](./fragments/profile-detail-(dashboard).md)
+[Detailed Documentation](<./fragments/profile-detail-(dashboard).md>)
 
---- 
+---
 
 ### Profile Detail (DEPRECATED)
 
@@ -869,15 +874,15 @@ A collection of high-fidelity fragments for constructing modern corporate intran
 
 [Detailed Documentation](./fragments/profile-detail.md)
 
---- 
+---
 
 ### Profile Summary (Dashboard) (DEPRECATED)
 
-*No image available*
+_No image available_
 
-[Detailed Documentation](./fragments/profile-summary-(dashboard).md)
+[Detailed Documentation](<./fragments/profile-summary-(dashboard).md>)
 
---- 
+---
 
 ### Profile Summary (DEPRECATED)
 
@@ -885,33 +890,33 @@ A collection of high-fidelity fragments for constructing modern corporate intran
 
 [Detailed Documentation](./fragments/profile-summary.md)
 
---- 
+---
 
 ## Pulse
 
 ### Campaign Initialiser
 
-*No image available*
+_No image available_
 
 [Detailed Documentation](./fragments/campaign-initialiser.md)
 
---- 
+---
 
 ### Campaign Insights
 
-*No image available*
+_No image available_
 
 [Detailed Documentation](./fragments/cookie-sniffer.md)
 
---- 
+---
 
 ### Custom Event Listener
 
-*No image available*
+_No image available_
 
 [Detailed Documentation](./fragments/custom-event-listener.md)
 
---- 
+---
 
 ### Pulse Button
 
@@ -919,17 +924,17 @@ A collection of high-fidelity fragments for constructing modern corporate intran
 
 [Detailed Documentation](./fragments/pulse-button.md)
 
---- 
+---
 
 ## Responsive Menus
 
 ### Logo Zone
 
-*No image available*
+_No image available_
 
 [Detailed Documentation](./fragments/logo-zone.md)
 
---- 
+---
 
 ### Responsive Menu
 
@@ -937,7 +942,7 @@ A collection of high-fidelity fragments for constructing modern corporate intran
 
 [Detailed Documentation](./fragments/responsive-menu.md)
 
---- 
+---
 
 ### Responsive Side Menu
 
@@ -945,41 +950,41 @@ A collection of high-fidelity fragments for constructing modern corporate intran
 
 [Detailed Documentation](./fragments/responsive-side-menu.md)
 
---- 
+---
 
 ### Zone Layout
 
-*No image available*
+_No image available_
 
 [Detailed Documentation](./fragments/zone-layout.md)
 
---- 
+---
 
 ## User Account
 
 ### My Rights
 
-*No image available*
+_No image available_
 
 [Detailed Documentation](./fragments/my-rights.md)
 
---- 
+---
 
 ### Ping
 
-*No image available*
+_No image available_
 
 [Detailed Documentation](./fragments/ping.md)
 
---- 
+---
 
 ### Who Am I
 
-*No image available*
+_No image available_
 
 [Detailed Documentation](./fragments/who-am-i.md)
 
---- 
+---
 
 ## Widget Modifiers
 

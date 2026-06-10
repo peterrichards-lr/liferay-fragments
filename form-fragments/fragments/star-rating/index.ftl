@@ -1,25 +1,17 @@
-[#assign readOnly = input.attributes.readOnly?? && input.attributes.readOnly ]
-
-<div
-  class="star-rating-container"
-  style="
-    --starSize: ${configuration.starSize!};
-    --activeStarColor: ${configuration.activeStarColor!};
-    --passiveStarColor: ${configuration.passiveStarColor!};
+[#assign
   "
->
-  <div
-    class="form-group mb-0[#if input.errorMessage?has_content] has-error[/#if]"
-  >
-    <fieldset>
-      <legend
-        class="[#if !input.showLabel || !input.label?has_content]sr-only[/#if]"
+[#if !input.showLabel || !input.label?has_content]sr-only[/#if]
+"
         id="${fragmentEntryLinkNamespace}-select-from-list-input-label"
       >
-        ${htmlUtil.escape(input.label)} [#if
-        readOnly](${languageUtil.get(locale, "read-only")})[#elseif
-        input.required][@clay["icon"] className="reference-mark"
-        symbol="asterisk" /][/#if]
+        ${htmlUtil.escape(input.label)}
+[#if
+        readOnly](${languageUtil.get(locale,
+  ,
+  "reference-mark"
+        symbol="asterisk"
+/]
+[/#if]
       </legend>
 
       <div class="star-wrap">
@@ -35,7 +27,8 @@
           aria-label="Clear rating"
           [#if
           readOnly]class="star readonly"
-          readonly[#else]class="star"
+          readonly
+[#else]class="star"
           [/#if]
         />
         <label
@@ -58,7 +51,8 @@
         <label class="star-label" for="st-${option.value}">
           <div class="star-shape"></div>
         </label>
-        [/#list] [/#if] [#else]
+        [/#list]
+[/#if] [#else]
         <input
           checked
           type="radio"
@@ -69,7 +63,8 @@
           aria-label="Clear rating"
           [#if
           readOnly]class="star readonly"
-          readonly[#else]class="star"
+          readonly
+[#else]class="star"
           [/#if]
         />
         <label
@@ -92,7 +87,8 @@
         <label class="star-label" for="st-${i}-${fragmentEntryLinkNamespace}">
           <div class="star-shape"></div>
         </label>
-        [/#list] [/#if]
+        [/#list]
+[/#if]
         <label
           class="skip-button"
           for="skip-star-${fragmentEntryLinkNamespace}"

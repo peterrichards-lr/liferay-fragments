@@ -1,10 +1,14 @@
 <div class="toggle-switch-container">
   <div class="form-group mb-0" id="${fragmentEntryLinkNamespace}-form-group">
     <label
-      class="switch-label [#if !input.showLabel || !input.label?has_content]sr-only[/#if]"
+      class="switch-label [#if !input.showLabel || !input.label?has_content]sr-only[/#if]
+"
       for="${fragmentEntryLinkNamespace}-checkbox-input"
-      >${htmlUtil.escape(input.label)}[#if input.required][@clay["icon"]
-      className="reference-mark" symbol="asterisk" /][/#if]</label
+      >${htmlUtil.escape(input.label)}
+[#if input.required][@clay["icon"]
+      className="reference-mark" symbol="asterisk" /]
+[/#if]
+</label
     >
 
     <label class="switch">

@@ -1,6 +1,11 @@
-[#attempt] [#assign displayFragmentName = fragmentName /] [#recover] [#assign
-displayFragmentName = "" /] [/#attempt] [#if !displayFragmentName?has_content]
-[#assign displayFragmentName = "Meta-Object Form" /] [/#if] [#assign
+[#attempt]
+[#assign displayFragmentName = fragmentName /] [#recover]
+[#assign
+displayFragmentName = "" /]
+[/#attempt] [#if !displayFragmentName?has_content]
+[#assign displayFragmentName = "Meta-Object Form" /]
+[/#if]
+[#assign
 showFragmentHeader = configuration.showFragmentHeader!true /] [#if layoutMode ==
 'edit']
 <div class="meta-form-editor-header ${showFragmentHeader?then('show', '')}">

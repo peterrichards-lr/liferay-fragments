@@ -1,18 +1,27 @@
-[#assign readOnly = input.attributes.readOnly?? && input.attributes.readOnly /]
-[#assign swatches = (configuration.swatchesJSON!"")?split(",") /]
+[#assign
+  readOnly = input.attributes.readOnly?? && input.attributes.readOnly
+/]
+[#assign
+  swatches = (configuration.swatchesJSON!"")?split(",")
+/]
 
 <div class="color-swatches-input">
   <div
     class="form-group [#if input.errorMessage?has_content]has-error[/#if] mb-0"
   >
     <label
-      class="[#if !input.showLabel || !input.label?has_content]sr-only[/#if]"
+      class="
+[#if !input.showLabel || !input.label?has_content]sr-only[/#if]
+"
       for="${fragmentEntryLinkNamespace}-color-swatches"
       id="${fragmentEntryLinkNamespace}-color-swatches-label"
     >
-      ${htmlUtil.escape(input.label)} [#if readOnly](${languageUtil.get(locale,
-      "read-only")})[#elseif input.required][@clay["icon"]
-      className="reference-mark" symbol="asterisk" /][/#if]
+      ${htmlUtil.escape(input.label)}
+[#if readOnly](${languageUtil.get(locale,
+      "read-only")})
+[#elseif input.required][@clay["icon"]
+      className="reference-mark" symbol="asterisk" /]
+[/#if]
     </label>
 
     [#if configuration.showValue]
@@ -28,7 +37,8 @@
       class="swatch-grid ${configuration.swatchShape!'circle'}"
       id="${fragmentEntryLinkNamespace}-color-swatches"
     >
-      [#list swatches as swatch] [#assign color = swatch?trim /]
+      [#list swatches as swatch]
+[#assign color = swatch?trim /]
       <label
         class="swatch-item ${configuration.swatchSize!}"
         for="${fragmentEntryLinkNamespace}-swatch-${swatch_index}"
