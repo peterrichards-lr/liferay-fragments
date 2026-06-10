@@ -241,16 +241,14 @@
           "label": "lfr.commerce.fragment-header",
           "description": "lfr.commerce.fragment-header-description",
           "name": "fragmentHeader",
-          "type": "checkbox",
-          "dataType": "boolean"
+          "type": "checkbox"
         },
         {
           "defaultValue": false,
           "label": "lfr.commerce.enable-debug",
           "description": "lfr.commerce.enable-debug-description",
           "name": "enableDebug",
-          "type": "checkbox",
-          "dataType": "boolean"
+          "type": "checkbox"
         }
       ],
       "label": "lfr.commerce.miscellaneous"

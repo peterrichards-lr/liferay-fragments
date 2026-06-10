@@ -12,7 +12,6 @@
           "type": "text"
         },
         {
-          "dataType": "boolean",
           "defaultValue": false,
           "label": "lfr.form-fragments.custom-range",
           "description": "lfr.form-fragments.custom-range",
@@ -44,7 +43,6 @@
           "type": "text"
         },
         {
-          "dataType": "boolean",
           "defaultValue": true,
           "label": "lfr.form-fragments.display-value",
           "description": "lfr.form-fragments.display-value",
@@ -68,7 +66,6 @@
           "type": "text"
         },
         {
-          "dataType": "boolean",
           "defaultValue": false,
           "label": "lfr.form-fragments.add-id",
           "description": "lfr.form-fragments.add-id",

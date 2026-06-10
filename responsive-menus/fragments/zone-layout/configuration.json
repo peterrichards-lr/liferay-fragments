@@ -126,8 +126,7 @@
           "label": "lfr.responsive-menus.allow-menu-override",
           "description": "lfr.responsive-menus.allow-menu-override",
           "name": "allowMenuOverride",
-          "type": "checkbox",
-          "dataType": "boolean"
+          "type": "checkbox"
         },
         {
           "defaultValue": "576px",
@@ -146,8 +145,7 @@
           "label": "lfr.responsive-menus.zone-layout-header",
           "description": "lfr.responsive-menus.zone-layout-header",
           "name": "zoneLayoutHeader",
-          "type": "checkbox",
-          "dataType": "boolean"
+          "type": "checkbox"
         }
       ],
       "label": "lfr.responsive-menus.editor"

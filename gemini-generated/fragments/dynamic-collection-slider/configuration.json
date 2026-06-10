@@ -71,8 +71,7 @@
           "description": "lfr.gemini-generated.enable-depth-effect-description",
           "label": "lfr.gemini-generated.enable-depth-effect",
           "name": "enableDepthEffect",
-          "type": "checkbox",
-          "dataType": "boolean"
+          "type": "checkbox"
         },
         {
           "defaultValue": "0.5",
@@ -204,8 +203,7 @@
           "description": "lfr.gemini-generated.autoplay-description",
           "label": "lfr.gemini-generated.autoplay",
           "name": "autoplay",
-          "type": "checkbox",
-          "dataType": "boolean"
+          "type": "checkbox"
         },
         {
           "defaultValue": "5000",
@@ -230,24 +228,21 @@
           "description": "lfr.gemini-generated.loop-description",
           "label": "lfr.gemini-generated.loop",
           "name": "loop",
-          "type": "checkbox",
-          "dataType": "boolean"
+          "type": "checkbox"
         },
         {
           "defaultValue": true,
           "description": "lfr.gemini-generated.show-controls-description",
           "label": "lfr.gemini-generated.show-controls",
           "name": "showControls",
-          "type": "checkbox",
-          "dataType": "boolean"
+          "type": "checkbox"
         },
         {
           "defaultValue": true,
           "description": "lfr.gemini-generated.show-pagination-description",
           "label": "lfr.gemini-generated.show-pagination",
           "name": "showPagination",
-          "type": "checkbox",
-          "dataType": "boolean"
+          "type": "checkbox"
         }
       ],
       "label": "lfr.gemini-generated.behavior"

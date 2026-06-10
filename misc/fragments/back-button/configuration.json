@@ -79,7 +79,6 @@
           }
         },
         {
-          "dataType": "boolean",
           "defaultValue": false,
           "description": "lfr.misc.inverted-description",
           "label": "lfr.misc.inverted",
@@ -87,7 +86,6 @@
           "type": "checkbox"
         },
         {
-          "dataType": "boolean",
           "defaultValue": false,
           "description": "lfr.misc.uppercase-description",
           "label": "lfr.misc.uppercase",

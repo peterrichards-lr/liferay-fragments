@@ -24,8 +24,7 @@
           "label": "lfr.form-fragments.show-document-library-picker",
           "description": "lfr.form-fragments.show-document-library-picker-description",
           "name": "showDocumentLibraryPicker",
-          "type": "checkbox",
-          "dataType": "boolean"
+          "type": "checkbox"
         }
       ],
       "label": "lfr.form-fragments.drop-zone-options"

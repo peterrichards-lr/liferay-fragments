@@ -26,8 +26,7 @@
           "label": "lfr.forms.debug-enabled",
           "description": "lfr.forms.debug-enabled-description",
           "name": "enableDebug",
-          "type": "checkbox",
-          "dataType": "boolean"
+          "type": "checkbox"
         }
       ],
       "label": "lfr.forms.debug"

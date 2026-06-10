@@ -14,8 +14,7 @@
           "label": "lfr.content.asset-library-collection",
           "description": "lfr.content.asset-library-collection",
           "name": "assetLibraryCollection",
-          "type": "checkbox",
-          "dataType": "boolean"
+          "type": "checkbox"
         },
         {
           "dataType": "number",
@@ -63,8 +62,7 @@
           "label": "lfr.content.show-icon",
           "description": "lfr.content.show-icon",
           "name": "showIcon",
-          "type": "checkbox",
-          "dataType": "boolean"
+          "type": "checkbox"
         },
         {
           "defaultValue": "var(--primary-l3, #e7f1f5)",
@@ -97,16 +95,14 @@
           "label": "lfr.content.debug-enabled",
           "description": "lfr.content.debug-enabled",
           "name": "enableDebug",
-          "type": "checkbox",
-          "dataType": "boolean"
+          "type": "checkbox"
         },
         {
           "defaultValue": false,
           "description": "lfr.content.debug-in-error-handler-description",
           "label": "lfr.content.debug-in-error-handler",
           "name": "debugInErrorHandler",
-          "type": "checkbox",
-          "dataType": "boolean"
+          "type": "checkbox"
         }
       ],
       "label": "lfr.content.miscellaneous"

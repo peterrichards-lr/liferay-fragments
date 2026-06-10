@@ -7,8 +7,7 @@
           "description": "lfr.header-components.enable-notification-indicator-description",
           "label": "lfr.header-components.enable-notification-indicator",
           "name": "enableNotificationIndicator",
-          "type": "checkbox",
-          "dataType": "boolean"
+          "type": "checkbox"
         },
         {
           "dataType": "number",
@@ -23,8 +22,7 @@
           "description": "lfr.header-components.enable-custom-link-description",
           "label": "lfr.header-components.enable-custom-link",
           "name": "enableCustomLink",
-          "type": "checkbox",
-          "dataType": "boolean"
+          "type": "checkbox"
         },
         {
           "defaultValue": "/notifications",
@@ -43,8 +41,7 @@
           "description": "lfr.header-components.enable-sign-in-link-description",
           "label": "lfr.header-components.enable-sign-in-link",
           "name": "enableSignInLink",
-          "type": "checkbox",
-          "dataType": "boolean"
+          "type": "checkbox"
         }
       ],
       "label": "lfr.header-components.notifications"

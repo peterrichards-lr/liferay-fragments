@@ -7,8 +7,7 @@
           "label": "lfr.tracker.enable-debug",
           "description": "lfr.tracker.enable-debug",
           "name": "enableDebug",
-          "type": "checkbox",
-          "dataType": "boolean"
+          "type": "checkbox"
         }
       ],
       "label": "lfr.tracker.debugging"

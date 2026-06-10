@@ -77,7 +77,6 @@
           "type": "text"
         },
         {
-          "dataType": "boolean",
           "defaultValue": true,
           "label": "lfr.objects.use-dummy-id",
           "description": "lfr.objects.use-dummy-id-description",

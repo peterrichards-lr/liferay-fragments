@@ -12,7 +12,6 @@
           "type": "text"
         },
         {
-          "dataType": "boolean",
           "defaultValue": false,
           "label": "lfr.populated-form-fields.custom-range",
           "description": "lfr.populated-form-fields.custom-range",
@@ -44,7 +43,6 @@
           "type": "text"
         },
         {
-          "dataType": "boolean",
           "defaultValue": true,
           "label": "lfr.populated-form-fields.display-value",
           "description": "lfr.populated-form-fields.display-value",
@@ -68,7 +66,6 @@
           "type": "text"
         },
         {
-          "dataType": "boolean",
           "defaultValue": false,
           "label": "lfr.populated-form-fields.add-id",
           "description": "lfr.populated-form-fields.add-id",
@@ -89,7 +86,6 @@
     {
       "fields": [
         {
-          "dataType": "boolean",
           "defaultValue": false,
           "label": "lfr.populated-form-fields.use-storage-value",
           "description": "lfr.populated-form-fields.use-storage-value",
@@ -104,7 +100,6 @@
           "type": "text"
         },
         {
-          "dataType": "boolean",
           "defaultValue": false,
           "label": "lfr.populated-form-fields.use-specific-storage-key",
           "description": "lfr.populated-form-fields.use-specific-storage-key",

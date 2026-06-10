@@ -91,8 +91,7 @@
           "label": "lfr.gemini-generated.show-fragment-header",
           "description": "lfr.gemini-generated.show-fragment-header-description",
           "name": "showFragmentHeader",
-          "type": "checkbox",
-          "dataType": "boolean"
+          "type": "checkbox"
         },
         {
           "defaultValue": "Regional Sales Performance",
@@ -120,8 +119,7 @@
           "label": "lfr.gemini-generated.enable-secondary-y-axis",
           "description": "lfr.gemini-generated.enable-secondary-y-axis-description",
           "name": "enableSecondaryYAxis",
-          "type": "checkbox",
-          "dataType": "boolean"
+          "type": "checkbox"
         },
         {
           "defaultValue": "Secondary Values",
@@ -178,8 +176,7 @@
           "label": "lfr.gemini-generated.show-legend",
           "description": "lfr.gemini-generated.show-legend-description",
           "name": "showLegend",
-          "type": "checkbox",
-          "dataType": "boolean"
+          "type": "checkbox"
         },
         {
           "defaultValue": "brightness(85%)",

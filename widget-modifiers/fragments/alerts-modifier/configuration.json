@@ -7,48 +7,42 @@
           "label": "lfr.widget-modifiers.show-tabs",
           "description": "lfr.widget-modifiers.show-tabs-description",
           "name": "showRead",
-          "type": "checkbox",
-          "dataType": "boolean"
+          "type": "checkbox"
         },
         {
           "defaultValue": true,
           "label": "lfr.widget-modifiers.show-buttons",
           "description": "lfr.widget-modifiers.show-buttons-description",
           "name": "showButtons",
-          "type": "checkbox",
-          "dataType": "boolean"
+          "type": "checkbox"
         },
         {
           "defaultValue": true,
           "label": "lfr.widget-modifiers.show-context-menu",
           "description": "lfr.widget-modifiers.show-context-menu-description",
           "name": "showContextMenu",
-          "type": "checkbox",
-          "dataType": "boolean"
+          "type": "checkbox"
         },
         {
           "defaultValue": true,
           "label": "lfr.widget-modifiers.show-creator-info",
           "description": "lfr.widget-modifiers.show-creator-info-description",
           "name": "showCreatorInfo",
-          "type": "checkbox",
-          "dataType": "boolean"
+          "type": "checkbox"
         },
         {
           "defaultValue": false,
           "label": "lfr.widget-modifiers.use-clay-alerts",
           "description": "lfr.widget-modifiers.use-clay-alerts-description",
           "name": "useClayAlerts",
-          "type": "checkbox",
-          "dataType": "boolean"
+          "type": "checkbox"
         },
         {
           "defaultValue": true,
           "label": "lfr.widget-modifiers.hide-anonymous-read",
           "description": "lfr.widget-modifiers.hide-anonymous-read-description",
           "name": "hideAnonymousRead",
-          "type": "checkbox",
-          "dataType": "boolean"
+          "type": "checkbox"
         }
       ],
       "label": "lfr.widget-modifiers.visibility"
@@ -60,16 +54,14 @@
           "label": "lfr.widget-modifiers.use-accordion",
           "description": "lfr.widget-modifiers.use-accordion-description",
           "name": "useAccordion",
-          "type": "checkbox",
-          "dataType": "boolean"
+          "type": "checkbox"
         },
         {
           "defaultValue": true,
           "label": "lfr.widget-modifiers.accordion-icon-left",
           "description": "lfr.widget-modifiers.accordion-icon-left-description",
           "name": "accordionIconLeft",
-          "type": "checkbox",
-          "dataType": "boolean"
+          "type": "checkbox"
         },
         {
           "defaultValue": "\\2295",
@@ -90,8 +82,7 @@
           "label": "lfr.widget-modifiers.show-accordion-expanded",
           "description": "lfr.widget-modifiers.show-accordion-expanded-description",
           "name": "showAlertOpen",
-          "type": "checkbox",
-          "dataType": "boolean"
+          "type": "checkbox"
         }
       ],
       "label": "lfr.widget-modifiers.accordion"
@@ -103,8 +94,7 @@
           "label": "lfr.widget-modifiers.add-mark-as-read",
           "description": "lfr.widget-modifiers.add-mark-as-read-description",
           "name": "addMarkAsRead",
-          "type": "checkbox",
-          "dataType": "boolean"
+          "type": "checkbox"
         },
         {
           "dataType": "string",
@@ -167,8 +157,7 @@
           "label": "lfr.widget-modifiers.enable-ac-custom-event",
           "description": "lfr.widget-modifiers.enable-ac-custom-event-description",
           "name": "enableAcCustomEvent",
-          "type": "checkbox",
-          "dataType": "boolean"
+          "type": "checkbox"
         }
       ],
       "label": "lfr.widget-modifiers.actions"

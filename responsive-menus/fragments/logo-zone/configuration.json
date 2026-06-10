@@ -126,8 +126,7 @@
           "label": "lfr.responsive-menus.allow-menu-override",
           "description": "lfr.responsive-menus.allow-menu-override",
           "type": "checkbox",
-          "defaultValue": true,
-          "dataType": "boolean"
+          "defaultValue": true
         }
       ],
       "label": "lfr.responsive-menus.layout"
@@ -159,8 +158,7 @@
           "label": "lfr.responsive-menus.always-display-logo",
           "description": "lfr.responsive-menus.always-display-logo",
           "type": "checkbox",
-          "defaultValue": false,
-          "dataType": "boolean"
+          "defaultValue": false
         }
       ],
       "label": "lfr.responsive-menus.logo"
@@ -172,8 +170,7 @@
           "label": "lfr.responsive-menus.logo-zone-header",
           "description": "lfr.responsive-menus.logo-zone-header",
           "name": "logoZoneHeader",
-          "type": "checkbox",
-          "dataType": "boolean"
+          "type": "checkbox"
         }
       ],
       "label": "lfr.responsive-menus.editor"

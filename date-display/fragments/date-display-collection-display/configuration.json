@@ -7,8 +7,7 @@
           "label": "lfr.date-display.show-icon",
           "description": "lfr.date-display.show-icon-description",
           "name": "showIcon",
-          "type": "checkbox",
-          "dataType": "boolean"
+          "type": "checkbox"
         }
       ],
       "label": "lfr.date-display.general"

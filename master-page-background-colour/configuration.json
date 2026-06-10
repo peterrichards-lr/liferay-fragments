@@ -43,8 +43,7 @@
           "label": "lfr.master-page-background-colour.enable-debug",
           "description": "lfr.master-page-background-colour.enable-debug",
           "name": "enableDebug",
-          "type": "checkbox",
-          "dataType": "boolean"
+          "type": "checkbox"
         }
       ],
       "label": "lfr.master-page-background-colour.debugging"

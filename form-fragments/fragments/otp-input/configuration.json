@@ -42,8 +42,7 @@
           "label": "lfr.form-fragments.auto-focus",
           "description": "lfr.form-fragments.auto-focus-description",
           "name": "autoFocus",
-          "type": "checkbox",
-          "dataType": "boolean"
+          "type": "checkbox"
         }
       ],
       "label": "lfr.form-fragments.otp-options"

@@ -21,16 +21,14 @@
           "label": "lfr.meter-reading.show-date-selector",
           "description": "lfr.meter-reading.show-date-selector-description",
           "name": "showDateSelector",
-          "type": "checkbox",
-          "dataType": "boolean"
+          "type": "checkbox"
         },
         {
           "defaultValue": true,
           "label": "lfr.meter-reading.allow-partial-paste",
           "description": "lfr.meter-reading.allow-partial-paste-description",
           "name": "allowPartialPaste",
-          "type": "checkbox",
-          "dataType": "boolean"
+          "type": "checkbox"
         }
       ],
       "label": "lfr.meter-reading.general"
@@ -42,16 +40,14 @@
           "label": "lfr.meter-reading.integer-reading",
           "description": "lfr.meter-reading.integer-reading-description",
           "name": "integerReading",
-          "type": "checkbox",
-          "dataType": "boolean"
+          "type": "checkbox"
         },
         {
           "defaultValue": false,
           "label": "lfr.meter-reading.enable-spinner",
           "description": "lfr.meter-reading.enable-spinner-description",
           "name": "enableSpinner",
-          "type": "checkbox",
-          "dataType": "boolean"
+          "type": "checkbox"
         },
         {
           "defaultValue": "4rem",
@@ -138,8 +134,7 @@
           "label": "lfr.meter-reading.show-labels",
           "description": "lfr.meter-reading.show-labels-description",
           "name": "showLabels",
-          "type": "checkbox",
-          "dataType": "boolean"
+          "type": "checkbox"
         },
         {
           "label": "lfr.meter-reading.label-color",
@@ -257,8 +252,7 @@
           "label": "lfr.meter-reading.use-pubsub",
           "description": "lfr.meter-reading.use-pubsub-description",
           "name": "usePubSub",
-          "type": "checkbox",
-          "dataType": "boolean"
+          "type": "checkbox"
         },
         {
           "defaultValue": "new-meter-reading",
@@ -285,16 +279,14 @@
           "label": "lfr.meter-reading.enable-debug",
           "description": "lfr.meter-reading.enable-debug-description",
           "name": "enableDebug",
-          "type": "checkbox",
-          "dataType": "boolean"
+          "type": "checkbox"
         },
         {
           "defaultValue": true,
           "label": "lfr.meter-reading.use-test-account",
           "description": "lfr.meter-reading.use-test-account-description",
           "name": "useTestAccount",
-          "type": "checkbox",
-          "dataType": "boolean"
+          "type": "checkbox"
         },
         {
           "defaultValue": 0,

@@ -18,8 +18,7 @@
           "label": "lfr.content.auto-fit-bounds",
           "description": "lfr.content.auto-fit-bounds",
           "name": "autoFitBounds",
-          "type": "checkbox",
-          "dataType": "boolean"
+          "type": "checkbox"
         },
         {
           "dataType": "number",
@@ -133,8 +132,7 @@
           "label": "lfr.content.use-custom-markers",
           "description": "lfr.content.use-custom-markers",
           "name": "useCustomMarkers",
-          "type": "checkbox",
-          "dataType": "boolean"
+          "type": "checkbox"
         },
         {
           "description": "lfr.content.vocabulary-id-description",
@@ -163,8 +161,7 @@
                 "value": "true"
               }
             }
-          },
-          "dataType": "boolean"
+          }
         }
       ],
       "label": "lfr.content.custom-markers"
@@ -207,8 +204,7 @@
           "label": "lfr.content.use-custom-info-template",
           "description": "lfr.content.use-custom-info-template",
           "name": "useCustomInfoTemplate",
-          "type": "checkbox",
-          "dataType": "boolean"
+          "type": "checkbox"
         },
         {
           "description": "lfr.content.info-template-id-description",
@@ -237,8 +233,7 @@
                 "value": "true"
               }
             }
-          },
-          "dataType": "boolean"
+          }
         }
       ],
       "label": "lfr.content.info-window"
@@ -250,8 +245,7 @@
           "description": "lfr.content.navigate-on-click-description",
           "label": "lfr.content.navigate-on-click",
           "name": "navigateOnClick",
-          "type": "checkbox",
-          "dataType": "boolean"
+          "type": "checkbox"
         },
         {
           "defaultValue": false,
@@ -266,16 +260,14 @@
                 "value": "true"
               }
             }
-          },
-          "dataType": "boolean"
+          }
         },
         {
           "defaultValue": false,
           "label": "lfr.content.use-custom-display-page",
           "description": "lfr.content.use-custom-display-page",
           "name": "useCustomDisplayPage",
-          "type": "checkbox",
-          "dataType": "boolean"
+          "type": "checkbox"
         },
         {
           "description": "lfr.content.display-page-url-description",
@@ -301,16 +293,14 @@
           "label": "lfr.content.debug-enabled",
           "description": "lfr.content.debug-enabled",
           "name": "enableDebug",
-          "type": "checkbox",
-          "dataType": "boolean"
+          "type": "checkbox"
         },
         {
           "defaultValue": false,
           "description": "lfr.content.debug-in-error-handler-description",
           "label": "lfr.content.debug-in-error-handler",
           "name": "debugInErrorHandler",
-          "type": "checkbox",
-          "dataType": "boolean"
+          "type": "checkbox"
         }
       ],
       "label": "lfr.content.miscellaneous"
