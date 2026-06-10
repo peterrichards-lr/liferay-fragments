@@ -1,30 +1,18 @@
 [#-- prettier-ignore --]
-[#assign
-  menuClassesList = [
+[#assign menuClassesList = [
 "fragment-menu-${fragmentEntryLinkNamespace}", "fragment-menu",
 configuration.menuStyle, (configuration.separator?then('separator',''))
-]?filter(x -> x?has_content),
-  , menuClasses = menuClassesList?join(' '),
-  ,
-dropzoneConfig = configuration.dropzoneConfig,
-  , menuHeaderClass =
+]?filter(x -> x?has_content), menuClasses = menuClassesList?join(' '),
+dropzoneConfig = configuration.dropzoneConfig, menuHeaderClass =
 'fragment-menu-editor-padding' + (configuration.menuHeader?then(' show','')),
-  ,
 menuTextAlign =
-configuration.menuStyle?contains('menu-right')?then("right","left"),
-  , menuId =
-'nav-' + fragmentEntryLinkNamespace,
-  , langDir = (locale?starts_with("ar") ||
-locale?starts_with("he"))?then("rtl","ltr"),
-  , htmlLang = locale?replace("_","-")
-/] [#assign
-  zoneMap = { 'menu-only': ['menu'], 'menu-upper-zone':
+configuration.menuStyle?contains('menu-right')?then("right","left"), menuId =
+'nav-' + fragmentEntryLinkNamespace, langDir = (locale?starts_with("ar") ||
+locale?starts_with("he"))?then("rtl","ltr"), htmlLang = locale?replace("_","-")
+/] [#assign zoneMap = { 'menu-only': ['menu'], 'menu-upper-zone':
 ['upper','menu'], 'menu-lower-zone': ['menu','lower'], 'menu-both-zones':
-['upper','menu','lower'] },
-  , zones = zoneMap[dropzoneConfig]!['menu'],
-  ,
-dropzoneCount = zones?size
-/] [#macro renderHamburgerIcon]
+['upper','menu','lower'] }, zones = zoneMap[dropzoneConfig]!['menu'],
+dropzoneCount = zones?size /] [#macro renderHamburgerIcon]
 <div class="hamburger">
   <button
     class="fragment-menu-icon"

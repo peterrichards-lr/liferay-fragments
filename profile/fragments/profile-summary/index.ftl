@@ -37,10 +37,8 @@ serviceLocator.findService("com.liferay.portal.kernel.service.UserLocalService")
   profileUser =
 userService.fetchUserByScreenName(themeDisplay.getCompanyId(),screenName)!''
 /]
-[#if profileUser?? && profileUser != ''] [#assign
-  imgIdToken =
-staticUtil["com.liferay.portal.kernel.util.DigesterUtil"].digest(profileUser.getUserUuid())
-/]
+[#if profileUser?? && profileUser != ''] [#assign imgIdToken =
+staticUtil["com.liferay.portal.kernel.util.DigesterUtil"].digest(profileUser.getUserUuid())/]
 [#assign
   " +
 imgIdToken?url('ISO-8859-1') + "&t=" +

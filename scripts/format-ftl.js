@@ -48,7 +48,7 @@ ftlFiles.forEach((file) => {
   });
 
   // 4. Force multi-line [#assign] for readability
-  content = content.replace(/\[#assign([\s\S]*?)\/\]/g, (match, body) => {
+  content = content.replace(/\[#assign([^\[\]]*?)\/\]/g, (match, body) => {
     if (body.includes(',') || body.length > 60) {
       const assignments = body.match(/[^=]+=[^=]+(?=,|$)/g);
       if (assignments) {

@@ -1,8 +1,15 @@
 [#assign
-  "${fragmentEntryLinkNamespace}-text-input" id="${fragmentEntryLinkNamespace}-text-input-label">${htmlUtil.escape(input.label)}
-[#if readOnly](${languageUtil.get(locale,
-  "reference-mark" symbol="asterisk"
-/]
+	readOnly = input.attributes.readOnly?? && input.attributes.readOnly
+]
+
+<div class="autocomplete-object-input" style="--hover-bg-color: ${configuration.hoverBgColor!}; --hover-color: ${configuration.hoverColor!}; --hover-border-color: ${configuration.hoverBorderColor!}; --active-bg-color: ${configuration.activeBgColor!}; --active-color: ${configuration.activeColor!}; --active-border-color: ${configuration.activeBorderColor!}; --autocomplete-color: ${configuration.autocompleteColor!}; --autocomplete-border-color: ${configuration.autocompleteBorderColor!}; --autocomplete-bg-color: ${configuration.autocompleteBgColor!}">
+    <div class="alert alert-danger d-none error-container mb-3"></div>
+	<div class="form-group [#if  input.errorMessage?has_content]has-error[/#if] mb-0" id="${fragmentEntryLinkNamespace}-form-group">
+		<label class="
+[#if !input.showLabel || !input.label?has_content]sr-only[/#if]
+" for="${fragmentEntryLinkNamespace}-text-input" id="${fragmentEntryLinkNamespace}-text-input-label">${htmlUtil.escape(input.label)}
+[#if readOnly](${languageUtil.get(locale, "read-only")})
+[#elseif input.required][@clay["icon"] className="reference-mark" symbol="asterisk" /]
 [/#if]
 </label>
 

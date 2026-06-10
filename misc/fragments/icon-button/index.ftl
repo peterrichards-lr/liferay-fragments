@@ -1,12 +1,9 @@
 [#-- prettier-ignore --]
-[#assign
-  elementId =
-fragmentElementId?has_content?then(fragmentElementId[9..], ""),
-  , buttonClasses =
+[#assign elementId =
+fragmentElementId?has_content?then(fragmentElementId[9..], ""), buttonClasses =
 [ "btn", "btn-${configuration.buttonSize!'nm'}",
 "btn-${configuration.buttonType!'primary'}", "icon-button",
-configuration.buttonCustomClasses!"" ]?filter(x -> x?has_content)?join(' ')
-/]
+configuration.buttonCustomClasses!"" ]?filter(x -> x?has_content)?join(' ') /]
 
 <div class="misc-icon-button">
   <a

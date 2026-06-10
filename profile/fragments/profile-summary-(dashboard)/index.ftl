@@ -3,10 +3,8 @@
   userService =
 serviceLocator.findService("com.liferay.portal.kernel.service.UserLocalService")
 /]
-[#if userService??] [#if user??] [#assign
-  imgIdToken =
-staticUtil["com.liferay.portal.kernel.util.DigesterUtil"].digest(user.getUserUuid())
-/]
+[#if userService??] [#if user??] [#assign imgIdToken =
+staticUtil["com.liferay.portal.kernel.util.DigesterUtil"].digest(user.getUserUuid())/]
 [#assign
   " +
 imgIdToken?url('ISO-8859-1') + "&t=" +

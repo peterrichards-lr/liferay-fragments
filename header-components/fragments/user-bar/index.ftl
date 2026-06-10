@@ -1,14 +1,23 @@
 <div class="user-personal-bar">
-  [#assign
-  'visible'
+  [#assign is_signed_in = themeDisplay.isSignedIn()] [#if is_signed_in]
+  <span class="d-md-inline-flex d-none user-full-name">
+    Hi&nbsp;${user.getFirstName()}
+  </span>
+  [/#if] [#if !is_signed_in] [#if configuration.enableSignInLink]
+  <span class="sign-in text-default" role="presentation">
+    <a
+      class="sign-in text-default"
+      data-redirect="true"
+      onclick="
+        document.querySelector('#loginCardContainer').style.visibility =
+          'visible'
       "
     >
       <span class="sign-in-label">${languageUtil.get(locale, "sign-in")}</span>
     </a>
   </span>
   [/#if] [#else]
-[@liferay.user_personal_bar
-/]
+[@liferay.user_personal_bar /]
 [/#if] [#if is_signed_in]
   [#assign
   configuration.enableCustomLink notification_count =

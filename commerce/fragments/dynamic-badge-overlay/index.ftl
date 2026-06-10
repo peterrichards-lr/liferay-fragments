@@ -1,13 +1,9 @@
 [#-- prettier-ignore --]
-[#assign
-  fragmentClassesList = [
+[#assign fragmentClassesList = [
 "dynamic-badge-overlay-${fragmentEntryLinkNamespace}", "dynamic-badge-overlay"
-]?filter(x -> x?has_content),
-  , fragmentClasses = fragmentClassesList?join(' '),
-  ,
+]?filter(x -> x?has_content), fragmentClasses = fragmentClassesList?join(' '),
 fragmentHeaderClass = 'fragment-editor-padding' +
-(configuration.fragmentHeader?then(' show',''))
-/]
+(configuration.fragmentHeader?then(' show','')) /]
 
 <div class="${fragmentClasses}" data-layout-mode="${layoutMode}">
   <div class="${fragmentHeaderClass}">Product Badge</div>

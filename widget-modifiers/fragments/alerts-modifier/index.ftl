@@ -1,8 +1,6 @@
-[#assign
-  configuration.hideAnonymousRead &&
+[#assign isSignedIn = configuration.hideAnonymousRead &&
 themeDisplay.isSignedIn()]
-[#assign divClassList = ''
-/] [#if
+[#assign divClassList = '' /] [#if
 configuration.showRead == false || isSignedIn == false]
 [#assign divClassList =
 divClassList + ' no_tabs' /]

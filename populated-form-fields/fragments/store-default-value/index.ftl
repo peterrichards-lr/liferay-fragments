@@ -1,18 +1,11 @@
 [#-- prettier-ignore --]
-[#assign
-  fragmentName = "Store Default Value",
-  ,
+[#assign fragmentName = "Store Default Value",
 fragmentClassName = fragmentName?lower_case?replace(' ', '-'),
-  ,
 fragmentUniqueClassName = "${fragmentClassName}-${fragmentEntryLinkNamespace}",
-  ,
 fragmentClassesList = [ fragmentUniqueClassName, fragmentClassName ]?filter(x ->
-x?has_content),
-  , fragmentClasses = fragmentClassesList?join(' '),
-  ,
+x?has_content), fragmentClasses = fragmentClassesList?join(' '),
 fragmentHeaderClass = '${fragmentClassName}-padding' +
-(configuration.fragmentHeader?then(' show',''))
-/]
+(configuration.fragmentHeader?then(' show','')) /]
 <div
   data-lfr-js-fragment-unique-class-name="${fragmentUniqueClassName}"
   data-lfr-js-fragment-name="${fragmentName}"

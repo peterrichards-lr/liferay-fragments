@@ -1,36 +1,22 @@
 [#-- prettier-ignore --]
-[#assign
-  menuClassesList = [
+[#assign menuClassesList = [
 "fragment-menu-${fragmentEntryLinkNamespace}", "fragment-menu",
 configuration.menuStyle, (configuration.separator?then('separator', ''))
-]?filter(x -> x?has_content),
-  , menuClasses = menuClassesList?join(' '),
-  ,
+]?filter(x -> x?has_content), menuClasses = menuClassesList?join(' '),
 menuHeaderClass = 'fragment-menu-editor-padding' +
-(configuration.menuHeader?then(' show', '')),
-  , dropzoneConfig =
-configuration.dropzoneConfig,
-  , isInline =
-configuration.menuStyle?contains('inline'),
-  , isSticky =
-configuration.menuStyle?contains('sticky'),
-  , menuId = 'nav-' +
-fragmentEntryLinkNamespace,
-  , langDir = (locale?starts_with("ar") ||
-locale?starts_with("he"))?then("rtl", "ltr"),
-  , htmlLang = locale?replace("_",
-"-")
-/] [#if configuration.menuStyle?contains('menu-inline')]
+(configuration.menuHeader?then(' show', '')), dropzoneConfig =
+configuration.dropzoneConfig, isInline =
+configuration.menuStyle?contains('inline'), isSticky =
+configuration.menuStyle?contains('sticky'), menuId = 'nav-' +
+fragmentEntryLinkNamespace, langDir = (locale?starts_with("ar") ||
+locale?starts_with("he"))?then("rtl", "ltr"), htmlLang = locale?replace("_",
+"-") /] [#if configuration.menuStyle?contains('menu-inline')]
 [#assign
 dropzoneConfig = 'menu-only' /]
-[/#if] [#assign
-  zoneMap = { 'menu-only':
+[/#if] [#assign zoneMap = { 'menu-only':
 ['menu'], 'menu-left-zone': ['left', 'menu'], 'menu-right-zone': ['menu',
-'right'], 'menu-both-zones': ['left', 'menu', 'right'] },
-  , zones =
-zoneMap[dropzoneConfig]!['menu'],
-  , dropzoneCount = zones?size
-/] [#macro
+'right'], 'menu-both-zones': ['left', 'menu', 'right'] }, zones =
+zoneMap[dropzoneConfig]!['menu'], dropzoneCount = zones?size /] [#macro
 ScrollToTopButton icon title]
 <button class="fragment-scroll-to-top" title="${title}" aria-label="${title}">
   [@clay["icon"] symbol="${icon}" /]

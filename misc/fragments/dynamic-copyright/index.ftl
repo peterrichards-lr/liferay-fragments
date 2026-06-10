@@ -1,7 +1,6 @@
-[#assign
-  'legal-name']
-[#assign company = themeDisplay.getCompany()
-/]
+[#assign entitySource = configuration.entitySource!"custom" ] [#if entitySource
+== 'legal-name']
+[#assign company = themeDisplay.getCompany() /]
 [#assign
 copyrightEntity = htmlUtil.escape(company.getLegalName()) /] [#elseif
 entitySource == 'site-name']

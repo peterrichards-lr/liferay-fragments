@@ -1,7 +1,6 @@
+[#assign is_signed_in = themeDisplay.isSignedIn()] [#if !is_signed_in]
 [#assign
-  themeDisplay.isSignedIn()] [#if !is_signed_in]
-[#assign
-preferences =
+  preferences =
 freeMarkerPortletPreferences.getPreferences("portletSetupPortletDecoratorId",
 "barebone")
 /]

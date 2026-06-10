@@ -1,9 +1,14 @@
-[#assign
-  "${fragmentEntryLinkNamespace}-range-input" id="${fragmentEntryLinkNamespace}-range-input-label">
+[#assign readOnly = input.attributes.readOnly?? && input.attributes.readOnly]
+
+<div class="range-input" [#if configuration.addId]id="${configuration.idValue!}"[/#if]
+>
+	<div class="form-group [#if input.errorMessage?has_content]has-error[/#if] mb-0">
+		<label class="
+[#if !input.showLabel || !input.label?has_content]sr-only[/#if]
+" for="${fragmentEntryLinkNamespace}-range-input" id="${fragmentEntryLinkNamespace}-range-input-label">
 			${htmlUtil.escape(input.label)}
-[#if readOnly](${languageUtil.get(locale,
-  "reference-mark" symbol="asterisk"
-/]
+[#if readOnly](${languageUtil.get(locale, "read-only")})
+[#elseif input.required][@clay["icon"] className="reference-mark" symbol="asterisk" /]
 [/#if]
 			[#if configuration.displayValue]
 			<br/><span class="value-prefix">${configuration.valuePrefix!}</span><span class="value"></span><span class="value-suffix">${configuration.valueSuffix!}</span>

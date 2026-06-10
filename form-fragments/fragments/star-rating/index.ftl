@@ -1,15 +1,31 @@
-[#assign
+[#assign readOnly = input.attributes.readOnly?? && input.attributes.readOnly ]
+
+<div
+  class="star-rating-container"
+  style="
+    --starSize: ${configuration.starSize!};
+    --activeStarColor: ${configuration.activeStarColor!};
+    --passiveStarColor: ${configuration.passiveStarColor!};
   "
+>
+  <div
+    class="form-group mb-0
+[#if input.errorMessage?has_content] has-error[/#if]
+"
+  >
+    <fieldset>
+      <legend
+        class="
 [#if !input.showLabel || !input.label?has_content]sr-only[/#if]
 "
         id="${fragmentEntryLinkNamespace}-select-from-list-input-label"
       >
         ${htmlUtil.escape(input.label)}
 [#if
-        readOnly](${languageUtil.get(locale,
-  "reference-mark"
-        symbol="asterisk"
-/]
+        readOnly](${languageUtil.get(locale, "read-only")})
+[#elseif
+        input.required][@clay["icon"] className="reference-mark"
+        symbol="asterisk" /]
 [/#if]
       </legend>
 
