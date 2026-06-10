@@ -1,0 +1,491 @@
+{
+  "configuration": {
+    "className": "com.liferay.object.admin.rest.dto.v1_0.ObjectDefinition",
+    "parameters": {
+      "containsHeaders": "true",
+      "createStrategy": "UPSERT",
+      "importStrategy": "ON_ERROR_CONTINUE",
+      "updateStrategy": "UPDATE"
+    }
+  },
+  "items": [
+    {
+      "active": true,
+      "defaultLanguageId": "en_US",
+      "externalReferenceCode": "TICKET",
+      "label": {
+        "en_US": "Ticket"
+      },
+      "name": "Ticket",
+      "objectFields": [
+        {
+          "businessType": "Text",
+          "externalReferenceCode": "TITLE",
+          "label": {
+            "en_US": "Title"
+          },
+          "name": "title",
+          "required": true,
+          "type": "String"
+        }
+      ],
+      "pluralLabel": {
+        "en_US": "Tickets"
+      },
+      "restContextPath": "/o/c/tickets",
+      "scope": "site",
+      "status": {
+        "code": 0,
+        "label": "approved"
+      }
+    },
+    {
+      "active": true,
+      "defaultLanguageId": "en_US",
+      "externalReferenceCode": "TICKET_COMMENT",
+      "label": {
+        "en_US": "Comment"
+      },
+      "name": "Comment",
+      "objectFields": [
+        {
+          "businessType": "Text",
+          "externalReferenceCode": "COMMENT_BODY",
+          "label": {
+            "en_US": "Comment"
+          },
+          "name": "comment",
+          "required": true,
+          "type": "String"
+        },
+        {
+          "businessType": "Text",
+          "externalReferenceCode": "VISIBILITY",
+          "label": {
+            "en_US": "Visibility"
+          },
+          "name": "visibility",
+          "required": false,
+          "type": "String"
+        }
+      ],
+      "objectRelationships": [
+        {
+          "name": "ticket",
+          "type": "oneToMany",
+          "deletionType": "disassociate",
+          "objectDefinitionExternalReferenceCode1": "TICKET",
+          "objectDefinitionExternalReferenceCode2": "TICKET_COMMENT"
+        }
+      ],
+      "pluralLabel": {
+        "en_US": "Comments"
+      },
+      "restContextPath": "/o/c/comments",
+      "scope": "site",
+      "status": {
+        "code": 0,
+        "label": "approved"
+      }
+    },
+    {
+      "active": true,
+      "defaultLanguageId": "en_US",
+      "externalReferenceCode": "AUDIT_ENTRY",
+      "label": {
+        "en_US": "Audit Entry"
+      },
+      "name": "AuditEntry",
+      "objectFields": [
+        {
+          "businessType": "Text",
+          "externalReferenceCode": "ACTION",
+          "label": {
+            "en_US": "Action"
+          },
+          "name": "action",
+          "required": true,
+          "type": "String"
+        },
+        {
+          "businessType": "Text",
+          "externalReferenceCode": "ACCOUNT",
+          "label": {
+            "en_US": "Account"
+          },
+          "name": "account",
+          "required": false,
+          "type": "String"
+        },
+        {
+          "businessType": "Date",
+          "externalReferenceCode": "ENTRY_DATE",
+          "label": {
+            "en_US": "Entry Date"
+          },
+          "name": "entryDate",
+          "required": false,
+          "type": "Date"
+        },
+        {
+          "businessType": "Text",
+          "externalReferenceCode": "USER_EMAIL",
+          "label": {
+            "en_US": "User Email"
+          },
+          "name": "userEmail",
+          "required": false,
+          "type": "String"
+        }
+      ],
+      "pluralLabel": {
+        "en_US": "Audit Entries"
+      },
+      "restContextPath": "/o/c/auditentries",
+      "scope": "site",
+      "status": {
+        "code": 0,
+        "label": "approved"
+      }
+    },
+    {
+      "active": true,
+      "defaultLanguageId": "en_US",
+      "externalReferenceCode": "CAMPAIGN",
+      "label": {
+        "en_US": "Campaign Record"
+      },
+      "name": "CampaignRecord",
+      "objectFields": [
+        {
+          "businessType": "Text",
+          "externalReferenceCode": "NAME",
+          "label": {
+            "en_US": "Name"
+          },
+          "name": "name",
+          "required": true,
+          "type": "String"
+        },
+        {
+          "businessType": "Text",
+          "externalReferenceCode": "REFERRER",
+          "label": {
+            "en_US": "Referrer"
+          },
+          "name": "referrer",
+          "required": false,
+          "type": "String"
+        }
+      ],
+      "pluralLabel": {
+        "en_US": "CampaignRecords"
+      },
+      "restContextPath": "/o/c/cmpgnrecords",
+      "scope": "site",
+      "status": {
+        "code": 0,
+        "label": "approved"
+      }
+    },
+    {
+      "active": true,
+      "defaultLanguageId": "en_US",
+      "externalReferenceCode": "CAMPAIGN_INTERACTION",
+      "label": {
+        "en_US": "Campaign Interaction"
+      },
+      "name": "CampaignInteraction",
+      "objectFields": [
+        {
+          "businessType": "Text",
+          "externalReferenceCode": "EVENT",
+          "label": {
+            "en_US": "Event"
+          },
+          "name": "event",
+          "required": false,
+          "type": "String"
+        },
+        {
+          "businessType": "Text",
+          "externalReferenceCode": "EVENT_TYPE",
+          "label": {
+            "en_US": "Event Type"
+          },
+          "name": "eventType",
+          "required": false,
+          "type": "String"
+        },
+        {
+          "businessType": "Text",
+          "externalReferenceCode": "EVENT_TARGET",
+          "label": {
+            "en_US": "Event Target"
+          },
+          "name": "eventTarget",
+          "required": false,
+          "type": "String"
+        }
+      ],
+      "objectRelationships": [
+        {
+          "name": "interaction",
+          "type": "oneToMany",
+          "deletionType": "disassociate",
+          "objectDefinitionExternalReferenceCode1": "CAMPAIGN",
+          "objectDefinitionExternalReferenceCode2": "CAMPAIGN_INTERACTION"
+        }
+      ],
+      "pluralLabel": {
+        "en_US": "Campaign Interactions"
+      },
+      "restContextPath": "/o/c/campaigninteractions",
+      "scope": "site",
+      "status": {
+        "code": 0,
+        "label": "approved"
+      }
+    },
+    {
+      "active": true,
+      "defaultLanguageId": "en_US",
+      "externalReferenceCode": "HEART_RATE",
+      "label": {
+        "en_US": "Heart Rate"
+      },
+      "name": "HeartRate",
+      "objectFields": [
+        {
+          "businessType": "DateTime",
+          "externalReferenceCode": "READING_DATE",
+          "label": {
+            "en_US": "Reading Date"
+          },
+          "name": "readingDate",
+          "required": false,
+          "type": "DateTime",
+          "objectFieldSettings": [
+            {
+              "name": "timeStorage",
+              "value": "convertToUTC"
+            }
+          ]
+        },
+        {
+          "businessType": "Integer",
+          "externalReferenceCode": "LOWEST",
+          "label": {
+            "en_US": "Lowest"
+          },
+          "name": "lowest",
+          "required": false,
+          "type": "Integer"
+        },
+        {
+          "businessType": "Integer",
+          "externalReferenceCode": "HIGHEST",
+          "label": {
+            "en_US": "Highest"
+          },
+          "name": "highest",
+          "required": false,
+          "type": "Integer"
+        }
+      ],
+      "objectRelationships": [
+        {
+          "name": "heartRate",
+          "type": "oneToMany",
+          "deletionType": "disassociate",
+          "objectDefinitionExternalReferenceCode1": "USER",
+          "objectDefinitionExternalReferenceCode2": "HEART_RATE"
+        }
+      ],
+      "pluralLabel": {
+        "en_US": "Heart Rates"
+      },
+      "restContextPath": "/o/c/heartrates",
+      "scope": "site",
+      "status": {
+        "code": 0,
+        "label": "approved"
+      }
+    },
+    {
+      "active": true,
+      "defaultLanguageId": "en_US",
+      "externalReferenceCode": "BLOOD_PRESSURE",
+      "label": {
+        "en_US": "Blood Pressure"
+      },
+      "name": "BloodPressure",
+      "objectFields": [
+        {
+          "businessType": "DateTime",
+          "externalReferenceCode": "READING_DATE",
+          "label": {
+            "en_US": "Reading Date"
+          },
+          "name": "readingDate",
+          "required": false,
+          "type": "DateTime",
+          "objectFieldSettings": [
+            {
+              "name": "timeStorage",
+              "value": "convertToUTC"
+            }
+          ]
+        },
+        {
+          "businessType": "Integer",
+          "externalReferenceCode": "DIASTOLIC",
+          "label": {
+            "en_US": "Diastolic"
+          },
+          "name": "diastolic",
+          "required": false,
+          "type": "Integer"
+        },
+        {
+          "businessType": "Integer",
+          "externalReferenceCode": "SYSTOLIC",
+          "label": {
+            "en_US": "Systolic"
+          },
+          "name": "systolic",
+          "required": false,
+          "type": "Integer"
+        }
+      ],
+      "objectRelationships": [
+        {
+          "name": "bloodPressure",
+          "type": "oneToMany",
+          "deletionType": "disassociate",
+          "objectDefinitionExternalReferenceCode1": "USER",
+          "objectDefinitionExternalReferenceCode2": "BLOOD_PRESSURE"
+        }
+      ],
+      "pluralLabel": {
+        "en_US": "Blood Pressures"
+      },
+      "restContextPath": "/o/c/bloodpressures",
+      "scope": "site",
+      "status": {
+        "code": 0,
+        "label": "approved"
+      }
+    },
+    {
+      "active": true,
+      "defaultLanguageId": "en_US",
+      "externalReferenceCode": "STEPS",
+      "label": {
+        "en_US": "Steps"
+      },
+      "name": "Steps",
+      "objectFields": [
+        {
+          "businessType": "DateTime",
+          "externalReferenceCode": "READING_DATE",
+          "label": {
+            "en_US": "Reading Date"
+          },
+          "name": "readingDate",
+          "required": false,
+          "type": "DateTime",
+          "objectFieldSettings": [
+            {
+              "name": "timeStorage",
+              "value": "convertToUTC"
+            }
+          ]
+        },
+        {
+          "businessType": "Integer",
+          "externalReferenceCode": "STEP_COUNT",
+          "label": {
+            "en_US": "Step Count"
+          },
+          "name": "stepCount",
+          "required": false,
+          "type": "Integer"
+        }
+      ],
+      "objectRelationships": [
+        {
+          "name": "steps",
+          "type": "oneToMany",
+          "deletionType": "disassociate",
+          "objectDefinitionExternalReferenceCode1": "USER",
+          "objectDefinitionExternalReferenceCode2": "STEPS"
+        }
+      ],
+      "pluralLabel": {
+        "en_US": "Stepses"
+      },
+      "restContextPath": "/o/c/stepses",
+      "scope": "site",
+      "status": {
+        "code": 0,
+        "label": "approved"
+      }
+    },
+    {
+      "active": true,
+      "defaultLanguageId": "en_US",
+      "externalReferenceCode": "WEIGHT",
+      "label": {
+        "en_US": "Weight"
+      },
+      "name": "Weight",
+      "objectFields": [
+        {
+          "businessType": "DateTime",
+          "externalReferenceCode": "READING_DATE",
+          "label": {
+            "en_US": "Reading Date"
+          },
+          "name": "readingDate",
+          "required": false,
+          "type": "DateTime",
+          "objectFieldSettings": [
+            {
+              "name": "timeStorage",
+              "value": "convertToUTC"
+            }
+          ]
+        },
+        {
+          "businessType": "Decimal",
+          "externalReferenceCode": "WEIGHT_VAL",
+          "label": {
+            "en_US": "Weight"
+          },
+          "name": "weight",
+          "required": false,
+          "type": "Double"
+        }
+      ],
+      "objectRelationships": [
+        {
+          "name": "userWeight",
+          "type": "oneToMany",
+          "deletionType": "disassociate",
+          "objectDefinitionExternalReferenceCode1": "USER",
+          "objectDefinitionExternalReferenceCode2": "WEIGHT"
+        }
+      ],
+      "pluralLabel": {
+        "en_US": "Weights"
+      },
+      "restContextPath": "/o/c/weights",
+      "scope": "site",
+      "status": {
+        "code": 0,
+        "label": "approved"
+      }
+    }
+  ]
+}

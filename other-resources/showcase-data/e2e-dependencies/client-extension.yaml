@@ -1,0 +1,17 @@
+assemble:
+  - from: batch
+    into: batch
+
+e2e-dependencies:
+  name: E2E Dependencies Object
+  oAuthApplicationHeadlessServer: e2e-dependencies-oauth
+  type: batch
+
+e2e-dependencies-oauth:
+  .serviceAddress: localhost:8080
+  .serviceScheme: http
+  name: E2E Dependencies OAuth Application Headless Server
+  scopes:
+    - Liferay.Headless.Batch.Engine.everything
+    - Liferay.Object.Admin.REST.everything
+  type: oAuthApplicationHeadlessServer

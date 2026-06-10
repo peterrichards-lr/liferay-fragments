@@ -1,0 +1,33 @@
+{
+  "configuration": {
+    "className": "com.liferay.headless.delivery.dto.v1_0.ContentStructure",
+    "parameters": {}
+  },
+  "items": [
+    {
+      "externalReferenceCode": "SLIDER-SLIDE-STRUCT",
+      "name": "Slider Slide Structure",
+      "description": "Structure for slider fragment E2E tests",
+      "contentStructureFields": [
+        {
+          "name": "title",
+          "label": "Title",
+          "dataType": "string",
+          "inputControl": "text_box"
+        },
+        {
+          "name": "description",
+          "label": "Description",
+          "dataType": "string",
+          "inputControl": "text_box"
+        },
+        {
+          "name": "image",
+          "label": "Image",
+          "dataType": "string",
+          "inputControl": "text_box"
+        }
+      ]
+    }
+  ]
+}

@@ -27,3 +27,8 @@ generated-test-pages.json
 
 # LDM Test Project
 /fragments-test-env/
+
+# Local diagnostic logs and scratch files
+/current_run.log
+/test_runner_output.log
+/test-js-service.js
