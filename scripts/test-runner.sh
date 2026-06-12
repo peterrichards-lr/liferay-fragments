@@ -7,7 +7,7 @@ set -e
 MIN_LDM_VERSION="2.8.0"
 LIFERAY_TAG="2026.q1"
 PROJECT_NAME="fragments-test-env"
-PORT=8080
+PORT=8090
 VERBOSE=false
 KEEP_ALIVE=false
 EXISTING_PROJECT=false
@@ -290,7 +290,7 @@ else
 
     echo "  -> Deploying ZIPs (Zero-Race Atomic Deployments via LDM bind mount)..."
     for zip_file in zips/fragments/*.zip; do
-        [[ "$zip_file" == *"-pre2025q3"* ]] && continue
+        [[ "$zip_file" == *"-pre"* ]] && continue
         [[ "$zip_file" == *"-debug"* ]] && continue # Skip debug zips if minified exist
         
         ZIP_NAME=$(basename "$zip_file")
