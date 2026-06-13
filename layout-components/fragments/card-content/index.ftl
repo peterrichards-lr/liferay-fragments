@@ -1,6 +1,5 @@
 [#-- prettier-ignore --]
-[#assign
-  elementMap = {
+[#assign elementMap = {
 	"display-1": "h1",
 	"display-2": "h1",
 	"display-3": "h1",
@@ -20,8 +19,7 @@
 	"text-link-lg": "div",
 	"text-link-md": "div",
 	"text-link-sm": "div"
-}
-/]
+} /]
 
 [#assign element = elementMap[configuration.textType!'h3'] /]
 

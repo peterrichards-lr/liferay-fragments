@@ -3,14 +3,10 @@
 <div class="muliselect-container" style="--option-count: ${configuration.numberOfOptions!}">
 	<div class="custom-checkbox custom-control [#if input.errorMessage?has_content]has-error[/#if] mb-0">
 		<span
-			class="d-block font-weight-semi-bold mb-2 multiselect-list-label text-3 [#if !input.showLabel || !input.label?has_content]sr-only[/#if]
-"
+			class="d-block font-weight-semi-bold mb-2 multiselect-list-label text-3 [#if !input.showLabel || !input.label?has_content]sr-only[/#if]"
 			id="${fragmentEntryLinkNamespace}-multiselect-list-label">
-			${htmlUtil.escape(input.label)}
-[#if readOnly](${languageUtil.get(locale, "read-only")})
-[#elseif
-			input.required][@clay["icon"] className="reference-mark" symbol="asterisk" /]
-[/#if]
+			${htmlUtil.escape(input.label)} [#if readOnly](${languageUtil.get(locale, "read-only")})[#elseif
+			input.required][@clay["icon"] className="reference-mark" symbol="asterisk" /][/#if]
 		</span>
 
 		<div class="lists-container">

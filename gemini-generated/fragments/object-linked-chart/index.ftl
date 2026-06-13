@@ -1,11 +1,6 @@
-[#attempt]
-[#assign displayFragmentName = fragmentName /] [#recover]
-[#assign
-displayFragmentName = "" /]
-[/#attempt] [#if !displayFragmentName?has_content]
-[#assign displayFragmentName = "Object-Linked Chart" /]
-[/#if]
-[#assign
+[#attempt] [#assign displayFragmentName = fragmentName /] [#recover] [#assign
+displayFragmentName = "" /] [/#attempt] [#if !displayFragmentName?has_content]
+[#assign displayFragmentName = "Object-Linked Chart" /] [/#if] [#assign
 showFragmentHeader = configuration.showFragmentHeader!true /] [#if layoutMode ==
 'edit']
 <div class="meta-chart-editor-header ${showFragmentHeader?then('show', '')}">

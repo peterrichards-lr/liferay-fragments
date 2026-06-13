@@ -1,17 +1,12 @@
-[#if serviceLocator?? && staticUtil??]
-[#assign
-  userService =
-serviceLocator.findService("com.liferay.portal.kernel.service.UserLocalService")
-/]
+[#if serviceLocator?? && staticUtil??] [#assign userService =
+serviceLocator.findService("com.liferay.portal.kernel.service.UserLocalService")/]
 [#if userService??] [#if user??] [#assign imgIdToken =
 staticUtil["com.liferay.portal.kernel.util.DigesterUtil"].digest(user.getUserUuid())/]
-[#assign
-  " +
+[#assign profileImageUrl = themeDisplay.getPathImage() +
+"/user_portrait?img_id=" + user.getPortraitId() + "&img_id_token=" +
 imgIdToken?url('ISO-8859-1') + "&t=" +
-webServerToken.getToken(user.getPortraitId())
-/] [#if user.emailAddressVerified]
-[#assign displayType = "success"/] [#else]
-[#assign displayType = "warning"/]
+webServerToken.getToken(user.getPortraitId()) /] [#if user.emailAddressVerified]
+[#assign displayType = "success"/] [#else] [#assign displayType = "warning"/]
 [/#if]
 <div class="profile-wrapper">
   <div class="profile-summary">
@@ -117,7 +112,6 @@ webServerToken.getToken(user.getPortraitId())
     </div>
   </div>
 </div>
-[/#if]
-[/#if] [#elseif serviceLocator??] Enable staticUtil via the System
+[/#if] [/#if] [#elseif serviceLocator??] Enable staticUtil via the System
 Settings > Template Engines [#else] Enable serviceLocator via the System
 Settings > Template Engines [/#if]

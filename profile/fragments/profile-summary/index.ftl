@@ -1,53 +1,27 @@
-[#if serviceLocator?? && staticUtil??]
-[#assign enablePreviewMode =
-configuration.enablePreviewMode/]
-[#assign validPage = true/] [#if
-!enablePreviewMode]
-[#assign layout = themeDisplay.getLayout()/]
-[#assign title
-= layout.getHTMLTitle(locale)/]
-[#assign
-  "Profile" || title = "Manage Profile")
-/]
-[#assign currentURL =
-themeDisplay.getURLCurrent()/]
-[#assign
-  validPage = validPage &&
-(currentURL?contains("/web/") || currentURL?contains("/user/"))
-/] [#if
-validPage]
-[#if currentURL?contains("/web/")]
-[#assign screenName =
-currentURL?keep_after_last("/web/")/] [#else]
-[#assign screenName =
-currentURL?keep_after_last("/user/")/]
-[/#if]
-[#if screenName?contains("/")]
-[#assign screenName = screenName?keep_before("/")/]
-[/#if]
-[/#if] [#else]
-[#assign screenName = "gary.bling"/]
-[/#if] [#if validPage && screenName??]
-[#assign
-  userService =
-serviceLocator.findService("com.liferay.portal.kernel.service.UserLocalService")
-/]
-[#if userService??]
-[#assign
-  profileUser =
-userService.fetchUserByScreenName(themeDisplay.getCompanyId(),screenName)!''
-/]
+[#if serviceLocator?? && staticUtil??] [#assign enablePreviewMode =
+configuration.enablePreviewMode/] [#assign validPage = true/] [#if
+!enablePreviewMode] [#assign layout = themeDisplay.getLayout()/] [#assign title
+= layout.getHTMLTitle(locale)/] [#assign validPage = validPage && (title ==
+"Profile" || title = "Manage Profile")/] [#assign currentURL =
+themeDisplay.getURLCurrent()/] [#assign validPage = validPage &&
+(currentURL?contains("/web/") || currentURL?contains("/user/"))/] [#if
+validPage] [#if currentURL?contains("/web/")] [#assign screenName =
+currentURL?keep_after_last("/web/")/] [#else] [#assign screenName =
+currentURL?keep_after_last("/user/")/] [/#if] [#if screenName?contains("/")]
+[#assign screenName = screenName?keep_before("/")/] [/#if] [/#if] [#else]
+[#assign screenName = "gary.bling"/] [/#if] [#if validPage && screenName??]
+[#assign userService =
+serviceLocator.findService("com.liferay.portal.kernel.service.UserLocalService")/]
+[#if userService??] [#assign profileUser =
+userService.fetchUserByScreenName(themeDisplay.getCompanyId(),screenName)!''/]
 [#if profileUser?? && profileUser != ''] [#assign imgIdToken =
 staticUtil["com.liferay.portal.kernel.util.DigesterUtil"].digest(profileUser.getUserUuid())/]
-[#assign
-  " +
+[#assign profileImageUrl = themeDisplay.getPathImage() +
+"/user_portrait?img_id=" + profileUser.getPortraitId() + "&img_id_token=" +
 imgIdToken?url('ISO-8859-1') + "&t=" +
-webServerToken.getToken(profileUser.getPortraitId())
-/] [#if
-profileUser.emailAddressVerified]
-[#assign displayType = "success"/] [#else]
-[#assign displayType = "warning"/]
-[/#if]
+webServerToken.getToken(profileUser.getPortraitId()) /] [#if
+profileUser.emailAddressVerified] [#assign displayType = "success"/] [#else]
+[#assign displayType = "warning"/] [/#if]
 <div class="profile-wrapper">
   <div class="profile-summary">
     <div class="profile-photo">
@@ -148,8 +122,6 @@ profileUser.emailAddressVerified]
     </div>
   </div>
 </div>
-[/#if]
-[/#if]
-[/#if] [#elseif serviceLocator??] Enable staticUtil via the System
+[/#if] [/#if] [/#if] [#elseif serviceLocator??] Enable staticUtil via the System
 Settings > Template Engines [#else] Enable serviceLocator via the System
 Settings > Template Engines [/#if]

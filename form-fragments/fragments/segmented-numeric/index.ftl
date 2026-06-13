@@ -9,28 +9,19 @@
     [#assign labelClass=labelClass+" hide-label" /]
 [/#if]
 [#assign labels = configuration.labelList?split(";") /]
-[#assign
-  totalDigits = configuration.integerDigitCount + configuration.decimalDigitCount
-/]
+[#assign totalDigits = configuration.integerDigitCount + configuration.decimalDigitCount /]
 <div class="segmented-numeric" data-localizable="${input.localizable?string('true', 'false')}"
      style="--segmented-numeric-integer-color: ${configuration.integerFGColor};--segmented-numeric-integer-background-color: ${configuration.integerBGColor};--segmented-numeric-decimal-color: ${configuration.decimalFGColor};;--segmented-numeric-decimal-background-color: ${configuration.decimalBGColor};--label-color: ${configuration.labelColor};--segmented-numeric-font-size: ${configuration.digitFontSize};;--label-font-size: ${configuration.labelFontSize};">
   <div class="form-group [#if input.errorMessage?has_content]has-error[/#if] mb-0">
-    <label class="
-[#if !input.showLabel || !input.label?has_content]sr-only[/#if]
-"
+    <label class="[#if !input.showLabel || !input.label?has_content]sr-only[/#if]"
            for="${fragmentEntryLinkNamespace}-numeric-input" id="${fragmentEntryLinkNamespace}-numeric-input-label">
-			<span class="
-[#if !input.showLabel || !input.label?has_content]sr-only [/#if]
-custom-control-label-text">
+			<span class="[#if !input.showLabel || !input.label?has_content]sr-only [/#if]custom-control-label-text">
 				${htmlUtil.escape(input.label)}
 
 				<span id="${fragmentEntryLinkNamespace}-numeric-read-only"
-              class="
-[#if !input.readOnly]d-none[/#if]
-">(${languageUtil.get(locale, "read-only")})</span>
+              class="[#if !input.readOnly]d-none[/#if]">(${languageUtil.get(locale, "read-only")})</span>
 
-				[#if input.required][@clay["icon"] className="reference-mark" symbol="asterisk" /]
-[/#if]
+				[#if input.required][@clay["icon"] className="reference-mark" symbol="asterisk" /][/#if]
 			</span>
     </label>
 
@@ -52,8 +43,7 @@ custom-control-label-text">
         <label class="${labelClass}">
           <input
                   aria-describedby="${fragmentEntryLinkNamespace}-numeric-input-help-text"
-                  aria-labelledby="${fragmentEntryLinkNamespace}-numeric-input-label [#if input.errorMessage?has_content]${fragmentEntryLinkNamespace}-numeric-input-error-message[/#if]
-"
+                  aria-labelledby="${fragmentEntryLinkNamespace}-numeric-input-label [#if input.errorMessage?has_content]${fragmentEntryLinkNamespace}-numeric-input-error-message[/#if]"
                   size="1"
                   maxlength="1"
                   class="${classList}"
@@ -78,12 +68,9 @@ custom-control-label-text">
             [@clay["icon"] className="ml-2 mt-0 text-secondary" symbol="question-circle-full" /]
         </div>
       [/#if]
-    <div [#if configuration.showLabels]style="margin-top: ${configuration.labelFontSize};"[/#if]
->
+    <div [#if configuration.showLabels]style="margin-top: ${configuration.labelFontSize};"[/#if]>
       <p class="font-weight-semi-bold mt-1 text-danger"
-         style="display: [#if input.errorMessage?has_content]block
-[#else]none[/#if]
-;"
+         style="display: [#if input.errorMessage?has_content]block[#else]none[/#if];"
          id=" ${fragmentEntryLinkNamespace}-numeric-input-error-message">
         <svg class="lexicon-icon lexicon-icon-info-circle" focusable="false" role="presentation">
           <use xlink:href="${siteSpritemap}#info-circle"/>

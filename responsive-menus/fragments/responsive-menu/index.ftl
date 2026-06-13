@@ -1,5 +1,4 @@
-[#-- prettier-ignore --]
-[#assign menuClassesList = [
+[#-- prettier-ignore --] [#assign menuClassesList = [
 "fragment-menu-${fragmentEntryLinkNamespace}", "fragment-menu",
 configuration.menuStyle, (configuration.separator?then('separator', ''))
 ]?filter(x -> x?has_content), menuClasses = menuClassesList?join(' '),
@@ -10,10 +9,8 @@ configuration.menuStyle?contains('inline'), isSticky =
 configuration.menuStyle?contains('sticky'), menuId = 'nav-' +
 fragmentEntryLinkNamespace, langDir = (locale?starts_with("ar") ||
 locale?starts_with("he"))?then("rtl", "ltr"), htmlLang = locale?replace("_",
-"-") /] [#if configuration.menuStyle?contains('menu-inline')]
-[#assign
-dropzoneConfig = 'menu-only' /]
-[/#if] [#assign zoneMap = { 'menu-only':
+"-") /] [#if configuration.menuStyle?contains('menu-inline')] [#assign
+dropzoneConfig = 'menu-only' /] [/#if] [#assign zoneMap = { 'menu-only':
 ['menu'], 'menu-left-zone': ['left', 'menu'], 'menu-right-zone': ['menu',
 'right'], 'menu-both-zones': ['left', 'menu', 'right'] }, zones =
 zoneMap[dropzoneConfig]!['menu'], dropzoneCount = zones?size /] [#macro
@@ -36,8 +33,7 @@ ScrollToTopButton icon title]
     <span class="bar" aria-hidden="true"></span>
   </button>
 </div>
-[/#macro] [#macro renderDropzone zone]
-[#local zoneId = (zone == 'menu')?then(
+[/#macro] [#macro renderDropzone zone] [#local zoneId = (zone == 'menu')?then(
 "fragmentMenuList-${fragmentEntryLinkNamespace}",
 "dropzone-${zone}-${fragmentEntryLinkNamespace}" ) /] [#if zone == 'menu']
 <nav
@@ -55,8 +51,7 @@ ScrollToTopButton icon title]
 >
   <lfr-drop-zone></lfr-drop-zone>
 </section>
-[/#if]
-[/#macro] [#macro renderDropzones zones]
+[/#if] [/#macro] [#macro renderDropzones zones]
 <div
   id="${menuId}"
   class="fragment-root-${fragmentEntryLinkNamespace} fragment-root"
@@ -73,16 +68,12 @@ ScrollToTopButton icon title]
     [@renderHamburgerIcon /]
     <div class="hamburger-zone-wrapper">
       <div class="hamburger-zone-inner">
-        [#list zones as zone]
-[@renderDropzone zone /]
-[/#list]
+        [#list zones as zone] [@renderDropzone zone /] [/#list]
       </div>
     </div>
   </div>
-  [#if configuration.scrollBackToTop && !isSticky]
-[@ScrollToTopButton
-  icon=configuration.scrollBackToTopIcon title="Scroll to top" /]
-[/#if]
+  [#if configuration.scrollBackToTop && !isSticky] [@ScrollToTopButton
+  icon=configuration.scrollBackToTopIcon title="Scroll to top" /] [/#if]
 </div>
 [/#macro]
 
@@ -537,6 +528,7 @@ ScrollToTopButton icon title]
 
   body.has-control-menu .master-page .hamburger-zone-inner .${configuration.dropzoneGrower}:not(:has(.page-editor__no-fragments-state)),
   body.has-control-menu .page-editor .hamburger-zone-inner .${configuration.dropzoneGrower}:not(:has(.page-editor__no-fragments-state)) { flex-grow: 1; }
+
 
   @media (prefers-reduced-motion: reduce) {
     .fragment-root { --menu-fade-duration: 0s; }

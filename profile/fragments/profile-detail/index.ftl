@@ -1,57 +1,30 @@
-[#if serviceLocator??]
-[#assign enablePreviewMode =
-configuration.enablePreviewMode/]
-[#assign validPage = true/] [#if
-!enablePreviewMode]
-[#assign layout = themeDisplay.getLayout()/]
-[#assign title
-= layout.getHTMLTitle(locale)/]
-[#assign validPage = validPage && title ==
-"Manage Profile"/]
-[#assign currentURL = themeDisplay.getURLCurrent()/]
-[#assign
-  validPage = validPage && (currentURL?contains("/web/") ||
-currentURL?contains("/user/"))
-/] [#if validPage]
-[#if
-currentURL?contains("/web/")]
-[#assign screenName =
-currentURL?keep_after_last("/web/")/] [#else]
-[#assign screenName =
-currentURL?keep_after_last("/user/")/]
-[/#if]
-[#if screenName?contains("/")]
-[#assign screenName = screenName?keep_before("/")/]
-[/#if]
-[/#if] [#else]
-[#assign screenName = "gary.bling"/]
-[/#if] [#if validPage && screenName??]
-[#assign
-  userService =
-serviceLocator.findService("com.liferay.portal.kernel.service.UserLocalService")
-/]
-[#if userService??]
-[#assign
-  profileUser =
-userService.fetchUserByScreenName(themeDisplay.getCompanyId(),screenName)!''
-/]
-[#if profileUser?? && profileUser != '']
-[#assign
-  phoneService =
-serviceLocator.findService("com.liferay.portal.kernel.service.PhoneLocalService")
-/]
+[#if serviceLocator??] [#assign enablePreviewMode =
+configuration.enablePreviewMode/] [#assign validPage = true/] [#if
+!enablePreviewMode] [#assign layout = themeDisplay.getLayout()/] [#assign title
+= layout.getHTMLTitle(locale)/] [#assign validPage = validPage && title ==
+"Manage Profile"/] [#assign currentURL = themeDisplay.getURLCurrent()/] [#assign
+validPage = validPage && (currentURL?contains("/web/") ||
+currentURL?contains("/user/"))/] [#if validPage] [#if
+currentURL?contains("/web/")] [#assign screenName =
+currentURL?keep_after_last("/web/")/] [#else] [#assign screenName =
+currentURL?keep_after_last("/user/")/] [/#if] [#if screenName?contains("/")]
+[#assign screenName = screenName?keep_before("/")/] [/#if] [/#if] [#else]
+[#assign screenName = "gary.bling"/] [/#if] [#if validPage && screenName??]
+[#assign userService =
+serviceLocator.findService("com.liferay.portal.kernel.service.UserLocalService")/]
+[#if userService??] [#assign profileUser =
+userService.fetchUserByScreenName(themeDisplay.getCompanyId(),screenName)!''/]
+[#if profileUser?? && profileUser != ''] [#assign phoneService =
+serviceLocator.findService("com.liferay.portal.kernel.service.PhoneLocalService")/]
 <div class="profile-detail">
   <div class="row">
     <div class="cell">Mobile Number</div>
     <div class="cell">
       [#if
-      phoneService??]
-[#attempt]${phoneService.getPhones(themeDisplay.getCompanyId(),"com.liferay.portal.kernel.model.Contact",profileUser.getContactId())?first.getNumber()}
-[#recover]<span
+      phoneService??][#attempt]${phoneService.getPhones(themeDisplay.getCompanyId(),"com.liferay.portal.kernel.model.Contact",profileUser.getContactId())?first.getNumber()}[#recover]<span
         class="label-danger"
         >Needs updating</span
-      >[/#attempt]
-[/#if]
+      >[/#attempt][/#if]
     </div>
   </div>
   <div class="row">
@@ -65,8 +38,7 @@ serviceLocator.findService("com.liferay.portal.kernel.service.PhoneLocalService"
     <div class="cell">Employment Type</div>
     <div class="cell">
       [#attempt]${profileUser.getExpandoBridge().getAttribute("Employment
-      Type")?filter(it -> it??)?first}
-[#recover]<span class="label-danger"
+      Type")?filter(it -> it??)?first}[#recover]<span class="label-danger"
         >Needs updating</span
       >[/#attempt]
     </div>
@@ -96,7 +68,5 @@ serviceLocator.findService("com.liferay.portal.kernel.service.PhoneLocalService"
     </div>
   </div>
 </div>
-[/#if]
-[/#if]
-[/#if] [#else] Enable serviceLocator via the System Settings >
+[/#if] [/#if] [/#if] [#else] Enable serviceLocator via the System Settings >
 Template Engines [/#if]

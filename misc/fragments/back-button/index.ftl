@@ -1,8 +1,6 @@
 <div class="component-button text-break">
   <a
-    class="btn ${configuration.buttonSize!} btn-style-${configuration.style!} btn-${configuration.type!}
-[#if configuration.inverted]btn-inverted[/#if] [#if configuration.uppercase]text-uppercase[/#if]
-"
+    class="btn ${configuration.buttonSize!} btn-style-${configuration.style!} btn-${configuration.type!} [#if configuration.inverted]btn-inverted[/#if] [#if configuration.uppercase]text-uppercase[/#if]"
     id="fragment-${fragmentEntryLinkNamespace}-link"
     aria-label="Back"
   >

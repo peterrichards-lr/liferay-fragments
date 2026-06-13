@@ -1,5 +1,4 @@
-[#-- prettier-ignore --]
-[#assign fragmentName = "Store Default Value",
+[#-- prettier-ignore --] [#assign fragmentName = "Store Default Value",
 fragmentClassName = fragmentName?lower_case?replace(' ', '-'),
 fragmentUniqueClassName = "${fragmentClassName}-${fragmentEntryLinkNamespace}",
 fragmentClassesList = [ fragmentUniqueClassName, fragmentClassName ]?filter(x ->

@@ -16,29 +16,20 @@
       <span class="sign-in-label">${languageUtil.get(locale, "sign-in")}</span>
     </a>
   </span>
-  [/#if] [#else]
-[@liferay.user_personal_bar /]
-[/#if] [#if is_signed_in]
-  [#assign
+  [/#if] [#else] [@liferay.user_personal_bar /] [/#if] [#if is_signed_in]
+  [#assign enableNotificationIndicator =
+  configuration.enableNotificationIndicator enableCustomLink =
   configuration.enableCustomLink notification_count =
-  configuration.notificationCount
-/] [#if enableNotificationIndicator] [#if
-  enableCustomLink]
-[#assign
-  notification_link = themeDisplay.getPortalURL() +
-  '/group' + configuration.customNotificationLink
-/] [#else]
-[#assign
-  com_liferay_notifications_web_portlet_NotificationsPortlet&p_p_lifecycle=0'
-/]
-[/#if] [#else]
-[#assign notification_link = "javascript:;" /]
-[/#if]
+  configuration.notificationCount /] [#if enableNotificationIndicator] [#if
+  enableCustomLink] [#assign notification_link = themeDisplay.getPortalURL() +
+  '/group' + configuration.customNotificationLink /] [#else] [#assign
+  notification_link = themeDisplay.getPortalURL() + '/group' +
+  themeDisplay.layout.getGroup().friendlyURL +
+  '/manage?p_p_id=com_liferay_notifications_web_portlet_NotificationsPortlet&p_p_lifecycle=0'
+  /] [/#if] [#else] [#assign notification_link = "javascript:;" /] [/#if]
   <a
     href="${notification_link}"
-    aria-label="View notifications
-[#if notification_count gt 0] (${notification_count} new)[/#if]
-"
+    aria-label="View notifications[#if notification_count gt 0] (${notification_count} new)[/#if]"
   >
     <span class="notification-indicator">
       [@clay["icon"] symbol="bell-on" /]

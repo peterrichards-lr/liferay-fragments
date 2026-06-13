@@ -5,23 +5,19 @@
 
 <div class="meter-reading">
 	<div class="form-group [#if input.errorMessage?has_content]has-error[/#if] mb-0">
-		<label class="
-[#if !input.showLabel || !input.label?has_content]sr-only[/#if]
-" for="${fragmentEntryLinkNamespace}-meter-input">
-			${htmlUtil.escape(input.label)}
-[#if input.required][@clay["icon"] className="reference-mark" symbol="asterisk" /]
-[/#if]
+		<label class="[#if !input.showLabel || !input.label?has_content]sr-only[/#if]" for="${fragmentEntryLinkNamespace}-meter-input">
+			${htmlUtil.escape(input.label)} [#if input.required][@clay["icon"] className="reference-mark" symbol="asterisk" /][/#if]
 		</label>
 
 		<div class="meter-container d-flex">
 			[#list 1..6 as i]
 				<label class="meter-digit">
 					[#-- prettier-ignore --]
-					<input
-						class="form-control"
-						type="text"
-						maxlength="1"
-						name="${input.name}"
+					<input 
+						class="form-control" 
+						type="text" 
+						maxlength="1" 
+						name="${input.name}" 
 						id="digit-${i}"
 						[#if input.readOnly]readonly[/#if]
 						${input.required?then('required', '')}

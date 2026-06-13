@@ -1,20 +1,14 @@
-[#if serviceLocator??] [#if user??]
-[#assign
-  phoneService =
-serviceLocator.findService("com.liferay.portal.kernel.service.PhoneLocalService")
-/]
+[#if serviceLocator??] [#if user??] [#assign phoneService =
+serviceLocator.findService("com.liferay.portal.kernel.service.PhoneLocalService")/]
 <div class="profile-detail">
   <div class="row">
     <div class="cell">Mobile Number</div>
     <div class="cell">
       [#if
-      phoneService??]
-[#attempt]${phoneService.getPhones(themeDisplay.getCompanyId(),"com.liferay.portal.kernel.model.Contact",user.getContactId())?first.getNumber()}
-[#recover]<span
+      phoneService??][#attempt]${phoneService.getPhones(themeDisplay.getCompanyId(),"com.liferay.portal.kernel.model.Contact",user.getContactId())?first.getNumber()}[#recover]<span
         class="label-danger"
         >Needs updating</span
-      >[/#attempt]
-[/#if]
+      >[/#attempt][/#if]
     </div>
   </div>
   <div class="row">
@@ -28,8 +22,7 @@ serviceLocator.findService("com.liferay.portal.kernel.service.PhoneLocalService"
     <div class="cell">Employment Type</div>
     <div class="cell">
       [#attempt]${user.getExpandoBridge().getAttribute("Employment
-      Type")?filter(it -> it??)?first}
-[#recover]<span class="label-danger"
+      Type")?filter(it -> it??)?first}[#recover]<span class="label-danger"
         >Needs updating</span
       >[/#attempt]
     </div>

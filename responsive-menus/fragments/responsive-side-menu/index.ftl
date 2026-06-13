@@ -1,5 +1,4 @@
-[#-- prettier-ignore --]
-[#assign menuClassesList = [
+[#-- prettier-ignore --] [#assign menuClassesList = [
 "fragment-menu-${fragmentEntryLinkNamespace}", "fragment-menu",
 configuration.menuStyle, (configuration.separator?then('separator',''))
 ]?filter(x -> x?has_content), menuClasses = menuClassesList?join(' '),
@@ -27,8 +26,7 @@ dropzoneCount = zones?size /] [#macro renderHamburgerIcon]
     <span class="bar" aria-hidden="true"></span>
   </button>
 </div>
-[/#macro] [#macro renderDropzone zone]
-[#local zoneId = (zone == 'menu')?then(
+[/#macro] [#macro renderDropzone zone] [#local zoneId = (zone == 'menu')?then(
 "fragmentSideMenuList-${fragmentEntryLinkNamespace}",
 "dropzone-${zone}-${fragmentEntryLinkNamespace}" )/] [#if zone == 'menu']
 <nav
@@ -46,8 +44,7 @@ dropzoneCount = zones?size /] [#macro renderHamburgerIcon]
 >
   <lfr-drop-zone></lfr-drop-zone>
 </section>
-[/#if]
-[/#macro] [#macro renderDropzones zones]
+[/#if] [/#macro] [#macro renderDropzones zones]
 <div
   id="${menuId}"
   class="fragment-root-${fragmentEntryLinkNamespace} fragment-root"
@@ -64,9 +61,7 @@ dropzoneCount = zones?size /] [#macro renderHamburgerIcon]
     [@renderHamburgerIcon/]
     <div class="hamburger-zone-wrapper">
       <div class="hamburger-zone-inner">
-        [#list zones as zone]
-[@renderDropzone zone/]
-[/#list]
+        [#list zones as zone] [@renderDropzone zone/] [/#list]
       </div>
     </div>
   </div>

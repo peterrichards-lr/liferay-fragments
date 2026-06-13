@@ -1,33 +1,26 @@
-[#assign
-  readOnly = input.attributes.readOnly?? && input.attributes.readOnly
-/]
+[#assign readOnly = input.attributes.readOnly?? && input.attributes.readOnly /]
 
 <div class="populate-select-fragment">
 	<div class="form-group [#if input.errorMessage?has_content]has-error[/#if] mb-0">
-		<label class="
-[#if !input.showLabel || !input.label?has_content]sr-only[/#if]
-" for="${fragmentEntryLinkNamespace}-select-from-list-input" id="${fragmentEntryLinkNamespace}-select-from-list-input-label">
-			${htmlUtil.escape(input.label)}
-[#if readOnly](${languageUtil.get(locale, "read-only")})
-[#elseif input.required][@clay["icon"] className="reference-mark" symbol="asterisk" /]
-[/#if]
+		<label class="[#if !input.showLabel || !input.label?has_content]sr-only[/#if]" for="${fragmentEntryLinkNamespace}-select-from-list-input" id="${fragmentEntryLinkNamespace}-select-from-list-input-label">
+			${htmlUtil.escape(input.label)} [#if readOnly](${languageUtil.get(locale, "read-only")})[#elseif input.required][@clay["icon"] className="reference-mark" symbol="asterisk" /][/#if]
 		</label>
 
 		[#if readOnly]
-			<input
-				aria-describedby="${fragmentEntryLinkNamespace}-help-text"
-				class="form-control"
-				id="${fragmentEntryLinkNamespace}-select-from-list-input"
-				name="${input.name}"
-				readonly
-				type="text"
-				[#if input.value??]value="${input.value}"[/#if]
+			<input 
+				aria-describedby="${fragmentEntryLinkNamespace}-help-text" 
+				class="form-control" 
+				id="${fragmentEntryLinkNamespace}-select-from-list-input" 
+				name="${input.name}" 
+				readonly 
+				type="text" 
+				[#if input.value??]value="${input.value}"[/#if] 
 			/>
 		[#else]
 			<div class="align-items-end input-group">
-				<select
-					class="form-control"
-					id="${fragmentEntryLinkNamespace}-select-from-list-input"
+				<select 
+					class="form-control" 
+					id="${fragmentEntryLinkNamespace}-select-from-list-input" 
 					name="${input.name}"
 					${input.required?then('required', '')}
 				>

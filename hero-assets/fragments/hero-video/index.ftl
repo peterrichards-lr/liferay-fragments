@@ -1,6 +1,4 @@
-[#assign
-  useStandardControl = configuration.controls && !configuration.useCustomControls
-/]
+[#assign useStandardControl = configuration.controls && !configuration.useCustomControls /]
 <div
   class="row banner-colour-dark banner-content-alignment-centre overlayContainer"
   style="--margin-top: ${configuration.marginTop!}; --margin-bottom: ${configuration.marginBottom!}; --margin-left: ${configuration.marginLeft!}; --margin-right: ${configuration.marginRight!}; --video-height: ${configuration.height!}; --video-width: ${configuration.width!}; --control-colour: ${configuration.controlColor!};"

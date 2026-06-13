@@ -1,25 +1,18 @@
-[#assign
-  readOnly = input.attributes.readOnly?? && input.attributes.readOnly
-/]
+[#assign readOnly = input.attributes.readOnly?? && input.attributes.readOnly /]
 
 <div class="signature-pad-fragment" style="--pad-height: ${configuration.padHeight!'200px'}">
 	<div class="form-group [#if input.errorMessage?has_content]has-error[/#if] mb-0">
-		<label class="
-[#if !input.showLabel || !input.label?has_content]sr-only[/#if]
-" for="${fragmentEntryLinkNamespace}-signature-canvas" id="${fragmentEntryLinkNamespace}-signature-label">
-			${htmlUtil.escape(input.label)}
-[#if readOnly](${languageUtil.get(locale, "read-only")})
-[#elseif input.required][@clay["icon"] className="reference-mark" symbol="asterisk" /]
-[/#if]
+		<label class="[#if !input.showLabel || !input.label?has_content]sr-only[/#if]" for="${fragmentEntryLinkNamespace}-signature-canvas" id="${fragmentEntryLinkNamespace}-signature-label">
+			${htmlUtil.escape(input.label)} [#if readOnly](${languageUtil.get(locale, "read-only")})[#elseif input.required][@clay["icon"] className="reference-mark" symbol="asterisk" /][/#if]
 		</label>
 
 		<div class="canvas-container">
-			<canvas
-                id="${fragmentEntryLinkNamespace}-signature-canvas"
+			<canvas 
+                id="${fragmentEntryLinkNamespace}-signature-canvas" 
                 class="signature-canvas"
                 [#if readOnly]data-readonly="true"[/#if]
             ></canvas>
-
+            
             [#if !readOnly]
                 <button type="button" class="btn btn-sm btn-outline-secondary clear-signature mt-2">
                     ${configuration.clearButtonText!'Clear'}
@@ -27,11 +20,11 @@
             [/#if]
 		</div>
 
-        <input
-            id="${fragmentEntryLinkNamespace}-signature-data"
-            name="${input.name}"
-            type="hidden"
-            [#if input.value??]value="${input.value}"[/#if]
+        <input 
+            id="${fragmentEntryLinkNamespace}-signature-data" 
+            name="${input.name}" 
+            type="hidden" 
+            [#if input.value??]value="${input.value}"[/#if] 
             ${input.required?then('required', '')}
         />
 

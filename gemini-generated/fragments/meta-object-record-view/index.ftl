@@ -1,11 +1,6 @@
-[#attempt]
-[#assign displayFragmentName = fragmentName /] [#recover]
-[#assign
-displayFragmentName = "" /]
-[/#attempt] [#if !displayFragmentName?has_content]
-[#assign displayFragmentName = "Meta-Object Record View" /]
-[/#if]
-[#assign
+[#attempt] [#assign displayFragmentName = fragmentName /] [#recover] [#assign
+displayFragmentName = "" /] [/#attempt] [#if !displayFragmentName?has_content]
+[#assign displayFragmentName = "Meta-Object Record View" /] [/#if] [#assign
 showFragmentHeader = configuration.showFragmentHeader!true /] [#if layoutMode ==
 'edit']
 <div class="meta-view-editor-header ${showFragmentHeader?then('show', '')}">

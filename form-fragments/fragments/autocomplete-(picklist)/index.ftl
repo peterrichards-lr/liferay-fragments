@@ -4,30 +4,23 @@
 
 <div class="autocomplete-picklist-input" style="--hover-bg-color: ${configuration.hoverBgColor!}; --hover-color: ${configuration.hoverColor!}; --hover-border-color: ${configuration.hoverBorderColor!}; --active-bg-color: ${configuration.activeBgColor!}; --active-color: ${configuration.activeColor!}; --active-border-color: ${configuration.activeBorderColor!}; --autocomplete-color: ${configuration.autocompleteColor!}; --autocomplete-border-color: ${configuration.autocompleteBorderColor!}; --autocomplete-bg-color: ${configuration.autocompleteBgColor!}">
 	<div class="form-group [#if  input.errorMessage?has_content]has-error[/#if] mb-0" id="${fragmentEntryLinkNamespace}-form-group">
-		<label class="
-[#if !input.showLabel || !input.label?has_content]sr-only[/#if]
-" for="${fragmentEntryLinkNamespace}-text-input" id="${fragmentEntryLinkNamespace}-text-input-label">${htmlUtil.escape(input.label)}
-[#if readOnly](${languageUtil.get(locale, "read-only")})
-[#elseif input.required][@clay["icon"] className="reference-mark" symbol="asterisk" /]
-[/#if]
-</label>
+		<label class="[#if !input.showLabel || !input.label?has_content]sr-only[/#if]" for="${fragmentEntryLinkNamespace}-text-input" id="${fragmentEntryLinkNamespace}-text-input-label">${htmlUtil.escape(input.label)} [#if readOnly](${languageUtil.get(locale, "read-only")})[#elseif input.required][@clay["icon"] className="reference-mark" symbol="asterisk" /][/#if]</label>
 
 		<div class="autocomplete" role="combobox" aria-haspopup="listbox" aria-owns="${fragmentEntryLinkNamespace}-results" aria-expanded="false">
-			<input
+			<input 
                 aria-autocomplete="list"
                 aria-controls="${fragmentEntryLinkNamespace}-results"
-                aria-describedby="${fragmentEntryLinkNamespace}-text-input-help-text"
-                aria-labelledby="${fragmentEntryLinkNamespace}-text-input-label [#if  input.errorMessage?has_content]${fragmentEntryLinkNamespace}-text-input-error-message[/#if]
-"
-                class="form-control"
-                id="${fragmentEntryLinkNamespace}-text-input"
-                name="${input.name}"
-                placeholder="${configuration.placeholder!}"
-                [#if readOnly]readonly[/#if]
-                ${input.required?then('required', '')}
-                type="text"
+                aria-describedby="${fragmentEntryLinkNamespace}-text-input-help-text" 
+                aria-labelledby="${fragmentEntryLinkNamespace}-text-input-label [#if  input.errorMessage?has_content]${fragmentEntryLinkNamespace}-text-input-error-message[/#if]" 
+                class="form-control" 
+                id="${fragmentEntryLinkNamespace}-text-input" 
+                name="${input.name}" 
+                placeholder="${configuration.placeholder!}" 
+                [#if readOnly]readonly[/#if] 
+                ${input.required?then('required', '')} 
+                type="text" 
                 autocomplete="off"
-                [#if input.value??]value="${input.value}"[/#if]
+                [#if input.value??]value="${input.value}"[/#if] 
             />
             <ul class="autocomplete-items list-unstyled d-none" id="${fragmentEntryLinkNamespace}-results" role="listbox"></ul>
 		</div>

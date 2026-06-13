@@ -1,5 +1,4 @@
-[#-- prettier-ignore --]
-[#assign fragmentClassesList = [
+[#-- prettier-ignore --] [#assign fragmentClassesList = [
 "dynamic-badge-overlay-${fragmentEntryLinkNamespace}", "dynamic-badge-overlay"
 ]?filter(x -> x?has_content), fragmentClasses = fragmentClassesList?join(' '),
 fragmentHeaderClass = 'fragment-editor-padding' +

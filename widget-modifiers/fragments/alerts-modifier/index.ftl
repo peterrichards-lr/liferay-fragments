@@ -1,32 +1,16 @@
 [#assign isSignedIn = configuration.hideAnonymousRead &&
-themeDisplay.isSignedIn()]
-[#assign divClassList = '' /] [#if
-configuration.showRead == false || isSignedIn == false]
-[#assign divClassList =
-divClassList + ' no_tabs' /]
-[/#if] [#if configuration.showButtons == false]
-[#assign divClassList = divClassList + ' no_btn_group' /]
-[/#if] [#if
-configuration.useClayAlerts == true]
-[#assign divClassList = divClassList + '
-use_clay_alert' /]
-[/#if] [#if configuration.showContextMenu == false]
-[#assign
-divClassList = divClassList + ' no_context_menu' /]
-[/#if] [#if
-configuration.showCreatorInfo == false]
-[#assign divClassList = divClassList + '
-no_creator_info' /]
-[/#if] [#if configuration.useAccordion == true]
-[#assign
-divClassList = divClassList + ' use_accordion' /]
-[/#if] [#if
-configuration.accordionIconLeft == true]
-[#assign pseudo_element = 'before' /]
-[#else]
-[#assign pseudo_element = 'after' /]
-[/#if]
-[#assign fragmentSelector =
+themeDisplay.isSignedIn()] [#assign divClassList = '' /] [#if
+configuration.showRead == false || isSignedIn == false] [#assign divClassList =
+divClassList + ' no_tabs' /] [/#if] [#if configuration.showButtons == false]
+[#assign divClassList = divClassList + ' no_btn_group' /] [/#if] [#if
+configuration.useClayAlerts == true] [#assign divClassList = divClassList + '
+use_clay_alert' /] [/#if] [#if configuration.showContextMenu == false] [#assign
+divClassList = divClassList + ' no_context_menu' /] [/#if] [#if
+configuration.showCreatorInfo == false] [#assign divClassList = divClassList + '
+no_creator_info' /] [/#if] [#if configuration.useAccordion == true] [#assign
+divClassList = divClassList + ' use_accordion' /] [/#if] [#if
+configuration.accordionIconLeft == true] [#assign pseudo_element = 'before' /]
+[#else] [#assign pseudo_element = 'after' /] [/#if] [#assign fragmentSelector =
 '#${fragmentEntryLinkNamespace}' /]
 <div id="${fragmentEntryLinkNamespace}" class="${divClassList}">
   <style scoped>

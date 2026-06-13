@@ -1,4 +1,3 @@
-[#assign pageGroup = layout.getGroup() /]
-[#assign siteName =
+[#assign pageGroup = layout.getGroup() /] [#assign siteName =
 htmlUtil.escape(pageGroup.getDescriptiveName()) /]
 <span class="site-name">${siteName}</span>
