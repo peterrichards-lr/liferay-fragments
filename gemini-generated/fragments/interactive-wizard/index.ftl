@@ -6,10 +6,12 @@
     --inactive-color: ${configuration.inactiveColor};
   "
 >
+  [#assign numSteps = configuration.numberOfSteps!3]
+  [#if numSteps?is_string][#assign numSteps = numSteps?number][/#if]
   <!-- Step Indicator -->
   <nav class="wizard-nav" aria-label="Wizard Steps">
     <ul class="wizard-steps list-unstyled">
-      [#list 1..configuration.numberOfSteps as i]
+      [#list 1..numSteps as i]
       <li
         class="step-item [#if i == 1]active[/#if]"
         id="step-indicator-${i}-${fragmentEntryLinkNamespace}"
@@ -24,7 +26,7 @@
 
   <!-- Step Content -->
   <div class="wizard-content">
-    [#list 1..configuration.numberOfSteps as i]
+    [#list 1..numSteps as i]
     <div
       class="step-panel [#if i > 1]d-none[/#if]"
       id="step-panel-${i}-${fragmentEntryLinkNamespace}"

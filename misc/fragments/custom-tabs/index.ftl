@@ -21,7 +21,9 @@
       id="navigationBarCollapse-${fragmentEntryLinkNamespace}"
     >
       <ul class="navbar-nav" role="tablist">
-        [#list 0..configuration.numberOfTabs
+        [#assign numTabs = configuration.numberOfTabs!4]
+        [#if numTabs?is_string][#assign numTabs = numTabs?number][/#if]
+        [#list 0..(numTabs - 1) as i]
         <li class="nav-item" role="presentation">
           <button
             aria-controls="tabPanel${i+1}-${fragmentEntryLinkNamespace}"
@@ -48,7 +50,7 @@
   </nav>
 
   <div class="tab-panel">
-    [#list 0..configuration.numberOfTabs
+    [#list 0..(numTabs - 1) as i]
     <div
       aria-labelledby="tab${i+1}-${fragmentEntryLinkNamespace}"
       class="hidden tab-panel-item"
