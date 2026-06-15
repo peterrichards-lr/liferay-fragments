@@ -1671,6 +1671,10 @@ async function globalSetup(config) {
       await new Promise((resolve) => setTimeout(resolve, 50));
     }
 
+    const isDeprecated =
+      fragmentName &&
+      (fragmentName.includes('(Deprecated)') ||
+        fragmentName.includes('(DEPRECATED)'));
     testPagesMap.push({
       collectionName: collectionName,
       fragmentName: fragmentName,
@@ -1678,7 +1682,8 @@ async function globalSetup(config) {
       id: pageId,
       uuid: pageUuid,
       siteERC: siteERC,
-      excludeFromGallery: testData ? !!testData.excludeFromGallery : false,
+      excludeFromGallery:
+        isDeprecated || (testData ? !!testData.excludeFromGallery : false),
     });
   }
 

@@ -42,7 +42,7 @@ const mappings = {
     children: [
       { type: 'Fragment', key: 'logo' },
       { type: 'Fragment', key: 'site-name' },
-      { type: 'Fragment', key: 'login-and-user-menu' },
+      { type: 'Fragment', key: 'login-and-user-menu' }, // pragma: allowlist secret
     ],
   },
   form: {
@@ -76,10 +76,10 @@ const mappings = {
     children: [
       {
         type: 'Fragment',
-        key: 'radial-kpi-gauge',
+        key: 'radial-kpi-gauge', // pragma: allowlist secret
         fragmentConfig: { title: 'Completion Rate', value: '85%' },
       },
-      { type: 'Fragment', key: 'activity-heatmap' },
+      { type: 'Fragment', key: 'activity-heatmap' }, // pragma: allowlist secret
     ],
   },
   general: {
@@ -127,6 +127,17 @@ fragmentFiles.forEach((file) => {
     testData.excludeFromGallery = true;
     modified = true;
     console.log(`[Utility] Marked ${fragmentKey} for exclusion.`);
+  }
+
+  // 1.1 Check for Deprecated Exclusion
+  const isDeprecated =
+    fragmentData.name &&
+    (fragmentData.name.includes('(Deprecated)') ||
+      fragmentData.name.includes('(DEPRECATED)'));
+  if (isDeprecated && !testData.excludeFromGallery) {
+    testData.excludeFromGallery = true;
+    modified = true;
+    console.log(`[Deprecated] Marked ${fragmentKey} for exclusion.`);
   }
 
   // 2. Identify and Process Containers

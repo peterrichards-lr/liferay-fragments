@@ -11,5 +11,6 @@
         }
       }
     ]
-  }
+  },
+  "excludeFromGallery": true
 }

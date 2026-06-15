@@ -91,6 +91,13 @@ function generateGallery() {
     fragments.sort().forEach((fragFile) => {
       const fragDir = path.dirname(fragFile);
       const fragMetadata = JSON.parse(fs.readFileSync(fragFile, 'utf8'));
+      const isDeprecated =
+        fragMetadata.name &&
+        (fragMetadata.name.includes('(Deprecated)') ||
+          fragMetadata.name.includes('(DEPRECATED)'));
+      if (isDeprecated) {
+        return; // Skip deprecated fragments in visual gallery entirely
+      }
       const fragSafeName = path.basename(fragDir);
 
       markdown += `### ${fragMetadata.name}\n\n`;
