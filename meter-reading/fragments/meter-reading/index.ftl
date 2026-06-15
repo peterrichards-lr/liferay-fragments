@@ -1,6 +1,14 @@
 [#-- prettier-ignore --]
 [#assign
 	labels = (configuration.labelList!"")?split(";")
+	input = {
+		"errorMessage": (input.errorMessage)!"",
+		"showLabel": (input.showLabel)!true,
+		"label": (input.label)!"Meter Reading",
+		"required": (input.required)!false,
+		"name": (input.name)!"meterReading",
+		"readOnly": (input.readOnly)!false
+	}
 /]
 
 <div class="meter-reading">

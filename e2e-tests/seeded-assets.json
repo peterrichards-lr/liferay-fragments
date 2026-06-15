@@ -308,5 +308,520 @@
     "type": "article",
     "id": 46430,
     "erc": "SLIDE-ARTICLE-03"
+  },
+  {
+    "type": "structure",
+    "id": "39880",
+    "erc": "SLIDER-SLIDE-STRUCT-V3"
+  },
+  {
+    "type": "article",
+    "id": 39886,
+    "erc": "SLIDE-ARTICLE-01"
+  },
+  {
+    "type": "article",
+    "id": 39896,
+    "erc": "SLIDE-ARTICLE-02"
+  },
+  {
+    "type": "article",
+    "id": 39906,
+    "erc": "SLIDE-ARTICLE-03"
+  },
+  {
+    "type": "collection",
+    "id": "39914",
+    "erc": "SLIDER-E2E-COLL"
+  },
+  {
+    "type": "structure",
+    "id": "39652",
+    "erc": "SLIDER-SLIDE-STRUCT-V3"
+  },
+  {
+    "type": "article",
+    "id": 39658,
+    "erc": "SLIDE-ARTICLE-01"
+  },
+  {
+    "type": "article",
+    "id": 39668,
+    "erc": "SLIDE-ARTICLE-02"
+  },
+  {
+    "type": "article",
+    "id": 39678,
+    "erc": "SLIDE-ARTICLE-03"
+  },
+  {
+    "type": "collection",
+    "id": "39686",
+    "erc": "SLIDER-E2E-COLL"
+  },
+  {
+    "type": "article",
+    "id": 50836,
+    "erc": "SLIDE-ARTICLE-01"
+  },
+  {
+    "type": "article",
+    "id": 50875,
+    "erc": "SLIDE-ARTICLE-02"
+  },
+  {
+    "type": "article",
+    "id": 50890,
+    "erc": "SLIDE-ARTICLE-03"
+  },
+  {
+    "type": "article",
+    "id": 66862,
+    "erc": "SLIDE-ARTICLE-01"
+  },
+  {
+    "type": "article",
+    "id": 66877,
+    "erc": "SLIDE-ARTICLE-02"
+  },
+  {
+    "type": "article",
+    "id": 66892,
+    "erc": "SLIDE-ARTICLE-03"
+  },
+  {
+    "type": "structure",
+    "id": "39369",
+    "erc": "SLIDER-SLIDE-STRUCT-V3"
+  },
+  {
+    "type": "article",
+    "id": 39375,
+    "erc": "SLIDE-ARTICLE-01"
+  },
+  {
+    "type": "article",
+    "id": 39385,
+    "erc": "SLIDE-ARTICLE-02"
+  },
+  {
+    "type": "article",
+    "id": 39395,
+    "erc": "SLIDE-ARTICLE-03"
+  },
+  {
+    "type": "collection",
+    "id": "39403",
+    "erc": "SLIDER-E2E-COLL"
+  },
+  {
+    "type": "structure",
+    "id": "39433",
+    "erc": "SLIDER-SLIDE-STRUCT-V3"
+  },
+  {
+    "type": "article",
+    "id": 39439,
+    "erc": "SLIDE-ARTICLE-01"
+  },
+  {
+    "type": "article",
+    "id": 39449,
+    "erc": "SLIDE-ARTICLE-02"
+  },
+  {
+    "type": "article",
+    "id": 39459,
+    "erc": "SLIDE-ARTICLE-03"
+  },
+  {
+    "type": "collection",
+    "id": "39467",
+    "erc": "SLIDER-E2E-COLL"
+  },
+  {
+    "type": "article",
+    "id": 54762,
+    "erc": "SLIDE-ARTICLE-01"
+  },
+  {
+    "type": "article",
+    "id": 54777,
+    "erc": "SLIDE-ARTICLE-02"
+  },
+  {
+    "type": "article",
+    "id": 54792,
+    "erc": "SLIDE-ARTICLE-03"
+  },
+  {
+    "type": "article",
+    "id": 60053,
+    "erc": "SLIDE-ARTICLE-01"
+  },
+  {
+    "type": "article",
+    "id": 60068,
+    "erc": "SLIDE-ARTICLE-02"
+  },
+  {
+    "type": "article",
+    "id": 60083,
+    "erc": "SLIDE-ARTICLE-03"
+  },
+  {
+    "type": "article",
+    "id": 67093,
+    "erc": "SLIDE-ARTICLE-01"
+  },
+  {
+    "type": "article",
+    "id": 67108,
+    "erc": "SLIDE-ARTICLE-02"
+  },
+  {
+    "type": "article",
+    "id": 67123,
+    "erc": "SLIDE-ARTICLE-03"
+  },
+  {
+    "type": "article",
+    "id": 77390,
+    "erc": "SLIDE-ARTICLE-01"
+  },
+  {
+    "type": "article",
+    "id": 77405,
+    "erc": "SLIDE-ARTICLE-02"
+  },
+  {
+    "type": "article",
+    "id": 77420,
+    "erc": "SLIDE-ARTICLE-03"
+  },
+  {
+    "type": "article",
+    "id": 81894,
+    "erc": "SLIDE-ARTICLE-01"
+  },
+  {
+    "type": "article",
+    "id": 81909,
+    "erc": "SLIDE-ARTICLE-02"
+  },
+  {
+    "type": "article",
+    "id": 81924,
+    "erc": "SLIDE-ARTICLE-03"
+  },
+  {
+    "type": "article",
+    "id": 84877,
+    "erc": "SLIDE-ARTICLE-01"
+  },
+  {
+    "type": "article",
+    "id": 84892,
+    "erc": "SLIDE-ARTICLE-02"
+  },
+  {
+    "type": "article",
+    "id": 84907,
+    "erc": "SLIDE-ARTICLE-03"
+  },
+  {
+    "type": "article",
+    "id": 99383,
+    "erc": "SLIDE-ARTICLE-01"
+  },
+  {
+    "type": "article",
+    "id": 99398,
+    "erc": "SLIDE-ARTICLE-02"
+  },
+  {
+    "type": "article",
+    "id": 99413,
+    "erc": "SLIDE-ARTICLE-03"
+  },
+  {
+    "type": "article",
+    "id": 104134,
+    "erc": "SLIDE-ARTICLE-01"
+  },
+  {
+    "type": "article",
+    "id": 104149,
+    "erc": "SLIDE-ARTICLE-02"
+  },
+  {
+    "type": "article",
+    "id": 104164,
+    "erc": "SLIDE-ARTICLE-03"
+  },
+  {
+    "type": "article",
+    "id": 109309,
+    "erc": "SLIDE-ARTICLE-01"
+  },
+  {
+    "type": "article",
+    "id": 109324,
+    "erc": "SLIDE-ARTICLE-02"
+  },
+  {
+    "type": "article",
+    "id": 109339,
+    "erc": "SLIDE-ARTICLE-03"
+  },
+  {
+    "type": "article",
+    "id": 114537,
+    "erc": "SLIDE-ARTICLE-01"
+  },
+  {
+    "type": "article",
+    "id": 114552,
+    "erc": "SLIDE-ARTICLE-02"
+  },
+  {
+    "type": "article",
+    "id": 114567,
+    "erc": "SLIDE-ARTICLE-03"
+  },
+  {
+    "type": "structure",
+    "id": "34739",
+    "erc": "SLIDER-SLIDE-STRUCT-V3"
+  },
+  {
+    "type": "article",
+    "id": 34745,
+    "erc": "SLIDE-ARTICLE-01"
+  },
+  {
+    "type": "article",
+    "id": 34755,
+    "erc": "SLIDE-ARTICLE-02"
+  },
+  {
+    "type": "article",
+    "id": 34765,
+    "erc": "SLIDE-ARTICLE-03"
+  },
+  {
+    "type": "collection",
+    "id": "34773",
+    "erc": "SLIDER-E2E-COLL"
+  },
+  {
+    "type": "article",
+    "id": 43592,
+    "erc": "SLIDE-ARTICLE-01"
+  },
+  {
+    "type": "article",
+    "id": 43607,
+    "erc": "SLIDE-ARTICLE-02"
+  },
+  {
+    "type": "article",
+    "id": 43622,
+    "erc": "SLIDE-ARTICLE-03"
+  },
+  {
+    "type": "article",
+    "id": 48313,
+    "erc": "SLIDE-ARTICLE-01"
+  },
+  {
+    "type": "article",
+    "id": 48328,
+    "erc": "SLIDE-ARTICLE-02"
+  },
+  {
+    "type": "article",
+    "id": 48343,
+    "erc": "SLIDE-ARTICLE-03"
+  },
+  {
+    "type": "article",
+    "id": 56313,
+    "erc": "SLIDE-ARTICLE-01"
+  },
+  {
+    "type": "article",
+    "id": 56328,
+    "erc": "SLIDE-ARTICLE-02"
+  },
+  {
+    "type": "article",
+    "id": 56343,
+    "erc": "SLIDE-ARTICLE-03"
+  },
+  {
+    "type": "article",
+    "id": 63720,
+    "erc": "SLIDE-ARTICLE-01"
+  },
+  {
+    "type": "article",
+    "id": 63735,
+    "erc": "SLIDE-ARTICLE-02"
+  },
+  {
+    "type": "article",
+    "id": 63750,
+    "erc": "SLIDE-ARTICLE-03"
+  },
+  {
+    "type": "article",
+    "id": 75518,
+    "erc": "SLIDE-ARTICLE-01"
+  },
+  {
+    "type": "article",
+    "id": 75533,
+    "erc": "SLIDE-ARTICLE-02"
+  },
+  {
+    "type": "article",
+    "id": 75548,
+    "erc": "SLIDE-ARTICLE-03"
+  },
+  {
+    "type": "article",
+    "id": 81727,
+    "erc": "SLIDE-ARTICLE-01"
+  },
+  {
+    "type": "article",
+    "id": 81742,
+    "erc": "SLIDE-ARTICLE-02"
+  },
+  {
+    "type": "article",
+    "id": 81757,
+    "erc": "SLIDE-ARTICLE-03"
+  },
+  {
+    "type": "article",
+    "id": 87513,
+    "erc": "SLIDE-ARTICLE-01"
+  },
+  {
+    "type": "article",
+    "id": 87528,
+    "erc": "SLIDE-ARTICLE-02"
+  },
+  {
+    "type": "article",
+    "id": 87543,
+    "erc": "SLIDE-ARTICLE-03"
+  },
+  {
+    "type": "article",
+    "id": 93930,
+    "erc": "SLIDE-ARTICLE-01"
+  },
+  {
+    "type": "article",
+    "id": 93945,
+    "erc": "SLIDE-ARTICLE-02"
+  },
+  {
+    "type": "article",
+    "id": 93960,
+    "erc": "SLIDE-ARTICLE-03"
+  },
+  {
+    "type": "article",
+    "id": 98382,
+    "erc": "SLIDE-ARTICLE-01"
+  },
+  {
+    "type": "article",
+    "id": 98397,
+    "erc": "SLIDE-ARTICLE-02"
+  },
+  {
+    "type": "article",
+    "id": 98412,
+    "erc": "SLIDE-ARTICLE-03"
+  },
+  {
+    "type": "article",
+    "id": 101569,
+    "erc": "SLIDE-ARTICLE-01"
+  },
+  {
+    "type": "article",
+    "id": 101584,
+    "erc": "SLIDE-ARTICLE-02"
+  },
+  {
+    "type": "article",
+    "id": 101599,
+    "erc": "SLIDE-ARTICLE-03"
+  },
+  {
+    "type": "article",
+    "id": 104981,
+    "erc": "SLIDE-ARTICLE-01"
+  },
+  {
+    "type": "article",
+    "id": 104996,
+    "erc": "SLIDE-ARTICLE-02"
+  },
+  {
+    "type": "article",
+    "id": 105011,
+    "erc": "SLIDE-ARTICLE-03"
+  },
+  {
+    "type": "article",
+    "id": 108531,
+    "erc": "SLIDE-ARTICLE-01"
+  },
+  {
+    "type": "article",
+    "id": 108546,
+    "erc": "SLIDE-ARTICLE-02"
+  },
+  {
+    "type": "article",
+    "id": 108561,
+    "erc": "SLIDE-ARTICLE-03"
+  },
+  {
+    "type": "article",
+    "id": 111805,
+    "erc": "SLIDE-ARTICLE-01"
+  },
+  {
+    "type": "article",
+    "id": 111820,
+    "erc": "SLIDE-ARTICLE-02"
+  },
+  {
+    "type": "article",
+    "id": 111835,
+    "erc": "SLIDE-ARTICLE-03"
+  },
+  {
+    "type": "article",
+    "id": 115355,
+    "erc": "SLIDE-ARTICLE-01"
+  },
+  {
+    "type": "article",
+    "id": 115370,
+    "erc": "SLIDE-ARTICLE-02"
+  },
+  {
+    "type": "article",
+    "id": 115385,
+    "erc": "SLIDE-ARTICLE-03"
   }
 ]

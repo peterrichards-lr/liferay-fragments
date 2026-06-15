@@ -7,7 +7,8 @@
           "label": "lfr.modern-intranet.news-hero.view-all-url",
           "description": "lfr.modern-intranet.news-hero.view-all-url-description",
           "name": "viewAllURL",
-          "type": "url"
+          "type": "url",
+          "dataType": "string"
         }
       ],
       "label": "lfr.modern-intranet.behavior"

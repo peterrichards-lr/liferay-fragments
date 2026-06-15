@@ -11,7 +11,6 @@
           "type": "text"
         },
         {
-          "dataType": "string",
           "defaultValue": "marketing",
           "label": "lfr.pulse.consent-category",
           "description": "lfr.pulse.consent-category-desc",

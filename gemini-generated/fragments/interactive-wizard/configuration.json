@@ -3,8 +3,8 @@
     {
       "fields": [
         {
-          "dataType": "number",
-          "defaultValue": 3,
+          "dataType": "string",
+          "defaultValue": "3",
           "label": "lfr.gemini-generated.number-of-steps",
           "description": "lfr.gemini-generated.number-of-steps-description",
           "name": "numberOfSteps",

@@ -10,24 +10,24 @@
           "type": "text"
         },
         {
-          "dataType": "number",
-          "defaultValue": 10,
+          "dataType": "string",
+          "defaultValue": "10",
           "label": "lfr.forms.wait-count",
           "description": "lfr.forms.wait-count-description",
           "name": "waitCount",
           "type": "text"
         },
         {
-          "dataType": "number",
-          "defaultValue": 500,
+          "dataType": "string",
+          "defaultValue": "500",
           "label": "lfr.forms.wait-interval-ms",
           "description": "lfr.forms.wait-interval-ms-description",
           "name": "waitIntervalMs",
           "type": "text"
         },
         {
-          "dataType": "number",
-          "defaultValue": 50,
+          "dataType": "string",
+          "defaultValue": "50",
           "label": "lfr.forms.type-text-delay",
           "description": "lfr.forms.type-text-delay-description",
           "name": "typeTextDelay",

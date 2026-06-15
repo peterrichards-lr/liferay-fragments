@@ -12,7 +12,6 @@
           "type": "text"
         },
         {
-          "dataType": "string",
           "defaultValue": "flex-column-direction",
           "label": "lfr.form-fragments.direction",
           "description": "lfr.form-fragments.direction",
@@ -32,7 +31,6 @@
           }
         },
         {
-          "dataType": "string",
           "defaultValue": "",
           "label": "lfr.form-fragments.horizontal-spacer",
           "description": "lfr.form-fragments.horizontal-spacer",
@@ -91,7 +89,6 @@
           "type": "text"
         },
         {
-          "dataType": "string",
           "defaultValue": "cssdisplay",
           "label": "lfr.form-fragments.error-display-method",
           "description": "lfr.form-fragments.error-display-method",

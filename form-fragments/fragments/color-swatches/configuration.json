@@ -12,7 +12,6 @@
           "type": "text"
         },
         {
-          "dataType": "string",
           "defaultValue": "circle",
           "label": "lfr.form-fragments.swatch-shape",
           "description": "lfr.form-fragments.swatch-shape-description",
@@ -32,7 +31,6 @@
           }
         },
         {
-          "dataType": "string",
           "defaultValue": "nm",
           "label": "lfr.form-fragments.swatch-size",
           "description": "lfr.form-fragments.swatch-size-description",

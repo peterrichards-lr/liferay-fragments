@@ -3,7 +3,6 @@
     {
       "fields": [
         {
-          "dataType": "string",
           "defaultValue": "menu-left sticky",
           "label": "lfr.responsive-menus.menu-style",
           "description": "lfr.responsive-menus.menu-style",
@@ -23,7 +22,6 @@
           }
         },
         {
-          "dataType": "string",
           "defaultValue": "ellipsis",
           "label": "lfr.responsive-menus.menu-item-overflow",
           "description": "lfr.responsive-menus.menu-item-overflow",
@@ -70,7 +68,6 @@
     {
       "fields": [
         {
-          "dataType": "string",
           "defaultValue": "menu-only",
           "label": "lfr.responsive-menus.dropzone-config",
           "description": "lfr.responsive-menus.dropzone-config",
@@ -98,7 +95,6 @@
           }
         },
         {
-          "dataType": "string",
           "defaultValue": "dropzone-menu",
           "label": "lfr.responsive-menus.dropzone-grower",
           "description": "lfr.responsive-menus.dropzone-grower",
@@ -226,7 +222,6 @@
           "type": "colorPicker"
         },
         {
-          "dataType": "string",
           "defaultValue": "solid",
           "label": "lfr.responsive-menus.border-style",
           "description": "lfr.responsive-menus.border-style",
@@ -434,16 +429,16 @@
           "type": "checkbox"
         },
         {
-          "dataType": "number",
-          "defaultValue": 0,
+          "dataType": "string",
+          "defaultValue": "0",
           "description": "lfr.responsive-menus.debounce-delay-description",
           "label": "lfr.responsive-menus.debounce-delay",
           "name": "debounceDelay",
           "type": "text"
         },
         {
-          "dataType": "number",
-          "defaultValue": 100,
+          "dataType": "string",
+          "defaultValue": "100",
           "description": "lfr.responsive-menus.initialize-delay-description",
           "label": "lfr.responsive-menus.initialize-delay",
           "name": "initializeDelay",

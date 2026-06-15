@@ -29,6 +29,16 @@ generated-test-pages.json
 /fragments-test-env/
 
 # Local diagnostic logs and scratch files
-/current_run.log
-/test_runner_output.log
+*.log
+**/*.log
 /test-js-service.js
+/jsonws.html
+/fragment_jsonws.html
+/extracted_config.json
+
+# State Coordinator and local databases
+.progress-signal
+*.db
+**/*.db
+
+

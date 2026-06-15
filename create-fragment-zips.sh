@@ -9,6 +9,8 @@ if ! command -v jq &> /dev/null; then
     exit 1
 fi
 
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/scripts"
+
 # Variables mimicking your Gradle properties
 # Defaulting to Guest site as a workaround for Liferay 2026.Q1 system-wide deployment bug
 COMPANY_WEB_ID="${COMPANY_WEB_ID:-liferay.com}"
@@ -125,7 +127,7 @@ handle_shared_resources() {
 
     # 1. Resolve themeStrategy from Collection (Hierarchy Level 1)
     if [ -f "$COLL_BUILD_FILE" ]; then
-        STRATEGY=$(jq -r '.themeStrategy // "generic"' "$COLL_BUILD_FILE")
+        STRATEGY=$(jq -r '.themeStrategy // "generic"' "$COLL_BUILD_FILE" | tr -d '\r')
     fi
 
     if [ -f "$FRAG_BUILD_FILE" ]; then
@@ -133,11 +135,11 @@ handle_shared_resources() {
         log_info "Processing build metadata for $FRAG_NAME"
         
         # 2. Resolve themeStrategy from Fragment (Hierarchy Level 2 - Override)
-        STRATEGY=$(jq -r ".themeStrategy // \"$STRATEGY\"" "$FRAG_BUILD_FILE")
+        STRATEGY=$(jq -r ".themeStrategy // \"$STRATEGY\"" "$FRAG_BUILD_FILE" | tr -d '\r')
 
         # 3. Process Shared Logic (Concatenate JS, Copy others)
         local RESOURCES
-        RESOURCES=$(jq -r '.sharedResources[]?' "$FRAG_BUILD_FILE")
+        RESOURCES=$(jq -r '.sharedResources[]?' "$FRAG_BUILD_FILE" | tr -d '\r')
 
         for RES in $RESOURCES; do
             if [ -f "$SHARED_LOGIC_ROOT/$RES" ]; then
@@ -319,7 +321,7 @@ if [ "$BUILD_FRAGMENTS" = true ]; then
 
        # Ensure descriptor at the ROOT of the zip (sibling to fragment folder)
        ensure_descriptor "$TEMP_FRAG" "$FRAGMENT_NAME"
-       process_dir "$TEMP_FRAG/$FRAGMENT_NAME" "$FRAGMENT_NAME"
+        process_dir "$TEMP_FRAG/$FRAGMENT_NAME" "$FRAGMENT_NAME"
        # Clean up OS-specific files from temp dir
        find "$TEMP_FRAG" -name ".DS_Store" -type f -delete
 
@@ -384,8 +386,7 @@ for COLLECTION_NAME in "${COLLECTIONS[@]}"; do
 
        # Ensure descriptor at the ROOT of the zip (sibling to collection folder)
        ensure_descriptor "$TEMP_COLL" "$COLLECTION_NAME"
-       
-       process_dir "$TEMP_COLL/$COLLECTION_NAME" "$COLLECTION_NAME"
+        process_dir "$TEMP_COLL/$COLLECTION_NAME" "$COLLECTION_NAME"
        
        # Clean up OS-specific files from temp dir
        find "$TEMP_COLL" -name ".DS_Store" -type f -delete
@@ -428,8 +429,10 @@ for COLLECTION_NAME in "${COLLECTIONS[@]}"; do
 
         find "$BUILD_TEMP/$COLLECTION_NAME" -name "Language*.properties" -delete
         find "$BUILD_TEMP/$COLLECTION_NAME" -name "client-extension.yaml" -delete
-        # Transform number/boolean defaultValue to strings, and number dataType to int for pre2025q3
-        find "$BUILD_TEMP/$COLLECTION_NAME" -name "configuration.json" -exec sh -c 'jq "del(.fieldSets[].fields[].typeOptions.dependency) | (.. | objects | select(.dataType == \"number\" and .defaultValue != null)) .defaultValue |= tostring | (.. | objects | select(.dataType == \"boolean\" and .defaultValue != null)) .defaultValue |= tostring | (.. | objects | select(.dataType == \"number\")) .dataType = \"int\"" "$1" > "$1.tmp" && mv "$1.tmp" "$1"' -- {} \;
+        # Transform configuration for pre2025q3 compatibility using jq
+        find "$BUILD_TEMP/$COLLECTION_NAME" -name "configuration.json" -print0 | while IFS= read -r -d '' config_file; do
+            jq "del(.fieldSets[].fields[].typeOptions.dependency) | (.. | objects | select(.dataType == \"number\" and .defaultValue != null)) .defaultValue |= tostring | (.. | objects | select(.dataType == \"boolean\" and .defaultValue != null)) .defaultValue |= tostring | (.. | objects | select(.dataType == \"number\")) .dataType = \"int\"" "$config_file" > "$config_file.tmp" && mv "$config_file.tmp" "$config_file"
+        done
         process_dir "$BUILD_TEMP/$COLLECTION_NAME" "$COLLECTION_NAME"
         
         # Ensure descriptor at the ROOT of the legacy zip
@@ -471,8 +474,10 @@ for COLLECTION_NAME in "${COLLECTIONS[@]}"; do
 
         find "$BUILD_TEMP_2026/$COLLECTION_NAME" -name "Language*.properties" -delete
         find "$BUILD_TEMP_2026/$COLLECTION_NAME" -name "client-extension.yaml" -delete
-        # Transform number/boolean defaultValue to strings for pre-2026q1 compatibility
-        find "$BUILD_TEMP_2026/$COLLECTION_NAME" -name "configuration.json" -exec sh -c 'jq "(.. | objects | select(.dataType == \"number\" and .defaultValue != null)) .defaultValue |= tostring | (.. | objects | select(.dataType == \"boolean\" and .defaultValue != null)) .defaultValue |= tostring" "$1" > "$1.tmp" && mv "$1.tmp" "$1"' -- {} \;
+        # Transform configuration for pre2026q1 compatibility using jq
+        find "$BUILD_TEMP_2026/$COLLECTION_NAME" -name "configuration.json" -print0 | while IFS= read -r -d '' config_file; do
+            jq "(.. | objects | select(.dataType == \"number\" and .defaultValue != null)) .defaultValue |= tostring | (.. | objects | select(.dataType == \"boolean\" and .defaultValue != null)) .defaultValue |= tostring" "$config_file" > "$config_file.tmp" && mv "$config_file.tmp" "$config_file"
+        done
         process_dir "$BUILD_TEMP_2026/$COLLECTION_NAME" "$COLLECTION_NAME"
         
         ensure_descriptor "$BUILD_TEMP_2026" "$COLLECTION_NAME"

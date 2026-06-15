@@ -33,7 +33,6 @@
     {
       "fields": [
         {
-          "dataType": "string",
           "defaultValue": "primary",
           "label": "lfr.pulse.button-type",
           "description": "lfr.pulse.button-type-description",
@@ -65,7 +64,6 @@
           }
         },
         {
-          "dataType": "string",
           "defaultValue": "nm",
           "label": "lfr.pulse.button-size",
           "description": "lfr.pulse.button-size-description",

@@ -117,6 +117,20 @@
   fragment-to-fragment communication with `{ sticky: true }` for broadcasts and
   `{ replay: true }` for subscribers.
 
+### 12. Asynchronous E2E State Coordinator
+
+- **Requirement**: The E2E test runner must manage a workspace-level, plain-text status file named `.progress-signal` as a shared IPC mailbox for state coordination.
+- **Allowed States**: Must write exactly one of the case-sensitive, single-line status labels during phase boundaries:
+  1. `BUILDING`: At start of compilation/build.
+  2. `WAITING_HEALTHY`: Staged when build artifacts are hot-deployed, servers are starting, or container health-checks are warming up.
+  3. `TESTING`: Staged when the browser E2E test runner (Playwright) launches.
+  4. `SUCCESS`: Exited/written if test runner exits cleanly with Exit Code 0.
+  5. `FAILED`: Exited/written if any phase fails/times out (Exit Code > 0).
+- **Robust Signal Trapping**: A unified signal trap catcher must capture script aborts (`SIGINT`), terminations (`SIGTERM`), unexpected errors (`ERR`), and regular exits (`EXIT`) to write `FAILED` and propagate the non-zero exit code.
+- **Git Shield**: `.progress-signal` (and any related SQLite `.db` or local environment logs) must be gitignored.
+- **Windows Command Execution**: In Windows environments, any `.sh` scripts (e.g. `scripts/test-runner.sh`, `create-fragment-zips.sh`) must be invoked using `bash.exe` (e.g. Git Bash, WSL, or absolute path `& "C:\Program Files\Git\bin\bash.exe" <script>`).
+
+
 ## E2E Testing Philosophy
 
 ### 1. Playwright-First Strategy
@@ -148,6 +162,7 @@ after itself.
 
 ## Current Tasks
 
+- [x] Implement Zero-Dependency Asynchronous E2E State Coordinator (.progress-signal lifecycle and traps).
 - [x] Implement End-to-End Automated Testing Suite (Playwright + LDM).
 - [x] Implement API-driven responsive page generation (Desktop, Tablet, Mobile).
 - [x] Fix Fragment ZIP structure (flattening) for Auto-Deploy compatibility.
@@ -178,6 +193,8 @@ after itself.
       updated.
 - [ ] Investigate Liferay Auto-Deploy bug (Empty Collections vs Manual UI
       Import).
+- [x] Roadmap: Enhance `.process-signal` state coordinator to write estimated completion times/percentages, allowing calling agents to schedule check reminders dynamically.
+- [ ] Roadmap: Investigate extending fragment bootstrapping to include provisioning Liferay Object definitions and mapping them dynamically inside Form Containers for input fragments (type: input) E2E verification.
 - [x] Optimize fragment selector in Playwright to match Liferay 2026.Q1
       structure items (using div[id^="fragment-"]), resolving 15s timeouts and
       speeding up tests.
@@ -264,11 +281,12 @@ after itself.
 - **Requirement**: The build script `create-fragment-zips.sh` must generate
   three versions of each collection ZIP to accommodate different target Liferay
   versions:
-  1. **Latest** (`-collection-min.zip`): Uses `"dataType": "number"` and actual
-     numeric/boolean types for default values (required for Liferay 2026.Q1+).
-  2. **pre2026q1** (`-pre2026q1-collection-min.zip`): Uses
-     `"dataType": "number"` but converts numeric and boolean default values back
-     to string representations (required for intermediate Liferay versions).
-  3. **pre2025q3** (`-pre2025q3-collection-min.zip`): Uses `"dataType": "int"`
-     (converting from `"number"`) and string representations for default values
-     (required for older Liferay versions).
+  1. **Latest** (`-collection-min.zip`): Uses `"dataType": "number"` and boolean
+     literals for checkbox default values, while default values for numeric fields
+     (using UI type `text` or `length`) remain string representations (required for Liferay 2026.Q1+).
+  2. **pre2026q1** (`-pre2026q1-min.zip`): Uses `"dataType": "number"` but converts
+     checkbox boolean default values back to string representations (required for intermediate
+     Liferay versions before 2026.Q1).
+  3. **pre2025q3** (`-pre2025q3-min.zip`): Uses `"dataType": "int"`
+     (converting from `"number"`) and string representations for all default values
+     (required for legacy Liferay versions before 2025.Q3).

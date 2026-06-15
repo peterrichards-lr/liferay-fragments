@@ -3,7 +3,6 @@
     {
       "fields": [
         {
-          "dataType": "string",
           "defaultValue": "primary",
           "label": "lfr.user-account.button-type",
           "description": "lfr.user-account.button-type",
@@ -35,7 +34,6 @@
           }
         },
         {
-          "dataType": "string",
           "defaultValue": "nm",
           "label": "lfr.user-account.button-size",
           "description": "lfr.user-account.button-size",

@@ -19,24 +19,24 @@
           "type": "checkbox"
         },
         {
-          "dataType": "number",
-          "defaultValue": 0,
+          "dataType": "string",
+          "defaultValue": "0",
           "label": "lfr.populated-form-fields.min",
           "description": "lfr.populated-form-fields.min",
           "name": "min",
           "type": "text"
         },
         {
-          "dataType": "number",
-          "defaultValue": 10,
+          "dataType": "string",
+          "defaultValue": "10",
           "label": "lfr.populated-form-fields.max",
           "description": "lfr.populated-form-fields.max",
           "name": "max",
           "type": "text"
         },
         {
-          "dataType": "number",
-          "defaultValue": 1,
+          "dataType": "string",
+          "defaultValue": "1",
           "label": "lfr.populated-form-fields.step",
           "description": "lfr.populated-form-fields.step",
           "name": "step",

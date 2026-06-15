@@ -1,0 +1,8 @@
+{
+  "pageConfig": {
+    "fragmentConfig": {
+      "objectERC": "AUDIT_ENTRY",
+      "taskItemDelegateName": "C_AuditEntry"
+    }
+  }
+}

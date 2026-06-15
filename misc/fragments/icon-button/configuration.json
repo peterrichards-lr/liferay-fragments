@@ -3,7 +3,6 @@
     {
       "fields": [
         {
-          "dataType": "string",
           "defaultValue": "link",
           "label": "lfr.misc.type",
           "description": "lfr.misc.type",
@@ -23,7 +22,6 @@
           }
         },
         {
-          "dataType": "string",
           "defaultValue": "primary",
           "label": "lfr.misc.style",
           "description": "lfr.misc.style",
@@ -55,7 +53,6 @@
           }
         },
         {
-          "dataType": "string",
           "defaultValue": "nm",
           "label": "lfr.misc.size",
           "description": "lfr.misc.size",

@@ -1,0 +1,9 @@
+{
+  "pageConfig": {
+    "fragmentConfig": {
+      "selectors": ".btn",
+      "eventType": "click",
+      "eventName": "Pulse Interaction"
+    }
+  }
+}

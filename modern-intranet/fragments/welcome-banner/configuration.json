@@ -40,7 +40,8 @@
           "label": "lfr.modern-intranet.welcome-banner.button-1-url",
           "description": "lfr.modern-intranet.welcome-banner.button-1-url-description",
           "name": "button1URL",
-          "type": "url"
+          "type": "url",
+          "dataType": "string"
         },
         {
           "label": "lfr.modern-intranet.welcome-banner.button-2-label",
@@ -52,7 +53,8 @@
           "label": "lfr.modern-intranet.welcome-banner.button-2-url",
           "description": "lfr.modern-intranet.welcome-banner.button-2-url-description",
           "name": "button2URL",
-          "type": "url"
+          "type": "url",
+          "dataType": "string"
         },
         {
           "label": "lfr.modern-intranet.welcome-banner.button-3-label",
@@ -64,7 +66,8 @@
           "label": "lfr.modern-intranet.welcome-banner.button-3-url",
           "description": "lfr.modern-intranet.welcome-banner.button-3-url-description",
           "name": "button3URL",
-          "type": "url"
+          "type": "url",
+          "dataType": "string"
         }
       ],
       "label": "lfr.modern-intranet.welcome-banner.actions"

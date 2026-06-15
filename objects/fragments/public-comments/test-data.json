@@ -1,0 +1,10 @@
+{
+  "pageConfig": {
+    "fragmentConfig": {
+      "objectERC": "TICKET_COMMENT",
+      "objectAPIPath": "/o/c/comments/",
+      "relationshipFieldName": "r_ticket_ticketId",
+      "taskItemDelegateName": "C_TicketComment"
+    }
+  }
+}

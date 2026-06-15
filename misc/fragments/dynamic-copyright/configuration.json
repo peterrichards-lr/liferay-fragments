@@ -3,7 +3,6 @@
     {
       "fields": [
         {
-          "dataType": "string",
           "defaultValue": "legal-name",
           "label": "lfr.misc.entity-source",
           "description": "lfr.misc.entity-source",

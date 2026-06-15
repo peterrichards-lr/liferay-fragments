@@ -3,7 +3,6 @@
     {
       "fields": [
         {
-          "dataType": "string",
           "defaultValue": "h4",
           "description": "lfr.misc.heading-level-description",
           "label": "lfr.misc.heading-level",
@@ -44,7 +43,6 @@
     {
       "fields": [
         {
-          "dataType": "string",
           "defaultValue": "py-2",
           "description": "lfr.misc.height-description",
           "label": "lfr.misc.height",
@@ -81,7 +79,6 @@
     {
       "fields": [
         {
-          "dataType": "string",
           "defaultValue": "primary",
           "description": "lfr.misc.button-type-desc",
           "label": "lfr.misc.type",
@@ -113,7 +110,6 @@
           }
         },
         {
-          "dataType": "string",
           "defaultValue": "nm",
           "description": "lfr.misc.button-size-desc",
           "label": "lfr.misc.size",

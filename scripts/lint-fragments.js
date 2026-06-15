@@ -82,7 +82,7 @@ const getLangKeys = (dir) => {
 };
 
 const parseProps = (filePath) => {
-  const content = fs.readFileSync(filePath, 'utf8');
+  const content = fs.readFileSync(filePath, 'utf8').replace(/\r/g, '');
   const keys = new Map();
   content.split('\n').forEach((line) => {
     const match = line.match(/^([^=]+)=(.*)$/);
@@ -108,9 +108,27 @@ const logWarn = (fragment, msg) => {
   audit.warnings++;
 };
 
+// Dynamically ignore any local LDM sandbox project directories to avoid scanning them
+const ldmIgnores = [];
+try {
+  const os = require('os');
+  const registryPath = path.join(os.homedir(), '.ldm', 'registry.json');
+  if (fs.existsSync(registryPath)) {
+    const registry = JSON.parse(fs.readFileSync(registryPath, 'utf8'));
+    Object.values(registry).forEach((proj) => {
+      if (proj.path) {
+        const rel = path.relative(process.cwd(), proj.path);
+        if (!rel.startsWith('..') && !path.isAbsolute(rel) && rel !== '') {
+          ldmIgnores.push(`${rel}/**`);
+        }
+      }
+    });
+  }
+} catch (e) {}
+
 // 1. Find all fragments
 const fragmentFiles = globSync('**/fragment.json', {
-  ignore: 'node_modules/**',
+  ignore: ['node_modules/**', ...ldmIgnores],
 });
 audit.total = fragmentFiles.length;
 
@@ -172,8 +190,94 @@ fragmentFiles.forEach((file) => {
         }
 
         set.fields?.forEach((field) => {
+          // 1. Strict dataType constraints
+          if (field.dataType !== undefined && field.dataType !== null) {
+            const allowedDataTypes = ['string', 'number', 'boolean', 'object'];
+            if (!allowedDataTypes.includes(field.dataType)) {
+              logError(
+                fragmentName,
+                `Field '${field.name}' has invalid dataType '${field.dataType}'. Must be one of: ${allowedDataTypes.join(', ')}`
+              );
+            }
+          }
+
+          // 1.1 Strict UI type constraints (blocking unsupported types like 'number')
+          if (field.type !== undefined && field.type !== null) {
+            const allowedTypes = [
+              'text',
+              'textarea',
+              'select',
+              'checkbox',
+              'colorPicker',
+              'colorPalette',
+              'length',
+              'item',
+              'itemSelector',
+              'url',
+              'navigationMenuSelector',
+            ];
+            if (!allowedTypes.includes(field.type)) {
+              logError(
+                fragmentName,
+                `Field '${field.name}' has invalid UI input type '${field.type}'. Must be one of: ${allowedTypes.join(', ')}`
+              );
+            }
+          }
+
+          // 2. Strict type vs dataType alignment
+          if (field.type === 'checkbox') {
+            if (field.dataType !== undefined && field.dataType !== 'boolean') {
+              logError(
+                fragmentName,
+                `Field '${field.name}' of type 'checkbox' must have dataType: 'boolean' or omit it (found '${field.dataType}')`
+              );
+            }
+          } else if (field.type === 'select') {
+            if (field.dataType !== undefined && field.dataType !== 'string') {
+              logError(
+                fragmentName,
+                `Field '${field.name}' of type 'select' must have dataType: 'string' or omit it (found '${field.dataType}')`
+              );
+            }
+          }
+
+          // 3. Strict defaultValue type constraints
+          if (field.defaultValue !== undefined && field.defaultValue !== null) {
+            if (field.dataType === 'number') {
+              if (typeof field.defaultValue !== 'string') {
+                logError(
+                  fragmentName,
+                  `Field '${field.name}' has numeric dataType but defaultValue is not a string: ${JSON.stringify(field.defaultValue)} (type: ${typeof field.defaultValue}). Numeric fields must use string-based default values.`
+                );
+              }
+            } else if (
+              field.dataType === 'boolean' ||
+              field.type === 'checkbox'
+            ) {
+              if (typeof field.defaultValue !== 'boolean') {
+                logError(
+                  fragmentName,
+                  `Field '${field.name}' has boolean dataType/type but defaultValue is not a boolean: ${JSON.stringify(field.defaultValue)} (type: ${typeof field.defaultValue})`
+                );
+              }
+            } else {
+              // String fields (text, select, colorPicker, length, etc.)
+              // Skip object/array values (e.g. for image fields)
+              if (
+                typeof field.defaultValue !== 'string' &&
+                typeof field.defaultValue !== 'object'
+              ) {
+                logError(
+                  fragmentName,
+                  `Field '${field.name}' has string type but defaultValue is not a string: ${JSON.stringify(field.defaultValue)} (type: ${typeof field.defaultValue})`
+                );
+              }
+            }
+          }
+
           if (field.typeOptions?.dependency) {
-            Object.keys(field.typeOptions.dependency).forEach((depField) => {
+            const depField = field.typeOptions.dependency.field;
+            if (depField) {
               const depFieldSetIndex = fieldToFieldSet.get(depField);
               if (
                 depFieldSetIndex !== undefined &&
@@ -181,10 +285,10 @@ fragmentFiles.forEach((file) => {
               ) {
                 logError(
                   fragmentName,
-                  `Field '${field.name}' in fieldset ${index} ('${set.label}') depends on '${depField}' in fieldset ${depFieldSetIndex}. Dependencies cannot cross fieldsets.`
+                  `Field '${field.name}' in fieldset ${index} depends on '${depField}' in fieldset ${depFieldSetIndex}. Dependencies cannot cross fieldsets.`
                 );
               }
-            });
+            }
           }
 
           if (field.label) {

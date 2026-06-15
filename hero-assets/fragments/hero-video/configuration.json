@@ -40,7 +40,6 @@
           "type": "checkbox"
         },
         {
-          "dataType": "string",
           "defaultValue": "auto",
           "label": "lfr.hero-assets.preload",
           "description": "lfr.hero-assets.preload-description",

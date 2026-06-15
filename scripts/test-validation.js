@@ -1,14 +1,25 @@
 const fs = require('fs');
-const cp = require('child_process');
+const path = require('path');
+
+function getFiles(dir) {
+  let results = [];
+  const list = fs.readdirSync(dir);
+  list.forEach((file) => {
+    const fullPath = path.join(dir, file);
+    if (file === 'node_modules' || file === '.git') return;
+    const stat = fs.statSync(fullPath);
+    if (stat && stat.isDirectory()) {
+      results = results.concat(getFiles(fullPath));
+    } else if (file === 'configuration.json') {
+      results.push(fullPath);
+    }
+  });
+  return results;
+}
 
 try {
-  const files = cp
-    .execSync('find . -name configuration.json')
-    .toString()
-    .split('\n')
-    .filter(Boolean);
+  const files = getFiles(process.cwd());
   for (const file of files) {
-    if (file.includes('node_modules')) continue;
     const data = JSON.parse(fs.readFileSync(file, 'utf8'));
     if (!data.fieldSets) continue;
     let modified = false;

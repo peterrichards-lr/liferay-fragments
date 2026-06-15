@@ -1,6 +1,91 @@
 // tests/global-setup.js
 const { chromium, request } = require('@playwright/test');
 
+function buildPageElementTree(
+  node,
+  siteERC,
+  assetMap,
+  defaultFragmentKey,
+  defaultFragmentConfig
+) {
+  if (typeof node === 'string') {
+    node = { type: 'Fragment', key: node };
+  }
+
+  let type = node.type || 'Fragment';
+  // Enforce correct capitalization
+  if (type.toLowerCase() === 'root') type = 'Root';
+  else if (type.toLowerCase() === 'section') type = 'Section';
+  else if (type.toLowerCase() === 'row') type = 'Row';
+  else if (type.toLowerCase() === 'column') type = 'Column';
+  else if (type.toLowerCase() === 'fragment') type = 'Fragment';
+
+  if (type === 'Fragment') {
+    const key = node.key || defaultFragmentKey;
+    const config =
+      node.fragmentConfig ||
+      (key === defaultFragmentKey ? defaultFragmentConfig : {});
+
+    // Resolve configuration references
+    const resolvedConfig = {};
+    Object.keys(config).forEach((k) => {
+      const val = config[k];
+      if (typeof val === 'string' && assetMap[val]) {
+        resolvedConfig[k] = assetMap[val].toString();
+      } else {
+        resolvedConfig[k] = val;
+      }
+    });
+
+    const element = {
+      type: 'Fragment',
+      definition: {
+        fragment: {
+          key: key,
+          siteKey: siteERC,
+        },
+        fragmentConfig: resolvedConfig,
+        fragmentFields: [],
+        indexed: true,
+      },
+    };
+
+    if (node.children && node.children.length > 0) {
+      element.pageElements = node.children.map((child) =>
+        buildPageElementTree(
+          child,
+          siteERC,
+          assetMap,
+          defaultFragmentKey,
+          defaultFragmentConfig
+        )
+      );
+    }
+
+    return element;
+  } else {
+    // Root, Section, Row, Column
+    const element = {
+      type: type,
+      definition: node.definition || {},
+    };
+
+    if (node.children && node.children.length > 0) {
+      element.pageElements = node.children.map((child) =>
+        buildPageElementTree(
+          child,
+          siteERC,
+          assetMap,
+          defaultFragmentKey,
+          defaultFragmentConfig
+        )
+      );
+    }
+
+    return element;
+  }
+}
+
 async function globalSetup(config) {
   const { baseURL, storageState } = config.projects[0].use;
   const browser = await chromium.launch();
@@ -323,6 +408,33 @@ async function globalSetup(config) {
     `Testing Global Fragments on Site: ${targetSite.name} (ID: ${siteId}, ERC: ${siteERC})`
   );
 
+  // ----- PHASE 5.05: DETECT LIFERAY VERSION & SCHEMA COMPATIBILITY -----
+  let realisedVersion = process.env.LIFERAY_VERSION || '';
+  let useStringForNumbers = true;
+
+  if (!realisedVersion) {
+    try {
+      const versionResp = await apiContext.post(
+        `/api/jsonws/portal/get-version?p_auth=${pAuthToken}`
+      );
+      if (versionResp.ok()) {
+        realisedVersion = (await versionResp.text()).replace(/"/g, '').trim();
+      }
+    } catch (err) {
+      console.warn(
+        '  [WARN] Failed to query Liferay version via JSON WS:',
+        err.message
+      );
+    }
+  }
+
+  console.log(
+    `  -> Realised Liferay DXP version for page seeding: ${realisedVersion}`
+  );
+  console.log(
+    `  -> Page seeding dataType:number overrides will use: ${useStringForNumbers ? 'String' : 'Number'}`
+  );
+
   // ----- PHASE 5.1: VERIFY DEPLOYMENT VIA JSON WS -----
   console.log(
     'Verifying fragment deployment via JSON WS (per docs E2E exception)...'
@@ -402,6 +514,28 @@ async function globalSetup(config) {
   // root, regardless of process.cwd(). Using a CWD-relative '../' pattern
   // escaped into sibling repos on the parent SanDisk volume.
   const projectRoot = path.resolve(__dirname, '..', '..');
+
+  // Dynamically ignore any local LDM sandbox project directories to avoid scanning them
+  const ldmIgnores = [];
+  try {
+    const registryPath = path.join(
+      require('os').homedir(),
+      '.ldm',
+      'registry.json'
+    );
+    if (fs.existsSync(registryPath)) {
+      const registry = JSON.parse(fs.readFileSync(registryPath, 'utf8'));
+      Object.values(registry).forEach((proj) => {
+        if (proj.path) {
+          const rel = path.relative(projectRoot, proj.path);
+          if (!rel.startsWith('..') && !path.isAbsolute(rel) && rel !== '') {
+            ldmIgnores.push(`**/${rel}/**`);
+          }
+        }
+      });
+    }
+  } catch (e) {}
+
   const fragmentFiles = globSync('**/fragment.json', {
     cwd: projectRoot,
     absolute: true,
@@ -410,6 +544,7 @@ async function globalSetup(config) {
       '**/temp*/**',
       '**/zips/**',
       '**/e2e-tests/**',
+      ...ldmIgnores,
     ],
   });
 
@@ -488,13 +623,15 @@ async function globalSetup(config) {
     // ----- SEED TEST DATA IF PRESENT -----
     const testDataFile = path.join(path.dirname(file), 'test-data.json');
     let seededConfigOverrides = {};
+    let testData = null;
+    const assetMap = {}; // Maps ERC -> Liferay ID
 
     if (fs.existsSync(testDataFile)) {
       console.log(
         `     Found E2E test data manifest at ${testDataFile}. Seeding assets...`
       );
       try {
-        const testData = JSON.parse(fs.readFileSync(testDataFile, 'utf8'));
+        testData = JSON.parse(fs.readFileSync(testDataFile, 'utf8'));
         const seededAssetsManifest = [];
 
         // Load existing manifest of seeded assets or start fresh
@@ -507,8 +644,6 @@ async function globalSetup(config) {
         if (fs.existsSync(seededAssetsPath)) {
           seededAssets = JSON.parse(fs.readFileSync(seededAssetsPath, 'utf8'));
         }
-
-        const assetMap = {}; // Maps ERC -> Liferay ID
 
         // 0. Seed Documents
         if (testData.documents) {
@@ -1116,12 +1251,73 @@ async function globalSetup(config) {
       }
     }
 
+    // 4.1 Automatically inject and format overrides for number fields to satisfy Page Import validation
+    const configFile = path.join(path.dirname(file), 'configuration.json');
+    if (fs.existsSync(configFile)) {
+      try {
+        const configJson = JSON.parse(fs.readFileSync(configFile, 'utf8'));
+        if (configJson.fieldSets) {
+          configJson.fieldSets.forEach((fsEntry) => {
+            if (fsEntry.fields) {
+              fsEntry.fields.forEach((field) => {
+                if (field.dataType === 'number' && field.name) {
+                  if (
+                    seededConfigOverrides[field.name] !== undefined &&
+                    seededConfigOverrides[field.name] !== null
+                  ) {
+                    const parsedVal = Number(seededConfigOverrides[field.name]);
+                    if (!isNaN(parsedVal)) {
+                      if (useStringForNumbers) {
+                        seededConfigOverrides[field.name] = String(
+                          seededConfigOverrides[field.name]
+                        );
+                      } else {
+                        seededConfigOverrides[field.name] = parsedVal;
+                      }
+                    }
+                  } else if (
+                    field.defaultValue !== undefined &&
+                    field.defaultValue !== null
+                  ) {
+                    if (useStringForNumbers) {
+                      seededConfigOverrides[field.name] = String(
+                        field.defaultValue
+                      );
+                      console.log(
+                        `       Auto-injecting string override for number field: ${field.name} -> "${field.defaultValue}"`
+                      );
+                    } else {
+                      seededConfigOverrides[field.name] = Number(
+                        field.defaultValue
+                      );
+                      console.log(
+                        `       Auto-injecting number override for number field: ${field.name} -> ${field.defaultValue}`
+                      );
+                    }
+                  }
+                }
+              });
+            }
+          });
+        }
+      } catch (e) {
+        console.warn(
+          `     [WARN] Failed to parse configuration.json for ${fragmentName}:`,
+          e.message
+        );
+      }
+    }
+
     const pageTitle = `Test: ${fragmentName}`;
     const sanitizedKey = baseFragmentKey
       .toLowerCase()
       .replace(/[^a-z0-9]+/g, '-')
       .replace(/(^-|-$)/g, '');
-    let friendlyUrl = `/test-${sanitizedKey}`;
+    const sanitizedCollection = collectionName
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, '-')
+      .replace(/(^-|-$)/g, '');
+    let friendlyUrl = `/test-${sanitizedCollection}-${sanitizedKey}`;
 
     console.log(
       `  -> Creating page for ${fragmentName} (${fragmentKey}) in ${collectionName}...`
@@ -1129,55 +1325,131 @@ async function globalSetup(config) {
 
     // payload based on Liferay Page Management API (LPD-35443)
     // Hardened based on inspecting manually created pages on Liferay 2026.Q1
+    let rootPageElement = null;
+
+    if (testData && testData.pageLayout) {
+      try {
+        const layoutNode = testData.pageLayout;
+        const topType = layoutNode.type || 'Fragment';
+        if (topType === 'Root') {
+          rootPageElement = buildPageElementTree(
+            layoutNode,
+            siteERC,
+            assetMap,
+            fragmentKey,
+            seededConfigOverrides
+          );
+        } else if (topType === 'Section') {
+          rootPageElement = {
+            type: 'Root',
+            pageElements: [
+              buildPageElementTree(
+                layoutNode,
+                siteERC,
+                assetMap,
+                fragmentKey,
+                seededConfigOverrides
+              ),
+            ],
+          };
+        } else {
+          // Wrap in default Section -> Row -> Column
+          rootPageElement = {
+            type: 'Root',
+            pageElements: [
+              {
+                type: 'Section',
+                definition: { indexed: true, layout: {} },
+                pageElements: [
+                  {
+                    type: 'Row',
+                    definition: {
+                      gutters: true,
+                      columnsSpacing: true,
+                      numberOfColumns: 1,
+                    },
+                    pageElements: [
+                      {
+                        type: 'Column',
+                        definition: { size: 12 },
+                        pageElements: [
+                          buildPageElementTree(
+                            layoutNode,
+                            siteERC,
+                            assetMap,
+                            fragmentKey,
+                            seededConfigOverrides
+                          ),
+                        ],
+                      },
+                    ],
+                  },
+                ],
+              },
+            ],
+          };
+        }
+      } catch (e) {
+        console.warn(
+          `     [WARN] Failed to build custom pageLayout:`,
+          e.message
+        );
+      }
+    }
+
+    if (!rootPageElement) {
+      rootPageElement = {
+        type: 'Root',
+        pageElements: [
+          {
+            type: 'Section',
+            definition: {
+              indexed: true,
+              layout: {},
+            },
+            pageElements: [
+              {
+                type: 'Row',
+                definition: {
+                  gutters: true,
+                  columnsSpacing: true,
+                  numberOfColumns: 1,
+                },
+                pageElements: [
+                  {
+                    type: 'Column',
+                    definition: {
+                      size: 12,
+                    },
+                    pageElements: [
+                      {
+                        type: 'Fragment',
+                        definition: {
+                          fragment: {
+                            key: fragmentKey,
+                            siteKey: siteERC,
+                          },
+                          fragmentConfig: seededConfigOverrides,
+                          fragmentFields: [],
+                          indexed: true,
+                        },
+                      },
+                    ],
+                  },
+                ],
+              },
+            ],
+          },
+        ],
+      };
+    }
+
     const payload = {
       title: pageTitle,
       friendlyUrlPath: friendlyUrl,
       pageType: 'content',
       pageDefinition: {
-        pageElement: {
-          type: 'Root',
-          pageElements: [
-            {
-              type: 'Section',
-              definition: {
-                indexed: true,
-                layout: {},
-              },
-              pageElements: [
-                {
-                  type: 'Row',
-                  definition: {
-                    gutters: true,
-                    columnsSpacing: true,
-                    numberOfColumns: 1,
-                  },
-                  pageElements: [
-                    {
-                      type: 'Column',
-                      definition: {
-                        size: 12,
-                      },
-                      pageElements: [
-                        {
-                          type: 'Fragment',
-                          definition: {
-                            fragment: {
-                              key: fragmentKey,
-                              siteKey: siteERC,
-                            },
-                            fragmentConfig: seededConfigOverrides,
-                            fragmentFields: [],
-                            indexed: true,
-                          },
-                        },
-                      ],
-                    },
-                  ],
-                },
-              ],
-            },
-          ],
-        },
+        pageElement: rootPageElement,
         settings: {
           colorSchemeName: '01',
           themeName: 'Classic',
@@ -1197,110 +1469,121 @@ async function globalSetup(config) {
 
     while (attempts < maxAttempts && !success) {
       attempts++;
-      const createResp = await apiContext.post(
-        `/o/headless-delivery/v1.0/sites/${siteId}/site-pages`,
-        {
-          data: payload,
-        }
-      );
-
-      if (createResp.ok()) {
-        success = true;
-        pageWasCreated = true;
-        const responseJson = await createResp.json();
-        if (responseJson.friendlyUrlPath) {
-          friendlyUrl = responseJson.friendlyUrlPath;
-        }
-        pageId = responseJson.id;
-        pageUuid = responseJson.uuid;
-
-        // Perform the patch to update page settings to hiddenFromNavigation: true
-        try {
-          const patchResp = await apiContext.patch(
-            `/o/headless-admin-site/v1.0/sites/${siteERC}/site-pages/${pageUuid}`,
-            {
-              data: {
-                pageSettings: {
-                  type: 'ContentPageSettings',
-                  hiddenFromNavigation: true,
-                },
-              },
-            }
-          );
-          if (!patchResp.ok()) {
-            const patchBody = await patchResp.text();
-            console.warn(
-              `     Failed to set hiddenFromNavigation for ${fragmentName}: ${patchResp.status()} - ${patchBody}`
-            );
+      try {
+        const createResp = await apiContext.post(
+          `/o/headless-delivery/v1.0/sites/${siteId}/site-pages`,
+          {
+            data: payload,
+            timeout: 30000,
           }
-        } catch (patchErr) {
-          console.error(
-            `     Exception while setting hiddenFromNavigation for ${fragmentName}:`,
-            patchErr
-          );
-        }
-      } else {
-        const body = await createResp.text();
-        if (
-          body.includes('Duplicate') ||
-          body.includes('LayoutFriendlyURLException') ||
-          body.includes('LayoutFriendlyURLsException')
-        ) {
-          console.log(
-            `     Page already exists for ${fragmentName} at ${friendlyUrl}. Deleting it to recreate...`
-          );
+        );
+
+        if (createResp.ok()) {
+          success = true;
+          pageWasCreated = true;
+          const responseJson = await createResp.json();
+          if (responseJson.friendlyUrlPath) {
+            friendlyUrl = responseJson.friendlyUrlPath;
+          }
+          pageId = responseJson.id;
+          pageUuid = responseJson.uuid;
+
+          // Perform the patch to update page settings to hiddenFromNavigation: true
           try {
-            // Use in-memory cache to find duplicate layout to avoid heavy database lookups
-            const matchedPage = existingLayouts.find(
-              (l) => l.friendlyURL === friendlyUrl
-            );
-            if (matchedPage) {
-              const deleteId = matchedPage.plid;
-              console.log(
-                `     Found existing page plid ${deleteId} for deletion.`
-              );
-              const deleteResp = await apiContext.post(
-                `/api/jsonws/layout/delete-layout?p_auth=${pAuthToken}`,
-                {
-                  form: {
-                    plid: deleteId,
+            const patchResp = await apiContext.patch(
+              `/o/headless-admin-site/v1.0/sites/${siteERC}/site-pages/${pageUuid}`,
+              {
+                data: {
+                  pageSettings: {
+                    type: 'ContentPageSettings',
+                    hiddenFromNavigation: true,
                   },
-                }
-              );
-              if (deleteResp.ok()) {
-                console.log(
-                  `     Successfully deleted existing page ${deleteId}. Will retry creation...`
-                );
-                // Remove deleted layout from cache
-                existingLayouts = existingLayouts.filter(
-                  (l) => l.plid !== deleteId
-                );
-                // Wait a brief moment to ensure DB consistency
-                await new Promise((resolve) => setTimeout(resolve, 1500));
-              } else {
-                console.warn(
-                  `     [WARN] Failed to delete existing page ${deleteId}: ${deleteResp.status()} - ${await deleteResp.text()}`
-                );
+                },
               }
-            } else {
+            );
+            if (!patchResp.ok()) {
+              const patchBody = await patchResp.text();
               console.warn(
-                `     Could not find page with URL ${friendlyUrl} in site layouts.`
+                `     Failed to set hiddenFromNavigation for ${fragmentName}: ${patchResp.status()} - ${patchBody}`
               );
             }
-          } catch (e) {
-            console.warn(
-              `     Failed to delete pre-existing page for ${fragmentName}:`,
-              e.message
+          } catch (patchErr) {
+            console.error(
+              `     Exception while setting hiddenFromNavigation for ${fragmentName}:`,
+              patchErr
             );
           }
         } else {
-          console.warn(
-            `     [Attempt ${attempts}] Failed to create page for ${fragmentName}: ${createResp.status()} - ${body}`
-          );
-          if (attempts < maxAttempts) {
-            console.log(`     Retrying in 2 seconds...`);
-            await new Promise((resolve) => setTimeout(resolve, 2000));
+          const body = await createResp.text();
+          if (
+            body.includes('Duplicate') ||
+            body.includes('LayoutFriendlyURLException') ||
+            body.includes('LayoutFriendlyURLsException')
+          ) {
+            console.log(
+              `     Page already exists for ${fragmentName} at ${friendlyUrl}. Deleting it to recreate...`
+            );
+            try {
+              // Use in-memory cache to find duplicate layout to avoid heavy database lookups
+              const matchedPage = existingLayouts.find(
+                (l) => l.friendlyURL === friendlyUrl
+              );
+              if (matchedPage) {
+                const deleteId = matchedPage.plid;
+                console.log(
+                  `     Found existing page plid ${deleteId} for deletion.`
+                );
+                const deleteResp = await apiContext.post(
+                  `/api/jsonws/layout/delete-layout?p_auth=${pAuthToken}`,
+                  {
+                    form: {
+                      plid: deleteId,
+                    },
+                  }
+                );
+                if (deleteResp.ok()) {
+                  console.log(
+                    `     Successfully deleted existing page ${deleteId}. Will retry creation...`
+                  );
+                  // Remove deleted layout from cache
+                  existingLayouts = existingLayouts.filter(
+                    (l) => l.plid !== deleteId
+                  );
+                  // Wait a brief moment to ensure DB consistency
+                  await new Promise((resolve) => setTimeout(resolve, 2000));
+                } else {
+                  console.warn(
+                    `     [WARN] Failed to delete existing page ${deleteId}: ${deleteResp.status()} - ${await deleteResp.text()}`
+                  );
+                }
+              } else {
+                console.warn(
+                  `     Could not find page with URL ${friendlyUrl} in site layouts.`
+                );
+              }
+            } catch (e) {
+              console.warn(
+                `     Failed to delete pre-existing page for ${fragmentName}:`,
+                e.message
+              );
+            }
+          } else {
+            console.warn(
+              `     [Attempt ${attempts}] Failed to create page for ${fragmentName}: ${createResp.status()} - ${body}`
+            );
+            if (attempts < maxAttempts) {
+              console.log(`     Retrying in 3 seconds...`);
+              await new Promise((resolve) => setTimeout(resolve, 3000));
+            }
           }
+        }
+      } catch (err) {
+        console.warn(
+          `     [Attempt ${attempts}] Exception occurred while creating page for ${fragmentName}: ${err.message}`
+        );
+        if (attempts < maxAttempts) {
+          console.log(`     Retrying in 5 seconds...`);
+          await new Promise((resolve) => setTimeout(resolve, 5000));
         }
       }
     }
@@ -1308,7 +1591,7 @@ async function globalSetup(config) {
     // Stagger page creation strictly to reduce DB contention on PortalPreferenceValue
     // Only stagger if a page was actually created, saving substantial E2E setup time on duplicate runs.
     if (pageWasCreated) {
-      await new Promise((resolve) => setTimeout(resolve, 5000));
+      await new Promise((resolve) => setTimeout(resolve, 2000));
     } else {
       await new Promise((resolve) => setTimeout(resolve, 50));
     }
@@ -1342,6 +1625,10 @@ async function globalSetup(config) {
     path.join(__dirname, '..', 'generated-test-pages.json'),
     JSON.stringify(uniqueTestPagesMap, null, 2)
   );
+
+  // Dispose of the request API context to release all connection pools/keep-alive handles cleanly
+  await apiContext.dispose();
+
   console.log('Finished generating test pages.');
 }
 

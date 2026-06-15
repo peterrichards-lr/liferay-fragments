@@ -3,7 +3,7 @@ const http = require('http');
 
 const auth = Buffer.from('test@liferay.com:test').toString('base64');
 const hostname = 'localhost';
-const port = 8080;
+const port = 8090;
 
 function getUrl(path) {
   return new Promise((resolve, reject) => {

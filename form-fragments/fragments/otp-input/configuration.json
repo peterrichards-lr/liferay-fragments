@@ -3,8 +3,8 @@
     {
       "fields": [
         {
-          "dataType": "number",
-          "defaultValue": 6,
+          "dataType": "string",
+          "defaultValue": "6",
           "label": "lfr.form-fragments.number-of-boxes",
           "description": "lfr.form-fragments.number-of-boxes-description",
           "name": "numberOfBoxes",
@@ -18,7 +18,6 @@
           "type": "length"
         },
         {
-          "dataType": "string",
           "defaultValue": "number",
           "label": "lfr.form-fragments.otp-type",
           "description": "lfr.form-fragments.otp-type-description",

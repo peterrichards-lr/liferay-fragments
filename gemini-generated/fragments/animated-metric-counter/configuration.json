@@ -17,20 +17,20 @@
           "type": "text"
         },
         {
-          "defaultValue": 0,
+          "defaultValue": "0",
           "description": "lfr.gemini-generated.decimal-precision-description",
           "label": "lfr.gemini-generated.decimal-precision",
           "name": "decimalPrecision",
           "type": "text",
-          "dataType": "number"
+          "dataType": "string"
         },
         {
-          "defaultValue": 2000,
+          "defaultValue": "2000",
           "description": "lfr.gemini-generated.animation-duration-ms-description",
           "label": "lfr.gemini-generated.animation-duration-ms",
           "name": "duration",
           "type": "text",
-          "dataType": "number"
+          "dataType": "string"
         },
         {
           "defaultValue": "",

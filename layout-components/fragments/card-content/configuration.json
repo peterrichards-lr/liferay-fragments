@@ -3,7 +3,6 @@
     {
       "fields": [
         {
-          "dataType": "string",
           "defaultValue": "h1",
           "label": "lfr.layout-components.text-type",
           "description": "lfr.layout-components.text-type-description",
@@ -91,7 +90,6 @@
           }
         },
         {
-          "dataType": "string",
           "defaultValue": "solid",
           "label": "lfr.layout-components.type",
           "description": "lfr.layout-components.type-description",
@@ -119,7 +117,6 @@
           }
         },
         {
-          "dataType": "string",
           "defaultValue": "primary",
           "label": "lfr.layout-components.style",
           "description": "lfr.layout-components.style-description",
@@ -143,7 +140,6 @@
           }
         },
         {
-          "dataType": "string",
           "defaultValue": "",
           "label": "lfr.layout-components.size",
           "description": "lfr.layout-components.size-description",

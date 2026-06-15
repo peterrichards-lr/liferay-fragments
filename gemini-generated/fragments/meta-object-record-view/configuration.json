@@ -46,7 +46,6 @@
           "defaultValue": false
         },
         {
-          "dataType": "string",
           "defaultValue": "id",
           "label": "lfr.gemini-generated.identifier-type",
           "description": "lfr.gemini-generated.identifier-type-description",

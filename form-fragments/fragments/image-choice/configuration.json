@@ -12,15 +12,14 @@
           "type": "text"
         },
         {
-          "dataType": "number",
-          "defaultValue": 3,
+          "dataType": "string",
+          "defaultValue": "3",
           "label": "lfr.form-fragments.grid-columns",
           "description": "lfr.form-fragments.grid-columns-description",
           "name": "gridColumns",
           "type": "text"
         },
         {
-          "dataType": "string",
           "defaultValue": "nm",
           "label": "lfr.form-fragments.image-size",
           "description": "lfr.form-fragments.image-size-description",
@@ -44,7 +43,6 @@
           }
         },
         {
-          "dataType": "string",
           "defaultValue": "radio",
           "label": "lfr.form-fragments.selection-type",
           "description": "lfr.form-fragments.selection-type-description",

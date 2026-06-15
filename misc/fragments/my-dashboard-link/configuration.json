@@ -43,7 +43,6 @@
           "type": "text"
         },
         {
-          "dataType": "string",
           "defaultValue": "group",
           "description": "lfr.misc.page-location-description",
           "label": "lfr.misc.page-location",

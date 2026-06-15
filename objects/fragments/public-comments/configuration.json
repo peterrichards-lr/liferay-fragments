@@ -42,7 +42,6 @@
     {
       "fields": [
         {
-          "dataType": "string",
           "defaultValue": "path",
           "label": "lfr.objects.source-method",
           "description": "lfr.objects.source-method-description",
@@ -62,12 +61,12 @@
           }
         },
         {
-          "defaultValue": -1,
+          "defaultValue": "-1",
           "label": "lfr.objects.path-position",
           "description": "lfr.objects.path-position-description",
           "name": "pathPosition",
           "type": "text",
-          "dataType": "number"
+          "dataType": "string"
         },
         {
           "defaultValue": "id",

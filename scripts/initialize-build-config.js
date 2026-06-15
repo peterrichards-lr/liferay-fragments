@@ -7,7 +7,27 @@ const { globSync } = require('glob');
  * Intelligently detects required shared resources based on code usage.
  */
 
-const fragments = globSync('**/fragment.json', { ignore: 'node_modules/**' });
+// Dynamically ignore any local LDM sandbox project directories to avoid scanning them
+const ldmIgnores = [];
+try {
+  const os = require('os');
+  const registryPath = path.join(os.homedir(), '.ldm', 'registry.json');
+  if (fs.existsSync(registryPath)) {
+    const registry = JSON.parse(fs.readFileSync(registryPath, 'utf8'));
+    Object.values(registry).forEach((proj) => {
+      if (proj.path) {
+        const rel = path.relative(process.cwd(), proj.path);
+        if (!rel.startsWith('..') && !path.isAbsolute(rel) && rel !== '') {
+          ldmIgnores.push(`${rel}/**`);
+        }
+      }
+    });
+  }
+} catch (e) {}
+
+const fragments = globSync('**/fragment.json', {
+  ignore: ['node_modules/**', ...ldmIgnores],
+});
 
 fragments.forEach((fragFile) => {
   const dir = path.dirname(fragFile);

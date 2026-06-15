@@ -77,7 +77,8 @@
           "name": "linkUrl",
           "label": "lfr.header-components.link-url",
           "description": "lfr.header-components.link-url-description",
-          "type": "url"
+          "type": "url",
+          "dataType": "string"
         }
       ],
       "label": "lfr.header-components.link"

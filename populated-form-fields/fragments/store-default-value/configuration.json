@@ -3,7 +3,6 @@
     {
       "fields": [
         {
-          "dataType": "string",
           "defaultValue": "string",
           "label": "lfr.populated-form-fields.data-lfr-js-type",
           "description": "lfr.populated-form-fields.data-lfr-js-type",
@@ -41,7 +40,6 @@
           "type": "text"
         },
         {
-          "dataType": "string",
           "defaultValue": "string",
           "label": "lfr.populated-form-fields.condition-value-type",
           "description": "lfr.populated-form-fields.condition-value-type",
@@ -91,8 +89,8 @@
           "type": "checkbox"
         },
         {
-          "dataType": "number",
-          "defaultValue": 1000,
+          "dataType": "string",
+          "defaultValue": "1000",
           "label": "lfr.populated-form-fields.initialize-delay",
           "description": "lfr.populated-form-fields.initialize-delay",
           "name": "initializeDelay",

@@ -10,12 +10,12 @@
           "type": "checkbox"
         },
         {
-          "defaultValue": 5,
+          "defaultValue": "5",
           "label": "lfr.forms.refresh-interval-seconds",
           "description": "lfr.forms.refresh-interval-seconds-description",
           "name": "refreshIntervalSec",
           "type": "text",
-          "dataType": "number",
+          "dataType": "string",
           "typeOptions": {
             "dependency": {
               "enableAutoRefresh": {
@@ -67,16 +67,16 @@
           "type": "text"
         },
         {
-          "dataType": "number",
-          "defaultValue": 500,
+          "dataType": "string",
+          "defaultValue": "500",
           "label": "lfr.forms.wait-interval-ms",
           "description": "lfr.forms.wait-interval-ms-description",
           "name": "waitIntervalMs",
           "type": "text"
         },
         {
-          "dataType": "number",
-          "defaultValue": 10,
+          "dataType": "string",
+          "defaultValue": "10",
           "label": "lfr.forms.wait-count",
           "description": "lfr.forms.wait-count-description",
           "name": "waitCount",

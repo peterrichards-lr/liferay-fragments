@@ -24,11 +24,11 @@
                 />
             </div>
 
-            [#if !readOnly && configuration.showDocumentLibraryPicker!true && input.attributes.selectFromDocumentLibraryURL?has_content]
+            [#if !readOnly && configuration.showDocumentLibraryPicker!true && (input.attributes.selectFromDocumentLibraryURL)?has_content]
                 <button 
                     class="btn btn-sm btn-link mt-2 dl-picker-btn" 
                     type="button" 
-                    data-url="${input.attributes.selectFromDocumentLibraryURL}"
+                    data-url="${(input.attributes.selectFromDocumentLibraryURL)!}"
                 >
                     [@clay["icon"] className="mr-1" symbol="folder" /]
                     ${languageUtil.get(locale, "select-from-document-library")}

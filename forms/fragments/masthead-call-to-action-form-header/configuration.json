@@ -20,7 +20,6 @@
           }
         },
         {
-          "dataType": "string",
           "defaultValue": "0.5",
           "label": "lfr.forms.overlay-opacity",
           "description": "lfr.forms.overlay-opacity-description",

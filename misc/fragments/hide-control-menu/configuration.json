@@ -3,7 +3,6 @@
     {
       "fields": [
         {
-          "dataType": "string",
           "defaultValue": "iframe",
           "label": "lfr.misc.execute-mode",
           "description": "lfr.misc.execute-mode",

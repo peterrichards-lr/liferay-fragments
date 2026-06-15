@@ -3,7 +3,6 @@
     {
       "fields": [
         {
-          "dataType": "string",
           "defaultValue": "complete",
           "label": "lfr.tracker.step-state",
           "description": "lfr.tracker.step-state-description",

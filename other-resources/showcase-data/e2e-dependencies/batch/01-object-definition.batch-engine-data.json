@@ -486,6 +486,46 @@
         "code": 0,
         "label": "approved"
       }
+    },
+    {
+      "active": true,
+      "defaultLanguageId": "en_US",
+      "externalReferenceCode": "APPLICANT",
+      "label": {
+        "en_US": "Applicant"
+      },
+      "name": "Applicant",
+      "objectFields": [
+        {
+          "businessType": "Text",
+          "externalReferenceCode": "SESSION_ID",
+          "label": {
+            "en_US": "Session ID"
+          },
+          "name": "sessionID",
+          "required": false,
+          "type": "String"
+        },
+        {
+          "businessType": "Text",
+          "externalReferenceCode": "EMAIL_ADDRESS",
+          "label": {
+            "en_US": "Email Address"
+          },
+          "name": "emailAddress",
+          "required": false,
+          "type": "String"
+        }
+      ],
+      "pluralLabel": {
+        "en_US": "Applicants"
+      },
+      "restContextPath": "/o/c/applicants",
+      "scope": "site",
+      "status": {
+        "code": 0,
+        "label": "approved"
+      }
     }
   ]
 }

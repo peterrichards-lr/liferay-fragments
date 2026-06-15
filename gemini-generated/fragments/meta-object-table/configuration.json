@@ -58,12 +58,12 @@
           "type": "checkbox"
         },
         {
-          "defaultValue": 10,
+          "defaultValue": "10",
           "label": "lfr.gemini-generated.page-size",
           "description": "lfr.gemini-generated.page-size-description",
           "name": "pageSize",
           "type": "text",
-          "dataType": "number"
+          "dataType": "string"
         }
       ],
       "label": "lfr.gemini-generated.display"
@@ -106,7 +106,6 @@
           "type": "checkbox"
         },
         {
-          "dataType": "string",
           "defaultValue": "even",
           "label": "lfr.gemini-generated.striped-row-type",
           "description": "lfr.gemini-generated.striped-row-type-description",
@@ -214,7 +213,6 @@
           }
         },
         {
-          "dataType": "string",
           "defaultValue": "lg",
           "label": "lfr.gemini-generated.add-modal-size",
           "description": "lfr.gemini-generated.add-modal-size-description",
@@ -298,7 +296,6 @@
           }
         },
         {
-          "dataType": "string",
           "defaultValue": "id",
           "label": "lfr.gemini-generated.identifier-type",
           "description": "lfr.gemini-generated.identifier-type-description",
@@ -354,7 +351,6 @@
           }
         },
         {
-          "dataType": "string",
           "defaultValue": "md",
           "label": "lfr.gemini-generated.view-modal-size",
           "description": "lfr.gemini-generated.view-modal-size-description",
@@ -438,7 +434,6 @@
           }
         },
         {
-          "dataType": "string",
           "defaultValue": "id",
           "label": "lfr.gemini-generated.identifier-type",
           "description": "lfr.gemini-generated.identifier-type-description",
@@ -494,7 +489,6 @@
           }
         },
         {
-          "dataType": "string",
           "defaultValue": "lg",
           "label": "lfr.gemini-generated.edit-modal-size",
           "description": "lfr.gemini-generated.edit-modal-size-description",

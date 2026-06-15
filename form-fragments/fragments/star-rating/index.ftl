@@ -76,7 +76,8 @@
           class="star-label hidden"
           for="skip-star-${fragmentEntryLinkNamespace}"
         ></label>
-        [#list 1..configuration.numberOfStars as i]
+        [#assign limit = (configuration.numberOfStars!"5")?number]
+        [#list 1..limit as i]
         <input
           class="star"
           type="radio"

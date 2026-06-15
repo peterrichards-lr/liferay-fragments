@@ -1,15 +1,13 @@
 # Fragment Visual Gallery
 
-A visual reference for the high-fidelity fragments available in this Liferay DXP
-repository. Generated automatically.
+A visual reference for the high-fidelity fragments available in this Liferay DXP repository. Generated automatically.
 
-**Last Tested Against Liferay Version:** `[0;36maica[0m` _(Note: Live snapshots
-disabled due to pending or failed test suite)_
+**Last Tested Against Liferay Version:** `2026.q1.9-lts`
+_(Note: Live snapshots disabled due to pending or failed test suite)_
 
 ## Aura Design System
 
-A lifestyle-focused design system with a scoped container architecture,
-high-fidelity design tokens, and modern product showcase components.
+A lifestyle-focused design system with a scoped container architecture, high-fidelity design tokens, and modern product showcase components.
 
 ### Aura - Final CTA Banner
 
@@ -575,8 +573,7 @@ _No image available_
 
 ## Hero Assets
 
-Prominent visuals, such as videos or banners, that capture attention and define
-page impact.
+Prominent visuals, such as videos or banners, that capture attention and define page impact.
 
 ### Banner Video
 
@@ -720,9 +717,7 @@ _No image available_
 
 ## Modern Intranet
 
-A collection of high-fidelity fragments for constructing modern corporate
-intranet pages, including social feeds, learning centers, and personalized
-dashboards.
+A collection of high-fidelity fragments for constructing modern corporate intranet pages, including social feeds, learning centers, and personalized dashboards.
 
 ### App Launcher
 

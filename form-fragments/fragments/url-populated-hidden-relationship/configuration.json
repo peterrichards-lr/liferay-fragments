@@ -3,7 +3,6 @@
     {
       "fields": [
         {
-          "dataType": "string",
           "defaultValue": "path",
           "label": "lfr.form-fragments.source-method",
           "description": "lfr.form-fragments.source-method",
@@ -23,12 +22,12 @@
           }
         },
         {
-          "defaultValue": -1,
+          "defaultValue": "-1",
           "label": "lfr.form-fragments.path-position",
           "description": "lfr.form-fragments.path-position",
           "name": "pathPosition",
           "type": "text",
-          "dataType": "number"
+          "dataType": "string"
         },
         {
           "defaultValue": "id",

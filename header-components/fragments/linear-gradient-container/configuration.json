@@ -3,7 +3,6 @@
     {
       "fields": [
         {
-          "dataType": "string",
           "defaultValue": "var(--black, #000000)",
           "label": "lfr.header-components.colour-1",
           "description": "lfr.header-components.colour-1-description",
@@ -11,7 +10,6 @@
           "type": "colorPicker"
         },
         {
-          "dataType": "string",
           "defaultValue": "var(--white, #ffffff)",
           "label": "lfr.header-components.colour-2",
           "description": "lfr.header-components.colour-2-description",
@@ -35,7 +33,6 @@
           "type": "text"
         },
         {
-          "dataType": "string",
           "defaultValue": "var(--black, #000000)",
           "label": "lfr.header-components.start-colour",
           "description": "lfr.header-components.start-colour-description",
@@ -43,7 +40,6 @@
           "type": "colorPicker"
         },
         {
-          "dataType": "string",
           "defaultValue": "var(--white, #ffffff)",
           "label": "lfr.header-components.end-colour",
           "description": "lfr.header-components.end-colour-description",

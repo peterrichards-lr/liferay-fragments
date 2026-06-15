@@ -4,6 +4,115 @@
 
 set -e
 
+# State Coordinator Initialization
+PROGRESS_SIGNAL_FILE="$(pwd)/.progress-signal"
+TESTS_PASSED=false
+EXIT_HANDLED=false
+
+# Estimate variables (ballpark seconds)
+EST_BUILD_EXISTING_SKIP_DEPLOY=5
+EST_BUILD_EXISTING_DEPLOY=45
+EST_BUILD_NEW_SKIP_DEPLOY=180
+EST_BUILD_NEW_DEPLOY=220
+
+EST_WAITING_HEALTHY_DEPLOY=100
+EST_WAITING_HEALTHY_SKIP_DEPLOY=0
+
+EST_TESTING=350
+
+write_signal() {
+    local status="$1"
+    local remaining_seconds="$2"
+    
+    local est_time=""
+    if [ -n "$remaining_seconds" ] && [ "$remaining_seconds" -gt 0 ]; then
+        est_time=$(date -d "+${remaining_seconds} seconds" "+%Y-%m-%dT%H:%M:%S%z" 2>/dev/null || \
+                   date -v+${remaining_seconds}s "+%Y-%m-%dT%H:%M:%S%z" 2>/dev/null || \
+                   date)
+    fi
+    
+    local temp_file="${PROGRESS_SIGNAL_FILE}.tmp"
+    echo "$status" > "$temp_file"
+    if [ -n "$remaining_seconds" ]; then
+        echo "ESTIMATED_REMAINING_SECONDS=$remaining_seconds" >> "$temp_file"
+    fi
+    if [ -n "$est_time" ]; then
+        echo "ESTIMATED_COMPLETION_TIME=$est_time" >> "$temp_file"
+    fi
+    
+    # Calculate percentage based on status
+    local percent=0
+    case "$status" in
+        "BUILDING")
+            percent=10
+            ;;
+        "WAITING_HEALTHY")
+            percent=40
+            ;;
+        "TESTING")
+            percent=70
+            ;;
+        "SUCCESS"|"FAILED")
+            percent=100
+            ;;
+    esac
+    echo "PROGRESS_PERCENT=$percent" >> "$temp_file"
+    
+    mv "$temp_file" "$PROGRESS_SIGNAL_FILE"
+}
+
+# Initial write (generic BUILDING phase)
+write_signal "BUILDING" 500
+
+# Cleanup and Exit Traps
+cleanup() {
+    echo ""
+    echo "======================================================"
+    if [ "$KEEP_ALIVE" = true ]; then
+        echo " [KEEP ALIVE] Skipping environment teardown."
+        echo " Liferay is still running at $BASE_URL"
+        if [ -n "$PROJECT_PATH" ]; then
+            echo " Project directory: $PROJECT_PATH"
+        fi
+    else
+        echo " Tearing down Liferay Docker Manager project..."
+        log_command "ldm rm \"$PROJECT_NAME\" -y --delete"
+        ldm rm "$PROJECT_NAME" -y --delete > /dev/null 2>&1 || true
+        echo " Cleanup complete."
+    fi
+    echo "======================================================"
+}
+
+handle_exit() {
+    if [ "$EXIT_HANDLED" = true ]; then
+        return
+    fi
+    EXIT_HANDLED=true
+    
+    EXIT_CODE=$?
+    
+    cleanup
+    
+    if [ "$TESTS_PASSED" = true ]; then
+        # Clean up transient logs and reports on successful execution
+        rm -rf ldm_startup.log e2e-tests/playwright_output.log state.json \
+               playwright-report/ test-results/ e2e-tests/playwright-report/ e2e-tests/test-results/
+               
+        write_signal "SUCCESS" 0
+        echo "State Coordinator: SUCCESS"
+        exit 0
+    else
+        write_signal "FAILED" 0
+        echo "State Coordinator: FAILED (Exit Code: $EXIT_CODE)"
+        if [ $EXIT_CODE -eq 0 ]; then
+            exit 1
+        else
+            exit $EXIT_CODE
+        fi
+    fi
+}
+trap handle_exit EXIT INT TERM ERR
+
 MIN_LDM_VERSION="2.8.0"
 LIFERAY_TAG="2026.q1"
 PROJECT_NAME="fragments-test-env"
@@ -39,6 +148,22 @@ while [[ "$#" -gt 0 ]]; do
     esac
     shift
 done
+
+# Recalculate building estimate based on actual parameters
+if [ "$EXISTING_PROJECT" = true ]; then
+    if [ "$SKIP_DEPLOY" = true ]; then
+        BUILD_REMAINING=$((EST_BUILD_EXISTING_SKIP_DEPLOY + EST_WAITING_HEALTHY_SKIP_DEPLOY + EST_TESTING))
+    else
+        BUILD_REMAINING=$((EST_BUILD_EXISTING_DEPLOY + EST_WAITING_HEALTHY_DEPLOY + EST_TESTING))
+    fi
+else
+    if [ "$SKIP_DEPLOY" = true ]; then
+        BUILD_REMAINING=$((EST_BUILD_NEW_SKIP_DEPLOY + EST_WAITING_HEALTHY_SKIP_DEPLOY + EST_TESTING))
+    else
+        BUILD_REMAINING=$((EST_BUILD_NEW_DEPLOY + EST_WAITING_HEALTHY_DEPLOY + EST_TESTING))
+    fi
+fi
+write_signal "BUILDING" "$BUILD_REMAINING"
 
 if [ "$VERBOSE" = true ]; then
     set -x
@@ -199,24 +324,6 @@ cat <<EOF > "$RESULTS_FILE"
 
 EOF
 
-# Cleanup Trap
-cleanup() {
-    echo ""
-    echo "======================================================"
-    if [ "$KEEP_ALIVE" = true ]; then
-        echo " [KEEP ALIVE] Skipping environment teardown."
-        echo " Liferay is still running at $BASE_URL"
-        echo " Project directory: $PROJECT_PATH"
-    else
-        echo " Tearing down Liferay Docker Manager project..."
-        log_command "ldm rm \"$PROJECT_NAME\" -y --delete"
-        ldm rm "$PROJECT_NAME" -y --delete > /dev/null 2>&1 || true
-        echo " Cleanup complete."
-    fi
-    echo "======================================================"
-}
-trap cleanup EXIT
-
 # 4. Environment Provisioning
 echo ""
 echo "[4/5] Provisioning Liferay environment via LDM..."
@@ -265,8 +372,9 @@ REALISED_VERSION=$(curl -s -u "$LIFERAY_USER:$LIFERAY_PASSWORD" "$BASE_URL/api/j
 
 if [ -z "$REALISED_VERSION" ]; then
     # Fallback to ldm list if JSON WS fails
-    REALISED_VERSION=$(ldm list | grep "$PROJECT_NAME" | awk '{print $2}' | xargs)
+    REALISED_VERSION=$(ldm list | grep "$PROJECT_NAME" | awk -F'?' '{print $3}' | xargs)
 fi
+REALISED_VERSION=$(echo "$REALISED_VERSION" | sed 's/\x1b\[[0-9;]*m//g')
 echo "  -> Realised Liferay Version: $REALISED_VERSION"
 
 # Rename the results file to be version-specific
@@ -281,6 +389,7 @@ sed -i.bak "s/- \*\*Liferay Tag\/Prefix\*\*: .*/&\n- \*\*Realised Version\*\*: $
 if [ "$SKIP_DEPLOY" = true ]; then
     echo ""
     echo "[5/5] Skipping Build and Deploy (as requested)..."
+    write_signal "WAITING_HEALTHY" "$EST_TESTING"
 else
     echo ""
     echo "[5/5] Building and Deploying Fragments..."
@@ -288,14 +397,52 @@ else
     log_command "./create-fragment-zips.sh --all"
     ./create-fragment-zips.sh --all > /dev/null
 
+    write_signal "WAITING_HEALTHY" $((EST_WAITING_HEALTHY_DEPLOY + EST_TESTING))
+
+    # Determine the target ZIP suffix based on Liferay version
+    TARGET_ZIP_SUFFIX="-collection-min.zip"
+    YEAR=$(echo "$REALISED_VERSION" | cut -d. -f1)
+    QUARTER_PART=$(echo "$REALISED_VERSION" | cut -d. -f2 | tr '[:upper:]' '[:lower:]')
+    QUARTER=$(echo "$QUARTER_PART" | sed 's/q//')
+
+    if [[ "$YEAR" =~ ^[0-9]+$ ]] && [[ "$QUARTER" =~ ^[0-9]+$ ]]; then
+        if [ "$YEAR" -gt 2026 ] || { [ "$YEAR" -eq 2026 ] && [ "$QUARTER" -ge 1 ]; }; then
+            TARGET_ZIP_SUFFIX="-collection-min.zip"
+            echo "  -> Target Liferay version: $REALISED_VERSION (2026.Q1+). Deploying standard minified ZIPs (Latest)."
+        elif { [ "$YEAR" -eq 2025 ] && [ "$QUARTER" -eq 4 ]; }; then
+            TARGET_ZIP_SUFFIX="-pre2026q1-min.zip"
+            echo "  -> Target Liferay version: $REALISED_VERSION (pre2026q1 compatible). Deploying pre2026q1 minified ZIPs."
+        else
+            TARGET_ZIP_SUFFIX="-pre2025q3-min.zip"
+            echo "  -> Target Liferay version: $REALISED_VERSION (pre2025q3 compatible). Deploying pre2025q3 minified ZIPs."
+        fi
+    else
+        # Fallback patterns in case cut/sed didn't parse expected digits
+        if [[ "$REALISED_VERSION" == *"2026.q"* ]] || [[ "$REALISED_VERSION" == *"2027.q"* ]]; then
+            TARGET_ZIP_SUFFIX="-collection-min.zip"
+            echo "  -> Target Liferay version: $REALISED_VERSION. Deploying standard minified ZIPs (Latest)."
+        elif [[ "$REALISED_VERSION" == *"2025.q4"* ]]; then
+            TARGET_ZIP_SUFFIX="-pre2026q1-min.zip"
+            echo "  -> Target Liferay version: $REALISED_VERSION. Deploying pre2026q1 minified ZIPs."
+        else
+            TARGET_ZIP_SUFFIX="-pre2025q3-min.zip"
+            echo "  -> Target Liferay version: $REALISED_VERSION. Deploying pre2025q3 minified ZIPs."
+        fi
+    fi
+
     echo "  -> Deploying ZIPs (Zero-Race Atomic Deployments via LDM bind mount)..."
-    for zip_file in zips/fragments/*.zip; do
-        [[ "$zip_file" == *"-pre"* ]] && continue
+    for zip_file in zips/fragments/*"$TARGET_ZIP_SUFFIX"; do
         [[ "$zip_file" == *"-debug"* ]] && continue # Skip debug zips if minified exist
+        [ -f "$zip_file" ] || continue
         
-        ZIP_NAME=$(basename "$zip_file")
+        COLL_ZIP_NAME=$(basename "$zip_file")
+        COLLECTION_NAME=${COLL_ZIP_NAME%$TARGET_ZIP_SUFFIX}
+        
+        DEPLOY_ZIP="$zip_file"
+        ZIP_NAME=$(basename "$DEPLOY_ZIP")
         echo "     Deploying $ZIP_NAME..."
-        cp "$zip_file" "$PROJECT_PATH/deploy/"
+        cp "$DEPLOY_ZIP" "$PROJECT_PATH/deploy/${ZIP_NAME}.tmp"
+        mv "$PROJECT_PATH/deploy/${ZIP_NAME}.tmp" "$PROJECT_PATH/deploy/${ZIP_NAME}"
         sleep 2 # Throttle deployment to reduce DB contention
     done
     
@@ -307,7 +454,8 @@ else
             [ -f "$cx_zip" ] || continue
             CX_ZIP_NAME=$(basename "$cx_zip")
             echo "     Deploying $CX_ZIP_NAME ($CX_TYPE)..."
-            cp "$cx_zip" "$PROJECT_PATH/deploy/"
+            cp "$cx_zip" "$PROJECT_PATH/deploy/${CX_ZIP_NAME}.tmp"
+            mv "$PROJECT_PATH/deploy/${CX_ZIP_NAME}.tmp" "$PROJECT_PATH/deploy/${CX_ZIP_NAME}"
         done
     done
 
@@ -328,21 +476,24 @@ fi
 # 6. Execute Tests
 echo ""
 echo "Executing Playwright Test Suite..."
+write_signal "TESTING" "$EST_TESTING"
 set +e
 cd e2e-tests
-log_command "npx playwright test"
-npx playwright test > playwright_output.log 2>&1
+log_command "LIFERAY_VERSION=\"$REALISED_VERSION\" PW_TEST_SCREENSHOT_NO_FONTS_READY=1 npx playwright test"
+LIFERAY_VERSION="$REALISED_VERSION" PW_TEST_SCREENSHOT_NO_FONTS_READY=1 npx playwright test > playwright_output.log 2>&1
 TEST_EXIT_CODE=$?
 cd ..
 set -e
 
 if [ $TEST_EXIT_CODE -eq 0 ]; then
     echo "  -> All tests passed."
+    TESTS_PASSED=true
     sed -i.bak "s/- \*\*Status\*\*: Running.../- \*\*Status\*\*: Completed/" "$RESULTS_FILE" && rm "${RESULTS_FILE}.bak"
     echo "## Summary" >> "$RESULTS_FILE"
     echo "All tests passed successfully." >> "$RESULTS_FILE"
 else
     echo "  -> Some tests failed. Check e2e-tests/playwright_output.log"
+    TESTS_PASSED=false
     sed -i.bak "s/- \*\*Status\*\*: Running.../- \*\*Status\*\*: Failed/" "$RESULTS_FILE" && rm "${RESULTS_FILE}.bak"
     echo "## Summary" >> "$RESULTS_FILE"
     echo "Some Playwright tests failed." >> "$RESULTS_FILE"

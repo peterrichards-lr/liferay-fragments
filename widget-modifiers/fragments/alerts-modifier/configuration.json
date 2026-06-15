@@ -97,7 +97,6 @@
           "type": "checkbox"
         },
         {
-          "dataType": "string",
           "defaultValue": "primary",
           "label": "lfr.widget-modifiers.mark-as-read-button-type",
           "description": "lfr.widget-modifiers.mark-as-read-button-type-description",
@@ -129,7 +128,6 @@
           }
         },
         {
-          "dataType": "string",
           "defaultValue": "sm",
           "label": "lfr.widget-modifiers.mark-as-read-button-size",
           "description": "lfr.widget-modifiers.mark-as-read-button-size-description",

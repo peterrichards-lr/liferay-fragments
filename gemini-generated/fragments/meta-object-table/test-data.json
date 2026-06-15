@@ -7,7 +7,7 @@
       "showFragmentHeader": true,
       "tableTitle": "Milestones Table",
       "enablePagination": true,
-      "pageSize": 10,
+      "pageSize": "10",
       "enableView": true,
       "enableEdit": false,
       "enableAdd": true

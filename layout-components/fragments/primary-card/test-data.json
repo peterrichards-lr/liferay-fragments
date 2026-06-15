@@ -1,0 +1,12 @@
+{
+  "pageLayout": {
+    "type": "Fragment",
+    "key": "primary-card",
+    "children": [
+      {
+        "type": "Fragment",
+        "key": "card-content"
+      }
+    ]
+  }
+}

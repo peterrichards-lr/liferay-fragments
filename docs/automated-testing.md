@@ -177,6 +177,11 @@ LIFERAY_USER="admin@mycompany.com" LIFERAY_PASSWORD="MySecurePassword123" ./scri
   Once this bug is fixed upstream, the test runner should be reverted to deploy
   fragments system-wide to ensure they are verified as universally available.
 
+- **Liferay Version-Targeted Deployment**: The test runner queries the target Liferay instance to determine its release version (e.g. `2026.q1.8-lts`) and automatically selects the compatible ZIP suffix variant to deploy:
+  - **Latest (`-collection-min.zip`)**: For Liferay `2026.q1` or later. These use `"dataType": "number"` and boolean literals for checkboxes, while numeric text/length fields use string representations.
+  - **pre2026q1 (`-pre2026q1-min.zip`)**: For intermediate versions (like `2025.q4`) which require checkbox boolean values to also be represented as strings.
+  - **pre2025q3 (`-pre2025q3-min.zip`)**: For legacy versions (before `2025.q3`) which convert `"dataType": "number"` to legacy `"int"` and use stringified default values for all fields.
+
 - **ZIP Structure (Flattening):** Liferay's `FragmentFileInstaller`
   (Auto-Deploy) requires a flat directory structure. The build script
   automatically flattens the ZIPs so that `collection.json` and all fragment
@@ -185,6 +190,64 @@ LIFERAY_USER="admin@mycompany.com" LIFERAY_PASSWORD="MySecurePassword123" ./scri
   echos the primary `ldm`, `docker`, and build commands it executes, including
   all resolved parameters (ports, tags, paths). This allows for easy manual
   replication and transparent debugging of the provisioning process.
+
+## Headless Testing Stack & State Coordinator
+
+To coordinate execution states with external parent processes or CI runners without relying on heavy network sockets or arbitrary `sleep` timeouts, the test suite implements the **State Coordinator Pattern**. This pattern uses a lightweight, zero-dependency local plain-text file at the workspace root named `.progress-signal` as a shared Inter-Process Communication (IPC) mailbox.
+
+### The `.progress-signal` Lifecycle & Protocol
+
+The `scripts/test-runner.sh` script automatically writes progress information to `.progress-signal` during lifecycle transitions. To maintain strict backward compatibility, the first line of the file always contains exactly one of the following case-sensitive status labels:
+
+1. `BUILDING`: Staged at the very beginning of the compilation or build packaging phase.
+2. `WAITING_HEALTHY`: Staged when build artifacts are hot-deployed, servers are starting, or container health-checks are warming up.
+3. `TESTING`: Staged the exact millisecond the browser E2E test runner (Playwright) launches.
+4. `SUCCESS`: Written if the test runner exits cleanly with Exit Code 0.
+5. `FAILED`: Written if any compilation, deployment, warm-up, or individual test fails/times out (propagating a non-zero exit code).
+
+Subsequent lines contain additional structured progress metadata key-value pairs:
+
+- `ESTIMATED_REMAINING_SECONDS`: Dynamic ballpark estimation of the remaining execution time in seconds.
+- `ESTIMATED_COMPLETION_TIME`: Target ISO-8601 timestamp of when the test runner is estimated to complete.
+- `PROGRESS_PERCENT`: Ballpark integer percentage of the completed execution progress.
+
+### Robust Signal Trapping
+
+The test runner utilizes a bash `trap` catcher (`trap handle_exit EXIT INT TERM ERR`) to handle all unexpected errors, script aborts (Ctrl+C / `SIGINT`), and terminations (`SIGTERM`). If any step in the lifecycle fails, the trap catches the exit, writes `FAILED` to `.progress-signal`, runs cleanup, and propagates the failure exit code.
+
+### Querying Progress (Parent Processes / CI)
+
+Parent processes or CI environments can query and poll the status of the E2E lifecycle dynamically. You can use the provided monitoring script:
+
+```bash
+# Run the progress monitor in a separate process or shell
+& "C:\Program Files\Git\bin\bash.exe" ./scripts/monitor-progress.sh
+```
+
+Alternatively, a custom polling check can be written as follows:
+
+```bash
+# Example polling check for parent processes
+while true; do
+  STATUS=$(head -n 1 .progress-signal 2>/dev/null || echo "No signal")
+  echo "Current State: $STATUS"
+  if [ "$STATUS" = "SUCCESS" ] || [ "$STATUS" = "FAILED" ]; then
+    break
+  fi
+  sleep 1
+done
+```
+
+### Windows Execution Environment Command
+
+When running in a Windows environment, all `.sh` scripts (including `scripts/test-runner.sh` and `scripts/monitor-progress.sh`) must be run via `bash.exe` (such as Git Bash or WSL). Running them directly or using standard PowerShell or Command Prompt will result in syntax or execution errors.
+
+Example:
+
+```powershell
+# Execute from Windows PowerShell using Git Bash path
+& "C:\Program Files\Git\bin\bash.exe" ./scripts/test-runner.sh
+```
 
 ## Lessons Learned & Guest Rendering Standards
 

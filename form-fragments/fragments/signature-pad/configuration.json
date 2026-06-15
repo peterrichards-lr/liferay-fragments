@@ -10,8 +10,8 @@
           "defaultValue": "#000000"
         },
         {
-          "dataType": "number",
-          "defaultValue": 2,
+          "dataType": "string",
+          "defaultValue": "2",
           "label": "lfr.form-fragments.pen-width",
           "description": "lfr.form-fragments.pen-width-description",
           "name": "penWidth",

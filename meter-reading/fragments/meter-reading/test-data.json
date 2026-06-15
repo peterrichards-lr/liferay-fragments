@@ -1,0 +1,10 @@
+{
+  "pageConfig": {
+    "fragmentConfig": {
+      "objectERC": "WATER_READING",
+      "objectPath": "waterreadings",
+      "useTestAccount": true,
+      "testAccount": "12345"
+    }
+  }
+}

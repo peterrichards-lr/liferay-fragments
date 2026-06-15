@@ -32,18 +32,6 @@ test.describe('Responsive Fragment Rendering', () => {
         }
       });
 
-      page.on('response', async (res) => {
-        if (res.url().includes('content-set-elements')) {
-          console.log(`[NETWORK DEBUG] URL: ${res.url()}`);
-          console.log(`[NETWORK DEBUG] Status: ${res.status()}`);
-          try {
-            console.log(`[NETWORK DEBUG] Body: ${await res.text()}`);
-          } catch (e) {
-            console.warn(`[NETWORK DEBUG] Cannot read body: ${e.message}`);
-          }
-        }
-      });
-
       // 1. Go directly to the generated page
       await page.goto(pageInfo.url);
 
@@ -130,15 +118,15 @@ test.describe('Responsive Fragment Rendering', () => {
       const fragmentElement = page.locator(fragmentSelector).first();
 
       try {
-        await expect(fragmentElement).toBeVisible({ timeout: 15000 });
+        await expect(fragmentElement).toBeVisible({ timeout: 2000 });
         await fragmentElement.scrollIntoViewIfNeeded();
-        await fragmentElement.screenshot({ path: snapshotPath });
+        await fragmentElement.screenshot({ path: snapshotPath, timeout: 5000 });
       } catch (e) {
         // Fallback to wrapper screenshot if fragment is 0-height or missing (e.g., due to missing prerequisites)
         console.warn(
           `[WARN] Could not capture fragment element directly for ${pageInfo.fragmentName}. Falling back to wrapper. Reason: ${e.message}`
         );
-        await wrapper.first().screenshot({ path: snapshotPath });
+        await wrapper.first().screenshot({ path: snapshotPath, timeout: 5000 });
       }
 
       // Log if there were severe errors

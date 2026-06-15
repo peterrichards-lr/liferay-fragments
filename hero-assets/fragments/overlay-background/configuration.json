@@ -33,8 +33,8 @@
           "type": "text"
         },
         {
-          "dataType": "number",
-          "defaultValue": 50,
+          "dataType": "string",
+          "defaultValue": "50",
           "label": "lfr.hero-assets.focal-x",
           "description": "lfr.hero-assets.focal-x-description",
           "name": "focalX",
@@ -48,8 +48,8 @@
           }
         },
         {
-          "dataType": "number",
-          "defaultValue": 50,
+          "dataType": "string",
+          "defaultValue": "50",
           "label": "lfr.hero-assets.focal-y",
           "description": "lfr.hero-assets.focal-y-description",
           "name": "focalY",
@@ -76,8 +76,8 @@
           "type": "colorPicker"
         },
         {
-          "dataType": "number",
-          "defaultValue": 40,
+          "dataType": "string",
+          "defaultValue": "40",
           "label": "lfr.hero-assets.alpha",
           "description": "lfr.hero-assets.alpha-description",
           "name": "alpha",

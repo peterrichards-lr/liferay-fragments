@@ -3,8 +3,8 @@
     {
       "fields": [
         {
-          "dataType": "number",
-          "defaultValue": 4,
+          "dataType": "string",
+          "defaultValue": "4",
           "label": "lfr.misc.number-of-tabs",
           "description": "lfr.misc.number-of-tabs",
           "name": "numberOfTabs",

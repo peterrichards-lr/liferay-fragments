@@ -3,7 +3,6 @@
     {
       "fields": [
         {
-          "dataType": "string",
           "defaultValue": "solid",
           "description": "lfr.misc.button-type-description",
           "label": "lfr.misc.type",
@@ -31,7 +30,6 @@
           }
         },
         {
-          "dataType": "string",
           "defaultValue": "primary",
           "description": "lfr.misc.style-description",
           "label": "lfr.misc.style",
@@ -55,7 +53,6 @@
           }
         },
         {
-          "dataType": "string",
           "defaultValue": "",
           "description": "lfr.misc.button-size-description",
           "label": "lfr.misc.size",

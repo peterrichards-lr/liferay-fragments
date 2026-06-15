@@ -21,8 +21,8 @@
           "type": "checkbox"
         },
         {
-          "dataType": "number",
-          "defaultValue": 20,
+          "dataType": "string",
+          "defaultValue": "20",
           "label": "lfr.content.map-center-latitude",
           "description": "lfr.content.map-center-latitude",
           "name": "mapCenterLat",
@@ -37,8 +37,8 @@
           }
         },
         {
-          "dataType": "number",
-          "defaultValue": 0,
+          "dataType": "string",
+          "defaultValue": "0",
           "label": "lfr.content.map-center-longitude",
           "description": "lfr.content.map-center-longitude",
           "name": "mapCenterLong",
@@ -53,8 +53,8 @@
           }
         },
         {
-          "dataType": "number",
-          "defaultValue": 2,
+          "dataType": "string",
+          "defaultValue": "2",
           "label": "lfr.content.map-zoom",
           "description": "lfr.content.map-zoom",
           "name": "mapZoom",
@@ -74,7 +74,6 @@
     {
       "fields": [
         {
-          "dataType": "string",
           "defaultValue": "osm",
           "label": "lfr.content.map-provider",
           "description": "lfr.content.map-provider",
@@ -192,8 +191,8 @@
           }
         },
         {
-          "dataType": "number",
-          "defaultValue": 200,
+          "dataType": "string",
+          "defaultValue": "200",
           "description": "lfr.content.info-window-close-delay-description",
           "label": "lfr.content.info-window-close-delay",
           "name": "infoWindowCloseDelay",

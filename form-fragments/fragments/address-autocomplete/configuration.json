@@ -3,7 +3,6 @@
     {
       "fields": [
         {
-          "dataType": "string",
           "defaultValue": "osm",
           "label": "lfr.form-fragments.api-provider",
           "description": "lfr.form-fragments.api-provider-description",
@@ -31,7 +30,6 @@
           "type": "text"
         },
         {
-          "dataType": "string",
           "defaultValue": "formatted",
           "label": "lfr.form-fragments.storage-mode",
           "description": "lfr.form-fragments.storage-mode-description",

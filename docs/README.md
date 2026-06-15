@@ -59,8 +59,10 @@ This will deploy all showcase resources found in
 
 1.  **Build the assets**: Run `./create-fragment-zips.sh` to generate the ZIP
     files.
-2.  **Deploy Fragments**: Copy the `.zip` files from `./zips/fragments/` to your
-    Liferay instance's `/deploy` folder.
+2.  **Deploy Fragments**: Copy the correct version of the `.zip` files from `./zips/fragments/` to your Liferay instance's `/deploy` folder.
+    - **Liferay 2026.Q1+ (Latest)**: Copy `*-collection-min.zip`. These use `"dataType": "number"` and boolean literals for checkboxes, while numeric text/length fields use string representations.
+    - **Intermediate versions before 2026.Q1 (pre-2026.Q1)**: Copy `*-pre2026q1-min.zip`. These use `"dataType": "number"` but convert checkbox boolean values back to string representations.
+    - **Legacy versions before 2025.Q3 (pre-2025.Q3)**: Copy `*-pre2025q3-min.zip`. These convert `"dataType": "number"` to legacy `"int"` and use stringified default values for all fields.
 3.  **Deploy Language Overrides**: Copy the `-language-batch-cx.zip` files from
     `./zips/language/` to your Liferay instance's `/osgi/client-extensions/`
     folder.

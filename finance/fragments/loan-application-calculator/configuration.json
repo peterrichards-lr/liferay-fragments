@@ -18,7 +18,6 @@
           "type": "checkbox"
         },
         {
-          "dataType": "string",
           "defaultValue": "solid",
           "label": "lfr.finance.type",
           "description": "lfr.finance.type-description",
@@ -46,7 +45,6 @@
           }
         },
         {
-          "dataType": "string",
           "defaultValue": "primary",
           "label": "lfr.finance.style",
           "description": "lfr.finance.style-description",
@@ -70,7 +68,6 @@
           }
         },
         {
-          "dataType": "string",
           "defaultValue": "",
           "label": "lfr.finance.size",
           "description": "lfr.finance.size-description",

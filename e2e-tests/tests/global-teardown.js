@@ -83,6 +83,9 @@ async function globalTeardown(config) {
     await new Promise((resolve) => setTimeout(resolve, 100));
   }
 
+  // Dispose of the request API context to release all connection pools/keep-alive handles cleanly
+  await apiContext.dispose();
+
   console.log('Cleanup complete.');
 }
 

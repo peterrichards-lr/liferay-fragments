@@ -9,7 +9,9 @@
     [#assign labelClass=labelClass+" hide-label" /]
 [/#if]
 [#assign labels = configuration.labelList?split(";") /]
-[#assign totalDigits = configuration.integerDigitCount + configuration.decimalDigitCount /]
+[#assign integerDigitCount = (configuration.integerDigitCount!"5")?number /]
+[#assign decimalDigitCount = (configuration.decimalDigitCount!"3")?number /]
+[#assign totalDigits = integerDigitCount + decimalDigitCount /]
 <div class="segmented-numeric" data-localizable="${input.localizable?string('true', 'false')}"
      style="--segmented-numeric-integer-color: ${configuration.integerFGColor};--segmented-numeric-integer-background-color: ${configuration.integerBGColor};--segmented-numeric-decimal-color: ${configuration.decimalFGColor};;--segmented-numeric-decimal-background-color: ${configuration.decimalBGColor};--label-color: ${configuration.labelColor};--segmented-numeric-font-size: ${configuration.digitFontSize};;--label-font-size: ${configuration.labelFontSize};">
   <div class="form-group [#if input.errorMessage?has_content]has-error[/#if] mb-0">
@@ -35,7 +37,7 @@
     />
       [#list 1..totalDigits as i]
           [#assign classList = "digit"/]
-          [#if i<= configuration.integerDigitCount]
+          [#if i<= integerDigitCount]
               [#assign classList=classList+" int" /]
           [#else]
               [#assign classList=classList+" dec" /]

@@ -32,7 +32,8 @@
           "label": "lfr.modern-intranet.app-launcher.app-url",
           "description": "lfr.modern-intranet.app-launcher.app-url-description",
           "name": "appURL1",
-          "type": "url"
+          "type": "url",
+          "dataType": "string"
         }
       ],
       "label": "lfr.modern-intranet.app-launcher.app-1"
@@ -57,7 +58,8 @@
           "label": "lfr.modern-intranet.app-launcher.app-url",
           "description": "lfr.modern-intranet.app-launcher.app-url-description",
           "name": "appURL2",
-          "type": "url"
+          "type": "url",
+          "dataType": "string"
         }
       ],
       "label": "lfr.modern-intranet.app-launcher.app-2"
@@ -82,7 +84,8 @@
           "label": "lfr.modern-intranet.app-launcher.app-url",
           "description": "lfr.modern-intranet.app-launcher.app-url-description",
           "name": "appURL3",
-          "type": "url"
+          "type": "url",
+          "dataType": "string"
         }
       ],
       "label": "lfr.modern-intranet.app-launcher.app-3"
@@ -107,7 +110,8 @@
           "label": "lfr.modern-intranet.app-launcher.app-url",
           "description": "lfr.modern-intranet.app-launcher.app-url-description",
           "name": "appURL4",
-          "type": "url"
+          "type": "url",
+          "dataType": "string"
         }
       ],
       "label": "lfr.modern-intranet.app-launcher.app-4"
@@ -132,7 +136,8 @@
           "label": "lfr.modern-intranet.app-launcher.app-url",
           "description": "lfr.modern-intranet.app-launcher.app-url-description",
           "name": "appURL5",
-          "type": "url"
+          "type": "url",
+          "dataType": "string"
         }
       ],
       "label": "lfr.modern-intranet.app-launcher.app-5"
@@ -157,7 +162,8 @@
           "label": "lfr.modern-intranet.app-launcher.app-url",
           "description": "lfr.modern-intranet.app-launcher.app-url-description",
           "name": "appURL6",
-          "type": "url"
+          "type": "url",
+          "dataType": "string"
         }
       ],
       "label": "lfr.modern-intranet.app-launcher.app-6"

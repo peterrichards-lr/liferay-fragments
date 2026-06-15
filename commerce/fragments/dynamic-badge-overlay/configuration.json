@@ -93,8 +93,8 @@
           "type": "text"
         },
         {
-          "dataType": "number",
-          "defaultValue": 14,
+          "dataType": "string",
+          "defaultValue": "14",
           "description": "lfr.commerce.new-product-freshness-description",
           "label": "lfr.commerce.new-product-freshness",
           "name": "newProductFreshness",
@@ -123,8 +123,8 @@
           "type": "text"
         },
         {
-          "dataType": "number",
-          "defaultValue": 10,
+          "dataType": "string",
+          "defaultValue": "10",
           "description": "lfr.commerce.stock-level-threshold-description",
           "label": "lfr.commerce.stock-level-threshold",
           "name": "limitedStockLevelThreshold",
@@ -143,7 +143,6 @@
     {
       "fields": [
         {
-          "dataType": "string",
           "defaultValue": "top-right",
           "label": "lfr.commerce.badge-position",
           "description": "lfr.commerce.badge-position-desc",
@@ -179,7 +178,6 @@
           "type": "text"
         },
         {
-          "dataType": "string",
           "defaultValue": "rectangle",
           "label": "lfr.commerce.badge-shape",
           "description": "lfr.commerce.badge-shape-desc",
@@ -208,7 +206,6 @@
     {
       "fields": [
         {
-          "dataType": "string",
           "defaultValue": "var(--success, #2a9d8f)",
           "label": "lfr.commerce.badge-bg-color",
           "description": "lfr.commerce.badge-bg-color-desc",
@@ -216,7 +213,6 @@
           "type": "colorPicker"
         },
         {
-          "dataType": "string",
           "defaultValue": "var(--white, #ffffff)",
           "label": "lfr.commerce.badge-text-color",
           "description": "lfr.commerce.badge-text-color-desc",
@@ -224,7 +220,6 @@
           "type": "colorPicker"
         },
         {
-          "dataType": "string",
           "defaultValue": "12px",
           "label": "lfr.commerce.badge-font-size",
           "description": "lfr.commerce.badge-font-size-desc",

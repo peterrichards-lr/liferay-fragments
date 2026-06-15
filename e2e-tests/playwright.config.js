@@ -6,7 +6,11 @@ export default defineConfig({
   fullyParallel: true,
   forbidOnly: !!process.env.CI,
   retries: process.env.CI ? 2 : 0,
-  workers: process.env.CI ? 1 : undefined,
+  workers: process.env.PLAYWRIGHT_WORKERS
+    ? parseInt(process.env.PLAYWRIGHT_WORKERS, 10)
+    : process.env.CI
+      ? 1
+      : 2,
   reporter: [['html', { open: 'never' }], ['list']],
   globalSetup: require.resolve('./tests/global-setup'),
   globalTeardown: require.resolve('./tests/global-teardown'),
@@ -15,6 +19,7 @@ export default defineConfig({
     trace: 'on-first-retry',
     storageState: './state.json',
     ignoreHTTPSErrors: true,
+    serviceWorkers: 'block',
   },
   projects: [
     {
@@ -28,6 +33,7 @@ export default defineConfig({
       name: 'tablet',
       use: {
         ...devices['iPad (gen 7)'],
+        browserName: 'chromium',
         userAgent: devices['Desktop Chrome'].userAgent,
         viewport: { width: 768, height: 1024 },
       },
@@ -36,6 +42,7 @@ export default defineConfig({
       name: 'mobile',
       use: {
         ...devices['iPhone 13'],
+        browserName: 'chromium',
         userAgent: devices['Desktop Chrome'].userAgent,
         viewport: { width: 375, height: 812 },
       },

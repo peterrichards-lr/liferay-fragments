@@ -3,8 +3,8 @@
     {
       "fields": [
         {
-          "dataType": "number",
-          "defaultValue": 8,
+          "dataType": "string",
+          "defaultValue": "8",
           "label": "lfr.form-fragments.number-of-options",
           "description": "lfr.form-fragments.number-of-options",
           "name": "numberOfOptions",
@@ -17,7 +17,6 @@
           }
         },
         {
-          "dataType": "string",
           "defaultValue": "primary",
           "label": "lfr.form-fragments.style",
           "description": "lfr.form-fragments.style",

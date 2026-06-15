@@ -11,7 +11,6 @@
           "type": "text"
         },
         {
-          "dataType": "string",
           "defaultValue": "primary",
           "label": "lfr.form-fragments.type",
           "description": "lfr.form-fragments.type-description",
@@ -39,7 +38,6 @@
           }
         },
         {
-          "dataType": "string",
           "defaultValue": "nm",
           "label": "lfr.form-fragments.size",
           "description": "lfr.form-fragments.size-description",

@@ -1,0 +1,9 @@
+{
+  "pageConfig": {
+    "fragmentConfig": {
+      "cookieName": "LFR_FORM_SESSION_ID",
+      "applicantRelationshipId": "formSessionId",
+      "enableDebug": true
+    }
+  }
+}

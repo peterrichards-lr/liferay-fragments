@@ -36,8 +36,8 @@
           "type": "checkbox"
         },
         {
-          "dataType": "number",
-          "defaultValue": 100,
+          "dataType": "string",
+          "defaultValue": "100",
           "label": "lfr.remote-app-utilities.resize-interval",
           "description": "lfr.remote-app-utilities.resize-interval-description",
           "name": "resizeInterval",

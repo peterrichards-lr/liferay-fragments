@@ -34,8 +34,26 @@ const fixLazyKeys = (filePath) => {
   fs.writeFileSync(filePath, newLines.join('\n'));
 };
 
+// Dynamically ignore any local LDM sandbox project directories to avoid scanning them
+const ldmIgnores = [];
+try {
+  const os = require('os');
+  const registryPath = path.join(os.homedir(), '.ldm', 'registry.json');
+  if (fs.existsSync(registryPath)) {
+    const registry = JSON.parse(fs.readFileSync(registryPath, 'utf8'));
+    Object.values(registry).forEach((proj) => {
+      if (proj.path) {
+        const rel = path.relative(process.cwd(), proj.path);
+        if (!rel.startsWith('..') && !path.isAbsolute(rel) && rel !== '') {
+          ldmIgnores.push(`${rel}/**`);
+        }
+      }
+    });
+  }
+} catch (e) {}
+
 const propFiles = globSync('**/Language_en_US.properties', {
-  ignore: 'node_modules/**',
+  ignore: ['node_modules/**', ...ldmIgnores],
 });
 
 console.log(

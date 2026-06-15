@@ -3,12 +3,12 @@
     {
       "fields": [
         {
-          "defaultValue": 6,
+          "defaultValue": "6",
           "label": "lfr.layout-components.column-size",
           "description": "lfr.layout-components.column-size-description",
           "name": "columnSize",
           "type": "text",
-          "dataType": "number"
+          "dataType": "string"
         }
       ],
       "label": "lfr.layout-components.general"

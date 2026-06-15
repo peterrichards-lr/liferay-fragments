@@ -12,8 +12,8 @@
           "type": "text"
         },
         {
-          "dataType": "number",
-          "defaultValue": 8,
+          "dataType": "string",
+          "defaultValue": "8",
           "label": "lfr.form-fragments.min-length",
           "description": "lfr.form-fragments.min-length-description",
           "name": "minLength",
