@@ -99,35 +99,46 @@ test.describe('Responsive Fragment Rendering', () => {
       }
 
       // 4. Capture Visual Snapshot
-      // Create a clean filename: collection-fragment-viewport.png
-      const viewportName = test.info().project.name;
-      const snapshotDir = path.join(
-        __dirname,
-        '..',
-        'snapshots',
-        pageInfo.collectionName
-      );
-      if (!fs.existsSync(snapshotDir)) {
-        fs.mkdirSync(snapshotDir, { recursive: true });
-      }
-      const snapshotPath = path.join(
-        snapshotDir,
-        `${pageInfo.fragmentName}-${viewportName}.png`
-      );
-
-      // Target the fragment element directly, scroll it into view, and screenshot it
-      const fragmentElement = page.locator(fragmentSelector).first();
-
-      try {
-        await expect(fragmentElement).toBeVisible({ timeout: 2000 });
-        await fragmentElement.scrollIntoViewIfNeeded();
-        await fragmentElement.screenshot({ path: snapshotPath, timeout: 5000 });
-      } catch (e) {
-        // Fallback to wrapper screenshot if fragment is 0-height or missing (e.g., due to missing prerequisites)
-        console.warn(
-          `[WARN] Could not capture fragment element directly for ${pageInfo.fragmentName}. Falling back to wrapper. Reason: ${e.message}`
+      if (pageInfo.excludeFromGallery) {
+        console.log(
+          `[SKIP] Skipping screenshot for ${pageInfo.fragmentName} (excludeFromGallery: true)`
         );
-        await wrapper.first().screenshot({ path: snapshotPath, timeout: 5000 });
+      } else {
+        // Create a clean filename: collection-fragment-viewport.png
+        const viewportName = test.info().project.name;
+        const snapshotDir = path.join(
+          __dirname,
+          '..',
+          'snapshots',
+          pageInfo.collectionName
+        );
+        if (!fs.existsSync(snapshotDir)) {
+          fs.mkdirSync(snapshotDir, { recursive: true });
+        }
+        const snapshotPath = path.join(
+          snapshotDir,
+          `${pageInfo.fragmentName}-${viewportName}.png`
+        );
+
+        // Target the fragment element directly, scroll it into view, and screenshot it
+        const fragmentElement = page.locator(fragmentSelector).first();
+
+        try {
+          await expect(fragmentElement).toBeVisible({ timeout: 2000 });
+          await fragmentElement.scrollIntoViewIfNeeded();
+          await fragmentElement.screenshot({
+            path: snapshotPath,
+            timeout: 5000,
+          });
+        } catch (e) {
+          // Fallback to wrapper screenshot if fragment is 0-height or missing (e.g., due to missing prerequisites)
+          console.warn(
+            `[WARN] Could not capture fragment element directly for ${pageInfo.fragmentName}. Falling back to wrapper. Reason: ${e.message}`
+          );
+          await wrapper
+            .first()
+            .screenshot({ path: snapshotPath, timeout: 5000 });
+        }
       }
 
       // Log if there were severe errors

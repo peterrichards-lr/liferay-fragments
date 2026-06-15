@@ -12,5 +12,23 @@
       "enableEdit": false,
       "enableAdd": true
     }
+  },
+  "pageLayout": {
+    "type": "Fragment",
+    "key": "meta-object-table",
+    "children": [
+      {
+        "type": "Fragment",
+        "key": "radial-kpi-gauge",
+        "fragmentConfig": {
+          "title": "Completion Rate",
+          "value": "85%"
+        }
+      },
+      {
+        "type": "Fragment",
+        "key": "activity-heatmap"
+      }
+    ]
   }
 }

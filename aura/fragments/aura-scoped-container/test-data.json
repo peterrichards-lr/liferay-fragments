@@ -1,0 +1,28 @@
+{
+  "pageLayout": {
+    "type": "Fragment",
+    "key": "aura-scoped-container",
+    "children": [
+      {
+        "type": "Fragment",
+        "key": "user-field",
+        "fragmentConfig": {
+          "label": "Full Name",
+          "fieldName": "name"
+        }
+      },
+      {
+        "type": "Fragment",
+        "key": "user-field",
+        "fragmentConfig": {
+          "label": "Email Address",
+          "fieldName": "email"
+        }
+      },
+      {
+        "type": "Fragment",
+        "key": "submit-button"
+      }
+    ]
+  }
+}

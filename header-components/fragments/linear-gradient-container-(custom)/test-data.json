@@ -1,7 +1,7 @@
 {
   "pageLayout": {
     "type": "Fragment",
-    "key": "secondary-card",
+    "key": "linear-gradient-container-(custom)",
     "children": [
       {
         "type": "Fragment",

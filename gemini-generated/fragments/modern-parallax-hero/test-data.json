@@ -1,7 +1,7 @@
 {
   "pageLayout": {
     "type": "Fragment",
-    "key": "secondary-card",
+    "key": "modern-parallax-hero",
     "children": [
       {
         "type": "Fragment",

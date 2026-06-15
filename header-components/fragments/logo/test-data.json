@@ -1,7 +1,7 @@
 {
   "pageLayout": {
     "type": "Fragment",
-    "key": "secondary-card",
+    "key": "logo",
     "children": [
       {
         "type": "Fragment",

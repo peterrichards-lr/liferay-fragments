@@ -4,5 +4,6 @@
       "campaignId": "TEST-CAMPAIGN-01",
       "enableDebug": true
     }
-  }
+  },
+  "excludeFromGallery": true
 }

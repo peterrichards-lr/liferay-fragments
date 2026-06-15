@@ -1,7 +1,7 @@
 {
   "pageLayout": {
     "type": "Fragment",
-    "key": "secondary-card",
+    "key": "overlay-background",
     "children": [
       {
         "type": "Fragment",

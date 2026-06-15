@@ -207,6 +207,12 @@ after itself.
       JSON WS fallback.
 - [x] Integrate programmatic DDM Structure deletion in global-teardown.js using
       JSON WS fallback.
+- [x] **E2E Semantic Bootstrapping Framework (Hand-off Checkpoint)**
+  - Configured `e2e-tests/tests/global-setup.js` to dynamically aggregate `requiredObjects` dependencies across all fragments to prevent missing object errors.
+  - Implemented `excludeFromGallery` flag downstream into Playwright `fragments.spec.js` to bypass screenshots for utility/background components.
+  - Created Conductor Track `semantic-bootstrapping` defining proper parent-child relationships for E2E layouts.
+  - Automated generation of semantic `test-data.json` manifests for 36+ containers via `scripts/configure-test-data.js` to prevent generic/empty screenshots.
+  - **NEXT ACTION (Secondary Machine):** Run the E2E test suite `./scripts/test-runner.sh` to generate the updated visual gallery.
 
 - [x] In `global-setup.js`, add `fieldReference` to `contentFields` payload for
       structured contents.

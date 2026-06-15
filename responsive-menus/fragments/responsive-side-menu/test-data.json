@@ -1,0 +1,20 @@
+{
+  "pageLayout": {
+    "type": "Fragment",
+    "key": "responsive-side-menu",
+    "children": [
+      {
+        "type": "Fragment",
+        "key": "logo"
+      },
+      {
+        "type": "Fragment",
+        "key": "site-name"
+      },
+      {
+        "type": "Fragment",
+        "key": "login-and-user-menu"
+      }
+    ]
+  }
+}

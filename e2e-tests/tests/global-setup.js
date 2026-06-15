@@ -263,13 +263,43 @@ async function globalSetup(config) {
   // ----- PHASE 4.5: AUTOMATE GUEST OBJECT PERMISSIONS VIA CONTROL PANEL UI -----
   try {
     console.log('Automating Guest Role Permissions for Custom Objects...');
-    const objectERCs = [
+
+    // Dynamically aggregate requiredObjects from test-data.json manifests
+    const fs = require('fs');
+    const path = require('path');
+    const { globSync } = require('glob');
+
+    const dynamicERCs = new Set([
       'WATER_READING',
       'SALES_REPORT',
       'COMPANY_MILESTONE',
       'PRODUCT_SHOWCASE',
       'ACTIVITY_LOG',
-    ];
+    ]);
+
+    const projectRoot = path.join(__dirname, '..', '..');
+    const testDataFiles = globSync('**/test-data.json', {
+      cwd: projectRoot,
+      absolute: true,
+      ignore: [
+        '**/node_modules/**',
+        '**/e2e-tests/**',
+        '**/zips/**',
+        '**/temp*/**',
+      ],
+    });
+
+    testDataFiles.forEach((file) => {
+      try {
+        const data = JSON.parse(fs.readFileSync(file, 'utf8'));
+        if (data.requiredObjects && Array.isArray(data.requiredObjects)) {
+          data.requiredObjects.forEach((erc) => dynamicERCs.add(erc));
+        }
+      } catch (e) {}
+    });
+
+    const objectERCs = Array.from(dynamicERCs);
+
     const basicAuth = Buffer.from(`${liferayUser}:${liferayPassword}`).toString(
       'base64'
     );
@@ -1648,6 +1678,7 @@ async function globalSetup(config) {
       id: pageId,
       uuid: pageUuid,
       siteERC: siteERC,
+      excludeFromGallery: testData ? !!testData.excludeFromGallery : false,
     });
   }
 
