@@ -35,9 +35,10 @@ test.describe('Responsive Fragment Rendering', () => {
       // 1. Go directly to the generated page
       await page.goto(pageInfo.url);
 
-      // 2. Wait for the page to load
+      // 2. Wait for the page to load (stretching timeout in CI to handle slow runner initialization)
       try {
-        await page.waitForLoadState('networkidle', { timeout: 5000 });
+        const idleTimeout = process.env.CI ? 15000 : 5000;
+        await page.waitForLoadState('networkidle', { timeout: idleTimeout });
       } catch (e) {
         // Ignore networkidle timeouts to prevent background requests from blocking test completion
       }

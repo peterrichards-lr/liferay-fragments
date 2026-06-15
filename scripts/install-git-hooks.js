@@ -18,7 +18,14 @@ function installGitHooks() {
   const preCommitHookPath = path.join(hooksDir, 'pre-commit');
 
   const hookContent = `#!/bin/sh
-# Auto-generated pre-commit hook for formatting and secret detection
+# Auto-generated pre-commit hook for formatting, dependency syncing, auditing, and secret detection
+
+# 0. Safety Guard: Check if dependencies are installed
+if [ ! -d "node_modules" ]; then
+    echo "[ERROR] node_modules folder is missing. Please run 'npm install' to resolve dependencies."
+    echo "Hint: You can bypass this check for WIP commits using: git commit --no-verify"
+    exit 1
+fi
 
 # 1. Format staged JS, JSON, CSS, HTML, and MD files using Prettier
 STAGED_FILES=\$(git diff --cached --name-only --diff-filter=ACMR | grep -E '\\.(js|json|css|html|md)\$')
@@ -28,7 +35,21 @@ if [ -n "\$STAGED_FILES" ]; then
     echo "\$STAGED_FILES" | xargs git add
 fi
 
-# 3. Secret Detection
+# 2. Synchronize fragment-build.json dependencies based on code usage
+echo "Syncing fragment-build.json dependencies..."
+node scripts/initialize-build-config.js
+git add "**/fragment-build.json" 2>/dev/null || true
+
+# 3. Run Fragment Audit Quality Gate
+echo "Running Fragment Audit linter..."
+npm run lint
+if [ \$? -ne 0 ]; then
+    echo "[ERROR] Fragment Audit failed. Commit aborted."
+    echo "Hint: Fix the errors above or bypass this quality gate using: git commit --no-verify"
+    exit 1
+fi
+
+# 4. Secret Detection
 node scripts/detect-secrets.js pre-commit
 `;
 

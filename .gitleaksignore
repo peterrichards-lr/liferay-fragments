@@ -3,3 +3,8 @@
 
 # Mock SE Client Token (used in examples, README.md, and local testing)
 mock-se-client-token-12345
+
+# Liferay default E2E credentials
+test@liferay.com
+test
+

@@ -130,7 +130,6 @@
 - **Git Shield**: `.progress-signal` (and any related SQLite `.db` or local environment logs) must be gitignored.
 - **Windows Command Execution**: In Windows environments, any `.sh` scripts (e.g. `scripts/test-runner.sh`, `create-fragment-zips.sh`) must be invoked using `bash.exe` (e.g. Git Bash, WSL, or absolute path `& "C:\Program Files\Git\bin\bash.exe" <script>`).
 
-
 ## E2E Testing Philosophy
 
 ### 1. Playwright-First Strategy
@@ -267,14 +266,7 @@ after itself.
 
 ### Active Fix (In Progress)
 
-- [x] Update `~/.ldm/registry.json` to properly map
-      `liferay-ai-commerce-accelerator` and `aica` projects.
-- [ ] Run automated E2E tests using
-- [x] Integrate Prettier formatting into the local pre-commit hook.
-      `./scripts/test-runner.sh -p liferay-ai-commerce-accelerator` or
-      equivalent command.
-- [x] Regenerate `docs/gallery.md` using `npm run docs:gallery` and verify
-      output layout.
+- [ ] Run automated E2E tests using `./scripts/test-runner.sh -p liferay-ai-commerce-accelerator` or equivalent command.
 
 ### Backward-Compatibility Rules (Three-Target ZIP Build)
 
@@ -290,3 +282,23 @@ after itself.
   3. **pre2025q3** (`-pre2025q3-min.zip`): Uses `"dataType": "int"`
      (converting from `"number"`) and string representations for all default values
      (required for legacy Liferay versions before 2025.Q3).
+
+## E2E Stability & Quality Gate Enhancements (June 2026)
+
+### 1. GitHub E2E Run Failure Fixes
+
+- **Default Credentials**: Defaulted `LIFERAY_USER` and `LIFERAY_PASSWORD` to `test@liferay.com` / `test` inside `test-runner.sh` to allow querying Liferay's version via REST/JSON WS APIs in clean environments. Added E2E credentials to `.gitleaksignore`.
+- **Robust LDM Parsing**: Updated `test-runner.sh` fallback LDM list parser with a regex `awk -F'[|?│]'` to robustly extract container versions across varying terminal locales (where Unicode boundaries may output as `│`, `|`, or `?`).
+- **Global Scoping Check**: In `global-setup.js`, mapped the JSON WS fragment verification to lookup collections under the `Global` site ID rather than the test `Guest` site ID. Since auto-deploy imports fragments globally, querying Guest returned 0 fragments and aborted setup with "No tests found".
+
+### 2. Gallery Screenshot & Link Fixes
+
+- **Git Ignore Override**: Added `!/docs/images/live/**/*.png` to `.gitignore` to override global `*.png` exclusions, enabling desktop/tablet snapshots to be correctly tracked and committed alongside mobile screenshots.
+- **Auto-Sync Dependencies**: Ran the dependency sync script to update all `fragment-build.json` files, successfully injecting missing `"discovery.js"` declarations for `dynamic-object-gallery` and other fragments (fixing the `resolveObjectPathByERC is not a function` JS errors).
+- **Object Discovery Retries**: Added a retry loop (5 attempts, 3s stagger) to retrieve custom object definitions (e.g. `WATER_READING`) in `global-setup.js`. This prevents race conditions where Guest permissions were skipped because Liferay had not finished deploying the object definitions, resolving the loading spinner issues.
+- **Markdown Link Checker**: Implemented a comprehensive relative link, HTML image tag, and HTML anchor checker inside `lint-fragments.js`. This scans all markdown files, resolving path anchors and skipping template tags (like `{{...}}`). Failed snapshots are logged as warnings so local setups don't block, while actual broken links raise errors. Created missing `vertical-bar.md` and corrected search-overlay / interactive-wizard visuals.
+
+### 3. Local Automation & Timing Gates
+
+- **Quality Hook**: Integrated the auto-dependency sync script (`scripts/initialize-build-config.js`) and the fragment linter (`npm run lint`) into the local `.git/hooks/pre-commit` script. It includes safety checks for missing `node_modules` and helpful instructions for using `git commit --no-verify` to bypass the hook for WIP.
+- **CI Timeout Tuning**: Scaled Playwright `networkidle` state timeout to 15 seconds in CI (`process.env.CI`) to ensure slower GitHub Actions runners wait for dynamic layout rendering before capturing screenshots.

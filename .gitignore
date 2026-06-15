@@ -21,6 +21,7 @@ generated-test-pages.json
 /docs/test-results
 *.png
 !/docs/images/live/
+!/docs/images/live/**/*.png
 
 # License files
 *.xml

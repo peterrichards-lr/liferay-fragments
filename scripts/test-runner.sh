@@ -368,11 +368,13 @@ echo "  -> Liferay is up and running at $BASE_URL!"
 
 # 4.1 Extract Realised Version via JSON WS
 echo "  -> Fetching portal version via JSON WS..."
+LIFERAY_USER="${LIFERAY_USER:-test@liferay.com}"
+LIFERAY_PASSWORD="${LIFERAY_PASSWORD:-test}"
 REALISED_VERSION=$(curl -s -u "$LIFERAY_USER:$LIFERAY_PASSWORD" "$BASE_URL/api/jsonws/portal/get-version" | tr -d '"' | xargs || echo "")
 
 if [ -z "$REALISED_VERSION" ]; then
     # Fallback to ldm list if JSON WS fails
-    REALISED_VERSION=$(ldm list | grep "$PROJECT_NAME" | awk -F'?' '{print $3}' | xargs)
+    REALISED_VERSION=$(ldm list | grep "$PROJECT_NAME" | awk -F'[|?│]' '{print $3}' | xargs)
 fi
 REALISED_VERSION=$(echo "$REALISED_VERSION" | sed 's/\x1b\[[0-9;]*m//g')
 echo "  -> Realised Liferay Version: $REALISED_VERSION"

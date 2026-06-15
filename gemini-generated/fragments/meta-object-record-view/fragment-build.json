@@ -1,10 +1,10 @@
 {
   "sharedResources": [
     "assets.js",
-    "dom.js",
-    "localization.js",
-    "validation.js",
     "discovery.js",
-    "event-bus.js"
+    "dom.js",
+    "event-bus.js",
+    "localization.js",
+    "validation.js"
   ]
 }

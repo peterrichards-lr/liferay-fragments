@@ -22,7 +22,4 @@ products, or pages.
 3.  **Interaction**: The user enters their query and hits Enter or clicks the
     search button to be redirected to the site's search results page.
 
-## Visuals
-
-![Search Overlay](../../docs/images/search-overlay.png) _(Note: Upload
-screenshot to docs/images/search-overlay.png)_
+![Search Overlay](../images/live/gemini-generated-modern-search-overlay-mobile.png)

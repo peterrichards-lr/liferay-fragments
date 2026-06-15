@@ -278,11 +278,24 @@ async function globalSetup(config) {
     for (const erc of objectERCs) {
       console.log(`  -> Configuring Guest permissions for ${erc}...`);
 
-      // Resolve object definition ID via Admin REST API
-      const objResp = await page.request.get(
-        `${baseURL}/o/object-admin/v1.0/object-definitions/by-external-reference-code/${erc}`,
-        { headers }
-      );
+      // Resolve object definition ID via Admin REST API (with retry to handle asynchronous Liferay deployment)
+      let objResp;
+      let attempts = 0;
+      const maxAttempts = 5;
+      while (attempts < maxAttempts) {
+        objResp = await page.request.get(
+          `${baseURL}/o/object-admin/v1.0/object-definitions/by-external-reference-code/${erc}`,
+          { headers }
+        );
+        if (objResp.ok()) break;
+        attempts++;
+        if (attempts < maxAttempts) {
+          console.log(
+            `     Object Definition ${erc} not found yet. Retrying in 3 seconds (Attempt ${attempts}/${maxAttempts})...`
+          );
+          await new Promise((resolve) => setTimeout(resolve, 3000));
+        }
+      }
 
       if (!objResp.ok()) {
         console.warn(
@@ -442,12 +455,19 @@ async function globalSetup(config) {
   let registeredKeys = [];
   let verificationSucceeded = false;
   try {
+    // Find the Global site to query fragment collections since they are auto-deployed globally
+    const globalSite =
+      siteData.items.find(
+        (s) => s.name === 'Global' || s.externalReferenceCode === 'GLOBAL'
+      ) || targetSite;
+    const globalSiteId = globalSite.id;
+
     // 1. Get all fragment collections using the CSRF token
     const collectionsResp = await apiContext.post(
       `/api/jsonws/fragment.fragmentcollection/get-fragment-collections?p_auth=${pAuthToken}`,
       {
         form: {
-          groupId: siteId,
+          groupId: globalSiteId,
           start: -1,
           end: -1,
         },
@@ -464,7 +484,7 @@ async function globalSetup(config) {
           `/api/jsonws/fragment.fragmententry/get-fragment-entries?p_auth=${pAuthToken}`,
           {
             form: {
-              groupId: siteId,
+              groupId: globalSiteId,
               fragmentCollectionId: collection.fragmentCollectionId,
               status: 0,
               start: -1,

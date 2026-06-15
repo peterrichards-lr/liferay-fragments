@@ -1,10 +1,10 @@
 {
   "sharedResources": [
     "discovery.js",
-    "localization.js",
-    "validation.js",
     "dom.js",
     "event-bus.js",
-    "logger.js"
+    "localization.js",
+    "logger.js",
+    "validation.js"
   ]
 }

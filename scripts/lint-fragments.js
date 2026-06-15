@@ -505,6 +505,73 @@ if (normalize(currentGalleryContent) !== normalize(expectedGalleryContent)) {
   console.log('Gallery is in sync.\n');
 }
 
+// --- MARKDOWN BROKEN LINK CHECKER ---
+console.log(`Checking Markdown files for broken local links...`);
+const mdFiles = globSync('**/*.md', {
+  ignore: ['node_modules/**', '**/node_modules/**', '.git/**'],
+});
+
+mdFiles.forEach((mdFile) => {
+  const content = fs.readFileSync(mdFile, 'utf8');
+  const mdDir = path.dirname(mdFile);
+
+  const checkLink = (rawPath, type) => {
+    // Skip template variables (e.g. {{contactInformation.website}}) and absolute file scheme URLs
+    if (
+      rawPath.includes('{') ||
+      rawPath.includes('}') ||
+      rawPath.startsWith('file:///')
+    ) {
+      return;
+    }
+
+    const linkPath = decodeURIComponent(rawPath.split('#')[0]);
+    if (!linkPath) return;
+
+    const resolvedPath = path.resolve(mdDir, linkPath);
+    if (!fs.existsSync(resolvedPath)) {
+      // Missing live images (under docs/images/live) should be warnings, not errors
+      // since they are generated dynamically on successful test runs
+      if (rawPath.includes('images/live/')) {
+        logWarn(
+          mdFile,
+          `Missing live snapshot reference: "${rawPath}" (Expected: ${path.relative(process.cwd(), resolvedPath)})`
+        );
+      } else {
+        logError(
+          mdFile,
+          `Broken ${type} reference to "${rawPath}" (Resolved: ${path.relative(process.cwd(), resolvedPath)})`
+        );
+      }
+    }
+  };
+
+  // 1. Standard markdown links: [text](path) or ![alt](path)
+  // Handles standard paths and paths enclosed in angle brackets <path> to escape parentheses
+  const mdLinkRegex =
+    /!?\[[^\]]*\]\(\s*(?:<([^>]+)>|((?!https?:\/\/|mailto:|#|file:\/\/\/)[^\)\s]+))\s*\)/g;
+  let match;
+  while ((match = mdLinkRegex.exec(content)) !== null) {
+    const rawPath = match[1] || match[2];
+    if (rawPath) checkLink(rawPath, 'markdown link');
+  }
+
+  // 2. HTML <img> tags: <img src="path">
+  const imgTagRegex =
+    /<img\s+[^>]*src=["'](?!https?:\/\/|file:\/\/\/)([^"']+)["'][^>]*>/g;
+  while ((match = imgTagRegex.exec(content)) !== null) {
+    checkLink(match[1], 'image src');
+  }
+
+  // 3. HTML <a> tags: <a href="path">
+  const aTagRegex =
+    /<a\s+[^>]*href=["'](?!https?:\/\/|mailto:|#|file:\/\/\/)([^"']+)["'][^>]*>/g;
+  while ((match = aTagRegex.exec(content)) !== null) {
+    checkLink(match[1], 'HTML anchor href');
+  }
+});
+console.log('Markdown local link validation complete.\n');
+
 console.log(`\nAudit Complete!`);
 console.log(`---------------------------------`);
 console.log(`Total Fragments: ${audit.total}`);

@@ -24,7 +24,4 @@ smooth transitions between steps.
 3.  **Progress Tracking**: The wizard automatically manages the visibility of
     panels and updates the progress bar as the user navigates.
 
-## Visuals
-
-![Interactive Wizard](../../docs/images/interactive-wizard.png) _(Note: Upload
-screenshot to docs/images/interactive-wizard.png)_
+![Interactive Wizard](../images/live/gemini-generated-interactive-wizard-mobile.png)
