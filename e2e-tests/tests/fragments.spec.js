@@ -119,6 +119,10 @@ test.describe('Responsive Fragment Rendering', () => {
           snapshotDir,
           `${pageInfo.fragmentName}-${viewportName}.png`
         );
+        const htmlPath = path.join(
+          snapshotDir,
+          `${pageInfo.fragmentName}-${viewportName}.html`
+        );
 
         // Target the fragment element directly, scroll it into view, and screenshot it
         const fragmentElement = page.locator(fragmentSelector).first();
@@ -130,6 +134,12 @@ test.describe('Responsive Fragment Rendering', () => {
             path: snapshotPath,
             timeout: 5000,
           });
+
+          // Capture and save the outer HTML of the fragment
+          const htmlContent = await fragmentElement.evaluate(
+            (el) => el.outerHTML
+          );
+          fs.writeFileSync(htmlPath, htmlContent, 'utf8');
         } catch (e) {
           // Fallback to wrapper screenshot if fragment is 0-height or missing (e.g., due to missing prerequisites)
           console.warn(
@@ -138,6 +148,18 @@ test.describe('Responsive Fragment Rendering', () => {
           await wrapper
             .first()
             .screenshot({ path: snapshotPath, timeout: 5000 });
+
+          // Capture and save the outer HTML of the fallback wrapper
+          try {
+            const fallbackHtmlContent = await wrapper
+              .first()
+              .evaluate((el) => el.outerHTML);
+            fs.writeFileSync(htmlPath, fallbackHtmlContent, 'utf8');
+          } catch (htmlErr) {
+            console.warn(
+              `[WARN] Could not capture fallback HTML for ${pageInfo.fragmentName}: ${htmlErr.message}`
+            );
+          }
         }
       }
 

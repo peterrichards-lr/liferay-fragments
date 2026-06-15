@@ -908,5 +908,20 @@
     "type": "article",
     "id": 58208,
     "erc": "SLIDE-ARTICLE-03"
+  },
+  {
+    "type": "article",
+    "id": 61716,
+    "erc": "SLIDE-ARTICLE-01"
+  },
+  {
+    "type": "article",
+    "id": 61731,
+    "erc": "SLIDE-ARTICLE-02"
+  },
+  {
+    "type": "article",
+    "id": 61746,
+    "erc": "SLIDE-ARTICLE-03"
   }
 ]
