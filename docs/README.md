@@ -11,6 +11,7 @@ platforms.
 - [🖼️ Visual Gallery](./gallery.md)
 - [📖 Recipes & Workflows](./recipes.md)
 - [⚙️ Prerequisites & Setup](./setup.md)
+- [📊 Bootstrap & Seed Data](./bootstrap-data.md)
 - [❓ Troubleshooting & FAQ](./troubleshooting.md)
 - [🛠️ Developer Resources](#-developer-resources)
 
@@ -54,6 +55,8 @@ correctly due to site-scoping requirements.**
 
 This will deploy all showcase resources found in
 `other-resources/showcase-data/`.
+
+For a detailed guide on how to configure and utilize these seeded datasets to test and preview each fragment, see the [Bootstrap & Seed Data Guide](./bootstrap-data.md).
 
 ### Option 4: Manual Deployment
 

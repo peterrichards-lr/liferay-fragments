@@ -5,6 +5,5 @@
   "icon": "bolt",
   "jsPath": "index.js",
   "name": "Service Link Button",
-  "type": "component",
-  "thumbnailPath": "thumbnail.png"
+  "type": "component"
 }

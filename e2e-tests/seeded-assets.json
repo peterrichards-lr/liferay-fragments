@@ -823,5 +823,45 @@
     "type": "article",
     "id": 115385,
     "erc": "SLIDE-ARTICLE-03"
+  },
+  {
+    "type": "structure",
+    "id": "40199",
+    "erc": "SLIDER-SLIDE-STRUCT-V3"
+  },
+  {
+    "type": "article",
+    "id": 40205,
+    "erc": "SLIDE-ARTICLE-01"
+  },
+  {
+    "type": "article",
+    "id": 40215,
+    "erc": "SLIDE-ARTICLE-02"
+  },
+  {
+    "type": "article",
+    "id": 40225,
+    "erc": "SLIDE-ARTICLE-03"
+  },
+  {
+    "type": "collection",
+    "id": "40233",
+    "erc": "SLIDER-E2E-COLL"
+  },
+  {
+    "type": "article",
+    "id": 44578,
+    "erc": "SLIDE-ARTICLE-01"
+  },
+  {
+    "type": "article",
+    "id": 44593,
+    "erc": "SLIDE-ARTICLE-02"
+  },
+  {
+    "type": "article",
+    "id": 44608,
+    "erc": "SLIDE-ARTICLE-03"
   }
 ]

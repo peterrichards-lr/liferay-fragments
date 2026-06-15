@@ -8,6 +8,5 @@
   "typeOptions": {
     "fieldTypes": ["file"]
   },
-  "type": "input",
-  "thumbnailPath": "thumbnail.png"
+  "type": "input"
 }

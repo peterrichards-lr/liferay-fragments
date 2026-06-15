@@ -549,7 +549,7 @@ mdFiles.forEach((mdFile) => {
   // 1. Standard markdown links: [text](path) or ![alt](path)
   // Handles standard paths and paths enclosed in angle brackets <path> to escape parentheses
   const mdLinkRegex =
-    /!?\[[^\]]*\]\(\s*(?:<([^>]+)>|((?!https?:\/\/|mailto:|#|file:\/\/\/)[^\)\s]+))\s*\)/g;
+    /!?\[[^\]]*\]\(\s*(?:<([^>]+)>|((?!https?:\/\/|mailto:|#|file:\/\/\/)[^\s]+))\)/g;
   let match;
   while ((match = mdLinkRegex.exec(content)) !== null) {
     const rawPath = match[1] || match[2];

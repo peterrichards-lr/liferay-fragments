@@ -5,6 +5,5 @@
   "icon": "shortcut",
   "jsPath": "index.js",
   "name": "Interactive Wizard",
-  "thumbnailPath": "thumbnail.png",
   "type": "component"
 }

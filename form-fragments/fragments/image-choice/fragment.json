@@ -8,6 +8,5 @@
   "typeOptions": {
     "fieldTypes": ["text", "multiselect"]
   },
-  "type": "input",
-  "thumbnailPath": "thumbnail.png"
+  "type": "input"
 }

@@ -5,6 +5,5 @@
   "cssPath": "index.css",
   "icon": "dashboard",
   "name": "Dashboard Container",
-  "type": "component",
-  "thumbnailPath": "thumbnail.png"
+  "type": "component"
 }

@@ -9,6 +9,8 @@
     "format:check": "prettier --check .",
     "create-fragment": "node scripts/create-fragment.js",
     "docs:gallery": "node scripts/generate-gallery.js",
+    "test:visual": "node scripts/verify-snapshots.js",
+    "test:visual:update": "node scripts/verify-snapshots.js --update",
     "detect-secrets": "node scripts/detect-secrets.js",
     "prepare": "node scripts/install-git-hooks.js",
     "fix-dependencies": "node scripts/fix-dependencies.js",

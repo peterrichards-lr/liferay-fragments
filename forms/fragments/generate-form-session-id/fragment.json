@@ -5,6 +5,5 @@
   "cssPath": "index.css",
   "icon": "bolt",
   "name": "Generate Form Session Id",
-  "type": "component",
-  "thumbnailPath": "thumbnail.png"
+  "type": "component"
 }

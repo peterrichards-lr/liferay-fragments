@@ -5,6 +5,5 @@
   "cssPath": "index.css",
   "icon": "send",
   "name": "Submit Button (Confirmation)",
-  "type": "component",
-  "thumbnailPath": "thumbnail.png"
+  "type": "component"
 }

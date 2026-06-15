@@ -5,6 +5,5 @@
   "cssPath": "index.css",
   "icon": "bolt",
   "name": "Who Am I",
-  "type": "component",
-  "thumbnailPath": "thumbnail.png"
+  "type": "component"
 }

@@ -5,6 +5,5 @@
   "icon": "bolt",
   "jsPath": "index.js",
   "name": "Zone Layout",
-  "type": "component",
-  "thumbnailPath": "thumbnail.png"
+  "type": "component"
 }

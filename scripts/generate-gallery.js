@@ -21,6 +21,21 @@ function generateGallery() {
     fs.mkdirSync(LIVE_IMAGES_DIR, { recursive: true });
   }
 
+  // Load visual verification results if available
+  let visualAnalysis = null;
+  try {
+    const analysisPath = path.join(
+      process.cwd(),
+      'e2e-tests',
+      'visual-analysis.json'
+    );
+    if (fs.existsSync(analysisPath)) {
+      visualAnalysis = JSON.parse(fs.readFileSync(analysisPath, 'utf8'));
+    }
+  } catch (e) {
+    console.warn('[WARN] Could not load visual-analysis.json:', e.message);
+  }
+
   // Determine latest tested version and status
   let testedVersion = 'Unknown';
   let testsPassed = false;
@@ -103,6 +118,24 @@ function generateGallery() {
             const liveDest = path.join(LIVE_IMAGES_DIR, liveFileName);
             fs.copyFileSync(e2eSnapshot, liveDest);
             liveImages[vp] = `./images/live/${liveFileName}`;
+
+            // Attach visual verification status badge if exists
+            if (
+              visualAnalysis &&
+              visualAnalysis.results &&
+              visualAnalysis.results[liveFileName]
+            ) {
+              const analysisResult = visualAnalysis.results[liveFileName];
+              if (analysisResult.status === 'anomaly') {
+                liveImages[vp + '_status'] = '<br>⚠️ **Blank/Solid Color**';
+              } else if (analysisResult.status === 'regression') {
+                const diffFileName = `${safeCollectionName}-${safeFragmentName}-${vp}-diff.png`;
+                liveImages[vp + '_status'] =
+                  `<br>❌ **Diff: ${analysisResult.diffPercentage.toFixed(1)}%**<br>[View Diff](./images/diffs/${diffFileName})`;
+              } else {
+                liveImages[vp + '_status'] = '<br>🟢 **Passed**';
+              }
+            }
           }
         });
       }
@@ -115,17 +148,20 @@ function generateGallery() {
         if (liveImages.desktop) {
           tableHeader += ' Desktop (1920px) |';
           tableDivider += ' :---: |';
-          tableRow += ` <img src="${liveImages.desktop}" width="350" alt="Desktop"> |`;
+          const status = liveImages.desktop_status || '';
+          tableRow += ` <img src="${liveImages.desktop}" width="350" alt="Desktop">${status} |`;
         }
         if (liveImages.tablet) {
           tableHeader += ' Tablet (768px) |';
           tableDivider += ' :---: |';
-          tableRow += ` <img src="${liveImages.tablet}" width="200" alt="Tablet"> |`;
+          const status = liveImages.tablet_status || '';
+          tableRow += ` <img src="${liveImages.tablet}" width="200" alt="Tablet">${status} |`;
         }
         if (liveImages.mobile) {
           tableHeader += ' Mobile (375px) |';
           tableDivider += ' :---: |';
-          tableRow += ` <img src="${liveImages.mobile}" width="120" alt="Mobile"> |`;
+          const status = liveImages.mobile_status || '';
+          tableRow += ` <img src="${liveImages.mobile}" width="120" alt="Mobile">${status} |`;
         }
 
         markdown += `${tableHeader}\n${tableDivider}\n${tableRow}\n\n`;

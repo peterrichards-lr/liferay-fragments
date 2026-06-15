@@ -460,23 +460,48 @@ async function globalSetup(config) {
       siteData.items.find(
         (s) => s.name === 'Global' || s.externalReferenceCode === 'GLOBAL'
       ) || targetSite;
-    const globalSiteId = globalSite.id;
+    let querySiteId = globalSite.id;
 
     // 1. Get all fragment collections using the CSRF token
-    const collectionsResp = await apiContext.post(
+    let collectionsResp = await apiContext.post(
       `/api/jsonws/fragment.fragmentcollection/get-fragment-collections?p_auth=${pAuthToken}`,
       {
         form: {
-          groupId: globalSiteId,
+          groupId: querySiteId,
           start: -1,
           end: -1,
         },
       }
     );
 
+    let collections = [];
     if (collectionsResp.ok()) {
+      collections = await collectionsResp.json();
+    }
+
+    // Fallback to Guest site if no collections found on Global
+    if (collections.length === 0 && querySiteId !== siteId) {
+      console.log(
+        `  -> No collections found on Global site (ID: ${querySiteId}). Trying Guest site (ID: ${siteId})...`
+      );
+      querySiteId = siteId;
+      collectionsResp = await apiContext.post(
+        `/api/jsonws/fragment.fragmentcollection/get-fragment-collections?p_auth=${pAuthToken}`,
+        {
+          form: {
+            groupId: querySiteId,
+            start: -1,
+            end: -1,
+          },
+        }
+      );
+      if (collectionsResp.ok()) {
+        collections = await collectionsResp.json();
+      }
+    }
+
+    if (collections.length > 0) {
       verificationSucceeded = true;
-      const collections = await collectionsResp.json();
 
       // 2. Loop through each collection and get its entries
       for (const collection of collections) {
@@ -484,7 +509,7 @@ async function globalSetup(config) {
           `/api/jsonws/fragment.fragmententry/get-fragment-entries?p_auth=${pAuthToken}`,
           {
             form: {
-              groupId: globalSiteId,
+              groupId: querySiteId,
               fragmentCollectionId: collection.fragmentCollectionId,
               status: 0,
               start: -1,
@@ -504,7 +529,7 @@ async function globalSetup(config) {
       );
     } else {
       console.warn(
-        `  -> JSON WS fragment verification failed (${collectionsResp.status()}). Proceeding with optimistic generation...`
+        `  -> JSON WS fragment verification returned 0 collections. Proceeding with optimistic generation...`
       );
     }
   } catch (e) {

@@ -5,6 +5,5 @@
   "cssPath": "index.css",
   "icon": "announcement",
   "name": "Campaign Initialiser",
-  "type": "component",
-  "thumbnailPath": "thumbnail.png"
+  "type": "component"
 }

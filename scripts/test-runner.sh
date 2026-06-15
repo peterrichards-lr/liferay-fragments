@@ -366,17 +366,20 @@ if ! ldm wait "$PROJECT_NAME"; then
 fi
 echo "  -> Liferay is up and running at $BASE_URL!"
 
-# 4.1 Extract Realised Version via JSON WS
-echo "  -> Fetching portal version via JSON WS..."
-LIFERAY_USER="${LIFERAY_USER:-test@liferay.com}"
-LIFERAY_PASSWORD="${LIFERAY_PASSWORD:-test}"
-REALISED_VERSION=$(curl -s -u "$LIFERAY_USER:$LIFERAY_PASSWORD" "$BASE_URL/api/jsonws/portal/get-version" | tr -d '"' | xargs || echo "")
-
-if [ -z "$REALISED_VERSION" ]; then
-    # Fallback to ldm list if JSON WS fails
-    REALISED_VERSION=$(ldm list | grep "$PROJECT_NAME" | awk -F'[|?│]' '{print $3}' | xargs)
-fi
+# 4.1 Extract Realised Version
+echo "  -> Resolving portal version..."
+REALISED_VERSION=$(ldm list | grep "$PROJECT_NAME" | awk -F'[|?│]' '{print $3}' | xargs || echo "")
 REALISED_VERSION=$(echo "$REALISED_VERSION" | sed 's/\x1b\[[0-9;]*m//g')
+
+if [[ ! "$REALISED_VERSION" =~ ^[0-9]{4}\.[a-zA-Z0-9] ]]; then
+    echo "  -> LDM version '$REALISED_VERSION' is not in Year.Quarter format, checking JSON WS..."
+    LIFERAY_USER="${LIFERAY_USER:-test@liferay.com}"
+    LIFERAY_PASSWORD="${LIFERAY_PASSWORD:-test}"
+    API_VERSION=$(curl -s -u "$LIFERAY_USER:$LIFERAY_PASSWORD" "$BASE_URL/api/jsonws/portal/get-version" | tr -d '"' | xargs || echo "")
+    if [ -n "$API_VERSION" ]; then
+        REALISED_VERSION="$API_VERSION"
+    fi
+fi
 echo "  -> Realised Liferay Version: $REALISED_VERSION"
 
 # Rename the results file to be version-specific
@@ -447,6 +450,19 @@ else
         mv "$PROJECT_PATH/deploy/${ZIP_NAME}.tmp" "$PROJECT_PATH/deploy/${ZIP_NAME}"
         sleep 2 # Throttle deployment to reduce DB contention
     done
+
+    # Deploy root fragments (non-collection)
+    for zip_file in zips/fragments/*-min.zip; do
+        [ -f "$zip_file" ] || continue
+        [[ "$zip_file" == *"-collection-min.zip" ]] && continue
+        [[ "$zip_file" == *"-pre20"* ]] && continue
+        
+        FRAG_ZIP_NAME=$(basename "$zip_file")
+        echo "     Deploying Root Fragment: $FRAG_ZIP_NAME..."
+        cp "$zip_file" "$PROJECT_PATH/deploy/${FRAG_ZIP_NAME}.tmp"
+        mv "$PROJECT_PATH/deploy/${FRAG_ZIP_NAME}.tmp" "$PROJECT_PATH/deploy/${FRAG_ZIP_NAME}"
+        sleep 2 # Throttle deployment to reduce DB contention
+    done
     
     echo "  -> Deploying Language and Showcase extensions..."
     for cx_dir in zips/language zips/showcase; do
@@ -486,6 +502,9 @@ LIFERAY_VERSION="$REALISED_VERSION" PW_TEST_SCREENSHOT_NO_FONTS_READY=1 npx play
 TEST_EXIT_CODE=$?
 cd ..
 set -e
+
+echo "  -> Verifying visual rendering and checking regressions..."
+node scripts/verify-snapshots.js
 
 if [ $TEST_EXIT_CODE -eq 0 ]; then
     echo "  -> All tests passed."

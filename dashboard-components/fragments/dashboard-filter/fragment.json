@@ -5,6 +5,5 @@
   "cssPath": "index.css",
   "icon": "filter",
   "name": "Dashboard Filter",
-  "type": "component",
-  "thumbnailPath": "thumbnail.png"
+  "type": "component"
 }

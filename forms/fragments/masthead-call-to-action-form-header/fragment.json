@@ -5,6 +5,5 @@
   "cssPath": "index.css",
   "icon": "bolt",
   "name": "Masthead Call to Action Form Holder",
-  "type": "section",
-  "thumbnailPath": "thumbnail.png"
+  "type": "section"
 }

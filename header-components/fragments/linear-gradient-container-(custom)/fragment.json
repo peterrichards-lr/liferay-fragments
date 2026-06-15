@@ -5,6 +5,5 @@
   "cssPath": "index.css",
   "icon": "bolt",
   "name": "Linear Gradient Container",
-  "type": "component",
-  "thumbnailPath": "thumbnail.png"
+  "type": "component"
 }

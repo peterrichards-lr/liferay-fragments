@@ -18,6 +18,9 @@ node_modules/**
 ldm_startup.log
 state.json
 generated-test-pages.json
+/e2e-tests/visual-analysis.json
+/e2e-tests/diffs/
+/docs/images/diffs/
 /docs/test-results
 *.png
 !/docs/images/live/

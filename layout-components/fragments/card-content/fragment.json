@@ -5,6 +5,5 @@
   "cssPath": "index.css",
   "icon": "description",
   "name": "Card Content",
-  "type": "component",
-  "thumbnailPath": "thumbnail.png"
+  "type": "component"
 }

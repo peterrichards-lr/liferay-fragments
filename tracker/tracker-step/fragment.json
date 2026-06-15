@@ -5,6 +5,5 @@
   "cssPath": "index.css",
   "icon": "check-circle",
   "name": "Tracker Step",
-  "type": "component",
-  "thumbnailPath": "thumbnail.png"
+  "type": "component"
 }

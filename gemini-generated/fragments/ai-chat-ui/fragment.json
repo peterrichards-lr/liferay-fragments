@@ -5,6 +5,5 @@
   "icon": "comments",
   "jsPath": "index.js",
   "name": "AI Assistant Chat UI",
-  "type": "component",
-  "thumbnailPath": "thumbnail.png"
+  "type": "component"
 }

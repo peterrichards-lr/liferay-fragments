@@ -5,6 +5,5 @@
   "cssPath": "index.css",
   "icon": "bolt",
   "name": "My Rights",
-  "type": "component",
-  "thumbnailPath": "thumbnail.png"
+  "type": "component"
 }
