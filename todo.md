@@ -233,7 +233,7 @@ typography.
 
 - [x] **Adopt Theme Tokens**: Replace hardcoded values with Meridian CSS
       variables.
-- [ ] **Align with Clay UI Standards**: Refactor
+- [x] **Align with Clay UI Standards**: Refactor
       `form-fragments/fragments/toggle-switch` to use the standard Clay HTML
       structure (Snippet 17: `toggle-switch-check`, `toggle-switch-bar`,
       `toggle-switch-handle`) instead of the current custom CSS slider.

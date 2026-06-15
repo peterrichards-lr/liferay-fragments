@@ -272,7 +272,8 @@ after itself.
 
 ### Active Fix (In Progress)
 
-- [ ] Run automated E2E tests using `./scripts/test-runner.sh -p liferay-ai-commerce-accelerator` or equivalent command.
+- [x] Run automated E2E tests using `./scripts/test-runner.sh` (or using existing project via `-p`).
+- [x] Standardize `form-fragments/fragments/toggle-switch` to use the standard Clay HTML structure, resolving the outstanding task in `todo.md`.
 
 ### Backward-Compatibility Rules (Three-Target ZIP Build)
 

@@ -14,7 +14,7 @@
         class="slogan"
         style="color: var(--aura-heading-color)"
         data-lfr-editable-id="title"
-        data-lfr-editable-type="text"
+        data-lfr-editable-type="rich-text"
       >
         Frames that frame <em>you</em>.
       </h2>

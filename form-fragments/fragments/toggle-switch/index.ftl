@@ -7,16 +7,21 @@
       className="reference-mark" symbol="asterisk" /][/#if]</label
     >
 
-    <label class="switch">
-      <input
-        aria-describedby="${fragmentEntryLinkNamespace}-checkbox-input-help-text"
-        id="${fragmentEntryLinkNamespace}-checkbox-input"
-        class="form-control"
-        name="${input.name}"
-        [#if input.value?? && input.value == 'true']checked[/#if]
-        type="checkbox"
-      />
-      <span class="slider round"></span>
+    <label class="toggle-switch" id="${fragmentEntryLinkNamespace}-checkbox-label">
+      <span class="toggle-switch-check-bar">
+        <input
+          aria-describedby="${fragmentEntryLinkNamespace}-checkbox-input-help-text"
+          id="${fragmentEntryLinkNamespace}-checkbox-input"
+          class="toggle-switch-check"
+          name="${input.name}"
+          [#if input.value?? && input.value == 'true']checked[/#if]
+          role="switch"
+          type="checkbox"
+        />
+        <span aria-hidden="true" class="toggle-switch-bar">
+          <span class="toggle-switch-handle"></span>
+        </span>
+      </span>
     </label>
     [#if input.showHelpText && input.helpText?has_content]
     <p

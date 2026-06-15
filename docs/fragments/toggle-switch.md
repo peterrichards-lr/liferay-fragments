@@ -11,5 +11,4 @@ binary settings.
 
 ## Configuration
 
-- **Label**: Description shown alongside the switch.
-- **Checked Color**: Background color when the switch is ON.
+This fragment is designed to run inside form container environments, maps to standard input field fields, and inherits Liferay theme styling natively.

@@ -244,9 +244,7 @@ A lifestyle-focused design system with a scoped container architecture, high-fid
 
 ### Hidden Relationship
 
-|                                                   Desktop (1920px)                                                   |                                                   Tablet (768px)                                                   |                                                   Mobile (375px)                                                   |
-| :------------------------------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------------------------: |
-| <img src="./images/live/forms-fragments-hidden-relationship-desktop.png" width="350" alt="Desktop"><br>🟢 **Passed** | <img src="./images/live/forms-fragments-hidden-relationship-tablet.png" width="200" alt="Tablet"><br>🟢 **Passed** | <img src="./images/live/forms-fragments-hidden-relationship-mobile.png" width="120" alt="Mobile"><br>🟢 **Passed** |
+![Hidden Relationship](./images/hidden-relationship.png)
 
 [Detailed Documentation](./fragments/hidden-relationship.md)
 
@@ -344,9 +342,7 @@ _No image available_
 
 ### URL Populated Hidden Relationship
 
-|                                                          Desktop (1920px)                                                          |                                                          Tablet (768px)                                                          |                                                          Mobile (375px)                                                          |
-| :--------------------------------------------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------------------------------------------: |
-| <img src="./images/live/forms-fragments-url-populated-hidden-relationship-desktop.png" width="350" alt="Desktop"><br>🟢 **Passed** | <img src="./images/live/forms-fragments-url-populated-hidden-relationship-tablet.png" width="200" alt="Tablet"><br>🟢 **Passed** | <img src="./images/live/forms-fragments-url-populated-hidden-relationship-mobile.png" width="120" alt="Mobile"><br>🟢 **Passed** |
+_No image available_
 
 [Detailed Documentation](./fragments/url-populated-hidden-relationship.md)
 
@@ -366,9 +362,7 @@ _No image available_
 
 ### Form Populator (DEPRECATED)
 
-|                                                 Desktop (1920px)                                                  |                                                 Tablet (768px)                                                  |                                                 Mobile (375px)                                                  |
-| :---------------------------------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------------------------: |
-| <img src="./images/live/forms-form-populator-deprecated--desktop.png" width="350" alt="Desktop"><br>🟢 **Passed** | <img src="./images/live/forms-form-populator-deprecated--tablet.png" width="200" alt="Tablet"><br>🟢 **Passed** | <img src="./images/live/forms-form-populator-deprecated--mobile.png" width="120" alt="Mobile"><br>🟢 **Passed** |
+![Form Populator (DEPRECATED)](./images/form-populator.png)
 
 [Detailed Documentation](./fragments/form-populator.md)
 
@@ -376,9 +370,7 @@ _No image available_
 
 ### Link Form to Applicant
 
-|                                                     Desktop (1920px)                                                     |                                                     Tablet (768px)                                                     |                                                     Mobile (375px)                                                     |
-| :----------------------------------------------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------------------------------------------: |
-| <img src="./images/live/forms-link-form-to-applicant-desktop.png" width="350" alt="Desktop"><br>⚠️ **Blank/Solid Color** | <img src="./images/live/forms-link-form-to-applicant-tablet.png" width="200" alt="Tablet"><br>⚠️ **Blank/Solid Color** | <img src="./images/live/forms-link-form-to-applicant-mobile.png" width="120" alt="Mobile"><br>⚠️ **Blank/Solid Color** |
+_No image available_
 
 [Detailed Documentation](./fragments/form-session-id.md)
 
@@ -386,9 +378,7 @@ _No image available_
 
 ### Generate Form Session Id
 
-|                                                      Desktop (1920px)                                                      |                                                      Tablet (768px)                                                      |                                                      Mobile (375px)                                                      |
-| :------------------------------------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------------------------------: |
-| <img src="./images/live/forms-generate-form-session-id-desktop.png" width="350" alt="Desktop"><br>⚠️ **Blank/Solid Color** | <img src="./images/live/forms-generate-form-session-id-tablet.png" width="200" alt="Tablet"><br>⚠️ **Blank/Solid Color** | <img src="./images/live/forms-generate-form-session-id-mobile.png" width="120" alt="Mobile"><br>⚠️ **Blank/Solid Color** |
+_No image available_
 
 [Detailed Documentation](./fragments/generate-form-session-id.md)
 
@@ -406,9 +396,7 @@ _No image available_
 
 ### Redirect Page
 
-|                                           Desktop (1920px)                                           |                                           Tablet (768px)                                           |                                           Mobile (375px)                                           |
-| :--------------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------------: |
-| <img src="./images/live/forms-redirect-page-desktop.png" width="350" alt="Desktop"><br>🟢 **Passed** | <img src="./images/live/forms-redirect-page-tablet.png" width="200" alt="Tablet"><br>🟢 **Passed** | <img src="./images/live/forms-redirect-page-mobile.png" width="120" alt="Mobile"><br>🟢 **Passed** |
+_No image available_
 
 [Detailed Documentation](./fragments/redirect-page.md)
 
@@ -416,9 +404,7 @@ _No image available_
 
 ### Refresh Page
 
-|                                          Desktop (1920px)                                           |                                          Tablet (768px)                                           |                                          Mobile (375px)                                           |
-| :-------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------: |
-| <img src="./images/live/forms-refresh-page-desktop.png" width="350" alt="Desktop"><br>🟢 **Passed** | <img src="./images/live/forms-refresh-page-tablet.png" width="200" alt="Tablet"><br>🟢 **Passed** | <img src="./images/live/forms-refresh-page-mobile.png" width="120" alt="Mobile"><br>🟢 **Passed** |
+![Refresh Page](../forms/fragments/refresh-page/thumbnail.png)
 
 [Detailed Documentation](./fragments/refresh-page.md)
 
@@ -822,9 +808,7 @@ Prominent visuals, such as videos or banners, that capture attention and define 
 
 ### Hide Control Menu
 
-|                                                 Desktop (1920px)                                                 |                                                 Tablet (768px)                                                 |                                                 Mobile (375px)                                                 |
-| :--------------------------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------------------------: |
-| <img src="./images/live/miscellaneous-hide-control-menu-desktop.png" width="350" alt="Desktop"><br>🟢 **Passed** | <img src="./images/live/miscellaneous-hide-control-menu-tablet.png" width="200" alt="Tablet"><br>🟢 **Passed** | <img src="./images/live/miscellaneous-hide-control-menu-mobile.png" width="120" alt="Mobile"><br>🟢 **Passed** |
+_No image available_
 
 [Detailed Documentation](./fragments/hide-control-menu.md)
 
@@ -880,9 +864,7 @@ Prominent visuals, such as videos or banners, that capture attention and define 
 
 ### Trigger Ray
 
-|                                                   Desktop (1920px)                                                    |                                                   Tablet (768px)                                                    |                                                   Mobile (375px)                                                    |
-| :-------------------------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------------------: |
-| <img src="./images/live/miscellaneous-trigger-ray-desktop.png" width="350" alt="Desktop"><br>⚠️ **Blank/Solid Color** | <img src="./images/live/miscellaneous-trigger-ray-tablet.png" width="200" alt="Tablet"><br>⚠️ **Blank/Solid Color** | <img src="./images/live/miscellaneous-trigger-ray-mobile.png" width="120" alt="Mobile"><br>⚠️ **Blank/Solid Color** |
+_No image available_
 
 [Detailed Documentation](./fragments/trigger-ray.md)
 
@@ -984,9 +966,7 @@ A collection of high-fidelity fragments for constructing modern corporate intran
 
 ### Populate Select
 
-|                                                    Desktop (1920px)                                                    |                                                    Tablet (768px)                                                    |                                                    Mobile (375px)                                                    |
-| :--------------------------------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------------------------------: |
-| <img src="./images/live/populated-form-fields-populate-select-desktop.png" width="350" alt="Desktop"><br>🟢 **Passed** | <img src="./images/live/populated-form-fields-populate-select-tablet.png" width="200" alt="Tablet"><br>🟢 **Passed** | <img src="./images/live/populated-form-fields-populate-select-mobile.png" width="120" alt="Mobile"><br>🟢 **Passed** |
+![Populate Select](./images/populate-select.png)
 
 [Detailed Documentation](./fragments/populate-select.md)
 
@@ -1004,9 +984,7 @@ A collection of high-fidelity fragments for constructing modern corporate intran
 
 ### Store Default Value
 
-|                                                      Desktop (1920px)                                                      |                                                      Tablet (768px)                                                      |                                                      Mobile (375px)                                                      |
-| :------------------------------------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------------------------------: |
-| <img src="./images/live/populated-form-fields-store-default-value-desktop.png" width="350" alt="Desktop"><br>🟢 **Passed** | <img src="./images/live/populated-form-fields-store-default-value-tablet.png" width="200" alt="Tablet"><br>🟢 **Passed** | <img src="./images/live/populated-form-fields-store-default-value-mobile.png" width="120" alt="Mobile"><br>🟢 **Passed** |
+![Store Default Value](./images/store-default-value.png)
 
 [Detailed Documentation](./fragments/store-default-value.md)
 
@@ -1014,9 +992,7 @@ A collection of high-fidelity fragments for constructing modern corporate intran
 
 ### Store Form Field Values
 
-|                                                        Desktop (1920px)                                                        |                                                        Tablet (768px)                                                        |                                                        Mobile (375px)                                                        |
-| :----------------------------------------------------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------------------------------------------------: |
-| <img src="./images/live/populated-form-fields-store-form-field-values-desktop.png" width="350" alt="Desktop"><br>🟢 **Passed** | <img src="./images/live/populated-form-fields-store-form-field-values-tablet.png" width="200" alt="Tablet"><br>🟢 **Passed** | <img src="./images/live/populated-form-fields-store-form-field-values-mobile.png" width="120" alt="Mobile"><br>🟢 **Passed** |
+_No image available_
 
 [Detailed Documentation](./fragments/store-form-field-values.md)
 
@@ -1024,9 +1000,7 @@ A collection of high-fidelity fragments for constructing modern corporate intran
 
 ### Text (Derived Value)
 
-|                                                      Desktop (1920px)                                                      |                                                      Tablet (768px)                                                      |                                                      Mobile (375px)                                                      |
-| :------------------------------------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------------------------------: |
-| <img src="./images/live/populated-form-fields-text-derived-value--desktop.png" width="350" alt="Desktop"><br>🟢 **Passed** | <img src="./images/live/populated-form-fields-text-derived-value--tablet.png" width="200" alt="Tablet"><br>🟢 **Passed** | <img src="./images/live/populated-form-fields-text-derived-value--mobile.png" width="120" alt="Mobile"><br>🟢 **Passed** |
+_No image available_
 
 [Detailed Documentation](./fragments/text-derived-value.md)
 
@@ -1108,9 +1082,7 @@ A collection of high-fidelity fragments for constructing modern corporate intran
 
 ### Campaign Initialiser
 
-|                                              Desktop (1920px)                                               |                                              Tablet (768px)                                               |                                              Mobile (375px)                                               |
-| :---------------------------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------------------: |
-| <img src="./images/live/pulse-campaign-initialiser-desktop.png" width="350" alt="Desktop"><br>🟢 **Passed** | <img src="./images/live/pulse-campaign-initialiser-tablet.png" width="200" alt="Tablet"><br>🟢 **Passed** | <img src="./images/live/pulse-campaign-initialiser-mobile.png" width="120" alt="Mobile"><br>🟢 **Passed** |
+_No image available_
 
 [Detailed Documentation](./fragments/campaign-initialiser.md)
 
@@ -1118,9 +1090,7 @@ A collection of high-fidelity fragments for constructing modern corporate intran
 
 ### Campaign Insights
 
-|                                             Desktop (1920px)                                             |                                             Tablet (768px)                                             |                                             Mobile (375px)                                             |
-| :------------------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------------: |
-| <img src="./images/live/pulse-campaign-insights-desktop.png" width="350" alt="Desktop"><br>🟢 **Passed** | <img src="./images/live/pulse-campaign-insights-tablet.png" width="200" alt="Tablet"><br>🟢 **Passed** | <img src="./images/live/pulse-campaign-insights-mobile.png" width="120" alt="Mobile"><br>🟢 **Passed** |
+_No image available_
 
 [Detailed Documentation](./fragments/cookie-sniffer.md)
 
@@ -1128,9 +1098,7 @@ A collection of high-fidelity fragments for constructing modern corporate intran
 
 ### Custom Event Listener
 
-|                                               Desktop (1920px)                                               |                                               Tablet (768px)                                               |                                               Mobile (375px)                                               |
-| :----------------------------------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------------------------------: |
-| <img src="./images/live/pulse-custom-event-listener-desktop.png" width="350" alt="Desktop"><br>🟢 **Passed** | <img src="./images/live/pulse-custom-event-listener-tablet.png" width="200" alt="Tablet"><br>🟢 **Passed** | <img src="./images/live/pulse-custom-event-listener-mobile.png" width="120" alt="Mobile"><br>🟢 **Passed** |
+_No image available_
 
 [Detailed Documentation](./fragments/custom-event-listener.md)
 
@@ -1202,9 +1170,7 @@ A collection of high-fidelity fragments for constructing modern corporate intran
 
 ### Ping
 
-|                                          Desktop (1920px)                                          |                                          Tablet (768px)                                          |                                          Mobile (375px)                                          |
-| :------------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------: |
-| <img src="./images/live/user-account-ping-desktop.png" width="350" alt="Desktop"><br>🟢 **Passed** | <img src="./images/live/user-account-ping-tablet.png" width="200" alt="Tablet"><br>🟢 **Passed** | <img src="./images/live/user-account-ping-mobile.png" width="120" alt="Mobile"><br>🟢 **Passed** |
+_No image available_
 
 [Detailed Documentation](./fragments/ping.md)
 
@@ -1212,9 +1178,7 @@ A collection of high-fidelity fragments for constructing modern corporate intran
 
 ### Who Am I
 
-|                                            Desktop (1920px)                                            |                                            Tablet (768px)                                            |                                            Mobile (375px)                                            |
-| :----------------------------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------------------------: |
-| <img src="./images/live/user-account-who-am-i-desktop.png" width="350" alt="Desktop"><br>🟢 **Passed** | <img src="./images/live/user-account-who-am-i-tablet.png" width="200" alt="Tablet"><br>🟢 **Passed** | <img src="./images/live/user-account-who-am-i-mobile.png" width="120" alt="Mobile"><br>🟢 **Passed** |
+_No image available_
 
 [Detailed Documentation](./fragments/who-am-i.md)
 
@@ -1224,9 +1188,7 @@ A collection of high-fidelity fragments for constructing modern corporate intran
 
 ### Announcements Modifier
 
-|                                                     Desktop (1920px)                                                     |                                                     Tablet (768px)                                                     |                                                     Mobile (375px)                                                     |
-| :----------------------------------------------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------------------------------------------: |
-| <img src="./images/live/widget-modifiers-announcements-modifier-desktop.png" width="350" alt="Desktop"><br>🟢 **Passed** | <img src="./images/live/widget-modifiers-announcements-modifier-tablet.png" width="200" alt="Tablet"><br>🟢 **Passed** | <img src="./images/live/widget-modifiers-announcements-modifier-mobile.png" width="120" alt="Mobile"><br>🟢 **Passed** |
+![Announcements Modifier](../widget-modifiers/fragments/alerts-modifier/thumbnail.png)
 
 [Detailed Documentation](./fragments/alerts-modifier.md)
 
