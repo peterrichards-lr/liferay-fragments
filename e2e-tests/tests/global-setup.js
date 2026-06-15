@@ -209,6 +209,10 @@ async function globalSetup(config) {
     const targetClasses = [
       'com.liferay.headless.delivery.internal.resource.v1_0.ContentSetElementResourceImpl',
       'com.liferay.headless.delivery.resource.v1_0.ContentSetElementResource',
+      'com.liferay.object.rest.internal.resource.v1_0.ObjectEntryResourceImpl',
+      'com.liferay.object.rest.resource.v1_0.ObjectEntryResource',
+      'com.liferay.object.rest.internal.resource.v1_0.ObjectEntryRelatedObjectsResourceImpl',
+      'com.liferay.object.rest.resource.v1_0.ObjectEntryRelatedObjectsResource',
     ];
 
     let needsSave = false;
@@ -275,6 +279,16 @@ async function globalSetup(config) {
       'COMPANY_MILESTONE',
       'PRODUCT_SHOWCASE',
       'ACTIVITY_LOG',
+      'TICKET_COMMENT',
+      'TICKET',
+      'HEART_RATE',
+      'BLOOD_PRESSURE',
+      'STEPS',
+      'WEIGHT',
+      'APPLICANT',
+      'CAMPAIGN',
+      'CAMPAIGN_INTERACTION',
+      'AUDIT_ENTRY',
     ]);
 
     const projectRoot = path.join(__dirname, '..', '..');
@@ -336,11 +350,20 @@ async function globalSetup(config) {
 
       const objJson = await objResp.json();
       const objId = objJson.id;
+      const className = objJson.className;
+      const hashPart = className ? className.split('#')[1] : null;
 
-      // Navigate to the permissions grid page for this Object Definition
-      const permissionsUrl = `${baseURL}/group/control_panel/manage?p_p_id=com_liferay_portlet_configuration_web_portlet_PortletConfigurationPortlet&_com_liferay_portlet_configuration_web_portlet_PortletConfigurationPortlet_mvcPath=%2Fedit_permissions.jsp&_com_liferay_portlet_configuration_web_portlet_PortletConfigurationPortlet_modelResource=com.liferay.object.model.ObjectDefinition&_com_liferay_portlet_configuration_web_portlet_PortletConfigurationPortlet_resourcePrimKey=${objId}`;
+      if (!hashPart) {
+        console.warn(
+          `     [WARN] Could not parse className hash suffix from: ${className}`
+        );
+        continue;
+      }
 
-      await page.goto(permissionsUrl);
+      // --- STEP 1: Set Object Definition Level Permissions ---
+      const defPermissionsUrl = `${baseURL}/group/control_panel/manage?p_p_id=com_liferay_portlet_configuration_web_portlet_PortletConfigurationPortlet&_com_liferay_portlet_configuration_web_portlet_PortletConfigurationPortlet_mvcPath=%2Fedit_permissions.jsp&_com_liferay_portlet_configuration_web_portlet_PortletConfigurationPortlet_modelResource=com.liferay.object.model.ObjectDefinition&_com_liferay_portlet_configuration_web_portlet_PortletConfigurationPortlet_resourcePrimKey=${objId}`;
+
+      await page.goto(defPermissionsUrl);
       await page.waitForSelector('form#fm, table', {
         state: 'visible',
         timeout: 10000,
@@ -348,55 +371,91 @@ async function globalSetup(config) {
 
       const guestRow = page.locator('tr:has-text("Guest")');
       if ((await guestRow.count()) > 0) {
-        let changed = false;
-
-        // 1. VIEW permission checkbox
         const viewCheckbox = guestRow.locator('input[id="guest_ACTION_VIEW"]');
         if ((await viewCheckbox.count()) > 0) {
           const isChecked = await viewCheckbox.isChecked();
           if (!isChecked) {
-            console.log(`     Checking VIEW checkbox for Guest...`);
-            await viewCheckbox.check();
-            changed = true;
-          }
-        }
-
-        // 2. ADD_ENTRY permission checkbox (primarily for COMPANY_MILESTONE form submissions)
-        const addCheckbox = guestRow.locator(
-          'input[id="guest_ACTION_ADD_ENTRY"]'
-        );
-        if ((await addCheckbox.count()) > 0) {
-          const isChecked = await addCheckbox.isChecked();
-          if (!isChecked) {
-            console.log(`     Checking ADD_ENTRY checkbox for Guest...`);
-            await addCheckbox.check();
-            changed = true;
-          }
-        }
-
-        if (changed) {
-          const saveButton = page.locator(
-            'button[type="submit"]:has-text("Save"), button.btn-primary:has-text("Save")'
-          );
-          if ((await saveButton.count()) > 0) {
-            await Promise.all([
-              page.waitForNavigation({ waitUntil: 'load' }),
-              saveButton.first().click(),
-            ]);
             console.log(
-              `     Successfully saved Guest permissions for ${erc}.`
+              `     Checking VIEW checkbox for Guest on ObjectDefinition...`
             );
+            await viewCheckbox.check();
+            const saveButton = page.locator(
+              'button[type="submit"]:has-text("Save"), button.btn-primary:has-text("Save")'
+            );
+            if ((await saveButton.count()) > 0) {
+              await Promise.all([
+                page.waitForNavigation({ waitUntil: 'load' }),
+                saveButton.first().click(),
+              ]);
+              console.log(
+                `     Successfully saved Guest ObjectDefinition VIEW permission for ${erc}.`
+              );
+            }
           } else {
-            console.warn(`     [WARN] Save button not found for ${erc}.`);
+            console.log(
+              `     Guest VIEW permission on ObjectDefinition already up-to-date for ${erc}.`
+            );
+          }
+        }
+      }
+
+      // --- STEP 2: Set Object Entry Level Permissions in Guest Role ---
+      const roleId = '20106'; // Guest Role ID
+      const rolePermissionsUrl = `${baseURL}/group/control_panel/manage?p_p_id=com_liferay_roles_admin_web_portlet_RolesAdminPortlet&p_p_lifecycle=0&p_p_state=maximized&p_p_mode=view&_com_liferay_roles_admin_web_portlet_RolesAdminPortlet_mvcPath=%2Fedit_role_permissions.jsp&_com_liferay_roles_admin_web_portlet_RolesAdminPortlet_cmd=edit&_com_liferay_roles_admin_web_portlet_RolesAdminPortlet_portletResource=com_liferay_object_web_internal_object_definitions_portlet_ObjectDefinitionsPortlet_${hashPart}&_com_liferay_roles_admin_web_portlet_RolesAdminPortlet_tabs1=define-permissions&_com_liferay_roles_admin_web_portlet_RolesAdminPortlet_tabs2=roles&_com_liferay_roles_admin_web_portlet_RolesAdminPortlet_accountRoleGroupScope=false&_com_liferay_roles_admin_web_portlet_RolesAdminPortlet_roleId=${roleId}`;
+
+      await page.goto(rolePermissionsUrl);
+      await page.waitForSelector('form, table', {
+        state: 'visible',
+        timeout: 10000,
+      });
+
+      const targetCheckboxes = [
+        `com.liferay.object#${objId}ADD_OBJECT_ENTRY`,
+        `com.liferay.object.model.ObjectDefinition#${hashPart}VIEW`,
+        `com_liferay_object_web_internal_object_definitions_portlet_ObjectDefinitionsPortlet_${hashPart}VIEW`,
+      ];
+
+      let entryChanged = false;
+      for (const value of targetCheckboxes) {
+        const checkbox = page.locator(
+          `input[type="checkbox"][value="${value}"]`
+        );
+        if ((await checkbox.count()) > 0) {
+          const isChecked = await checkbox.isChecked();
+          if (!isChecked) {
+            console.log(
+              `     Checking Guest role checkbox for value: ${value}`
+            );
+            await checkbox.check();
+            entryChanged = true;
           }
         } else {
+          console.warn(`     [WARN] Checkbox not found for value: ${value}`);
+        }
+      }
+
+      if (entryChanged) {
+        const saveButton = page
+          .locator(
+            'button[type="submit"]:has-text("Save"), button.btn-primary:has-text("Save")'
+          )
+          .first();
+        if ((await saveButton.count()) > 0) {
+          await Promise.all([
+            page.waitForNavigation({ waitUntil: 'load' }),
+            saveButton.click(),
+          ]);
           console.log(
-            `     Guest permissions are already up-to-date for ${erc}.`
+            `     Successfully saved Guest entry permissions for ${erc}.`
+          );
+        } else {
+          console.warn(
+            `     [WARN] Guest role save button not found for ${erc}.`
           );
         }
       } else {
-        console.warn(
-          `     [WARN] Guest role row not found in permissions table for ${erc}.`
+        console.log(
+          `     Guest entry permissions are already up-to-date for ${erc}.`
         );
       }
     }
@@ -647,6 +706,23 @@ async function globalSetup(config) {
     }
   } catch (e) {
     console.error('  -> Error fetching existing layouts:', e.message);
+  }
+
+  // Fetch all object definitions to resolve site-scoped API paths
+  let objectDefinitions = [];
+  try {
+    const objDefsResp = await apiContext.get(
+      `/o/object-admin/v1.0/object-definitions?pageSize=100`
+    );
+    if (objDefsResp.ok()) {
+      const objDefsJson = await objDefsResp.json();
+      objectDefinitions = objDefsJson.items || [];
+      console.log(
+        `  -> Retrieved ${objectDefinitions.length} object definitions for scope mapping.`
+      );
+    }
+  } catch (e) {
+    console.warn('  -> [WARN] Failed to fetch object definitions:', e.message);
   }
 
   const testPagesMap = [];
@@ -1308,15 +1384,93 @@ async function globalSetup(config) {
         if (testData.pageConfig && testData.pageConfig.fragmentConfig) {
           seededConfigOverrides = { ...testData.pageConfig.fragmentConfig };
           // Dynamically map ERC references to actual Liferay IDs/UUIDs
+          // Also automatically rewrite site-scoped object API paths to include scopes
           Object.keys(seededConfigOverrides).forEach((key) => {
             const val = seededConfigOverrides[key];
-            if (typeof val === 'string' && assetMap[val]) {
-              seededConfigOverrides[key] = assetMap[val].toString();
-              console.log(
-                `       Mapping config override: ${key} -> ${seededConfigOverrides[key]} (resolved from ${val})`
-              );
+            if (typeof val === 'string') {
+              if (assetMap[val]) {
+                seededConfigOverrides[key] = assetMap[val].toString();
+                console.log(
+                  `       Mapping config override: ${key} -> ${seededConfigOverrides[key]} (resolved from ${val})`
+                );
+              } else if (
+                val.includes('/o/c/') ||
+                key.toLowerCase().includes('apipath')
+              ) {
+                // Determine the clean path representation
+                let cleanPath = val.trim();
+                if (!cleanPath.startsWith('/o/c/')) {
+                  cleanPath = `/o/c/${cleanPath}`;
+                }
+                const matchPath = cleanPath.replace(/\/$/, '');
+                const def = objectDefinitions.find(
+                  (d) => d.restContextPath === matchPath
+                );
+                if (def && def.scope === 'site') {
+                  const suffix = val.endsWith('/') ? '/' : '';
+                  seededConfigOverrides[key] =
+                    `${matchPath}/scopes/${siteId}${suffix}`;
+                  console.log(
+                    `       Rewrote site-scoped object API path for ${key}: ${val} -> ${seededConfigOverrides[key]}`
+                  );
+                }
+              }
             }
           });
+        }
+
+        if (baseFragmentKey === 'public-comments') {
+          let ticketId = '91133';
+          try {
+            console.log(
+              '       Seeding Ticket and Comment for public-comments...'
+            );
+            const ticketResp = await apiContext.post(
+              `/o/c/tickets/scopes/${siteId}`,
+              {
+                data: {
+                  title: 'E2E Test Ticket',
+                },
+              }
+            );
+            if (ticketResp.ok()) {
+              const ticketJson = await ticketResp.json();
+              ticketId = ticketJson.id.toString();
+              console.log(`       Created Ticket with ID: ${ticketId}`);
+
+              // Seed the comment record linked to this ticket
+              const commentResp = await apiContext.post(
+                `/o/c/comments/scopes/${siteId}`,
+                {
+                  data: {
+                    comment:
+                      '<p>This is a test comment from the E2E setup!</p>',
+                    visibility: 'Public',
+                    r_ticket_ticketId: ticketId,
+                  },
+                }
+              );
+              if (commentResp.ok()) {
+                console.log(
+                  `       Successfully seeded mock comment linked to Ticket ${ticketId}`
+                );
+              } else {
+                console.warn(
+                  `       [WARN] Failed to seed mock comment: ${commentResp.status()} - ${await commentResp.text()}`
+                );
+              }
+            } else {
+              console.warn(
+                `       [WARN] Failed to seed Ticket: ${ticketResp.status()} - ${await ticketResp.text()}`
+              );
+            }
+          } catch (e) {
+            console.warn(
+              `       [WARN] Exception seeding Ticket/Comment: ${e.message}`
+            );
+          }
+          seededConfigOverrides.dummyId = ticketId;
+          seededConfigOverrides.useDummyId = true;
         }
       } catch (err) {
         console.error(
