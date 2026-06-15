@@ -1,0 +1,13 @@
+node_modules/
+zips/
+e2e-tests/snapshots/
+e2e-tests/playwright-report/
+playwright-report/
+test-results/
+
+# FreeMarker Templates (formatted by scripts/format-ftl.js)
+**/*.ftl
+
+# CSS files containing FreeMarker namespace variables
+layout-components/fragments/primary-card/index.css
+layout-components/fragments/secondary-card/index.css
