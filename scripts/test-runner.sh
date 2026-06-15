@@ -491,6 +491,10 @@ if [ $TEST_EXIT_CODE -eq 0 ]; then
     sed -i.bak "s/- \*\*Status\*\*: Running.../- \*\*Status\*\*: Completed/" "$RESULTS_FILE" && rm "${RESULTS_FILE}.bak"
     echo "## Summary" >> "$RESULTS_FILE"
     echo "All tests passed successfully." >> "$RESULTS_FILE"
+    
+    echo "  -> Regenerating documentation gallery..."
+    node scripts/generate-gallery.js
+    echo "  -> Gallery regenerated successfully."
 else
     echo "  -> Some tests failed. Check e2e-tests/playwright_output.log"
     TESTS_PASSED=false
