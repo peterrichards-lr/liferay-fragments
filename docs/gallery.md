@@ -3,7 +3,6 @@
 A visual reference for the high-fidelity fragments available in this Liferay DXP repository. Generated automatically.
 
 **Last Tested Against Liferay Version:** `2026.q1.9-lts`
-_(Note: Live snapshots disabled due to pending or failed test suite)_
 
 ## Aura Design System
 
@@ -11,31 +10,41 @@ A lifestyle-focused design system with a scoped container architecture, high-fid
 
 ### Aura - Final CTA Banner
 
-![Aura - Final CTA Banner](../aura/fragments/aura-final-cta/thumbnail.png)
+|                                             Desktop (1920px)                                             |                                             Tablet (768px)                                             |                                             Mobile (375px)                                             |
+| :------------------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------------: |
+| <img src="./images/live/aura-design-system-aura-final-cta-banner-desktop.png" width="350" alt="Desktop"> | <img src="./images/live/aura-design-system-aura-final-cta-banner-tablet.png" width="200" alt="Tablet"> | <img src="./images/live/aura-design-system-aura-final-cta-banner-mobile.png" width="120" alt="Mobile"> |
 
 ---
 
 ### Aura - Lookbook Row
 
-![Aura - Lookbook Row](../aura/fragments/aura-lookbook/thumbnail.png)
+|                                           Desktop (1920px)                                           |                                           Tablet (768px)                                           |                                           Mobile (375px)                                           |
+| :--------------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------------: |
+| <img src="./images/live/aura-design-system-aura-lookbook-row-desktop.png" width="350" alt="Desktop"> | <img src="./images/live/aura-design-system-aura-lookbook-row-tablet.png" width="200" alt="Tablet"> | <img src="./images/live/aura-design-system-aura-lookbook-row-mobile.png" width="120" alt="Mobile"> |
 
 ---
 
 ### Aura - Product Gallery
 
-![Aura - Product Gallery](../aura/fragments/aura-product-gallery/thumbnail.png)
+|                                            Desktop (1920px)                                             |                                            Tablet (768px)                                             |                                            Mobile (375px)                                             |
+| :-----------------------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------------------: |
+| <img src="./images/live/aura-design-system-aura-product-gallery-desktop.png" width="350" alt="Desktop"> | <img src="./images/live/aura-design-system-aura-product-gallery-tablet.png" width="200" alt="Tablet"> | <img src="./images/live/aura-design-system-aura-product-gallery-mobile.png" width="120" alt="Mobile"> |
 
 ---
 
 ### Aura - Scoped Container
 
-![Aura - Scoped Container](../aura/fragments/aura-scoped-container/thumbnail.png)
+|                                             Desktop (1920px)                                             |                                             Tablet (768px)                                             |                                             Mobile (375px)                                             |
+| :------------------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------------: |
+| <img src="./images/live/aura-design-system-aura-scoped-container-desktop.png" width="350" alt="Desktop"> | <img src="./images/live/aura-design-system-aura-scoped-container-tablet.png" width="200" alt="Tablet"> | <img src="./images/live/aura-design-system-aura-scoped-container-mobile.png" width="120" alt="Mobile"> |
 
 ---
 
 ### Aura - USP Grid
 
-![Aura - USP Grid](../aura/fragments/aura-usp-grid/thumbnail.png)
+|                                         Desktop (1920px)                                         |                                         Tablet (768px)                                         |                                         Mobile (375px)                                         |
+| :----------------------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------------------: |
+| <img src="./images/live/aura-design-system-aura-usp-grid-desktop.png" width="350" alt="Desktop"> | <img src="./images/live/aura-design-system-aura-usp-grid-tablet.png" width="200" alt="Tablet"> | <img src="./images/live/aura-design-system-aura-usp-grid-mobile.png" width="120" alt="Mobile"> |
 
 ---
 
@@ -43,7 +52,9 @@ A lifestyle-focused design system with a scoped container architecture, high-fid
 
 ### Dynamic Badge Overlay
 
-![Dynamic Badge Overlay](./images/dynamic-badge-overlay.png)
+|                                        Desktop (1920px)                                        |                                        Tablet (768px)                                        |                                        Mobile (375px)                                        |
+| :--------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------: |
+| <img src="./images/live/commerce-dynamic-badge-overlay-desktop.png" width="350" alt="Desktop"> | <img src="./images/live/commerce-dynamic-badge-overlay-tablet.png" width="200" alt="Tablet"> | <img src="./images/live/commerce-dynamic-badge-overlay-mobile.png" width="120" alt="Mobile"> |
 
 [Detailed Documentation](./fragments/dynamic-badge-overlay.md)
 
@@ -51,7 +62,9 @@ A lifestyle-focused design system with a scoped container architecture, high-fid
 
 ### Purchased Products
 
-![Purchased Products](../commerce/fragments/purchased-products/thumbnail.png)
+|                                      Desktop (1920px)                                       |                                      Tablet (768px)                                       |                                      Mobile (375px)                                       |
+| :-----------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------: |
+| <img src="./images/live/commerce-purchased-products-desktop.png" width="350" alt="Desktop"> | <img src="./images/live/commerce-purchased-products-tablet.png" width="200" alt="Tablet"> | <img src="./images/live/commerce-purchased-products-mobile.png" width="120" alt="Mobile"> |
 
 [Detailed Documentation](./fragments/purchased-products.md)
 
@@ -61,7 +74,9 @@ A lifestyle-focused design system with a scoped container architecture, high-fid
 
 ### Content Map
 
-![Content Map](./images/content-map.png)
+|                                  Desktop (1920px)                                   |                                  Tablet (768px)                                   |                                  Mobile (375px)                                   |
+| :---------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------: |
+| <img src="./images/live/content-content-map-desktop.png" width="350" alt="Desktop"> | <img src="./images/live/content-content-map-tablet.png" width="200" alt="Tablet"> | <img src="./images/live/content-content-map-mobile.png" width="120" alt="Mobile"> |
 
 [Detailed Documentation](./fragments/content-map.md)
 
@@ -69,7 +84,9 @@ A lifestyle-focused design system with a scoped container architecture, high-fid
 
 ### Service Card
 
-![Service Card](../content/fragments/service-card/thumbnail.png)
+|                                   Desktop (1920px)                                   |                                   Tablet (768px)                                   |                                   Mobile (375px)                                   |
+| :----------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------: |
+| <img src="./images/live/content-service-card-desktop.png" width="350" alt="Desktop"> | <img src="./images/live/content-service-card-tablet.png" width="200" alt="Tablet"> | <img src="./images/live/content-service-card-mobile.png" width="120" alt="Mobile"> |
 
 [Detailed Documentation](./fragments/service-card.md)
 
@@ -77,7 +94,9 @@ A lifestyle-focused design system with a scoped container architecture, high-fid
 
 ### Service Icon
 
-![Service Icon](../content/fragments/service-icon/thumbnail.png)
+|                                   Desktop (1920px)                                   |                                   Tablet (768px)                                   |                                   Mobile (375px)                                   |
+| :----------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------: |
+| <img src="./images/live/content-service-icon-desktop.png" width="350" alt="Desktop"> | <img src="./images/live/content-service-icon-tablet.png" width="200" alt="Tablet"> | <img src="./images/live/content-service-icon-mobile.png" width="120" alt="Mobile"> |
 
 [Detailed Documentation](./fragments/service-icon.md)
 
@@ -85,7 +104,9 @@ A lifestyle-focused design system with a scoped container architecture, high-fid
 
 ### Service Link Button
 
-_No image available_
+|                                      Desktop (1920px)                                       |                                      Tablet (768px)                                       |                                      Mobile (375px)                                       |
+| :-----------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------: |
+| <img src="./images/live/content-service-link-button-desktop.png" width="350" alt="Desktop"> | <img src="./images/live/content-service-link-button-tablet.png" width="200" alt="Tablet"> | <img src="./images/live/content-service-link-button-mobile.png" width="120" alt="Mobile"> |
 
 [Detailed Documentation](./fragments/service-link-button.md)
 
@@ -95,7 +116,9 @@ _No image available_
 
 ### Dashboard Container
 
-_No image available_
+|                                           Desktop (1920px)                                           |                                           Tablet (768px)                                           |                                           Mobile (375px)                                           |
+| :--------------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------------: |
+| <img src="./images/live/heathcare-portal-dashboard-container-desktop.png" width="350" alt="Desktop"> | <img src="./images/live/heathcare-portal-dashboard-container-tablet.png" width="200" alt="Tablet"> | <img src="./images/live/heathcare-portal-dashboard-container-mobile.png" width="120" alt="Mobile"> |
 
 [Detailed Documentation](./fragments/dashboard-container.md)
 
@@ -103,7 +126,9 @@ _No image available_
 
 ### Dashboard Filter
 
-_No image available_
+|                                         Desktop (1920px)                                          |                                         Tablet (768px)                                          |                                         Mobile (375px)                                          |
+| :-----------------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------------: |
+| <img src="./images/live/heathcare-portal-dashboard-filter-desktop.png" width="350" alt="Desktop"> | <img src="./images/live/heathcare-portal-dashboard-filter-tablet.png" width="200" alt="Tablet"> | <img src="./images/live/heathcare-portal-dashboard-filter-mobile.png" width="120" alt="Mobile"> |
 
 [Detailed Documentation](./fragments/dashboard-filter.md)
 
@@ -113,7 +138,9 @@ _No image available_
 
 ### Date Display (Collection Display) (DEPRECATED)
 
-![Date Display (Collection Display) (DEPRECATED)](../date-display/fragments/date-display-collection-display/thumbnail.png)
+|                                                     Desktop (1920px)                                                     |                                                     Tablet (768px)                                                     |                                                     Mobile (375px)                                                     |
+| :----------------------------------------------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------------------------------------------: |
+| <img src="./images/live/date-display-date-display-collection-display-deprecated--desktop.png" width="350" alt="Desktop"> | <img src="./images/live/date-display-date-display-collection-display-deprecated--tablet.png" width="200" alt="Tablet"> | <img src="./images/live/date-display-date-display-collection-display-deprecated--mobile.png" width="120" alt="Mobile"> |
 
 [Detailed Documentation](./fragments/date-display-collection-display.md)
 
@@ -121,7 +148,9 @@ _No image available_
 
 ### Data Display (Static) (DEPRECATED)
 
-![Data Display (Static) (DEPRECATED)](../date-display/fragments/date-display-static/thumbnail.png)
+|                                               Desktop (1920px)                                               |                                               Tablet (768px)                                               |                                               Mobile (375px)                                               |
+| :----------------------------------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------------------------------: |
+| <img src="./images/live/date-display-data-display-static-deprecated--desktop.png" width="350" alt="Desktop"> | <img src="./images/live/date-display-data-display-static-deprecated--tablet.png" width="200" alt="Tablet"> | <img src="./images/live/date-display-data-display-static-deprecated--mobile.png" width="120" alt="Mobile"> |
 
 [Detailed Documentation](./fragments/date-display-static.md)
 
@@ -131,7 +160,9 @@ _No image available_
 
 ### Loan Application Calculator
 
-![Loan Application Calculator](./images/loan-application-calculator.png)
+|                                          Desktop (1920px)                                           |                                          Tablet (768px)                                           |                                          Mobile (375px)                                           |
+| :-------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------: |
+| <img src="./images/live/finance-loan-application-calculator-desktop.png" width="350" alt="Desktop"> | <img src="./images/live/finance-loan-application-calculator-tablet.png" width="200" alt="Tablet"> | <img src="./images/live/finance-loan-application-calculator-mobile.png" width="120" alt="Mobile"> |
 
 [Detailed Documentation](./fragments/loan-application-calculator.md)
 
@@ -139,7 +170,9 @@ _No image available_
 
 ### Loan Calculator
 
-![Loan Calculator](./images/loan-calculator.png)
+|                                    Desktop (1920px)                                     |                                    Tablet (768px)                                     |                                    Mobile (375px)                                     |
+| :-------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------: |
+| <img src="./images/live/finance-loan-calculator-desktop.png" width="350" alt="Desktop"> | <img src="./images/live/finance-loan-calculator-tablet.png" width="200" alt="Tablet"> | <img src="./images/live/finance-loan-calculator-mobile.png" width="120" alt="Mobile"> |
 
 [Detailed Documentation](./fragments/loan-calculator.md)
 
@@ -149,13 +182,17 @@ _No image available_
 
 ### Address Autocomplete
 
-_No image available_
+|                                           Desktop (1920px)                                           |                                           Tablet (768px)                                           |                                           Mobile (375px)                                           |
+| :--------------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------------: |
+| <img src="./images/live/forms-fragments-address-autocomplete-desktop.png" width="350" alt="Desktop"> | <img src="./images/live/forms-fragments-address-autocomplete-tablet.png" width="200" alt="Tablet"> | <img src="./images/live/forms-fragments-address-autocomplete-mobile.png" width="120" alt="Mobile"> |
 
 ---
 
 ### Autocomplete (Object)
 
-![Autocomplete (Object)](<../form-fragments/fragments/autocomplete-(object)/thumbnail.png>)
+|                                           Desktop (1920px)                                           |                                           Tablet (768px)                                           |                                           Mobile (375px)                                           |
+| :--------------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------------: |
+| <img src="./images/live/forms-fragments-autocomplete-object--desktop.png" width="350" alt="Desktop"> | <img src="./images/live/forms-fragments-autocomplete-object--tablet.png" width="200" alt="Tablet"> | <img src="./images/live/forms-fragments-autocomplete-object--mobile.png" width="120" alt="Mobile"> |
 
 [Detailed Documentation](<./fragments/autocomplete-(object).md>)
 
@@ -163,7 +200,9 @@ _No image available_
 
 ### Autocomplete (Picklist)
 
-![Autocomplete (Picklist)](<../form-fragments/fragments/autocomplete-(picklist)/thumbnail.png>)
+|                                            Desktop (1920px)                                            |                                            Tablet (768px)                                            |                                            Mobile (375px)                                            |
+| :----------------------------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------------------------: |
+| <img src="./images/live/forms-fragments-autocomplete-picklist--desktop.png" width="350" alt="Desktop"> | <img src="./images/live/forms-fragments-autocomplete-picklist--tablet.png" width="200" alt="Tablet"> | <img src="./images/live/forms-fragments-autocomplete-picklist--mobile.png" width="120" alt="Mobile"> |
 
 [Detailed Documentation](<./fragments/autocomplete-(picklist).md>)
 
@@ -171,13 +210,17 @@ _No image available_
 
 ### Color Swatches
 
-_No image available_
+|                                        Desktop (1920px)                                        |                                        Tablet (768px)                                        |                                        Mobile (375px)                                        |
+| :--------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------: |
+| <img src="./images/live/forms-fragments-color-swatches-desktop.png" width="350" alt="Desktop"> | <img src="./images/live/forms-fragments-color-swatches-tablet.png" width="200" alt="Tablet"> | <img src="./images/live/forms-fragments-color-swatches-mobile.png" width="120" alt="Mobile"> |
 
 ---
 
 ### Confirmation Field
 
-![Confirmation Field](../form-fragments/fragments/confirmation-field/thumbnail.png)
+|                                          Desktop (1920px)                                          |                                          Tablet (768px)                                          |                                          Mobile (375px)                                          |
+| :------------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------: |
+| <img src="./images/live/forms-fragments-confirmation-field-desktop.png" width="350" alt="Desktop"> | <img src="./images/live/forms-fragments-confirmation-field-tablet.png" width="200" alt="Tablet"> | <img src="./images/live/forms-fragments-confirmation-field-mobile.png" width="120" alt="Mobile"> |
 
 [Detailed Documentation](./fragments/confirmation-field.md)
 
@@ -185,19 +228,25 @@ _No image available_
 
 ### Currency Masked Input
 
-_No image available_
+|                                           Desktop (1920px)                                            |                                           Tablet (768px)                                            |                                           Mobile (375px)                                            |
+| :---------------------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------------: |
+| <img src="./images/live/forms-fragments-currency-masked-input-desktop.png" width="350" alt="Desktop"> | <img src="./images/live/forms-fragments-currency-masked-input-tablet.png" width="200" alt="Tablet"> | <img src="./images/live/forms-fragments-currency-masked-input-mobile.png" width="120" alt="Mobile"> |
 
 ---
 
 ### File Drop Zone
 
-_No image available_
+|                                        Desktop (1920px)                                        |                                        Tablet (768px)                                        |                                        Mobile (375px)                                        |
+| :--------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------: |
+| <img src="./images/live/forms-fragments-file-drop-zone-desktop.png" width="350" alt="Desktop"> | <img src="./images/live/forms-fragments-file-drop-zone-tablet.png" width="200" alt="Tablet"> | <img src="./images/live/forms-fragments-file-drop-zone-mobile.png" width="120" alt="Mobile"> |
 
 ---
 
 ### Hidden Relationship
 
-![Hidden Relationship](./images/hidden-relationship.png)
+|                                          Desktop (1920px)                                           |                                          Tablet (768px)                                           |                                          Mobile (375px)                                           |
+| :-------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------: |
+| <img src="./images/live/forms-fragments-hidden-relationship-desktop.png" width="350" alt="Desktop"> | <img src="./images/live/forms-fragments-hidden-relationship-tablet.png" width="200" alt="Tablet"> | <img src="./images/live/forms-fragments-hidden-relationship-mobile.png" width="120" alt="Mobile"> |
 
 [Detailed Documentation](./fragments/hidden-relationship.md)
 
@@ -205,13 +254,17 @@ _No image available_
 
 ### Image Choice
 
-_No image available_
+|                                       Desktop (1920px)                                       |                                       Tablet (768px)                                       |                                       Mobile (375px)                                       |
+| :------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------: |
+| <img src="./images/live/forms-fragments-image-choice-desktop.png" width="350" alt="Desktop"> | <img src="./images/live/forms-fragments-image-choice-tablet.png" width="200" alt="Tablet"> | <img src="./images/live/forms-fragments-image-choice-mobile.png" width="120" alt="Mobile"> |
 
 ---
 
 ### Listbox Multiselect
 
-![Listbox Multiselect](./images/listbox-multiselect.png)
+|                                          Desktop (1920px)                                           |                                          Tablet (768px)                                           |                                          Mobile (375px)                                           |
+| :-------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------: |
+| <img src="./images/live/forms-fragments-listbox-multiselect-desktop.png" width="350" alt="Desktop"> | <img src="./images/live/forms-fragments-listbox-multiselect-tablet.png" width="200" alt="Tablet"> | <img src="./images/live/forms-fragments-listbox-multiselect-mobile.png" width="120" alt="Mobile"> |
 
 [Detailed Documentation](./fragments/listbox-multiselect.md)
 
@@ -225,13 +278,17 @@ _No image available_
 
 ### Password Strength
 
-_No image available_
+|                                         Desktop (1920px)                                          |                                         Tablet (768px)                                          |                                         Mobile (375px)                                          |
+| :-----------------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------------: |
+| <img src="./images/live/forms-fragments-password-strength-desktop.png" width="350" alt="Desktop"> | <img src="./images/live/forms-fragments-password-strength-tablet.png" width="200" alt="Tablet"> | <img src="./images/live/forms-fragments-password-strength-mobile.png" width="120" alt="Mobile"> |
 
 ---
 
 ### Range
 
-![Range](../form-fragments/fragments/range/thumbnail.png)
+|                                   Desktop (1920px)                                    |                                   Tablet (768px)                                    |                                   Mobile (375px)                                    |
+| :-----------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------: |
+| <img src="./images/live/forms-fragments-range-desktop.png" width="350" alt="Desktop"> | <img src="./images/live/forms-fragments-range-tablet.png" width="200" alt="Tablet"> | <img src="./images/live/forms-fragments-range-mobile.png" width="120" alt="Mobile"> |
 
 [Detailed Documentation](./fragments/range.md)
 
@@ -239,7 +296,9 @@ _No image available_
 
 ### Segmented Numeric
 
-![Segmented Numeric](./images/segmented-numeric.png)
+|                                         Desktop (1920px)                                          |                                         Tablet (768px)                                          |                                         Mobile (375px)                                          |
+| :-----------------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------------: |
+| <img src="./images/live/forms-fragments-segmented-numeric-desktop.png" width="350" alt="Desktop"> | <img src="./images/live/forms-fragments-segmented-numeric-tablet.png" width="200" alt="Tablet"> | <img src="./images/live/forms-fragments-segmented-numeric-mobile.png" width="120" alt="Mobile"> |
 
 [Detailed Documentation](./fragments/segmented-numeric.md)
 
@@ -247,13 +306,17 @@ _No image available_
 
 ### Signature Pad
 
-_No image available_
+|                                       Desktop (1920px)                                        |                                       Tablet (768px)                                        |                                       Mobile (375px)                                        |
+| :-------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------: |
+| <img src="./images/live/forms-fragments-signature-pad-desktop.png" width="350" alt="Desktop"> | <img src="./images/live/forms-fragments-signature-pad-tablet.png" width="200" alt="Tablet"> | <img src="./images/live/forms-fragments-signature-pad-mobile.png" width="120" alt="Mobile"> |
 
 ---
 
 ### Star Rating
 
-![Star Rating](./images/star-rating.png)
+|                                      Desktop (1920px)                                       |                                      Tablet (768px)                                       |                                      Mobile (375px)                                       |
+| :-----------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------: |
+| <img src="./images/live/forms-fragments-star-rating-desktop.png" width="350" alt="Desktop"> | <img src="./images/live/forms-fragments-star-rating-tablet.png" width="200" alt="Tablet"> | <img src="./images/live/forms-fragments-star-rating-mobile.png" width="120" alt="Mobile"> |
 
 [Detailed Documentation](./fragments/star-rating.md)
 
@@ -261,7 +324,9 @@ _No image available_
 
 ### Submit Button (Confirmation)
 
-_No image available_
+|                                              Desktop (1920px)                                               |                                              Tablet (768px)                                               |                                              Mobile (375px)                                               |
+| :---------------------------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------------------: |
+| <img src="./images/live/forms-fragments-submit-button-confirmation--desktop.png" width="350" alt="Desktop"> | <img src="./images/live/forms-fragments-submit-button-confirmation--tablet.png" width="200" alt="Tablet"> | <img src="./images/live/forms-fragments-submit-button-confirmation--mobile.png" width="120" alt="Mobile"> |
 
 [Detailed Documentation](./fragments/submit-button.md)
 
@@ -269,7 +334,9 @@ _No image available_
 
 ### Toggle Switch
 
-![Toggle Switch](./images/toggle-switch.png)
+|                                       Desktop (1920px)                                        |                                       Tablet (768px)                                        |                                       Mobile (375px)                                        |
+| :-------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------: |
+| <img src="./images/live/forms-fragments-toggle-switch-desktop.png" width="350" alt="Desktop"> | <img src="./images/live/forms-fragments-toggle-switch-tablet.png" width="200" alt="Tablet"> | <img src="./images/live/forms-fragments-toggle-switch-mobile.png" width="120" alt="Mobile"> |
 
 [Detailed Documentation](./fragments/toggle-switch.md)
 
@@ -277,7 +344,9 @@ _No image available_
 
 ### URL Populated Hidden Relationship
 
-_No image available_
+|                                                 Desktop (1920px)                                                  |                                                 Tablet (768px)                                                  |                                                 Mobile (375px)                                                  |
+| :---------------------------------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------------------------: |
+| <img src="./images/live/forms-fragments-url-populated-hidden-relationship-desktop.png" width="350" alt="Desktop"> | <img src="./images/live/forms-fragments-url-populated-hidden-relationship-tablet.png" width="200" alt="Tablet"> | <img src="./images/live/forms-fragments-url-populated-hidden-relationship-mobile.png" width="120" alt="Mobile"> |
 
 [Detailed Documentation](./fragments/url-populated-hidden-relationship.md)
 
@@ -285,7 +354,9 @@ _No image available_
 
 ### User Attribute
 
-_No image available_
+|                                        Desktop (1920px)                                        |                                        Tablet (768px)                                        |                                        Mobile (375px)                                        |
+| :--------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------: |
+| <img src="./images/live/forms-fragments-user-attribute-desktop.png" width="350" alt="Desktop"> | <img src="./images/live/forms-fragments-user-attribute-tablet.png" width="200" alt="Tablet"> | <img src="./images/live/forms-fragments-user-attribute-mobile.png" width="120" alt="Mobile"> |
 
 [Detailed Documentation](./fragments/user-field.md)
 
@@ -295,7 +366,9 @@ _No image available_
 
 ### Form Populator (DEPRECATED)
 
-![Form Populator (DEPRECATED)](./images/form-populator.png)
+|                                         Desktop (1920px)                                         |                                         Tablet (768px)                                         |                                         Mobile (375px)                                         |
+| :----------------------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------------------: |
+| <img src="./images/live/forms-form-populator-deprecated--desktop.png" width="350" alt="Desktop"> | <img src="./images/live/forms-form-populator-deprecated--tablet.png" width="200" alt="Tablet"> | <img src="./images/live/forms-form-populator-deprecated--mobile.png" width="120" alt="Mobile"> |
 
 [Detailed Documentation](./fragments/form-populator.md)
 
@@ -303,7 +376,9 @@ _No image available_
 
 ### Link Form to Applicant
 
-_No image available_
+|                                       Desktop (1920px)                                       |                                       Tablet (768px)                                       |                                       Mobile (375px)                                       |
+| :------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------: |
+| <img src="./images/live/forms-link-form-to-applicant-desktop.png" width="350" alt="Desktop"> | <img src="./images/live/forms-link-form-to-applicant-tablet.png" width="200" alt="Tablet"> | <img src="./images/live/forms-link-form-to-applicant-mobile.png" width="120" alt="Mobile"> |
 
 [Detailed Documentation](./fragments/form-session-id.md)
 
@@ -311,7 +386,9 @@ _No image available_
 
 ### Generate Form Session Id
 
-_No image available_
+|                                        Desktop (1920px)                                        |                                        Tablet (768px)                                        |                                        Mobile (375px)                                        |
+| :--------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------: |
+| <img src="./images/live/forms-generate-form-session-id-desktop.png" width="350" alt="Desktop"> | <img src="./images/live/forms-generate-form-session-id-tablet.png" width="200" alt="Tablet"> | <img src="./images/live/forms-generate-form-session-id-mobile.png" width="120" alt="Mobile"> |
 
 [Detailed Documentation](./fragments/generate-form-session-id.md)
 
@@ -319,7 +396,9 @@ _No image available_
 
 ### Masthead Call to Action Form Holder
 
-_No image available_
+|                                             Desktop (1920px)                                              |                                             Tablet (768px)                                              |                                             Mobile (375px)                                              |
+| :-------------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------: |
+| <img src="./images/live/forms-masthead-call-to-action-form-holder-desktop.png" width="350" alt="Desktop"> | <img src="./images/live/forms-masthead-call-to-action-form-holder-tablet.png" width="200" alt="Tablet"> | <img src="./images/live/forms-masthead-call-to-action-form-holder-mobile.png" width="120" alt="Mobile"> |
 
 [Detailed Documentation](./fragments/masthead-call-to-action-form-header.md)
 
@@ -327,7 +406,9 @@ _No image available_
 
 ### Redirect Page
 
-_No image available_
+|                                  Desktop (1920px)                                   |                                  Tablet (768px)                                   |                                  Mobile (375px)                                   |
+| :---------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------: |
+| <img src="./images/live/forms-redirect-page-desktop.png" width="350" alt="Desktop"> | <img src="./images/live/forms-redirect-page-tablet.png" width="200" alt="Tablet"> | <img src="./images/live/forms-redirect-page-mobile.png" width="120" alt="Mobile"> |
 
 [Detailed Documentation](./fragments/redirect-page.md)
 
@@ -335,7 +416,9 @@ _No image available_
 
 ### Refresh Page
 
-![Refresh Page](../forms/fragments/refresh-page/thumbnail.png)
+|                                  Desktop (1920px)                                  |                                  Tablet (768px)                                  |                                  Mobile (375px)                                  |
+| :--------------------------------------------------------------------------------: | :------------------------------------------------------------------------------: | :------------------------------------------------------------------------------: |
+| <img src="./images/live/forms-refresh-page-desktop.png" width="350" alt="Desktop"> | <img src="./images/live/forms-refresh-page-tablet.png" width="200" alt="Tablet"> | <img src="./images/live/forms-refresh-page-mobile.png" width="120" alt="Mobile"> |
 
 [Detailed Documentation](./fragments/refresh-page.md)
 
@@ -347,7 +430,9 @@ Visually appealing fragments generated by Gemini.
 
 ### Activity Heatmap
 
-![Activity Heatmap](./images/activity-heatmap.png)
+|                                         Desktop (1920px)                                          |                                         Tablet (768px)                                          |                                         Mobile (375px)                                          |
+| :-----------------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------------: |
+| <img src="./images/live/gemini-generated-activity-heatmap-desktop.png" width="350" alt="Desktop"> | <img src="./images/live/gemini-generated-activity-heatmap-tablet.png" width="200" alt="Tablet"> | <img src="./images/live/gemini-generated-activity-heatmap-mobile.png" width="120" alt="Mobile"> |
 
 [Detailed Documentation](./fragments/activity-heatmap.md)
 
@@ -355,7 +440,9 @@ Visually appealing fragments generated by Gemini.
 
 ### AI Assistant Chat UI
 
-_No image available_
+|                                           Desktop (1920px)                                            |                                           Tablet (768px)                                            |                                           Mobile (375px)                                            |
+| :---------------------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------------: |
+| <img src="./images/live/gemini-generated-ai-assistant-chat-ui-desktop.png" width="350" alt="Desktop"> | <img src="./images/live/gemini-generated-ai-assistant-chat-ui-tablet.png" width="200" alt="Tablet"> | <img src="./images/live/gemini-generated-ai-assistant-chat-ui-mobile.png" width="120" alt="Mobile"> |
 
 [Detailed Documentation](./fragments/ai-chat-ui.md)
 
@@ -363,7 +450,9 @@ _No image available_
 
 ### Animated Metric Counter
 
-![Animated Metric Counter](./images/animated-metric-counter.png)
+|                                             Desktop (1920px)                                             |                                             Tablet (768px)                                             |                                             Mobile (375px)                                             |
+| :------------------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------------: |
+| <img src="./images/live/gemini-generated-animated-metric-counter-desktop.png" width="350" alt="Desktop"> | <img src="./images/live/gemini-generated-animated-metric-counter-tablet.png" width="200" alt="Tablet"> | <img src="./images/live/gemini-generated-animated-metric-counter-mobile.png" width="120" alt="Mobile"> |
 
 [Detailed Documentation](./fragments/animated-metric-counter.md)
 
@@ -371,7 +460,9 @@ _No image available_
 
 ### Dynamic Collection Slider
 
-![Dynamic Collection Slider](./images/dynamic-collection-slider.png)
+|                                              Desktop (1920px)                                              |                                              Tablet (768px)                                              |                                              Mobile (375px)                                              |
+| :--------------------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------------------: |
+| <img src="./images/live/gemini-generated-dynamic-collection-slider-desktop.png" width="350" alt="Desktop"> | <img src="./images/live/gemini-generated-dynamic-collection-slider-tablet.png" width="200" alt="Tablet"> | <img src="./images/live/gemini-generated-dynamic-collection-slider-mobile.png" width="120" alt="Mobile"> |
 
 [Detailed Documentation](./fragments/dynamic-collection-slider.md)
 
@@ -379,7 +470,9 @@ _No image available_
 
 ### Dynamic Object Gallery
 
-![Dynamic Object Gallery](./images/dynamic-object-gallery.png)
+|                                            Desktop (1920px)                                             |                                            Tablet (768px)                                             |                                            Mobile (375px)                                             |
+| :-----------------------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------------------: |
+| <img src="./images/live/gemini-generated-dynamic-object-gallery-desktop.png" width="350" alt="Desktop"> | <img src="./images/live/gemini-generated-dynamic-object-gallery-tablet.png" width="200" alt="Tablet"> | <img src="./images/live/gemini-generated-dynamic-object-gallery-mobile.png" width="120" alt="Mobile"> |
 
 [Detailed Documentation](./fragments/dynamic-object-gallery.md)
 
@@ -387,7 +480,9 @@ _No image available_
 
 ### Interactive Event Timeline
 
-![Interactive Event Timeline](./images/interactive-event-timeline.png)
+|                                              Desktop (1920px)                                               |                                              Tablet (768px)                                               |                                              Mobile (375px)                                               |
+| :---------------------------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------------------: |
+| <img src="./images/live/gemini-generated-interactive-event-timeline-desktop.png" width="350" alt="Desktop"> | <img src="./images/live/gemini-generated-interactive-event-timeline-tablet.png" width="200" alt="Tablet"> | <img src="./images/live/gemini-generated-interactive-event-timeline-mobile.png" width="120" alt="Mobile"> |
 
 [Detailed Documentation](./fragments/interactive-event-timeline.md)
 
@@ -395,7 +490,9 @@ _No image available_
 
 ### Interactive Wizard
 
-_No image available_
+|                                          Desktop (1920px)                                           |                                          Tablet (768px)                                           |                                          Mobile (375px)                                           |
+| :-------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------: |
+| <img src="./images/live/gemini-generated-interactive-wizard-desktop.png" width="350" alt="Desktop"> | <img src="./images/live/gemini-generated-interactive-wizard-tablet.png" width="200" alt="Tablet"> | <img src="./images/live/gemini-generated-interactive-wizard-mobile.png" width="120" alt="Mobile"> |
 
 [Detailed Documentation](./fragments/interactive-wizard.md)
 
@@ -403,7 +500,9 @@ _No image available_
 
 ### Meta-Object Form
 
-![Meta-Object Form](./images/meta-object-form.png)
+|                                         Desktop (1920px)                                          |                                         Tablet (768px)                                          |                                         Mobile (375px)                                          |
+| :-----------------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------------: |
+| <img src="./images/live/gemini-generated-meta-object-form-desktop.png" width="350" alt="Desktop"> | <img src="./images/live/gemini-generated-meta-object-form-tablet.png" width="200" alt="Tablet"> | <img src="./images/live/gemini-generated-meta-object-form-mobile.png" width="120" alt="Mobile"> |
 
 [Detailed Documentation](./fragments/meta-object-form.md)
 
@@ -411,7 +510,9 @@ _No image available_
 
 ### Meta-Object Record View
 
-![Meta-Object Record View](./images/meta-object-record-view.png)
+|                                             Desktop (1920px)                                             |                                             Tablet (768px)                                             |                                             Mobile (375px)                                             |
+| :------------------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------------: |
+| <img src="./images/live/gemini-generated-meta-object-record-view-desktop.png" width="350" alt="Desktop"> | <img src="./images/live/gemini-generated-meta-object-record-view-tablet.png" width="200" alt="Tablet"> | <img src="./images/live/gemini-generated-meta-object-record-view-mobile.png" width="120" alt="Mobile"> |
 
 [Detailed Documentation](./fragments/meta-object-record-view.md)
 
@@ -419,7 +520,9 @@ _No image available_
 
 ### Meta-Object Table
 
-![Meta-Object Table](./images/meta-object-table.png)
+|                                          Desktop (1920px)                                          |                                          Tablet (768px)                                          |                                          Mobile (375px)                                          |
+| :------------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------: |
+| <img src="./images/live/gemini-generated-meta-object-table-desktop.png" width="350" alt="Desktop"> | <img src="./images/live/gemini-generated-meta-object-table-tablet.png" width="200" alt="Tablet"> | <img src="./images/live/gemini-generated-meta-object-table-mobile.png" width="120" alt="Mobile"> |
 
 [Detailed Documentation](./fragments/meta-object-table.md)
 
@@ -427,7 +530,9 @@ _No image available_
 
 ### Modern Parallax Hero
 
-![Modern Parallax Hero](./images/modern-parallax-hero.png)
+|                                           Desktop (1920px)                                            |                                           Tablet (768px)                                            |                                           Mobile (375px)                                            |
+| :---------------------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------------: |
+| <img src="./images/live/gemini-generated-modern-parallax-hero-desktop.png" width="350" alt="Desktop"> | <img src="./images/live/gemini-generated-modern-parallax-hero-tablet.png" width="200" alt="Tablet"> | <img src="./images/live/gemini-generated-modern-parallax-hero-mobile.png" width="120" alt="Mobile"> |
 
 [Detailed Documentation](./fragments/modern-parallax-hero.md)
 
@@ -435,7 +540,9 @@ _No image available_
 
 ### Object-Linked Chart
 
-![Object-Linked Chart](./images/object-linked-chart.png)
+|                                           Desktop (1920px)                                           |                                           Tablet (768px)                                           |                                           Mobile (375px)                                           |
+| :--------------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------------: |
+| <img src="./images/live/gemini-generated-object-linked-chart-desktop.png" width="350" alt="Desktop"> | <img src="./images/live/gemini-generated-object-linked-chart-tablet.png" width="200" alt="Tablet"> | <img src="./images/live/gemini-generated-object-linked-chart-mobile.png" width="120" alt="Mobile"> |
 
 [Detailed Documentation](./fragments/object-linked-chart.md)
 
@@ -443,7 +550,9 @@ _No image available_
 
 ### Pricing Comparison Grid
 
-![Pricing Comparison Grid](./images/pricing-comparison-grid.png)
+|                                             Desktop (1920px)                                             |                                             Tablet (768px)                                             |                                             Mobile (375px)                                             |
+| :------------------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------------: |
+| <img src="./images/live/gemini-generated-pricing-comparison-grid-desktop.png" width="350" alt="Desktop"> | <img src="./images/live/gemini-generated-pricing-comparison-grid-tablet.png" width="200" alt="Tablet"> | <img src="./images/live/gemini-generated-pricing-comparison-grid-mobile.png" width="120" alt="Mobile"> |
 
 [Detailed Documentation](./fragments/pricing-comparison-grid.md)
 
@@ -451,7 +560,9 @@ _No image available_
 
 ### Radial KPI Gauge
 
-![Radial KPI Gauge](./images/radial-kpi-gauge.png)
+|                                         Desktop (1920px)                                          |                                         Tablet (768px)                                          |                                         Mobile (375px)                                          |
+| :-----------------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------------: |
+| <img src="./images/live/gemini-generated-radial-kpi-gauge-desktop.png" width="350" alt="Desktop"> | <img src="./images/live/gemini-generated-radial-kpi-gauge-tablet.png" width="200" alt="Tablet"> | <img src="./images/live/gemini-generated-radial-kpi-gauge-mobile.png" width="120" alt="Mobile"> |
 
 [Detailed Documentation](./fragments/radial-kpi-gauge.md)
 
@@ -459,7 +570,9 @@ _No image available_
 
 ### Modern Search Overlay
 
-_No image available_
+|                                            Desktop (1920px)                                            |                                            Tablet (768px)                                            |                                            Mobile (375px)                                            |
+| :----------------------------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------------------------: |
+| <img src="./images/live/gemini-generated-modern-search-overlay-desktop.png" width="350" alt="Desktop"> | <img src="./images/live/gemini-generated-modern-search-overlay-tablet.png" width="200" alt="Tablet"> | <img src="./images/live/gemini-generated-modern-search-overlay-mobile.png" width="120" alt="Mobile"> |
 
 [Detailed Documentation](./fragments/search-overlay.md)
 
@@ -469,7 +582,9 @@ _No image available_
 
 ### Customer Registration (Header) (Deprecated)
 
-_No image available_
+|                                                      Desktop (1920px)                                                      |                                                      Tablet (768px)                                                      |                                                      Mobile (375px)                                                      |
+| :------------------------------------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------------------------------: |
+| <img src="./images/live/header-components-customer-registration-header-deprecated--desktop.png" width="350" alt="Desktop"> | <img src="./images/live/header-components-customer-registration-header-deprecated--tablet.png" width="200" alt="Tablet"> | <img src="./images/live/header-components-customer-registration-header-deprecated--mobile.png" width="120" alt="Mobile"> |
 
 [Detailed Documentation](./fragments/customer-registration.md)
 
@@ -477,7 +592,9 @@ _No image available_
 
 ### Linear Gradient Container
 
-_No image available_
+|                                              Desktop (1920px)                                               |                                              Tablet (768px)                                               |                                              Mobile (375px)                                               |
+| :---------------------------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------------------: |
+| <img src="./images/live/header-components-linear-gradient-container-desktop.png" width="350" alt="Desktop"> | <img src="./images/live/header-components-linear-gradient-container-tablet.png" width="200" alt="Tablet"> | <img src="./images/live/header-components-linear-gradient-container-mobile.png" width="120" alt="Mobile"> |
 
 [Detailed Documentation](<./fragments/linear-gradient-container-(custom).md>)
 
@@ -485,7 +602,9 @@ _No image available_
 
 ### Linear Gradient Container (Deprecated)
 
-![Linear Gradient Container (Deprecated)](./images/linear-gradient-container.png)
+|                                                    Desktop (1920px)                                                     |                                                    Tablet (768px)                                                     |                                                    Mobile (375px)                                                     |
+| :---------------------------------------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------------------------------: |
+| <img src="./images/live/header-components-linear-gradient-container-deprecated--desktop.png" width="350" alt="Desktop"> | <img src="./images/live/header-components-linear-gradient-container-deprecated--tablet.png" width="200" alt="Tablet"> | <img src="./images/live/header-components-linear-gradient-container-deprecated--mobile.png" width="120" alt="Mobile"> |
 
 [Detailed Documentation](./fragments/linear-gradient-container.md)
 
@@ -493,7 +612,9 @@ _No image available_
 
 ### Login and User Menu
 
-![Login and User Menu](../header-components/fragments/login-and-user-menu/thumbnail.png)
+|                                           Desktop (1920px)                                            |                                           Tablet (768px)                                            |                                           Mobile (375px)                                            |
+| :---------------------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------------: |
+| <img src="./images/live/header-components-login-and-user-menu-desktop.png" width="350" alt="Desktop"> | <img src="./images/live/header-components-login-and-user-menu-tablet.png" width="200" alt="Tablet"> | <img src="./images/live/header-components-login-and-user-menu-mobile.png" width="120" alt="Mobile"> |
 
 [Detailed Documentation](./fragments/login-and-user-menu.md)
 
@@ -501,7 +622,9 @@ _No image available_
 
 ### Login Card (Deprecated)
 
-_No image available_
+|                                             Desktop (1920px)                                             |                                             Tablet (768px)                                             |                                             Mobile (375px)                                             |
+| :------------------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------------: |
+| <img src="./images/live/header-components-login-card-deprecated--desktop.png" width="350" alt="Desktop"> | <img src="./images/live/header-components-login-card-deprecated--tablet.png" width="200" alt="Tablet"> | <img src="./images/live/header-components-login-card-deprecated--mobile.png" width="120" alt="Mobile"> |
 
 [Detailed Documentation](./fragments/login-card.md)
 
@@ -509,7 +632,9 @@ _No image available_
 
 ### Site Logo
 
-![Site Logo](../header-components/fragments/logo/thumbnail.png)
+|                                      Desktop (1920px)                                       |                                      Tablet (768px)                                       |                                      Mobile (375px)                                       |
+| :-----------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------: |
+| <img src="./images/live/header-components-site-logo-desktop.png" width="350" alt="Desktop"> | <img src="./images/live/header-components-site-logo-tablet.png" width="200" alt="Tablet"> | <img src="./images/live/header-components-site-logo-mobile.png" width="120" alt="Mobile"> |
 
 [Detailed Documentation](./fragments/logo.md)
 
@@ -517,7 +642,9 @@ _No image available_
 
 ### Lower Header Bar
 
-![Lower Header Bar](./images/lower-header-layout.png)
+|                                          Desktop (1920px)                                          |                                          Tablet (768px)                                          |                                          Mobile (375px)                                          |
+| :------------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------: |
+| <img src="./images/live/header-components-lower-header-bar-desktop.png" width="350" alt="Desktop"> | <img src="./images/live/header-components-lower-header-bar-tablet.png" width="200" alt="Tablet"> | <img src="./images/live/header-components-lower-header-bar-mobile.png" width="120" alt="Mobile"> |
 
 [Detailed Documentation](./fragments/lower-header-layout.md)
 
@@ -525,7 +652,9 @@ _No image available_
 
 ### Navigation (Deprecated)
 
-![Navigation (Deprecated)](../header-components/fragments/navigation/thumbnail.png)
+|                                             Desktop (1920px)                                             |                                             Tablet (768px)                                             |                                             Mobile (375px)                                             |
+| :------------------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------------: |
+| <img src="./images/live/header-components-navigation-deprecated--desktop.png" width="350" alt="Desktop"> | <img src="./images/live/header-components-navigation-deprecated--tablet.png" width="200" alt="Tablet"> | <img src="./images/live/header-components-navigation-deprecated--mobile.png" width="120" alt="Mobile"> |
 
 [Detailed Documentation](./fragments/navigation.md)
 
@@ -533,7 +662,9 @@ _No image available_
 
 ### Search Bar
 
-![Search Bar](../header-components/fragments/search-bar/thumbnail.png)
+|                                       Desktop (1920px)                                       |                                       Tablet (768px)                                       |                                       Mobile (375px)                                       |
+| :------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------: |
+| <img src="./images/live/header-components-search-bar-desktop.png" width="350" alt="Desktop"> | <img src="./images/live/header-components-search-bar-tablet.png" width="200" alt="Tablet"> | <img src="./images/live/header-components-search-bar-mobile.png" width="120" alt="Mobile"> |
 
 [Detailed Documentation](./fragments/search-bar.md)
 
@@ -541,7 +672,9 @@ _No image available_
 
 ### Search Button
 
-![Search Button](../header-components/fragments/search-button/thumbnail.png)
+|                                        Desktop (1920px)                                         |                                        Tablet (768px)                                         |                                        Mobile (375px)                                         |
+| :---------------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------: |
+| <img src="./images/live/header-components-search-button-desktop.png" width="350" alt="Desktop"> | <img src="./images/live/header-components-search-button-tablet.png" width="200" alt="Tablet"> | <img src="./images/live/header-components-search-button-mobile.png" width="120" alt="Mobile"> |
 
 [Detailed Documentation](./fragments/search-button.md)
 
@@ -549,7 +682,9 @@ _No image available_
 
 ### Site Name
 
-![Site Name](../header-components/fragments/site-name/thumbnail.png)
+|                                      Desktop (1920px)                                       |                                      Tablet (768px)                                       |                                      Mobile (375px)                                       |
+| :-----------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------: |
+| <img src="./images/live/header-components-site-name-desktop.png" width="350" alt="Desktop"> | <img src="./images/live/header-components-site-name-tablet.png" width="200" alt="Tablet"> | <img src="./images/live/header-components-site-name-mobile.png" width="120" alt="Mobile"> |
 
 [Detailed Documentation](./fragments/site-name.md)
 
@@ -557,7 +692,9 @@ _No image available_
 
 ### Upper Header Bar Layout
 
-![Upper Header Bar Layout](../header-components/fragments/upper-header-layout/thumbnail.png)
+|                                             Desktop (1920px)                                              |                                             Tablet (768px)                                              |                                             Mobile (375px)                                              |
+| :-------------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------: |
+| <img src="./images/live/header-components-upper-header-bar-layout-desktop.png" width="350" alt="Desktop"> | <img src="./images/live/header-components-upper-header-bar-layout-tablet.png" width="200" alt="Tablet"> | <img src="./images/live/header-components-upper-header-bar-layout-mobile.png" width="120" alt="Mobile"> |
 
 [Detailed Documentation](./fragments/upper-header-layout.md)
 
@@ -565,7 +702,9 @@ _No image available_
 
 ### User Personal Bar
 
-![User Personal Bar](../header-components/fragments/user-bar/thumbnail.png)
+|                                          Desktop (1920px)                                           |                                          Tablet (768px)                                           |                                          Mobile (375px)                                           |
+| :-------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------: |
+| <img src="./images/live/header-components-user-personal-bar-desktop.png" width="350" alt="Desktop"> | <img src="./images/live/header-components-user-personal-bar-tablet.png" width="200" alt="Tablet"> | <img src="./images/live/header-components-user-personal-bar-mobile.png" width="120" alt="Mobile"> |
 
 [Detailed Documentation](./fragments/user-bar.md)
 
@@ -577,7 +716,9 @@ Prominent visuals, such as videos or banners, that capture attention and define 
 
 ### Banner Video
 
-![Banner Video](../hero-assets/fragments/hero-video/thumbnail.png)
+|                                     Desktop (1920px)                                     |                                     Tablet (768px)                                     |                                     Mobile (375px)                                     |
+| :--------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------: |
+| <img src="./images/live/hero-assets-banner-video-desktop.png" width="350" alt="Desktop"> | <img src="./images/live/hero-assets-banner-video-tablet.png" width="200" alt="Tablet"> | <img src="./images/live/hero-assets-banner-video-mobile.png" width="120" alt="Mobile"> |
 
 [Detailed Documentation](./fragments/hero-video.md)
 
@@ -585,7 +726,9 @@ Prominent visuals, such as videos or banners, that capture attention and define 
 
 ### Overlay Background
 
-![Overlay Background](../hero-assets/fragments/overlay-background/thumbnail.png)
+|                                        Desktop (1920px)                                        |                                        Tablet (768px)                                        |                                        Mobile (375px)                                        |
+| :--------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------: |
+| <img src="./images/live/hero-assets-overlay-background-desktop.png" width="350" alt="Desktop"> | <img src="./images/live/hero-assets-overlay-background-tablet.png" width="200" alt="Tablet"> | <img src="./images/live/hero-assets-overlay-background-mobile.png" width="120" alt="Mobile"> |
 
 [Detailed Documentation](./fragments/overlay-background.md)
 
@@ -595,7 +738,9 @@ Prominent visuals, such as videos or banners, that capture attention and define 
 
 ### Card Content
 
-_No image available_
+|                                        Desktop (1920px)                                        |                                        Tablet (768px)                                        |                                        Mobile (375px)                                        |
+| :--------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------: |
+| <img src="./images/live/layout-components-card-content-desktop.png" width="350" alt="Desktop"> | <img src="./images/live/layout-components-card-content-tablet.png" width="200" alt="Tablet"> | <img src="./images/live/layout-components-card-content-mobile.png" width="120" alt="Mobile"> |
 
 [Detailed Documentation](./fragments/card-content.md)
 
@@ -603,7 +748,9 @@ _No image available_
 
 ### Primary Card
 
-![Primary Card](../layout-components/fragments/primary-card/thumbnail.png)
+|                                        Desktop (1920px)                                        |                                        Tablet (768px)                                        |                                        Mobile (375px)                                        |
+| :--------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------: |
+| <img src="./images/live/layout-components-primary-card-desktop.png" width="350" alt="Desktop"> | <img src="./images/live/layout-components-primary-card-tablet.png" width="200" alt="Tablet"> | <img src="./images/live/layout-components-primary-card-mobile.png" width="120" alt="Mobile"> |
 
 [Detailed Documentation](./fragments/primary-card.md)
 
@@ -611,7 +758,9 @@ _No image available_
 
 ### Secondary Card
 
-![Secondary Card](../layout-components/fragments/secondary-card/thumbnail.png)
+|                                         Desktop (1920px)                                         |                                         Tablet (768px)                                         |                                         Mobile (375px)                                         |
+| :----------------------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------------------: |
+| <img src="./images/live/layout-components-secondary-card-desktop.png" width="350" alt="Desktop"> | <img src="./images/live/layout-components-secondary-card-tablet.png" width="200" alt="Tablet"> | <img src="./images/live/layout-components-secondary-card-mobile.png" width="120" alt="Mobile"> |
 
 [Detailed Documentation](./fragments/secondary-card.md)
 
@@ -621,7 +770,9 @@ _No image available_
 
 ### Meter Reading
 
-![Meter Reading](../meter-reading/fragments/meter-reading/thumbnail.png)
+|                                      Desktop (1920px)                                       |                                      Tablet (768px)                                       |                                      Mobile (375px)                                       |
+| :-----------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------: |
+| <img src="./images/live/meter-reading-meter-reading-desktop.png" width="350" alt="Desktop"> | <img src="./images/live/meter-reading-meter-reading-tablet.png" width="200" alt="Tablet"> | <img src="./images/live/meter-reading-meter-reading-mobile.png" width="120" alt="Mobile"> |
 
 [Detailed Documentation](./fragments/meter-reading.md)
 
@@ -631,7 +782,9 @@ _No image available_
 
 ### Back Button
 
-_No image available_
+|                                     Desktop (1920px)                                      |                                     Tablet (768px)                                      |                                     Mobile (375px)                                      |
+| :---------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------: |
+| <img src="./images/live/miscellaneous-back-button-desktop.png" width="350" alt="Desktop"> | <img src="./images/live/miscellaneous-back-button-tablet.png" width="200" alt="Tablet"> | <img src="./images/live/miscellaneous-back-button-mobile.png" width="120" alt="Mobile"> |
 
 [Detailed Documentation](./fragments/back-button.md)
 
@@ -639,7 +792,9 @@ _No image available_
 
 ### Custom Tabs
 
-![Custom Tabs](../misc/fragments/custom-tabs/thumbnail.png)
+|                                     Desktop (1920px)                                      |                                     Tablet (768px)                                      |                                     Mobile (375px)                                      |
+| :---------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------: |
+| <img src="./images/live/miscellaneous-custom-tabs-desktop.png" width="350" alt="Desktop"> | <img src="./images/live/miscellaneous-custom-tabs-tablet.png" width="200" alt="Tablet"> | <img src="./images/live/miscellaneous-custom-tabs-mobile.png" width="120" alt="Mobile"> |
 
 [Detailed Documentation](./fragments/custom-tabs.md)
 
@@ -647,7 +802,9 @@ _No image available_
 
 ### Customer Registration (Misc) (Deprecated)
 
-_No image available_
+|                                                   Desktop (1920px)                                                   |                                                   Tablet (768px)                                                   |                                                   Mobile (375px)                                                   |
+| :------------------------------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------------------------: |
+| <img src="./images/live/miscellaneous-customer-registration-misc-deprecated--desktop.png" width="350" alt="Desktop"> | <img src="./images/live/miscellaneous-customer-registration-misc-deprecated--tablet.png" width="200" alt="Tablet"> | <img src="./images/live/miscellaneous-customer-registration-misc-deprecated--mobile.png" width="120" alt="Mobile"> |
 
 [Detailed Documentation](./fragments/customer-registration.md)
 
@@ -655,7 +812,9 @@ _No image available_
 
 ### Dynamic Copyright
 
-![Dynamic Copyright](./images/dynamic-copyright.png)
+|                                        Desktop (1920px)                                         |                                        Tablet (768px)                                         |                                        Mobile (375px)                                         |
+| :---------------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------: |
+| <img src="./images/live/miscellaneous-dynamic-copyright-desktop.png" width="350" alt="Desktop"> | <img src="./images/live/miscellaneous-dynamic-copyright-tablet.png" width="200" alt="Tablet"> | <img src="./images/live/miscellaneous-dynamic-copyright-mobile.png" width="120" alt="Mobile"> |
 
 [Detailed Documentation](./fragments/dynamic-copyright.md)
 
@@ -663,7 +822,9 @@ _No image available_
 
 ### Hide Control Menu
 
-_No image available_
+|                                        Desktop (1920px)                                         |                                        Tablet (768px)                                         |                                        Mobile (375px)                                         |
+| :---------------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------: |
+| <img src="./images/live/miscellaneous-hide-control-menu-desktop.png" width="350" alt="Desktop"> | <img src="./images/live/miscellaneous-hide-control-menu-tablet.png" width="200" alt="Tablet"> | <img src="./images/live/miscellaneous-hide-control-menu-mobile.png" width="120" alt="Mobile"> |
 
 [Detailed Documentation](./fragments/hide-control-menu.md)
 
@@ -671,7 +832,9 @@ _No image available_
 
 ### Icon Button
 
-![Icon Button](./images/icon-button.png)
+|                                     Desktop (1920px)                                      |                                     Tablet (768px)                                      |                                     Mobile (375px)                                      |
+| :---------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------: |
+| <img src="./images/live/miscellaneous-icon-button-desktop.png" width="350" alt="Desktop"> | <img src="./images/live/miscellaneous-icon-button-tablet.png" width="200" alt="Tablet"> | <img src="./images/live/miscellaneous-icon-button-mobile.png" width="120" alt="Mobile"> |
 
 [Detailed Documentation](./fragments/icon-button.md)
 
@@ -679,7 +842,9 @@ _No image available_
 
 ### Launch Analytics Cloud
 
-![Launch Analytics Cloud](../misc/fragments/launch-analytics-cloud/thumbnail.png)
+|                                           Desktop (1920px)                                           |                                           Tablet (768px)                                           |                                           Mobile (375px)                                           |
+| :--------------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------------: |
+| <img src="./images/live/miscellaneous-launch-analytics-cloud-desktop.png" width="350" alt="Desktop"> | <img src="./images/live/miscellaneous-launch-analytics-cloud-tablet.png" width="200" alt="Tablet"> | <img src="./images/live/miscellaneous-launch-analytics-cloud-mobile.png" width="120" alt="Mobile"> |
 
 [Detailed Documentation](./fragments/launch-analytics-cloud.md)
 
@@ -687,7 +852,9 @@ _No image available_
 
 ### Modify My Profile Link
 
-_No image available_
+|                                           Desktop (1920px)                                           |                                           Tablet (768px)                                           |                                           Mobile (375px)                                           |
+| :--------------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------------: |
+| <img src="./images/live/miscellaneous-modify-my-profile-link-desktop.png" width="350" alt="Desktop"> | <img src="./images/live/miscellaneous-modify-my-profile-link-tablet.png" width="200" alt="Tablet"> | <img src="./images/live/miscellaneous-modify-my-profile-link-mobile.png" width="120" alt="Mobile"> |
 
 [Detailed Documentation](./fragments/modify-my-profile-link.md)
 
@@ -695,7 +862,9 @@ _No image available_
 
 ### My Dashboard Link
 
-_No image available_
+|                                        Desktop (1920px)                                         |                                        Tablet (768px)                                         |                                        Mobile (375px)                                         |
+| :---------------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------: |
+| <img src="./images/live/miscellaneous-my-dashboard-link-desktop.png" width="350" alt="Desktop"> | <img src="./images/live/miscellaneous-my-dashboard-link-tablet.png" width="200" alt="Tablet"> | <img src="./images/live/miscellaneous-my-dashboard-link-mobile.png" width="120" alt="Mobile"> |
 
 [Detailed Documentation](./fragments/my-dashboard-link.md)
 
@@ -703,13 +872,17 @@ _No image available_
 
 ### Test Fragment (Manual Check)
 
-_No image available_
+|                                             Desktop (1920px)                                              |                                             Tablet (768px)                                              |                                             Mobile (375px)                                              |
+| :-------------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------: |
+| <img src="./images/live/miscellaneous-test-fragment-manual-check--desktop.png" width="350" alt="Desktop"> | <img src="./images/live/miscellaneous-test-fragment-manual-check--tablet.png" width="200" alt="Tablet"> | <img src="./images/live/miscellaneous-test-fragment-manual-check--mobile.png" width="120" alt="Mobile"> |
 
 ---
 
 ### Trigger Ray
 
-_No image available_
+|                                     Desktop (1920px)                                      |                                     Tablet (768px)                                      |                                     Mobile (375px)                                      |
+| :---------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------: |
+| <img src="./images/live/miscellaneous-trigger-ray-desktop.png" width="350" alt="Desktop"> | <img src="./images/live/miscellaneous-trigger-ray-tablet.png" width="200" alt="Tablet"> | <img src="./images/live/miscellaneous-trigger-ray-mobile.png" width="120" alt="Mobile"> |
 
 [Detailed Documentation](./fragments/trigger-ray.md)
 
@@ -721,43 +894,57 @@ A collection of high-fidelity fragments for constructing modern corporate intran
 
 ### App Launcher
 
-_No image available_
+|                                       Desktop (1920px)                                       |                                       Tablet (768px)                                       |                                       Mobile (375px)                                       |
+| :------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------: |
+| <img src="./images/live/modern-intranet-app-launcher-desktop.png" width="350" alt="Desktop"> | <img src="./images/live/modern-intranet-app-launcher-tablet.png" width="200" alt="Tablet"> | <img src="./images/live/modern-intranet-app-launcher-mobile.png" width="120" alt="Mobile"> |
 
 ---
 
 ### Course Progress Card
 
-_No image available_
+|                                           Desktop (1920px)                                           |                                           Tablet (768px)                                           |                                           Mobile (375px)                                           |
+| :--------------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------------: |
+| <img src="./images/live/modern-intranet-course-progress-card-desktop.png" width="350" alt="Desktop"> | <img src="./images/live/modern-intranet-course-progress-card-tablet.png" width="200" alt="Tablet"> | <img src="./images/live/modern-intranet-course-progress-card-mobile.png" width="120" alt="Mobile"> |
 
 ---
 
 ### File Repository List
 
-_No image available_
+|                                           Desktop (1920px)                                           |                                           Tablet (768px)                                           |                                           Mobile (375px)                                           |
+| :--------------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------------: |
+| <img src="./images/live/modern-intranet-file-repository-list-desktop.png" width="350" alt="Desktop"> | <img src="./images/live/modern-intranet-file-repository-list-tablet.png" width="200" alt="Tablet"> | <img src="./images/live/modern-intranet-file-repository-list-mobile.png" width="120" alt="Mobile"> |
 
 ---
 
 ### Intranet Feed
 
-_No image available_
+|                                       Desktop (1920px)                                        |                                       Tablet (768px)                                        |                                       Mobile (375px)                                        |
+| :-------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------: |
+| <img src="./images/live/modern-intranet-intranet-feed-desktop.png" width="350" alt="Desktop"> | <img src="./images/live/modern-intranet-intranet-feed-tablet.png" width="200" alt="Tablet"> | <img src="./images/live/modern-intranet-intranet-feed-mobile.png" width="120" alt="Mobile"> |
 
 ---
 
 ### News Hero
 
-_No image available_
+|                                     Desktop (1920px)                                      |                                     Tablet (768px)                                      |                                     Mobile (375px)                                      |
+| :---------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------: |
+| <img src="./images/live/modern-intranet-news-hero-desktop.png" width="350" alt="Desktop"> | <img src="./images/live/modern-intranet-news-hero-tablet.png" width="200" alt="Tablet"> | <img src="./images/live/modern-intranet-news-hero-mobile.png" width="120" alt="Mobile"> |
 
 ---
 
 ### Stat Card
 
-_No image available_
+|                                     Desktop (1920px)                                      |                                     Tablet (768px)                                      |                                     Mobile (375px)                                      |
+| :---------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------: |
+| <img src="./images/live/modern-intranet-stat-card-desktop.png" width="350" alt="Desktop"> | <img src="./images/live/modern-intranet-stat-card-tablet.png" width="200" alt="Tablet"> | <img src="./images/live/modern-intranet-stat-card-mobile.png" width="120" alt="Mobile"> |
 
 ---
 
 ### Welcome Banner
 
-_No image available_
+|                                        Desktop (1920px)                                        |                                        Tablet (768px)                                        |                                        Mobile (375px)                                        |
+| :--------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------: |
+| <img src="./images/live/modern-intranet-welcome-banner-desktop.png" width="350" alt="Desktop"> | <img src="./images/live/modern-intranet-welcome-banner-tablet.png" width="200" alt="Tablet"> | <img src="./images/live/modern-intranet-welcome-banner-mobile.png" width="120" alt="Mobile"> |
 
 ---
 
@@ -765,7 +952,9 @@ _No image available_
 
 ### Audit Button
 
-![Audit Button](../objects/fragments/audit-button/thumbnail.png)
+|                                  Desktop (1920px)                                  |                                  Tablet (768px)                                  |                                  Mobile (375px)                                  |
+| :--------------------------------------------------------------------------------: | :------------------------------------------------------------------------------: | :------------------------------------------------------------------------------: |
+| <img src="./images/live/forms-audit-button-desktop.png" width="350" alt="Desktop"> | <img src="./images/live/forms-audit-button-tablet.png" width="200" alt="Tablet"> | <img src="./images/live/forms-audit-button-mobile.png" width="120" alt="Mobile"> |
 
 [Detailed Documentation](./fragments/audit-button.md)
 
@@ -773,7 +962,9 @@ _No image available_
 
 ### Comment
 
-![Comment](./images/comment.png)
+|                               Desktop (1920px)                                |                               Tablet (768px)                                |                               Mobile (375px)                                |
+| :---------------------------------------------------------------------------: | :-------------------------------------------------------------------------: | :-------------------------------------------------------------------------: |
+| <img src="./images/live/forms-comment-desktop.png" width="350" alt="Desktop"> | <img src="./images/live/forms-comment-tablet.png" width="200" alt="Tablet"> | <img src="./images/live/forms-comment-mobile.png" width="120" alt="Mobile"> |
 
 [Detailed Documentation](./fragments/comment.md)
 
@@ -781,7 +972,9 @@ _No image available_
 
 ### View Comments
 
-![View Comments](./images/public-comments.png)
+|                                  Desktop (1920px)                                   |                                  Tablet (768px)                                   |                                  Mobile (375px)                                   |
+| :---------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------: |
+| <img src="./images/live/forms-view-comments-desktop.png" width="350" alt="Desktop"> | <img src="./images/live/forms-view-comments-tablet.png" width="200" alt="Tablet"> | <img src="./images/live/forms-view-comments-mobile.png" width="120" alt="Mobile"> |
 
 [Detailed Documentation](./fragments/public-comments.md)
 
@@ -791,7 +984,9 @@ _No image available_
 
 ### Populate Select
 
-![Populate Select](./images/populate-select.png)
+|                                           Desktop (1920px)                                            |                                           Tablet (768px)                                            |                                           Mobile (375px)                                            |
+| :---------------------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------------: |
+| <img src="./images/live/populated-form-fields-populate-select-desktop.png" width="350" alt="Desktop"> | <img src="./images/live/populated-form-fields-populate-select-tablet.png" width="200" alt="Tablet"> | <img src="./images/live/populated-form-fields-populate-select-mobile.png" width="120" alt="Mobile"> |
 
 [Detailed Documentation](./fragments/populate-select.md)
 
@@ -799,7 +994,9 @@ _No image available_
 
 ### Populated Range
 
-![Populated Range](./images/populated-range.png)
+|                                           Desktop (1920px)                                            |                                           Tablet (768px)                                            |                                           Mobile (375px)                                            |
+| :---------------------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------------: |
+| <img src="./images/live/populated-form-fields-populated-range-desktop.png" width="350" alt="Desktop"> | <img src="./images/live/populated-form-fields-populated-range-tablet.png" width="200" alt="Tablet"> | <img src="./images/live/populated-form-fields-populated-range-mobile.png" width="120" alt="Mobile"> |
 
 [Detailed Documentation](./fragments/populated-range.md)
 
@@ -807,7 +1004,9 @@ _No image available_
 
 ### Store Default Value
 
-![Store Default Value](./images/store-default-value.png)
+|                                             Desktop (1920px)                                              |                                             Tablet (768px)                                              |                                             Mobile (375px)                                              |
+| :-------------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------: |
+| <img src="./images/live/populated-form-fields-store-default-value-desktop.png" width="350" alt="Desktop"> | <img src="./images/live/populated-form-fields-store-default-value-tablet.png" width="200" alt="Tablet"> | <img src="./images/live/populated-form-fields-store-default-value-mobile.png" width="120" alt="Mobile"> |
 
 [Detailed Documentation](./fragments/store-default-value.md)
 
@@ -815,7 +1014,9 @@ _No image available_
 
 ### Store Form Field Values
 
-_No image available_
+|                                               Desktop (1920px)                                                |                                               Tablet (768px)                                                |                                               Mobile (375px)                                                |
+| :-----------------------------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------------------------: |
+| <img src="./images/live/populated-form-fields-store-form-field-values-desktop.png" width="350" alt="Desktop"> | <img src="./images/live/populated-form-fields-store-form-field-values-tablet.png" width="200" alt="Tablet"> | <img src="./images/live/populated-form-fields-store-form-field-values-mobile.png" width="120" alt="Mobile"> |
 
 [Detailed Documentation](./fragments/store-form-field-values.md)
 
@@ -823,7 +1024,9 @@ _No image available_
 
 ### Text (Derived Value)
 
-_No image available_
+|                                             Desktop (1920px)                                              |                                             Tablet (768px)                                              |                                             Mobile (375px)                                              |
+| :-------------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------: |
+| <img src="./images/live/populated-form-fields-text-derived-value--desktop.png" width="350" alt="Desktop"> | <img src="./images/live/populated-form-fields-text-derived-value--tablet.png" width="200" alt="Tablet"> | <img src="./images/live/populated-form-fields-text-derived-value--mobile.png" width="120" alt="Mobile"> |
 
 [Detailed Documentation](./fragments/text-derived-value.md)
 
@@ -833,7 +1036,9 @@ _No image available_
 
 ### Customer Profile (DEPRECATED)
 
-![Customer Profile (DEPRECATED)](../profile/fragments/customer-profile/thumbnail.png)
+|                                           Desktop (1920px)                                           |                                           Tablet (768px)                                           |                                           Mobile (375px)                                           |
+| :--------------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------------: |
+| <img src="./images/live/profile-customer-profile-deprecated--desktop.png" width="350" alt="Desktop"> | <img src="./images/live/profile-customer-profile-deprecated--tablet.png" width="200" alt="Tablet"> | <img src="./images/live/profile-customer-profile-deprecated--mobile.png" width="120" alt="Mobile"> |
 
 [Detailed Documentation](./fragments/customer-profile.md)
 
@@ -841,7 +1046,9 @@ _No image available_
 
 ### PDF Export (Dashboard) (Deprecated)
 
-![PDF Export (Dashboard) (Deprecated)](<../profile/fragments/pdf-export-(dashboard)/thumbnail.png>)
+|                                             Desktop (1920px)                                             |                                             Tablet (768px)                                             |                                             Mobile (375px)                                             |
+| :------------------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------------: |
+| <img src="./images/live/profile-pdf-export-dashboard-deprecated--desktop.png" width="350" alt="Desktop"> | <img src="./images/live/profile-pdf-export-dashboard-deprecated--tablet.png" width="200" alt="Tablet"> | <img src="./images/live/profile-pdf-export-dashboard-deprecated--mobile.png" width="120" alt="Mobile"> |
 
 [Detailed Documentation](<./fragments/pdf-export-(dashboard).md>)
 
@@ -849,7 +1056,9 @@ _No image available_
 
 ### PDF Export (DEPRECATED)
 
-![PDF Export (DEPRECATED)](./images/pdf-export.png)
+|                                        Desktop (1920px)                                        |                                        Tablet (768px)                                        |                                        Mobile (375px)                                        |
+| :--------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------: |
+| <img src="./images/live/profile-pdf-export-deprecated--desktop.png" width="350" alt="Desktop"> | <img src="./images/live/profile-pdf-export-deprecated--tablet.png" width="200" alt="Tablet"> | <img src="./images/live/profile-pdf-export-deprecated--mobile.png" width="120" alt="Mobile"> |
 
 [Detailed Documentation](./fragments/pdf-export.md)
 
@@ -857,7 +1066,9 @@ _No image available_
 
 ### Profile Detail (Dashboard) (Deprecated)
 
-_No image available_
+|                                               Desktop (1920px)                                               |                                               Tablet (768px)                                               |                                               Mobile (375px)                                               |
+| :----------------------------------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------------------------------: |
+| <img src="./images/live/profile-profile-detail-dashboard-deprecated--desktop.png" width="350" alt="Desktop"> | <img src="./images/live/profile-profile-detail-dashboard-deprecated--tablet.png" width="200" alt="Tablet"> | <img src="./images/live/profile-profile-detail-dashboard-deprecated--mobile.png" width="120" alt="Mobile"> |
 
 [Detailed Documentation](<./fragments/profile-detail-(dashboard).md>)
 
@@ -865,7 +1076,9 @@ _No image available_
 
 ### Profile Detail (DEPRECATED)
 
-![Profile Detail (DEPRECATED)](../profile/fragments/profile-detail/thumbnail.png)
+|                                          Desktop (1920px)                                          |                                          Tablet (768px)                                          |                                          Mobile (375px)                                          |
+| :------------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------: |
+| <img src="./images/live/profile-profile-detail-deprecated--desktop.png" width="350" alt="Desktop"> | <img src="./images/live/profile-profile-detail-deprecated--tablet.png" width="200" alt="Tablet"> | <img src="./images/live/profile-profile-detail-deprecated--mobile.png" width="120" alt="Mobile"> |
 
 [Detailed Documentation](./fragments/profile-detail.md)
 
@@ -873,7 +1086,9 @@ _No image available_
 
 ### Profile Summary (Dashboard) (DEPRECATED)
 
-_No image available_
+|                                               Desktop (1920px)                                                |                                               Tablet (768px)                                                |                                               Mobile (375px)                                                |
+| :-----------------------------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------------------------: |
+| <img src="./images/live/profile-profile-summary-dashboard-deprecated--desktop.png" width="350" alt="Desktop"> | <img src="./images/live/profile-profile-summary-dashboard-deprecated--tablet.png" width="200" alt="Tablet"> | <img src="./images/live/profile-profile-summary-dashboard-deprecated--mobile.png" width="120" alt="Mobile"> |
 
 [Detailed Documentation](<./fragments/profile-summary-(dashboard).md>)
 
@@ -881,7 +1096,9 @@ _No image available_
 
 ### Profile Summary (DEPRECATED)
 
-![Profile Summary (DEPRECATED)](../profile/fragments/profile-summary/thumbnail.png)
+|                                          Desktop (1920px)                                           |                                          Tablet (768px)                                           |                                          Mobile (375px)                                           |
+| :-------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------: |
+| <img src="./images/live/profile-profile-summary-deprecated--desktop.png" width="350" alt="Desktop"> | <img src="./images/live/profile-profile-summary-deprecated--tablet.png" width="200" alt="Tablet"> | <img src="./images/live/profile-profile-summary-deprecated--mobile.png" width="120" alt="Mobile"> |
 
 [Detailed Documentation](./fragments/profile-summary.md)
 
@@ -891,7 +1108,9 @@ _No image available_
 
 ### Campaign Initialiser
 
-_No image available_
+|                                      Desktop (1920px)                                      |                                      Tablet (768px)                                      |                                      Mobile (375px)                                      |
+| :----------------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------------: |
+| <img src="./images/live/pulse-campaign-initialiser-desktop.png" width="350" alt="Desktop"> | <img src="./images/live/pulse-campaign-initialiser-tablet.png" width="200" alt="Tablet"> | <img src="./images/live/pulse-campaign-initialiser-mobile.png" width="120" alt="Mobile"> |
 
 [Detailed Documentation](./fragments/campaign-initialiser.md)
 
@@ -899,7 +1118,9 @@ _No image available_
 
 ### Campaign Insights
 
-_No image available_
+|                                    Desktop (1920px)                                     |                                    Tablet (768px)                                     |                                    Mobile (375px)                                     |
+| :-------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------: |
+| <img src="./images/live/pulse-campaign-insights-desktop.png" width="350" alt="Desktop"> | <img src="./images/live/pulse-campaign-insights-tablet.png" width="200" alt="Tablet"> | <img src="./images/live/pulse-campaign-insights-mobile.png" width="120" alt="Mobile"> |
 
 [Detailed Documentation](./fragments/cookie-sniffer.md)
 
@@ -907,7 +1128,9 @@ _No image available_
 
 ### Custom Event Listener
 
-_No image available_
+|                                      Desktop (1920px)                                       |                                      Tablet (768px)                                       |                                      Mobile (375px)                                       |
+| :-----------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------: |
+| <img src="./images/live/pulse-custom-event-listener-desktop.png" width="350" alt="Desktop"> | <img src="./images/live/pulse-custom-event-listener-tablet.png" width="200" alt="Tablet"> | <img src="./images/live/pulse-custom-event-listener-mobile.png" width="120" alt="Mobile"> |
 
 [Detailed Documentation](./fragments/custom-event-listener.md)
 
@@ -915,7 +1138,9 @@ _No image available_
 
 ### Pulse Button
 
-![Pulse Button](../pulse/fragments/pulse-button/thumbnail.png)
+|                                  Desktop (1920px)                                  |                                  Tablet (768px)                                  |                                  Mobile (375px)                                  |
+| :--------------------------------------------------------------------------------: | :------------------------------------------------------------------------------: | :------------------------------------------------------------------------------: |
+| <img src="./images/live/pulse-pulse-button-desktop.png" width="350" alt="Desktop"> | <img src="./images/live/pulse-pulse-button-tablet.png" width="200" alt="Tablet"> | <img src="./images/live/pulse-pulse-button-mobile.png" width="120" alt="Mobile"> |
 
 [Detailed Documentation](./fragments/pulse-button.md)
 
@@ -925,7 +1150,9 @@ _No image available_
 
 ### Logo Zone
 
-_No image available_
+|                                      Desktop (1920px)                                      |                                      Tablet (768px)                                      |                                      Mobile (375px)                                      |
+| :----------------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------------: |
+| <img src="./images/live/responsive-menus-logo-zone-desktop.png" width="350" alt="Desktop"> | <img src="./images/live/responsive-menus-logo-zone-tablet.png" width="200" alt="Tablet"> | <img src="./images/live/responsive-menus-logo-zone-mobile.png" width="120" alt="Mobile"> |
 
 [Detailed Documentation](./fragments/logo-zone.md)
 
@@ -933,7 +1160,9 @@ _No image available_
 
 ### Responsive Menu
 
-![Responsive Menu](../responsive-menus/fragments/responsive-menu/thumbnail.png)
+|                                         Desktop (1920px)                                         |                                         Tablet (768px)                                         |                                         Mobile (375px)                                         |
+| :----------------------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------------------: |
+| <img src="./images/live/responsive-menus-responsive-menu-desktop.png" width="350" alt="Desktop"> | <img src="./images/live/responsive-menus-responsive-menu-tablet.png" width="200" alt="Tablet"> | <img src="./images/live/responsive-menus-responsive-menu-mobile.png" width="120" alt="Mobile"> |
 
 [Detailed Documentation](./fragments/responsive-menu.md)
 
@@ -941,7 +1170,9 @@ _No image available_
 
 ### Responsive Side Menu
 
-![Responsive Side Menu](../responsive-menus/fragments/responsive-side-menu/thumbnail.png)
+|                                           Desktop (1920px)                                            |                                           Tablet (768px)                                            |                                           Mobile (375px)                                            |
+| :---------------------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------------: |
+| <img src="./images/live/responsive-menus-responsive-side-menu-desktop.png" width="350" alt="Desktop"> | <img src="./images/live/responsive-menus-responsive-side-menu-tablet.png" width="200" alt="Tablet"> | <img src="./images/live/responsive-menus-responsive-side-menu-mobile.png" width="120" alt="Mobile"> |
 
 [Detailed Documentation](./fragments/responsive-side-menu.md)
 
@@ -949,7 +1180,9 @@ _No image available_
 
 ### Zone Layout
 
-_No image available_
+|                                       Desktop (1920px)                                       |                                       Tablet (768px)                                       |                                       Mobile (375px)                                       |
+| :------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------: |
+| <img src="./images/live/responsive-menus-zone-layout-desktop.png" width="350" alt="Desktop"> | <img src="./images/live/responsive-menus-zone-layout-tablet.png" width="200" alt="Tablet"> | <img src="./images/live/responsive-menus-zone-layout-mobile.png" width="120" alt="Mobile"> |
 
 [Detailed Documentation](./fragments/zone-layout.md)
 
@@ -959,7 +1192,9 @@ _No image available_
 
 ### My Rights
 
-_No image available_
+|                                    Desktop (1920px)                                    |                                    Tablet (768px)                                    |                                    Mobile (375px)                                    |
+| :------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------: |
+| <img src="./images/live/user-account-my-rights-desktop.png" width="350" alt="Desktop"> | <img src="./images/live/user-account-my-rights-tablet.png" width="200" alt="Tablet"> | <img src="./images/live/user-account-my-rights-mobile.png" width="120" alt="Mobile"> |
 
 [Detailed Documentation](./fragments/my-rights.md)
 
@@ -967,7 +1202,9 @@ _No image available_
 
 ### Ping
 
-_No image available_
+|                                 Desktop (1920px)                                  |                                 Tablet (768px)                                  |                                 Mobile (375px)                                  |
+| :-------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------: | :-----------------------------------------------------------------------------: |
+| <img src="./images/live/user-account-ping-desktop.png" width="350" alt="Desktop"> | <img src="./images/live/user-account-ping-tablet.png" width="200" alt="Tablet"> | <img src="./images/live/user-account-ping-mobile.png" width="120" alt="Mobile"> |
 
 [Detailed Documentation](./fragments/ping.md)
 
@@ -975,7 +1212,9 @@ _No image available_
 
 ### Who Am I
 
-_No image available_
+|                                   Desktop (1920px)                                    |                                   Tablet (768px)                                    |                                   Mobile (375px)                                    |
+| :-----------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------: |
+| <img src="./images/live/user-account-who-am-i-desktop.png" width="350" alt="Desktop"> | <img src="./images/live/user-account-who-am-i-tablet.png" width="200" alt="Tablet"> | <img src="./images/live/user-account-who-am-i-mobile.png" width="120" alt="Mobile"> |
 
 [Detailed Documentation](./fragments/who-am-i.md)
 
@@ -985,7 +1224,9 @@ _No image available_
 
 ### Announcements Modifier
 
-![Announcements Modifier](../widget-modifiers/fragments/alerts-modifier/thumbnail.png)
+|                                            Desktop (1920px)                                             |                                            Tablet (768px)                                             |                                            Mobile (375px)                                             |
+| :-----------------------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------------------: |
+| <img src="./images/live/widget-modifiers-announcements-modifier-desktop.png" width="350" alt="Desktop"> | <img src="./images/live/widget-modifiers-announcements-modifier-tablet.png" width="200" alt="Tablet"> | <img src="./images/live/widget-modifiers-announcements-modifier-mobile.png" width="120" alt="Mobile"> |
 
 [Detailed Documentation](./fragments/alerts-modifier.md)
 
