@@ -98,6 +98,18 @@ function generateGallery() {
       if (isDeprecated) {
         return; // Skip deprecated fragments in visual gallery entirely
       }
+
+      // Skip fragments that are explicitly excluded from the gallery (e.g. utility containers)
+      const testDataFile = path.join(fragDir, 'test-data.json');
+      if (fs.existsSync(testDataFile)) {
+        try {
+          const testData = JSON.parse(fs.readFileSync(testDataFile, 'utf8'));
+          if (testData.excludeFromGallery === true) {
+            return;
+          }
+        } catch (e) {}
+      }
+
       const fragSafeName = path.basename(fragDir);
 
       markdown += `### ${fragMetadata.name}\n\n`;
