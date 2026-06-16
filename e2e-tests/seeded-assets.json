@@ -1058,5 +1058,70 @@
     "type": "article",
     "id": 102265,
     "erc": "SLIDE-ARTICLE-03"
+  },
+  {
+    "type": "structure",
+    "id": "105327",
+    "erc": "MAP-MARKER-STRUCT-V1"
+  },
+  {
+    "type": "article",
+    "id": 105333,
+    "erc": "MAP-MARKER-ARTICLE-01"
+  },
+  {
+    "type": "article",
+    "id": 105343,
+    "erc": "MAP-MARKER-ARTICLE-02"
+  },
+  {
+    "type": "collection",
+    "id": "105351",
+    "erc": "MAP-E2E-COLL"
+  },
+  {
+    "type": "article",
+    "id": 105612,
+    "erc": "MAP-MARKER-ARTICLE-01"
+  },
+  {
+    "type": "article",
+    "id": 105627,
+    "erc": "MAP-MARKER-ARTICLE-02"
+  },
+  {
+    "type": "article",
+    "id": 106107,
+    "erc": "MAP-MARKER-ARTICLE-01"
+  },
+  {
+    "type": "article",
+    "id": 106122,
+    "erc": "MAP-MARKER-ARTICLE-02"
+  },
+  {
+    "type": "article",
+    "id": 109035,
+    "erc": "SLIDE-ARTICLE-01"
+  },
+  {
+    "type": "article",
+    "id": 109050,
+    "erc": "SLIDE-ARTICLE-02"
+  },
+  {
+    "type": "article",
+    "id": 109065,
+    "erc": "SLIDE-ARTICLE-03"
+  },
+  {
+    "type": "article",
+    "id": 109897,
+    "erc": "MAP-MARKER-ARTICLE-01"
+  },
+  {
+    "type": "article",
+    "id": 109912,
+    "erc": "MAP-MARKER-ARTICLE-02"
   }
 ]

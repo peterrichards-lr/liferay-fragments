@@ -128,8 +128,41 @@ test.describe('Responsive Fragment Rendering', () => {
         const fragmentElement = page.locator(fragmentSelector).first();
 
         try {
-          await expect(fragmentElement).toBeVisible({ timeout: 2000 });
+          await expect(fragmentElement).toBeVisible({ timeout: 5000 });
           await fragmentElement.scrollIntoViewIfNeeded();
+
+          // Check for any visible loading spinners/animations within the fragment
+          const loaders = fragmentElement.locator(
+            '.loading-animation, .loading-animation-squares, .spinner, .loading-animation-bounce, .loading-animation-dots, [class*="loading-animation"], [class*="spinner"]'
+          );
+          const loaderCount = await loaders.count();
+          for (let i = 0; i < loaderCount; i++) {
+            const loader = loaders.nth(i);
+            if (await loader.isVisible()) {
+              // Wait for it to become hidden
+              try {
+                await expect(loader).toBeHidden({ timeout: 10000 });
+              } catch (err) {
+                throw new Error(
+                  `Fragment '${pageInfo.fragmentName}' is stuck in a loading state. Spinner/loader remains visible after 10s.`
+                );
+              }
+            }
+          }
+
+          // Let rendering settle for 500ms (especially for leaflet maps or chart animations)
+          await page.waitForTimeout(500);
+
+          // Verify the bounding box is non-zero and has height
+          const box = await fragmentElement.boundingBox();
+          if (!box || box.height <= 10) {
+            throw new Error(
+              `Fragment '${pageInfo.fragmentName}' rendered with insufficient height (${
+                box ? box.height : 0
+              }px). It might be empty or failing to render content.`
+            );
+          }
+
           await fragmentElement.screenshot({
             path: snapshotPath,
             timeout: 5000,
@@ -145,6 +178,15 @@ test.describe('Responsive Fragment Rendering', () => {
           console.warn(
             `[WARN] Could not capture fragment element directly for ${pageInfo.fragmentName}. Falling back to wrapper. Reason: ${e.message}`
           );
+
+          // Propagate the specific failure if it's a verification assertion
+          if (
+            e.message.includes('stuck in a loading state') ||
+            e.message.includes('insufficient height')
+          ) {
+            errors.push(e.message);
+          }
+
           await wrapper
             .first()
             .screenshot({ path: snapshotPath, timeout: 5000 });

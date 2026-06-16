@@ -1,4 +1,15 @@
 const initServiceIcon = () => {
+  const Logger = (window.Liferay &&
+    window.Liferay.Fragment &&
+    window.Liferay.Fragment.Commons &&
+    window.Liferay.Fragment.Commons.Logger) || {
+    create: (context) => ({
+      debug: console.debug,
+      info: console.info,
+      warn: console.warn,
+      error: console.error,
+    }),
+  };
   const logger = Logger.create('Service Icon');
 
   const iconSpan = fragmentElement.querySelector('.svg-icon');

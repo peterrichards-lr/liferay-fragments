@@ -1,0 +1,106 @@
+{
+  "webContentStructures": [
+    {
+      "externalReferenceCode": "MAP-MARKER-STRUCT-V1",
+      "name": "Map Marker Structure",
+      "description": "Structure for markers in the Content Map",
+      "fields": [
+        {
+          "name": "title",
+          "type": "text",
+          "label": "Marker Title"
+        },
+        {
+          "name": "description",
+          "type": "text",
+          "label": "Marker Description"
+        },
+        {
+          "name": "latitude",
+          "type": "text",
+          "label": "Latitude"
+        },
+        {
+          "name": "longitude",
+          "type": "text",
+          "label": "Longitude"
+        }
+      ]
+    }
+  ],
+  "webContentArticles": [
+    {
+      "externalReferenceCode": "MAP-MARKER-ARTICLE-01",
+      "structureERC": "MAP-MARKER-STRUCT-V1",
+      "title": "Marker 1: London HQ",
+      "contentFields": [
+        {
+          "name": "title",
+          "value": "London Office HQ"
+        },
+        {
+          "name": "description",
+          "value": "Our headquarters in the UK (London)."
+        },
+        {
+          "name": "latitude",
+          "value": "51.5074"
+        },
+        {
+          "name": "longitude",
+          "value": "-0.1278"
+        }
+      ]
+    },
+    {
+      "externalReferenceCode": "MAP-MARKER-ARTICLE-02",
+      "structureERC": "MAP-MARKER-STRUCT-V1",
+      "title": "Marker 2: New York Branch",
+      "contentFields": [
+        {
+          "name": "title",
+          "value": "New York Office"
+        },
+        {
+          "name": "description",
+          "value": "Our office in the USA (New York)."
+        },
+        {
+          "name": "latitude",
+          "value": "40.7128"
+        },
+        {
+          "name": "longitude",
+          "value": "-74.0060"
+        }
+      ]
+    }
+  ],
+  "collections": [
+    {
+      "externalReferenceCode": "MAP-E2E-COLL",
+      "name": "E2E Map Collection",
+      "description": "Collection for content map markers testing",
+      "assetType": "journal-article",
+      "items": [
+        {
+          "type": "journal-article",
+          "externalReferenceCode": "MAP-MARKER-ARTICLE-01"
+        },
+        {
+          "type": "journal-article",
+          "externalReferenceCode": "MAP-MARKER-ARTICLE-02"
+        }
+      ]
+    }
+  ],
+  "pageConfig": {
+    "fragmentConfig": {
+      "collectionIdentier": "MAP-E2E-COLL",
+      "mapCenterLat": "30",
+      "mapCenterLong": "-30",
+      "mapZoom": "2",
+      "mapProvider": "osm"
+    }
+  }
+}

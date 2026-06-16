@@ -5,10 +5,7 @@
     "children": [
       {
         "type": "Fragment",
-        "key": "primary-card",
-        "fragmentConfig": {
-          "title": "Semantic Layout"
-        }
+        "key": "card-content"
       }
     ]
   }
