@@ -127,17 +127,23 @@ function generateGallery() {
           .toLowerCase();
 
         viewports.forEach((vp) => {
+          const liveFileName = `${safeCollectionName}-${safeFragmentName}-${vp}.png`;
+          const liveDest = path.join(LIVE_IMAGES_DIR, liveFileName);
           const e2eSnapshot = path.join(
             SNAPSHOTS_DIR,
             collectionMetadata.name,
             `${fragMetadata.name}-${vp}.png`
           );
+
           if (fs.existsSync(e2eSnapshot)) {
-            const liveFileName = `${safeCollectionName}-${safeFragmentName}-${vp}.png`;
-            const liveDest = path.join(LIVE_IMAGES_DIR, liveFileName);
             fs.copyFileSync(e2eSnapshot, liveDest);
             liveImages[vp] = `./images/live/${liveFileName}`;
+          } else if (fs.existsSync(liveDest)) {
+            // Fall back to pre-existing live image if this fragment was not run in the current filtered test
+            liveImages[vp] = `./images/live/${liveFileName}`;
+          }
 
+          if (liveImages[vp]) {
             // Attach visual verification status badge if exists
             if (
               visualAnalysis &&
