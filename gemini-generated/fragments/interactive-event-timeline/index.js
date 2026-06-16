@@ -27,6 +27,11 @@ const fetchData = async () => {
   const response = await Liferay.Util.fetch(
     `${apiPath}/?pageSize=100&sort=date:asc`
   );
+  if (!response.ok) {
+    throw new Error(
+      `Failed to fetch events: ${response.status} ${response.statusText}`
+    );
+  }
   const data = await response.json();
   return data.items || [];
 };

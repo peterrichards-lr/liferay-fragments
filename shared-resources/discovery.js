@@ -43,36 +43,43 @@ window.Liferay.Fragment.Commons.resolveObjectPath = async (restContextPath) => {
 
     // Fallback registry mapping REST Context paths to names for Guest scope resolution
     const fallbackPaths = {
-      '/o/c/comments': 'Comment',
-      '/o/c/waterreadings': 'Water Reading',
-      '/o/c/salesreports': 'Sales Report',
-      '/o/c/companymilestones': 'Company Milestone',
-      '/o/c/activitylogs': 'Activity Log',
-      '/o/c/tickets': 'Ticket',
-      '/o/c/heartrates': 'Heart Rate',
-      '/o/c/bloodpressures': 'Blood Pressure',
-      '/o/c/stepses': 'Steps',
-      '/o/c/weights': 'Weight',
-      '/o/c/applicants': 'Applicant',
-      '/o/c/productshowcases': 'Product Showcase',
-      '/o/c/campaigns': 'Campaign',
-      '/o/c/campaigninteractions': 'Campaign Interaction',
-      '/o/c/auditentries': 'Audit Entry',
+      '/o/c/comments': { name: 'Comment', scope: 'site' },
+      '/o/c/waterreadings': { name: 'Water Reading', scope: 'site' },
+      '/o/c/salesreports': { name: 'Sales Report', scope: 'site' },
+      '/o/c/companymilestones': { name: 'Company Milestone', scope: 'company' },
+      '/o/c/activitylogs': { name: 'Activity Log', scope: 'company' },
+      '/o/c/tickets': { name: 'Ticket', scope: 'site' },
+      '/o/c/heartrates': { name: 'Heart Rate', scope: 'site' },
+      '/o/c/bloodpressures': { name: 'Blood Pressure', scope: 'site' },
+      '/o/c/stepses': { name: 'Steps', scope: 'site' },
+      '/o/c/weights': { name: 'Weight', scope: 'site' },
+      '/o/c/applicants': { name: 'Applicant', scope: 'site' },
+      '/o/c/productshowcases': { name: 'Product Showcase', scope: 'company' },
+      '/o/c/campaigns': { name: 'Campaign', scope: 'site' },
+      '/o/c/campaigninteractions': {
+        name: 'Campaign Interaction',
+        scope: 'site',
+      },
+      '/o/c/auditentries': { name: 'Audit Entry', scope: 'site' },
     };
 
     const cleanPath = restContextPath.replace(/\/$/, '');
-    const name = fallbackPaths[cleanPath];
+    const mapping = fallbackPaths[cleanPath];
 
-    if (name && Liferay.ThemeDisplay) {
-      const apiPath = `${cleanPath}/scopes/${Liferay.ThemeDisplay.getScopeGroupId()}`;
+    if (mapping && Liferay.ThemeDisplay) {
+      const scope = mapping.scope || 'site';
+      const apiPath =
+        scope === 'site'
+          ? `${cleanPath}/scopes/${Liferay.ThemeDisplay.getScopeGroupId()}`
+          : cleanPath;
       console.log(
         `[Commons] Resolved path via fallback registry for ${restContextPath}: ${apiPath}`
       );
       return {
         apiPath,
         definition: {
-          name,
-          scope: 'site',
+          name: mapping.name,
+          scope,
           restContextPath: cleanPath,
         },
       };
@@ -115,33 +122,64 @@ window.Liferay.Fragment.Commons.resolveObjectPathByERC = async (erc) => {
       PRODUCT_SHOWCASE: {
         path: '/o/c/productshowcases',
         name: 'Product Showcase',
+        scope: 'company',
       },
-      TICKET_COMMENT: { path: '/o/c/comments', name: 'Comment' },
-      WATER_READING: { path: '/o/c/waterreadings', name: 'Water Reading' },
-      SALES_REPORT: { path: '/o/c/salesreports', name: 'Sales Report' },
+      TICKET_COMMENT: { path: '/o/c/comments', name: 'Comment', scope: 'site' },
+      WATER_READING: {
+        path: '/o/c/waterreadings',
+        name: 'Water Reading',
+        scope: 'site',
+      },
+      SALES_REPORT: {
+        path: '/o/c/salesreports',
+        name: 'Sales Report',
+        scope: 'site',
+      },
       COMPANY_MILESTONE: {
         path: '/o/c/companymilestones',
         name: 'Company Milestone',
+        scope: 'company',
       },
-      ACTIVITY_LOG: { path: '/o/c/activitylogs', name: 'Activity Log' },
-      TICKET: { path: '/o/c/tickets', name: 'Ticket' },
-      HEART_RATE: { path: '/o/c/heartrates', name: 'Heart Rate' },
-      BLOOD_PRESSURE: { path: '/o/c/bloodpressures', name: 'Blood Pressure' },
-      STEPS: { path: '/o/c/stepses', name: 'Steps' },
-      WEIGHT: { path: '/o/c/weights', name: 'Weight' },
-      APPLICANT: { path: '/o/c/applicants', name: 'Applicant' },
-      CAMPAIGN: { path: '/o/c/campaigns', name: 'Campaign' },
+      ACTIVITY_LOG: {
+        path: '/o/c/activitylogs',
+        name: 'Activity Log',
+        scope: 'company',
+      },
+      TICKET: { path: '/o/c/tickets', name: 'Ticket', scope: 'site' },
+      HEART_RATE: {
+        path: '/o/c/heartrates',
+        name: 'Heart Rate',
+        scope: 'site',
+      },
+      BLOOD_PRESSURE: {
+        path: '/o/c/bloodpressures',
+        name: 'Blood Pressure',
+        scope: 'site',
+      },
+      STEPS: { path: '/o/c/stepses', name: 'Steps', scope: 'site' },
+      WEIGHT: { path: '/o/c/weights', name: 'Weight', scope: 'site' },
+      APPLICANT: { path: '/o/c/applicants', name: 'Applicant', scope: 'site' },
+      CAMPAIGN: { path: '/o/c/campaigns', name: 'Campaign', scope: 'site' },
       CAMPAIGN_INTERACTION: {
         path: '/o/c/campaigninteractions',
         name: 'Campaign Interaction',
+        scope: 'site',
       },
-      AUDIT_ENTRY: { path: '/o/c/auditentries', name: 'Audit Entry' },
+      AUDIT_ENTRY: {
+        path: '/o/c/auditentries',
+        name: 'Audit Entry',
+        scope: 'site',
+      },
     };
 
     const mapping = fallbackMap[erc];
     if (mapping && Liferay.ThemeDisplay) {
       const restContextPath = mapping.path;
-      const apiPath = `${restContextPath}/scopes/${Liferay.ThemeDisplay.getScopeGroupId()}`;
+      const scope = mapping.scope || 'site';
+      const apiPath =
+        scope === 'site'
+          ? `${restContextPath}/scopes/${Liferay.ThemeDisplay.getScopeGroupId()}`
+          : restContextPath;
       console.log(
         `[Commons] Resolved path via fallback registry for ERC ${erc}: ${apiPath}`
       );
@@ -149,7 +187,7 @@ window.Liferay.Fragment.Commons.resolveObjectPathByERC = async (erc) => {
         apiPath,
         definition: {
           name: mapping.name,
-          scope: 'site',
+          scope,
           restContextPath,
         },
       };

@@ -153,6 +153,16 @@ test.describe('Responsive Fragment Rendering', () => {
           // Let rendering settle for 500ms (especially for leaflet maps or chart animations)
           await page.waitForTimeout(500);
 
+          if (pageInfo.fragmentName === 'Content Map') {
+            const marker = page.locator('.leaflet-marker-icon').first();
+            await expect(marker).toBeVisible({ timeout: 5000 });
+            await marker.click();
+            const popup = page.locator('.leaflet-popup-content-wrapper');
+            await expect(popup).toBeVisible({ timeout: 5000 });
+            // Extra wait for popup transition to finish
+            await page.waitForTimeout(500);
+          }
+
           // Verify the bounding box is non-zero and has height
           const box = await fragmentElement.boundingBox();
           if (!box || box.height <= 10) {

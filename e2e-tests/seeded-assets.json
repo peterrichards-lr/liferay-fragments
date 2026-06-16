@@ -1123,5 +1123,15 @@
     "type": "article",
     "id": 109912,
     "erc": "MAP-MARKER-ARTICLE-02"
+  },
+  {
+    "type": "article",
+    "id": 111804,
+    "erc": "MAP-MARKER-ARTICLE-01"
+  },
+  {
+    "type": "article",
+    "id": 111819,
+    "erc": "MAP-MARKER-ARTICLE-02"
   }
 ]
