@@ -165,11 +165,29 @@ function generateGallery() {
         });
       }
 
+      let fallbackPath = '';
+      if (fs.existsSync(manualImg)) {
+        fallbackPath = `./images/${fragSafeName}.png`;
+      } else if (fs.existsSync(path.join(fragDir, 'screenshot.png'))) {
+        fallbackPath = path
+          .relative(DOCS_DIR, path.join(fragDir, 'screenshot.png'))
+          .replace(/\\/g, '/');
+      } else if (fs.existsSync(path.join(fragDir, 'thumbnail.png'))) {
+        fallbackPath = path
+          .relative(DOCS_DIR, path.join(fragDir, 'thumbnail.png'))
+          .replace(/\\/g, '/');
+      }
+
       if (Object.keys(liveImages).length > 0) {
         let tableHeader = '|';
         let tableDivider = '|';
         let tableRow = '|';
 
+        if (fallbackPath) {
+          tableHeader += ' Original Image |';
+          tableDivider += ' :---: |';
+          tableRow += ` <img src="${fallbackPath}" width="200" alt="Original Image"> |`;
+        }
         if (liveImages.desktop) {
           tableHeader += ' Desktop (1920px) |';
           tableDivider += ' :---: |';
@@ -191,19 +209,6 @@ function generateGallery() {
 
         markdown += `${tableHeader}\n${tableDivider}\n${tableRow}\n\n`;
       } else {
-        let fallbackPath = '';
-        if (fs.existsSync(manualImg)) {
-          fallbackPath = `./images/${fragSafeName}.png`;
-        } else if (fs.existsSync(path.join(fragDir, 'screenshot.png'))) {
-          fallbackPath = path
-            .relative(DOCS_DIR, path.join(fragDir, 'screenshot.png'))
-            .replace(/\\/g, '/');
-        } else if (fs.existsSync(path.join(fragDir, 'thumbnail.png'))) {
-          fallbackPath = path
-            .relative(DOCS_DIR, path.join(fragDir, 'thumbnail.png'))
-            .replace(/\\/g, '/');
-        }
-
         if (fallbackPath) {
           markdown += `![${fragMetadata.name}](${fallbackPath})\n\n`;
         } else {
