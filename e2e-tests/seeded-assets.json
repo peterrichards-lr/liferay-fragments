@@ -1043,5 +1043,20 @@
     "type": "article",
     "id": 97719,
     "erc": "SLIDE-ARTICLE-03"
+  },
+  {
+    "type": "article",
+    "id": 102235,
+    "erc": "SLIDE-ARTICLE-01"
+  },
+  {
+    "type": "article",
+    "id": 102250,
+    "erc": "SLIDE-ARTICLE-02"
+  },
+  {
+    "type": "article",
+    "id": 102265,
+    "erc": "SLIDE-ARTICLE-03"
   }
 ]
