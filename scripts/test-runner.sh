@@ -435,6 +435,16 @@ else
         fi
     fi
 
+    # Clean up pre-existing fragment resource files from the database to prevent duplicate (1).css, (2).css creation by auto-deploy scanner
+    if [ "$(docker ps -q -f name=fragments-test-env-db)" ]; then
+        echo "  -> Purging duplicate/stale fragment resource database entries..."
+        docker exec -i fragments-test-env-db psql -U lportal -d lportal -c "
+          DELETE FROM dlfileentrymetadata WHERE fileentryid IN (SELECT fileentryid FROM dlfileentry WHERE folderid IN (SELECT folderid FROM dlfolder WHERE parentfolderid = (SELECT folderid FROM dlfolder WHERE name = 'com_liferay_fragment_web_portlet_FragmentPortlet')));
+          DELETE FROM dlfileversion WHERE fileentryid IN (SELECT fileentryid FROM dlfileentry WHERE folderid IN (SELECT folderid FROM dlfolder WHERE parentfolderid = (SELECT folderid FROM dlfolder WHERE name = 'com_liferay_fragment_web_portlet_FragmentPortlet')));
+          DELETE FROM dlfileentry WHERE folderid IN (SELECT folderid FROM dlfolder WHERE parentfolderid = (SELECT folderid FROM dlfolder WHERE name = 'com_liferay_fragment_web_portlet_FragmentPortlet'));
+        " > /dev/null 2>&1 || true
+    fi
+
     echo "  -> Deploying ZIPs (Zero-Race Atomic Deployments via LDM bind mount)..."
     for zip_file in zips/fragments/*"$TARGET_ZIP_SUFFIX"; do
         [[ "$zip_file" == *"-debug"* ]] && continue # Skip debug zips if minified exist

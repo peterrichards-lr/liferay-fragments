@@ -34,9 +34,7 @@ A lifestyle-focused design system with a scoped container architecture, high-fid
 
 ### Aura - Scoped Container
 
-|                                                     Desktop (1920px)                                                      |                                                     Tablet (768px)                                                      |                                                     Mobile (375px)                                                      |
-| :-----------------------------------------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------------------------------------: |
-| <img src="./images/live/aura-design-system-aura-scoped-container-desktop.png" width="350" alt="Desktop"><br>🟢 **Passed** | <img src="./images/live/aura-design-system-aura-scoped-container-tablet.png" width="200" alt="Tablet"><br>🟢 **Passed** | <img src="./images/live/aura-design-system-aura-scoped-container-mobile.png" width="120" alt="Mobile"><br>🟢 **Passed** |
+![Aura - Scoped Container](../aura/fragments/aura-scoped-container/thumbnail.png)
 
 ---
 

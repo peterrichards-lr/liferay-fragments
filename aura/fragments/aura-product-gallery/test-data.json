@@ -1,0 +1,12 @@
+{
+  "pageLayout": {
+    "type": "Fragment",
+    "key": "aura-scoped-container",
+    "children": [
+      {
+        "type": "Fragment",
+        "key": "aura-product-gallery"
+      }
+    ]
+  }
+}
