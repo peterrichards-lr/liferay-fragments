@@ -122,6 +122,7 @@ KEEP_ALIVE=false
 EXISTING_PROJECT=false
 SKIP_DEPLOY=false
 LDM_VERBOSE=""
+FILTER_PATTERN=""
 
 # Parse Arguments
 while [[ "$#" -gt 0 ]]; do
@@ -141,6 +142,21 @@ while [[ "$#" -gt 0 ]]; do
             ;;
         -s|--skip-deploy)
             SKIP_DEPLOY=true
+            ;;
+        -f|--filter)
+            FILTER_PATTERN="$2"
+            shift
+            ;;
+        -h|--help)
+            echo "Usage: ./test-runner.sh [options] [liferay-tag]"
+            echo "Options:"
+            echo "  -v, --verbose          Enable verbose output"
+            echo "  -k, --keep-alive       Do not tear down environment on exit/completion"
+            echo "  -p, --project <name>   Use an existing LDM project"
+            echo "  -s, --skip-deploy      Skip fragment ZIP compilation and deployment"
+            echo "  -f, --filter <pattern> Filter tests and page creation to matching fragments/collections"
+            echo "  -h, --help             Show this help screen"
+            exit 0
             ;;
         *) 
             LIFERAY_TAG="$1" 
@@ -176,9 +192,19 @@ log_command() {
     fi
 }
 
+matches_filter() {
+    local text="$1"
+    if [ -z "$FILTER_PATTERN" ]; then
+        return 0
+    fi
+    echo "$text" | grep -iqE "$FILTER_PATTERN"
+    return $?
+}
+
 echo "======================================================"
 echo " Starting Liferay Fragments Automated Test Runner "
 echo " Target Liferay Tag/Prefix: $LIFERAY_TAG"
+if [ -n "$FILTER_PATTERN" ]; then echo " Test Filter: $FILTER_PATTERN"; fi
 if [ "$VERBOSE" = true ]; then echo " Verbose Mode: Enabled"; fi
 echo " (Press Ctrl+C to safely abort and cleanup at any time)"
 echo "======================================================"
@@ -398,9 +424,82 @@ if [ "$SKIP_DEPLOY" = true ]; then
 else
     echo ""
     echo "[5/5] Building and Deploying Fragments..."
+    
+    DEPLOY_LIST=()
+    if [ -n "$FILTER_PATTERN" ]; then
+        echo "  -> Filtering build/deployment to matching items..."
+        # 1. Check collections
+        for coll_dir in *; do
+            [ -d "$coll_dir" ] || continue
+            [ -f "$coll_dir/collection.json" ] || continue
+            
+            COLL_NAME=$(jq -r '.name // empty' "$coll_dir/collection.json" 2>/dev/null || echo "")
+            if matches_filter "$coll_dir" || matches_filter "$COLL_NAME"; then
+                DEPLOY_LIST+=("$coll_dir")
+                continue
+            fi
+            
+            # Check fragments inside collection
+            MATCHED=false
+            if [ -d "$coll_dir/fragments" ]; then
+                for frag_dir in "$coll_dir/fragments"/*; do
+                    [ -d "$frag_dir" ] || continue
+                    [ -f "$frag_dir/fragment.json" ] || continue
+                    FRAG_FOLDER=$(basename "$frag_dir")
+                    FRAG_NAME=$(jq -r '.name // empty' "$frag_dir/fragment.json" 2>/dev/null || echo "")
+                    FRAG_KEY=$(jq -r '.key // empty' "$frag_dir/fragment.json" 2>/dev/null || echo "")
+                    if matches_filter "$FRAG_FOLDER" || matches_filter "$FRAG_NAME" || matches_filter "$FRAG_KEY"; then
+                        MATCHED=true
+                        break
+                    fi
+                done
+            fi
+            if [ "$MATCHED" = true ]; then
+                DEPLOY_LIST+=("$coll_dir")
+            fi
+        done
+        
+        # 2. Check root fragments (not in a collection)
+        for frag_dir in *; do
+            [ -d "$frag_dir" ] || continue
+            [ -f "$frag_dir/fragment.json" ] || continue
+            
+            FRAG_NAME=$(jq -r '.name // empty' "$frag_dir/fragment.json" 2>/dev/null || echo "")
+            FRAG_KEY=$(jq -r '.key // empty' "$frag_dir/fragment.json" 2>/dev/null || echo "")
+            if matches_filter "$frag_dir" || matches_filter "$FRAG_NAME" || matches_filter "$FRAG_KEY"; then
+                DEPLOY_LIST+=("$frag_dir")
+            fi
+        done
+
+        # 3. Check showcase data
+        if [ -d "other-resources/showcase-data" ]; then
+            for sc_dir in other-resources/showcase-data/*; do
+                [ -d "$sc_dir" ] || continue
+                SC_NAME=$(basename "$sc_dir")
+                if matches_filter "$SC_NAME"; then
+                    DEPLOY_LIST+=("$SC_NAME")
+                fi
+            done
+        fi
+        
+        if [ ${#DEPLOY_LIST[@]} -eq 0 ]; then
+            echo "  [WARN] No collections, fragments, or showcases matched the filter: $FILTER_PATTERN"
+            echo "         Nothing will be built or deployed."
+        else
+            echo "  -> Found ${#DEPLOY_LIST[@]} matching build targets: ${DEPLOY_LIST[*]}"
+        fi
+    fi
+
     echo "  -> Building ZIPs (Default Scoping: liferay.com / Guest)..."
-    log_command "./create-fragment-zips.sh --all"
-    ./create-fragment-zips.sh --all > /dev/null
+    if [ -n "$FILTER_PATTERN" ]; then
+        if [ ${#DEPLOY_LIST[@]} -gt 0 ]; then
+            log_command "./create-fragment-zips.sh --clean ${DEPLOY_LIST[*]}"
+            ./create-fragment-zips.sh --clean "${DEPLOY_LIST[@]}" > /dev/null
+        fi
+    else
+        log_command "./create-fragment-zips.sh --all"
+        ./create-fragment-zips.sh --all > /dev/null
+    fi
 
     write_signal "WAITING_HEALTHY" $((EST_WAITING_HEALTHY_DEPLOY + EST_TESTING))
 
@@ -507,8 +606,13 @@ echo "Executing Playwright Test Suite..."
 write_signal "TESTING" "$EST_TESTING"
 set +e
 cd e2e-tests
-log_command "LIFERAY_VERSION=\"$REALISED_VERSION\" PW_TEST_SCREENSHOT_NO_FONTS_READY=1 npx playwright test"
-LIFERAY_VERSION="$REALISED_VERSION" PW_TEST_SCREENSHOT_NO_FONTS_READY=1 npx playwright test > playwright_output.log 2>&1
+if [ -n "$FILTER_PATTERN" ]; then
+    log_command "LIFERAY_VERSION=\"$REALISED_VERSION\" PW_TEST_SCREENSHOT_NO_FONTS_READY=1 npx playwright test --grep \"$FILTER_PATTERN\""
+    LIFERAY_VERSION="$REALISED_VERSION" PW_TEST_SCREENSHOT_NO_FONTS_READY=1 TEST_FILTER="$FILTER_PATTERN" npx playwright test --grep "$FILTER_PATTERN" > playwright_output.log 2>&1
+else
+    log_command "LIFERAY_VERSION=\"$REALISED_VERSION\" PW_TEST_SCREENSHOT_NO_FONTS_READY=1 npx playwright test"
+    LIFERAY_VERSION="$REALISED_VERSION" PW_TEST_SCREENSHOT_NO_FONTS_READY=1 npx playwright test > playwright_output.log 2>&1
+fi
 TEST_EXIT_CODE=$?
 cd ..
 set -e

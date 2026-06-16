@@ -1,6 +1,4 @@
 {
-  "sharedResources": [
-    "dom.js"
-  ],
+  "sharedResources": ["dom.js"],
   "themeStrategy": "generic"
 }

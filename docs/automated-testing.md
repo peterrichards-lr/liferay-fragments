@@ -152,6 +152,22 @@ against an already-provisioned environment without any fragment changes):
 ./scripts/test-runner.sh -p my-liferay-instance -s
 ```
 
+To filter the test execution and only build, deploy, and verify a specific collection or fragment (highly recommended for a faster local development feedback loop):
+
+```bash
+./scripts/test-runner.sh -f aura
+# OR
+./scripts/test-runner.sh --filter aura
+# Multiple patterns can be passed as regular expressions
+./scripts/test-runner.sh -f "aura|finance"
+```
+
+This filter option optimizes the entire E2E testing pipeline by:
+
+1. **Targeted Builds**: Only building ZIP collections, languages, and showcases that match the filter.
+2. **Selective Seeding**: Restricting page creation in `global-setup.js` to only the matching fragments, which reduces setup overhead and only queries or awaits the database objects those fragments actually require.
+3. **Focused Tests**: Passing the filter to Playwright via `--grep` to run only the tests matching the specified pattern.
+
 ### Overriding Default Credentials
 
 If your Liferay instance uses different credentials than the LDM defaults

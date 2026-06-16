@@ -303,7 +303,44 @@ async function globalSetup(config) {
       ],
     });
 
-    testDataFiles.forEach((file) => {
+    let filteredTestDataFiles = testDataFiles;
+    if (process.env.TEST_FILTER) {
+      let filterRegex;
+      try {
+        filterRegex = new RegExp(process.env.TEST_FILTER, 'i');
+      } catch (e) {
+        const escaped = process.env.TEST_FILTER.replace(
+          /[-\/\\^$*+?.()|[\]{}]/g,
+          '\\$&'
+        );
+        filterRegex = new RegExp(escaped, 'i');
+      }
+      filteredTestDataFiles = testDataFiles.filter((file) => {
+        const parentDir = path.dirname(file);
+        const fragmentFolder = path.basename(parentDir);
+        let collectionFolder = '';
+        let currentDir = parentDir;
+        while (
+          currentDir !== '..' &&
+          currentDir !== '/' &&
+          currentDir !== '.'
+        ) {
+          const collectionFile = path.join(currentDir, 'collection.json');
+          if (fs.existsSync(collectionFile)) {
+            collectionFolder = path.basename(currentDir);
+            break;
+          }
+          const parent = path.dirname(currentDir);
+          if (parent === currentDir) break;
+          currentDir = parent;
+        }
+        return (
+          filterRegex.test(fragmentFolder) || filterRegex.test(collectionFolder)
+        );
+      });
+    }
+
+    filteredTestDataFiles.forEach((file) => {
       try {
         const data = JSON.parse(fs.readFileSync(file, 'utf8'));
         if (data.requiredObjects && Array.isArray(data.requiredObjects)) {
@@ -670,7 +707,7 @@ async function globalSetup(config) {
     }
   } catch (e) {}
 
-  const fragmentFiles = globSync('**/fragment.json', {
+  let fragmentFiles = globSync('**/fragment.json', {
     cwd: projectRoot,
     absolute: true,
     ignore: [
@@ -681,6 +718,54 @@ async function globalSetup(config) {
       ...ldmIgnores,
     ],
   });
+
+  if (process.env.TEST_FILTER) {
+    let filterRegex;
+    try {
+      filterRegex = new RegExp(process.env.TEST_FILTER, 'i');
+    } catch (e) {
+      const escaped = process.env.TEST_FILTER.replace(
+        /[-\/\\^$*+?.()|[\]{}]/g,
+        '\\$&'
+      );
+      filterRegex = new RegExp(escaped, 'i');
+    }
+    fragmentFiles = fragmentFiles.filter((file) => {
+      const fragmentData = JSON.parse(fs.readFileSync(file, 'utf8'));
+      const fragmentName = fragmentData.name || '';
+      const baseFragmentKey =
+        fragmentData.key || path.basename(path.dirname(file));
+
+      let currentDir = path.dirname(file);
+      let collectionName = '';
+      while (currentDir !== '..' && currentDir !== '/' && currentDir !== '.') {
+        const collectionFile = path.join(currentDir, 'collection.json');
+        if (fs.existsSync(collectionFile)) {
+          const collData = JSON.parse(fs.readFileSync(collectionFile, 'utf8'));
+          collectionName = collData.name || '';
+          break;
+        }
+        const parent = path.dirname(currentDir);
+        if (parent === currentDir) break;
+        currentDir = parent;
+      }
+      if (!collectionName) {
+        const parentDirName = path.basename(path.dirname(path.dirname(file)));
+        if (parentDirName !== 'fragments' && parentDirName !== '..') {
+          collectionName = parentDirName;
+        }
+      }
+
+      return (
+        filterRegex.test(collectionName) ||
+        filterRegex.test(fragmentName) ||
+        filterRegex.test(baseFragmentKey)
+      );
+    });
+    console.log(
+      `  -> Test filter '${process.env.TEST_FILTER}' applied: Seeding ${fragmentFiles.length} matching pages.`
+    );
+  }
 
   // Fetch all existing layouts once to optimize duplicate checks
   let existingLayouts = [];
