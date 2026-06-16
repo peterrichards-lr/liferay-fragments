@@ -1,12 +1,15 @@
 // tests/global-setup.js
 const { chromium, request } = require('@playwright/test');
+const fs = require('fs');
+const path = require('path');
 
 function buildPageElementTree(
   node,
   siteERC,
   assetMap,
   defaultFragmentKey,
-  defaultFragmentConfig
+  defaultFragmentConfig,
+  fragmentKeyToDir
 ) {
   if (typeof node === 'string') {
     node = { type: 'Fragment', key: node };
@@ -51,15 +54,50 @@ function buildPageElementTree(
     };
 
     if (node.children && node.children.length > 0) {
-      element.pageElements = node.children.map((child) =>
-        buildPageElementTree(
-          child,
-          siteERC,
-          assetMap,
-          defaultFragmentKey,
-          defaultFragmentConfig
-        )
-      );
+      const parentDir = fragmentKeyToDir ? fragmentKeyToDir[key] : null;
+      let dropZoneId = '1';
+
+      if (parentDir) {
+        let content = '';
+        const ftlPath = path.join(parentDir, 'index.ftl');
+        const htmlPath = path.join(parentDir, 'index.html');
+        if (fs.existsSync(ftlPath)) {
+          content = fs.readFileSync(ftlPath, 'utf8');
+        } else if (fs.existsSync(htmlPath)) {
+          content = fs.readFileSync(htmlPath, 'utf8');
+        }
+
+        if (content) {
+          const match = content.match(
+            /<lfr-drop-zone[^>]+(?:id|data-lfr-drop-zone-id)=["']([^"']+)["']/i
+          );
+          if (match) {
+            dropZoneId = match[1];
+          } else {
+            const tagMatch = content.match(/<lfr-drop-zone/i);
+            if (tagMatch) {
+              dropZoneId = '1';
+            }
+          }
+        }
+      }
+
+      element.pageElements = [
+        {
+          type: 'FragmentDropZone',
+          id: dropZoneId,
+          pageElements: node.children.map((child) =>
+            buildPageElementTree(
+              child,
+              siteERC,
+              assetMap,
+              defaultFragmentKey,
+              defaultFragmentConfig,
+              fragmentKeyToDir
+            )
+          ),
+        },
+      ];
     }
 
     return element;
@@ -77,7 +115,8 @@ function buildPageElementTree(
           siteERC,
           assetMap,
           defaultFragmentKey,
-          defaultFragmentConfig
+          defaultFragmentConfig,
+          fragmentKeyToDir
         )
       );
     }
@@ -685,6 +724,27 @@ async function globalSetup(config) {
   // root, regardless of process.cwd(). Using a CWD-relative '../' pattern
   // escaped into sibling repos on the parent SanDisk volume.
   const projectRoot = path.resolve(__dirname, '..', '..');
+
+  // Build a comprehensive map of all fragment keys to their directory paths (unfiltered)
+  const allFragmentFiles = globSync('**/fragment.json', {
+    cwd: projectRoot,
+    absolute: true,
+    ignore: [
+      '**/node_modules/**',
+      '**/temp*/**',
+      '**/zips/**',
+      '**/e2e-tests/**',
+    ],
+  });
+  const fragmentKeyToDir = {};
+  for (const file of allFragmentFiles) {
+    try {
+      const fragmentData = JSON.parse(fs.readFileSync(file, 'utf8'));
+      const baseFragmentKey =
+        fragmentData.key || path.basename(path.dirname(file));
+      fragmentKeyToDir[baseFragmentKey] = path.dirname(file);
+    } catch (e) {}
+  }
 
   // Dynamically ignore any local LDM sandbox project directories to avoid scanning them
   const ldmIgnores = [];
@@ -1651,7 +1711,8 @@ async function globalSetup(config) {
             siteERC,
             assetMap,
             fragmentKey,
-            seededConfigOverrides
+            seededConfigOverrides,
+            fragmentKeyToDir
           );
         } else if (topType === 'Section') {
           rootPageElement = {
@@ -1662,7 +1723,8 @@ async function globalSetup(config) {
                 siteERC,
                 assetMap,
                 fragmentKey,
-                seededConfigOverrides
+                seededConfigOverrides,
+                fragmentKeyToDir
               ),
             ],
           };
@@ -1692,7 +1754,8 @@ async function globalSetup(config) {
                             siteERC,
                             assetMap,
                             fragmentKey,
-                            seededConfigOverrides
+                            seededConfigOverrides,
+                            fragmentKeyToDir
                           ),
                         ],
                       },
