@@ -4,6 +4,11 @@ const fs = require('fs');
 const path = require('path');
 
 async function globalTeardown(config) {
+  if (process.env.KEEP_ALIVE === 'true' || process.env.KEEP_ALIVE === '1') {
+    console.log('KEEP_ALIVE is active: Skipping cleanup of test pages.');
+    return;
+  }
+
   // Only teardown if we have the generated pages manifest
   const dataPath = path.join(__dirname, '..', 'generated-test-pages.json');
   if (!fs.existsSync(dataPath)) {
