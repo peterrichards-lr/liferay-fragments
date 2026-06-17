@@ -1,6 +1,6 @@
 {
   "name": "liferay-fragments",
-  "version": "6.3.2",
+  "version": "6.3.3",
   "description": "High-fidelity Liferay DXP Fragments",
   "main": "index.js",
   "scripts": {
