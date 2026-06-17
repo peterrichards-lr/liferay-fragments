@@ -1,4 +1,5 @@
 {
+  "excludeFromGallery": true,
   "pageLayout": {
     "type": "Fragment",
     "key": "zone-layout",

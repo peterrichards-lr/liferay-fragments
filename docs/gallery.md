@@ -52,16 +52,6 @@ A lifestyle-focused design system with a scoped container architecture, high-fid
 
 ---
 
-### Purchased Products
-
-|                                      Desktop (1920px)                                       |                                      Tablet (768px)                                       |                                      Mobile (375px)                                       |
-| :-----------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------: |
-| <img src="./images/live/commerce-purchased-products-desktop.png" width="350" alt="Desktop"> | <img src="./images/live/commerce-purchased-products-tablet.png" width="200" alt="Tablet"> | <img src="./images/live/commerce-purchased-products-mobile.png" width="120" alt="Mobile"> |
-
-[Detailed Documentation](./fragments/purchased-products.md)
-
----
-
 ## Content
 
 ### Content Map
@@ -801,46 +791,6 @@ A collection of high-fidelity fragments for constructing modern corporate intran
 ---
 
 ## Responsive Menus
-
-### Logo Zone
-
-|                                              Desktop (1920px)                                               |                                              Tablet (768px)                                               |                                              Mobile (375px)                                               |
-| :---------------------------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------------------: |
-| <img src="./images/live/responsive-menus-logo-zone-desktop.png" width="350" alt="Desktop"><br>🟢 **Passed** | <img src="./images/live/responsive-menus-logo-zone-tablet.png" width="200" alt="Tablet"><br>🟢 **Passed** | <img src="./images/live/responsive-menus-logo-zone-mobile.png" width="120" alt="Mobile"><br>🟢 **Passed** |
-
-[Detailed Documentation](./fragments/logo-zone.md)
-
----
-
-### Responsive Menu
-
-|                                                 Desktop (1920px)                                                  |                                                 Tablet (768px)                                                  |                                                 Mobile (375px)                                                  |
-| :---------------------------------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------------------------: |
-| <img src="./images/live/responsive-menus-responsive-menu-desktop.png" width="350" alt="Desktop"><br>🟢 **Passed** | <img src="./images/live/responsive-menus-responsive-menu-tablet.png" width="200" alt="Tablet"><br>🟢 **Passed** | <img src="./images/live/responsive-menus-responsive-menu-mobile.png" width="120" alt="Mobile"><br>🟢 **Passed** |
-
-[Detailed Documentation](./fragments/responsive-menu.md)
-
----
-
-### Responsive Side Menu
-
-|                                                    Desktop (1920px)                                                    |                                                    Tablet (768px)                                                    |                                                    Mobile (375px)                                                    |
-| :--------------------------------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------------------------------: |
-| <img src="./images/live/responsive-menus-responsive-side-menu-desktop.png" width="350" alt="Desktop"><br>🟢 **Passed** | <img src="./images/live/responsive-menus-responsive-side-menu-tablet.png" width="200" alt="Tablet"><br>🟢 **Passed** | <img src="./images/live/responsive-menus-responsive-side-menu-mobile.png" width="120" alt="Mobile"><br>🟢 **Passed** |
-
-[Detailed Documentation](./fragments/responsive-side-menu.md)
-
----
-
-### Zone Layout
-
-|                                               Desktop (1920px)                                                |                                               Tablet (768px)                                                |                                               Mobile (375px)                                                |
-| :-----------------------------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------------------------: |
-| <img src="./images/live/responsive-menus-zone-layout-desktop.png" width="350" alt="Desktop"><br>🟢 **Passed** | <img src="./images/live/responsive-menus-zone-layout-tablet.png" width="200" alt="Tablet"><br>🟢 **Passed** | <img src="./images/live/responsive-menus-zone-layout-mobile.png" width="120" alt="Mobile"><br>🟢 **Passed** |
-
-[Detailed Documentation](./fragments/zone-layout.md)
-
----
 
 ## User Account
 
