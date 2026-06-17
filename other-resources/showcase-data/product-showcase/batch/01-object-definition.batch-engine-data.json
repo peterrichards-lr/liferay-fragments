@@ -47,6 +47,26 @@
           "name": "imageUrl",
           "required": false,
           "type": "String"
+        },
+        {
+          "businessType": "Text",
+          "externalReferenceCode": "BADGE_TEXT",
+          "label": {
+            "en_US": "Badge Text"
+          },
+          "name": "badgeText",
+          "required": false,
+          "type": "String"
+        },
+        {
+          "businessType": "Text",
+          "externalReferenceCode": "SKU",
+          "label": {
+            "en_US": "SKU"
+          },
+          "name": "sku",
+          "required": false,
+          "type": "String"
         }
       ],
       "pluralLabel": {

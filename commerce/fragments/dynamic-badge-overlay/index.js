@@ -275,7 +275,10 @@ const initBadgeOverlay = () => {
             await Liferay.Fragment.Commons.resolveObjectPathByERC(objectERC);
 
           if (apiPath) {
-            const url = `${apiPath}/${recordId}`;
+            const isErc = isNaN(recordId);
+            const url = isErc
+              ? `${apiPath}/by-externalReferenceCode/${recordId}`
+              : `${apiPath}/${recordId}`;
             const res = await Liferay.Util.fetch(url);
             if (res.ok) {
               const data = await res.json();

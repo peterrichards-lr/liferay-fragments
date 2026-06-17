@@ -11,5 +11,19 @@
         }
       }
     ]
+  },
+  "pageConfig": {
+    "fragmentFields": [
+      {
+        "id": "01-product-id",
+        "value": {
+          "text": {
+            "value_i18n": {
+              "en_US": "PS-01"
+            }
+          }
+        }
+      }
+    ]
   }
 }
