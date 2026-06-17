@@ -476,9 +476,7 @@ else
             for sc_dir in other-resources/showcase-data/*; do
                 [ -d "$sc_dir" ] || continue
                 SC_NAME=$(basename "$sc_dir")
-                if matches_filter "$SC_NAME"; then
-                    DEPLOY_LIST+=("$SC_NAME")
-                fi
+                DEPLOY_LIST+=("$SC_NAME")
             done
         fi
         

@@ -32,7 +32,8 @@
   transition: all 0.6s ease-out;
 }
 
-.timeline-item.is-visible {
+.timeline-item.is-visible,
+.timeline-item.visible {
   opacity: 1;
   transform: translateY(0);
 }

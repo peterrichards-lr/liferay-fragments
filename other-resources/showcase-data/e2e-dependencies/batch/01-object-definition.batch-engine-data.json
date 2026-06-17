@@ -29,6 +29,15 @@
           "type": "String"
         }
       ],
+      "objectRelationships": [
+        {
+          "name": "ticket",
+          "type": "oneToMany",
+          "deletionType": "disassociate",
+          "objectDefinitionExternalReferenceCode1": "TICKET",
+          "objectDefinitionExternalReferenceCode2": "TICKET_COMMENT"
+        }
+      ],
       "pluralLabel": {
         "en_US": "Tickets"
       },
@@ -67,15 +76,6 @@
           "name": "visibility",
           "required": false,
           "type": "String"
-        }
-      ],
-      "objectRelationships": [
-        {
-          "name": "ticket",
-          "type": "oneToMany",
-          "deletionType": "disassociate",
-          "objectDefinitionExternalReferenceCode1": "TICKET",
-          "objectDefinitionExternalReferenceCode2": "TICKET_COMMENT"
         }
       ],
       "pluralLabel": {
@@ -178,6 +178,15 @@
           "type": "String"
         }
       ],
+      "objectRelationships": [
+        {
+          "name": "interaction",
+          "type": "oneToMany",
+          "deletionType": "disassociate",
+          "objectDefinitionExternalReferenceCode1": "CAMPAIGN",
+          "objectDefinitionExternalReferenceCode2": "CAMPAIGN_INTERACTION"
+        }
+      ],
       "pluralLabel": {
         "en_US": "CampaignRecords"
       },
@@ -226,15 +235,6 @@
           "name": "eventTarget",
           "required": false,
           "type": "String"
-        }
-      ],
-      "objectRelationships": [
-        {
-          "name": "interaction",
-          "type": "oneToMany",
-          "deletionType": "disassociate",
-          "objectDefinitionExternalReferenceCode1": "CAMPAIGN",
-          "objectDefinitionExternalReferenceCode2": "CAMPAIGN_INTERACTION"
         }
       ],
       "pluralLabel": {
@@ -298,7 +298,7 @@
           "name": "heartRate",
           "type": "oneToMany",
           "deletionType": "disassociate",
-          "objectDefinitionExternalReferenceCode1": "USER",
+          "objectDefinitionExternalReferenceCode1": "L_USER",
           "objectDefinitionExternalReferenceCode2": "HEART_RATE"
         }
       ],
@@ -363,7 +363,7 @@
           "name": "bloodPressure",
           "type": "oneToMany",
           "deletionType": "disassociate",
-          "objectDefinitionExternalReferenceCode1": "USER",
+          "objectDefinitionExternalReferenceCode1": "L_USER",
           "objectDefinitionExternalReferenceCode2": "BLOOD_PRESSURE"
         }
       ],
@@ -418,7 +418,7 @@
           "name": "steps",
           "type": "oneToMany",
           "deletionType": "disassociate",
-          "objectDefinitionExternalReferenceCode1": "USER",
+          "objectDefinitionExternalReferenceCode1": "L_USER",
           "objectDefinitionExternalReferenceCode2": "STEPS"
         }
       ],
@@ -473,7 +473,7 @@
           "name": "userWeight",
           "type": "oneToMany",
           "deletionType": "disassociate",
-          "objectDefinitionExternalReferenceCode1": "USER",
+          "objectDefinitionExternalReferenceCode1": "L_USER",
           "objectDefinitionExternalReferenceCode2": "WEIGHT"
         }
       ],

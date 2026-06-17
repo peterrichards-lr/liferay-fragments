@@ -1,7 +1,29 @@
 {
+  "documents": [
+    {
+      "externalReferenceCode": "PARALLAX-HERO-BG",
+      "title": "parallax_hero_bg.png",
+      "filePath": "e2e-tests/assets/parallax_hero_bg.png"
+    }
+  ],
   "pageLayout": {
     "type": "Fragment",
     "key": "modern-parallax-hero",
+    "fragmentFields": [
+      {
+        "id": "background-image",
+        "value": {
+          "fragmentImage": {
+            "url": {
+              "value_i18n": {
+                "en_US": "PARALLAX-HERO-BG"
+              }
+            }
+          },
+          "fragmentLink": {}
+        }
+      }
+    ],
     "children": [
       {
         "type": "Fragment",

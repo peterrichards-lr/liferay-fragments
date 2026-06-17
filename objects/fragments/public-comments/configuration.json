@@ -21,7 +21,7 @@
         },
         {
           "dataType": "string",
-          "defaultValue": "r_ticket_ticketId",
+          "defaultValue": "r_ticket_c_ticketId",
           "label": "lfr.objects.relationship-field-name",
           "description": "lfr.objects.relationship-field-name-description",
           "name": "relationshipFieldName",

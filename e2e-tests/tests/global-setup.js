@@ -40,6 +40,31 @@ function buildPageElementTree(
       }
     });
 
+    // Resolve fragmentFields references
+    const resolvedFields = [];
+    if (node.fragmentFields) {
+      const resolveValues = (obj) => {
+        if (typeof obj === 'string') {
+          if (assetMap[obj]) {
+            return assetMap[obj].toString();
+          }
+          return obj;
+        } else if (Array.isArray(obj)) {
+          return obj.map(resolveValues);
+        } else if (obj !== null && typeof obj === 'object') {
+          const newObj = {};
+          Object.keys(obj).forEach((key) => {
+            newObj[key] = resolveValues(obj[key]);
+          });
+          return newObj;
+        }
+        return obj;
+      };
+      node.fragmentFields.forEach((field) => {
+        resolvedFields.push(resolveValues(field));
+      });
+    }
+
     // Resolve if it is an input fragment
     const parentDir = fragmentKeyToDir ? fragmentKeyToDir[key] : null;
     let isInputType = false;
@@ -69,7 +94,7 @@ function buildPageElementTree(
               ? `ObjectField_${node.fieldKey}`
               : 'ObjectField_emailAddress',
           },
-          fragmentFields: [],
+          fragmentFields: resolvedFields,
           indexed: true,
         },
       };
@@ -84,7 +109,7 @@ function buildPageElementTree(
           siteKey: siteERC,
         },
         fragmentConfig: resolvedConfig,
-        fragmentFields: [],
+        fragmentFields: resolvedFields,
         indexed: true,
       },
     };
@@ -906,6 +931,104 @@ async function globalSetup(config) {
     console.warn('  -> [WARN] Failed to fetch object definitions:', e.message);
   }
 
+  // ----- SEED CUSTOM SHOWCASE OBJECT ENTRIES -----
+  try {
+    console.log('Seeding custom showcase object entries...');
+    const showcaseRoot = path.join(
+      __dirname,
+      '..',
+      '..',
+      'other-resources',
+      'showcase-data'
+    );
+    if (fs.existsSync(showcaseRoot)) {
+      const dirs = fs.readdirSync(showcaseRoot);
+      for (const dirName of dirs) {
+        const dirPath = path.join(showcaseRoot, dirName);
+        if (!fs.statSync(dirPath).isDirectory()) continue;
+
+        const defFile = path.join(
+          dirPath,
+          'batch',
+          '01-object-definition.batch-engine-data.json'
+        );
+        const entryFile = path.join(
+          dirPath,
+          'batch',
+          '02-object-entry.batch-engine-data.json'
+        );
+
+        if (fs.existsSync(defFile) && fs.existsSync(entryFile)) {
+          const defJson = JSON.parse(fs.readFileSync(defFile, 'utf8'));
+          const entryJson = JSON.parse(fs.readFileSync(entryFile, 'utf8'));
+
+          if (defJson.items && defJson.items[0] && entryJson.items) {
+            const objERC = defJson.items[0].externalReferenceCode;
+            // Look up definition
+            const matchedDef = objectDefinitions.find(
+              (d) => d.externalReferenceCode === objERC
+            );
+            if (matchedDef) {
+              const restContextPath = matchedDef.restContextPath;
+              const isSiteScoped = matchedDef.scope === 'site';
+              const baseEndpoint = isSiteScoped
+                ? `${restContextPath}/scopes/${siteId}`
+                : restContextPath;
+
+              console.log(
+                `  -> Seeding entries for Object ${objERC} using endpoint ${baseEndpoint}...`
+              );
+
+              for (const entry of entryJson.items) {
+                const erc = entry.externalReferenceCode;
+                if (!erc) continue;
+
+                // Check if entry already exists
+                let exists = false;
+                try {
+                  const checkResp = await apiContext.get(
+                    `${restContextPath}/by-external-reference-code/${erc}`
+                  );
+                  if (checkResp.ok()) {
+                    exists = true;
+                  }
+                } catch (e) {}
+
+                if (!exists) {
+                  const postResp = await apiContext.post(baseEndpoint, {
+                    data: entry,
+                  });
+                  if (postResp.ok()) {
+                    console.log(
+                      `     Successfully seeded entry ${erc} for ${objERC}`
+                    );
+                  } else {
+                    console.warn(
+                      `     [WARN] Failed to seed entry ${erc} for ${objERC}: ${postResp.status()} - ${await postResp.text()}`
+                    );
+                  }
+                } else {
+                  console.log(
+                    `     Entry ${erc} already exists for ${objERC}. Skipping.`
+                  );
+                }
+              }
+            } else {
+              console.warn(
+                `  -> [WARN] Object definition not found in Liferay for ERC: ${objERC}`
+              );
+            }
+          }
+        }
+      }
+    }
+  } catch (shErr) {
+    console.warn(
+      '  -> [WARN] Error during custom showcase object entry seeding:',
+      shErr.message
+    );
+  }
+
   const testPagesMap = [];
 
   for (const file of fragmentFiles) {
@@ -1627,7 +1750,7 @@ async function globalSetup(config) {
                     comment:
                       '<p>This is a test comment from the E2E setup!</p>',
                     visibility: 'Public',
-                    r_ticket_ticketId: ticketId,
+                    r_ticket_c_ticketId: Number(ticketId),
                   },
                 }
               );
@@ -1810,6 +1933,31 @@ async function globalSetup(config) {
       }
     }
 
+    // Resolve fragmentFields from testData.pageConfig.fragmentFields if present
+    const defaultResolvedFields = [];
+    if (testData && testData.pageConfig && testData.pageConfig.fragmentFields) {
+      const resolveValues = (obj) => {
+        if (typeof obj === 'string') {
+          if (assetMap[obj]) {
+            return assetMap[obj].toString();
+          }
+          return obj;
+        } else if (Array.isArray(obj)) {
+          return obj.map(resolveValues);
+        } else if (obj !== null && typeof obj === 'object') {
+          const newObj = {};
+          Object.keys(obj).forEach((key) => {
+            newObj[key] = resolveValues(obj[key]);
+          });
+          return newObj;
+        }
+        return obj;
+      };
+      testData.pageConfig.fragmentFields.forEach((field) => {
+        defaultResolvedFields.push(resolveValues(field));
+      });
+    }
+
     if (!rootPageElement) {
       if (fragmentData.type === 'input') {
         const applicantDef = objectDefinitions.find(
@@ -1869,7 +2017,7 @@ async function globalSetup(config) {
                                   ...seededConfigOverrides,
                                   inputFieldId: 'ObjectField_emailAddress',
                                 },
-                                fragmentFields: [],
+                                fragmentFields: defaultResolvedFields,
                                 indexed: true,
                               },
                             },
@@ -1940,7 +2088,7 @@ async function globalSetup(config) {
                               siteKey: siteERC,
                             },
                             fragmentConfig: seededConfigOverrides,
-                            fragmentFields: [],
+                            fragmentFields: defaultResolvedFields,
                             indexed: true,
                           },
                         },

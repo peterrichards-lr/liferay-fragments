@@ -2,7 +2,8 @@
   "pageConfig": {
     "fragmentConfig": {
       "objectERC": "COMPANY_MILESTONE",
-      "fallbackRecordIdentifier": "",
+      "fallbackRecordIdentifier": "MS-01",
+      "fallbackRecordIdentifierType": "erc",
       "customizeColumns": true,
       "columnsToDisplay": "date,title,description",
       "cardTitle": "Milestone Detail",
