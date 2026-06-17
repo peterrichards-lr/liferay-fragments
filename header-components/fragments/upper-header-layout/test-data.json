@@ -1,3 +1,21 @@
 {
-  "excludeFromGallery": true
+  "excludeFromGallery": true,
+  "pageLayout": {
+    "type": "Fragment",
+    "key": "upper-header-layout",
+    "children": [
+      {
+        "type": "Fragment",
+        "key": "logo"
+      },
+      {
+        "type": "Fragment",
+        "key": "site-name"
+      },
+      {
+        "type": "Fragment",
+        "key": "login-and-user-menu"
+      }
+    ]
+  }
 }

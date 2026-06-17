@@ -1,0 +1,19 @@
+{
+  "pageLayout": {
+    "type": "Form",
+    "children": [
+      {
+        "type": "Fragment",
+        "key": "signature-pad",
+        "fieldKey": "signature",
+        "fragmentConfig": {
+          "label": "Signature"
+        }
+      },
+      {
+        "type": "Fragment",
+        "key": "submit-button"
+      }
+    ]
+  }
+}

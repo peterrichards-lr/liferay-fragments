@@ -1,0 +1,83 @@
+{
+  "configuration": {
+    "className": "com.liferay.object.admin.rest.dto.v1_0.ObjectDefinition",
+    "parameters": {
+      "containsHeaders": "true",
+      "createStrategy": "UPSERT",
+      "importStrategy": "ON_ERROR_CONTINUE",
+      "updateStrategy": "UPDATE"
+    }
+  },
+  "items": [
+    {
+      "active": true,
+      "defaultLanguageId": "en_US",
+      "externalReferenceCode": "LOAN_APPLICATION",
+      "label": {
+        "en_US": "Loan Application"
+      },
+      "name": "LoanApplication",
+      "objectFields": [
+        {
+          "businessType": "Integer",
+          "externalReferenceCode": "LOAN_AMOUNT",
+          "label": {
+            "en_US": "Loan Amount"
+          },
+          "name": "loanAmount",
+          "required": true,
+          "type": "Integer"
+        },
+        {
+          "businessType": "Integer",
+          "externalReferenceCode": "LOAN_TERM",
+          "label": {
+            "en_US": "Loan Term (Months)"
+          },
+          "name": "loanTerm",
+          "required": true,
+          "type": "Integer"
+        }
+      ],
+      "pluralLabel": {
+        "en_US": "Loan Applications"
+      },
+      "restContextPath": "/o/c/loanapplications",
+      "scope": "site",
+      "status": {
+        "code": 0,
+        "label": "approved"
+      }
+    },
+    {
+      "active": true,
+      "defaultLanguageId": "en_US",
+      "externalReferenceCode": "OTP_VERIFICATION",
+      "label": {
+        "en_US": "OTP Verification"
+      },
+      "name": "OTPVerification",
+      "objectFields": [
+        {
+          "businessType": "Text",
+          "externalReferenceCode": "OTP_CODE",
+          "label": {
+            "en_US": "OTP Code"
+          },
+          "name": "otpCode",
+          "required": true,
+          "type": "String"
+        }
+      ],
+      "pluralLabel": {
+        "en_US": "OTP Verifications"
+      },
+      "restContextPath": "/o/c/otpverifications",
+      "scope": "site",
+      "status": {
+        "code": 0,
+        "label": "approved"
+      }
+    }
+  ]
+}

@@ -52,6 +52,7 @@ const mappings = {
       'masthead-call-to-action-form-header',
       'meta-object-form',
       'aura-scoped-container',
+      'signature-pad',
     ],
     children: [
       {
@@ -61,8 +62,8 @@ const mappings = {
       },
       {
         type: 'Fragment',
-        key: 'user-field',
-        fragmentConfig: { label: 'Email Address', fieldName: 'email' },
+        key: 'signature-pad',
+        fragmentConfig: { label: 'Signature', fieldName: 'signature' },
       },
       { type: 'Fragment', key: 'submit-button' },
     ],
@@ -87,9 +88,21 @@ const mappings = {
     children: [
       {
         type: 'Fragment',
-        key: 'primary-card',
-        fragmentConfig: { title: 'Semantic Layout' },
-      }, // pragma: allowlist secret
+        key: 'rich-text',
+        fragmentFields: [
+          {
+            id: 'text',
+            value: {
+              text: {
+                value_i18n: {
+                  en_US:
+                    '<div class="text-center"><img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?q=80&w=400&auto=format&fit=crop" style="max-width:100%; border-radius:8px;" /><h3 class="mt-3">Showcase Content</h3><p>This is semantic content dropped into a container to demonstrate layout and transparency.</p></div>',
+                },
+              },
+            },
+          },
+        ],
+      },
     ],
   },
 };
@@ -140,6 +153,20 @@ fragmentFiles.forEach((file) => {
     console.log(`[Deprecated] Marked ${fragmentKey} for exclusion.`);
   }
 
+  // Determine the nearest collection
+  let collectionDir = '';
+  let currentDir = dir;
+  while (currentDir !== '..' && currentDir !== '/' && currentDir !== '.') {
+    const collectionFile = path.join(currentDir, 'collection.json');
+    if (fs.existsSync(collectionFile)) {
+      collectionDir = currentDir;
+      break;
+    }
+    const parent = path.dirname(currentDir);
+    if (parent === currentDir) break;
+    currentDir = parent;
+  }
+
   // 2. Identify and Process Containers
   const htmlFile = path.join(dir, 'index.html');
   const ftlFile = path.join(dir, 'index.ftl');
@@ -153,7 +180,9 @@ fragmentFiles.forEach((file) => {
     templateContent.includes('lfr-drop-zone') ||
     templateContent.includes('lfr-widget-');
 
-  if (isContainer && !utilityFragments.includes(fragmentKey)) {
+  const isCommerce = collectionDir && collectionDir.includes('commerce');
+
+  if ((isContainer || isCommerce) && !utilityFragments.includes(fragmentKey)) {
     let targetChildren = mappings.general.children;
 
     if (mappings.header.fragments.includes(fragmentKey))
@@ -162,6 +191,13 @@ fragmentFiles.forEach((file) => {
       targetChildren = mappings.form.children;
     else if (mappings.dashboard.fragments.includes(fragmentKey))
       targetChildren = mappings.dashboard.children;
+
+    if (isCommerce) {
+      targetChildren = [
+        { type: 'Fragment', key: 'account-selector' },
+        ...targetChildren,
+      ];
+    }
 
     // We overwrite the generic stat-card layout or add the new layout if none exists
     const currentLayoutString = testData.pageLayout

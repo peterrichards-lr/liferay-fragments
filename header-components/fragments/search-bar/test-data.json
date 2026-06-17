@@ -1,4 +1,12 @@
 {
+  "pageConfig": {
+    "settings": {
+      "themeSettings": {
+        "lfr-theme:regular:show-header": "false",
+        "lfr-theme:regular:show-footer": "false"
+      }
+    }
+  },
   "pageLayout": {
     "type": "Fragment",
     "key": "upper-header-layout",

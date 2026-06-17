@@ -9,7 +9,8 @@ function buildPageElementTree(
   assetMap,
   defaultFragmentKey,
   defaultFragmentConfig,
-  fragmentKeyToDir
+  fragmentKeyToDir,
+  objectDefinitions = []
 ) {
   if (typeof node === 'string') {
     node = { type: 'Fragment', key: node };
@@ -22,6 +23,7 @@ function buildPageElementTree(
   else if (type.toLowerCase() === 'row') type = 'Row';
   else if (type.toLowerCase() === 'column') type = 'Column';
   else if (type.toLowerCase() === 'fragment') type = 'Fragment';
+  else if (type.toLowerCase() === 'form') type = 'Form';
 
   if (type === 'Fragment') {
     const key = node.key || defaultFragmentKey;
@@ -2112,6 +2114,9 @@ async function globalSetup(config) {
         settings: {
           colorSchemeName: '01',
           themeName: 'Classic',
+          ...(testData && testData.pageConfig && testData.pageConfig.settings
+            ? testData.pageConfig.settings
+            : {}),
         },
       },
     };

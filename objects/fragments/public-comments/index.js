@@ -91,8 +91,12 @@ const initPublicComments = () => {
       if (!temp) return;
       const commentEL = temp.content.cloneNode(true);
       const img = commentEL.querySelector('img.commenter-image');
-      if (img && comment.creator)
-        img.setAttribute('src', comment.creator.image);
+      if (img && comment.creator) {
+        const portrait =
+          comment.creator.image ||
+          'https://www.liferay.com/documents/20121/0/Portrait+Placeholder.png/89086f68-7c8a-9c4c-3c8c-1e8b1d9c7d42';
+        img.setAttribute('src', portrait);
+      }
       const name = commentEL.querySelector('span.commenter-name');
       if (name && comment.creator) name.textContent = comment.creator.name;
       const text = commentEL.querySelector('span.comment');

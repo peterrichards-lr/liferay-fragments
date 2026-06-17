@@ -1,3 +1,7 @@
 {
-  "sharedResources": ["discovery.js", "storage.js", "validation.js"]
+  "sharedResources": [
+    "discovery.js",
+    "storage.js",
+    "validation.js"
+  ]
 }

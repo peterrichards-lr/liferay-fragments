@@ -83,7 +83,13 @@ function generateGallery() {
 
     if (fragments.length === 0) return;
 
+    // Skip Widget Modifiers as they don't have a useful visual representation
+    if (collectionDir.includes('widget-modifiers')) {
+      return;
+    }
+
     markdown += `## ${collectionMetadata.name}\n\n`;
+
     if (collectionMetadata.description) {
       markdown += `${collectionMetadata.description}\n\n`;
     }
