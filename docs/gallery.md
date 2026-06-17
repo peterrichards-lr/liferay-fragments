@@ -10,33 +10,33 @@ A lifestyle-focused design system with a scoped container architecture, high-fid
 
 ### Aura - Final CTA Banner
 
-|                                       Original Image                                        |                                             Desktop (1920px)                                             |                                             Tablet (768px)                                             |                                             Mobile (375px)                                             |
-| :-----------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------------: |
-| <img src="../aura/fragments/aura-final-cta/thumbnail.png" width="200" alt="Original Image"> | <img src="./images/live/aura-design-system-aura-final-cta-banner-desktop.png" width="350" alt="Desktop"> | <img src="./images/live/aura-design-system-aura-final-cta-banner-tablet.png" width="200" alt="Tablet"> | <img src="./images/live/aura-design-system-aura-final-cta-banner-mobile.png" width="120" alt="Mobile"> |
+|                                             Desktop (1920px)                                             |                                             Tablet (768px)                                             |                                             Mobile (375px)                                             |
+| :------------------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------------: |
+| <img src="./images/live/aura-design-system-aura-final-cta-banner-desktop.png" width="350" alt="Desktop"> | <img src="./images/live/aura-design-system-aura-final-cta-banner-tablet.png" width="200" alt="Tablet"> | <img src="./images/live/aura-design-system-aura-final-cta-banner-mobile.png" width="120" alt="Mobile"> |
 
 ---
 
 ### Aura - Lookbook Row
 
-|                                       Original Image                                       |                                           Desktop (1920px)                                           |                                           Tablet (768px)                                           |                                           Mobile (375px)                                           |
-| :----------------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------------: |
-| <img src="../aura/fragments/aura-lookbook/thumbnail.png" width="200" alt="Original Image"> | <img src="./images/live/aura-design-system-aura-lookbook-row-desktop.png" width="350" alt="Desktop"> | <img src="./images/live/aura-design-system-aura-lookbook-row-tablet.png" width="200" alt="Tablet"> | <img src="./images/live/aura-design-system-aura-lookbook-row-mobile.png" width="120" alt="Mobile"> |
+|                                           Desktop (1920px)                                           |                                           Tablet (768px)                                           |                                           Mobile (375px)                                           |
+| :--------------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------------: |
+| <img src="./images/live/aura-design-system-aura-lookbook-row-desktop.png" width="350" alt="Desktop"> | <img src="./images/live/aura-design-system-aura-lookbook-row-tablet.png" width="200" alt="Tablet"> | <img src="./images/live/aura-design-system-aura-lookbook-row-mobile.png" width="120" alt="Mobile"> |
 
 ---
 
 ### Aura - Product Gallery
 
-|                                          Original Image                                           |                                            Desktop (1920px)                                             |                                            Tablet (768px)                                             |                                            Mobile (375px)                                             |
-| :-----------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------------------: |
-| <img src="../aura/fragments/aura-product-gallery/thumbnail.png" width="200" alt="Original Image"> | <img src="./images/live/aura-design-system-aura-product-gallery-desktop.png" width="350" alt="Desktop"> | <img src="./images/live/aura-design-system-aura-product-gallery-tablet.png" width="200" alt="Tablet"> | <img src="./images/live/aura-design-system-aura-product-gallery-mobile.png" width="120" alt="Mobile"> |
+|                                            Desktop (1920px)                                             |                                            Tablet (768px)                                             |                                            Mobile (375px)                                             |
+| :-----------------------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------------------: |
+| <img src="./images/live/aura-design-system-aura-product-gallery-desktop.png" width="350" alt="Desktop"> | <img src="./images/live/aura-design-system-aura-product-gallery-tablet.png" width="200" alt="Tablet"> | <img src="./images/live/aura-design-system-aura-product-gallery-mobile.png" width="120" alt="Mobile"> |
 
 ---
 
 ### Aura - USP Grid
 
-|                                       Original Image                                       |                                         Desktop (1920px)                                         |                                         Tablet (768px)                                         |                                         Mobile (375px)                                         |
-| :----------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------------------: |
-| <img src="../aura/fragments/aura-usp-grid/thumbnail.png" width="200" alt="Original Image"> | <img src="./images/live/aura-design-system-aura-usp-grid-desktop.png" width="350" alt="Desktop"> | <img src="./images/live/aura-design-system-aura-usp-grid-tablet.png" width="200" alt="Tablet"> | <img src="./images/live/aura-design-system-aura-usp-grid-mobile.png" width="120" alt="Mobile"> |
+|                                         Desktop (1920px)                                         |                                         Tablet (768px)                                         |                                         Mobile (375px)                                         |
+| :----------------------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------------------: |
+| <img src="./images/live/aura-design-system-aura-usp-grid-desktop.png" width="350" alt="Desktop"> | <img src="./images/live/aura-design-system-aura-usp-grid-tablet.png" width="200" alt="Tablet"> | <img src="./images/live/aura-design-system-aura-usp-grid-mobile.png" width="120" alt="Mobile"> |
 
 ---
 
@@ -44,9 +44,9 @@ A lifestyle-focused design system with a scoped container architecture, high-fid
 
 ### Dynamic Badge Overlay
 
-|                                 Original Image                                  |                                                Desktop (1920px)                                                 |                                                Tablet (768px)                                                 |                                                Mobile (375px)                                                 |
-| :-----------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------------: |
-| <img src="./images/dynamic-badge-overlay.png" width="200" alt="Original Image"> | <img src="./images/live/commerce-dynamic-badge-overlay-desktop.png" width="350" alt="Desktop"><br>🟢 **Passed** | <img src="./images/live/commerce-dynamic-badge-overlay-tablet.png" width="200" alt="Tablet"><br>🟢 **Passed** | <img src="./images/live/commerce-dynamic-badge-overlay-mobile.png" width="120" alt="Mobile"><br>🟢 **Passed** |
+|                                 Original Image                                  |                                        Desktop (1920px)                                        |                                        Tablet (768px)                                        |                                        Mobile (375px)                                        |
+| :-----------------------------------------------------------------------------: | :--------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------: |
+| <img src="./images/dynamic-badge-overlay.png" width="200" alt="Original Image"> | <img src="./images/live/commerce-dynamic-badge-overlay-desktop.png" width="350" alt="Desktop"> | <img src="./images/live/commerce-dynamic-badge-overlay-tablet.png" width="200" alt="Tablet"> | <img src="./images/live/commerce-dynamic-badge-overlay-mobile.png" width="120" alt="Mobile"> |
 
 [Detailed Documentation](./fragments/dynamic-badge-overlay.md)
 
@@ -54,9 +54,9 @@ A lifestyle-focused design system with a scoped container architecture, high-fid
 
 ### Purchased Products
 
-|                                           Original Image                                            |                                      Desktop (1920px)                                       |                                      Tablet (768px)                                       |                                      Mobile (375px)                                       |
-| :-------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------: |
-| <img src="../commerce/fragments/purchased-products/thumbnail.png" width="200" alt="Original Image"> | <img src="./images/live/commerce-purchased-products-desktop.png" width="350" alt="Desktop"> | <img src="./images/live/commerce-purchased-products-tablet.png" width="200" alt="Tablet"> | <img src="./images/live/commerce-purchased-products-mobile.png" width="120" alt="Mobile"> |
+|                                      Desktop (1920px)                                       |                                      Tablet (768px)                                       |                                      Mobile (375px)                                       |
+| :-----------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------: |
+| <img src="./images/live/commerce-purchased-products-desktop.png" width="350" alt="Desktop"> | <img src="./images/live/commerce-purchased-products-tablet.png" width="200" alt="Tablet"> | <img src="./images/live/commerce-purchased-products-mobile.png" width="120" alt="Mobile"> |
 
 [Detailed Documentation](./fragments/purchased-products.md)
 
@@ -76,9 +76,9 @@ A lifestyle-focused design system with a scoped container architecture, high-fid
 
 ### Service Card
 
-|                                        Original Image                                        |                                   Desktop (1920px)                                   |                                   Tablet (768px)                                   |                                   Mobile (375px)                                   |
-| :------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------: |
-| <img src="../content/fragments/service-card/thumbnail.png" width="200" alt="Original Image"> | <img src="./images/live/content-service-card-desktop.png" width="350" alt="Desktop"> | <img src="./images/live/content-service-card-tablet.png" width="200" alt="Tablet"> | <img src="./images/live/content-service-card-mobile.png" width="120" alt="Mobile"> |
+|                                   Desktop (1920px)                                   |                                   Tablet (768px)                                   |                                   Mobile (375px)                                   |
+| :----------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------: |
+| <img src="./images/live/content-service-card-desktop.png" width="350" alt="Desktop"> | <img src="./images/live/content-service-card-tablet.png" width="200" alt="Tablet"> | <img src="./images/live/content-service-card-mobile.png" width="120" alt="Mobile"> |
 
 [Detailed Documentation](./fragments/service-card.md)
 
@@ -86,9 +86,9 @@ A lifestyle-focused design system with a scoped container architecture, high-fid
 
 ### Service Icon
 
-|                                        Original Image                                        |                                   Desktop (1920px)                                   |                                   Tablet (768px)                                   |                                   Mobile (375px)                                   |
-| :------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------: |
-| <img src="../content/fragments/service-icon/thumbnail.png" width="200" alt="Original Image"> | <img src="./images/live/content-service-icon-desktop.png" width="350" alt="Desktop"> | <img src="./images/live/content-service-icon-tablet.png" width="200" alt="Tablet"> | <img src="./images/live/content-service-icon-mobile.png" width="120" alt="Mobile"> |
+|                                   Desktop (1920px)                                   |                                   Tablet (768px)                                   |                                   Mobile (375px)                                   |
+| :----------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------: |
+| <img src="./images/live/content-service-icon-desktop.png" width="350" alt="Desktop"> | <img src="./images/live/content-service-icon-tablet.png" width="200" alt="Tablet"> | <img src="./images/live/content-service-icon-mobile.png" width="120" alt="Mobile"> |
 
 [Detailed Documentation](./fragments/service-icon.md)
 
@@ -162,9 +162,9 @@ A lifestyle-focused design system with a scoped container architecture, high-fid
 
 ### Autocomplete (Object)
 
-|                                                Original Image                                                |                                           Desktop (1920px)                                           |                                           Tablet (768px)                                           |                                           Mobile (375px)                                           |
-| :----------------------------------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------------: |
-| <img src="../form-fragments/fragments/autocomplete-(object)/thumbnail.png" width="200" alt="Original Image"> | <img src="./images/live/forms-fragments-autocomplete-object--desktop.png" width="350" alt="Desktop"> | <img src="./images/live/forms-fragments-autocomplete-object--tablet.png" width="200" alt="Tablet"> | <img src="./images/live/forms-fragments-autocomplete-object--mobile.png" width="120" alt="Mobile"> |
+|                                           Desktop (1920px)                                           |                                           Tablet (768px)                                           |                                           Mobile (375px)                                           |
+| :--------------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------------: |
+| <img src="./images/live/forms-fragments-autocomplete-object--desktop.png" width="350" alt="Desktop"> | <img src="./images/live/forms-fragments-autocomplete-object--tablet.png" width="200" alt="Tablet"> | <img src="./images/live/forms-fragments-autocomplete-object--mobile.png" width="120" alt="Mobile"> |
 
 [Detailed Documentation](<./fragments/autocomplete-(object).md>)
 
@@ -172,9 +172,9 @@ A lifestyle-focused design system with a scoped container architecture, high-fid
 
 ### Autocomplete (Picklist)
 
-|                                                 Original Image                                                 |                                            Desktop (1920px)                                            |                                            Tablet (768px)                                            |                                            Mobile (375px)                                            |
-| :------------------------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------------------------: |
-| <img src="../form-fragments/fragments/autocomplete-(picklist)/thumbnail.png" width="200" alt="Original Image"> | <img src="./images/live/forms-fragments-autocomplete-picklist--desktop.png" width="350" alt="Desktop"> | <img src="./images/live/forms-fragments-autocomplete-picklist--tablet.png" width="200" alt="Tablet"> | <img src="./images/live/forms-fragments-autocomplete-picklist--mobile.png" width="120" alt="Mobile"> |
+|                                            Desktop (1920px)                                            |                                            Tablet (768px)                                            |                                            Mobile (375px)                                            |
+| :----------------------------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------------------------: |
+| <img src="./images/live/forms-fragments-autocomplete-picklist--desktop.png" width="350" alt="Desktop"> | <img src="./images/live/forms-fragments-autocomplete-picklist--tablet.png" width="200" alt="Tablet"> | <img src="./images/live/forms-fragments-autocomplete-picklist--mobile.png" width="120" alt="Mobile"> |
 
 [Detailed Documentation](<./fragments/autocomplete-(picklist).md>)
 
@@ -190,9 +190,9 @@ A lifestyle-focused design system with a scoped container architecture, high-fid
 
 ### Confirmation Field
 
-|                                              Original Image                                               |                                          Desktop (1920px)                                          |                                          Tablet (768px)                                          |                                          Mobile (375px)                                          |
-| :-------------------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------: |
-| <img src="../form-fragments/fragments/confirmation-field/thumbnail.png" width="200" alt="Original Image"> | <img src="./images/live/forms-fragments-confirmation-field-desktop.png" width="350" alt="Desktop"> | <img src="./images/live/forms-fragments-confirmation-field-tablet.png" width="200" alt="Tablet"> | <img src="./images/live/forms-fragments-confirmation-field-mobile.png" width="120" alt="Mobile"> |
+|                                          Desktop (1920px)                                          |                                          Tablet (768px)                                          |                                          Mobile (375px)                                          |
+| :------------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------: |
+| <img src="./images/live/forms-fragments-confirmation-field-desktop.png" width="350" alt="Desktop"> | <img src="./images/live/forms-fragments-confirmation-field-tablet.png" width="200" alt="Tablet"> | <img src="./images/live/forms-fragments-confirmation-field-mobile.png" width="120" alt="Mobile"> |
 
 [Detailed Documentation](./fragments/confirmation-field.md)
 
@@ -250,9 +250,9 @@ A lifestyle-focused design system with a scoped container architecture, high-fid
 
 ### Range
 
-|                                        Original Image                                        |                                   Desktop (1920px)                                    |                                   Tablet (768px)                                    |                                   Mobile (375px)                                    |
-| :------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------: |
-| <img src="../form-fragments/fragments/range/thumbnail.png" width="200" alt="Original Image"> | <img src="./images/live/forms-fragments-range-desktop.png" width="350" alt="Desktop"> | <img src="./images/live/forms-fragments-range-tablet.png" width="200" alt="Tablet"> | <img src="./images/live/forms-fragments-range-mobile.png" width="120" alt="Mobile"> |
+|                                   Desktop (1920px)                                    |                                   Tablet (768px)                                    |                                   Mobile (375px)                                    |
+| :-----------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------: |
+| <img src="./images/live/forms-fragments-range-desktop.png" width="350" alt="Desktop"> | <img src="./images/live/forms-fragments-range-tablet.png" width="200" alt="Tablet"> | <img src="./images/live/forms-fragments-range-mobile.png" width="120" alt="Mobile"> |
 
 [Detailed Documentation](./fragments/range.md)
 
@@ -298,9 +298,9 @@ A lifestyle-focused design system with a scoped container architecture, high-fid
 
 ### Toggle Switch
 
-|                             Original Image                              |                                       Desktop (1920px)                                        |                                       Tablet (768px)                                        |                                       Mobile (375px)                                        |
-| :---------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------: |
-| <img src="./images/toggle-switch.png" width="200" alt="Original Image"> | <img src="./images/live/forms-fragments-toggle-switch-desktop.png" width="350" alt="Desktop"> | <img src="./images/live/forms-fragments-toggle-switch-tablet.png" width="200" alt="Tablet"> | <img src="./images/live/forms-fragments-toggle-switch-mobile.png" width="120" alt="Mobile"> |
+|                             Original Image                              |                                                Desktop (1920px)                                                |                                                Tablet (768px)                                                |                                                Mobile (375px)                                                |
+| :---------------------------------------------------------------------: | :------------------------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------------------: |
+| <img src="./images/toggle-switch.png" width="200" alt="Original Image"> | <img src="./images/live/forms-fragments-toggle-switch-desktop.png" width="350" alt="Desktop"><br>🟢 **Passed** | <img src="./images/live/forms-fragments-toggle-switch-tablet.png" width="200" alt="Tablet"><br>🟢 **Passed** | <img src="./images/live/forms-fragments-toggle-switch-mobile.png" width="120" alt="Mobile"><br>🟢 **Passed** |
 
 [Detailed Documentation](./fragments/toggle-switch.md)
 
@@ -496,9 +496,9 @@ Visually appealing fragments generated by Gemini.
 
 ### Login and User Menu
 
-|                                                Original Image                                                 |                                           Desktop (1920px)                                            |                                           Tablet (768px)                                            |                                           Mobile (375px)                                            |
-| :-----------------------------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------------: |
-| <img src="../header-components/fragments/login-and-user-menu/thumbnail.png" width="200" alt="Original Image"> | <img src="./images/live/header-components-login-and-user-menu-desktop.png" width="350" alt="Desktop"> | <img src="./images/live/header-components-login-and-user-menu-tablet.png" width="200" alt="Tablet"> | <img src="./images/live/header-components-login-and-user-menu-mobile.png" width="120" alt="Mobile"> |
+|                                           Desktop (1920px)                                            |                                           Tablet (768px)                                            |                                           Mobile (375px)                                            |
+| :---------------------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------------: |
+| <img src="./images/live/header-components-login-and-user-menu-desktop.png" width="350" alt="Desktop"> | <img src="./images/live/header-components-login-and-user-menu-tablet.png" width="200" alt="Tablet"> | <img src="./images/live/header-components-login-and-user-menu-mobile.png" width="120" alt="Mobile"> |
 
 [Detailed Documentation](./fragments/login-and-user-menu.md)
 
@@ -506,9 +506,9 @@ Visually appealing fragments generated by Gemini.
 
 ### Site Logo
 
-|                                         Original Image                                         |                                      Desktop (1920px)                                       |                                      Tablet (768px)                                       |                                      Mobile (375px)                                       |
-| :--------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------: |
-| <img src="../header-components/fragments/logo/thumbnail.png" width="200" alt="Original Image"> | <img src="./images/live/header-components-site-logo-desktop.png" width="350" alt="Desktop"> | <img src="./images/live/header-components-site-logo-tablet.png" width="200" alt="Tablet"> | <img src="./images/live/header-components-site-logo-mobile.png" width="120" alt="Mobile"> |
+|                                      Desktop (1920px)                                       |                                      Tablet (768px)                                       |                                      Mobile (375px)                                       |
+| :-----------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------: |
+| <img src="./images/live/header-components-site-logo-desktop.png" width="350" alt="Desktop"> | <img src="./images/live/header-components-site-logo-tablet.png" width="200" alt="Tablet"> | <img src="./images/live/header-components-site-logo-mobile.png" width="120" alt="Mobile"> |
 
 [Detailed Documentation](./fragments/logo.md)
 
@@ -526,9 +526,9 @@ Visually appealing fragments generated by Gemini.
 
 ### Search Bar
 
-|                                            Original Image                                            |                                       Desktop (1920px)                                       |                                       Tablet (768px)                                       |                                       Mobile (375px)                                       |
-| :--------------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------: |
-| <img src="../header-components/fragments/search-bar/thumbnail.png" width="200" alt="Original Image"> | <img src="./images/live/header-components-search-bar-desktop.png" width="350" alt="Desktop"> | <img src="./images/live/header-components-search-bar-tablet.png" width="200" alt="Tablet"> | <img src="./images/live/header-components-search-bar-mobile.png" width="120" alt="Mobile"> |
+|                                       Desktop (1920px)                                       |                                       Tablet (768px)                                       |                                       Mobile (375px)                                       |
+| :------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------: |
+| <img src="./images/live/header-components-search-bar-desktop.png" width="350" alt="Desktop"> | <img src="./images/live/header-components-search-bar-tablet.png" width="200" alt="Tablet"> | <img src="./images/live/header-components-search-bar-mobile.png" width="120" alt="Mobile"> |
 
 [Detailed Documentation](./fragments/search-bar.md)
 
@@ -536,9 +536,9 @@ Visually appealing fragments generated by Gemini.
 
 ### Search Button
 
-|                                             Original Image                                              |                                        Desktop (1920px)                                         |                                        Tablet (768px)                                         |                                        Mobile (375px)                                         |
-| :-----------------------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------: |
-| <img src="../header-components/fragments/search-button/thumbnail.png" width="200" alt="Original Image"> | <img src="./images/live/header-components-search-button-desktop.png" width="350" alt="Desktop"> | <img src="./images/live/header-components-search-button-tablet.png" width="200" alt="Tablet"> | <img src="./images/live/header-components-search-button-mobile.png" width="120" alt="Mobile"> |
+|                                        Desktop (1920px)                                         |                                        Tablet (768px)                                         |                                        Mobile (375px)                                         |
+| :---------------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------: |
+| <img src="./images/live/header-components-search-button-desktop.png" width="350" alt="Desktop"> | <img src="./images/live/header-components-search-button-tablet.png" width="200" alt="Tablet"> | <img src="./images/live/header-components-search-button-mobile.png" width="120" alt="Mobile"> |
 
 [Detailed Documentation](./fragments/search-button.md)
 
@@ -546,9 +546,9 @@ Visually appealing fragments generated by Gemini.
 
 ### Site Name
 
-|                                           Original Image                                            |                                      Desktop (1920px)                                       |                                      Tablet (768px)                                       |                                      Mobile (375px)                                       |
-| :-------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------: |
-| <img src="../header-components/fragments/site-name/thumbnail.png" width="200" alt="Original Image"> | <img src="./images/live/header-components-site-name-desktop.png" width="350" alt="Desktop"> | <img src="./images/live/header-components-site-name-tablet.png" width="200" alt="Tablet"> | <img src="./images/live/header-components-site-name-mobile.png" width="120" alt="Mobile"> |
+|                                      Desktop (1920px)                                       |                                      Tablet (768px)                                       |                                      Mobile (375px)                                       |
+| :-----------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------: |
+| <img src="./images/live/header-components-site-name-desktop.png" width="350" alt="Desktop"> | <img src="./images/live/header-components-site-name-tablet.png" width="200" alt="Tablet"> | <img src="./images/live/header-components-site-name-mobile.png" width="120" alt="Mobile"> |
 
 [Detailed Documentation](./fragments/site-name.md)
 
@@ -556,9 +556,9 @@ Visually appealing fragments generated by Gemini.
 
 ### Upper Header Bar Layout
 
-|                                                Original Image                                                 |                                             Desktop (1920px)                                              |                                             Tablet (768px)                                              |                                             Mobile (375px)                                              |
-| :-----------------------------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------: |
-| <img src="../header-components/fragments/upper-header-layout/thumbnail.png" width="200" alt="Original Image"> | <img src="./images/live/header-components-upper-header-bar-layout-desktop.png" width="350" alt="Desktop"> | <img src="./images/live/header-components-upper-header-bar-layout-tablet.png" width="200" alt="Tablet"> | <img src="./images/live/header-components-upper-header-bar-layout-mobile.png" width="120" alt="Mobile"> |
+|                                             Desktop (1920px)                                              |                                             Tablet (768px)                                              |                                             Mobile (375px)                                              |
+| :-------------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------: |
+| <img src="./images/live/header-components-upper-header-bar-layout-desktop.png" width="350" alt="Desktop"> | <img src="./images/live/header-components-upper-header-bar-layout-tablet.png" width="200" alt="Tablet"> | <img src="./images/live/header-components-upper-header-bar-layout-mobile.png" width="120" alt="Mobile"> |
 
 [Detailed Documentation](./fragments/upper-header-layout.md)
 
@@ -566,9 +566,9 @@ Visually appealing fragments generated by Gemini.
 
 ### User Personal Bar
 
-|                                           Original Image                                           |                                          Desktop (1920px)                                           |                                          Tablet (768px)                                           |                                          Mobile (375px)                                           |
-| :------------------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------: |
-| <img src="../header-components/fragments/user-bar/thumbnail.png" width="200" alt="Original Image"> | <img src="./images/live/header-components-user-personal-bar-desktop.png" width="350" alt="Desktop"> | <img src="./images/live/header-components-user-personal-bar-tablet.png" width="200" alt="Tablet"> | <img src="./images/live/header-components-user-personal-bar-mobile.png" width="120" alt="Mobile"> |
+|                                          Desktop (1920px)                                           |                                          Tablet (768px)                                           |                                          Mobile (375px)                                           |
+| :-------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------: |
+| <img src="./images/live/header-components-user-personal-bar-desktop.png" width="350" alt="Desktop"> | <img src="./images/live/header-components-user-personal-bar-tablet.png" width="200" alt="Tablet"> | <img src="./images/live/header-components-user-personal-bar-mobile.png" width="120" alt="Mobile"> |
 
 [Detailed Documentation](./fragments/user-bar.md)
 
@@ -580,9 +580,9 @@ Prominent visuals, such as videos or banners, that capture attention and define 
 
 ### Banner Video
 
-|                                         Original Image                                         |                                     Desktop (1920px)                                     |                                     Tablet (768px)                                     |                                     Mobile (375px)                                     |
-| :--------------------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------: |
-| <img src="../hero-assets/fragments/hero-video/thumbnail.png" width="200" alt="Original Image"> | <img src="./images/live/hero-assets-banner-video-desktop.png" width="350" alt="Desktop"> | <img src="./images/live/hero-assets-banner-video-tablet.png" width="200" alt="Tablet"> | <img src="./images/live/hero-assets-banner-video-mobile.png" width="120" alt="Mobile"> |
+|                                     Desktop (1920px)                                     |                                     Tablet (768px)                                     |                                     Mobile (375px)                                     |
+| :--------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------: |
+| <img src="./images/live/hero-assets-banner-video-desktop.png" width="350" alt="Desktop"> | <img src="./images/live/hero-assets-banner-video-tablet.png" width="200" alt="Tablet"> | <img src="./images/live/hero-assets-banner-video-mobile.png" width="120" alt="Mobile"> |
 
 [Detailed Documentation](./fragments/hero-video.md)
 
@@ -590,9 +590,9 @@ Prominent visuals, such as videos or banners, that capture attention and define 
 
 ### Overlay Background
 
-|                                             Original Image                                             |                                        Desktop (1920px)                                        |                                        Tablet (768px)                                        |                                        Mobile (375px)                                        |
-| :----------------------------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------: |
-| <img src="../hero-assets/fragments/overlay-background/thumbnail.png" width="200" alt="Original Image"> | <img src="./images/live/hero-assets-overlay-background-desktop.png" width="350" alt="Desktop"> | <img src="./images/live/hero-assets-overlay-background-tablet.png" width="200" alt="Tablet"> | <img src="./images/live/hero-assets-overlay-background-mobile.png" width="120" alt="Mobile"> |
+|                                        Desktop (1920px)                                        |                                        Tablet (768px)                                        |                                        Mobile (375px)                                        |
+| :--------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------: |
+| <img src="./images/live/hero-assets-overlay-background-desktop.png" width="350" alt="Desktop"> | <img src="./images/live/hero-assets-overlay-background-tablet.png" width="200" alt="Tablet"> | <img src="./images/live/hero-assets-overlay-background-mobile.png" width="120" alt="Mobile"> |
 
 [Detailed Documentation](./fragments/overlay-background.md)
 
@@ -612,9 +612,9 @@ Prominent visuals, such as videos or banners, that capture attention and define 
 
 ### Primary Card
 
-|                                             Original Image                                             |                                        Desktop (1920px)                                        |                                        Tablet (768px)                                        |                                        Mobile (375px)                                        |
-| :----------------------------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------: |
-| <img src="../layout-components/fragments/primary-card/thumbnail.png" width="200" alt="Original Image"> | <img src="./images/live/layout-components-primary-card-desktop.png" width="350" alt="Desktop"> | <img src="./images/live/layout-components-primary-card-tablet.png" width="200" alt="Tablet"> | <img src="./images/live/layout-components-primary-card-mobile.png" width="120" alt="Mobile"> |
+|                                        Desktop (1920px)                                        |                                        Tablet (768px)                                        |                                        Mobile (375px)                                        |
+| :--------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------: |
+| <img src="./images/live/layout-components-primary-card-desktop.png" width="350" alt="Desktop"> | <img src="./images/live/layout-components-primary-card-tablet.png" width="200" alt="Tablet"> | <img src="./images/live/layout-components-primary-card-mobile.png" width="120" alt="Mobile"> |
 
 [Detailed Documentation](./fragments/primary-card.md)
 
@@ -622,9 +622,9 @@ Prominent visuals, such as videos or banners, that capture attention and define 
 
 ### Secondary Card
 
-|                                              Original Image                                              |                                         Desktop (1920px)                                         |                                         Tablet (768px)                                         |                                         Mobile (375px)                                         |
-| :------------------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------------------: |
-| <img src="../layout-components/fragments/secondary-card/thumbnail.png" width="200" alt="Original Image"> | <img src="./images/live/layout-components-secondary-card-desktop.png" width="350" alt="Desktop"> | <img src="./images/live/layout-components-secondary-card-tablet.png" width="200" alt="Tablet"> | <img src="./images/live/layout-components-secondary-card-mobile.png" width="120" alt="Mobile"> |
+|                                         Desktop (1920px)                                         |                                         Tablet (768px)                                         |                                         Mobile (375px)                                         |
+| :----------------------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------------------: |
+| <img src="./images/live/layout-components-secondary-card-desktop.png" width="350" alt="Desktop"> | <img src="./images/live/layout-components-secondary-card-tablet.png" width="200" alt="Tablet"> | <img src="./images/live/layout-components-secondary-card-mobile.png" width="120" alt="Mobile"> |
 
 [Detailed Documentation](./fragments/secondary-card.md)
 
@@ -634,9 +634,9 @@ Prominent visuals, such as videos or banners, that capture attention and define 
 
 ### Meter Reading
 
-|                                           Original Image                                            |                                      Desktop (1920px)                                       |                                      Tablet (768px)                                       |                                      Mobile (375px)                                       |
-| :-------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------: |
-| <img src="../meter-reading/fragments/meter-reading/thumbnail.png" width="200" alt="Original Image"> | <img src="./images/live/meter-reading-meter-reading-desktop.png" width="350" alt="Desktop"> | <img src="./images/live/meter-reading-meter-reading-tablet.png" width="200" alt="Tablet"> | <img src="./images/live/meter-reading-meter-reading-mobile.png" width="120" alt="Mobile"> |
+|                                      Desktop (1920px)                                       |                                      Tablet (768px)                                       |                                      Mobile (375px)                                       |
+| :-----------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------: |
+| <img src="./images/live/meter-reading-meter-reading-desktop.png" width="350" alt="Desktop"> | <img src="./images/live/meter-reading-meter-reading-tablet.png" width="200" alt="Tablet"> | <img src="./images/live/meter-reading-meter-reading-mobile.png" width="120" alt="Mobile"> |
 
 [Detailed Documentation](./fragments/meter-reading.md)
 
@@ -656,9 +656,9 @@ Prominent visuals, such as videos or banners, that capture attention and define 
 
 ### Custom Tabs
 
-|                                      Original Image                                      |                                     Desktop (1920px)                                      |                                     Tablet (768px)                                      |                                     Mobile (375px)                                      |
-| :--------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------: |
-| <img src="../misc/fragments/custom-tabs/thumbnail.png" width="200" alt="Original Image"> | <img src="./images/live/miscellaneous-custom-tabs-desktop.png" width="350" alt="Desktop"> | <img src="./images/live/miscellaneous-custom-tabs-tablet.png" width="200" alt="Tablet"> | <img src="./images/live/miscellaneous-custom-tabs-mobile.png" width="120" alt="Mobile"> |
+|                                     Desktop (1920px)                                      |                                     Tablet (768px)                                      |                                     Mobile (375px)                                      |
+| :---------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------: |
+| <img src="./images/live/miscellaneous-custom-tabs-desktop.png" width="350" alt="Desktop"> | <img src="./images/live/miscellaneous-custom-tabs-tablet.png" width="200" alt="Tablet"> | <img src="./images/live/miscellaneous-custom-tabs-mobile.png" width="120" alt="Mobile"> |
 
 [Detailed Documentation](./fragments/custom-tabs.md)
 
@@ -686,9 +686,9 @@ Prominent visuals, such as videos or banners, that capture attention and define 
 
 ### Launch Analytics Cloud
 
-|                                           Original Image                                            |                                           Desktop (1920px)                                           |                                           Tablet (768px)                                           |                                           Mobile (375px)                                           |
-| :-------------------------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------------: |
-| <img src="../misc/fragments/launch-analytics-cloud/thumbnail.png" width="200" alt="Original Image"> | <img src="./images/live/miscellaneous-launch-analytics-cloud-desktop.png" width="350" alt="Desktop"> | <img src="./images/live/miscellaneous-launch-analytics-cloud-tablet.png" width="200" alt="Tablet"> | <img src="./images/live/miscellaneous-launch-analytics-cloud-mobile.png" width="120" alt="Mobile"> |
+|                                           Desktop (1920px)                                           |                                           Tablet (768px)                                           |                                           Mobile (375px)                                           |
+| :--------------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------------: |
+| <img src="./images/live/miscellaneous-launch-analytics-cloud-desktop.png" width="350" alt="Desktop"> | <img src="./images/live/miscellaneous-launch-analytics-cloud-tablet.png" width="200" alt="Tablet"> | <img src="./images/live/miscellaneous-launch-analytics-cloud-mobile.png" width="120" alt="Mobile"> |
 
 [Detailed Documentation](./fragments/launch-analytics-cloud.md)
 
@@ -786,9 +786,9 @@ A collection of high-fidelity fragments for constructing modern corporate intran
 
 ### Audit Button
 
-|                                        Original Image                                        |                                  Desktop (1920px)                                  |                                  Tablet (768px)                                  |                                  Mobile (375px)                                  |
-| :------------------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------: | :------------------------------------------------------------------------------: | :------------------------------------------------------------------------------: |
-| <img src="../objects/fragments/audit-button/thumbnail.png" width="200" alt="Original Image"> | <img src="./images/live/forms-audit-button-desktop.png" width="350" alt="Desktop"> | <img src="./images/live/forms-audit-button-tablet.png" width="200" alt="Tablet"> | <img src="./images/live/forms-audit-button-mobile.png" width="120" alt="Mobile"> |
+|                                  Desktop (1920px)                                  |                                  Tablet (768px)                                  |                                  Mobile (375px)                                  |
+| :--------------------------------------------------------------------------------: | :------------------------------------------------------------------------------: | :------------------------------------------------------------------------------: |
+| <img src="./images/live/forms-audit-button-desktop.png" width="350" alt="Desktop"> | <img src="./images/live/forms-audit-button-tablet.png" width="200" alt="Tablet"> | <img src="./images/live/forms-audit-button-mobile.png" width="120" alt="Mobile"> |
 
 [Detailed Documentation](./fragments/audit-button.md)
 
@@ -832,9 +832,9 @@ A collection of high-fidelity fragments for constructing modern corporate intran
 
 ### Pulse Button
 
-|                                       Original Image                                       |                                  Desktop (1920px)                                  |                                  Tablet (768px)                                  |                                  Mobile (375px)                                  |
-| :----------------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------: | :------------------------------------------------------------------------------: | :------------------------------------------------------------------------------: |
-| <img src="../pulse/fragments/pulse-button/thumbnail.png" width="200" alt="Original Image"> | <img src="./images/live/pulse-pulse-button-desktop.png" width="350" alt="Desktop"> | <img src="./images/live/pulse-pulse-button-tablet.png" width="200" alt="Tablet"> | <img src="./images/live/pulse-pulse-button-mobile.png" width="120" alt="Mobile"> |
+|                                  Desktop (1920px)                                  |                                  Tablet (768px)                                  |                                  Mobile (375px)                                  |
+| :--------------------------------------------------------------------------------: | :------------------------------------------------------------------------------: | :------------------------------------------------------------------------------: |
+| <img src="./images/live/pulse-pulse-button-desktop.png" width="350" alt="Desktop"> | <img src="./images/live/pulse-pulse-button-tablet.png" width="200" alt="Tablet"> | <img src="./images/live/pulse-pulse-button-mobile.png" width="120" alt="Mobile"> |
 
 [Detailed Documentation](./fragments/pulse-button.md)
 
@@ -854,9 +854,9 @@ A collection of high-fidelity fragments for constructing modern corporate intran
 
 ### Responsive Menu
 
-|                                              Original Image                                              |                                         Desktop (1920px)                                         |                                         Tablet (768px)                                         |                                         Mobile (375px)                                         |
-| :------------------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------------------: |
-| <img src="../responsive-menus/fragments/responsive-menu/thumbnail.png" width="200" alt="Original Image"> | <img src="./images/live/responsive-menus-responsive-menu-desktop.png" width="350" alt="Desktop"> | <img src="./images/live/responsive-menus-responsive-menu-tablet.png" width="200" alt="Tablet"> | <img src="./images/live/responsive-menus-responsive-menu-mobile.png" width="120" alt="Mobile"> |
+|                                         Desktop (1920px)                                         |                                         Tablet (768px)                                         |                                         Mobile (375px)                                         |
+| :----------------------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------------------: |
+| <img src="./images/live/responsive-menus-responsive-menu-desktop.png" width="350" alt="Desktop"> | <img src="./images/live/responsive-menus-responsive-menu-tablet.png" width="200" alt="Tablet"> | <img src="./images/live/responsive-menus-responsive-menu-mobile.png" width="120" alt="Mobile"> |
 
 [Detailed Documentation](./fragments/responsive-menu.md)
 
@@ -864,9 +864,9 @@ A collection of high-fidelity fragments for constructing modern corporate intran
 
 ### Responsive Side Menu
 
-|                                                Original Image                                                 |                                           Desktop (1920px)                                            |                                           Tablet (768px)                                            |                                           Mobile (375px)                                            |
-| :-----------------------------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------------: |
-| <img src="../responsive-menus/fragments/responsive-side-menu/thumbnail.png" width="200" alt="Original Image"> | <img src="./images/live/responsive-menus-responsive-side-menu-desktop.png" width="350" alt="Desktop"> | <img src="./images/live/responsive-menus-responsive-side-menu-tablet.png" width="200" alt="Tablet"> | <img src="./images/live/responsive-menus-responsive-side-menu-mobile.png" width="120" alt="Mobile"> |
+|                                           Desktop (1920px)                                            |                                           Tablet (768px)                                            |                                           Mobile (375px)                                            |
+| :---------------------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------------: |
+| <img src="./images/live/responsive-menus-responsive-side-menu-desktop.png" width="350" alt="Desktop"> | <img src="./images/live/responsive-menus-responsive-side-menu-tablet.png" width="200" alt="Tablet"> | <img src="./images/live/responsive-menus-responsive-side-menu-mobile.png" width="120" alt="Mobile"> |
 
 [Detailed Documentation](./fragments/responsive-side-menu.md)
 

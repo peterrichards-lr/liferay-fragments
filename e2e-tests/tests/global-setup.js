@@ -40,6 +40,42 @@ function buildPageElementTree(
       }
     });
 
+    // Resolve if it is an input fragment
+    const parentDir = fragmentKeyToDir ? fragmentKeyToDir[key] : null;
+    let isInputType = false;
+    if (parentDir) {
+      try {
+        const fragJsonPath = path.join(parentDir, 'fragment.json');
+        if (fs.existsSync(fragJsonPath)) {
+          const fragJson = JSON.parse(fs.readFileSync(fragJsonPath, 'utf8'));
+          if (fragJson.type === 'input') {
+            isInputType = true;
+          }
+        }
+      } catch (e) {}
+    }
+
+    if (isInputType) {
+      const element = {
+        type: 'Fragment',
+        definition: {
+          fragment: {
+            key: key,
+            siteKey: siteERC,
+          },
+          fragmentConfig: {
+            ...resolvedConfig,
+            inputFieldId: node.fieldKey
+              ? `ObjectField_${node.fieldKey}`
+              : 'ObjectField_emailAddress',
+          },
+          fragmentFields: [],
+          indexed: true,
+        },
+      };
+      return element;
+    }
+
     const element = {
       type: 'Fragment',
       definition: {
@@ -1775,50 +1811,148 @@ async function globalSetup(config) {
     }
 
     if (!rootPageElement) {
-      rootPageElement = {
-        type: 'Root',
-        pageElements: [
-          {
-            type: 'Section',
-            definition: {
-              indexed: true,
-              layout: {},
-            },
-            pageElements: [
-              {
-                type: 'Row',
-                definition: {
-                  gutters: true,
-                  columnsSpacing: true,
-                  numberOfColumns: 1,
-                },
-                pageElements: [
-                  {
-                    type: 'Column',
-                    definition: {
-                      size: 12,
-                    },
-                    pageElements: [
-                      {
-                        type: 'Fragment',
-                        definition: {
-                          fragment: {
-                            key: fragmentKey,
-                            siteKey: siteERC,
-                          },
-                          fragmentConfig: seededConfigOverrides,
-                          fragmentFields: [],
-                          indexed: true,
-                        },
-                      },
-                    ],
-                  },
-                ],
+      if (fragmentData.type === 'input') {
+        const applicantDef = objectDefinitions.find(
+          (d) => d.externalReferenceCode === 'APPLICANT'
+        );
+        const applicantClassName = applicantDef
+          ? applicantDef.className
+          : 'com.liferay.object.model.ObjectDefinition#O0U8';
+
+        rootPageElement = {
+          type: 'Root',
+          pageElements: [
+            {
+              type: 'Section',
+              definition: {
+                indexed: true,
+                layout: {},
               },
-            ],
-          },
-        ],
-      };
+              pageElements: [
+                {
+                  type: 'Row',
+                  definition: {
+                    gutters: true,
+                    columnsSpacing: true,
+                    numberOfColumns: 1,
+                  },
+                  pageElements: [
+                    {
+                      type: 'Column',
+                      definition: {
+                        size: 12,
+                      },
+                      pageElements: [
+                        {
+                          type: 'Form',
+                          definition: {
+                            formConfig: {
+                              formReference: {
+                                className: applicantClassName,
+                                classType: 0,
+                              },
+                              formType: 'simple',
+                              numberOfSteps: 0,
+                            },
+                            indexed: true,
+                            layout: {},
+                          },
+                          pageElements: [
+                            {
+                              type: 'Fragment',
+                              definition: {
+                                fragment: {
+                                  key: fragmentKey,
+                                  siteKey: siteERC,
+                                },
+                                fragmentConfig: {
+                                  ...seededConfigOverrides,
+                                  inputFieldId: 'ObjectField_emailAddress',
+                                },
+                                fragmentFields: [],
+                                indexed: true,
+                              },
+                            },
+                            {
+                              type: 'Fragment',
+                              definition: {
+                                fragment: {
+                                  key: 'submit-button',
+                                  siteKey: siteERC,
+                                },
+                                fragmentConfig: {
+                                  buttonType: 'primary',
+                                  submittedEntryStatus: '0',
+                                  type: 'submit',
+                                  buttonSize: 'nm',
+                                },
+                                fragmentFields: [
+                                  {
+                                    id: 'submit-button-text',
+                                    value: {
+                                      fragmentLink: {},
+                                    },
+                                  },
+                                ],
+                                indexed: true,
+                              },
+                            },
+                          ],
+                        },
+                      ],
+                    },
+                  ],
+                },
+              ],
+            },
+          ],
+        };
+      } else {
+        rootPageElement = {
+          type: 'Root',
+          pageElements: [
+            {
+              type: 'Section',
+              definition: {
+                indexed: true,
+                layout: {},
+              },
+              pageElements: [
+                {
+                  type: 'Row',
+                  definition: {
+                    gutters: true,
+                    columnsSpacing: true,
+                    numberOfColumns: 1,
+                  },
+                  pageElements: [
+                    {
+                      type: 'Column',
+                      definition: {
+                        size: 12,
+                      },
+                      pageElements: [
+                        {
+                          type: 'Fragment',
+                          definition: {
+                            fragment: {
+                              key: fragmentKey,
+                              siteKey: siteERC,
+                            },
+                            fragmentConfig: seededConfigOverrides,
+                            fragmentFields: [],
+                            indexed: true,
+                          },
+                        },
+                      ],
+                    },
+                  ],
+                },
+              ],
+            },
+          ],
+        };
+      }
     }
 
     const payload = {
