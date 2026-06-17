@@ -19,7 +19,7 @@
   will-change: transform;
 }
 
-.parallax-hero .parallax-bg img {
+.parallax-hero .parallax-bg .parallax-media {
   width: 100%;
   height: 100%;
   object-fit: cover;

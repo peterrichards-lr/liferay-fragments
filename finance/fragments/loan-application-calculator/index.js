@@ -9,14 +9,18 @@ const initLoanAppCalc = () => {
 
   const loanAmountDiv = fragmentElement.querySelector('#loanAmount');
   const loanTermDiv = fragmentElement.querySelector('#loanTerm');
+  const helpDiv = fragmentElement.querySelector('#loanAppHelp');
 
   if (!loanAmountDiv || !loanTermDiv) {
     if (layoutMode === 'edit') {
+      if (helpDiv) helpDiv.classList.remove('d-none');
       console.info(
         "Loan Application Calculator: Please drop 'Range' fragments into the drop-zone and set their IDs to 'loanAmount' and 'loanTerm'."
       );
     }
     return;
+  } else {
+    if (helpDiv) helpDiv.classList.add('d-none');
   }
 
   const loanAmountInput = loanAmountDiv.querySelector('input');

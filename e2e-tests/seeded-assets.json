@@ -1253,5 +1253,30 @@
     "type": "article",
     "id": 122370,
     "erc": "SLIDE-ARTICLE-03"
+  },
+  {
+    "type": "article",
+    "id": 126031,
+    "erc": "SLIDE-ARTICLE-01"
+  },
+  {
+    "type": "article",
+    "id": 126046,
+    "erc": "SLIDE-ARTICLE-02"
+  },
+  {
+    "type": "article",
+    "id": 126061,
+    "erc": "SLIDE-ARTICLE-03"
+  },
+  {
+    "type": "article",
+    "id": 126938,
+    "erc": "MAP-MARKER-ARTICLE-01"
+  },
+  {
+    "type": "article",
+    "id": 126953,
+    "erc": "MAP-MARKER-ARTICLE-02"
   }
 ]

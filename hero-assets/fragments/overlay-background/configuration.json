@@ -21,6 +21,14 @@
           }
         },
         {
+          "dataType": "string",
+          "defaultValue": "400px",
+          "label": "lfr.hero-assets.height",
+          "description": "lfr.hero-assets.height-description",
+          "name": "height",
+          "type": "length"
+        },
+        {
           "label": "lfr.hero-assets.background-image-alt",
           "description": "lfr.hero-assets.background-image-alt-description",
           "name": "backgroundImageAlt",

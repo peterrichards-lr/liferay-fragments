@@ -7,5 +7,7 @@
     --end: ${configuration.end.rgbValue!};
   "
 >
-  <lfr-drop-zone></lfr-drop-zone>
+  <div class="container py-5">
+    <lfr-drop-zone></lfr-drop-zone>
+  </div>
 </div>

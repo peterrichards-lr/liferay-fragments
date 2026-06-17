@@ -35,9 +35,12 @@
 }
 
 .segmented-numeric div.number {
-  white-space: nowrap;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--segmented-numeric-spacing, 0.5rem);
   margin: var(--segmented-numeric-spacing, 0.5rem);
-  height: var(--segmented-numeric-height, 6rem);
+  height: auto;
 }
 
 .segmented-numeric div.number.hide-label {

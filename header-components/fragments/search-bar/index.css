@@ -1,5 +1,24 @@
+.search-bar-collapse {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  z-index: 1040;
+  background-color: var(--body-bg, #fff);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.search-bar-wrapper {
+  display: block;
+  width: 100%;
+  max-width: var(--container-max-width, 1200px);
+  margin: 0 auto;
+  padding: 10px 15px;
+}
+
 .commerce-search {
   display: flex;
+  height: 44px; /* More standard header height */
 }
 
 #portlet_com_liferay_portal_search_web_search_bar_portlet_SearchBarPortlet_INSTANCE_templateSearch {
@@ -7,17 +26,17 @@
 }
 
 .commerce-search .commerce-search__input {
-  background-color: var(--gray-200, #e0e5ee);
   background-color: var(--body-bg, var(--gray-200, #e0e5ee));
   flex-grow: 1;
-  padding: 20px;
+  padding: 0 15px;
+  display: flex;
+  align-items: center;
 }
 
 .commerce-search .commerce-search__input input {
   background-color: transparent;
   border: 0;
   caret-color: var(--primary, #71d2e8);
-  caret-color: var(--color-brand-primary, #71d2e8);
   font-size: 14px;
   height: 100%;
   width: 100%;
@@ -31,8 +50,9 @@
   border: unset;
   color: currentColor;
   display: flex;
-  font-size: 21px;
-  height: 67px;
+  font-size: 18px;
+  height: 44px;
   justify-content: center;
-  width: 67px;
+  width: 44px;
+  padding: 0;
 }

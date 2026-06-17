@@ -1,0 +1,24 @@
+{
+  "pageLayout": {
+    "type": "Fragment",
+    "key": "upper-header-layout",
+    "children": [
+      {
+        "type": "Fragment",
+        "key": "logo"
+      },
+      {
+        "type": "Fragment",
+        "key": "navigation"
+      },
+      {
+        "type": "Fragment",
+        "key": "search-button"
+      },
+      {
+        "type": "Fragment",
+        "key": "search-bar"
+      }
+    ]
+  }
+}

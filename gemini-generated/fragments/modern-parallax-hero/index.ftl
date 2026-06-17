@@ -30,12 +30,24 @@
   ></div>
 
   <div class="parallax-bg">
-    <img
-      data-lfr-editable-id="background-image"
-      data-lfr-editable-type="image"
-      src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=2072&auto=format&fit=crop"
-      alt="Background"
-    />
+    [#if configuration.backgroundVideo?? && configuration.backgroundVideo.url??]
+      <video
+        autoplay
+        muted
+        loop
+        playsinline
+        class="parallax-media"
+        src="${configuration.backgroundVideo.url}"
+      ></video>
+    [#else]
+      <img
+        data-lfr-editable-id="background-image"
+        data-lfr-editable-type="image"
+        class="parallax-media"
+        src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=2072&auto=format&fit=crop"
+        alt="Background"
+      />
+    [/#if]
   </div>
   <div class="hero-overlay"></div>
   <div class="hero-content">

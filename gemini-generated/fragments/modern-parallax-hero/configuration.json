@@ -22,6 +22,16 @@
           "description": "lfr.gemini-generated.overlay-color-description",
           "name": "overlayColor",
           "type": "colorPicker"
+        },
+        {
+          "label": "lfr.gemini-generated.background-video",
+          "description": "lfr.gemini-generated.background-video-description",
+          "name": "backgroundVideo",
+          "type": "itemSelector",
+          "typeOptions": {
+            "itemType": "com.liferay.portal.kernel.repository.model.FileEntry",
+            "mimeTypes": ["video/mp4", "video/webm", "video/ogg"]
+          }
         }
       ],
       "label": "lfr.gemini-generated.style"

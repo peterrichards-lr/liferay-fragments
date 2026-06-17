@@ -95,9 +95,10 @@ const initBadgeOverlay = () => {
   const channelId = commerceContext.commerceChannelId;
   const account = commerceContext.account;
 
-  const getSkuUrl =
-    `/o/headless-commerce-delivery-catalog/v1.0/channels/${channelId}/products/${mappings['productId']}/skus` +
-    (account ? `?accountId=${account.accountId}` : '');
+  const getSkuUrl = channelId
+    ? `/o/headless-commerce-delivery-catalog/v1.0/channels/${channelId}/products/${mappings['productId']}/skus` +
+      (account ? `?accountId=${account.accountId}` : '')
+    : null;
 
   const drawBadgeShape = (
     ctx,
