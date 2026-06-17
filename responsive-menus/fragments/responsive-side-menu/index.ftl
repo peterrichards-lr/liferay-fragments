@@ -11,7 +11,19 @@ locale?starts_with("he"))?then("rtl","ltr"), htmlLang = locale?replace("_","-")
 /] [#assign zoneMap = { 'menu-only': ['menu'], 'menu-upper-zone':
 ['upper','menu'], 'menu-lower-zone': ['menu','lower'], 'menu-both-zones':
 ['upper','menu','lower'] }, zones = zoneMap[dropzoneConfig]!['menu'],
-dropzoneCount = zones?size /] [#macro renderHamburgerIcon]
+dropzoneCount = zones?size /]
+[#assign effectiveBreakpoint = "" /]
+[#assign effectiveBgColor = "white" /]
+[#if configuration.enableTabletBreakpoint]
+  [#assign effectiveBreakpoint = configuration.tabletBreakpoint /]
+  [#assign effectiveBgColor = configuration.tabletMenuBgColor /]
+[#elseif configuration.enableLandscapePhoneBreakpoint]
+  [#assign effectiveBreakpoint = configuration.landscapePhoneBreakpoint /]
+  [#assign effectiveBgColor = configuration.landscapePhoneMenuBgColor /]
+[#elseif configuration.enablePortraitPhoneBreakpoint]
+  [#assign effectiveBreakpoint = configuration.portraitPhoneBreakpoint /]
+  [#assign effectiveBgColor = configuration.portraitPhoneMenuBgColor /]
+[/#if] [#macro renderHamburgerIcon]
 <div class="hamburger">
   <button
     class="fragment-menu-icon"
@@ -298,13 +310,13 @@ dropzoneCount = zones?size /] [#macro renderHamburgerIcon]
   }
   [/#if]
 
-  [#if configuration.enableTabletBreakpoint]
-  @media only screen and (max-width: ${configuration.tabletBreakpoint}) {
+  [#if effectiveBreakpoint?has_content]
+  @media only screen and (max-width: ${effectiveBreakpoint}) {
     .lfr-layout-structure-item-responsive-side-menu { position: fixed; z-index: 1; }
     .fragment-root .dropzone-wrapper { width: 100%; }
 
     .fragment-root .hamburger-zone-wrapper {
-      background-color: var(--responsive-menu-breakpoint-tablet-menu-background-color, transparent);
+      background-color: ${effectiveBgColor};
       width: 100%;
       max-width: 100%;
       display: grid;
@@ -477,374 +489,40 @@ dropzoneCount = zones?size /] [#macro renderHamburgerIcon]
     .fragment-root:has(.dropzone-menu.fragment-menu .text-truncate img) .hamburger-zone-wrapper.open   .hamburger-zone-inner { transform: none; }
     [/#if]
 
+    .fragment-root .fragment-menu .lfr-nav-item { flex-direction: column; width: 100%; justify-content: end; }
+    [#if configuration.menuStyle?contains('menu-right')]
+      .fragment-root .fragment-menu .lfr-nav-item { align-items: end; }
+    [#else]
+      .fragment-root .fragment-menu .lfr-nav-item { align-items: start; }
+    [/#if]
+
     .fragment-root .hamburger.increase { height: var(--responsive-menu-logo-max-height); }
     body:has(.logo-zone.logo-always) #main-content.increase-hamburger { margin-top: var(--responsive-menu-logo-max-height); }
   }
-  [/#if]
 
-  [#if configuration.enableLandscapePhoneBreakpoint]
+  [#if configuration.enableLandscapePhoneBreakpoint && effectiveBreakpoint != configuration.landscapePhoneBreakpoint]
   @media only screen and (max-width: ${configuration.landscapePhoneBreakpoint}) {
-    .fragment-root { height: auto; }
-    .fragment-root .dropzone-wrapper { height: auto; width: 0; }
-    .lfr-layout-structure-item-responsive-side-menu {
-      position: static;
-      top: auto;
-      height: auto;
-      z-index: auto;
+    .fragment-root .hamburger-zone-wrapper {
+      background-color: ${configuration.landscapePhoneMenuBgColor};
     }
-
-    .fragment-root .fragment-menu-icon,
-    .fragment-root:has(.dropzone-menu.fragment-menu .text-truncate img) .fragment-menu-icon {
-      position: fixed;
-      inset-block-start: var(--control-menu-container-height, 0);
-      [#if configuration.menuStyle?contains('menu-right')]
-      inset-inline-end: 8px;
-      inset-inline-start: auto;
-      [#else]
-      inset-inline-start: 8px;
-      inset-inline-end: auto;
-      [/#if]
-      z-index: 981;
-      --_h-size: var(--responsive-menu-hamburger-size, 2.75rem);
-      --_h-min: var(--responsive-menu-hamburger-min-size, 44px);
-      --_h-effective: max(var(--_h-size), var(--_h-min));
-      --hamburger-bar-width: calc(var(--_h-effective) * 0.6);
-      --hamburger-bar-height: calc(var(--_h-effective) * 0.12);
-      --hamburger-bar-gap: calc(var(--_h-effective) * 0.18);
-
-      display: inline-flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: var(--hamburger-bar-gap);
-
-      width: var(--_h-effective);
-      height: var(--_h-effective);
-      min-width: var(--_h-min);
-      min-height: var(--_h-min);
-      padding: calc(var(--_h-effective) * 0.18);
-      box-sizing: border-box;
-
-      cursor: pointer;
-      background-color: ${configuration.menuHamburgerBgColor};
-      border: ${configuration.menuHamburgerBorderWidth} ${configuration.menuHamburgerBorderStyle} ${configuration.menuHamburgerBorderColor};
-      border-radius: ${configuration.menuHamburgerBorderRadius};
-    }
-    .fragment-root.control-menu-offscreen .fragment-menu-icon {
-      inset-block-start: 0;
-    }
-
-    body:has(.logo-zone.logo-always) .fragment-root .hamburger,
-    .fragment-root .dropzone-wrapper:has(.hamburger-zone-wrapper.open) .hamburger {
-      position: fixed;
-      inset-block-start: var(--control-menu-container-height, 0);
-      inset-inline-start: 0;
-      width: 100dvw;
-      height: var(--responsive-menu-hamburger-min-size, 44px);
-      background-color: var(--responsive-menu-breakpoint-phone-landscape-menu-background-color, transparent);
-      z-index: 979;
-      display: flex;
-      align-items: center;
-    }
-
-    .fragment-root.control-menu-offscreen .fragment-menu-icon,
-    .fragment-root.control-menu-offscreen:has(.dropzone-menu.fragment-menu .text-truncate img) .fragment-menu-icon {
-      inset-block-start: 0;
-    }
-
-    body:has(.logo-zone.logo-always) .fragment-root.control-menu-offscreen .hamburger,
-    .fragment-root.control-menu-offscreen .dropzone-wrapper:has(.hamburger-zone-wrapper.open) .hamburger {
-      inset-block-start: 0;
-    }
-
-    .fragment-root .fragment-menu-icon:focus-visible { outline: 2px solid currentColor; outline-offset: 2px; }
-    .fragment-root .fragment-menu-icon .bar {
-      display: block;
-      width: var(--hamburger-bar-width);
-      height: var(--hamburger-bar-height);
-      border-radius: calc(var(--hamburger-bar-height) / 2);
-      background-color: ${configuration.menuHamburgerColor};
-    }
-
-    .fragment-root:not(:has(.dropzone-menu.fragment-menu .text-truncate img)) .hamburger-zone-wrapper,
-    .fragment-root:not(:has(.dropzone-menu.fragment-menu .text-truncate img)) .hamburger-zone-wrapper:hover,
-    .fragment-root:has(.dropzone-menu.fragment-menu .text-truncate img) .hamburger-zone-wrapper,
-    .fragment-root:has(.dropzone-menu.fragment-menu .text-truncate img) .hamburger-zone-wrapper:hover {
-      background-color: var(--responsive-menu-breakpoint-phone-landscape-menu-background-color, transparent);
-      width: 100dvw;
-      max-width: 100%;
-      display: grid;
-      grid-template-rows: 0fr !important;
-      transition: grid-template-rows var(--side-menu-open-duration) ease-out;
-      z-index: 980;
-      height: auto;
-    }
-    .fragment-root:not(:has(.dropzone-menu.fragment-menu .text-truncate img)) .hamburger-zone-wrapper.open,
-    .fragment-root:not(:has(.dropzone-menu.fragment-menu .text-truncate img)) .hamburger-zone-wrapper.open:hover,
-    .fragment-root:has(.dropzone-menu.fragment-menu .text-truncate img) .hamburger-zone-wrapper.open,
-    .fragment-root:has(.dropzone-menu.fragment-menu .text-truncate img) .hamburger-zone-wrapper.open:hover {
-      grid-template-rows: 1fr !important;
-      width: 100dvw;
-      position: fixed;
-      inset-inline-start: 0;
-      inset-inline-end: 0;
-      inset-block-start: calc(var(--control-menu-container-height, 0) + var(--responsive-menu-hamburger-min-size, 44px));
-      max-height: calc(100dvh - (var(--control-menu-container-height, 0) + var(--responsive-menu-hamburger-min-size, 44px)));
-      overflow: auto;
-      z-index: 980;
-    }
-    .fragment-root.control-menu-offscreen:not(:has(.dropzone-menu.fragment-menu .text-truncate img)) .hamburger-zone-wrapper.open,
-    .fragment-root.control-menu-offscreen:has(.dropzone-menu.fragment-menu .text-truncate img) .hamburger-zone-wrapper.open {
-      inset-block-start: var(--responsive-menu-hamburger-min-size, 44px);
-    }
-
-    .fragment-root .hamburger-zone-inner { max-width: none; overflow: hidden; }
-
-    .fragment-root .dropzone-menu.fragment-menu {
-      display: block;
-      flex-direction: column;
-      pointer-events: none;
-      opacity: 0;
-      transform: translateY(-.25rem);
-      transition: opacity .2s ease, transform .2s ease;
-      width: 100%;
-      position: static;
-    }
-    .fragment-root .hamburger-zone-wrapper.open .dropzone-menu.fragment-menu {
-      pointer-events: auto;
-      opacity: 1;
-      transform: none;
-    }
-
-    .fragment-root .hamburger-zone-wrapper:not(.open) .dropzone-upper,
-    .fragment-root .hamburger-zone-wrapper:not(.open) .dropzone-lower {
-      pointer-events: none;
-      opacity: 0;
-      transform: translateY(.25rem);
-      transition: opacity .2s ease, transform .2s ease;
-    }
-    .fragment-root .hamburger-zone-wrapper.open .dropzone-upper,
-    .fragment-root .hamburger-zone-wrapper.open .dropzone-lower {
-      pointer-events: auto;
-      opacity: 1;
-      transform: none;
-    }
-
-    .fragment-root .fragment-menu .lfr-nav-item { flex-direction: column; width: 100%; justify-content: end; }
-    [#if configuration.menuStyle?contains('menu-right')]
-      .fragment-root .fragment-menu .lfr-nav-item { align-items: end; }
-    [#else]
-      .fragment-root .fragment-menu .lfr-nav-item { align-items: start; }
-    [/#if]
-
-    .fragment-root .dropzone .zone-layout > div { display: flex; flex-direction: column; align-items: start; justify-content: end; }
-    .fragment-root .dropzone .zone-layout.allow-override > div > * { width: 100%; }
-
-    .fragment-root:has(.dropzone-menu.fragment-menu .text-truncate img) .hamburger-zone-inner .dropzone-upper,
-    .fragment-root:has(.dropzone-menu.fragment-menu .text-truncate img) .hamburger-zone-inner .dropzone-lower { display: block; }
-    .fragment-root .dropzone-menu.fragment-menu .lfr-nav-item .text-truncate,
-    .fragment-root:has(.dropzone-menu.fragment-menu .text-truncate img) .hamburger-zone-wrapper .dropzone-menu.fragment-menu .lfr-nav-item .text-truncate { color: inherit; }
-
-    body > .logo-zone.logo-zone-fragment.reduce-logo.logo-always.floating-logo img,
-    .fragment-root .dropzone .logo-zone.reduce-logo img {
-      height: auto;
-      object-fit: contain;
-      max-height: min(
-        var(--_h-effective, 2.75rem),
-        var(--logo-max-height, 60px)
-      );
-      max-width: var(--logo-max-width, 120px);
-    }
-
-    .fragment-root .hamburger.increase { height: var(--responsive-menu-logo-max-height); }
-    body:has(.logo-zone.logo-always) #main-content.increase-hamburger { margin-top: var(--responsive-menu-logo-max-height); }
   }
   [/#if]
 
-  [#if configuration.enablePortraitPhoneBreakpoint]
+  [#if configuration.enablePortraitPhoneBreakpoint && effectiveBreakpoint != configuration.portraitPhoneBreakpoint]
   @media only screen and (max-width: ${configuration.portraitPhoneBreakpoint}) {
-    .fragment-root { height: auto; }
-    .fragment-root .dropzone-wrapper { height: auto; width: 0; }
-    .lfr-layout-structure-item-responsive-side-menu {
-      position: static;
-      top: auto;
-      height: auto;
-      z-index: auto;
+    .fragment-root .hamburger-zone-wrapper {
+      background-color: ${configuration.portraitPhoneMenuBgColor};
     }
-
-    .fragment-root .fragment-menu-icon,
-    .fragment-root:has(.dropzone-menu.fragment-menu .text-truncate img) .fragment-menu-icon {
-      position: fixed;
-      inset-block-start: var(--control-menu-container-height, 0);
-      [#if configuration.menuStyle?contains('menu-right')]
-      inset-inline-end: 8px;
-      inset-inline-start: auto;
-      [#else]
-      inset-inline-start: 8px;
-      inset-inline-end: auto;
-      [/#if]
-      z-index: 981;
-      --_h-size: var(--responsive-menu-hamburger-size, 2.75rem);
-      --_h-min: var(--responsive-menu-hamburger-min-size, 44px);
-      --_h-effective: max(var(--_h-size), var(--_h-min));
-      --hamburger-bar-width: calc(var(--_h-effective) * 0.6);
-      --hamburger-bar-height: calc(var(--_h-effective) * 0.12);
-      --hamburger-bar-gap: calc(var(--_h-effective) * 0.18);
-
-      display: inline-flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: var(--hamburger-bar-gap);
-
-      width: var(--_h-effective);
-      height: var(--_h-effective);
-      min-width: var(--_h-min);
-      min-height: var(--_h-min);
-      padding: calc(var(--_h-effective) * 0.18);
-      box-sizing: border-box;
-
-      cursor: pointer;
-      background-color: ${configuration.menuHamburgerBgColor};
-      border: ${configuration.menuHamburgerBorderWidth} ${configuration.menuHamburgerBorderStyle} ${configuration.menuHamburgerBorderColor};
-      border-radius: ${configuration.menuHamburgerBorderRadius};
-    }
-    .fragment-root.control-menu-offscreen .fragment-menu-icon {
-      inset-block-start: 0;
-    }
-
-    body:has(.logo-zone.logo-always) .fragment-root .hamburger,
-    .fragment-root .dropzone-wrapper:has(.hamburger-zone-wrapper.open) .hamburger {
-      position: fixed;
-      inset-block-start: var(--control-menu-container-height, 0);
-      inset-inline-start: 0;
-      width: 100dvw;
-      height: var(--responsive-menu-hamburger-min-size, 44px);
-      background-color: var(--responsive-menu-breakpoint-phone-landscape-menu-background-color, transparent);
-      z-index: 979;
-      display: flex;
-      align-items: center;
-    }
-
-    .fragment-root.control-menu-offscreen .fragment-menu-icon,
-    .fragment-root.control-menu-offscreen:has(.dropzone-menu.fragment-menu .text-truncate img) .fragment-menu-icon {
-      inset-block-start: 0;
-    }
-
-    body:has(.logo-zone.logo-always) .fragment-root.control-menu-offscreen .hamburger,
-    .fragment-root.control-menu-offscreen .dropzone-wrapper:has(.hamburger-zone-wrapper.open) .hamburger {
-      inset-block-start: 0;
-    }
-
-    .fragment-root .fragment-menu-icon:focus-visible { outline: 2px solid currentColor; outline-offset: 2px; }
-    .fragment-root .fragment-menu-icon .bar {
-      display: block;
-      width: var(--hamburger-bar-width);
-      height: var(--hamburger-bar-height);
-      border-radius: calc(var(--hamburger-bar-height) / 2);
-      background-color: ${configuration.menuHamburgerColor};
-    }
-
-    .fragment-root:not(:has(.dropzone-menu.fragment-menu .text-truncate img)) .hamburger-zone-wrapper,
-    .fragment-root:not(:has(.dropzone-menu.fragment-menu .text-truncate img)) .hamburger-zone-wrapper:hover,
-    .fragment-root:has(.dropzone-menu.fragment-menu .text-truncate img) .hamburger-zone-wrapper,
-    .fragment-root:has(.dropzone-menu.fragment-menu .text-truncate img) .hamburger-zone-wrapper:hover {
-      background-color: var(--responsive-menu-breakpoint-phone-landscape-menu-background-color, transparent);
-      width: 100dvw;
-      max-width: 100%;
-      display: grid;
-      grid-template-rows: 0fr !important;
-      transition: grid-template-rows var(--side-menu-open-duration) ease-out;
-      z-index: 980;
-      height: auto;
-    }
-    .fragment-root:not(:has(.dropzone-menu.fragment-menu .text-truncate img)) .hamburger-zone-wrapper.open,
-    .fragment-root:not(:has(.dropzone-menu.fragment-menu .text-truncate img)) .hamburger-zone-wrapper.open:hover,
-    .fragment-root:has(.dropzone-menu.fragment-menu .text-truncate img) .hamburger-zone-wrapper.open,
-    .fragment-root:has(.dropzone-menu.fragment-menu .text-truncate img) .hamburger-zone-wrapper.open:hover {
-      grid-template-rows: 1fr !important;
-      width: 100dvw;
-      position: fixed;
-      inset-inline-start: 0;
-      inset-inline-end: 0;
-      inset-block-start: calc(var(--control-menu-container-height, 0) + var(--responsive-menu-hamburger-min-size, 44px));
-      max-height: calc(100dvh - (var(--control-menu-container-height, 0) + var(--responsive-menu-hamburger-min-size, 44px)));
-      overflow: auto;
-      z-index: 980;
-    }
-    .fragment-root.control-menu-offscreen:not(:has(.dropzone-menu.fragment-menu .text-truncate img)) .hamburger-zone-wrapper.open,
-    .fragment-root.control-menu-offscreen:has(.dropzone-menu.fragment-menu .text-truncate img) .hamburger-zone-wrapper.open {
-      inset-block-start: var(--responsive-menu-hamburger-min-size, 44px);
-    }
-
-    .fragment-root .hamburger-zone-inner { max-width: none; overflow: hidden; }
-
-    .fragment-root .dropzone-menu.fragment-menu {
-      display: block;
-      flex-direction: column;
-      pointer-events: none;
-      opacity: 0;
-      transform: translateY(-.25rem);
-      transition: opacity .2s ease, transform .2s ease;
-      width: 100%;
-      position: static;
-    }
-    .fragment-root .hamburger-zone-wrapper.open .dropzone-menu.fragment-menu {
-      pointer-events: auto;
-      opacity: 1;
-      transform: none;
-    }
-
-    .fragment-root .hamburger-zone-wrapper:not(.open) .dropzone-upper,
-    .fragment-root .hamburger-zone-wrapper:not(.open) .dropzone-menu,
-    .fragment-root .hamburger-zone-wrapper:not(.open) .dropzone-lower {
-      pointer-events: none;
-      opacity: 0;
-      transform: translateY(.25rem);
-      transition: opacity .2s ease, transform .2s ease;
-    }
-    .fragment-root .hamburger-zone-wrapper.open .dropzone-upper,
-    .fragment-root .hamburger-zone-wrapper.open .dropzone-menu,
-    .fragment-root .hamburger-zone-wrapper.open .dropzone-lower {
-      pointer-events: auto;
-      opacity: 1;
-      transform: none;
-    }
-
-    .fragment-root .fragment-menu .lfr-nav-item { flex-direction: column; width: 100%; justify-content: end; }
-    [#if configuration.menuStyle?contains('menu-right')]
-      .fragment-root .fragment-menu .lfr-nav-item { align-items: end; }
-    [#else]
-      .fragment-root .fragment-menu .lfr-nav-item { align-items: start; }
-    [/#if]
-
-    .fragment-root .dropzone .zone-layout > div { display: flex; flex-direction: column; align-items: start; justify-content: end; }
-    .fragment-root .dropzone .zone-layout.allow-override > div > * { width: 100%; }
-
-    .fragment-root .dropzone-menu.fragment-menu .lfr-nav-item .text-truncate,
-    .fragment-root:has(.dropzone-menu.fragment-menu .text-truncate img) .dropzone-menu.fragment-menu .lfr-nav-item .text-truncate { color: inherit; }
-
-    body > .logo-zone.logo-zone-fragment.reduce-logo.logo-always.floating-logo img,
-    .fragment-root .dropzone .logo-zone.reduce-logo img {
-      height: auto;
-      object-fit: contain;
-      max-height: min(
-        var(--_h-effective, 2.75rem),
-        var(--logo-max-height, 60px)
-      );
-      max-width: var(--logo-max-width, 120px);
-    }
-
-    .fragment-root .hamburger.increase { height: var(--responsive-menu-logo-max-height); }
-    body:has(.logo-zone.logo-always) #main-content.increase-hamburger { margin-top: var(--responsive-menu-logo-max-height); }
   }
+  [/#if]
   [/#if]
 
   @media (prefers-reduced-motion: reduce) {
     .fragment-root { --side-menu-open-duration: 0s; }
   }
 
-  @media (prefers-reduced-motion: reduce) and (max-width: ${configuration.landscapePhoneBreakpoint}) {
+  [#if effectiveBreakpoint?has_content]
+  @media (prefers-reduced-motion: reduce) and (max-width: ${effectiveBreakpoint}) {
     .fragment-root:not(:has(.dropzone-menu.fragment-menu .text-truncate img)) .hamburger-zone-wrapper,
     .fragment-root:has(.dropzone-menu.fragment-menu .text-truncate img) .hamburger-zone-wrapper,
     .fragment-root .dropzone .logo-zone.increase-hamburger {
@@ -857,20 +535,7 @@ dropzoneCount = zones?size /] [#macro renderHamburgerIcon]
       transform: none;
     }
   }
-
-  @media (prefers-reduced-motion: reduce) and (max-width: ${configuration.portraitPhoneBreakpoint}) {
-    .fragment-root:not(:has(.dropzone-menu.fragment-menu .text-truncate img)) .hamburger-zone-wrapper,
-    .fragment-root:has(.dropzone-menu.fragment-menu .text-truncate img) .hamburger-zone-wrapper,
-    .fragment-root .dropzone .logo-zone.increase-hamburger {
-      transition: none;
-    }
-    .fragment-root .dropzone-menu.fragment-menu,
-    .fragment-root .hamburger-zone-wrapper .dropzone-upper,
-    .fragment-root .hamburger-zone-wrapper .dropzone-lower {
-      transition: none;
-      transform: none;
-    }
-  }
+  [/#if]
 
   .reduce-motion * {
     transition: none !important;

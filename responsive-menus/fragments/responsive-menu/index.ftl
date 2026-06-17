@@ -247,12 +247,12 @@ ScrollToTopButton icon title]
     .fragment-root .hamburger-zone-inner .dropzone-right { visibility: visible; opacity: 1; pointer-events: auto; height: auto; transform: none; min-width: 0; }
   }
 
-  @media (max-width: ${configuration.landscapePhoneBreakpoint}) {
+  @media (max-width: calc(${configuration.tabletBreakpoint} - 0.02px)) {
     .fragment-root { height: auto; }
     .fragment-root .dropzone-wrapper { position: relative; height: auto; }
     .fragment-root .fragment-menu-icon { display: inline-flex; }
     .fragment-root .hamburger-zone-wrapper {
-      background-color: var(--responsive-menu-breakpoint-phone-landscape-menu-background-color, transparent);
+      background-color: var(--responsive-menu-breakpoint-tablet-menu-background-color, transparent);
       z-index: 980;
       display: grid;
       grid-template-rows: 0fr;
@@ -376,133 +376,16 @@ ScrollToTopButton icon title]
     .fragment-root.menu-right .dropzone .logo-zone.logo-always { inset-inline-start: 0; inset-inline-end: auto; }
   }
 
+  @media (max-width: ${configuration.landscapePhoneBreakpoint}) {
+    .fragment-root .hamburger-zone-wrapper {
+      background-color: var(--responsive-menu-breakpoint-phone-landscape-menu-background-color, transparent);
+    }
+  }
+
   @media (max-width: ${configuration.portraitPhoneBreakpoint}) {
-    .fragment-root { height: auto; }
-    .fragment-root .dropzone-wrapper { position: relative; height: auto; }
-    .fragment-root .fragment-menu-icon { display: inline-flex; }
     .fragment-root .hamburger-zone-wrapper {
       background-color: var(--responsive-menu-breakpoint-phone-portrait-menu-background-color, transparent);
-      z-index: 980;
-      display: grid;
-      grid-template-rows: 0fr;
-      transition: grid-template-rows .5s ease-out, max-height .5s ease-out;
-      width: 100dvw;
-      position: fixed;
-      inset-block-start: calc(
-        var(--control-menu-container-height, 0) +
-        var(--responsive-menu-hamburger-min-size, 44px)
-      );
-      inset-inline: 0;
-      max-height: 0;
-      overflow: hidden;
     }
-    .fragment-root .hamburger-zone-wrapper.open {
-      grid-template-rows: 1fr;
-      max-height: calc(
-        100dvh - var(--control-menu-container-height, 0) -
-        var(--responsive-menu-hamburger-min-size, 44px)
-      );
-      pointer-events: auto;
-    }
-    .fragment-root[data-closing="true"] .hamburger-zone-wrapper {
-      position: fixed;
-      inset-block-start: calc(
-        var(--control-menu-container-height, 0) +
-        var(--responsive-menu-hamburger-min-size, 44px)
-      );
-      inset-inline: 0;
-      z-index: 980;
-    }
-
-    .fragment-root .dropzone-wrapper:not(.increase) .hamburger-zone-wrapper,
-    .fragment-root .dropzone-wrapper:not(.increase) .hamburger-zone-wrapper.open,
-    .fragment-root[data-closing="true"] .dropzone-wrapper:not(.increase) .hamburger-zone-wrapper {
-      inset-block-start: calc(
-        var(--control-menu-container-height, 0) +
-        var(--responsive-menu-hamburger-min-size, 44px)
-      );
-      max-height: calc(
-        100dvh - var(--control-menu-container-height, 0) -
-        var(--responsive-menu-hamburger-min-size, 44px)
-      );
-    }
-
-    .fragment-root .dropzone-wrapper.increase .hamburger-zone-wrapper,
-    .fragment-root .dropzone-wrapper.increase .hamburger-zone-wrapper.open,
-    .fragment-root[data-closing="true"] .dropzone-wrapper.increase .hamburger-zone-wrapper {
-      inset-block-start: calc(
-        var(--control-menu-container-height, 0) +
-        var(
-          --responsive-menu-logo-max-height,
-          var(--responsive-menu-hamburger-min-size, 44px)
-        )
-      );
-      max-height: calc(
-        100dvh - var(--control-menu-container-height, 0) -
-        var(
-          --responsive-menu-logo-max-height,
-          var(--responsive-menu-hamburger-min-size, 44px)
-        )
-      );
-    }
-
-    .fragment-root .hamburger {
-      position: fixed;
-      top: var(--control-menu-container-height, 0);
-      inset-inline-start: 0;
-      z-index: 981;
-      pointer-events: auto;
-    }
-    .fragment-root.menu-right .hamburger {
-      inset-inline-start: auto;
-      inset-inline-end: 0;
-    }
-    .fragment-root .hamburger-zone-inner { flex-direction: column; align-items: flex-start; flex-wrap: nowrap; max-width: none; overflow: hidden; transition: all .5s ease; }
-
-    .fragment-root .dropzone-menu :is(>.fragment-menu, &.fragment-menu) {
-      display: none; pointer-events: none; opacity: 0; transform: translateY(-.25rem);
-      transition: opacity var(--menu-fade-duration) ease, transform var(--menu-fade-duration) ease;
-      position: static; width: 100%;
-    }
-    .fragment-root .hamburger-zone-wrapper.open .dropzone-menu :is(>.fragment-menu, &.fragment-menu) {
-      display: block; pointer-events: auto; opacity: 1; transform: none;
-      transition: opacity var(--menu-fade-duration) ease, transform var(--menu-fade-duration) ease;
-    }
-    .fragment-root[data-closing="true"] .dropzone-menu :is(>.fragment-menu, &.fragment-menu) {
-      transition: opacity var(--menu-fade-duration) ease, transform var(--menu-fade-duration) ease;
-    }
-
-    .fragment-root .dropzone-menu.fragment-menu .navbar-nav { flex-direction: column; width: 100%; align-items: start; justify-content: end; }
-    [#if !isInline]
-    .fragment-root .dropzone-menu.fragment-menu .navbar-nav { width: 100dvw; }
-    [/#if]
-
-    .fragment-root .dropzone .zone-layout > div { display: flex; flex-direction: column; }
-    .fragment-root .dropzone .zone-layout.allow-override > div { align-items: start; justify-content: end; }
-    .fragment-root .dropzone .zone-layout.allow-override > div > * { width: 100dvw; }
-
-    .fragment-root .hamburger { display: flex; flex-direction: row; align-items: center; justify-content: start; transition: all .5s ease; width: 100%; }
-    .fragment-root .dropzone-wrapper.increase .hamburger { height: var(--responsive-menu-logo-max-height); }
-    .fragment-root .hamburger.open { background-color: ${configuration.menuHamburgerBgColor}; }
-    .fragment-root .hamburger a { display: inline-block; }
-    .fragment-root .hamburger-zone-inner .dropzone-left,
-    .fragment-root .hamburger-zone-inner .dropzone-right { visibility: visible; overflow: visible; opacity: 1; transition: all .5s ease; min-width: 100%; }
-
-    .fragment-root .dropzone .logo-zone.reduce-logo img,
-    .fragment-root .logo-proxy.reduce-logo img {
-      max-height: min(var(--_h-effective, 2.75rem), var(--logo-max-height, 60px));
-      object-fit: contain;
-    }
-
-    #main-content.increase-hamburger { margin-top: var(--responsive-menu-logo-max-height); }
-    .fragment-root .dropzone .logo-zone.reduce-logo,
-    .fragment-root .dropzone .logo-zone.increase-hamburger { position: absolute; inset-block-start: 0; inset-inline-end: 0; z-index: 980; visibility: hidden; opacity: 0; transition: all .5s ease; }
-    .fragment-root .dropzone .logo-zone.open { visibility: visible; opacity: 1; }
-    .fragment-root.is-menu-view .logo-zone[data-always-display="false"] { display: none; }
-    .fragment-root.menu-right .dropzone .logo-zone.reduce-logo,
-    .fragment-root.menu-right .dropzone .logo-zone.increase-hamburger { inset-inline-start: 0; inset-inline-end: auto; }
-    .fragment-root .dropzone .logo-zone.logo-always { position: absolute; inset-block-start: 0; inset-inline-end: 0; z-index: 980; visibility: visible; opacity: 1; }
-    .fragment-root.menu-right .dropzone .logo-zone.logo-always { inset-inline-start: 0; inset-inline-end: auto; }
   }
 
   [#if configuration.scrollBackToTop && !isSticky]

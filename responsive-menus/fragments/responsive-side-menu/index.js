@@ -91,7 +91,10 @@ const initResponsiveSideMenu = () => {
     markCurrentPageLink();
 
     const updateSizes = () => {
-      if (limitMenuWidth && window.innerWidth >= 992) {
+      const isDesktop =
+        toggleButton &&
+        window.getComputedStyle(toggleButton).display === 'none';
+      if (limitMenuWidth && isDesktop) {
         if (hamburgerZoneWrapper) hamburgerZoneWrapper.style.width = menuWidth;
         if (mainContent) {
           if (isLeft) mainContent.style.marginLeft = menuWidth;
@@ -104,7 +107,7 @@ const initResponsiveSideMenu = () => {
           mainContent.style.marginRight = '';
         }
       }
-      if (window.innerWidth >= 992 && isMenuOpen()) closeMenu();
+      if (isDesktop && isMenuOpen()) closeMenu();
     };
 
     updateSizes();

@@ -532,12 +532,15 @@ const initMetaTable = async (isEditMode) => {
   }
 };
 
+let hasLoaded = false;
+
 // Listen for global refresh signals from standardized Event Bus
 Liferay.Fragment.Commons.EventBus.subscribe(
   'refreshData',
   (data) => {
     if (layoutMode === 'view') {
       logger.debug('Received refresh signal', data);
+      hasLoaded = true;
       loadPage(1, false);
     }
   },
@@ -546,7 +549,9 @@ Liferay.Fragment.Commons.EventBus.subscribe(
 
 const init = () => {
   if (layoutMode === 'view') {
-    // Initial load handled by EventBus subscribe with replay:true
+    if (!hasLoaded) {
+      initMetaTable(false);
+    }
   } else {
     initMetaTable(true);
   }

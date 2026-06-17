@@ -445,12 +445,15 @@ const initChart = async (isEditMode) => {
   }
 };
 
+let hasLoaded = false;
+
 // Listen for global refresh signals from standardized Event Bus
 Liferay.Fragment.Commons.EventBus.subscribe(
   'refreshData',
   (data) => {
     if (layoutMode === 'view') {
       console.debug('[Object Chart] Received refresh signal', data);
+      hasLoaded = true;
       initChart(false);
     }
   },
@@ -458,7 +461,9 @@ Liferay.Fragment.Commons.EventBus.subscribe(
 );
 
 if (layoutMode === 'view') {
-  // Manual call removed because subscribe with replay:true handles the initial load if filter exists
+  if (!hasLoaded) {
+    initChart(false);
+  }
 } else {
   initChart(true);
 }

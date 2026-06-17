@@ -143,6 +143,8 @@ const initSlider = () => {
       // Initial setup
       updateSlider();
 
+      window.addEventListener('resize', updateSlider);
+
       // Auto-slide if configured
       const interval = parseInt(configuration.autoplayInterval || '0');
       if (interval > 0 && layoutMode === 'view') {

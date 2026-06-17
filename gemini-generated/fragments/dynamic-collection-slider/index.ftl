@@ -6,6 +6,7 @@
     --bg-opacity: ${configuration.bgOpacity!};
     --inset-opacity: ${configuration.insetOpacity! '1.0'};
     --slide-height: ${configuration.slideHeight! '350px'};
+    --desktop-slides-per-view: ${configuration.slidesPerView! '3'};
   "
   data-display-style="${configuration.displayStyle!}"
   tabindex="0"

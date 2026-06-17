@@ -146,7 +146,10 @@ const initResponsiveMenu = () => {
     }
 
     const onResize = Liferay.Fragment.Commons.debounce(() => {
-      if (window.innerWidth >= 992 && isMenuOpen()) {
+      const isDesktop =
+        toggleButton &&
+        window.getComputedStyle(toggleButton).display === 'none';
+      if (isDesktop && isMenuOpen()) {
         closeMenu();
       }
     }, configDebounceDelay);

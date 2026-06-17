@@ -3,13 +3,14 @@
 <div class="component-button text-break">
   <a
     class="btn"
-    data-lfr-editable-id="link"
-    data-lfr-editable-type="link"
     href="${hrefSignIn}"
     id="fragment-${fragmentEntryLinkNamespace}-link"
   >
     <span style="font-size: ${configuration.iconSize!}">
-      [@clay["icon"] symbol="${configuration.iconName!}" /] Log In
+      [@clay["icon"] symbol="${configuration.iconName!}" /]
+      <span data-lfr-editable-id="link-text" data-lfr-editable-type="text">
+        Log In
+      </span>
     </span>
   </a>
 </div>
