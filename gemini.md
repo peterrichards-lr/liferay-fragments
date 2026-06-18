@@ -186,8 +186,11 @@ after itself.
       to prevent long retry delays.
 - [x] Finalize missing visuals for Dashboard, Gemini, and User Account
       fragments.
-- [ ] Restore missing configuration fields and localizations across all
-      fragments.
+- [x] Restore missing configuration fields and localizations across all
+      fragments. Consolidated all per-fragment Language_en_US.properties files
+      into a single root-level file for form-fragments. Fixed dataType mismatches
+      (boolean/number) across color-swatches, file-drop-zone, listbox-multiselect,
+      password-strength, signature-pad, custom-tabs, otp-input, and meter-reading.
 - [ ] Integrate new `ldm --feature` switch into `test-runner.sh` once LDM is
       updated.
 - [ ] Investigate Liferay Auto-Deploy bug (Empty Collections vs Manual UI
@@ -307,5 +310,20 @@ after itself.
 
 ### 3. Local Automation & Timing Gates
 
+
 - **Quality Hook**: Integrated the auto-dependency sync script (`scripts/initialize-build-config.js`) and the fragment linter (`npm run lint`) into the local `.git/hooks/pre-commit` script. It includes safety checks for missing `node_modules` and helpful instructions for using `git commit --no-verify` to bypass the hook for WIP.
 - **CI Timeout Tuning**: Scaled Playwright `networkidle` state timeout to 15 seconds in CI (`process.env.CI`) to ensure slower GitHub Actions runners wait for dynamic layout rendering before capturing screenshots.
+
+### 4. Configuration Hardening & i18n Consolidation (June 2026)
+
+- **i18n Consolidation**: Removed 16 per-fragment `Language_en_US.properties` files in `form-fragments/fragments/` and merged all keys into a single `form-fragments/Language_en_US.properties` root file. This matches Liferay's collection-level localization pattern and eliminates duplication.
+- **dataType Boolean Fixes**: Added missing `"dataType": "boolean"` to all checkbox fields across `color-swatches`, `file-drop-zone`, `listbox-multiselect`, `password-strength`, `signature-pad`, `custom-tabs`, `otp-input`, and `meter-reading`. Without this, Liferay 2026.Q1 interprets boolean defaults as strings.
+- **dataType Number Fixes**: Corrected `"dataType": "string"` → `"dataType": "number"` for numeric text fields in `listbox-multiselect`, `password-strength`, `signature-pad`, and `meter-reading` (integer/decimal digit counts).
+- **meter-reading FTL Fix**: Updated `index.ftl` to use `?number` conversion for `integerDigitCount`/`decimalDigitCount` and calculate `totalDigits` dynamically from the two values rather than hardcoding `6`.
+- **otp-input FTL Guard**: Hardened the `?number` conversion to guard against empty strings, preventing FreeMarker rendering errors.
+- **otp-input Fragment Name**: Renamed from `OTP / Verification Code` to `OTP - Verification Code` to avoid path separator issues.
+- **global-setup.js Simplification**: Simplified the input fragment page layout by placing the fragment directly inside a Column (no Form wrapper), and switched Column `size` → `width: '100%'` to match the validated Headless Delivery API schema.
+- **Dashboard Container CSS**: Added base CSS to `dashboard-container/index.css` so the component renders with a visible frame in E2E screenshots.
+- **Linter Exclusions**: Added `temp_extract/**` and `temp_inspect/**` to the lint-fragments.js ignore list to prevent false positives from diagnostic extraction folders.
+- **search-button CSS Tokens**: Replaced hardcoded hex colors (`#30313f`, `#e2e8f0`, `#f8fafc`, `#0053a0`, `#cbd5e1`) with Meridian CSS variable tokens (`var(--body-color)`, `var(--border-color)`, `var(--light)`, `var(--primary)`, `var(--gray-400)`). Resolves the final linter warning — project now passes `npm run lint` with **0 errors, 0 warnings**.
+
