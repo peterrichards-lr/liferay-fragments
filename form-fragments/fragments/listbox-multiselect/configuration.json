@@ -3,7 +3,7 @@
     {
       "fields": [
         {
-          "dataType": "string",
+          "dataType": "number",
           "defaultValue": "8",
           "label": "lfr.form-fragments.number-of-options",
           "description": "lfr.form-fragments.number-of-options",
@@ -44,6 +44,7 @@
           }
         },
         {
+          "dataType": "boolean",
           "defaultValue": false,
           "label": "lfr.form-fragments.order-options-alphabetically",
           "description": "lfr.form-fragments.order-options-alphabetically",
@@ -54,6 +55,7 @@
           }
         },
         {
+          "dataType": "boolean",
           "defaultValue": false,
           "label": "lfr.form-fragments.show-all-buttons",
           "description": "lfr.form-fragments.show-all-buttons",

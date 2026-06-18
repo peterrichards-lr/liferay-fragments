@@ -1559,55 +1559,22 @@ async function globalSetup(config) {
                     {
                       type: 'Column',
                       definition: {
-                        size: 12,
+                        width: '100%',
                       },
                       pageElements: [
                         {
-                          type: 'Form',
+                          type: 'Fragment',
                           definition: {
-                            formConfig: {
-                              formReference: {
-                                className: applicantClassName,
-                                classType: 0,
-                              },
-                              formType: 'simple',
-                              numberOfSteps: 0,
+                            fragment: {
+                              key: fragmentKey,
+                              siteKey: siteERC,
+                            },
+                            fragmentConfig: {
+                              ...seededConfigOverrides,
+                              inputFieldId: 'ObjectField_emailAddress',
                             },
                             indexed: true,
-                            layout: {},
                           },
-                          pageElements: [
-                            {
-                              type: 'Fragment',
-                              definition: {
-                                fragment: {
-                                  key: fragmentKey,
-                                  siteKey: siteERC,
-                                },
-                                fragmentConfig: {
-                                  ...seededConfigOverrides,
-                                  inputFieldId: 'ObjectField_emailAddress',
-                                },
-                                indexed: true,
-                              },
-                            },
-                            {
-                              type: 'Fragment',
-                              definition: {
-                                fragment: {
-                                  key: 'submit-button',
-                                  siteKey: siteERC,
-                                },
-                                fragmentConfig: {
-                                  buttonType: 'primary',
-                                  submittedEntryStatus: '0',
-                                  type: 'submit',
-                                  buttonSize: 'nm',
-                                },
-                                indexed: true,
-                              },
-                            },
-                          ],
                         },
                       ],
                     },
@@ -1639,7 +1606,7 @@ async function globalSetup(config) {
                     {
                       type: 'Column',
                       definition: {
-                        size: 12,
+                        width: '100%',
                       },
                       pageElements: [
                         {

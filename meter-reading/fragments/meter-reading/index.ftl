@@ -9,9 +9,9 @@
 		"name": (input.name)!"meterReading",
 		"readOnly": (input.readOnly)!false
 	}
-    integerDigitCount = configuration.integerDigitCount!5
-    decimalDigitCount = configuration.decimalDigitCount!1
-    totalDigits = 6
+    integerDigitCount = (configuration.integerDigitCount!"5")?number
+    decimalDigitCount = (configuration.decimalDigitCount!"1")?number
+    totalDigits = integerDigitCount + decimalDigitCount
 /]
 
 <div class="meter-reading meter-reading-content">
@@ -27,7 +27,7 @@
         <form>
             <div class="reading meter-container d-flex">
                 [#list 1..totalDigits as i]
-                    [#assign isDecimal = (i > integerDigitCount?number) /]
+                    [#assign isDecimal = (i > integerDigitCount) /]
                     <label class="digit meter-digit [#if isDecimal]dec[#else]int[/#if]">
                         <input 
                             class="form-control digit [#if isDecimal]dec[#else]int[/#if]" 

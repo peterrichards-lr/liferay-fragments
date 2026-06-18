@@ -12,7 +12,7 @@
           "type": "text"
         },
         {
-          "dataType": "string",
+          "dataType": "number",
           "defaultValue": "8",
           "label": "lfr.form-fragments.min-length",
           "description": "lfr.form-fragments.min-length-description",
@@ -20,6 +20,7 @@
           "type": "text"
         },
         {
+          "dataType": "boolean",
           "defaultValue": true,
           "label": "lfr.form-fragments.require-uppercase",
           "description": "lfr.form-fragments.require-uppercase-description",
@@ -27,6 +28,7 @@
           "type": "checkbox"
         },
         {
+          "dataType": "boolean",
           "defaultValue": true,
           "label": "lfr.form-fragments.require-number",
           "description": "lfr.form-fragments.require-number-description",
@@ -34,6 +36,7 @@
           "type": "checkbox"
         },
         {
+          "dataType": "boolean",
           "defaultValue": true,
           "label": "lfr.form-fragments.require-special",
           "description": "lfr.form-fragments.require-special-description",
@@ -41,6 +44,7 @@
           "type": "checkbox"
         },
         {
+          "dataType": "boolean",
           "defaultValue": true,
           "label": "lfr.form-fragments.show-strength-meter",
           "description": "lfr.form-fragments.show-strength-meter-description",
@@ -48,6 +52,7 @@
           "type": "checkbox"
         },
         {
+          "dataType": "boolean",
           "defaultValue": true,
           "label": "lfr.form-fragments.enable-toggle-visibility",
           "description": "lfr.form-fragments.enable-toggle-visibility-description",

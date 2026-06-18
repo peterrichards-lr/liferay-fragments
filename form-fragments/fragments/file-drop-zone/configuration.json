@@ -20,6 +20,7 @@
           "type": "text"
         },
         {
+          "dataType": "boolean",
           "defaultValue": true,
           "label": "lfr.form-fragments.show-document-library-picker",
           "description": "lfr.form-fragments.show-document-library-picker-description",

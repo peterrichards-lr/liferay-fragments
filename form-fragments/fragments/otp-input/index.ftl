@@ -1,6 +1,10 @@
 [#assign readOnly = input.attributes.readOnly?? && input.attributes.readOnly /]
 [#assign boxCount = configuration.numberOfBoxes!6]
-[#if boxCount?is_string][#assign boxCount = boxCount?number][/#if]
+[#if boxCount?is_string && boxCount?has_content]
+    [#assign boxCount = boxCount?number]
+[#elseif boxCount?is_string]
+    [#assign boxCount = 6]
+[/#if]
 
 <div class="otp-input-fragment" style="--box-size: ${configuration.boxSize!'3rem'}">
 	<div class="form-group [#if input.errorMessage?has_content]has-error[/#if] mb-0">

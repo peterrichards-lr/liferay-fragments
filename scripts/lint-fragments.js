@@ -128,7 +128,7 @@ try {
 
 // 1. Find all fragments
 const fragmentFiles = globSync('**/fragment.json', {
-  ignore: ['node_modules/**', ...ldmIgnores],
+  ignore: ['node_modules/**', 'temp_extract/**', 'temp_inspect/**', ...ldmIgnores],
 });
 audit.total = fragmentFiles.length;
 
