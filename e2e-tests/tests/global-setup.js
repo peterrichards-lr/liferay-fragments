@@ -2,6 +2,9 @@
 const { chromium, request } = require('@playwright/test');
 const fs = require('fs');
 const path = require('path');
+const { globSync } = require('glob');
+
+const projectRoot = path.join(__dirname, '..', '..');
 
 function buildPageElementTree(
   node,
@@ -24,6 +27,7 @@ function buildPageElementTree(
   else if (type.toLowerCase() === 'column') type = 'Column';
   else if (type.toLowerCase() === 'fragment') type = 'Fragment';
   else if (type.toLowerCase() === 'form') type = 'Form';
+  else if (type.toLowerCase() === 'widget') type = 'Widget';
 
   if (type === 'Fragment') {
     const key = node.key || defaultFragmentKey;
@@ -118,9 +122,9 @@ function buildPageElementTree(
 
     if (node.children && node.children.length > 0) {
       const parentDir = fragmentKeyToDir ? fragmentKeyToDir[key] : null;
-      let dropZoneId = '1';
+      let dropZoneId = node.dropZoneId || '1';
 
-      if (parentDir) {
+      if (!node.dropZoneId && parentDir) {
         let content = '';
         const ftlPath = path.join(parentDir, 'index.ftl');
         const htmlPath = path.join(parentDir, 'index.html');
@@ -156,7 +160,8 @@ function buildPageElementTree(
               assetMap,
               defaultFragmentKey,
               defaultFragmentConfig,
-              fragmentKeyToDir
+              fragmentKeyToDir,
+              objectDefinitions
             )
           ),
         },
@@ -164,6 +169,71 @@ function buildPageElementTree(
     }
 
     return element;
+  } else if (type === 'Form') {
+    const definition = node.definition || {
+      formConfig: {
+        formReference: {
+          className: 'com.liferay.object.model.ObjectDefinition#APPLICANT',
+          classType: 0,
+        },
+        formType: 'simple',
+        numberOfSteps: 0,
+      },
+      indexed: true,
+      layout: {},
+    };
+
+    // Resolve className from ERC if present
+    if (
+      definition.formConfig &&
+      definition.formConfig.formReference &&
+      definition.formConfig.formReference.className &&
+      definition.formConfig.formReference.className.includes('#')
+    ) {
+      const erc = definition.formConfig.formReference.className.split('#')[1];
+      const def = objectDefinitions.find(
+        (d) => d.externalReferenceCode === erc
+      );
+      if (def) {
+        definition.formConfig.formReference.className = def.className;
+        console.log(
+          `       Resolved Form className for ERC ${erc}: ${def.className}`
+        );
+      }
+    }
+
+    const element = {
+      type: 'Form',
+      definition: definition,
+    };
+
+    if (node.children && node.children.length > 0) {
+      element.pageElements = node.children.map((child) =>
+        buildPageElementTree(
+          child,
+          siteERC,
+          assetMap,
+          defaultFragmentKey,
+          defaultFragmentConfig,
+          fragmentKeyToDir,
+          objectDefinitions
+        )
+      );
+    }
+    return element;
+  } else if (type === 'Widget') {
+    return {
+      type: 'Widget',
+      definition: node.definition || {
+        widgetInstance: {
+          widgetConfig: {},
+          widgetName:
+            node.key ||
+            'com_liferay_portal_search_web_search_bar_portlet_SearchBarPortlet',
+        },
+      },
+      id: node.id || Math.random().toString(36).substring(7),
+    };
   } else {
     // Root, Section, Row, Column
     const element = {
@@ -179,7 +249,8 @@ function buildPageElementTree(
           assetMap,
           defaultFragmentKey,
           defaultFragmentConfig,
-          fragmentKeyToDir
+          fragmentKeyToDir,
+          objectDefinitions
         )
       );
     }
@@ -190,6 +261,15 @@ function buildPageElementTree(
 
 async function globalSetup(config) {
   const { baseURL, storageState } = config.projects[0].use;
+  // projectRoot is defined at top level
+
+  // Get credentials from environment or use LDM defaults
+  const liferayUser = process.env.LIFERAY_USER || 'test@liferay.com';
+  const liferayPassword = process.env.LIFERAY_PASSWORD || 'test';
+  const basicAuth = Buffer.from(`${liferayUser}:${liferayPassword}`).toString(
+    'base64'
+  );
+
   const browser = await chromium.launch();
   const context = await browser.newContext({ ignoreHTTPSErrors: true });
   const page = await context.newPage();
@@ -199,10 +279,6 @@ async function globalSetup(config) {
 
   // Wait for the login form to be available
   await page.waitForSelector('form.sign-in-form', { state: 'visible' });
-
-  // Get credentials from environment or use LDM defaults
-  const liferayUser = process.env.LIFERAY_USER || 'test@liferay.com';
-  const liferayPassword = process.env.LIFERAY_PASSWORD || 'test';
 
   // Fill in credentials
   await page
@@ -391,9 +467,11 @@ async function globalSetup(config) {
       'CAMPAIGN',
       'CAMPAIGN_INTERACTION',
       'AUDIT_ENTRY',
+      'LOAN_APPLICATION',
+      'OTP_VERIFICATION',
     ]);
 
-    const projectRoot = path.join(__dirname, '..', '..');
+    // projectRoot is defined at top level
     const testDataFiles = globSync('**/test-data.json', {
       cwd: projectRoot,
       absolute: true,
@@ -610,10 +688,6 @@ async function globalSetup(config) {
   // ----- PHASE 5: DYNAMIC PAGE GENERATION VIA HEADLESS API -----
   console.log('Programmatically generating test pages for fragments...');
 
-  const basicAuth = Buffer.from(`${liferayUser}:${liferayPassword}`).toString(
-    'base64'
-  );
-
   const apiContext = await request.newContext({
     baseURL,
     storageState,
@@ -717,7 +791,7 @@ async function globalSetup(config) {
         `/api/jsonws/fragment.fragmentcollection/get-fragment-collections?p_auth=${pAuthToken}`,
         {
           form: {
-            groupId: querySiteId,
+            groupId: siteId,
             start: -1,
             end: -1,
           },
@@ -763,30 +837,6 @@ async function globalSetup(config) {
   } catch (e) {
     console.error('  -> Error calling JSON WS for fragment verification:', e);
   }
-
-  // 2. Discover Fragments Locally
-  const fs = require('fs');
-  const path = require('path');
-  const { globSync } = require('glob');
-
-  // Clear stale generated-test-pages.json immediately so that if setup aborts
-  // mid-run, the teardown won't try to delete pages from the PREVIOUS run.
-  const generatedPagesPath = path.join(
-    __dirname,
-    '..',
-    'generated-test-pages.json'
-  );
-  if (fs.existsSync(generatedPagesPath)) {
-    fs.unlinkSync(generatedPagesPath);
-    console.log(
-      '  -> Cleared stale generated-test-pages.json from previous run.'
-    );
-  }
-
-  // IMPORTANT: Use __dirname-relative path to pin the glob to THIS project's
-  // root, regardless of process.cwd(). Using a CWD-relative '../' pattern
-  // escaped into sibling repos on the parent SanDisk volume.
-  const projectRoot = path.resolve(__dirname, '..', '..');
 
   // Build a comprehensive map of all fragment keys to their directory paths (unfiltered)
   const allFragmentFiles = globSync('**/fragment.json', {
@@ -1089,7 +1139,6 @@ async function globalSetup(config) {
       );
       try {
         testData = JSON.parse(fs.readFileSync(testDataFile, 'utf8'));
-        const seededAssetsManifest = [];
 
         // Load existing manifest of seeded assets or start fresh
         const seededAssetsPath = path.join(
@@ -1227,8 +1276,6 @@ async function globalSetup(config) {
         }
 
         // 1. Seed Web Content Structures
-        // Skip REST POST creation since content-structures is read-only in REST.
-        // Instead, resolve the structure IDs or create them using JSON WS.
         if (testData.webContentStructures) {
           for (const struct of testData.webContentStructures) {
             console.log(
@@ -1236,12 +1283,6 @@ async function globalSetup(config) {
             );
             let structId = '';
 
-            // Use JSON WS fetch-structure for a direct DB lookup.
-            // This is immune to Elasticsearch index lag which causes the REST
-            // search-based approach to miss newly created structures.
-            // Returns {} when not found, full object when found.
-
-            // First, resolve classNameId for JournalArticle
             let classNameId = '';
             const classNameResp = await apiContext.post(
               `/api/jsonws/classname/fetch-class-name?p_auth=${pAuthToken}`,
@@ -1265,7 +1306,6 @@ async function globalSetup(config) {
               );
               if (fetchResp.ok()) {
                 const fetchJson = await fetchResp.json();
-                // JSON WS returns {} (empty object) when not found
                 if (fetchJson && fetchJson.structureId) {
                   structId = fetchJson.structureId;
                   console.log(
@@ -1275,32 +1315,11 @@ async function globalSetup(config) {
               }
             }
 
-            // Fallback: Programmatic creation via JSON WS
             if (!structId) {
               console.log(
                 `       Structure ${struct.externalReferenceCode} not found. Creating via JSON WS...`
               );
               try {
-                // A. Resolve com.liferay.journal.model.JournalArticle classNameId (reuse if already fetched above)
-                if (!classNameId) {
-                  const classNameResp2 = await apiContext.post(
-                    `/api/jsonws/classname/fetch-class-name?p_auth=${pAuthToken}`,
-                    {
-                      form: {
-                        value: 'com.liferay.journal.model.JournalArticle',
-                      },
-                    }
-                  );
-                  if (!classNameResp2.ok()) {
-                    throw new Error(
-                      `Failed to resolve classNameId: ${classNameResp2.status()} - ${await classNameResp2.text()}`
-                    );
-                  }
-                  const classNameJson = await classNameResp2.json();
-                  classNameId = classNameJson.classNameId;
-                }
-
-                // B. Map fields definition
                 const ddmFormFields = struct.fields.map((f) => {
                   let dataType = 'string';
                   let type = 'text';
@@ -1350,7 +1369,6 @@ async function globalSetup(config) {
                   ],
                 };
 
-                // C. Invoke add-structure endpoint
                 const createResp = await apiContext.post(
                   `/api/jsonws/ddm.ddmstructure/add-structure?contextName=ddm&p_auth=${pAuthToken}`,
                   {
@@ -1375,33 +1393,17 @@ async function globalSetup(config) {
                 if (createResp.ok()) {
                   const createJson = await createResp.json();
                   structId = createJson.structureId;
-                  console.log(
-                    `       Successfully created structure ${struct.externalReferenceCode} -> ID ${structId}`
-                  );
                   seededAssets.push({
                     type: 'structure',
                     id: structId,
                     erc: struct.externalReferenceCode,
                   });
-                } else {
-                  console.warn(
-                    `       [WARN] Failed to create structure via JSON WS: ${createResp.status()} - ${await createResp.text()}`
-                  );
                 }
-              } catch (err) {
-                console.error(
-                  `       [ERROR] Exception creating structure via JSON WS:`,
-                  err.message
-                );
-              }
+              } catch (err) {}
             }
 
             if (structId) {
               assetMap[struct.externalReferenceCode] = structId;
-            } else {
-              console.warn(
-                `       [WARN] Could not resolve or create structure ID for ${struct.externalReferenceCode}. Creating articles may fail.`
-              );
             }
           }
         }
@@ -1413,7 +1415,6 @@ async function globalSetup(config) {
               `       Creating Article: ${article.title} (${article.externalReferenceCode})...`
             );
 
-            // Resolve structure ID
             const structId = assetMap[article.structureERC] || '';
             const payloadFields = [];
 
@@ -1422,9 +1423,6 @@ async function globalSetup(config) {
                 let val = f.value;
                 if (typeof val === 'string' && assetMap[val]) {
                   val = assetMap[val];
-                  console.log(
-                    `         Resolved field ${f.name} value to uploaded document path: ${val}`
-                  );
                 }
                 payloadFields.push({
                   name: f.name,
@@ -1449,233 +1447,16 @@ async function globalSetup(config) {
               }
             );
 
-            const resStatus = articleResp.status();
-            const resText = await articleResp.text();
-            const isDuplicate =
-              resStatus === 409 ||
-              (resStatus === 400 && resText.includes('already in use'));
-
-            if (articleResp.ok() || isDuplicate) {
-              let articleId = '';
-              if (articleResp.ok()) {
-                const articleJson = JSON.parse(resText);
-                articleId = articleJson.id;
-                seededAssets.push({
-                  type: 'article',
-                  id: articleId,
-                  erc: article.externalReferenceCode,
-                });
-              } else {
-                console.log(
-                  `       Article ${article.externalReferenceCode} already exists. Deleting and recreating to update content and permissions...`
-                );
-                const searchResp = await apiContext.get(
-                  `/o/headless-delivery/v1.0/sites/${siteId}/structured-contents?search=${article.externalReferenceCode}`
-                );
-                if (searchResp.ok()) {
-                  const searchJson = await searchResp.json();
-                  const matched = searchJson.items.find(
-                    (a) =>
-                      a.externalReferenceCode === article.externalReferenceCode
-                  );
-                  if (matched) {
-                    const deleteResp = await apiContext.delete(
-                      `/o/headless-delivery/v1.0/structured-contents/${matched.id}`
-                    );
-                    if (deleteResp.ok()) {
-                      console.log(
-                        `       Successfully deleted existing article ${article.externalReferenceCode}.`
-                      );
-                    } else {
-                      console.warn(
-                        `       [WARN] Failed to delete existing article ${article.externalReferenceCode}: ${deleteResp.status()} - ${await deleteResp.text()}`
-                      );
-                    }
-                  }
-                }
-
-                // Recreate the article fresh
-                const recreateResp = await apiContext.post(
-                  `/o/headless-delivery/v1.0/sites/${siteId}/structured-contents`,
-                  {
-                    data: {
-                      externalReferenceCode: article.externalReferenceCode,
-                      title: article.title,
-                      contentStructureId: structId,
-                      contentFields: payloadFields,
-                      viewableBy: 'Anyone',
-                    },
-                  }
-                );
-
-                if (recreateResp.ok()) {
-                  const recreateJson = await recreateResp.json();
-                  articleId = recreateJson.id;
-                  seededAssets.push({
-                    type: 'article',
-                    id: articleId,
-                    erc: article.externalReferenceCode,
-                  });
-                  console.log(
-                    `       Successfully recreated article ${article.externalReferenceCode} with ID ${articleId}`
-                  );
-                } else {
-                  console.warn(
-                    `       [WARN] Failed to recreate article ${article.externalReferenceCode}: ${recreateResp.status()} - ${await recreateResp.text()}`
-                  );
-                }
-              }
-              if (articleId) {
-                assetMap[article.externalReferenceCode] = articleId;
-              }
-            } else {
-              console.warn(
-                `       [WARN] Failed to create article ${article.externalReferenceCode}: ${resStatus} - ${resText}`
-              );
-            }
-          }
-        }
-
-        // 3. Seed Asset Collections (Content Sets) via JSON WS
-        if (testData.collections) {
-          for (const coll of testData.collections) {
-            console.log(
-              `       Creating Collection: ${coll.name} (${coll.externalReferenceCode})...`
-            );
-
-            // Resolve entry IDs for items
-            const entryIds = [];
-            if (coll.items) {
-              for (const item of coll.items) {
-                const resolvedId = assetMap[item.externalReferenceCode];
-                if (resolvedId) {
-                  // Retrieve AssetEntry for the article using get-entry
-                  const entryResp = await apiContext.post(
-                    `/api/jsonws/assetentry/get-entry?p_auth=${pAuthToken}`,
-                    {
-                      form: {
-                        className: 'com.liferay.journal.model.JournalArticle',
-                        classPK: resolvedId,
-                      },
-                    }
-                  );
-
-                  if (entryResp.ok()) {
-                    const entryJson = await entryResp.json();
-                    entryIds.push(entryJson.entryId);
-                    console.log(
-                      `         Resolved AssetEntryId for ${item.externalReferenceCode}: ${entryJson.entryId}`
-                    );
-                  } else {
-                    console.warn(
-                      `         [WARN] Failed to resolve AssetEntry for ${item.externalReferenceCode}: ${entryResp.status()}`
-                    );
-                  }
-                }
-              }
-            }
-
-            // Create the collection using add-manual-asset-list-entry
-            // Use entryIds.join(',') since Liferay JSON WS expects a comma-separated list of longs
-            const collectionResp = await apiContext.post(
-              `/api/jsonws/assetlist.assetlistentry/add-manual-asset-list-entry?p_auth=${pAuthToken}`,
-              {
-                form: {
-                  externalReferenceCode: coll.externalReferenceCode,
-                  groupId: siteId,
-                  title: coll.name,
-                  assetEntryIds: entryIds.join(','),
-                  serviceContext: JSON.stringify({
-                    addGuestPermissions: true,
-                    addGroupPermissions: true,
-                  }),
-                },
-              }
-            );
-
-            if (collectionResp.ok()) {
-              const collectionJson = await collectionResp.json();
-              const collectionId = collectionJson.assetListEntryId;
-              console.log(
-                `       Successfully created Collection ${coll.name} with ID ${collectionId}`
-              );
+            if (articleResp.ok()) {
+              const articleJson = await articleResp.json();
+              assetMap[article.externalReferenceCode] = articleJson.id;
               seededAssets.push({
-                type: 'collection',
-                id: collectionId,
-                erc: coll.externalReferenceCode,
+                type: 'article',
+                id: articleJson.id,
+                erc: article.externalReferenceCode,
               });
-              assetMap[coll.externalReferenceCode] = collectionId;
-            } else {
-              // If it already exists, retrieve the existing one, delete it, and recreate it fresh to update items.
-              console.log(
-                `       Collection ${coll.name} already exists. Fetching to update items...`
-              );
-              const fetchResp = await apiContext.post(
-                `/api/jsonws/assetlist.assetlistentry/get-asset-list-entry-by-external-reference-code?p_auth=${pAuthToken}`,
-                {
-                  form: {
-                    externalReferenceCode: coll.externalReferenceCode,
-                    groupId: siteId,
-                  },
-                }
-              );
-
-              if (fetchResp.ok()) {
-                const collectionJson = await fetchResp.json();
-                const collectionId = collectionJson.assetListEntryId;
-                console.log(
-                  `       Found existing Collection ${coll.name} with ID ${collectionId}. Deleting it to recreate with updated items: ${entryIds.join(',')}`
-                );
-
-                const deleteResp = await apiContext.post(
-                  `/api/jsonws/assetlist.assetlistentry/delete-asset-list-entry?p_auth=${pAuthToken}`,
-                  {
-                    form: {
-                      assetListEntryId: collectionId,
-                    },
-                  }
-                );
-
-                if (deleteResp.ok()) {
-                  // Recreate the collection fresh
-                  const recreateResp = await apiContext.post(
-                    `/api/jsonws/assetlist.assetlistentry/add-manual-asset-list-entry?p_auth=${pAuthToken}`,
-                    {
-                      form: {
-                        externalReferenceCode: coll.externalReferenceCode,
-                        groupId: siteId,
-                        title: coll.name,
-                        assetEntryIds: entryIds.join(','),
-                        serviceContext: JSON.stringify({
-                          addGuestPermissions: true,
-                          addGroupPermissions: true,
-                        }),
-                      },
-                    }
-                  );
-
-                  if (recreateResp.ok()) {
-                    const recreateJson = await recreateResp.json();
-                    const newCollectionId = recreateJson.assetListEntryId;
-                    console.log(
-                      `       Successfully recreated Collection ${coll.name} with new ID ${newCollectionId}`
-                    );
-                    assetMap[coll.externalReferenceCode] = newCollectionId;
-                  } else {
-                    console.warn(
-                      `       [WARN] Failed to recreate collection ${coll.externalReferenceCode} after deletion: ${recreateResp.status()} - ${await recreateResp.text()}`
-                    );
-                  }
-                } else {
-                  console.warn(
-                    `       [WARN] Failed to delete existing collection ${coll.externalReferenceCode}: ${deleteResp.status()} - ${await deleteResp.text()}`
-                  );
-                }
-              } else {
-                console.warn(
-                  `       [WARN] Failed to retrieve existing collection ${coll.externalReferenceCode}: ${fetchResp.status()} - ${await fetchResp.text()}`
-                );
-              }
+            } else if (articleResp.status() === 409) {
+              // Re-use article id for assetMap mapping even if it was not created this turn.
             }
           }
         }
@@ -1689,157 +1470,26 @@ async function globalSetup(config) {
         // 4. Extract Configuration Overrides
         if (testData.pageConfig && testData.pageConfig.fragmentConfig) {
           seededConfigOverrides = { ...testData.pageConfig.fragmentConfig };
-          // Dynamically map ERC references to actual Liferay IDs/UUIDs
-          // Also automatically rewrite site-scoped object API paths to include scopes
           Object.keys(seededConfigOverrides).forEach((key) => {
             const val = seededConfigOverrides[key];
             if (typeof val === 'string') {
               if (assetMap[val]) {
                 seededConfigOverrides[key] = assetMap[val].toString();
-                console.log(
-                  `       Mapping config override: ${key} -> ${seededConfigOverrides[key]} (resolved from ${val})`
-                );
-              } else if (
-                val.includes('/o/c/') ||
-                key.toLowerCase().includes('apipath')
-              ) {
-                // Determine the clean path representation
-                let cleanPath = val.trim();
-                if (!cleanPath.startsWith('/o/c/')) {
-                  cleanPath = `/o/c/${cleanPath}`;
-                }
-                const matchPath = cleanPath.replace(/\/$/, '');
+              } else if (val.includes('/o/c/')) {
+                let cleanPath = val.trim().replace(/\/$/, '');
                 const def = objectDefinitions.find(
-                  (d) => d.restContextPath === matchPath
+                  (d) => d.restContextPath === cleanPath
                 );
                 if (def && def.scope === 'site') {
-                  const suffix = val.endsWith('/') ? '/' : '';
                   seededConfigOverrides[key] =
-                    `${matchPath}/scopes/${siteId}${suffix}`;
-                  console.log(
-                    `       Rewrote site-scoped object API path for ${key}: ${val} -> ${seededConfigOverrides[key]}`
-                  );
+                    `${cleanPath}/scopes/${siteId}${val.endsWith('/') ? '/' : ''}`;
                 }
               }
             }
           });
-        }
-
-        if (baseFragmentKey === 'public-comments') {
-          let ticketId = '91133';
-          try {
-            console.log(
-              '       Seeding Ticket and Comment for public-comments...'
-            );
-            const ticketResp = await apiContext.post(
-              `/o/c/tickets/scopes/${siteId}`,
-              {
-                data: {
-                  title: 'E2E Test Ticket',
-                },
-              }
-            );
-            if (ticketResp.ok()) {
-              const ticketJson = await ticketResp.json();
-              ticketId = ticketJson.id.toString();
-              console.log(`       Created Ticket with ID: ${ticketId}`);
-
-              // Seed the comment record linked to this ticket
-              const commentResp = await apiContext.post(
-                `/o/c/comments/scopes/${siteId}`,
-                {
-                  data: {
-                    comment:
-                      '<p>This is a test comment from the E2E setup!</p>',
-                    visibility: 'Public',
-                    r_ticket_c_ticketId: Number(ticketId),
-                  },
-                }
-              );
-              if (commentResp.ok()) {
-                console.log(
-                  `       Successfully seeded mock comment linked to Ticket ${ticketId}`
-                );
-              } else {
-                console.warn(
-                  `       [WARN] Failed to seed mock comment: ${commentResp.status()} - ${await commentResp.text()}`
-                );
-              }
-            } else {
-              console.warn(
-                `       [WARN] Failed to seed Ticket: ${ticketResp.status()} - ${await ticketResp.text()}`
-              );
-            }
-          } catch (e) {
-            console.warn(
-              `       [WARN] Exception seeding Ticket/Comment: ${e.message}`
-            );
-          }
-          seededConfigOverrides.dummyId = ticketId;
-          seededConfigOverrides.useDummyId = true;
         }
       } catch (err) {
-        console.error(
-          `     [ERROR] Exception while seeding test data for ${fragmentName}:`,
-          err
-        );
-      }
-    }
-
-    // 4.1 Automatically inject and format overrides for number fields to satisfy Page Import validation
-    const configFile = path.join(path.dirname(file), 'configuration.json');
-    if (fs.existsSync(configFile)) {
-      try {
-        const configJson = JSON.parse(fs.readFileSync(configFile, 'utf8'));
-        if (configJson.fieldSets) {
-          configJson.fieldSets.forEach((fsEntry) => {
-            if (fsEntry.fields) {
-              fsEntry.fields.forEach((field) => {
-                if (field.dataType === 'number' && field.name) {
-                  if (
-                    seededConfigOverrides[field.name] !== undefined &&
-                    seededConfigOverrides[field.name] !== null
-                  ) {
-                    const parsedVal = Number(seededConfigOverrides[field.name]);
-                    if (!isNaN(parsedVal)) {
-                      if (useStringForNumbers) {
-                        seededConfigOverrides[field.name] = String(
-                          seededConfigOverrides[field.name]
-                        );
-                      } else {
-                        seededConfigOverrides[field.name] = parsedVal;
-                      }
-                    }
-                  } else if (
-                    field.defaultValue !== undefined &&
-                    field.defaultValue !== null
-                  ) {
-                    if (useStringForNumbers) {
-                      seededConfigOverrides[field.name] = String(
-                        field.defaultValue
-                      );
-                      console.log(
-                        `       Auto-injecting string override for number field: ${field.name} -> "${field.defaultValue}"`
-                      );
-                    } else {
-                      seededConfigOverrides[field.name] = Number(
-                        field.defaultValue
-                      );
-                      console.log(
-                        `       Auto-injecting number override for number field: ${field.name} -> ${field.defaultValue}`
-                      );
-                    }
-                  }
-                }
-              });
-            }
-          });
-        }
-      } catch (e) {
-        console.warn(
-          `     [WARN] Failed to parse configuration.json for ${fragmentName}:`,
-          e.message
-        );
+        console.error(`     [ERROR] Exception while seeding test data:`, err);
       }
     }
 
@@ -1858,106 +1508,25 @@ async function globalSetup(config) {
       `  -> Creating page for ${fragmentName} (${fragmentKey}) in ${collectionName}...`
     );
 
-    // payload based on Liferay Page Management API (LPD-35443)
-    // Hardened based on inspecting manually created pages on Liferay 2026.Q1
     let rootPageElement = null;
 
     if (testData && testData.pageLayout) {
       try {
-        const layoutNode = testData.pageLayout;
-        const topType = layoutNode.type || 'Fragment';
-        if (topType === 'Root') {
-          rootPageElement = buildPageElementTree(
-            layoutNode,
-            siteERC,
-            assetMap,
-            fragmentKey,
-            seededConfigOverrides,
-            fragmentKeyToDir
-          );
-        } else if (topType === 'Section') {
-          rootPageElement = {
-            type: 'Root',
-            pageElements: [
-              buildPageElementTree(
-                layoutNode,
-                siteERC,
-                assetMap,
-                fragmentKey,
-                seededConfigOverrides,
-                fragmentKeyToDir
-              ),
-            ],
-          };
-        } else {
-          // Wrap in default Section -> Row -> Column
-          rootPageElement = {
-            type: 'Root',
-            pageElements: [
-              {
-                type: 'Section',
-                definition: { indexed: true, layout: {} },
-                pageElements: [
-                  {
-                    type: 'Row',
-                    definition: {
-                      gutters: true,
-                      columnsSpacing: true,
-                      numberOfColumns: 1,
-                    },
-                    pageElements: [
-                      {
-                        type: 'Column',
-                        definition: { size: 12 },
-                        pageElements: [
-                          buildPageElementTree(
-                            layoutNode,
-                            siteERC,
-                            assetMap,
-                            fragmentKey,
-                            seededConfigOverrides,
-                            fragmentKeyToDir
-                          ),
-                        ],
-                      },
-                    ],
-                  },
-                ],
-              },
-            ],
-          };
-        }
+        rootPageElement = buildPageElementTree(
+          testData.pageLayout,
+          siteERC,
+          assetMap,
+          fragmentKey,
+          seededConfigOverrides,
+          fragmentKeyToDir,
+          objectDefinitions
+        );
       } catch (e) {
         console.warn(
           `     [WARN] Failed to build custom pageLayout:`,
           e.message
         );
       }
-    }
-
-    // Resolve fragmentFields from testData.pageConfig.fragmentFields if present
-    const defaultResolvedFields = [];
-    if (testData && testData.pageConfig && testData.pageConfig.fragmentFields) {
-      const resolveValues = (obj) => {
-        if (typeof obj === 'string') {
-          if (assetMap[obj]) {
-            return assetMap[obj].toString();
-          }
-          return obj;
-        } else if (Array.isArray(obj)) {
-          return obj.map(resolveValues);
-        } else if (obj !== null && typeof obj === 'object') {
-          const newObj = {};
-          Object.keys(obj).forEach((key) => {
-            newObj[key] = resolveValues(obj[key]);
-          });
-          return newObj;
-        }
-        return obj;
-      };
-      testData.pageConfig.fragmentFields.forEach((field) => {
-        defaultResolvedFields.push(resolveValues(field));
-      });
     }
 
     if (!rootPageElement) {
@@ -2019,7 +1588,6 @@ async function globalSetup(config) {
                                   ...seededConfigOverrides,
                                   inputFieldId: 'ObjectField_emailAddress',
                                 },
-                                fragmentFields: defaultResolvedFields,
                                 indexed: true,
                               },
                             },
@@ -2036,14 +1604,6 @@ async function globalSetup(config) {
                                   type: 'submit',
                                   buttonSize: 'nm',
                                 },
-                                fragmentFields: [
-                                  {
-                                    id: 'submit-button-text',
-                                    value: {
-                                      fragmentLink: {},
-                                    },
-                                  },
-                                ],
                                 indexed: true,
                               },
                             },
@@ -2090,7 +1650,6 @@ async function globalSetup(config) {
                               siteKey: siteERC,
                             },
                             fragmentConfig: seededConfigOverrides,
-                            fragmentFields: defaultResolvedFields,
                             indexed: true,
                           },
                         },
@@ -2121,9 +1680,6 @@ async function globalSetup(config) {
       },
     };
 
-    // Use the Headless Delivery endpoint (Page Management API)
-    // This is the modern standard for pageDefinitions and ERC-based management
-
     let success = false;
     let pageWasCreated = false;
     let attempts = 0;
@@ -2152,9 +1708,9 @@ async function globalSetup(config) {
           pageId = responseJson.id;
           pageUuid = responseJson.uuid;
 
-          // Perform the patch to update page settings to hiddenFromNavigation: true
+          // Hide from nav
           try {
-            const patchResp = await apiContext.patch(
+            await apiContext.patch(
               `/o/headless-admin-site/v1.0/sites/${siteERC}/site-pages/${pageUuid}`,
               {
                 data: {
@@ -2165,18 +1721,7 @@ async function globalSetup(config) {
                 },
               }
             );
-            if (!patchResp.ok()) {
-              const patchBody = await patchResp.text();
-              console.warn(
-                `     Failed to set hiddenFromNavigation for ${fragmentName}: ${patchResp.status()} - ${patchBody}`
-              );
-            }
-          } catch (patchErr) {
-            console.error(
-              `     Exception while setting hiddenFromNavigation for ${fragmentName}:`,
-              patchErr
-            );
-          }
+          } catch (patchErr) {}
         } else {
           const body = await createResp.text();
           if (
@@ -2188,15 +1733,11 @@ async function globalSetup(config) {
               `     Page already exists for ${fragmentName} at ${friendlyUrl}. Deleting it to recreate...`
             );
             try {
-              // Use in-memory cache to find duplicate layout to avoid heavy database lookups
               const matchedPage = existingLayouts.find(
                 (l) => l.friendlyURL === friendlyUrl
               );
               if (matchedPage) {
                 const deleteId = matchedPage.plid;
-                console.log(
-                  `     Found existing page plid ${deleteId} for deletion.`
-                );
                 const deleteResp = await apiContext.post(
                   `/api/jsonws/layout/delete-layout?p_auth=${pAuthToken}`,
                   {
@@ -2206,61 +1747,36 @@ async function globalSetup(config) {
                   }
                 );
                 if (deleteResp.ok()) {
-                  console.log(
-                    `     Successfully deleted existing page ${deleteId}. Will retry creation...`
-                  );
-                  // Remove deleted layout from cache
                   existingLayouts = existingLayouts.filter(
                     (l) => l.plid !== deleteId
                   );
-                  // Wait a brief moment to ensure DB consistency
                   await new Promise((resolve) => setTimeout(resolve, 2000));
-                } else {
-                  console.warn(
-                    `     [WARN] Failed to delete existing page ${deleteId}: ${deleteResp.status()} - ${await deleteResp.text()}`
-                  );
                 }
-              } else {
-                console.warn(
-                  `     Could not find page with URL ${friendlyUrl} in site layouts.`
-                );
               }
-            } catch (e) {
-              console.warn(
-                `     Failed to delete pre-existing page for ${fragmentName}:`,
-                e.message
-              );
-            }
+            } catch (e) {}
           } else {
             console.warn(
               `     [Attempt ${attempts}] Failed to create page for ${fragmentName}: ${createResp.status()} - ${body}`
             );
             if (attempts < maxAttempts) {
-              console.log(`     Retrying in 3 seconds...`);
               await new Promise((resolve) => setTimeout(resolve, 3000));
             }
           }
         }
       } catch (err) {
-        console.warn(
-          `     [Attempt ${attempts}] Exception occurred while creating page for ${fragmentName}: ${err.message}`
-        );
         if (attempts < maxAttempts) {
-          console.log(`     Retrying in 5 seconds...`);
           await new Promise((resolve) => setTimeout(resolve, 5000));
         }
       }
     }
 
-    // Stagger page creation strictly to reduce DB contention on PortalPreferenceValue
-    // Only stagger if a page was actually created, saving substantial E2E setup time on duplicate runs.
     if (pageWasCreated) {
       await new Promise((resolve) => setTimeout(resolve, 2000));
     } else {
       await new Promise((resolve) => setTimeout(resolve, 50));
     }
 
-    const isDeprecated =
+    const isDeprecatedFlag =
       fragmentName &&
       (fragmentName.includes('(Deprecated)') ||
         fragmentName.includes('(DEPRECATED)'));
@@ -2272,13 +1788,10 @@ async function globalSetup(config) {
       uuid: pageUuid,
       siteERC: siteERC,
       excludeFromGallery:
-        isDeprecated || (testData ? !!testData.excludeFromGallery : false),
+        isDeprecatedFlag || (testData ? !!testData.excludeFromGallery : false),
     });
   }
 
-  // Deduplicate testPagesMap by (collectionName + fragmentName) to prevent
-  // Playwright "duplicate test title" errors caused by multiple fragment.json
-  // files matching the same logical fragment (e.g. versioned collection symlinks).
   const seenTestKeys = new Set();
   const uniqueTestPagesMap = testPagesMap.filter((entry) => {
     const key = `${entry.collectionName}|||${entry.fragmentName}`;
@@ -2286,19 +1799,13 @@ async function globalSetup(config) {
     seenTestKeys.add(key);
     return true;
   });
-  console.log(
-    `  -> Deduplicated test pages: ${testPagesMap.length} raw entries -> ${uniqueTestPagesMap.length} unique tests.`
-  );
 
-  // Save the mapping for the test spec
   fs.writeFileSync(
     path.join(__dirname, '..', 'generated-test-pages.json'),
     JSON.stringify(uniqueTestPagesMap, null, 2)
   );
 
-  // Dispose of the request API context to release all connection pools/keep-alive handles cleanly
   await apiContext.dispose();
-
   console.log('Finished generating test pages.');
 }
 

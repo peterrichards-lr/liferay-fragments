@@ -9,6 +9,10 @@ PROGRESS_SIGNAL_FILE="$(pwd)/.progress-signal"
 TESTS_PASSED=false
 EXIT_HANDLED=false
 
+# Ensure scripts directory and System32 are in PATH
+export PATH="$(pwd)/scripts:$(pwd)/node_modules/.bin:$PATH"
+export PATH="$PATH:/c/Windows/System32"
+
 # Estimate variables (ballpark seconds)
 EST_BUILD_EXISTING_SKIP_DEPLOY=5
 EST_BUILD_EXISTING_DEPLOY=45
@@ -64,6 +68,22 @@ write_signal() {
 # Initial write (generic BUILDING phase)
 write_signal "BUILDING" 500
 
+# Logging Helpers
+log_command() {
+    if [ "$VERBOSE" = true ]; then
+        echo -e "\033[0;34m[CMD]\033[0m $@"
+    fi
+}
+
+matches_filter() {
+    local text="$1"
+    if [ -z "$FILTER_PATTERN" ]; then
+        return 0
+    fi
+    echo "$text" | grep -iqE "$FILTER_PATTERN"
+    return $?
+}
+
 # Cleanup and Exit Traps
 cleanup() {
     echo ""
@@ -115,7 +135,7 @@ trap handle_exit EXIT INT TERM ERR
 
 MIN_LDM_VERSION="2.8.0"
 LIFERAY_TAG="2026.q1"
-PROJECT_NAME="fragments-test-env"
+PROJECT_NAME="e2e-test-env"
 PORT=8090
 VERBOSE=false
 KEEP_ALIVE=false
@@ -185,22 +205,6 @@ if [ "$VERBOSE" = true ]; then
     set -x
 fi
 
-# Logging Helpers
-log_command() {
-    if [ "$VERBOSE" = true ]; then
-        echo -e "\033[0;34m[CMD]\033[0m $@"
-    fi
-}
-
-matches_filter() {
-    local text="$1"
-    if [ -z "$FILTER_PATTERN" ]; then
-        return 0
-    fi
-    echo "$text" | grep -iqE "$FILTER_PATTERN"
-    return $?
-}
-
 echo "======================================================"
 echo " Starting Liferay Fragments Automated Test Runner "
 echo " Target Liferay Tag/Prefix: $LIFERAY_TAG"
@@ -225,7 +229,7 @@ for cmd in ldm jq curl node npm docker; do
 done
 
 # Check Playwright Browsers
-if ! npx playwright test --version &> /dev/null; then
+if ! playwright test --version &> /dev/null; then
     echo "Error: Playwright is not initialized."
     echo "Hint: Run 'npm install' to install dependencies."
     exit 1
@@ -605,11 +609,11 @@ write_signal "TESTING" "$EST_TESTING"
 set +e
 cd e2e-tests
 if [ -n "$FILTER_PATTERN" ]; then
-    log_command "LIFERAY_VERSION=\"$REALISED_VERSION\" PW_TEST_SCREENSHOT_NO_FONTS_READY=1 npx playwright test --grep \"$FILTER_PATTERN\""
-    LIFERAY_VERSION="$REALISED_VERSION" PW_TEST_SCREENSHOT_NO_FONTS_READY=1 TEST_FILTER="$FILTER_PATTERN" npx playwright test --grep "$FILTER_PATTERN" > playwright_output.log 2>&1
+    log_command "LIFERAY_VERSION=\"$REALISED_VERSION\" PW_TEST_SCREENSHOT_NO_FONTS_READY=1 playwright test --grep \"$FILTER_PATTERN\""
+    LIFERAY_VERSION="$REALISED_VERSION" PW_TEST_SCREENSHOT_NO_FONTS_READY=1 TEST_FILTER="$FILTER_PATTERN" playwright test --grep "$FILTER_PATTERN" > playwright_output.log 2>&1
 else
-    log_command "LIFERAY_VERSION=\"$REALISED_VERSION\" PW_TEST_SCREENSHOT_NO_FONTS_READY=1 npx playwright test"
-    LIFERAY_VERSION="$REALISED_VERSION" PW_TEST_SCREENSHOT_NO_FONTS_READY=1 npx playwright test > playwright_output.log 2>&1
+    log_command "LIFERAY_VERSION=\"$REALISED_VERSION\" PW_TEST_SCREENSHOT_NO_FONTS_READY=1 playwright test"
+    LIFERAY_VERSION="$REALISED_VERSION" PW_TEST_SCREENSHOT_NO_FONTS_READY=1 playwright test > playwright_output.log 2>&1
 fi
 TEST_EXIT_CODE=$?
 cd ..
