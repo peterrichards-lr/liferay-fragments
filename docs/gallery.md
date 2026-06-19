@@ -92,13 +92,13 @@ A lifestyle-focused design system with a scoped container architecture, high-fid
 
 <img src="./images/content-map.png" width="800" alt="Original Image">
 
-#### Desktop (1920px)
+#### Desktop (1920px) <br>🟢 **Passed**
 
 <img src="./images/live/content-content-map-desktop.png" width="100%" alt="Desktop">
 
-|                                  Tablet (768px)                                   |                                  Mobile (375px)                                   |
-| :-------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------: |
-| <img src="./images/live/content-content-map-tablet.png" width="350" alt="Tablet"> | <img src="./images/live/content-content-map-mobile.png" width="175" alt="Mobile"> |
+|                                           Tablet (768px)                                           |                                           Mobile (375px)                                           |
+| :------------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------------: |
+| <img src="./images/live/content-content-map-tablet.png" width="350" alt="Tablet"><br>🟢 **Passed** | <img src="./images/live/content-content-map-mobile.png" width="175" alt="Mobile"><br>🟢 **Passed** |
 
 [Detailed Documentation](./fragments/content-map.md)
 
@@ -350,13 +350,13 @@ A lifestyle-focused design system with a scoped container architecture, high-fid
 
 ### OTP - Verification Code
 
-#### Desktop (1920px) <br>🟢 **Passed**
+#### Desktop (1920px)
 
 <img src="./images/live/forms-fragments-otp-verification-code-desktop.png" width="100%" alt="Desktop">
 
-|                                                    Tablet (768px)                                                    |                                                    Mobile (375px)                                                    |
-| :------------------------------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------------------------------: |
-| <img src="./images/live/forms-fragments-otp-verification-code-tablet.png" width="350" alt="Tablet"><br>🟢 **Passed** | <img src="./images/live/forms-fragments-otp-verification-code-mobile.png" width="175" alt="Mobile"><br>🟢 **Passed** |
+|                                           Tablet (768px)                                            |                                           Mobile (375px)                                            |
+| :-------------------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------------: |
+| <img src="./images/live/forms-fragments-otp-verification-code-tablet.png" width="350" alt="Tablet"> | <img src="./images/live/forms-fragments-otp-verification-code-mobile.png" width="175" alt="Mobile"> |
 
 [Detailed Documentation](./fragments/otp-input.md)
 

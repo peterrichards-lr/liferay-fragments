@@ -1368,5 +1368,20 @@
     "type": "article",
     "id": 37214,
     "erc": "SLIDE-ARTICLE-03"
+  },
+  {
+    "type": "structure",
+    "id": "36639",
+    "erc": "MAP-MARKER-STRUCT-V1"
+  },
+  {
+    "type": "article",
+    "id": 36645,
+    "erc": "MAP-MARKER-ARTICLE-01"
+  },
+  {
+    "type": "article",
+    "id": 36655,
+    "erc": "MAP-MARKER-ARTICLE-02"
   }
 ]
