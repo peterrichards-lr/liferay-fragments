@@ -1,25 +1,115 @@
 {
   "pageLayout": {
-    "type": "Fragment",
-    "key": "dynamic-badge-overlay",
+    "type": "Row",
     "children": [
       {
-        "type": "Fragment",
-        "key": "account-selector"
+        "type": "Column",
+        "definition": {
+          "width": "4"
+        },
+        "children": [
+          {
+            "type": "Fragment",
+            "key": "dynamic-badge-overlay",
+            "fragmentConfig": {
+              "badgeTypePriority": "limited-stock",
+              "badgePosition": "bottom-right",
+              "badgeShape": "pill",
+              "badgeBgColor": "var(--primary, #0d6efd)",
+              "badgeTextColor": "var(--white, #ffffff)"
+            },
+            "children": [
+              {
+                "type": "Fragment",
+                "key": "rich-text",
+                "fragmentFields": [
+                  {
+                    "id": "text",
+                    "value": {
+                      "text": {
+                        "value_i18n": {
+                          "en_US": "<div class=\"card p-3 border rounded\" style=\"text-align:center; font-family:sans-serif;\"><div class=\"bg-light rounded d-flex align-items-center justify-content-center\" style=\"height:150px; background-color:#e5e5e5;\"><img src=\"https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=80&w=200&auto=format&fit=crop\" style=\"max-height:80%; opacity:0.6;\" /></div><div class=\"mt-3 text-left\"><span style=\"font-size:10px; color:#28a745; border:1px solid #28a745; padding:2px 4px; border-radius:2px;\">AVAILABLE</span><div style=\"font-size:10px; color:#6c757d; margin-top:8px;\">MIN93023</div><h4 style=\"font-size:14px; margin:4px 0;\">Timing Belt</h4><div style=\"font-size:14px; font-weight:bold;\">$ 600.00</div><div class=\"mt-3\"><input type=\"number\" value=\"1\" style=\"width:100%; padding:4px; margin-bottom:8px; border:1px solid #ced4da; border-radius:4px;\" /><button style=\"width:100%; background-color:#0d6efd; color:white; border:none; padding:8px; border-radius:4px;\">Add to Cart</button></div></div></div>"
+                        }
+                      }
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        ]
       },
       {
-        "type": "Fragment",
-        "key": "rich-text",
-        "fragmentFields": [
+        "type": "Column",
+        "definition": {
+          "width": "4"
+        },
+        "children": [
           {
-            "id": "text",
-            "value": {
-              "text": {
-                "value_i18n": {
-                  "en_US": "<div class=\"text-center\"><img src=\"https://images.unsplash.com/photo-1506744038136-46273834b3fb?q=80&w=400&auto=format&fit=crop\" style=\"max-width:100%; border-radius:8px;\" /><h3 class=\"mt-3\">Showcase Content</h3><p>This is semantic content dropped into a container to demonstrate layout and transparency.</p></div>"
-                }
+            "type": "Fragment",
+            "key": "dynamic-badge-overlay",
+            "fragmentConfig": {
+              "badgeTypePriority": "offer",
+              "badgePosition": "top-left",
+              "badgeShape": "rectangle",
+              "badgeBgColor": "#dc3545",
+              "badgeTextColor": "var(--white, #ffffff)"
+            },
+            "children": [
+              {
+                "type": "Fragment",
+                "key": "rich-text",
+                "fragmentFields": [
+                  {
+                    "id": "text",
+                    "value": {
+                      "text": {
+                        "value_i18n": {
+                          "en_US": "<div class=\"card p-3 border rounded\" style=\"text-align:center; font-family:sans-serif;\"><div class=\"bg-light rounded d-flex align-items-center justify-content-center\" style=\"height:150px; background-color:#e5e5e5;\"><img src=\"https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=80&w=200&auto=format&fit=crop\" style=\"max-height:80%; opacity:0.6;\" /></div><div class=\"mt-3 text-left\"><span style=\"font-size:10px; color:#28a745; border:1px solid #28a745; padding:2px 4px; border-radius:2px;\">AVAILABLE</span><div style=\"font-size:10px; color:#6c757d; margin-top:8px;\">MIN93024</div><h4 style=\"font-size:14px; margin:4px 0;\">Master Cylinder</h4><div style=\"font-size:14px;\"><span style=\"text-decoration:line-through; color:#6c757d;\">$ 78.00</span> <span style=\"font-weight:bold; color:#dc3545;\">$ 20.00</span></div><div class=\"mt-3\"><input type=\"number\" value=\"1\" style=\"width:100%; padding:4px; margin-bottom:8px; border:1px solid #ced4da; border-radius:4px;\" /><button style=\"width:100%; background-color:#0d6efd; color:white; border:none; padding:8px; border-radius:4px;\">Add to Cart</button></div></div></div>"
+                        }
+                      }
+                    }
+                  }
+                ]
               }
-            }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "Column",
+        "definition": {
+          "width": "4"
+        },
+        "children": [
+          {
+            "type": "Fragment",
+            "key": "dynamic-badge-overlay",
+            "fragmentConfig": {
+              "badgeTypePriority": "new-product",
+              "badgePosition": "top-right",
+              "badgeShape": "pill",
+              "badgeBgColor": "var(--success, #2a9d8f)",
+              "badgeTextColor": "var(--white, #ffffff)"
+            },
+            "children": [
+              {
+                "type": "Fragment",
+                "key": "rich-text",
+                "fragmentFields": [
+                  {
+                    "id": "text",
+                    "value": {
+                      "text": {
+                        "value_i18n": {
+                          "en_US": "<div class=\"card p-3 border rounded\" style=\"text-align:center; font-family:sans-serif;\"><div class=\"bg-light rounded d-flex align-items-center justify-content-center\" style=\"height:150px; background-color:#e5e5e5;\"><img src=\"https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=80&w=200&auto=format&fit=crop\" style=\"max-height:80%; opacity:0.6;\" /></div><div class=\"mt-3 text-left\"><span style=\"font-size:10px; color:#28a745; border:1px solid #28a745; padding:2px 4px; border-radius:2px;\">AVAILABLE</span><div style=\"font-size:10px; color:#6c757d; margin-top:8px;\">MIN93025</div><h4 style=\"font-size:14px; margin:4px 0;\">Master Cylinder</h4><div style=\"font-size:14px; font-weight:bold;\">$ 34.00</div><div class=\"mt-3\"><input type=\"number\" value=\"1\" style=\"width:100%; padding:4px; margin-bottom:8px; border:1px solid #ced4da; border-radius:4px;\" /><button style=\"width:100%; background-color:#0d6efd; color:white; border:none; padding:8px; border-radius:4px;\">Add to Cart</button></div></div></div>"
+                        }
+                      }
+                    }
+                  }
+                ]
+              }
+            ]
           }
         ]
       }
@@ -32,7 +122,7 @@
         "value": {
           "text": {
             "value_i18n": {
-              "en_US": "PS-01"
+              "en_US": "12345"
             }
           }
         }

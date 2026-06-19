@@ -6,7 +6,7 @@ fragmentHeaderClass = 'fragment-editor-padding' +
 
 <div class="${fragmentClasses}" data-layout-mode="${layoutMode}">
   <div class="${fragmentHeaderClass}">Product Badge</div>
-  <lfr-drop-zone></lfr-drop-zone>
+  <lfr-drop-zone data-lfr-drop-zone-id="1"></lfr-drop-zone>
 </div>
 
 <div class="config d-none">

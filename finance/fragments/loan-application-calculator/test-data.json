@@ -1,16 +1,7 @@
 {
   "pageLayout": {
-    "type": "Form",
-    "definition": {
-      "formConfig": {
-        "formReference": {
-          "className": "com.liferay.object.model.ObjectDefinition#LOAN_APPLICATION",
-          "classType": 0
-        },
-        "formType": "simple",
-        "numberOfSteps": 0
-      }
-    },
+    "type": "Column",
+    "definition": { "width": "12" },
     "children": [
       {
         "type": "Fragment",
@@ -27,7 +18,9 @@
             "fragmentFields": [
               {
                 "id": "label",
-                "value": { "text": { "value_i18n": { "en_US": "Loan Amount ($)" } } }
+                "value": {
+                  "text": { "value_i18n": { "en_US": "Loan Amount ($)" } }
+                }
               }
             ]
           },
@@ -42,7 +35,9 @@
             "fragmentFields": [
               {
                 "id": "label",
-                "value": { "text": { "value_i18n": { "en_US": "Loan Term (Months)" } } }
+                "value": {
+                  "text": { "value_i18n": { "en_US": "Loan Term (Months)" } }
+                }
               }
             ]
           }

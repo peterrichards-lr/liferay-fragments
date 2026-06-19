@@ -13,10 +13,10 @@
       },
       {
         "type": "Fragment",
-        "key": "signature-pad",
+        "key": "user-field",
         "fragmentConfig": {
-          "label": "Signature",
-          "fieldName": "signature"
+          "label": "Email Address",
+          "fieldName": "emailAddress"
         }
       },
       {

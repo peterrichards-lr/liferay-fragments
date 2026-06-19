@@ -34,19 +34,32 @@ const initCustomTabs = () => {
 
     return {
       getId() {
-        const val = Liferay.Util.SessionStorage.getItem(
-          persistedTabKey,
-          Liferay.Util.SessionStorage.TYPES.PERSONALIZATION
-        );
-        return val !== null ? Number(val) : 0;
+        try {
+          if (Liferay && Liferay.Util && Liferay.Util.SessionStorage) {
+            const val = Liferay.Util.SessionStorage.getItem(
+              persistedTabKey,
+              Liferay.Util.SessionStorage.TYPES.PERSONALIZATION
+            );
+            return val !== null ? Number(val) : 0;
+          }
+        } catch (e) {
+          console.warn('SessionStorage unavailable', e);
+        }
+        return 0;
       },
 
       setId(id) {
-        Liferay.Util.SessionStorage.setItem(
-          persistedTabKey,
-          id,
-          Liferay.Util.SessionStorage.TYPES.PERSONALIZATION
-        );
+        try {
+          if (Liferay && Liferay.Util && Liferay.Util.SessionStorage) {
+            Liferay.Util.SessionStorage.setItem(
+              persistedTabKey,
+              id,
+              Liferay.Util.SessionStorage.TYPES.PERSONALIZATION
+            );
+          }
+        } catch (e) {
+          console.warn('SessionStorage unavailable', e);
+        }
       },
     };
   })();
@@ -203,9 +216,13 @@ const initCustomTabs = () => {
       }
     });
 
-    activeTab(tabItems[initialIndex]);
-    activeTabPanel(tabPanelItems[initialIndex]);
-    handleDropdownButtonName(tabItems[initialIndex]);
+    if (tabItems.length > 0) {
+      activeTab(tabItems[initialIndex]);
+      if (tabPanelItems.length > initialIndex) {
+        activeTabPanel(tabPanelItems[initialIndex]);
+      }
+      handleDropdownButtonName(tabItems[initialIndex]);
+    }
   };
 
   init();

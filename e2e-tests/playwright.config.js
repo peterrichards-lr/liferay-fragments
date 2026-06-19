@@ -27,6 +27,7 @@ export default defineConfig({
       use: {
         ...devices['Desktop Chrome'],
         viewport: { width: 1920, height: 1080 },
+        deviceScaleFactor: 2,
       },
     },
     {
@@ -36,6 +37,7 @@ export default defineConfig({
         browserName: 'chromium',
         userAgent: devices['Desktop Chrome'].userAgent,
         viewport: { width: 768, height: 1024 },
+        deviceScaleFactor: 2,
       },
     },
     {
@@ -45,6 +47,7 @@ export default defineConfig({
         browserName: 'chromium',
         userAgent: devices['Desktop Chrome'].userAgent,
         viewport: { width: 375, height: 812 },
+        deviceScaleFactor: 2,
       },
     },
   ],

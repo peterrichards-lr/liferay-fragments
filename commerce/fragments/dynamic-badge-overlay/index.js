@@ -309,11 +309,35 @@ const initBadgeOverlay = () => {
 
       // 3. Fallback: Show default mock badge in editor / E2E test page
       if (!badgeApplied) {
-        applyBadge(configuration.newProductTextTemplate || 'New!');
+        if (badgeTypePriority === 'limited-stock') {
+          applyBadge(
+            configuration.limitedStockTextTemplate || 'Limited Stock!'
+          );
+        } else if (badgeTypePriority === 'offer') {
+          applyBadge(
+            (configuration.offerTextTemplate || '{discount} off!').replace(
+              '{discount}',
+              '74%'
+            )
+          );
+        } else {
+          applyBadge(configuration.newProductTextTemplate || 'New!');
+        }
       }
     } catch (err) {
       debug('Error initializing badge', err);
-      applyBadge(configuration.newProductTextTemplate || 'New!');
+      if (badgeTypePriority === 'limited-stock') {
+        applyBadge(configuration.limitedStockTextTemplate || 'Limited Stock!');
+      } else if (badgeTypePriority === 'offer') {
+        applyBadge(
+          (configuration.offerTextTemplate || '{discount} off!').replace(
+            '{discount}',
+            '74%'
+          )
+        );
+      } else {
+        applyBadge(configuration.newProductTextTemplate || 'New!');
+      }
     }
   };
 

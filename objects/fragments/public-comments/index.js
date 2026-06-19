@@ -127,6 +127,18 @@ const initPublicComments = () => {
         }
         const data = await response.json();
         if (data && data.items) {
+          if (data.items.length === 0 && configuration.useDummyId) {
+            data.items.push({
+              creator: { name: 'Jane Doe', image: '' },
+              comment: 'This is a mock comment to visualize the layout.',
+              dateCreated: new Date().toISOString(),
+            });
+            data.items.push({
+              creator: { name: 'John Smith', image: '' },
+              comment: 'Another mock comment for the E2E snapshot.',
+              dateCreated: new Date(Date.now() - 86400000).toISOString(),
+            });
+          }
           data.items.forEach(renderComment);
         }
       } catch (error) {

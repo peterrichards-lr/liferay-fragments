@@ -111,6 +111,7 @@ const initPurchasedProducts = () => {
                       index ===
                       self.findIndex((o) => o.productId === value.productId);
                     const orderItems = responses
+                      .filter((response) => response.items)
                       .map((response) => response.items)
                       .flat(1);
                     console.log(

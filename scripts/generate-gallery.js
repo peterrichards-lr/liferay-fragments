@@ -181,35 +181,29 @@ function generateGallery() {
       }
 
       if (Object.keys(liveImages).length > 0) {
-        let tableHeader = '|';
-        let tableDivider = '|';
-        let tableRow = '|';
-
         if (fallbackPath) {
-          tableHeader += ' Original Image |';
-          tableDivider += ' :---: |';
-          tableRow += ` <img src="${fallbackPath}" width="200" alt="Original Image"> |`;
+          markdown += `#### Original Design\n<img src="${fallbackPath}" width="800" alt="Original Image">\n\n`;
         }
         if (liveImages.desktop) {
-          tableHeader += ' Desktop (1920px) |';
-          tableDivider += ' :---: |';
           const status = liveImages.desktop_status || '';
-          tableRow += ` <img src="${liveImages.desktop}" width="350" alt="Desktop">${status} |`;
-        }
-        if (liveImages.tablet) {
-          tableHeader += ' Tablet (768px) |';
-          tableDivider += ' :---: |';
-          const status = liveImages.tablet_status || '';
-          tableRow += ` <img src="${liveImages.tablet}" width="200" alt="Tablet">${status} |`;
-        }
-        if (liveImages.mobile) {
-          tableHeader += ' Mobile (375px) |';
-          tableDivider += ' :---: |';
-          const status = liveImages.mobile_status || '';
-          tableRow += ` <img src="${liveImages.mobile}" width="120" alt="Mobile">${status} |`;
+          markdown += `#### Desktop (1920px) ${status}\n<img src="${liveImages.desktop}" width="100%" alt="Desktop">\n\n`;
         }
 
-        markdown += `${tableHeader}\n${tableDivider}\n${tableRow}\n\n`;
+        if (liveImages.tablet || liveImages.mobile) {
+          markdown += `| Tablet (768px) | Mobile (375px) |\n| :---: | :---: |\n|`;
+          if (liveImages.tablet) {
+            const status = liveImages.tablet_status || '';
+            markdown += ` <img src="${liveImages.tablet}" width="350" alt="Tablet">${status} |`;
+          } else {
+            markdown += ` N/A |`;
+          }
+          if (liveImages.mobile) {
+            const status = liveImages.mobile_status || '';
+            markdown += ` <img src="${liveImages.mobile}" width="175" alt="Mobile">${status} |\n\n`;
+          } else {
+            markdown += ` N/A |\n\n`;
+          }
+        }
       } else {
         if (fallbackPath) {
           markdown += `![${fragMetadata.name}](${fallbackPath})\n\n`;

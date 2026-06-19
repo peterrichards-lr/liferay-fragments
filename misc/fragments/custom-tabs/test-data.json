@@ -6,6 +6,7 @@
       {
         "type": "Fragment",
         "key": "rich-text",
+        "dropZoneId": "1",
         "fragmentFields": [
           {
             "id": "text",

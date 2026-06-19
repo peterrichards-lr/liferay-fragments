@@ -4,7 +4,9 @@
       "objectERC": "TICKET_COMMENT",
       "objectAPIPath": "/o/c/comments/",
       "relationshipFieldName": "r_ticket_c_ticketId",
-      "taskItemDelegateName": "C_TicketComment"
+      "taskItemDelegateName": "C_TicketComment",
+      "useDummyId": true,
+      "dummyId": "123"
     }
   }
 }

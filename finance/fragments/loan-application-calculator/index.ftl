@@ -4,7 +4,7 @@
       Please drop two 'Range' fragments into the drop-zone and set their Reference IDs to <code>loanAmount</code> and <code>loanTerm</code>.
     </div>
   [/#if]
-  <lfr-drop-zone></lfr-drop-zone>
+  <lfr-drop-zone data-lfr-drop-zone-id="1"></lfr-drop-zone>
   <div class="summary mt-4 p-4 bg-light rounded">
     <h3 class="component-text h3 mb-2 text-break">
       ${configuration.title!"Summary"}

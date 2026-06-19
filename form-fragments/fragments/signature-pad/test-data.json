@@ -1,6 +1,9 @@
 {
   "pageLayout": {
-    "type": "Form",
+    "type": "Column",
+    "definition": {
+      "width": "12"
+    },
     "children": [
       {
         "type": "Fragment",
