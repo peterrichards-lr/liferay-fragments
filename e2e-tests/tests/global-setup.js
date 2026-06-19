@@ -2072,8 +2072,23 @@ async function globalSetup(config) {
         settings: {
           colorSchemeName: '01',
           themeName: 'Classic',
+          themeSettings: {
+            'lfr-theme:regular:show-header': 'false',
+            'lfr-theme:regular:show-footer': 'false',
+            'lfr-theme:regular:show-header-search': 'false',
+            'lfr-theme:regular:wrap-widget-page-content': 'false',
+            ...(testData &&
+            testData.pageConfig &&
+            testData.pageConfig.settings &&
+            testData.pageConfig.settings.themeSettings
+              ? testData.pageConfig.settings.themeSettings
+              : {}),
+          },
           ...(testData && testData.pageConfig && testData.pageConfig.settings
-            ? testData.pageConfig.settings
+            ? (() => {
+                const { themeSettings, ...rest } = testData.pageConfig.settings;
+                return rest;
+              })()
             : {}),
         },
       },

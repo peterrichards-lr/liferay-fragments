@@ -3,6 +3,7 @@ const VERSION = '1.0.11';
 
 const state = {
   definition: null,
+  apiPath: null,
   fields: [],
   items: [],
   page: 1,
@@ -309,10 +310,17 @@ const initMetaTable = async (isEditMode) => {
     `#info-${fragmentEntryLinkNamespace}`
   );
 
-  // Resolve effective ERC
-  const mappableERCEl = fragmentElement.querySelector(
+  // Resolve effective ERC (ignoring mappings inside nested child fragments)
+  const mappableERCEls = fragmentElement.querySelectorAll(
     "[data-lfr-editable-id='object-erc']"
   );
+  let mappableERCEl = null;
+  for (const el of mappableERCEls) {
+    if (!el.closest('.lfr-drop-zone') && !el.closest('.meta-modal-overlay')) {
+      mappableERCEl = el;
+      break;
+    }
+  }
   let objectERC = configERC;
   if (mappableERCEl) {
     const mappedVal = mappableERCEl.innerText.trim();
@@ -463,8 +471,13 @@ const initMetaTable = async (isEditMode) => {
     );
   } else {
     try {
-      const defUrl = `${ADMIN_API_BASE}/object-definitions/by-external-reference-code/${objectERC}`;
-      state.definition = await fetchData(defUrl);
+      const result =
+        await Liferay.Fragment.Commons.resolveObjectPathByERC(objectERC);
+      if (!result || !result.definition) {
+        throw new Error(`Failed to fetch definition (ERC: ${objectERC}).`);
+      }
+      state.definition = result.definition;
+      state.apiPath = result.apiPath;
 
       const objectLabel = getLocalizedValue(
         state.definition.pluralLabel ||
@@ -522,6 +535,7 @@ const initMetaTable = async (isEditMode) => {
         thead.innerHTML = headerHtml;
       }
 
+      hasLoaded = true;
       await loadPage(1, isEditMode);
     } catch (err) {
       if (isEditMode && errorEl) {
@@ -540,8 +554,9 @@ Liferay.Fragment.Commons.EventBus.subscribe(
   (data) => {
     if (layoutMode === 'view') {
       logger.debug('Received refresh signal', data);
-      hasLoaded = true;
-      loadPage(1, false);
+      if (hasLoaded) {
+        loadPage(1, false);
+      }
     }
   },
   { replay: true }

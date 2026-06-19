@@ -60,7 +60,11 @@ test.describe('Responsive Fragment Rendering', () => {
           .sidenav-slider,
           .sidenav-menu,
           #sidenav-slider-productMenu,
-          .c-admin-user-personal-bar { 
+          .c-admin-user-personal-bar,
+          #footer,
+          footer,
+          .footer,
+          #wrapper footer { 
             display: none !important; 
             visibility: hidden !important;
             opacity: 0 !important;
@@ -145,6 +149,22 @@ test.describe('Responsive Fragment Rendering', () => {
               } catch (err) {
                 throw new Error(
                   `Fragment '${pageInfo.fragmentName}' is stuck in a loading state. Spinner/loader remains visible after 10s.`
+                );
+              }
+            }
+          }
+
+          // Check for any visible loading text elements (e.g. "Loading object...", "Loading collection...")
+          const loadingTexts = fragmentElement.locator('text=/Loading/i');
+          const loadingTextCount = await loadingTexts.count();
+          for (let i = 0; i < loadingTextCount; i++) {
+            const loader = loadingTexts.nth(i);
+            if (await loader.isVisible()) {
+              try {
+                await expect(loader).toBeHidden({ timeout: 15000 });
+              } catch (err) {
+                throw new Error(
+                  `Fragment '${pageInfo.fragmentName}' is stuck in a loading state. Loading text '${await loader.textContent()}' remains visible after 15s.`
                 );
               }
             }
