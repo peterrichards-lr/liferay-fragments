@@ -233,7 +233,10 @@ function buildPageElementTree(
   else if (type.toLowerCase() === 'widget') type = 'Widget';
 
   if (type === 'Fragment') {
-    const key = node.key || defaultFragmentKey;
+    let key = node.key || defaultFragmentKey;
+    if (key === 'rich-text') {
+      key = 'BASIC_COMPONENT-html'; // pragma: allowlist secret
+    }
     const config =
       node.fragmentConfig ||
       (key === defaultFragmentKey ? defaultFragmentConfig : {});
@@ -270,7 +273,15 @@ function buildPageElementTree(
         return obj;
       };
       node.fragmentFields.forEach((field) => {
-        resolvedFields.push(resolveValues(field));
+        const resolvedField = resolveValues(field);
+        if (key === 'BASIC_COMPONENT-html' && resolvedField.id === 'text') {
+          resolvedField.id = 'element-html';
+          if (resolvedField.value && resolvedField.value.text) {
+            resolvedField.value.html = resolvedField.value.text;
+            delete resolvedField.value.text;
+          }
+        }
+        resolvedFields.push(resolvedField);
       });
     }
 
@@ -361,10 +372,14 @@ function buildPageElementTree(
         }
       }
 
+      const uniqueDropZoneId = Math.random().toString(36).substring(7);
       element.pageElements = [
         {
           type: 'FragmentDropZone',
-          id: dropZoneId,
+          id: uniqueDropZoneId,
+          definition: {
+            fragmentDropZoneId: dropZoneId,
+          },
           pageElements: node.children.map((child) =>
             buildPageElementTree(
               child,
@@ -548,6 +563,20 @@ function buildPageElementTree(
 
     if (type === 'Column' && element.definition.size === undefined) {
       element.definition.size = 12;
+    }
+
+    if (type === 'Row') {
+      if (element.definition.numberOfColumns === undefined) {
+        element.definition.numberOfColumns = node.children
+          ? node.children.length
+          : 1;
+      }
+      if (element.definition.gutters === undefined) {
+        element.definition.gutters = true;
+      }
+      if (element.definition.columnsSpacing === undefined) {
+        element.definition.columnsSpacing = true;
+      }
     }
 
     if (node.children && node.children.length > 0) {
@@ -1390,6 +1419,92 @@ async function globalSetup(config) {
     );
   }
 
+  // ----- PHASE 4.8: SEED COMMERCE PRODUCTS -----
+  try {
+    console.log('Seeding Liferay Commerce products...');
+    let catalogId = 33837; // Default fallback catalog ID
+    const catalogResp = await apiContext.get(
+      '/o/headless-commerce-admin-catalog/v1.0/catalogs'
+    );
+    if (catalogResp.ok()) {
+      const catalogsJson = await catalogResp.json();
+      if (catalogsJson.items && catalogsJson.items.length > 0) {
+        catalogId = catalogsJson.items[0].id;
+      }
+    }
+    console.log(`  -> Using Catalog ID: ${catalogId}`);
+
+    const productsToSeed = [
+      { key: 'COMMERCE_PRODUCT_1', name: 'Timing Belt', sku: 'MIN93023' }, // pragma: allowlist secret
+      { key: 'COMMERCE_PRODUCT_2', name: 'Master Cylinder', sku: 'MIN93024' }, // pragma: allowlist secret
+      {
+        key: 'COMMERCE_PRODUCT_3', // pragma: allowlist secret
+        name: 'Alternator Assembly',
+        sku: 'MIN93025',
+      },
+      {
+        key: 'COMMERCE_PRODUCT_4', // pragma: allowlist secret
+        name: 'Power Steering Pump',
+        sku: 'MIN93026',
+      },
+    ];
+
+    const prodListResp = await apiContext.get(
+      '/o/headless-commerce-admin-catalog/v1.0/products'
+    );
+    const existingProducts = prodListResp.ok()
+      ? (await prodListResp.json()).items || []
+      : [];
+
+    for (const prodData of productsToSeed) {
+      let productId;
+      const matched = existingProducts.find(
+        (p) => p.name && p.name.en_US === prodData.name
+      );
+
+      if (matched) {
+        productId = matched.productId;
+        console.log(
+          `  -> Product "${prodData.name}" already exists. ID: ${productId}`
+        );
+      } else {
+        const createResp = await apiContext.post(
+          '/o/headless-commerce-admin-catalog/v1.0/products',
+          {
+            data: {
+              catalogId,
+              name: { en_US: prodData.name },
+              productType: 'simple',
+              active: true,
+            },
+          }
+        );
+
+        if (createResp.ok()) {
+          const created = await createResp.json();
+          productId = created.productId;
+          console.log(
+            `  -> Successfully created product "${prodData.name}". ID: ${productId}`
+          );
+        } else {
+          console.warn(
+            `  -> [WARN] Failed to create product "${prodData.name}":`,
+            await createResp.text()
+          );
+          continue;
+        }
+      }
+
+      // Add product ID to assetMap so test-data.json can resolve it
+      assetMap[prodData.key] = productId;
+    }
+  } catch (commErr) {
+    console.warn(
+      '  -> [WARN] Error seeding commerce products:',
+      commErr.message
+    );
+  }
+
   const testPagesMap = [];
 
   for (const file of fragmentFiles) {
@@ -1918,6 +2033,85 @@ async function globalSetup(config) {
           fragmentKeyToDir,
           objectDefinitions
         );
+
+        // Ensure rootPageElement conforms to Liferay's strict layout schema: Root -> Section -> Row -> Column
+        if (rootPageElement && rootPageElement.type !== 'Root') {
+          console.log(
+            `     [INFO] Wrapping custom layout of type ${rootPageElement.type} to conform to Root -> Section -> Row -> Column schema.`
+          );
+          let current = rootPageElement;
+
+          if (current.type === 'Section') {
+            current = {
+              type: 'Root',
+              pageElements: [current],
+            };
+          } else if (current.type === 'Row') {
+            if (!current.definition) current.definition = {};
+            current.definition.gutters = true;
+            current.definition.columnsSpacing = true;
+            if (current.definition.numberOfColumns === undefined) {
+              current.definition.numberOfColumns = current.pageElements
+                ? current.pageElements.length
+                : 1;
+            }
+
+            current = {
+              type: 'Section',
+              definition: { indexed: true, layout: {} },
+              pageElements: [current],
+            };
+            current = {
+              type: 'Root',
+              pageElements: [current],
+            };
+          } else if (current.type === 'Column') {
+            current = {
+              type: 'Row',
+              definition: {
+                gutters: true,
+                columnsSpacing: true,
+                numberOfColumns: 1,
+              },
+              pageElements: [current],
+            };
+            current = {
+              type: 'Section',
+              definition: { indexed: true, layout: {} },
+              pageElements: [current],
+            };
+            current = {
+              type: 'Root',
+              pageElements: [current],
+            };
+          } else {
+            // Fragment, Widget, FormContainer, etc.
+            current = {
+              type: 'Column',
+              definition: { size: 12 },
+              pageElements: [current],
+            };
+            current = {
+              type: 'Row',
+              definition: {
+                gutters: true,
+                columnsSpacing: true,
+                numberOfColumns: 1,
+              },
+              pageElements: [current],
+            };
+            current = {
+              type: 'Section',
+              definition: { indexed: true, layout: {} },
+              pageElements: [current],
+            };
+            current = {
+              type: 'Root',
+              pageElements: [current],
+            };
+          }
+          rootPageElement = current;
+        }
       } catch (e) {
         console.warn(
           `     [WARN] Failed to build custom pageLayout:`,

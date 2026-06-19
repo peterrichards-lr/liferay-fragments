@@ -1383,5 +1383,10 @@
     "type": "article",
     "id": 36655,
     "erc": "MAP-MARKER-ARTICLE-02"
+  },
+  {
+    "type": "document",
+    "id": 41239,
+    "erc": "PARALLAX-HERO-BG"
   }
 ]

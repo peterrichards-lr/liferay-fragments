@@ -57,6 +57,7 @@ environment before release.
   invalid data is provided. Verify this in the Playwright logs/snapshots.
 - **Rendering**: Confirm the fragment appears within its Form Container and is
   not replaced by Liferay's fallback text.
+- **Bootstrap Verification (`test-data.json`)**: Ensure the form fragment is defined in a `test-data.json` layout file under a Form Container layout element. This guarantees proper semantic provisioning and E2E page rendering. Refer to the [Fragment E2E Bootstrap Skill](../../.agents/skills/fragment-e2e-bootstrap/SKILL.md) for details.
 - **Gallery Inclusion**: Once verified, run `node scripts/generate-gallery.js`
   to add the mobile render to the repository's documentation.
 

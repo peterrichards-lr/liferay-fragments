@@ -171,7 +171,7 @@
         },
         {
           "dataType": "string",
-          "defaultValue": "10px",
+          "defaultValue": "8px",
           "label": "lfr.commerce.badge-margin",
           "description": "lfr.commerce.badge-margin-desc",
           "name": "badgeMargin",
@@ -220,7 +220,7 @@
           "type": "colorPicker"
         },
         {
-          "defaultValue": "12px",
+          "defaultValue": "10px",
           "label": "lfr.commerce.badge-font-size",
           "description": "lfr.commerce.badge-font-size-desc",
           "name": "badgeFontSize",

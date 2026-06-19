@@ -1,4 +1,4 @@
-const initBadgeOverlay = () => {
+const initBadgeOverlay = (fragmentElement, configuration) => {
   const currentLayoutMode =
     typeof layoutMode !== 'undefined' ? layoutMode : 'view';
   if (currentLayoutMode !== 'view') return;
@@ -136,28 +136,48 @@ const initBadgeOverlay = () => {
   const generateBadgeImage = (text, config) => {
     const canvas = document.createElement('canvas');
     const ctx = canvas.getContext('2d');
-    const width = 200; // Fixed relative canvas size for drawing
-    const height = 80;
-
-    canvas.width = width * 2;
-    canvas.height = height * 2;
 
     const resolvedBgColor = evaluateCssVar(badgeBgColor);
     const resolvedTextColor = evaluateCssVar(badgeTextColor);
     const resolvedFontSize = convertToPixels(badgeFontSize) || 12;
 
+    // First measure the text size using the font details
+    ctx.font = `bold ${resolvedFontSize * 2}px Arial`;
+    const textWidth = ctx.measureText(text).width;
+
+    let canvasWidth, canvasHeight;
+    if (badgeShape === 'circle') {
+      const size = Math.max(
+        textWidth + resolvedFontSize * 3,
+        resolvedFontSize * 4
+      );
+      canvasWidth = size;
+      canvasHeight = size;
+    } else {
+      canvasWidth = textWidth + resolvedFontSize * 3;
+      canvasHeight = resolvedFontSize * 3.5;
+    }
+
+    canvas.width = canvasWidth;
+    canvas.height = canvasHeight;
+
     ctx.fillStyle = resolvedBgColor;
     let borderRadius = 0;
-    if (badgeShape === 'pill') borderRadius = height;
-    else if (badgeShape === 'rectangle') borderRadius = 8;
+    if (badgeShape === 'pill') {
+      borderRadius = canvasHeight / 2;
+    } else if (badgeShape === 'rectangle') {
+      borderRadius = resolvedFontSize * 0.6;
+    }
 
+    // Redraw fill style and shape after canvas sizing (which resets context)
+    ctx.fillStyle = resolvedBgColor;
     drawBadgeShape(
       ctx,
       0,
       0,
       canvas.width,
       canvas.height,
-      borderRadius * 2,
+      borderRadius,
       badgeShape
     );
     ctx.fill();
@@ -253,7 +273,7 @@ const initBadgeOverlay = () => {
 
     const badgeImg = document.createElement('img');
     badgeImg.src = generateBadgeImage(text);
-    badgeImg.style.maxWidth = '120px';
+    badgeImg.style.maxWidth = '100%';
     badgeImg.style.height = 'auto';
 
     badge.appendChild(badgeImg);
@@ -344,4 +364,4 @@ const initBadgeOverlay = () => {
   fetchAndApply();
 };
 
-initBadgeOverlay();
+initBadgeOverlay(fragmentElement, configuration);

@@ -29,6 +29,9 @@
     ]
   },
   "pageConfig": {
+    "fragmentConfig": {
+      "backgroundVideoUrl": "https://www.youtube.com/watch?v=C0DPdy98e4c"
+    },
     "fragmentFields": [
       {
         "id": "background-image",

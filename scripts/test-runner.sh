@@ -12,6 +12,9 @@ EXIT_HANDLED=false
 # Ensure scripts directory and System32 are in PATH
 export PATH="$(pwd)/scripts:$(pwd)/node_modules/.bin:$PATH"
 export PATH="$PATH:/c/Windows/System32"
+export PATH="$PATH:/c/Users/prichards/AppData/Local/Microsoft/WinGet/Packages/jqlang.jq_Microsoft.Winget.Source_8wekyb3d8bbwe"
+export PATH="$PATH:/c/Users/prichards/AppData/Local/Microsoft/WinGet/Links"
+
 
 # Estimate variables (ballpark seconds)
 EST_BUILD_EXISTING_SKIP_DEPLOY=5

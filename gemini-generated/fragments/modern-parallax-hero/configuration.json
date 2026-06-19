@@ -32,6 +32,13 @@
             "itemType": "com.liferay.portal.kernel.repository.model.FileEntry",
             "mimeTypes": ["video/mp4", "video/webm", "video/ogg"]
           }
+        },
+        {
+          "defaultValue": "https://www.youtube.com/watch?v=C0DPdy98e4c",
+          "label": "lfr.gemini-generated.background-video-url",
+          "description": "lfr.gemini-generated.background-video-url-description",
+          "name": "backgroundVideoUrl",
+          "type": "text"
         }
       ],
       "label": "lfr.gemini-generated.style"

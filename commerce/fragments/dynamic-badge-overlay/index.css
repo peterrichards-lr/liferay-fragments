@@ -17,10 +17,177 @@ body.has-edit-mode-menu .page-editor .fragment-editor-padding.show,
   font-weight: var(--font-weight-semi-bold, 600);
 }
 
+.dynamic-badge-overlay {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.dynamic-badge-overlay lfr-drop-zone {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 16px;
+}
+
+/* Scoped Portrait Card Design */
+.dynamic-badge-overlay .card {
+  width: 100%;
+  max-width: 300px;
+  margin: 0 auto;
+  border: 1px solid var(--border-color, #e2e8f0);
+  border-radius: var(--border-radius-md, 8px);
+  background-color: var(--card-bg, #ffffff);
+  box-shadow:
+    0 4px 6px -1px rgba(0, 0, 0, 0.05),
+    0 2px 4px -1px rgba(0, 0, 0, 0.03);
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  text-align: left;
+  font-family: var(
+    --font-family-sans-serif,
+    system-ui,
+    -apple-system,
+    sans-serif
+  );
+}
+
+.dynamic-badge-overlay .card:hover {
+  transform: translateY(-4px);
+  box-shadow:
+    0 10px 15px -3px rgba(0, 0, 0, 0.1),
+    0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+.dynamic-badge-overlay .card-img-container {
+  height: 180px;
+  background-color: var(--light, #f8fafc);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.dynamic-badge-overlay .card-img-container img {
+  max-height: 80%;
+  max-width: 80%;
+  object-fit: contain;
+  transition: transform 0.3s ease;
+}
+
+.dynamic-badge-overlay .card:hover .card-img-container img {
+  transform: scale(1.05);
+}
+
+.dynamic-badge-overlay .card-body {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.dynamic-badge-overlay .card-badge-status {
+  align-self: flex-start;
+  font-size: 10px;
+  font-weight: 700;
+  padding: 2px 6px;
+  border-radius: 4px;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+
+.dynamic-badge-overlay .card-sku {
+  font-size: 11px;
+  color: var(--gray-500, #64748b);
+  margin-bottom: 4px;
+}
+
+.dynamic-badge-overlay .card-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--body-color, #1e293b);
+  margin: 0 0 8px 0;
+  line-height: 1.3;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  height: 36px;
+}
+
+.dynamic-badge-overlay .card-price {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--body-color, #1e293b);
+  margin-bottom: 12px;
+}
+
+.dynamic-badge-overlay .card-price-promo {
+  color: var(--danger, #ef4444);
+}
+
+.dynamic-badge-overlay .card-price-regular-strike {
+  text-decoration: line-through;
+  color: var(--gray-400, #94a3b8);
+  font-size: 13px;
+  margin-right: 4px;
+  font-weight: 400;
+}
+
+.dynamic-badge-overlay .card-actions {
+  margin-top: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.dynamic-badge-overlay .card-qty-input {
+  width: 100%;
+  padding: 6px 10px;
+  border: 1px solid var(--border-color, #cbd5e1);
+  border-radius: 6px;
+  font-size: 12px;
+  outline: none;
+  box-sizing: border-box;
+}
+
+.dynamic-badge-overlay .card-btn {
+  width: 100%;
+  background-color: var(--primary, #0f172a);
+  color: var(--white, #ffffff);
+  border: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  box-sizing: border-box;
+}
+
+.dynamic-badge-overlay .card-btn:hover {
+  background-color: var(--primary-hover, #334155);
+}
+
+.dynamic-badge-overlay .card-btn:disabled {
+  background-color: var(--gray-300, #e2e8f0);
+  color: var(--gray-500, #94a3b8);
+  cursor: not-allowed;
+}
+
 .dynamic-badge-overlay .product-badge {
   position: absolute;
   opacity: 0;
   animation: fadeIn 1s forwards;
+  filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.18));
 }
 
 .dynamic-badge-overlay .product-badge.top-right {

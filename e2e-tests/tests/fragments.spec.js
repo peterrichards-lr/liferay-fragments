@@ -129,7 +129,15 @@ test.describe('Responsive Fragment Rendering', () => {
         );
 
         // Target the fragment element directly, scroll it into view, and screenshot it
-        const fragmentElement = page.locator(fragmentSelector).first();
+        let fragmentElement;
+        const fragmentCount = await page.locator(fragmentSelector).count();
+        if (fragmentCount > 1) {
+          fragmentElement = page
+            .locator('.lfr-layout-structure-item-row, .row')
+            .first();
+        } else {
+          fragmentElement = page.locator(fragmentSelector).first();
+        }
 
         try {
           await expect(fragmentElement).toBeVisible({ timeout: 5000 });

@@ -1,3 +1,21 @@
+[#assign youtubeId = ""]
+[#if configuration.backgroundVideoUrl?? && configuration.backgroundVideoUrl?contains("v=")]
+  [#assign youtubeId = configuration.backgroundVideoUrl?keep_after("v=")]
+  [#if youtubeId?contains("&")]
+    [#assign youtubeId = youtubeId?keep_before("&")]
+  [/#if]
+[#elseif configuration.backgroundVideoUrl?? && configuration.backgroundVideoUrl?contains("youtu.be/")]
+  [#assign youtubeId = configuration.backgroundVideoUrl?keep_after("youtu.be/")]
+  [#if youtubeId?contains("?")]
+    [#assign youtubeId = youtubeId?keep_before("?")]
+  [/#if]
+[#elseif configuration.backgroundVideoUrl?? && configuration.backgroundVideoUrl?contains("embed/")]
+  [#assign youtubeId = configuration.backgroundVideoUrl?keep_after("embed/")]
+  [#if youtubeId?contains("?")]
+    [#assign youtubeId = youtubeId?keep_before("?")]
+  [/#if]
+[/#if]
+
 <div
   class="parallax-hero hero-container-${fragmentEntryLinkNamespace}"
   style="
@@ -66,6 +84,21 @@
       Discover the future of digital portals with our next-generation
       components.
     </p>
+
+    [#if youtubeId?has_content]
+      <div class="hero-video-wrapper my-4 mx-auto" style="max-width: 560px; aspect-ratio: 16/9; border-radius: 12px; overflow: hidden; box-shadow: 0 10px 25px rgba(0,0,0,0.3);">
+        <iframe
+          width="100%"
+          height="100%"
+          src="https://www.youtube.com/embed/${youtubeId}"
+          frameborder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen
+          style="border: none;"
+        ></iframe>
+      </div>
+    [/#if]
+
     <div class="hero-actions">
       <lfr-drop-zone></lfr-drop-zone>
     </div>

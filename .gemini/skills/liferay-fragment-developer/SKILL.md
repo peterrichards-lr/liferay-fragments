@@ -41,6 +41,7 @@ standards for building robust, modern Liferay Fragments.
     `/scopes/{siteId}` if scope is `site`).
 - **Standardized API Interaction**: Always use `Liferay.Util.fetch` for standard
   Liferay APIs to auto-handle CSRF and authentication.
+- **E2E Bootstrap Configuration (`test-data.json`)**: Every fragment must define a `test-data.json` layout file mapping its test layout elements. Use placeholders like `COMMERCE_PRODUCT_1` to `COMMERCE_PRODUCT_4` for dynamic products so they are dynamically seeded by the `global-setup.js` framework. Utilize responsive `columnViewports` to verify side-by-side or stacked layouts across viewports. Refer to the [Fragment E2E Bootstrap Skill](../../.agents/skills/fragment-e2e-bootstrap/SKILL.md) for detailed guidelines.
 
 ### 2. Auditing Fragments
 
@@ -88,6 +89,9 @@ before being considered "Done".
   - Run the test suite: `./scripts/test-runner.sh -k`.
   - Ensure the fragment renders its full UI across Desktop, Tablet, and Mobile.
   - Verify that no "Fragment is unavailable" errors appear in the screenshots.
+- **Visual Seeding & Capture Bootstrap**:
+  - Leverage the `test-data.json` page bootstrapping configuration.
+  - Verify row-level screenshots for fragments rendering multiple items side-by-side (Playwright's `fragments.spec.js` automatically captures the parent `.row` or `#wrapper` container if multiple instances of the fragment are present).
 - **Headless API Payload Strictness**:
   - When programmatically creating test pages, the `pageDefinition` JSON MUST
     use **Capitalized** element types (`Root`, `Section`, `Row`, `Column`,
@@ -126,3 +130,12 @@ before being considered "Done".
   integration rules.
 - [AI Integration](./references/ai-chat-interface.md): Standard JSON interface
   for AI components.
+
+## Guest Access, Permissions & Object Batching
+
+To ensure fragments render successfully for anonymous/Guest users in production and E2E test runs:
+
+- **Service Access Policy (SAP)**: Guest queries to headless collections and elements endpoints require that their corresponding implementation classes (e.g., `com.liferay.headless.delivery.internal.resource.v1_0.ContentSetElementResourceImpl#*`) are configured inside Liferay's `SYSTEM_DEFAULT` Service Access Policy.
+- **Guest Permissions**: Programmatically created test layouts, content structures, and articles must be granted Guest view permissions (`viewableBy: 'Anyone'` or `addGuestPermissions: true` in the setup service context) to prevent 403 Forbidden errors.
+- **Custom Objects (Batch Client Extensions)**: Custom object schemas must be seeded as batch client extensions rather than manual UI creation to ensure database-level stability and avoid E2E timing delays.
+- **Resolution Registry Fallback**: Ensure that client-side scripts query a fallback registry in `Liferay.Fragment.Commons.resolveObjectPath` when the definition endpoint is inaccessible, preventing JS errors.
