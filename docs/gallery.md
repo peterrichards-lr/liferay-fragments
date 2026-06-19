@@ -11,7 +11,13 @@ A lifestyle-focused design system with a scoped container architecture, high-fid
 
 ### Aura - Final CTA Banner
 
-_No image available_
+#### Desktop (1920px) <br>🟢 **Passed**
+
+<img src="./images/live/aura-design-system-aura-final-cta-banner-desktop.png" width="100%" alt="Desktop">
+
+|                                                     Tablet (768px)                                                      |                                                     Mobile (375px)                                                      |
+| :---------------------------------------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------------------------------------: |
+| <img src="./images/live/aura-design-system-aura-final-cta-banner-tablet.png" width="350" alt="Tablet"><br>🟢 **Passed** | <img src="./images/live/aura-design-system-aura-final-cta-banner-mobile.png" width="175" alt="Mobile"><br>🟢 **Passed** |
 
 [Detailed Documentation](./fragments/aura-final-cta.md)
 
@@ -19,7 +25,13 @@ _No image available_
 
 ### Aura - Lookbook Row
 
-_No image available_
+#### Desktop (1920px) <br>🟢 **Passed**
+
+<img src="./images/live/aura-design-system-aura-lookbook-row-desktop.png" width="100%" alt="Desktop">
+
+|                                                   Tablet (768px)                                                    |                                                   Mobile (375px)                                                    |
+| :-----------------------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------------------: |
+| <img src="./images/live/aura-design-system-aura-lookbook-row-tablet.png" width="350" alt="Tablet"><br>🟢 **Passed** | <img src="./images/live/aura-design-system-aura-lookbook-row-mobile.png" width="175" alt="Mobile"><br>🟢 **Passed** |
 
 [Detailed Documentation](./fragments/aura-lookbook.md)
 
@@ -27,7 +39,13 @@ _No image available_
 
 ### Aura - Product Gallery
 
-_No image available_
+#### Desktop (1920px) <br>🟢 **Passed**
+
+<img src="./images/live/aura-design-system-aura-product-gallery-desktop.png" width="100%" alt="Desktop">
+
+|                                                     Tablet (768px)                                                     |                                                     Mobile (375px)                                                     |
+| :--------------------------------------------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------------------------------------------: |
+| <img src="./images/live/aura-design-system-aura-product-gallery-tablet.png" width="350" alt="Tablet"><br>🟢 **Passed** | <img src="./images/live/aura-design-system-aura-product-gallery-mobile.png" width="175" alt="Mobile"><br>🟢 **Passed** |
 
 [Detailed Documentation](./fragments/aura-product-gallery.md)
 
@@ -35,7 +53,13 @@ _No image available_
 
 ### Aura - USP Grid
 
-_No image available_
+#### Desktop (1920px) <br>🟢 **Passed**
+
+<img src="./images/live/aura-design-system-aura-usp-grid-desktop.png" width="100%" alt="Desktop">
+
+|                                                 Tablet (768px)                                                  |                                                 Mobile (375px)                                                  |
+| :-------------------------------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------------------------: |
+| <img src="./images/live/aura-design-system-aura-usp-grid-tablet.png" width="350" alt="Tablet"><br>🟢 **Passed** | <img src="./images/live/aura-design-system-aura-usp-grid-mobile.png" width="175" alt="Mobile"><br>🟢 **Passed** |
 
 [Detailed Documentation](./fragments/aura-usp-grid.md)
 
@@ -45,7 +69,17 @@ _No image available_
 
 ### Dynamic Badge Overlay
 
-![Dynamic Badge Overlay](./images/dynamic-badge-overlay.png)
+#### Original Design
+
+<img src="./images/dynamic-badge-overlay.png" width="800" alt="Original Image">
+
+#### Desktop (1920px) <br>🟢 **Passed**
+
+<img src="./images/live/commerce-dynamic-badge-overlay-desktop.png" width="100%" alt="Desktop">
+
+|                                                Tablet (768px)                                                 |                                                Mobile (375px)                                                 |
+| :-----------------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------------: |
+| <img src="./images/live/commerce-dynamic-badge-overlay-tablet.png" width="350" alt="Tablet"><br>🟢 **Passed** | <img src="./images/live/commerce-dynamic-badge-overlay-mobile.png" width="175" alt="Mobile"><br>🟢 **Passed** |
 
 [Detailed Documentation](./fragments/dynamic-badge-overlay.md)
 
@@ -55,7 +89,17 @@ _No image available_
 
 ### Content Map
 
-![Content Map](./images/content-map.png)
+#### Original Design
+
+<img src="./images/content-map.png" width="800" alt="Original Image">
+
+#### Desktop (1920px) <br>🟢 **Passed**
+
+<img src="./images/live/content-content-map-desktop.png" width="100%" alt="Desktop">
+
+|                                           Tablet (768px)                                           |                                           Mobile (375px)                                           |
+| :------------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------------: |
+| <img src="./images/live/content-content-map-tablet.png" width="350" alt="Tablet"><br>🟢 **Passed** | <img src="./images/live/content-content-map-mobile.png" width="175" alt="Mobile"><br>🟢 **Passed** |
 
 [Detailed Documentation](./fragments/content-map.md)
 
@@ -63,7 +107,13 @@ _No image available_
 
 ### Service Card
 
-_No image available_
+#### Desktop (1920px) <br>🟢 **Passed**
+
+<img src="./images/live/content-service-card-desktop.png" width="100%" alt="Desktop">
+
+|                                           Tablet (768px)                                            |                                           Mobile (375px)                                            |
+| :-------------------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------------: |
+| <img src="./images/live/content-service-card-tablet.png" width="350" alt="Tablet"><br>🟢 **Passed** | <img src="./images/live/content-service-card-mobile.png" width="175" alt="Mobile"><br>🟢 **Passed** |
 
 [Detailed Documentation](./fragments/service-card.md)
 
@@ -71,7 +121,13 @@ _No image available_
 
 ### Service Icon
 
-_No image available_
+#### Desktop (1920px) <br>🟢 **Passed**
+
+<img src="./images/live/content-service-icon-desktop.png" width="100%" alt="Desktop">
+
+|                                           Tablet (768px)                                            |                                           Mobile (375px)                                            |
+| :-------------------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------------: |
+| <img src="./images/live/content-service-icon-tablet.png" width="350" alt="Tablet"><br>🟢 **Passed** | <img src="./images/live/content-service-icon-mobile.png" width="175" alt="Mobile"><br>🟢 **Passed** |
 
 [Detailed Documentation](./fragments/service-icon.md)
 
@@ -79,7 +135,13 @@ _No image available_
 
 ### Service Link Button
 
-_No image available_
+#### Desktop (1920px) <br>🟢 **Passed**
+
+<img src="./images/live/content-service-link-button-desktop.png" width="100%" alt="Desktop">
+
+|                                               Tablet (768px)                                               |                                               Mobile (375px)                                               |
+| :--------------------------------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------------------------------: |
+| <img src="./images/live/content-service-link-button-tablet.png" width="350" alt="Tablet"><br>🟢 **Passed** | <img src="./images/live/content-service-link-button-mobile.png" width="175" alt="Mobile"><br>🟢 **Passed** |
 
 [Detailed Documentation](./fragments/service-link-button.md)
 
@@ -89,7 +151,13 @@ _No image available_
 
 ### Dashboard Container
 
-_No image available_
+#### Desktop (1920px) <br>🟢 **Passed**
+
+<img src="./images/live/heathcare-portal-dashboard-container-desktop.png" width="100%" alt="Desktop">
+
+|                                                   Tablet (768px)                                                    |                                                   Mobile (375px)                                                    |
+| :-----------------------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------------------: |
+| <img src="./images/live/heathcare-portal-dashboard-container-tablet.png" width="350" alt="Tablet"><br>🟢 **Passed** | <img src="./images/live/heathcare-portal-dashboard-container-mobile.png" width="175" alt="Mobile"><br>🟢 **Passed** |
 
 [Detailed Documentation](./fragments/dashboard-container.md)
 
@@ -97,7 +165,13 @@ _No image available_
 
 ### Dashboard Filter
 
-_No image available_
+#### Desktop (1920px) <br>🟢 **Passed**
+
+<img src="./images/live/heathcare-portal-dashboard-filter-desktop.png" width="100%" alt="Desktop">
+
+|                                                  Tablet (768px)                                                  |                                                  Mobile (375px)                                                  |
+| :--------------------------------------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------------------------------------: |
+| <img src="./images/live/heathcare-portal-dashboard-filter-tablet.png" width="350" alt="Tablet"><br>🟢 **Passed** | <img src="./images/live/heathcare-portal-dashboard-filter-mobile.png" width="175" alt="Mobile"><br>🟢 **Passed** |
 
 [Detailed Documentation](./fragments/dashboard-filter.md)
 
@@ -109,7 +183,17 @@ _No image available_
 
 ### Loan Application Calculator
 
-![Loan Application Calculator](./images/loan-application-calculator.png)
+#### Original Design
+
+<img src="./images/loan-application-calculator.png" width="800" alt="Original Image">
+
+#### Desktop (1920px) <br>🟢 **Passed**
+
+<img src="./images/live/finance-loan-application-calculator-desktop.png" width="100%" alt="Desktop">
+
+|                                                   Tablet (768px)                                                   |                                                   Mobile (375px)                                                   |
+| :----------------------------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------------------------: |
+| <img src="./images/live/finance-loan-application-calculator-tablet.png" width="350" alt="Tablet"><br>🟢 **Passed** | <img src="./images/live/finance-loan-application-calculator-mobile.png" width="175" alt="Mobile"><br>🟢 **Passed** |
 
 [Detailed Documentation](./fragments/loan-application-calculator.md)
 
@@ -117,7 +201,17 @@ _No image available_
 
 ### Loan Calculator
 
-![Loan Calculator](./images/loan-calculator.png)
+#### Original Design
+
+<img src="./images/loan-calculator.png" width="800" alt="Original Image">
+
+#### Desktop (1920px) <br>🟢 **Passed**
+
+<img src="./images/live/finance-loan-calculator-desktop.png" width="100%" alt="Desktop">
+
+|                                             Tablet (768px)                                             |                                             Mobile (375px)                                             |
+| :----------------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------------: |
+| <img src="./images/live/finance-loan-calculator-tablet.png" width="350" alt="Tablet"><br>🟢 **Passed** | <img src="./images/live/finance-loan-calculator-mobile.png" width="175" alt="Mobile"><br>🟢 **Passed** |
 
 [Detailed Documentation](./fragments/loan-calculator.md)
 
@@ -127,7 +221,13 @@ _No image available_
 
 ### Address Autocomplete
 
-_No image available_
+#### Desktop (1920px) <br>🟢 **Passed**
+
+<img src="./images/live/forms-fragments-address-autocomplete-desktop.png" width="100%" alt="Desktop">
+
+|                                                   Tablet (768px)                                                    |                                                   Mobile (375px)                                                    |
+| :-----------------------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------------------: |
+| <img src="./images/live/forms-fragments-address-autocomplete-tablet.png" width="350" alt="Tablet"><br>🟢 **Passed** | <img src="./images/live/forms-fragments-address-autocomplete-mobile.png" width="175" alt="Mobile"><br>🟢 **Passed** |
 
 [Detailed Documentation](./fragments/address-autocomplete.md)
 
@@ -135,7 +235,13 @@ _No image available_
 
 ### Autocomplete (Object)
 
-_No image available_
+#### Desktop (1920px) <br>🟢 **Passed**
+
+<img src="./images/live/forms-fragments-autocomplete-object--desktop.png" width="100%" alt="Desktop">
+
+|                                                   Tablet (768px)                                                    |                                                   Mobile (375px)                                                    |
+| :-----------------------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------------------: |
+| <img src="./images/live/forms-fragments-autocomplete-object--tablet.png" width="350" alt="Tablet"><br>🟢 **Passed** | <img src="./images/live/forms-fragments-autocomplete-object--mobile.png" width="175" alt="Mobile"><br>🟢 **Passed** |
 
 [Detailed Documentation](<./fragments/autocomplete-(object).md>)
 
@@ -143,7 +249,13 @@ _No image available_
 
 ### Autocomplete (Picklist)
 
-_No image available_
+#### Desktop (1920px) <br>🟢 **Passed**
+
+<img src="./images/live/forms-fragments-autocomplete-picklist--desktop.png" width="100%" alt="Desktop">
+
+|                                                    Tablet (768px)                                                     |                                                    Mobile (375px)                                                     |
+| :-------------------------------------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------------------------------: |
+| <img src="./images/live/forms-fragments-autocomplete-picklist--tablet.png" width="350" alt="Tablet"><br>🟢 **Passed** | <img src="./images/live/forms-fragments-autocomplete-picklist--mobile.png" width="175" alt="Mobile"><br>🟢 **Passed** |
 
 [Detailed Documentation](<./fragments/autocomplete-(picklist).md>)
 
@@ -151,7 +263,13 @@ _No image available_
 
 ### Color Swatches
 
-_No image available_
+#### Desktop (1920px) <br>🟢 **Passed**
+
+<img src="./images/live/forms-fragments-color-swatches-desktop.png" width="100%" alt="Desktop">
+
+|                                                Tablet (768px)                                                 |                                                Mobile (375px)                                                 |
+| :-----------------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------------: |
+| <img src="./images/live/forms-fragments-color-swatches-tablet.png" width="350" alt="Tablet"><br>🟢 **Passed** | <img src="./images/live/forms-fragments-color-swatches-mobile.png" width="175" alt="Mobile"><br>🟢 **Passed** |
 
 [Detailed Documentation](./fragments/color-swatches.md)
 
@@ -159,7 +277,13 @@ _No image available_
 
 ### Confirmation Field
 
-_No image available_
+#### Desktop (1920px) <br>🟢 **Passed**
+
+<img src="./images/live/forms-fragments-confirmation-field-desktop.png" width="100%" alt="Desktop">
+
+|                                                  Tablet (768px)                                                   |                                                  Mobile (375px)                                                   |
+| :---------------------------------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------------------------------: |
+| <img src="./images/live/forms-fragments-confirmation-field-tablet.png" width="350" alt="Tablet"><br>🟢 **Passed** | <img src="./images/live/forms-fragments-confirmation-field-mobile.png" width="175" alt="Mobile"><br>🟢 **Passed** |
 
 [Detailed Documentation](./fragments/confirmation-field.md)
 
@@ -167,7 +291,13 @@ _No image available_
 
 ### Currency Masked Input
 
-_No image available_
+#### Desktop (1920px) <br>🟢 **Passed**
+
+<img src="./images/live/forms-fragments-currency-masked-input-desktop.png" width="100%" alt="Desktop">
+
+|                                                    Tablet (768px)                                                    |                                                    Mobile (375px)                                                    |
+| :------------------------------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------------------------------: |
+| <img src="./images/live/forms-fragments-currency-masked-input-tablet.png" width="350" alt="Tablet"><br>🟢 **Passed** | <img src="./images/live/forms-fragments-currency-masked-input-mobile.png" width="175" alt="Mobile"><br>🟢 **Passed** |
 
 [Detailed Documentation](./fragments/currency-input.md)
 
@@ -175,7 +305,13 @@ _No image available_
 
 ### File Drop Zone
 
-_No image available_
+#### Desktop (1920px) <br>🟢 **Passed**
+
+<img src="./images/live/forms-fragments-file-drop-zone-desktop.png" width="100%" alt="Desktop">
+
+|                                                Tablet (768px)                                                 |                                                Mobile (375px)                                                 |
+| :-----------------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------------: |
+| <img src="./images/live/forms-fragments-file-drop-zone-tablet.png" width="350" alt="Tablet"><br>🟢 **Passed** | <img src="./images/live/forms-fragments-file-drop-zone-mobile.png" width="175" alt="Mobile"><br>🟢 **Passed** |
 
 [Detailed Documentation](./fragments/file-drop-zone.md)
 
@@ -183,7 +319,13 @@ _No image available_
 
 ### Image Choice
 
-_No image available_
+#### Desktop (1920px) <br>🟢 **Passed**
+
+<img src="./images/live/forms-fragments-image-choice-desktop.png" width="100%" alt="Desktop">
+
+|                                               Tablet (768px)                                                |                                               Mobile (375px)                                                |
+| :---------------------------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------------------------: |
+| <img src="./images/live/forms-fragments-image-choice-tablet.png" width="350" alt="Tablet"><br>🟢 **Passed** | <img src="./images/live/forms-fragments-image-choice-mobile.png" width="175" alt="Mobile"><br>🟢 **Passed** |
 
 [Detailed Documentation](./fragments/image-choice.md)
 
@@ -191,7 +333,17 @@ _No image available_
 
 ### Listbox Multiselect
 
-![Listbox Multiselect](./images/listbox-multiselect.png)
+#### Original Design
+
+<img src="./images/listbox-multiselect.png" width="800" alt="Original Image">
+
+#### Desktop (1920px) <br>🟢 **Passed**
+
+<img src="./images/live/forms-fragments-listbox-multiselect-desktop.png" width="100%" alt="Desktop">
+
+|                                                   Tablet (768px)                                                   |                                                   Mobile (375px)                                                   |
+| :----------------------------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------------------------: |
+| <img src="./images/live/forms-fragments-listbox-multiselect-tablet.png" width="350" alt="Tablet"><br>🟢 **Passed** | <img src="./images/live/forms-fragments-listbox-multiselect-mobile.png" width="175" alt="Mobile"><br>🟢 **Passed** |
 
 [Detailed Documentation](./fragments/listbox-multiselect.md)
 
@@ -199,7 +351,13 @@ _No image available_
 
 ### OTP - Verification Code
 
-_No image available_
+#### Desktop (1920px)
+
+<img src="./images/live/forms-fragments-otp-verification-code-desktop.png" width="100%" alt="Desktop">
+
+| Tablet (768px) |                                           Mobile (375px)                                            |
+| :------------: | :-------------------------------------------------------------------------------------------------: |
+|      N/A       | <img src="./images/live/forms-fragments-otp-verification-code-mobile.png" width="175" alt="Mobile"> |
 
 [Detailed Documentation](./fragments/otp-input.md)
 
@@ -207,7 +365,13 @@ _No image available_
 
 ### Password Strength
 
-_No image available_
+#### Desktop (1920px) <br>🟢 **Passed**
+
+<img src="./images/live/forms-fragments-password-strength-desktop.png" width="100%" alt="Desktop">
+
+|                                                  Tablet (768px)                                                  |                                                  Mobile (375px)                                                  |
+| :--------------------------------------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------------------------------------: |
+| <img src="./images/live/forms-fragments-password-strength-tablet.png" width="350" alt="Tablet"><br>🟢 **Passed** | <img src="./images/live/forms-fragments-password-strength-mobile.png" width="175" alt="Mobile"><br>🟢 **Passed** |
 
 [Detailed Documentation](./fragments/password-strength.md)
 
@@ -215,7 +379,13 @@ _No image available_
 
 ### Range
 
-_No image available_
+#### Desktop (1920px) <br>🟢 **Passed**
+
+<img src="./images/live/forms-fragments-range-desktop.png" width="100%" alt="Desktop">
+
+|                                            Tablet (768px)                                            |                                            Mobile (375px)                                            |
+| :--------------------------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------------------------: |
+| <img src="./images/live/forms-fragments-range-tablet.png" width="350" alt="Tablet"><br>🟢 **Passed** | <img src="./images/live/forms-fragments-range-mobile.png" width="175" alt="Mobile"><br>🟢 **Passed** |
 
 [Detailed Documentation](./fragments/range.md)
 
@@ -223,7 +393,17 @@ _No image available_
 
 ### Segmented Numeric
 
-![Segmented Numeric](./images/segmented-numeric.png)
+#### Original Design
+
+<img src="./images/segmented-numeric.png" width="800" alt="Original Image">
+
+#### Desktop (1920px) <br>🟢 **Passed**
+
+<img src="./images/live/forms-fragments-segmented-numeric-desktop.png" width="100%" alt="Desktop">
+
+|                                                  Tablet (768px)                                                  |                                                  Mobile (375px)                                                  |
+| :--------------------------------------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------------------------------------: |
+| <img src="./images/live/forms-fragments-segmented-numeric-tablet.png" width="350" alt="Tablet"><br>🟢 **Passed** | <img src="./images/live/forms-fragments-segmented-numeric-mobile.png" width="175" alt="Mobile"><br>🟢 **Passed** |
 
 [Detailed Documentation](./fragments/segmented-numeric.md)
 
@@ -231,7 +411,13 @@ _No image available_
 
 ### Signature Pad
 
-_No image available_
+#### Desktop (1920px) <br>🟢 **Passed**
+
+<img src="./images/live/forms-fragments-signature-pad-desktop.png" width="100%" alt="Desktop">
+
+|                                                Tablet (768px)                                                |                                                Mobile (375px)                                                |
+| :----------------------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------------------: |
+| <img src="./images/live/forms-fragments-signature-pad-tablet.png" width="350" alt="Tablet"><br>🟢 **Passed** | <img src="./images/live/forms-fragments-signature-pad-mobile.png" width="175" alt="Mobile"><br>🟢 **Passed** |
 
 [Detailed Documentation](./fragments/signature-pad.md)
 
@@ -239,7 +425,17 @@ _No image available_
 
 ### Star Rating
 
-![Star Rating](./images/star-rating.png)
+#### Original Design
+
+<img src="./images/star-rating.png" width="800" alt="Original Image">
+
+#### Desktop (1920px) <br>🟢 **Passed**
+
+<img src="./images/live/forms-fragments-star-rating-desktop.png" width="100%" alt="Desktop">
+
+|                                               Tablet (768px)                                               |                                               Mobile (375px)                                               |
+| :--------------------------------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------------------------------: |
+| <img src="./images/live/forms-fragments-star-rating-tablet.png" width="350" alt="Tablet"><br>🟢 **Passed** | <img src="./images/live/forms-fragments-star-rating-mobile.png" width="175" alt="Mobile"><br>🟢 **Passed** |
 
 [Detailed Documentation](./fragments/star-rating.md)
 
@@ -247,7 +443,13 @@ _No image available_
 
 ### Submit Button (Confirmation)
 
-_No image available_
+#### Desktop (1920px) <br>🟢 **Passed**
+
+<img src="./images/live/forms-fragments-submit-button-confirmation--desktop.png" width="100%" alt="Desktop">
+
+|                                                       Tablet (768px)                                                       |                                                       Mobile (375px)                                                       |
+| :------------------------------------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------------------------------------: |
+| <img src="./images/live/forms-fragments-submit-button-confirmation--tablet.png" width="350" alt="Tablet"><br>🟢 **Passed** | <img src="./images/live/forms-fragments-submit-button-confirmation--mobile.png" width="175" alt="Mobile"><br>🟢 **Passed** |
 
 [Detailed Documentation](./fragments/submit-button.md)
 
@@ -255,7 +457,17 @@ _No image available_
 
 ### Toggle Switch
 
-![Toggle Switch](./images/toggle-switch.png)
+#### Original Design
+
+<img src="./images/toggle-switch.png" width="800" alt="Original Image">
+
+#### Desktop (1920px) <br>🟢 **Passed**
+
+<img src="./images/live/forms-fragments-toggle-switch-desktop.png" width="100%" alt="Desktop">
+
+|                                                Tablet (768px)                                                |                                                Mobile (375px)                                                |
+| :----------------------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------------------: |
+| <img src="./images/live/forms-fragments-toggle-switch-tablet.png" width="350" alt="Tablet"><br>🟢 **Passed** | <img src="./images/live/forms-fragments-toggle-switch-mobile.png" width="175" alt="Mobile"><br>🟢 **Passed** |
 
 [Detailed Documentation](./fragments/toggle-switch.md)
 
@@ -263,7 +475,13 @@ _No image available_
 
 ### User Attribute
 
-_No image available_
+#### Desktop (1920px) <br>🟢 **Passed**
+
+<img src="./images/live/forms-fragments-user-attribute-desktop.png" width="100%" alt="Desktop">
+
+|                                                Tablet (768px)                                                 |                                                Mobile (375px)                                                 |
+| :-----------------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------------: |
+| <img src="./images/live/forms-fragments-user-attribute-tablet.png" width="350" alt="Tablet"><br>🟢 **Passed** | <img src="./images/live/forms-fragments-user-attribute-mobile.png" width="175" alt="Mobile"><br>🟢 **Passed** |
 
 [Detailed Documentation](./fragments/user-field.md)
 
@@ -273,7 +491,13 @@ _No image available_
 
 ### Masthead Call to Action Form Holder
 
-_No image available_
+#### Desktop (1920px) <br>🟢 **Passed**
+
+<img src="./images/live/forms-masthead-call-to-action-form-holder-desktop.png" width="100%" alt="Desktop">
+
+|                                                      Tablet (768px)                                                      |                                                      Mobile (375px)                                                      |
+| :----------------------------------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------------------------------: |
+| <img src="./images/live/forms-masthead-call-to-action-form-holder-tablet.png" width="350" alt="Tablet"><br>🟢 **Passed** | <img src="./images/live/forms-masthead-call-to-action-form-holder-mobile.png" width="175" alt="Mobile"><br>🟢 **Passed** |
 
 [Detailed Documentation](./fragments/masthead-call-to-action-form-header.md)
 
@@ -285,7 +509,17 @@ Visually appealing fragments generated by Gemini.
 
 ### Activity Heatmap
 
-![Activity Heatmap](./images/activity-heatmap.png)
+#### Original Design
+
+<img src="./images/activity-heatmap.png" width="800" alt="Original Image">
+
+#### Desktop (1920px) <br>🟢 **Passed**
+
+<img src="./images/live/gemini-generated-activity-heatmap-desktop.png" width="100%" alt="Desktop">
+
+|                                                  Tablet (768px)                                                  |                                                  Mobile (375px)                                                  |
+| :--------------------------------------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------------------------------------: |
+| <img src="./images/live/gemini-generated-activity-heatmap-tablet.png" width="350" alt="Tablet"><br>🟢 **Passed** | <img src="./images/live/gemini-generated-activity-heatmap-mobile.png" width="175" alt="Mobile"><br>🟢 **Passed** |
 
 [Detailed Documentation](./fragments/activity-heatmap.md)
 
@@ -293,7 +527,13 @@ Visually appealing fragments generated by Gemini.
 
 ### AI Assistant Chat UI
 
-_No image available_
+#### Desktop (1920px) <br>🟢 **Passed**
+
+<img src="./images/live/gemini-generated-ai-assistant-chat-ui-desktop.png" width="100%" alt="Desktop">
+
+|                                                    Tablet (768px)                                                    |                                                    Mobile (375px)                                                    |
+| :------------------------------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------------------------------: |
+| <img src="./images/live/gemini-generated-ai-assistant-chat-ui-tablet.png" width="350" alt="Tablet"><br>🟢 **Passed** | <img src="./images/live/gemini-generated-ai-assistant-chat-ui-mobile.png" width="175" alt="Mobile"><br>🟢 **Passed** |
 
 [Detailed Documentation](./fragments/ai-chat-ui.md)
 
@@ -301,7 +541,17 @@ _No image available_
 
 ### Animated Metric Counter
 
-![Animated Metric Counter](./images/animated-metric-counter.png)
+#### Original Design
+
+<img src="./images/animated-metric-counter.png" width="800" alt="Original Image">
+
+#### Desktop (1920px) <br>🟢 **Passed**
+
+<img src="./images/live/gemini-generated-animated-metric-counter-desktop.png" width="100%" alt="Desktop">
+
+|                                                     Tablet (768px)                                                      |                                                     Mobile (375px)                                                      |
+| :---------------------------------------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------------------------------------: |
+| <img src="./images/live/gemini-generated-animated-metric-counter-tablet.png" width="350" alt="Tablet"><br>🟢 **Passed** | <img src="./images/live/gemini-generated-animated-metric-counter-mobile.png" width="175" alt="Mobile"><br>🟢 **Passed** |
 
 [Detailed Documentation](./fragments/animated-metric-counter.md)
 
@@ -309,7 +559,17 @@ _No image available_
 
 ### Dynamic Collection Slider
 
-![Dynamic Collection Slider](./images/dynamic-collection-slider.png)
+#### Original Design
+
+<img src="./images/dynamic-collection-slider.png" width="800" alt="Original Image">
+
+#### Desktop (1920px) <br>🟢 **Passed**
+
+<img src="./images/live/gemini-generated-dynamic-collection-slider-desktop.png" width="100%" alt="Desktop">
+
+|                                                      Tablet (768px)                                                       |                                                      Mobile (375px)                                                       |
+| :-----------------------------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------------------------: |
+| <img src="./images/live/gemini-generated-dynamic-collection-slider-tablet.png" width="350" alt="Tablet"><br>🟢 **Passed** | <img src="./images/live/gemini-generated-dynamic-collection-slider-mobile.png" width="175" alt="Mobile"><br>🟢 **Passed** |
 
 [Detailed Documentation](./fragments/dynamic-collection-slider.md)
 
@@ -317,7 +577,17 @@ _No image available_
 
 ### Dynamic Object Gallery
 
-![Dynamic Object Gallery](./images/dynamic-object-gallery.png)
+#### Original Design
+
+<img src="./images/dynamic-object-gallery.png" width="800" alt="Original Image">
+
+#### Desktop (1920px) <br>🟢 **Passed**
+
+<img src="./images/live/gemini-generated-dynamic-object-gallery-desktop.png" width="100%" alt="Desktop">
+
+|                                                     Tablet (768px)                                                     |                                                     Mobile (375px)                                                     |
+| :--------------------------------------------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------------------------------------------: |
+| <img src="./images/live/gemini-generated-dynamic-object-gallery-tablet.png" width="350" alt="Tablet"><br>🟢 **Passed** | <img src="./images/live/gemini-generated-dynamic-object-gallery-mobile.png" width="175" alt="Mobile"><br>🟢 **Passed** |
 
 [Detailed Documentation](./fragments/dynamic-object-gallery.md)
 
@@ -325,7 +595,17 @@ _No image available_
 
 ### Interactive Event Timeline
 
-![Interactive Event Timeline](./images/interactive-event-timeline.png)
+#### Original Design
+
+<img src="./images/interactive-event-timeline.png" width="800" alt="Original Image">
+
+#### Desktop (1920px) <br>🟢 **Passed**
+
+<img src="./images/live/gemini-generated-interactive-event-timeline-desktop.png" width="100%" alt="Desktop">
+
+|                                                       Tablet (768px)                                                       |                                                       Mobile (375px)                                                       |
+| :------------------------------------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------------------------------------: |
+| <img src="./images/live/gemini-generated-interactive-event-timeline-tablet.png" width="350" alt="Tablet"><br>🟢 **Passed** | <img src="./images/live/gemini-generated-interactive-event-timeline-mobile.png" width="175" alt="Mobile"><br>🟢 **Passed** |
 
 [Detailed Documentation](./fragments/interactive-event-timeline.md)
 
@@ -333,7 +613,13 @@ _No image available_
 
 ### Interactive Wizard
 
-_No image available_
+#### Desktop (1920px) <br>🟢 **Passed**
+
+<img src="./images/live/gemini-generated-interactive-wizard-desktop.png" width="100%" alt="Desktop">
+
+|                                                   Tablet (768px)                                                   |                                                   Mobile (375px)                                                   |
+| :----------------------------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------------------------: |
+| <img src="./images/live/gemini-generated-interactive-wizard-tablet.png" width="350" alt="Tablet"><br>🟢 **Passed** | <img src="./images/live/gemini-generated-interactive-wizard-mobile.png" width="175" alt="Mobile"><br>🟢 **Passed** |
 
 [Detailed Documentation](./fragments/interactive-wizard.md)
 
@@ -341,7 +627,17 @@ _No image available_
 
 ### Meta-Object Form
 
-![Meta-Object Form](./images/meta-object-form.png)
+#### Original Design
+
+<img src="./images/meta-object-form.png" width="800" alt="Original Image">
+
+#### Desktop (1920px) <br>🟢 **Passed**
+
+<img src="./images/live/gemini-generated-meta-object-form-desktop.png" width="100%" alt="Desktop">
+
+|                                                  Tablet (768px)                                                  |                                                  Mobile (375px)                                                  |
+| :--------------------------------------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------------------------------------: |
+| <img src="./images/live/gemini-generated-meta-object-form-tablet.png" width="350" alt="Tablet"><br>🟢 **Passed** | <img src="./images/live/gemini-generated-meta-object-form-mobile.png" width="175" alt="Mobile"><br>🟢 **Passed** |
 
 [Detailed Documentation](./fragments/meta-object-form.md)
 
@@ -349,7 +645,17 @@ _No image available_
 
 ### Meta-Object Record View
 
-![Meta-Object Record View](./images/meta-object-record-view.png)
+#### Original Design
+
+<img src="./images/meta-object-record-view.png" width="800" alt="Original Image">
+
+#### Desktop (1920px) <br>🟢 **Passed**
+
+<img src="./images/live/gemini-generated-meta-object-record-view-desktop.png" width="100%" alt="Desktop">
+
+|                                                     Tablet (768px)                                                      |                                                     Mobile (375px)                                                      |
+| :---------------------------------------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------------------------------------: |
+| <img src="./images/live/gemini-generated-meta-object-record-view-tablet.png" width="350" alt="Tablet"><br>🟢 **Passed** | <img src="./images/live/gemini-generated-meta-object-record-view-mobile.png" width="175" alt="Mobile"><br>🟢 **Passed** |
 
 [Detailed Documentation](./fragments/meta-object-record-view.md)
 
@@ -357,7 +663,17 @@ _No image available_
 
 ### Meta-Object Table
 
-![Meta-Object Table](./images/meta-object-table.png)
+#### Original Design
+
+<img src="./images/meta-object-table.png" width="800" alt="Original Image">
+
+#### Desktop (1920px) <br>🟢 **Passed**
+
+<img src="./images/live/gemini-generated-meta-object-table-desktop.png" width="100%" alt="Desktop">
+
+|                                                  Tablet (768px)                                                   |                                                  Mobile (375px)                                                   |
+| :---------------------------------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------------------------------: |
+| <img src="./images/live/gemini-generated-meta-object-table-tablet.png" width="350" alt="Tablet"><br>🟢 **Passed** | <img src="./images/live/gemini-generated-meta-object-table-mobile.png" width="175" alt="Mobile"><br>🟢 **Passed** |
 
 [Detailed Documentation](./fragments/meta-object-table.md)
 
@@ -365,7 +681,17 @@ _No image available_
 
 ### Modern Parallax Hero
 
-![Modern Parallax Hero](./images/modern-parallax-hero.png)
+#### Original Design
+
+<img src="./images/modern-parallax-hero.png" width="800" alt="Original Image">
+
+#### Desktop (1920px) <br>🟢 **Passed**
+
+<img src="./images/live/gemini-generated-modern-parallax-hero-desktop.png" width="100%" alt="Desktop">
+
+|                                                    Tablet (768px)                                                    |                                                    Mobile (375px)                                                    |
+| :------------------------------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------------------------------: |
+| <img src="./images/live/gemini-generated-modern-parallax-hero-tablet.png" width="350" alt="Tablet"><br>🟢 **Passed** | <img src="./images/live/gemini-generated-modern-parallax-hero-mobile.png" width="175" alt="Mobile"><br>🟢 **Passed** |
 
 [Detailed Documentation](./fragments/modern-parallax-hero.md)
 
@@ -373,7 +699,17 @@ _No image available_
 
 ### Object-Linked Chart
 
-![Object-Linked Chart](./images/object-linked-chart.png)
+#### Original Design
+
+<img src="./images/object-linked-chart.png" width="800" alt="Original Image">
+
+#### Desktop (1920px) <br>🟢 **Passed**
+
+<img src="./images/live/gemini-generated-object-linked-chart-desktop.png" width="100%" alt="Desktop">
+
+|                                                   Tablet (768px)                                                    |                                                   Mobile (375px)                                                    |
+| :-----------------------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------------------: |
+| <img src="./images/live/gemini-generated-object-linked-chart-tablet.png" width="350" alt="Tablet"><br>🟢 **Passed** | <img src="./images/live/gemini-generated-object-linked-chart-mobile.png" width="175" alt="Mobile"><br>🟢 **Passed** |
 
 [Detailed Documentation](./fragments/object-linked-chart.md)
 
@@ -381,7 +717,17 @@ _No image available_
 
 ### Pricing Comparison Grid
 
-![Pricing Comparison Grid](./images/pricing-comparison-grid.png)
+#### Original Design
+
+<img src="./images/pricing-comparison-grid.png" width="800" alt="Original Image">
+
+#### Desktop (1920px) <br>🟢 **Passed**
+
+<img src="./images/live/gemini-generated-pricing-comparison-grid-desktop.png" width="100%" alt="Desktop">
+
+|                                                     Tablet (768px)                                                      |                                                     Mobile (375px)                                                      |
+| :---------------------------------------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------------------------------------: |
+| <img src="./images/live/gemini-generated-pricing-comparison-grid-tablet.png" width="350" alt="Tablet"><br>🟢 **Passed** | <img src="./images/live/gemini-generated-pricing-comparison-grid-mobile.png" width="175" alt="Mobile"><br>🟢 **Passed** |
 
 [Detailed Documentation](./fragments/pricing-comparison-grid.md)
 
@@ -389,7 +735,17 @@ _No image available_
 
 ### Radial KPI Gauge
 
-![Radial KPI Gauge](./images/radial-kpi-gauge.png)
+#### Original Design
+
+<img src="./images/radial-kpi-gauge.png" width="800" alt="Original Image">
+
+#### Desktop (1920px) <br>🟢 **Passed**
+
+<img src="./images/live/gemini-generated-radial-kpi-gauge-desktop.png" width="100%" alt="Desktop">
+
+|                                                  Tablet (768px)                                                  |                                                  Mobile (375px)                                                  |
+| :--------------------------------------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------------------------------------: |
+| <img src="./images/live/gemini-generated-radial-kpi-gauge-tablet.png" width="350" alt="Tablet"><br>🟢 **Passed** | <img src="./images/live/gemini-generated-radial-kpi-gauge-mobile.png" width="175" alt="Mobile"><br>🟢 **Passed** |
 
 [Detailed Documentation](./fragments/radial-kpi-gauge.md)
 
@@ -397,7 +753,13 @@ _No image available_
 
 ### Modern Search Overlay
 
-_No image available_
+#### Desktop (1920px) <br>🟢 **Passed**
+
+<img src="./images/live/gemini-generated-modern-search-overlay-desktop.png" width="100%" alt="Desktop">
+
+|                                                    Tablet (768px)                                                     |                                                    Mobile (375px)                                                     |
+| :-------------------------------------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------------------------------: |
+| <img src="./images/live/gemini-generated-modern-search-overlay-tablet.png" width="350" alt="Tablet"><br>🟢 **Passed** | <img src="./images/live/gemini-generated-modern-search-overlay-mobile.png" width="175" alt="Mobile"><br>🟢 **Passed** |
 
 [Detailed Documentation](./fragments/search-overlay.md)
 
@@ -407,7 +769,13 @@ _No image available_
 
 ### Linear Gradient Container
 
-_No image available_
+#### Desktop (1920px) <br>🟢 **Passed**
+
+<img src="./images/live/header-components-linear-gradient-container-desktop.png" width="100%" alt="Desktop">
+
+|                                                       Tablet (768px)                                                       |                                                       Mobile (375px)                                                       |
+| :------------------------------------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------------------------------------: |
+| <img src="./images/live/header-components-linear-gradient-container-tablet.png" width="350" alt="Tablet"><br>🟢 **Passed** | <img src="./images/live/header-components-linear-gradient-container-mobile.png" width="175" alt="Mobile"><br>🟢 **Passed** |
 
 [Detailed Documentation](<./fragments/linear-gradient-container-(custom).md>)
 
@@ -415,7 +783,13 @@ _No image available_
 
 ### Site Logo
 
-_No image available_
+#### Desktop (1920px) <br>🟢 **Passed**
+
+<img src="./images/live/header-components-site-logo-desktop.png" width="100%" alt="Desktop">
+
+|                                               Tablet (768px)                                               |                                               Mobile (375px)                                               |
+| :--------------------------------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------------------------------: |
+| <img src="./images/live/header-components-site-logo-tablet.png" width="350" alt="Tablet"><br>🟢 **Passed** | <img src="./images/live/header-components-site-logo-mobile.png" width="175" alt="Mobile"><br>🟢 **Passed** |
 
 [Detailed Documentation](./fragments/logo.md)
 
@@ -423,7 +797,13 @@ _No image available_
 
 ### Search Bar
 
-_No image available_
+#### Desktop (1920px) <br>🟢 **Passed**
+
+<img src="./images/live/header-components-search-bar-desktop.png" width="100%" alt="Desktop">
+
+|                                               Tablet (768px)                                                |                                               Mobile (375px)                                                |
+| :---------------------------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------------------------: |
+| <img src="./images/live/header-components-search-bar-tablet.png" width="350" alt="Tablet"><br>🟢 **Passed** | <img src="./images/live/header-components-search-bar-mobile.png" width="175" alt="Mobile"><br>🟢 **Passed** |
 
 [Detailed Documentation](./fragments/search-bar.md)
 
@@ -431,7 +811,13 @@ _No image available_
 
 ### Search Button
 
-_No image available_
+#### Desktop (1920px) <br>🟢 **Passed**
+
+<img src="./images/live/header-components-search-button-desktop.png" width="100%" alt="Desktop">
+
+|                                                 Tablet (768px)                                                 |                                                 Mobile (375px)                                                 |
+| :------------------------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------------------------: |
+| <img src="./images/live/header-components-search-button-tablet.png" width="350" alt="Tablet"><br>🟢 **Passed** | <img src="./images/live/header-components-search-button-mobile.png" width="175" alt="Mobile"><br>🟢 **Passed** |
 
 [Detailed Documentation](./fragments/search-button.md)
 
@@ -439,7 +825,13 @@ _No image available_
 
 ### Site Name
 
-_No image available_
+#### Desktop (1920px) <br>🟢 **Passed**
+
+<img src="./images/live/header-components-site-name-desktop.png" width="100%" alt="Desktop">
+
+|                                               Tablet (768px)                                               |                                               Mobile (375px)                                               |
+| :--------------------------------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------------------------------: |
+| <img src="./images/live/header-components-site-name-tablet.png" width="350" alt="Tablet"><br>🟢 **Passed** | <img src="./images/live/header-components-site-name-mobile.png" width="175" alt="Mobile"><br>🟢 **Passed** |
 
 [Detailed Documentation](./fragments/site-name.md)
 
@@ -451,7 +843,13 @@ Prominent visuals, such as videos or banners, that capture attention and define 
 
 ### Banner Video
 
-_No image available_
+#### Desktop (1920px) <br>🟢 **Passed**
+
+<img src="./images/live/hero-assets-banner-video-desktop.png" width="100%" alt="Desktop">
+
+|                                             Tablet (768px)                                              |                                             Mobile (375px)                                              |
+| :-----------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------: |
+| <img src="./images/live/hero-assets-banner-video-tablet.png" width="350" alt="Tablet"><br>🟢 **Passed** | <img src="./images/live/hero-assets-banner-video-mobile.png" width="175" alt="Mobile"><br>🟢 **Passed** |
 
 [Detailed Documentation](./fragments/hero-video.md)
 
@@ -459,7 +857,13 @@ _No image available_
 
 ### Overlay Background
 
-_No image available_
+#### Desktop (1920px) <br>🟢 **Passed**
+
+<img src="./images/live/hero-assets-overlay-background-desktop.png" width="100%" alt="Desktop">
+
+|                                                Tablet (768px)                                                 |                                                Mobile (375px)                                                 |
+| :-----------------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------------: |
+| <img src="./images/live/hero-assets-overlay-background-tablet.png" width="350" alt="Tablet"><br>🟢 **Passed** | <img src="./images/live/hero-assets-overlay-background-mobile.png" width="175" alt="Mobile"><br>🟢 **Passed** |
 
 [Detailed Documentation](./fragments/overlay-background.md)
 
@@ -469,7 +873,13 @@ _No image available_
 
 ### Card Content
 
-_No image available_
+#### Desktop (1920px) <br>🟢 **Passed**
+
+<img src="./images/live/layout-components-card-content-desktop.png" width="100%" alt="Desktop">
+
+|                                                Tablet (768px)                                                 |                                                Mobile (375px)                                                 |
+| :-----------------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------------: |
+| <img src="./images/live/layout-components-card-content-tablet.png" width="350" alt="Tablet"><br>🟢 **Passed** | <img src="./images/live/layout-components-card-content-mobile.png" width="175" alt="Mobile"><br>🟢 **Passed** |
 
 [Detailed Documentation](./fragments/card-content.md)
 
@@ -477,7 +887,13 @@ _No image available_
 
 ### Primary Card
 
-_No image available_
+#### Desktop (1920px) <br>🟢 **Passed**
+
+<img src="./images/live/layout-components-primary-card-desktop.png" width="100%" alt="Desktop">
+
+|                                                Tablet (768px)                                                 |                                                Mobile (375px)                                                 |
+| :-----------------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------------: |
+| <img src="./images/live/layout-components-primary-card-tablet.png" width="350" alt="Tablet"><br>🟢 **Passed** | <img src="./images/live/layout-components-primary-card-mobile.png" width="175" alt="Mobile"><br>🟢 **Passed** |
 
 [Detailed Documentation](./fragments/primary-card.md)
 
@@ -485,7 +901,13 @@ _No image available_
 
 ### Secondary Card
 
-_No image available_
+#### Desktop (1920px) <br>⚠️ **Blank/Solid Color**
+
+<img src="./images/live/layout-components-secondary-card-desktop.png" width="100%" alt="Desktop">
+
+|                                                       Tablet (768px)                                                       |                                                       Mobile (375px)                                                       |
+| :------------------------------------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------------------------------------: |
+| <img src="./images/live/layout-components-secondary-card-tablet.png" width="350" alt="Tablet"><br>⚠️ **Blank/Solid Color** | <img src="./images/live/layout-components-secondary-card-mobile.png" width="175" alt="Mobile"><br>⚠️ **Blank/Solid Color** |
 
 [Detailed Documentation](./fragments/secondary-card.md)
 
@@ -495,7 +917,13 @@ _No image available_
 
 ### Meter Reading
 
-_No image available_
+#### Desktop (1920px) <br>🟢 **Passed**
+
+<img src="./images/live/meter-reading-meter-reading-desktop.png" width="100%" alt="Desktop">
+
+|                                               Tablet (768px)                                               |                                               Mobile (375px)                                               |
+| :--------------------------------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------------------------------: |
+| <img src="./images/live/meter-reading-meter-reading-tablet.png" width="350" alt="Tablet"><br>🟢 **Passed** | <img src="./images/live/meter-reading-meter-reading-mobile.png" width="175" alt="Mobile"><br>🟢 **Passed** |
 
 [Detailed Documentation](./fragments/meter-reading.md)
 
@@ -505,7 +933,13 @@ _No image available_
 
 ### Back Button
 
-_No image available_
+#### Desktop (1920px) <br>🟢 **Passed**
+
+<img src="./images/live/miscellaneous-back-button-desktop.png" width="100%" alt="Desktop">
+
+|                                              Tablet (768px)                                              |                                              Mobile (375px)                                              |
+| :------------------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------------------: |
+| <img src="./images/live/miscellaneous-back-button-tablet.png" width="350" alt="Tablet"><br>🟢 **Passed** | <img src="./images/live/miscellaneous-back-button-mobile.png" width="175" alt="Mobile"><br>🟢 **Passed** |
 
 [Detailed Documentation](./fragments/back-button.md)
 
@@ -513,7 +947,13 @@ _No image available_
 
 ### Custom Tabs
 
-_No image available_
+#### Desktop (1920px) <br>🟢 **Passed**
+
+<img src="./images/live/miscellaneous-custom-tabs-desktop.png" width="100%" alt="Desktop">
+
+|                                              Tablet (768px)                                              |                                              Mobile (375px)                                              |
+| :------------------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------------------: |
+| <img src="./images/live/miscellaneous-custom-tabs-tablet.png" width="350" alt="Tablet"><br>🟢 **Passed** | <img src="./images/live/miscellaneous-custom-tabs-mobile.png" width="175" alt="Mobile"><br>🟢 **Passed** |
 
 [Detailed Documentation](./fragments/custom-tabs.md)
 
@@ -521,7 +961,17 @@ _No image available_
 
 ### Dynamic Copyright
 
-![Dynamic Copyright](./images/dynamic-copyright.png)
+#### Original Design
+
+<img src="./images/dynamic-copyright.png" width="800" alt="Original Image">
+
+#### Desktop (1920px) <br>🟢 **Passed**
+
+<img src="./images/live/miscellaneous-dynamic-copyright-desktop.png" width="100%" alt="Desktop">
+
+|                                                 Tablet (768px)                                                 |                                                 Mobile (375px)                                                 |
+| :------------------------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------------------------: |
+| <img src="./images/live/miscellaneous-dynamic-copyright-tablet.png" width="350" alt="Tablet"><br>🟢 **Passed** | <img src="./images/live/miscellaneous-dynamic-copyright-mobile.png" width="175" alt="Mobile"><br>🟢 **Passed** |
 
 [Detailed Documentation](./fragments/dynamic-copyright.md)
 
@@ -529,7 +979,17 @@ _No image available_
 
 ### Icon Button
 
-![Icon Button](./images/icon-button.png)
+#### Original Design
+
+<img src="./images/icon-button.png" width="800" alt="Original Image">
+
+#### Desktop (1920px) <br>🟢 **Passed**
+
+<img src="./images/live/miscellaneous-icon-button-desktop.png" width="100%" alt="Desktop">
+
+|                                              Tablet (768px)                                              |                                              Mobile (375px)                                              |
+| :------------------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------------------: |
+| <img src="./images/live/miscellaneous-icon-button-tablet.png" width="350" alt="Tablet"><br>🟢 **Passed** | <img src="./images/live/miscellaneous-icon-button-mobile.png" width="175" alt="Mobile"><br>🟢 **Passed** |
 
 [Detailed Documentation](./fragments/icon-button.md)
 
@@ -537,7 +997,13 @@ _No image available_
 
 ### Launch Analytics Cloud
 
-_No image available_
+#### Desktop (1920px) <br>🟢 **Passed**
+
+<img src="./images/live/miscellaneous-launch-analytics-cloud-desktop.png" width="100%" alt="Desktop">
+
+|                                                   Tablet (768px)                                                    |                                                   Mobile (375px)                                                    |
+| :-----------------------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------------------: |
+| <img src="./images/live/miscellaneous-launch-analytics-cloud-tablet.png" width="350" alt="Tablet"><br>🟢 **Passed** | <img src="./images/live/miscellaneous-launch-analytics-cloud-mobile.png" width="175" alt="Mobile"><br>🟢 **Passed** |
 
 [Detailed Documentation](./fragments/launch-analytics-cloud.md)
 
@@ -545,7 +1011,13 @@ _No image available_
 
 ### Modify My Profile Link
 
-_No image available_
+#### Desktop (1920px) <br>🟢 **Passed**
+
+<img src="./images/live/miscellaneous-modify-my-profile-link-desktop.png" width="100%" alt="Desktop">
+
+|                                                   Tablet (768px)                                                    |                                                   Mobile (375px)                                                    |
+| :-----------------------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------------------: |
+| <img src="./images/live/miscellaneous-modify-my-profile-link-tablet.png" width="350" alt="Tablet"><br>🟢 **Passed** | <img src="./images/live/miscellaneous-modify-my-profile-link-mobile.png" width="175" alt="Mobile"><br>🟢 **Passed** |
 
 [Detailed Documentation](./fragments/modify-my-profile-link.md)
 
@@ -553,7 +1025,13 @@ _No image available_
 
 ### My Dashboard Link
 
-_No image available_
+#### Desktop (1920px) <br>🟢 **Passed**
+
+<img src="./images/live/miscellaneous-my-dashboard-link-desktop.png" width="100%" alt="Desktop">
+
+|                                                 Tablet (768px)                                                 |                                                 Mobile (375px)                                                 |
+| :------------------------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------------------------: |
+| <img src="./images/live/miscellaneous-my-dashboard-link-tablet.png" width="350" alt="Tablet"><br>🟢 **Passed** | <img src="./images/live/miscellaneous-my-dashboard-link-mobile.png" width="175" alt="Mobile"><br>🟢 **Passed** |
 
 [Detailed Documentation](./fragments/my-dashboard-link.md)
 
@@ -565,7 +1043,13 @@ A collection of high-fidelity fragments for constructing modern corporate intran
 
 ### App Launcher
 
-_No image available_
+#### Desktop (1920px) <br>🟢 **Passed**
+
+<img src="./images/live/modern-intranet-app-launcher-desktop.png" width="100%" alt="Desktop">
+
+|                                               Tablet (768px)                                                |                                               Mobile (375px)                                                |
+| :---------------------------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------------------------: |
+| <img src="./images/live/modern-intranet-app-launcher-tablet.png" width="350" alt="Tablet"><br>🟢 **Passed** | <img src="./images/live/modern-intranet-app-launcher-mobile.png" width="175" alt="Mobile"><br>🟢 **Passed** |
 
 [Detailed Documentation](./fragments/app-launcher.md)
 
@@ -573,7 +1057,13 @@ _No image available_
 
 ### Course Progress Card
 
-_No image available_
+#### Desktop (1920px) <br>🟢 **Passed**
+
+<img src="./images/live/modern-intranet-course-progress-card-desktop.png" width="100%" alt="Desktop">
+
+|                                                   Tablet (768px)                                                    |                                                   Mobile (375px)                                                    |
+| :-----------------------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------------------: |
+| <img src="./images/live/modern-intranet-course-progress-card-tablet.png" width="350" alt="Tablet"><br>🟢 **Passed** | <img src="./images/live/modern-intranet-course-progress-card-mobile.png" width="175" alt="Mobile"><br>🟢 **Passed** |
 
 [Detailed Documentation](./fragments/course-progress-card.md)
 
@@ -581,7 +1071,13 @@ _No image available_
 
 ### File Repository List
 
-_No image available_
+#### Desktop (1920px) <br>🟢 **Passed**
+
+<img src="./images/live/modern-intranet-file-repository-list-desktop.png" width="100%" alt="Desktop">
+
+|                                                   Tablet (768px)                                                    |                                                   Mobile (375px)                                                    |
+| :-----------------------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------------------: |
+| <img src="./images/live/modern-intranet-file-repository-list-tablet.png" width="350" alt="Tablet"><br>🟢 **Passed** | <img src="./images/live/modern-intranet-file-repository-list-mobile.png" width="175" alt="Mobile"><br>🟢 **Passed** |
 
 [Detailed Documentation](./fragments/file-repository-list.md)
 
@@ -589,7 +1085,13 @@ _No image available_
 
 ### Intranet Feed
 
-_No image available_
+#### Desktop (1920px) <br>🟢 **Passed**
+
+<img src="./images/live/modern-intranet-intranet-feed-desktop.png" width="100%" alt="Desktop">
+
+|                                                Tablet (768px)                                                |                                                Mobile (375px)                                                |
+| :----------------------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------------------: |
+| <img src="./images/live/modern-intranet-intranet-feed-tablet.png" width="350" alt="Tablet"><br>🟢 **Passed** | <img src="./images/live/modern-intranet-intranet-feed-mobile.png" width="175" alt="Mobile"><br>🟢 **Passed** |
 
 [Detailed Documentation](./fragments/intranet-feed.md)
 
@@ -597,7 +1099,13 @@ _No image available_
 
 ### News Hero
 
-_No image available_
+#### Desktop (1920px) <br>🟢 **Passed**
+
+<img src="./images/live/modern-intranet-news-hero-desktop.png" width="100%" alt="Desktop">
+
+|                                              Tablet (768px)                                              |                                              Mobile (375px)                                              |
+| :------------------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------------------: |
+| <img src="./images/live/modern-intranet-news-hero-tablet.png" width="350" alt="Tablet"><br>🟢 **Passed** | <img src="./images/live/modern-intranet-news-hero-mobile.png" width="175" alt="Mobile"><br>🟢 **Passed** |
 
 [Detailed Documentation](./fragments/news-hero.md)
 
@@ -605,7 +1113,13 @@ _No image available_
 
 ### Stat Card
 
-_No image available_
+#### Desktop (1920px) <br>🟢 **Passed**
+
+<img src="./images/live/modern-intranet-stat-card-desktop.png" width="100%" alt="Desktop">
+
+|                                              Tablet (768px)                                              |                                              Mobile (375px)                                              |
+| :------------------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------------------: |
+| <img src="./images/live/modern-intranet-stat-card-tablet.png" width="350" alt="Tablet"><br>🟢 **Passed** | <img src="./images/live/modern-intranet-stat-card-mobile.png" width="175" alt="Mobile"><br>🟢 **Passed** |
 
 [Detailed Documentation](./fragments/stat-card.md)
 
@@ -613,7 +1127,13 @@ _No image available_
 
 ### Welcome Banner
 
-_No image available_
+#### Desktop (1920px) <br>🟢 **Passed**
+
+<img src="./images/live/modern-intranet-welcome-banner-desktop.png" width="100%" alt="Desktop">
+
+|                                                Tablet (768px)                                                 |                                                Mobile (375px)                                                 |
+| :-----------------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------------: |
+| <img src="./images/live/modern-intranet-welcome-banner-tablet.png" width="350" alt="Tablet"><br>🟢 **Passed** | <img src="./images/live/modern-intranet-welcome-banner-mobile.png" width="175" alt="Mobile"><br>🟢 **Passed** |
 
 [Detailed Documentation](./fragments/welcome-banner.md)
 
@@ -623,7 +1143,13 @@ _No image available_
 
 ### Audit Button
 
-_No image available_
+#### Desktop (1920px) <br>🟢 **Passed**
+
+<img src="./images/live/forms-audit-button-desktop.png" width="100%" alt="Desktop">
+
+|                                          Tablet (768px)                                           |                                          Mobile (375px)                                           |
+| :-----------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------: |
+| <img src="./images/live/forms-audit-button-tablet.png" width="350" alt="Tablet"><br>🟢 **Passed** | <img src="./images/live/forms-audit-button-mobile.png" width="175" alt="Mobile"><br>🟢 **Passed** |
 
 [Detailed Documentation](./fragments/audit-button.md)
 
@@ -631,7 +1157,17 @@ _No image available_
 
 ### Comment
 
-![Comment](./images/comment.png)
+#### Original Design
+
+<img src="./images/comment.png" width="800" alt="Original Image">
+
+#### Desktop (1920px) <br>🟢 **Passed**
+
+<img src="./images/live/forms-comment-desktop.png" width="100%" alt="Desktop">
+
+|                                        Tablet (768px)                                        |                                        Mobile (375px)                                        |
+| :------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------: |
+| <img src="./images/live/forms-comment-tablet.png" width="350" alt="Tablet"><br>🟢 **Passed** | <img src="./images/live/forms-comment-mobile.png" width="175" alt="Mobile"><br>🟢 **Passed** |
 
 [Detailed Documentation](./fragments/comment.md)
 
@@ -639,7 +1175,17 @@ _No image available_
 
 ### View Comments
 
-![View Comments](./images/public-comments.png)
+#### Original Design
+
+<img src="./images/public-comments.png" width="800" alt="Original Image">
+
+#### Desktop (1920px) <br>🟢 **Passed**
+
+<img src="./images/live/forms-view-comments-desktop.png" width="100%" alt="Desktop">
+
+|                                           Tablet (768px)                                           |                                           Mobile (375px)                                           |
+| :------------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------------: |
+| <img src="./images/live/forms-view-comments-tablet.png" width="350" alt="Tablet"><br>🟢 **Passed** | <img src="./images/live/forms-view-comments-mobile.png" width="175" alt="Mobile"><br>🟢 **Passed** |
 
 [Detailed Documentation](./fragments/public-comments.md)
 
@@ -649,7 +1195,17 @@ _No image available_
 
 ### Populated Range
 
-![Populated Range](./images/populated-range.png)
+#### Original Design
+
+<img src="./images/populated-range.png" width="800" alt="Original Image">
+
+#### Desktop (1920px) <br>🟢 **Passed**
+
+<img src="./images/live/populated-form-fields-populated-range-desktop.png" width="100%" alt="Desktop">
+
+|                                                    Tablet (768px)                                                    |                                                    Mobile (375px)                                                    |
+| :------------------------------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------------------------------: |
+| <img src="./images/live/populated-form-fields-populated-range-tablet.png" width="350" alt="Tablet"><br>🟢 **Passed** | <img src="./images/live/populated-form-fields-populated-range-mobile.png" width="175" alt="Mobile"><br>🟢 **Passed** |
 
 [Detailed Documentation](./fragments/populated-range.md)
 
@@ -661,7 +1217,13 @@ _No image available_
 
 ### Pulse Button
 
-_No image available_
+#### Desktop (1920px) <br>🟢 **Passed**
+
+<img src="./images/live/pulse-pulse-button-desktop.png" width="100%" alt="Desktop">
+
+|                                          Tablet (768px)                                           |                                          Mobile (375px)                                           |
+| :-----------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------: |
+| <img src="./images/live/pulse-pulse-button-tablet.png" width="350" alt="Tablet"><br>🟢 **Passed** | <img src="./images/live/pulse-pulse-button-mobile.png" width="175" alt="Mobile"><br>🟢 **Passed** |
 
 [Detailed Documentation](./fragments/pulse-button.md)
 
@@ -671,7 +1233,13 @@ _No image available_
 
 ### Responsive Menu
 
-_No image available_
+#### Desktop (1920px) <br>🟢 **Passed**
+
+<img src="./images/live/responsive-menus-responsive-menu-desktop.png" width="100%" alt="Desktop">
+
+|                                                 Tablet (768px)                                                  |                                                 Mobile (375px)                                                  |
+| :-------------------------------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------------------------: |
+| <img src="./images/live/responsive-menus-responsive-menu-tablet.png" width="350" alt="Tablet"><br>🟢 **Passed** | <img src="./images/live/responsive-menus-responsive-menu-mobile.png" width="175" alt="Mobile"><br>🟢 **Passed** |
 
 [Detailed Documentation](./fragments/responsive-menu.md)
 
@@ -679,7 +1247,13 @@ _No image available_
 
 ### Responsive Side Menu
 
-_No image available_
+#### Desktop (1920px) <br>🟢 **Passed**
+
+<img src="./images/live/responsive-menus-responsive-side-menu-desktop.png" width="100%" alt="Desktop">
+
+|                                                    Tablet (768px)                                                    |                                                    Mobile (375px)                                                    |
+| :------------------------------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------------------------------: |
+| <img src="./images/live/responsive-menus-responsive-side-menu-tablet.png" width="350" alt="Tablet"><br>🟢 **Passed** | <img src="./images/live/responsive-menus-responsive-side-menu-mobile.png" width="175" alt="Mobile"><br>🟢 **Passed** |
 
 [Detailed Documentation](./fragments/responsive-side-menu.md)
 
@@ -689,7 +1263,13 @@ _No image available_
 
 ### My Rights
 
-_No image available_
+#### Desktop (1920px) <br>🟢 **Passed**
+
+<img src="./images/live/user-account-my-rights-desktop.png" width="100%" alt="Desktop">
+
+|                                            Tablet (768px)                                             |                                            Mobile (375px)                                             |
+| :---------------------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------------------: |
+| <img src="./images/live/user-account-my-rights-tablet.png" width="350" alt="Tablet"><br>🟢 **Passed** | <img src="./images/live/user-account-my-rights-mobile.png" width="175" alt="Mobile"><br>🟢 **Passed** |
 
 [Detailed Documentation](./fragments/my-rights.md)
 

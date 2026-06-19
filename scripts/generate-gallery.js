@@ -124,52 +124,48 @@ function generateGallery() {
       const viewports = ['desktop', 'tablet', 'mobile'];
       const liveImages = {};
 
-      if (testsPassed) {
-        const safeCollectionName = collectionMetadata.name
-          .replace(/[^a-z0-9]+/gi, '-')
-          .toLowerCase();
-        const safeFragmentName = fragMetadata.name
-          .replace(/[^a-z0-9]+/gi, '-')
-          .toLowerCase();
+      const safeCollectionName = collectionMetadata.name
+        .replace(/[^a-z0-9]+/gi, '-')
+        .toLowerCase();
+      const safeFragmentName = fragMetadata.name
+        .replace(/[^a-z0-9]+/gi, '-')
+        .toLowerCase();
 
-        viewports.forEach((vp) => {
-          const liveFileName = `${safeCollectionName}-${safeFragmentName}-${vp}.png`;
-          const liveDest = path.join(LIVE_IMAGES_DIR, liveFileName);
-          const e2eSnapshot = path.join(
-            SNAPSHOTS_DIR,
-            collectionMetadata.name,
-            `${fragMetadata.name}-${vp}.png`
-          );
+      viewports.forEach((vp) => {
+        const liveFileName = `${safeCollectionName}-${safeFragmentName}-${vp}.png`;
+        const liveDest = path.join(LIVE_IMAGES_DIR, liveFileName);
+        const e2eSnapshot = path.join(
+          SNAPSHOTS_DIR,
+          collectionMetadata.name,
+          `${fragMetadata.name}-${vp}.png`
+        );
 
-          if (fs.existsSync(e2eSnapshot)) {
-            fs.copyFileSync(e2eSnapshot, liveDest);
-            liveImages[vp] = `./images/live/${liveFileName}`;
-          } else if (fs.existsSync(liveDest)) {
-            // Fall back to pre-existing live image if this fragment was not run in the current filtered test
-            liveImages[vp] = `./images/live/${liveFileName}`;
-          }
+        if (fs.existsSync(e2eSnapshot)) {
+          fs.copyFileSync(e2eSnapshot, liveDest);
+          liveImages[vp] = `./images/live/${liveFileName}`;
+        } else if (fs.existsSync(liveDest)) {
+          liveImages[vp] = `./images/live/${liveFileName}`;
+        }
 
-          if (liveImages[vp]) {
-            // Attach visual verification status badge if exists
-            if (
-              visualAnalysis &&
-              visualAnalysis.results &&
-              visualAnalysis.results[liveFileName]
-            ) {
-              const analysisResult = visualAnalysis.results[liveFileName];
-              if (analysisResult.status === 'anomaly') {
-                liveImages[vp + '_status'] = '<br>⚠️ **Blank/Solid Color**';
-              } else if (analysisResult.status === 'regression') {
-                const diffFileName = `${safeCollectionName}-${safeFragmentName}-${vp}-diff.png`;
-                liveImages[vp + '_status'] =
-                  `<br>❌ **Diff: ${analysisResult.diffPercentage.toFixed(1)}%**<br>[View Diff](./images/diffs/${diffFileName})`;
-              } else {
-                liveImages[vp + '_status'] = '<br>🟢 **Passed**';
-              }
+        if (liveImages[vp]) {
+          if (
+            visualAnalysis &&
+            visualAnalysis.results &&
+            visualAnalysis.results[liveFileName]
+          ) {
+            const analysisResult = visualAnalysis.results[liveFileName];
+            if (analysisResult.status === 'anomaly') {
+              liveImages[vp + '_status'] = '<br>⚠️ **Blank/Solid Color**';
+            } else if (analysisResult.status === 'regression') {
+              const diffFileName = `${safeCollectionName}-${safeFragmentName}-${vp}-diff.png`;
+              liveImages[vp + '_status'] =
+                `<br>❌ **Diff: ${analysisResult.diffPercentage.toFixed(1)}%**<br>[View Diff](./images/diffs/${diffFileName})`;
+            } else {
+              liveImages[vp + '_status'] = '<br>🟢 **Passed**';
             }
           }
-        });
-      }
+        }
+      });
 
       let fallbackPath = '';
       if (fs.existsSync(manualImg)) {
