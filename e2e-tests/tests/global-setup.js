@@ -6,6 +6,207 @@ const { globSync } = require('glob');
 
 const projectRoot = path.join(__dirname, '..', '..');
 
+function convertConfigToFieldValues(config, fragmentDir) {
+  const fieldValues = {};
+  if (!config) return fieldValues;
+
+  let fieldsConfig = {};
+  if (fragmentDir) {
+    try {
+      const configPath = path.join(fragmentDir, 'configuration.json');
+      if (fs.existsSync(configPath)) {
+        const configJson = JSON.parse(fs.readFileSync(configPath, 'utf8'));
+        if (configJson.fieldSets) {
+          configJson.fieldSets.forEach((set) => {
+            if (set.fields) {
+              set.fields.forEach((f) => {
+                fieldsConfig[f.name] = f;
+              });
+            }
+          });
+        }
+      }
+    } catch (e) {
+      // Ignore reading errors
+    }
+  }
+
+  Object.keys(config).forEach((k) => {
+    const val = config[k];
+    const fieldDef = fieldsConfig[k] || {};
+    const uiType = fieldDef.type || 'text'; // default to text
+    let type = 'Text';
+
+    if (uiType === 'checkbox') {
+      type = 'Checkbox';
+    } else if (uiType === 'select') {
+      type = 'Select';
+    } else if (uiType === 'item') {
+      type = 'Item';
+    } else if (uiType === 'collection') {
+      type = 'Collection';
+    } else if (uiType === 'url') {
+      type = 'URL';
+    } else if (uiType === 'video') {
+      type = 'Video';
+    } else if (uiType === 'colorPalette') {
+      type = 'ColorPalette';
+    } else if (uiType === 'colorPicker') {
+      type = 'ColorPicker';
+    } else if (uiType === 'length') {
+      type = 'Length';
+    }
+
+    if (type === 'Checkbox') {
+      fieldValues[k] = {
+        type,
+        value: typeof val === 'string' ? val === 'true' : !!val,
+      };
+    } else {
+      fieldValues[k] = {
+        type,
+        value: val !== null && val !== undefined ? val.toString() : '',
+      };
+    }
+  });
+
+  return fieldValues;
+}
+
+async function getAssetEntryId(apiContext, pAuthToken, className, classPK) {
+  try {
+    const resp = await apiContext.post(
+      `/api/jsonws/assetentry/get-entry?p_auth=${pAuthToken}`,
+      {
+        form: {
+          className: className,
+          classPK: classPK.toString(),
+        },
+      }
+    );
+    if (resp.ok()) {
+      const json = await resp.json();
+      return json.entryId;
+    } else {
+      console.warn(
+        `       [WARN] Failed to get asset entry for ${className} / ${classPK}: ${resp.status()}`
+      );
+    }
+  } catch (err) {
+    console.error(`       [ERROR] Exception getting asset entry:`, err.message);
+  }
+  return null;
+}
+
+async function seedCollection(
+  apiContext,
+  pAuthToken,
+  siteId,
+  collection,
+  assetMap,
+  assetEntryIdMap
+) {
+  const erc = collection.externalReferenceCode;
+  const title = collection.name;
+
+  // 1. Resolve assetEntryIds of items
+  const resolvedAssetEntryIds = [];
+  if (collection.items) {
+    for (const item of collection.items) {
+      if (
+        item.externalReferenceCode &&
+        assetEntryIdMap[item.externalReferenceCode]
+      ) {
+        resolvedAssetEntryIds.push(assetEntryIdMap[item.externalReferenceCode]);
+      } else {
+        console.warn(
+          `       [WARN] Item ERC ${item.externalReferenceCode} not found in assetEntryIdMap. Skipping item.`
+        );
+      }
+    }
+  }
+
+  console.log(
+    `       Seeding Asset Collection ${title} (${erc}) with ${resolvedAssetEntryIds.length} item(s)...`
+  );
+
+  // 2. Check if the collection already exists
+  let existingId = null;
+  try {
+    const checkResp = await apiContext.post(
+      `/api/jsonws/assetlist.assetlistentry/get-asset-list-entry-by-external-reference-code?p_auth=${pAuthToken}`,
+      {
+        form: {
+          externalReferenceCode: erc,
+          groupId: siteId.toString(),
+        },
+      }
+    );
+    if (checkResp.ok()) {
+      const json = await checkResp.json();
+      if (json && json.assetListEntryId) {
+        existingId = json.assetListEntryId;
+      }
+    }
+  } catch (err) {
+    // Ignore error if it doesn't exist
+  }
+
+  // 3. If it exists, delete it first to ensure fresh seed
+  if (existingId) {
+    console.log(
+      `       Existing collection found with ID ${existingId}. Deleting...`
+    );
+    try {
+      await apiContext.post(
+        `/api/jsonws/assetlist.assetlistentry/delete-asset-list-entry?p_auth=${pAuthToken}`,
+        {
+          form: {
+            assetListEntryId: existingId.toString(),
+          },
+        }
+      );
+    } catch (err) {
+      console.warn(
+        `       [WARN] Failed to delete existing collection:`,
+        err.message
+      );
+    }
+  }
+
+  // 4. Create collection via JSON WS
+  try {
+    const createResp = await apiContext.post(
+      `/api/jsonws/assetlist.assetlistentry/add-manual-asset-list-entry?contextName=assetlist&p_auth=${pAuthToken}`,
+      {
+        form: {
+          externalReferenceCode: erc,
+          groupId: siteId.toString(),
+          title: title,
+          assetEntryIds: JSON.stringify(resolvedAssetEntryIds),
+          'serviceContext.addGuestPermissions': 'true',
+          'serviceContext.addGroupPermissions': 'true',
+        },
+      }
+    );
+    if (createResp.ok()) {
+      const createdJson = await createResp.json();
+      console.log(
+        `       Successfully seeded Asset Collection ${title} -> ID: ${createdJson.assetListEntryId}`
+      );
+      assetMap[erc] = createdJson.assetListEntryId;
+      return createdJson.assetListEntryId;
+    } else {
+      console.error(
+        `       [ERROR] Failed to seed collection: ${createResp.status()} - ${await createResp.text()}`
+      );
+    }
+  } catch (err) {
+    console.error(`       [ERROR] Exception seeding collection:`, err.message);
+  }
+  return null;
+}
+
 function buildPageElementTree(
   node,
   siteERC,
@@ -27,6 +228,8 @@ function buildPageElementTree(
   else if (type.toLowerCase() === 'column') type = 'Column';
   else if (type.toLowerCase() === 'fragment') type = 'Fragment';
   else if (type.toLowerCase() === 'form') type = 'Form';
+  else if (type.toLowerCase() === 'formcontainer') type = 'FormContainer';
+  else if (type.toLowerCase() === 'formfragment') type = 'FormFragment';
   else if (type.toLowerCase() === 'widget') type = 'Widget';
 
   if (type === 'Fragment') {
@@ -87,21 +290,30 @@ function buildPageElementTree(
     }
 
     if (isInputType) {
+      // In Liferay 2026.Q1, bare input fragments must be of type FormFragment inside a FormContainer
+      const fieldKey = node.fieldKey || 'emailAddress';
       const element = {
-        type: 'Fragment',
+        type: 'FormFragment',
         definition: {
-          fragment: {
-            key: key,
-            siteKey: siteERC,
+          fieldKey: fieldKey.startsWith('ObjectField_')
+            ? fieldKey
+            : `ObjectField_${fieldKey}`,
+          fragmentInstance: {
+            fragmentReference: {
+              key: key,
+              siteKey: siteERC,
+            },
+            fragmentConfigurationFieldValues: convertConfigToFieldValues(
+              {
+                ...resolvedConfig,
+                inputFieldId: fieldKey.startsWith('ObjectField_')
+                  ? fieldKey
+                  : `ObjectField_${fieldKey}`,
+              },
+              parentDir
+            ),
+            fragmentEditableElements: resolvedFields,
           },
-          fragmentConfig: {
-            ...resolvedConfig,
-            inputFieldId: node.fieldKey
-              ? `ObjectField_${node.fieldKey}`
-              : 'ObjectField_emailAddress',
-          },
-          fragmentFields: resolvedFields,
-          indexed: true,
         },
       };
       return element;
@@ -169,47 +381,140 @@ function buildPageElementTree(
     }
 
     return element;
-  } else if (type === 'Form') {
-    const definition = node.definition || {
-      formConfig: {
-        formReference: {
-          className: 'com.liferay.object.model.ObjectDefinition#APPLICANT',
-          classType: 0,
+  } else if (type === 'FormFragment') {
+    const key = node.key || defaultFragmentKey;
+    const config =
+      node.fragmentConfig ||
+      (key === defaultFragmentKey ? defaultFragmentConfig : {});
+
+    // Resolve configuration references
+    const resolvedConfig = {};
+    Object.keys(config).forEach((k) => {
+      const val = config[k];
+      if (typeof val === 'string' && assetMap[val]) {
+        resolvedConfig[k] = assetMap[val].toString();
+      } else {
+        resolvedConfig[k] = val;
+      }
+    });
+
+    // Resolve fragmentFields references
+    const resolvedFields = [];
+    if (node.fragmentFields) {
+      const resolveValues = (obj) => {
+        if (typeof obj === 'string') {
+          if (assetMap[obj]) {
+            return assetMap[obj].toString();
+          }
+          return obj;
+        } else if (Array.isArray(obj)) {
+          return obj.map(resolveValues);
+        } else if (obj !== null && typeof obj === 'object') {
+          const newObj = {};
+          Object.keys(obj).forEach((key) => {
+            newObj[key] = resolveValues(obj[key]);
+          });
+          return newObj;
+        }
+        return obj;
+      };
+      node.fragmentFields.forEach((field) => {
+        resolvedFields.push(resolveValues(field));
+      });
+    }
+
+    const parentDir = fragmentKeyToDir ? fragmentKeyToDir[key] : null;
+    const fieldKey =
+      node.fieldKey ||
+      (node.fragmentConfig && node.fragmentConfig.inputFieldId) ||
+      'emailAddress';
+
+    const element = {
+      type: 'FormFragment',
+      definition: {
+        fieldKey: fieldKey.startsWith('ObjectField_')
+          ? fieldKey
+          : `ObjectField_${fieldKey}`,
+        fragmentInstance: {
+          fragmentReference: {
+            key: key,
+            siteKey: siteERC,
+          },
+          fragmentConfigurationFieldValues: convertConfigToFieldValues(
+            {
+              ...resolvedConfig,
+              inputFieldId: fieldKey.startsWith('ObjectField_')
+                ? fieldKey
+                : `ObjectField_${fieldKey}`,
+            },
+            parentDir
+          ),
+          fragmentEditableElements: resolvedFields,
         },
-        formType: 'simple',
-        numberOfSteps: 0,
       },
-      indexed: true,
-      layout: {},
     };
+    return element;
+  } else if (type === 'Form' || type === 'FormContainer') {
+    // Build FormContainer
+    let className = 'com.liferay.object.model.ObjectDefinition#APPLICANT';
+    if (
+      node.definition &&
+      node.definition.formConfig &&
+      node.definition.formConfig.formReference
+    ) {
+      className =
+        node.definition.formConfig.formReference.className || className;
+    } else if (
+      node.definition &&
+      node.definition.formContainerConfig &&
+      node.definition.formContainerConfig.formContainerReference
+    ) {
+      className =
+        node.definition.formContainerConfig.formContainerReference.className ||
+        className;
+    }
 
     // Resolve className from ERC if present
-    if (
-      definition.formConfig &&
-      definition.formConfig.formReference &&
-      definition.formConfig.formReference.className &&
-      definition.formConfig.formReference.className.includes('#')
-    ) {
-      const erc = definition.formConfig.formReference.className.split('#')[1];
+    if (className.includes('#')) {
+      const erc = className.split('#')[1];
       const def = objectDefinitions.find(
         (d) => d.externalReferenceCode === erc
       );
       if (def) {
-        definition.formConfig.formReference.className = def.className;
+        className = def.className;
         console.log(
           `       Resolved Form className for ERC ${erc}: ${def.className}`
         );
       }
     }
 
+    const definition = {
+      formContainerConfig: {
+        formContainerReference: {
+          className: className,
+          type: 'FormContainerClassSubtypeReference',
+        },
+        formContainerType: 'Simple',
+        numberOfSteps: 0,
+      },
+      indexed: true,
+      layout: {},
+    };
+
     const element = {
-      type: 'Form',
+      type: 'FormContainer',
       definition: definition,
     };
 
     if (node.children && node.children.length > 0) {
-      element.pageElements = node.children.map((child) =>
-        buildPageElementTree(
+      element.pageElements = node.children.map((child) => {
+        // Automatically treat children of FormContainer as FormFragments if they are Fragments
+        if (typeof child === 'string') {
+          child = { type: 'FormFragment', key: child };
+        } else if (child && (child.type === 'Fragment' || !child.type)) {
+          child = { ...child, type: 'FormFragment' };
+        }
+        return buildPageElementTree(
           child,
           siteERC,
           assetMap,
@@ -217,8 +522,8 @@ function buildPageElementTree(
           defaultFragmentConfig,
           fragmentKeyToDir,
           objectDefinitions
-        )
-      );
+        );
+      });
     }
     return element;
   } else if (type === 'Widget') {
@@ -238,8 +543,12 @@ function buildPageElementTree(
     // Root, Section, Row, Column
     const element = {
       type: type,
-      definition: node.definition || {},
+      definition: node.definition ? { ...node.definition } : {},
     };
+
+    if (type === 'Column' && element.definition.size === undefined) {
+      element.definition.size = 12;
+    }
 
     if (node.children && node.children.length > 0) {
       element.pageElements = node.children.map((child) =>
@@ -1132,6 +1441,7 @@ async function globalSetup(config) {
     let seededConfigOverrides = {};
     let testData = null;
     const assetMap = {}; // Maps ERC -> Liferay ID
+    const assetEntryIdMap = {}; // Maps ERC -> AssetEntry ID
 
     if (fs.existsSync(testDataFile)) {
       console.log(
@@ -1217,6 +1527,17 @@ async function globalSetup(config) {
                   id: docId,
                   erc: doc.externalReferenceCode,
                 });
+
+                // Resolve and store assetEntryId
+                const assetEntryId = await getAssetEntryId(
+                  apiContext,
+                  pAuthToken,
+                  'com.liferay.document.library.kernel.model.DLFileEntry',
+                  docId
+                );
+                if (assetEntryId) {
+                  assetEntryIdMap[doc.externalReferenceCode] = assetEntryId;
+                }
               } else if (uploadResp.status() === 409) {
                 console.log(
                   `       Document ${doc.title} already exists. Resolving URL and verifying guest permissions...`
@@ -1236,6 +1557,17 @@ async function globalSetup(config) {
                       `       Found existing document ${doc.title} -> URL: ${contentUrl}, ID: ${docId}`
                     );
                     assetMap[doc.externalReferenceCode] = contentUrl;
+
+                    // Resolve and store assetEntryId
+                    const assetEntryId = await getAssetEntryId(
+                      apiContext,
+                      pAuthToken,
+                      'com.liferay.document.library.kernel.model.DLFileEntry',
+                      docId
+                    );
+                    if (assetEntryId) {
+                      assetEntryIdMap[doc.externalReferenceCode] = assetEntryId;
+                    }
 
                     // Verify and patch guest permissions to Anyone
                     const patchResp = await apiContext.patch(
@@ -1455,9 +1787,74 @@ async function globalSetup(config) {
                 id: articleJson.id,
                 erc: article.externalReferenceCode,
               });
-            } else if (articleResp.status() === 409) {
-              // Re-use article id for assetMap mapping even if it was not created this turn.
+
+              // Resolve and store assetEntryId
+              const assetEntryId = await getAssetEntryId(
+                apiContext,
+                pAuthToken,
+                'com.liferay.journal.model.JournalArticle',
+                articleJson.id
+              );
+              if (assetEntryId) {
+                assetEntryIdMap[article.externalReferenceCode] = assetEntryId;
+              }
+            } else {
+              const body = await articleResp.text();
+              if (
+                articleResp.status() === 409 ||
+                (articleResp.status() === 400 &&
+                  body.includes('already in use'))
+              ) {
+                console.log(
+                  `       Article ${article.title} already exists. Resolving ID by ERC...`
+                );
+                const getResp = await apiContext.get(
+                  `/o/headless-delivery/v1.0/sites/${siteId}/structured-contents/by-external-reference-code/${article.externalReferenceCode}`
+                );
+                if (getResp.ok()) {
+                  const getJson = await getResp.json();
+                  const existingArticleId = getJson.id;
+                  assetMap[article.externalReferenceCode] = existingArticleId;
+                  console.log(
+                    `       Resolved existing article ID: ${existingArticleId}`
+                  );
+
+                  // Resolve and store assetEntryId
+                  const assetEntryId = await getAssetEntryId(
+                    apiContext,
+                    pAuthToken,
+                    'com.liferay.journal.model.JournalArticle',
+                    existingArticleId
+                  );
+                  if (assetEntryId) {
+                    assetEntryIdMap[article.externalReferenceCode] =
+                      assetEntryId;
+                  }
+                } else {
+                  console.warn(
+                    `       [WARN] Failed to retrieve existing article by ERC: ${getResp.status()}`
+                  );
+                }
+              } else {
+                console.error(
+                  `       [ERROR] Failed to create article ${article.title}: ${articleResp.status()} - ${body}`
+                );
+              }
             }
+          }
+        }
+
+        // 3. Seed Collections (Content Sets)
+        if (testData.collections) {
+          for (const collection of testData.collections) {
+            await seedCollection(
+              apiContext,
+              pAuthToken,
+              siteId,
+              collection,
+              assetMap,
+              assetEntryIdMap
+            );
           }
         }
 
@@ -1536,45 +1933,80 @@ async function globalSetup(config) {
         );
         const applicantClassName = applicantDef
           ? applicantDef.className
-          : 'com.liferay.object.model.ObjectDefinition#O0U8';
+          : 'com.liferay.object.model.ObjectDefinition#APPLICANT';
 
         rootPageElement = {
           type: 'Root',
           pageElements: [
             {
-              type: 'Section',
+              type: 'FormContainer',
               definition: {
+                formContainerConfig: {
+                  formContainerReference: {
+                    className: applicantClassName,
+                    type: 'FormContainerClassSubtypeReference',
+                  },
+                  formContainerType: 'Simple',
+                  numberOfSteps: 0,
+                },
                 indexed: true,
                 layout: {},
               },
               pageElements: [
                 {
-                  type: 'Row',
+                  type: 'Section',
                   definition: {
-                    gutters: true,
-                    columnsSpacing: true,
-                    numberOfColumns: 1,
+                    indexed: true,
+                    layout: {},
                   },
                   pageElements: [
                     {
-                      type: 'Column',
+                      type: 'Row',
                       definition: {
-                        width: '100%',
+                        gutters: true,
+                        columnsSpacing: true,
+                        numberOfColumns: 1,
                       },
                       pageElements: [
                         {
-                          type: 'Fragment',
+                          type: 'Column',
                           definition: {
-                            fragment: {
-                              key: fragmentKey,
-                              siteKey: siteERC,
-                            },
-                            fragmentConfig: {
-                              ...seededConfigOverrides,
-                              inputFieldId: 'ObjectField_emailAddress',
-                            },
-                            indexed: true,
+                            size: 12,
                           },
+                          pageElements: [
+                            {
+                              type: 'FormFragment',
+                              definition: {
+                                fieldKey: 'ObjectField_emailAddress',
+                                fragmentInstance: {
+                                  fragmentReference: {
+                                    key: fragmentKey,
+                                    siteKey: siteERC,
+                                  },
+                                  fragmentConfigurationFieldValues:
+                                    convertConfigToFieldValues(
+                                      seededConfigOverrides,
+                                      fragmentKeyToDir
+                                        ? fragmentKeyToDir[fragmentKey]
+                                        : null
+                                    ),
+                                },
+                              },
+                            },
+                            {
+                              type: 'FormFragment',
+                              definition: {
+                                fieldKey: '',
+                                fragmentInstance: {
+                                  fragmentReference: {
+                                    key: 'submit-button',
+                                    siteKey: siteERC,
+                                  },
+                                  fragmentConfigurationFieldValues: {},
+                                },
+                              },
+                            },
+                          ],
                         },
                       ],
                     },
@@ -1606,7 +2038,7 @@ async function globalSetup(config) {
                     {
                       type: 'Column',
                       definition: {
-                        width: '100%',
+                        size: 12,
                       },
                       pageElements: [
                         {
@@ -1724,6 +2156,9 @@ async function globalSetup(config) {
           } else {
             console.warn(
               `     [Attempt ${attempts}] Failed to create page for ${fragmentName}: ${createResp.status()} - ${body}`
+            );
+            console.warn(
+              `     Request Payload: ${JSON.stringify(payload, null, 2)}`
             );
             if (attempts < maxAttempts) {
               await new Promise((resolve) => setTimeout(resolve, 3000));

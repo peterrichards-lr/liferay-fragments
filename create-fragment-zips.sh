@@ -328,7 +328,7 @@ if [ "$BUILD_FRAGMENTS" = true ]; then
        OUTPUT_ZIP_ABS="$ZIPS_ROOT/fragments/${FRAGMENT_NAME}${BUILD_SUFFIX}.zip"
        # ZIP creation: Include the fragment folder AND the descriptor file from the temp root.
        # This ensures liferay-deploy-fragments.json is at the root of the zip.
-       (cd "$TEMP_FRAG" && zip -qr "$OUTPUT_ZIP_ABS" . -x "*.DS_Store" -x "*/fragment-build.json" -x "*/client-extension.yaml" -x "*/test-data.json" -x "*/test-data.yaml")
+       (cd "$TEMP_FRAG" && zip -qr "$OUTPUT_ZIP_ABS" . -x "*.DS_Store" -x "*/fragment-build.json" -x "*/collection-build.json" -x "*/client-extension.yaml" -x "*/test-data.json" -x "*/test-data.yaml")
        rm -rf "$TEMP_FRAG"
 
     done
@@ -393,7 +393,7 @@ for COLLECTION_NAME in "${COLLECTIONS[@]}"; do
        
        OUTPUT_ZIP_ABS="$ZIPS_ROOT/fragments/${COLLECTION_NAME}-collection${BUILD_SUFFIX}.zip"
        # Zipping from temp root content. Include everything (folder + descriptor).
-       (cd "$TEMP_COLL" && zip -qr "$OUTPUT_ZIP_ABS" . -x "*.DS_Store" -x "$COLLECTION_NAME/Language*.properties" -x "$COLLECTION_NAME/client-extension.yaml" -x "$COLLECTION_NAME/fragment-build.json" -x "$COLLECTION_NAME/collection-build.json" -x "*/test-data.json" -x "*/test-data.yaml")
+       (cd "$TEMP_COLL" && zip -qr "$OUTPUT_ZIP_ABS" . -x "*.DS_Store" -x "$COLLECTION_NAME/Language*.properties" -x "$COLLECTION_NAME/client-extension.yaml" -x "*/fragment-build.json" -x "*/collection-build.json" -x "*/test-data.json" -x "*/test-data.yaml")
        rm -rf "$TEMP_COLL"
        
         # --- C. Legacy (pre2025q3) Collection ---
@@ -442,7 +442,7 @@ for COLLECTION_NAME in "${COLLECTIONS[@]}"; do
         find "$BUILD_TEMP" -name ".DS_Store" -delete
 
         OUTPUT_ZIP_LEGACY_ABS="$ZIPS_ROOT/fragments/${COLLECTION_NAME}-pre2025q3${BUILD_SUFFIX}.zip"
-        (cd "$BUILD_TEMP" && zip -qr "$OUTPUT_ZIP_LEGACY_ABS" . -x "*.DS_Store" -x "*/test-data.json" -x "*/test-data.yaml")
+        (cd "$BUILD_TEMP" && zip -qr "$OUTPUT_ZIP_LEGACY_ABS" . -x "*.DS_Store" -x "*/fragment-build.json" -x "*/collection-build.json" -x "*/test-data.json" -x "*/test-data.yaml")
         rm -rf "$BUILD_TEMP"
         
         # --- D. Legacy (pre2026q1) Collection ---
@@ -484,7 +484,7 @@ for COLLECTION_NAME in "${COLLECTIONS[@]}"; do
         find "$BUILD_TEMP_2026" -name ".DS_Store" -delete
 
         OUTPUT_ZIP_2026_ABS="$ZIPS_ROOT/fragments/${COLLECTION_NAME}-pre2026q1${BUILD_SUFFIX}.zip"
-        (cd "$BUILD_TEMP_2026" && zip -qr "$OUTPUT_ZIP_2026_ABS" . -x "*.DS_Store" -x "*/test-data.json" -x "*/test-data.yaml")
+        (cd "$BUILD_TEMP_2026" && zip -qr "$OUTPUT_ZIP_2026_ABS" . -x "*.DS_Store" -x "*/fragment-build.json" -x "*/collection-build.json" -x "*/test-data.json" -x "*/test-data.yaml")
         rm -rf "$BUILD_TEMP_2026"
    fi
 done
