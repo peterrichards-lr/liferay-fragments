@@ -31,6 +31,7 @@ generated-test-pages.json
 
 # LDM Test Project
 /fragments-test-env/
+/e2e-test-env/
 
 # Local diagnostic logs and scratch files
 *.log
