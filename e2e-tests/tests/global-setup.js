@@ -597,6 +597,29 @@ function buildPageElementTree(
   }
 }
 
+function findObjectDefinitionPayload(erc, rootPath) {
+  const { globSync } = require('glob');
+  const fs = require('fs');
+  const path = require('path');
+
+  const files = globSync('**/*object-definition*.json', {
+    cwd: rootPath,
+    absolute: true,
+    ignore: ['**/node_modules/**', '**/temp*/**', '**/zips/**'],
+  });
+
+  for (const file of files) {
+    try {
+      const data = JSON.parse(fs.readFileSync(file, 'utf8'));
+      if (data.items && Array.isArray(data.items)) {
+        const item = data.items.find((i) => i.externalReferenceCode === erc);
+        if (item) return item;
+      }
+    } catch (e) {}
+  }
+  return null;
+}
+
 async function globalSetup(config) {
   const { baseURL, storageState } = config.projects[0].use;
   // projectRoot is defined at top level
@@ -888,6 +911,34 @@ async function globalSetup(config) {
         );
         if (objResp.ok()) break;
         attempts++;
+        if (attempts === 1) {
+          console.log(
+            `     Object Definition ${erc} not found on initial check. Attempting programmatic bootstrap...`
+          );
+          const payload = findObjectDefinitionPayload(erc, projectRoot);
+          if (payload) {
+            const createResp = await page.request.post(
+              `${baseURL}/o/object-admin/v1.0/object-definitions`,
+              {
+                headers,
+                data: payload,
+              }
+            );
+            if (createResp.ok()) {
+              console.log(
+                `     Successfully created Object Definition for ${erc}. Waiting for Liferay activation...`
+              );
+            } else {
+              console.warn(
+                `     [WARN] Programmatic creation failed for ${erc}: ${createResp.status()} - ${await createResp.text().catch(() => '')}`
+              );
+            }
+          } else {
+            console.warn(
+              `     [WARN] Could not find local JSON definition file for ${erc}`
+            );
+          }
+        }
         if (attempts < maxAttempts) {
           console.log(
             `     Object Definition ${erc} not found yet. Retrying in 3 seconds (Attempt ${attempts}/${maxAttempts})...`
