@@ -326,6 +326,9 @@ log_command "ldm init-common -y"
 ldm init-common -y > /dev/null 2>&1
 
 echo "  -> Enabling modern Headless API feature flags in common properties..."
+# Ensure properties file and parent directories exist to prevent grep errors
+mkdir -p ~/.ldm/common
+touch ~/.ldm/common/portal-ext.properties
 # Ensure file ends with newline before appending
 [ -f ~/.ldm/common/portal-ext.properties ] && sed -i '' -e '$a\' ~/.ldm/common/portal-ext.properties 2>/dev/null || true
 
