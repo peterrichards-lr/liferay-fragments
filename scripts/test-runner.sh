@@ -240,7 +240,7 @@ for cmd in ldm jq curl node npm docker; do
 done
 
 # Check Playwright Browsers
-if ! playwright test --version &> /dev/null; then
+if ! npx playwright test --version &> /dev/null; then
     echo "Error: Playwright is not initialized."
     echo "Hint: Run 'npm install' to install dependencies."
     exit 1
@@ -624,11 +624,11 @@ write_signal "TESTING" "$EST_TESTING"
 set +e
 cd e2e-tests
 if [ -n "$FILTER_PATTERN" ]; then
-    log_command "LIFERAY_VERSION=\"$REALISED_VERSION\" PW_TEST_SCREENSHOT_NO_FONTS_READY=1 playwright test --grep \"$FILTER_PATTERN\""
-    LIFERAY_VERSION="$REALISED_VERSION" PW_TEST_SCREENSHOT_NO_FONTS_READY=1 TEST_FILTER="$FILTER_PATTERN" playwright test --grep "$FILTER_PATTERN" > playwright_output.log 2>&1
+    log_command "LIFERAY_VERSION=\"$REALISED_VERSION\" PW_TEST_SCREENSHOT_NO_FONTS_READY=1 npx playwright test --grep \"$FILTER_PATTERN\""
+    LIFERAY_VERSION="$REALISED_VERSION" PW_TEST_SCREENSHOT_NO_FONTS_READY=1 TEST_FILTER="$FILTER_PATTERN" npx playwright test --grep "$FILTER_PATTERN" > playwright_output.log 2>&1
 else
-    log_command "LIFERAY_VERSION=\"$REALISED_VERSION\" PW_TEST_SCREENSHOT_NO_FONTS_READY=1 playwright test"
-    LIFERAY_VERSION="$REALISED_VERSION" PW_TEST_SCREENSHOT_NO_FONTS_READY=1 playwright test > playwright_output.log 2>&1
+    log_command "LIFERAY_VERSION=\"$REALISED_VERSION\" PW_TEST_SCREENSHOT_NO_FONTS_READY=1 npx playwright test"
+    LIFERAY_VERSION="$REALISED_VERSION" PW_TEST_SCREENSHOT_NO_FONTS_READY=1 npx playwright test > playwright_output.log 2>&1
 fi
 TEST_EXIT_CODE=$?
 cd ..
