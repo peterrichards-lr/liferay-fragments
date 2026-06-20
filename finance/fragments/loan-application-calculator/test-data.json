@@ -1,4 +1,5 @@
 {
+  "requiredObjects": ["LOAN_APPLICATION"],
   "pageLayout": {
     "type": "FormContainer",
     "definition": {

@@ -7,5 +7,6 @@
       "descriptionField": "description",
       "columns": "3"
     }
-  }
+  },
+  "requiredObjects": ["PRODUCT_SHOWCASE"]
 }

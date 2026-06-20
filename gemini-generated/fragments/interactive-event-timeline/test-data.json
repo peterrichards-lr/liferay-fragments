@@ -7,5 +7,6 @@
       "descriptionField": "description",
       "baseColor": "var(--primary)"
     }
-  }
+  },
+  "requiredObjects": ["COMPANY_MILESTONE"]
 }

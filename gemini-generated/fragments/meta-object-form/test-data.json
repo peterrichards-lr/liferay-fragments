@@ -10,5 +10,6 @@
       "successBehavior": "message",
       "successMessage": "Milestone submitted successfully!"
     }
-  }
+  },
+  "requiredObjects": ["COMPANY_MILESTONE"]
 }

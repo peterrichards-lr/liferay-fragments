@@ -1,4 +1,5 @@
 {
+  "requiredObjects": ["OTP_VERIFICATION"],
   "pageLayout": {
     "type": "FormContainer",
     "definition": {

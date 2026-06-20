@@ -10,5 +10,6 @@
       "enableDelete": false,
       "enableEdit": false
     }
-  }
+  },
+  "requiredObjects": ["COMPANY_MILESTONE"]
 }

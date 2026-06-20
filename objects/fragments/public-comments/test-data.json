@@ -8,5 +8,6 @@
       "useDummyId": true,
       "dummyId": "123"
     }
-  }
+  },
+  "requiredObjects": ["TICKET_COMMENT"]
 }

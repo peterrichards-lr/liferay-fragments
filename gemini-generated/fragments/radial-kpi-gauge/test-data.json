@@ -6,5 +6,6 @@
       "targetValue": "5000",
       "gaugeColor": "var(--primary)"
     }
-  }
+  },
+  "requiredObjects": ["WATER_READING"]
 }

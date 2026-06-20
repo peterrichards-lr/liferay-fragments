@@ -14,5 +14,6 @@
       "chartType": "bar",
       "showLegend": true
     }
-  }
+  },
+  "requiredObjects": ["SALES_REPORT"]
 }

@@ -1,4 +1,5 @@
 {
+  "requiredObjects": ["ACTIVITY_LOG"],
   "pageConfig": {
     "fragmentConfig": {
       "objectERC": "ACTIVITY_LOG",

@@ -1,4 +1,5 @@
 {
+  "requiredObjects": ["APPLICANT"],
   "pageLayout": {
     "type": "FormContainer",
     "definition": {

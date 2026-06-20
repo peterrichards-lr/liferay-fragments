@@ -4,5 +4,6 @@
       "objectERC": "AUDIT_ENTRY",
       "taskItemDelegateName": "C_AuditEntry"
     }
-  }
+  },
+  "requiredObjects": ["AUDIT_ENTRY"]
 }

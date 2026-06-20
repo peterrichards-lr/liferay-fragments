@@ -6,5 +6,6 @@
       "useTestAccount": true,
       "testAccount": "12345"
     }
-  }
+  },
+  "requiredObjects": ["WATER_READING"]
 }
