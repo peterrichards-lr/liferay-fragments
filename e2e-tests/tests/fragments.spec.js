@@ -35,7 +35,17 @@ test.describe('Responsive Fragment Rendering', () => {
 
       // 1. Go directly to the generated page
       const base = baseURL || process.env.BASE_URL || 'http://localhost:8080';
-      await page.goto(base + pageInfo.url);
+      const response = await page.goto(base + pageInfo.url);
+
+      // Fail early if navigation returns an error page (e.g. 404, 500)
+      if (response) {
+        const status = response.status();
+        if (status >= 400) {
+          throw new Error(
+            `Page navigation failed with status code ${status} for URL: ${pageInfo.url}`
+          );
+        }
+      }
 
       // 2. Wait for the page to load (stretching timeout in CI to handle slow runner initialization)
       try {
@@ -144,6 +154,11 @@ test.describe('Responsive Fragment Rendering', () => {
         // Target the fragment element directly, scroll it into view, and screenshot it
         let fragmentElement;
         const fragmentCount = await page.locator(fragmentSelector).count();
+        if (fragmentCount === 0) {
+          throw new Error(
+            `Fragment '${pageInfo.fragmentName}' was not found on the page! (Selector: ${fragmentSelector} returned 0 elements)`
+          );
+        }
         if (fragmentCount > 1) {
           fragmentElement = page
             .locator('.lfr-layout-structure-item-row, .row')

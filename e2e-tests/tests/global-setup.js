@@ -897,10 +897,10 @@ async function globalSetup(config) {
       }
 
       if (!objResp.ok()) {
-        console.warn(
-          `     [WARN] Object Definition ${erc} not found in portal: status ${objResp.status()}`
-        );
-        continue;
+        const bodyText = await objResp.text().catch(() => '');
+        const msg = `Object Definition ${erc} not found in portal: status ${objResp.status()} - ${bodyText}`;
+        console.error(`     [ERROR] ${msg}`);
+        throw new Error(msg);
       }
 
       const objJson = await objResp.json();
@@ -2441,6 +2441,12 @@ async function globalSetup(config) {
           await new Promise((resolve) => setTimeout(resolve, 5000));
         }
       }
+    }
+
+    if (!success) {
+      throw new Error(
+        `Failed to create page for fragment '${fragmentName}' (${fragmentKey}) after ${maxAttempts} attempts.`
+      );
     }
 
     if (pageWasCreated) {

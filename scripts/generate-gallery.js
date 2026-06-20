@@ -225,7 +225,7 @@ function generateGallery() {
           if (fs.existsSync(fsPath)) {
             const size = fs.statSync(fsPath).size;
             if (
-              [8736, 9822, 19110, 18252, 906493, 238225, 151856].includes(size)
+              [8736, 9822, 19110, 18252, 21912, 10367, 32360].includes(size)
             ) {
               is404 = true;
             }
@@ -269,7 +269,7 @@ function generateGallery() {
               liveImages[vp + '_status'] = '<br>🟢 **Passed**';
             }
           } else {
-            liveImages[vp + '_status'] = '<br>🟢 **Passed**';
+            liveImages[vp + '_status'] = '<br>⚠️ **Unverified**';
           }
         }
       });
