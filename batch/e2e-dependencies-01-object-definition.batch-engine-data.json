@@ -390,6 +390,14 @@
           "name": "emailAddress",
           "required": false,
           "type": "String"
+        },
+        {
+          "businessType": "Text",
+          "externalReferenceCode": "SIGNATURE",
+          "label": { "en_US": "Signature" },
+          "name": "signature",
+          "required": false,
+          "type": "String"
         }
       ],
       "pluralLabel": { "en_US": "Applicants" },

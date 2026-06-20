@@ -88,6 +88,23 @@ async function globalTeardown(config) {
     await new Promise((resolve) => setTimeout(resolve, 100));
   }
 
+  // Delete the dedicated E2E site to clean up all pages, layouts, and site scoped data
+  try {
+    console.log('Deleting dedicated E2E Site: FRAGMENTS_E2E_TEST_SITE...');
+    const deleteSiteResp = await apiContext.delete(
+      '/o/headless-admin-site/v1.0/sites/FRAGMENTS_E2E_TEST_SITE'
+    );
+    if (deleteSiteResp.ok()) {
+      console.log('  -> Successfully deleted E2E Site.');
+    } else {
+      console.warn(
+        `  -> [WARN] Failed to delete E2E Site: ${deleteSiteResp.status()} - ${await deleteSiteResp.text()}`
+      );
+    }
+  } catch (e) {
+    console.error('  -> [ERROR] Exception while deleting E2E Site:', e.message);
+  }
+
   // Dispose of the request API context to release all connection pools/keep-alive handles cleanly
   await apiContext.dispose();
 

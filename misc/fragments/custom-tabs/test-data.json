@@ -2,11 +2,11 @@
   "pageLayout": {
     "type": "Fragment",
     "key": "custom-tabs",
+    "dropZoneId": "1",
     "children": [
       {
         "type": "Fragment",
         "key": "rich-text",
-        "dropZoneId": "1",
         "fragmentFields": [
           {
             "id": "text",

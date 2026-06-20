@@ -107,9 +107,10 @@ function generateGallery() {
 
       // Skip fragments that are explicitly excluded from the gallery (e.g. utility containers)
       const testDataFile = path.join(fragDir, 'test-data.json');
+      let testData = null;
       if (fs.existsSync(testDataFile)) {
         try {
-          const testData = JSON.parse(fs.readFileSync(testDataFile, 'utf8'));
+          testData = JSON.parse(fs.readFileSync(testDataFile, 'utf8'));
           if (testData.excludeFromGallery === true) {
             return;
           }
@@ -119,6 +120,73 @@ function generateGallery() {
       const fragSafeName = path.basename(fragDir);
 
       markdown += `### ${fragMetadata.name}\n\n`;
+
+      if (testData) {
+        const getCustomFragmentRequirements = (data, ownKey) => {
+          if (!data || !data.pageLayout) return [];
+          const requirements = new Set();
+          const traverse = (node) => {
+            if (!node) return;
+            // Traverse nested definitions if type Section, Row, Column, etc.
+            if (node.key && node.key !== ownKey) {
+              let typeName = node.type || 'Fragment';
+              let displayName = node.key;
+              if (
+                node.key === 'BASIC_COMPONENT-html' ||
+                node.key === 'rich-text'
+              ) {
+                displayName = 'HTML (System Component)';
+              } else if (
+                node.key ===
+                'com.liferay.fragment.renderer.menu.display.internal.MenuDisplayFragmentRenderer'
+              ) {
+                displayName = 'Menu Display (System Component)';
+              }
+              requirements.add(`${typeName}: \`${displayName}\``);
+            }
+            if (node.children && Array.isArray(node.children)) {
+              node.children.forEach(traverse);
+            }
+            if (node.pageElements && Array.isArray(node.pageElements)) {
+              node.pageElements.forEach(traverse);
+            }
+            // Check form container definitions/layout definitions
+            if (node.definition) {
+              if (
+                node.definition.formContainerConfig &&
+                node.definition.formContainerConfig.formContainerReference
+              ) {
+                const className =
+                  node.definition.formContainerConfig.formContainerReference
+                    .className;
+                requirements.add(`Form Target: \`${className}\``);
+              }
+              if (
+                node.definition.formConfig &&
+                node.definition.formConfig.formReference
+              ) {
+                const className =
+                  node.definition.formConfig.formReference.className;
+                requirements.add(`Form Target: \`${className}\``);
+              }
+            }
+          };
+          traverse(data.pageLayout);
+          return Array.from(requirements).sort();
+        };
+
+        const reqs = getCustomFragmentRequirements(
+          testData,
+          fragMetadata.key || fragSafeName
+        );
+        if (reqs.length > 0) {
+          markdown += `**Snapshot Prerequisites / Layout Components:**\n`;
+          reqs.forEach((r) => {
+            markdown += `- ${r}\n`;
+          });
+          markdown += `\n`;
+        }
+      }
 
       const manualImg = path.join(IMAGES_DIR, `${fragSafeName}.png`);
       const viewports = ['desktop', 'tablet', 'mobile'];
@@ -148,7 +216,44 @@ function generateGallery() {
         }
 
         if (liveImages[vp]) {
-          if (
+          const fsPath = path.resolve(
+            process.cwd(),
+            'docs',
+            liveImages[vp].replace(/^\.\//, '')
+          );
+          let is404 = false;
+          if (fs.existsSync(fsPath)) {
+            const size = fs.statSync(fsPath).size;
+            if (
+              [8736, 9822, 19110, 18252, 906493, 238225, 151856].includes(size)
+            ) {
+              is404 = true;
+            }
+          }
+
+          // Check corresponding HTML file in snapshots for 404 markers
+          const e2eHtml = e2eSnapshot.replace('.png', '.html');
+          if (!is404 && fs.existsSync(e2eHtml)) {
+            try {
+              const htmlContent = fs.readFileSync(e2eHtml, 'utf8');
+              if (
+                htmlContent.includes('Page Not Found') ||
+                htmlContent.includes('Page not found') ||
+                htmlContent.includes('404 - Page Not Found')
+              ) {
+                is404 = true;
+              }
+            } catch (err) {
+              console.warn(
+                `[WARN] Failed to read HTML file ${e2eHtml}:`,
+                err.message
+              );
+            }
+          }
+
+          if (is404) {
+            liveImages[vp + '_status'] = '<br>🔴 **Failed (404 Page)**';
+          } else if (
             visualAnalysis &&
             visualAnalysis.results &&
             visualAnalysis.results[liveFileName]
@@ -163,6 +268,8 @@ function generateGallery() {
             } else {
               liveImages[vp + '_status'] = '<br>🟢 **Passed**';
             }
+          } else {
+            liveImages[vp + '_status'] = '<br>🟢 **Passed**';
           }
         }
       });
@@ -208,14 +315,27 @@ function generateGallery() {
         }
       }
 
-      const docFile = path.join(DOCS_DIR, 'fragments', `${fragSafeName}.md`);
-      if (fs.existsSync(docFile)) {
+      const docFile1 = path.join(DOCS_DIR, 'fragments', `${fragSafeName}.md`);
+      const docFile2 = path.join(
+        DOCS_DIR,
+        'fragments',
+        `${safeFragmentName}.md`
+      );
+      const rootDocFile1 = path.join(DOCS_DIR, `${fragSafeName}.md`);
+      const rootDocFile2 = path.join(DOCS_DIR, `${safeFragmentName}.md`);
+
+      if (fs.existsSync(docFile1)) {
         markdown += `[Detailed Documentation](./fragments/${fragSafeName}.md)\n\n`;
+      } else if (fs.existsSync(docFile2)) {
+        markdown += `[Detailed Documentation](./fragments/${safeFragmentName}.md)\n\n`;
+      } else if (fs.existsSync(rootDocFile1)) {
+        markdown += `[Detailed Documentation](./${fragSafeName}.md)\n\n`;
+      } else if (fs.existsSync(rootDocFile2)) {
+        markdown += `[Detailed Documentation](./${safeFragmentName}.md)\n\n`;
       } else {
-        const rootDocFile = path.join(DOCS_DIR, `${fragSafeName}.md`);
-        if (fs.existsSync(rootDocFile)) {
-          markdown += `[Detailed Documentation](./${fragSafeName}.md)\n\n`;
-        }
+        console.warn(
+          `[WARN] No documentation file found for fragment: ${fragMetadata.name} in gallery`
+        );
       }
 
       markdown += `--- \n\n`;

@@ -191,7 +191,7 @@ after itself.
       into a single root-level file for form-fragments. Fixed dataType mismatches
       (boolean/number) across color-swatches, file-drop-zone, listbox-multiselect,
       password-strength, signature-pad, custom-tabs, otp-input, and meter-reading.
-- [ ] Integrate new `ldm --feature` switch into `test-runner.sh` once LDM is
+- [x] Integrate new `ldm --feature` switch into `test-runner.sh` once LDM is
       updated.
 - [ ] Investigate Liferay Auto-Deploy bug (Empty Collections vs Manual UI
       Import).
@@ -310,7 +310,6 @@ after itself.
 
 ### 3. Local Automation & Timing Gates
 
-
 - **Quality Hook**: Integrated the auto-dependency sync script (`scripts/initialize-build-config.js`) and the fragment linter (`npm run lint`) into the local `.git/hooks/pre-commit` script. It includes safety checks for missing `node_modules` and helpful instructions for using `git commit --no-verify` to bypass the hook for WIP.
 - **CI Timeout Tuning**: Scaled Playwright `networkidle` state timeout to 15 seconds in CI (`process.env.CI`) to ensure slower GitHub Actions runners wait for dynamic layout rendering before capturing screenshots.
 
@@ -326,4 +325,3 @@ after itself.
 - **Dashboard Container CSS**: Added base CSS to `dashboard-container/index.css` so the component renders with a visible frame in E2E screenshots.
 - **Linter Exclusions**: Added `temp_extract/**` and `temp_inspect/**` to the lint-fragments.js ignore list to prevent false positives from diagnostic extraction folders.
 - **search-button CSS Tokens**: Replaced hardcoded hex colors (`#30313f`, `#e2e8f0`, `#f8fafc`, `#0053a0`, `#cbd5e1`) with Meridian CSS variable tokens (`var(--body-color)`, `var(--border-color)`, `var(--light)`, `var(--primary)`, `var(--gray-400)`). Resolves the final linter warning — project now passes `npm run lint` with **0 errors, 0 warnings**.
-

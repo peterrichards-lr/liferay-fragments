@@ -335,7 +335,7 @@ function buildPageElementTree(
       definition: {
         fragment: {
           key: key,
-          siteKey: siteERC,
+          siteKey: key === 'BASIC_COMPONENT-html' ? 'L_GLOBAL' : siteERC,
         },
         fragmentConfig: resolvedConfig,
         fragmentFields: resolvedFields,
@@ -1038,27 +1038,73 @@ async function globalSetup(config) {
     timeout: 60000,
   });
 
-  // 1. Fetch the Target Site for Page Generation (Guest/Liferay)
-  // Fragments are deployed to 'Global' but we verify them on the 'Guest' site
-  // because the Global site often restricts Headless Page creation.
-  const siteResp = await apiContext.get('/o/headless-admin-site/v1.0/sites');
-  if (!siteResp.ok()) {
+  // 1. Reset and Create Dedicated E2E Site
+  const targetSiteERC = 'FRAGMENTS_E2E_TEST_SITE';
+  const targetSiteName = 'Fragments E2E Test Site';
+  const targetSiteFriendlyUrl = '/fragments-e2e-test-site';
+
+  console.log(`Checking if E2E site ${targetSiteERC} already exists...`);
+  const checkSiteResp = await apiContext.get(
+    `/o/headless-admin-site/v1.0/sites/${targetSiteERC}`
+  );
+  if (checkSiteResp.ok()) {
+    console.log(
+      `  -> Existing site found. Deleting to ensure a clean slate...`
+    );
+    const deleteSiteResp = await apiContext.delete(
+      `/o/headless-admin-site/v1.0/sites/${targetSiteERC}`
+    );
+    if (deleteSiteResp.ok()) {
+      console.log('  -> Delete request submitted. Waiting for completion...');
+      let deleted = false;
+      for (let i = 0; i < 15; i++) {
+        await new Promise((resolve) => setTimeout(resolve, 2000));
+        const statusResp = await apiContext.get(
+          `/o/headless-admin-site/v1.0/sites/${targetSiteERC}`
+        );
+        if (statusResp.status() === 404) {
+          deleted = true;
+          break;
+        }
+      }
+      if (!deleted) {
+        console.warn('  -> [WARN] Site deletion timed out. Proceeding anyway.');
+      } else {
+        console.log('  -> Site successfully deleted.');
+      }
+    } else {
+      console.warn(
+        `  -> [WARN] Failed to delete existing site: ${deleteSiteResp.status()} - ${await deleteSiteResp.text()}`
+      );
+    }
+  }
+
+  console.log(
+    `Creating new E2E site '${targetSiteName}' (${targetSiteERC})...`
+  );
+  const createSiteResp = await apiContext.post(
+    '/o/headless-admin-site/v1.0/sites',
+    {
+      data: {
+        name: targetSiteName,
+        friendlyUrlPath: targetSiteFriendlyUrl,
+        externalReferenceCode: targetSiteERC,
+        membershipType: 'open',
+      },
+    }
+  );
+
+  if (!createSiteResp.ok()) {
     throw new Error(
-      `Failed to fetch sites: ${siteResp.status()} ${siteResp.statusText()}`
+      `Failed to create E2E site: ${createSiteResp.status()} - ${await createSiteResp.text()}`
     );
   }
-  const siteData = await siteResp.json();
-  const targetSite =
-    siteData.items.find(
-      (s) =>
-        s.name === 'Guest' ||
-        s.name === 'Liferay' ||
-        s.friendlyUrlPath === '/guest'
-    ) || siteData.items[0];
-  const siteId = targetSite.id;
-  const siteERC = targetSite.externalReferenceCode;
+
+  const siteInfo = await createSiteResp.json();
+  const siteId = siteInfo.id;
+  const siteERC = siteInfo.externalReferenceCode;
   console.log(
-    `Testing Global Fragments on Site: ${targetSite.name} (ID: ${siteId}, ERC: ${siteERC})`
+    `Testing Global Fragments on Site: ${siteInfo.name} (ID: ${siteId}, ERC: ${siteERC})`
   );
 
   // ----- PHASE 5.05: DETECT LIFERAY VERSION & SCHEMA COMPATIBILITY -----
@@ -1249,26 +1295,32 @@ async function globalSetup(config) {
 
       let currentDir = path.dirname(file);
       let collectionName = '';
+      let collectionFolder = '';
+      let collectionFound = false;
       while (currentDir !== '..' && currentDir !== '/' && currentDir !== '.') {
         const collectionFile = path.join(currentDir, 'collection.json');
         if (fs.existsSync(collectionFile)) {
           const collData = JSON.parse(fs.readFileSync(collectionFile, 'utf8'));
           collectionName = collData.name || '';
+          collectionFolder = path.basename(currentDir);
+          collectionFound = true;
           break;
         }
         const parent = path.dirname(currentDir);
         if (parent === currentDir) break;
         currentDir = parent;
       }
-      if (!collectionName) {
+      if (!collectionFound) {
         const parentDirName = path.basename(path.dirname(path.dirname(file)));
         if (parentDirName !== 'fragments' && parentDirName !== '..') {
           collectionName = parentDirName;
+          collectionFolder = parentDirName;
         }
       }
 
       return (
         filterRegex.test(collectionName) ||
+        filterRegex.test(collectionFolder) ||
         filterRegex.test(fragmentName) ||
         filterRegex.test(baseFragmentKey)
       );
@@ -1532,11 +1584,14 @@ async function globalSetup(config) {
       currentDir = parent;
     }
 
-    if (!collectionFound) {
-      // Fallback: use the name of the folder two levels up if it's not 'fragments'
+    let collectionFolder = '';
+    if (collectionFound) {
+      collectionFolder = path.basename(currentDir);
+    } else {
       const parentDirName = path.basename(path.dirname(path.dirname(file)));
       if (parentDirName !== 'fragments' && parentDirName !== '..') {
         collectionName = parentDirName;
+        collectionFolder = parentDirName;
       }
     }
 
@@ -2084,11 +2139,16 @@ async function globalSetup(config) {
               type: 'Root',
               pageElements: [current],
             };
+          } else if (current.type === 'FormContainer') {
+            current = {
+              type: 'Root',
+              pageElements: [current],
+            };
           } else {
-            // Fragment, Widget, FormContainer, etc.
+            // Fragment, Widget, etc.
             current = {
               type: 'Column',
-              definition: { size: 12 },
+              definition: { size: 12, width: '12' },
               pageElements: [current],
             };
             current = {
@@ -2166,6 +2226,7 @@ async function globalSetup(config) {
                           type: 'Column',
                           definition: {
                             size: 12,
+                            width: '12',
                           },
                           pageElements: [
                             {
@@ -2233,6 +2294,7 @@ async function globalSetup(config) {
                       type: 'Column',
                       definition: {
                         size: 12,
+                        width: '12',
                       },
                       pageElements: [
                         {
@@ -2393,8 +2455,9 @@ async function globalSetup(config) {
         fragmentName.includes('(DEPRECATED)'));
     testPagesMap.push({
       collectionName: collectionName,
+      collectionFolder: collectionFolder,
       fragmentName: fragmentName,
-      url: friendlyUrl,
+      url: `/web/fragments-e2e-test-site${friendlyUrl}`,
       id: pageId,
       uuid: pageUuid,
       siteERC: siteERC,

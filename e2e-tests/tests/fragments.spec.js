@@ -18,8 +18,9 @@ test.describe('Responsive Fragment Rendering', () => {
   test.use({ storageState: { cookies: [], origins: [] } });
 
   for (const pageInfo of testPages) {
-    test(`Verify: ${pageInfo.collectionName} > ${pageInfo.fragmentName}`, async ({
+    test(`Verify: ${pageInfo.collectionFolder || pageInfo.collectionName} > ${pageInfo.fragmentName}`, async ({
       page,
+      baseURL,
     }) => {
       const errors = [];
       page.on('pageerror', (err) => errors.push(err.message));
@@ -33,7 +34,8 @@ test.describe('Responsive Fragment Rendering', () => {
       });
 
       // 1. Go directly to the generated page
-      await page.goto(pageInfo.url);
+      const base = baseURL || process.env.BASE_URL || 'http://localhost:8080';
+      await page.goto(base + pageInfo.url);
 
       // 2. Wait for the page to load (stretching timeout in CI to handle slow runner initialization)
       try {
@@ -64,7 +66,11 @@ test.describe('Responsive Fragment Rendering', () => {
           #footer,
           footer,
           .footer,
-          #wrapper footer { 
+          #wrapper footer,
+          [role="contentinfo"],
+          .powered-by,
+          [id*="footer"],
+          [class*="footer"] { 
             display: none !important; 
             visibility: hidden !important;
             opacity: 0 !important;
@@ -78,6 +84,13 @@ test.describe('Responsive Fragment Rendering', () => {
             padding-left: 0 !important;
             margin-top: 0 !important;
             padding-top: 0 !important;
+          }
+          /* Limit menu items inside responsive menus to prevent screenshot bloating */
+          .fragment-menu .navbar-nav > li:nth-child(n+6),
+          .fragment-menu .navbar-nav > .nav-item:nth-child(n+6),
+          .fragment-menu .navbar-nav > .lfr-nav-item:nth-child(n+6),
+          .fragment-menu ul > li:nth-child(n+6) {
+            display: none !important;
           }
         `,
       });

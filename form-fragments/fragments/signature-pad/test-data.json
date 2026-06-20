@@ -1,21 +1,41 @@
 {
   "pageLayout": {
-    "type": "Column",
+    "type": "FormContainer",
     "definition": {
-      "width": "12"
+      "formContainerConfig": {
+        "formContainerReference": {
+          "className": "com.liferay.object.model.ObjectDefinition#APPLICANT"
+        }
+      }
     },
     "children": [
       {
-        "type": "Fragment",
-        "key": "signature-pad",
-        "fieldKey": "signature",
-        "fragmentConfig": {
-          "label": "Signature"
-        }
-      },
-      {
-        "type": "Fragment",
-        "key": "submit-button"
+        "type": "Section",
+        "children": [
+          {
+            "type": "Row",
+            "children": [
+              {
+                "type": "Column",
+                "definition": { "width": "100%" },
+                "children": [
+                  {
+                    "type": "FormFragment",
+                    "key": "signature-pad",
+                    "fieldKey": "signature",
+                    "fragmentConfig": {
+                      "label": "Signature"
+                    }
+                  },
+                  {
+                    "type": "FormFragment",
+                    "key": "submit-button"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
       }
     ]
   }

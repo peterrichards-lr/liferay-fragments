@@ -128,7 +128,12 @@ try {
 
 // 1. Find all fragments
 const fragmentFiles = globSync('**/fragment.json', {
-  ignore: ['node_modules/**', 'temp_extract/**', 'temp_inspect/**', ...ldmIgnores],
+  ignore: [
+    'node_modules/**',
+    'temp_extract/**',
+    'temp_inspect/**',
+    ...ldmIgnores,
+  ],
 });
 audit.total = fragmentFiles.length;
 
@@ -146,6 +151,47 @@ fragmentFiles.forEach((file) => {
         fragmentName,
         `fragment.json schema mismatch: ${ajv.errorsText(validateFragment.errors)}`
       );
+    }
+
+    // Validate that detailed documentation markdown file exists in docs/fragments/
+    if (fragJson.name) {
+      const fragSafeName = fragJson.name
+        .replace(/[^a-z0-9]+/gi, '-')
+        .toLowerCase();
+      const folderName = path.basename(dir);
+      const folderSafeName = folderName
+        .replace(/[^a-z0-9]+/gi, '-')
+        .toLowerCase();
+
+      const docPath1 = path.join(
+        process.cwd(),
+        'docs',
+        'fragments',
+        `${fragSafeName}.md`
+      );
+      const docPath2 = path.join(
+        process.cwd(),
+        'docs',
+        'fragments',
+        `${folderSafeName}.md`
+      );
+      const docPath3 = path.join(
+        process.cwd(),
+        'docs',
+        'fragments',
+        `${folderName}.md`
+      );
+
+      if (
+        !fs.existsSync(docPath1) &&
+        !fs.existsSync(docPath2) &&
+        !fs.existsSync(docPath3)
+      ) {
+        logError(
+          fragmentName,
+          `Missing detailed documentation file. Expected at: docs/fragments/${fragSafeName}.md`
+        );
+      }
     }
   } catch (e) {
     logError(fragmentName, `Could not parse fragment.json: ${e.message}`);

@@ -1,16 +1,38 @@
 {
   "pageLayout": {
-    "type": "Column",
-    "definition": { "width": "12" },
+    "type": "FormContainer",
+    "definition": {
+      "formContainerConfig": {
+        "formContainerReference": {
+          "className": "com.liferay.object.model.ObjectDefinition#OTP_VERIFICATION"
+        }
+      }
+    },
     "children": [
       {
-        "type": "Fragment",
-        "key": "otp-input",
-        "fieldKey": "otpCode"
-      },
-      {
-        "type": "Fragment",
-        "key": "submit-button"
+        "type": "Section",
+        "children": [
+          {
+            "type": "Row",
+            "children": [
+              {
+                "type": "Column",
+                "definition": { "width": "100%" },
+                "children": [
+                  {
+                    "type": "FormFragment",
+                    "key": "otp-input",
+                    "fieldKey": "otpCode"
+                  },
+                  {
+                    "type": "FormFragment",
+                    "key": "submit-button"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
       }
     ]
   }

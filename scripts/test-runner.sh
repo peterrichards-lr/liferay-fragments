@@ -146,6 +146,7 @@ EXISTING_PROJECT=false
 SKIP_DEPLOY=false
 LDM_VERBOSE=""
 FILTER_PATTERN=""
+FEATURES=("LPD-35443" "LPS-178052")
 
 # Parse Arguments
 while [[ "$#" -gt 0 ]]; do
@@ -170,6 +171,12 @@ while [[ "$#" -gt 0 ]]; do
             FILTER_PATTERN="$2"
             shift
             ;;
+        --feature)
+            # Support space-separated values within one argument, or multiple --feature args
+            IFS=' ' read -r -a array <<< "$2"
+            FEATURES+=("${array[@]}")
+            shift
+            ;;
         -h|--help)
             echo "Usage: ./test-runner.sh [options] [liferay-tag]"
             echo "Options:"
@@ -178,6 +185,7 @@ while [[ "$#" -gt 0 ]]; do
             echo "  -p, --project <name>   Use an existing LDM project"
             echo "  -s, --skip-deploy      Skip fragment ZIP compilation and deployment"
             echo "  -f, --filter <pattern> Filter tests and page creation to matching fragments/collections"
+            echo "  --feature <flags>      Additional feature flags to enable (space-separated)"
             echo "  -h, --help             Show this help screen"
             exit 0
             ;;
@@ -365,9 +373,13 @@ if [ "$EXISTING_PROJECT" = true ]; then
     echo "  -> Skipping LDM run (using existing project $PROJECT_NAME)..."
 else
     echo "  -> Starting LDM project '$PROJECT_NAME' with $TAG_FLAG $LIFERAY_TAG on port $PORT..."
+    FEATURE_ARGS=""
+    if [ ${#FEATURES[@]} -gt 0 ]; then
+        FEATURE_ARGS="--feature ${FEATURES[*]}"
+    fi
     # Increase CodeCache and Memory to prevent JIT stalls. 
-    log_command "ldm run \"$PROJECT_NAME\" \"$TAG_FLAG\" \"$LIFERAY_TAG\" --port \"$PORT\" --non-interactive --no-captcha --fast-login --sidecar --db postgresql $LDM_VERBOSE --env \"LIFERAY_JVM_OPTS=-Xms2g -Xmx4g -XX:ReservedCodeCacheSize=512m\""
-    if ! ldm run "$PROJECT_NAME" "$TAG_FLAG" "$LIFERAY_TAG" --port "$PORT" --non-interactive --no-captcha --fast-login --sidecar --db postgresql $LDM_VERBOSE --env "LIFERAY_JVM_OPTS=-Xms2g -Xmx4g -XX:ReservedCodeCacheSize=512m" > ldm_startup.log 2>&1; then
+    log_command "ldm run \"$PROJECT_NAME\" \"$TAG_FLAG\" \"$LIFERAY_TAG\" --port \"$PORT\" --non-interactive --no-captcha --fast-login --sidecar --db postgresql $LDM_VERBOSE $FEATURE_ARGS --env \"LIFERAY_JVM_OPTS=-Xms2g -Xmx4g -XX:ReservedCodeCacheSize=512m\""
+    if ! ldm run "$PROJECT_NAME" "$TAG_FLAG" "$LIFERAY_TAG" --port "$PORT" --non-interactive --no-captcha --fast-login --sidecar --db postgresql $LDM_VERBOSE $FEATURE_ARGS --env "LIFERAY_JVM_OPTS=-Xms2g -Xmx4g -XX:ReservedCodeCacheSize=512m" > ldm_startup.log 2>&1; then
         echo "Error: LDM failed to start the environment."
         echo "Hint: Check ldm_startup.log or run 'ldm logs $PROJECT_NAME' for more details."
         cat <<EOF >> "$RESULTS_FILE"
