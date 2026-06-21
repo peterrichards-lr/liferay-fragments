@@ -328,14 +328,14 @@ fi
 echo ""
 echo "[3/5] Configuring LDM Prerequisites..."
 
-# Locate LDM common directory dynamically
+# Locate LDM common directory dynamically (checking for DXP activation keys)
 LDM_COMMON_DIR="$HOME/.ldm/common"
-if [ ! -d "$LDM_COMMON_DIR" ]; then
-    # Try typical WSL/MSYS mount paths for Windows user profiles
+if [ ! -d "$LDM_COMMON_DIR" ] || ! ls "$LDM_COMMON_DIR"/*.xml 1> /dev/null 2>&1; then
+    # Try typical WSL/MSYS mount paths for Windows user profiles where activation keys are stored
     WINDOWS_USER=$(cmd.exe /c "echo %USERNAME%" 2>/dev/null | tr -d '\r' || whoami)
-    if [ -d "/mnt/c/Users/$WINDOWS_USER/.ldm/common" ]; then
+    if [ -d "/mnt/c/Users/$WINDOWS_USER/.ldm/common" ] && ls "/mnt/c/Users/$WINDOWS_USER/.ldm/common"/*.xml 1> /dev/null 2>&1; then
         LDM_COMMON_DIR="/mnt/c/Users/$WINDOWS_USER/.ldm/common"
-    elif [ -d "/c/Users/$WINDOWS_USER/.ldm/common" ]; then
+    elif [ -d "/c/Users/$WINDOWS_USER/.ldm/common" ] && ls "/c/Users/$WINDOWS_USER/.ldm/common"/*.xml 1> /dev/null 2>&1; then
         LDM_COMMON_DIR="/c/Users/$WINDOWS_USER/.ldm/common"
     fi
 fi
