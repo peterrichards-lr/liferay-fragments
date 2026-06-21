@@ -239,6 +239,13 @@ for cmd in ldm jq curl node npm docker; do
     check_dependency "$cmd"
 done
 
+# Check if Docker daemon is running
+if ! docker info &> /dev/null; then
+    echo "Error: Docker daemon is not running."
+    echo "Hint: Please start Docker Desktop or the Docker daemon and try again."
+    exit 1
+fi
+
 # Check Playwright Browsers
 if ! npx playwright test --version &> /dev/null; then
     echo "Error: Playwright is not initialized."
