@@ -282,6 +282,11 @@ echo "Cleaning up previous test artifacts..."
 echo "  -> Purging old visual snapshots..."
 rm -rf e2e-tests/snapshots/ e2e-tests/playwright-report/ e2e-tests/playwright_output.log \
        playwright-report/ test-results/ state.json ldm_startup.log
+# Clean up any orphaned Docker containers to prevent port or naming conflicts
+if command -v docker &> /dev/null && docker info &> /dev/null; then
+    echo "  -> Cleaning up orphaned Docker containers..."
+    docker rm -f "${PROJECT_NAME}" "${PROJECT_NAME}-db" > /dev/null 2>&1 || true
+fi
 echo "  -> Old logs and reports cleared."
 
 # 2. Port & Tag Logic
