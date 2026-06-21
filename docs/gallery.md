@@ -3,6 +3,7 @@
 A visual reference for the high-fidelity fragments available in this Liferay DXP repository. Generated automatically.
 
 **Last Tested Against Liferay Version:** `2026.q1.9-lts`
+_(Note: Live snapshots disabled due to pending or failed test suite)_
 
 ## Aura Design System
 
@@ -1042,13 +1043,13 @@ Prominent visuals, such as videos or banners, that capture attention and define 
 
 - Fragment: `HTML (System Component)`
 
-#### Desktop (1920px) <br>🔴 **Failed (404 Page)**
+#### Desktop (1920px) <br>🟢 **Passed**
 
 <img src="./images/live/miscellaneous-custom-tabs-desktop.png" width="100%" alt="Desktop">
 
-|                                                   Tablet (768px)                                                    |                                                   Mobile (375px)                                                    |
-| :-----------------------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------------------: |
-| <img src="./images/live/miscellaneous-custom-tabs-tablet.png" width="350" alt="Tablet"><br>🔴 **Failed (404 Page)** | <img src="./images/live/miscellaneous-custom-tabs-mobile.png" width="175" alt="Mobile"><br>🔴 **Failed (404 Page)** |
+|                                              Tablet (768px)                                              |                                              Mobile (375px)                                              |
+| :------------------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------------------: |
+| <img src="./images/live/miscellaneous-custom-tabs-tablet.png" width="350" alt="Tablet"><br>🟢 **Passed** | <img src="./images/live/miscellaneous-custom-tabs-mobile.png" width="175" alt="Mobile"><br>🟢 **Passed** |
 
 [Detailed Documentation](./fragments/custom-tabs.md)
 

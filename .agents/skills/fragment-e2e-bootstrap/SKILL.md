@@ -52,6 +52,8 @@ The E2E bootstrap framework automatically provisions the following resources on 
    - **Service Access Policy (SAP)**: The setup scripts automatically configure Liferay's `SYSTEM_DEFAULT` SAP policy to authorize Guest users to view headless collection elements (specifically `com.liferay.headless.delivery.internal.resource.v1_0.ContentSetElementResourceImpl#*`).
    - **Guest View Permissions**: Programmatically created test layouts, content structures, and articles are granted Guest view permissions (`viewableBy: 'Anyone'` or `addGuestPermissions: true` in the setup service context) to prevent 403 Forbidden errors.
 
+- **FormContainer Rest schema constraints**: In Liferay 2026.Q1 REST payloads, a `FormContainer` pageElement's `pageElements` array must contain `FormFragment` elements _directly_ (e.g. no layout sections, rows, or columns are allowed directly inside `FormContainer`). Nested layout structures inside `FormContainer` pageElements are rejected with validation errors such as `Unable to map JSON path: pageDefinition.pageElement.pageElements.null.type`.
+
 ### 1.2 Shared Build Dependencies (`fragment-build.json`)
 
 If the fragment utilizes shared helper utilities (such as `discovery.js` for site-scoped dynamic object discovery or `dom.js` for utility functions), it must define them inside a `fragment-build.json` file in its root:

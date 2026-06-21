@@ -79,6 +79,7 @@
   - **Deprecated References**: The **'Module'** reference type (previously used
     for certain layout elements) is non-functional and strictly prohibited. Use
     `Fragment`, `Section`, or `Column` as defined in the modern schema.
+  - **FormContainer Rest schema constraints**: In Liferay 2026.Q1 REST payloads, a `FormContainer` pageElement's `pageElements` array must contain `FormFragment` elements _directly_ (e.g. no layout sections, rows, or columns are allowed directly inside `FormContainer`). Nested layout structures inside `FormContainer` pageElements are rejected with validation errors such as `Unable to map JSON path: pageDefinition.pageElement.pageElements.null.type`.
 
 ### 7. Robust Identifier Validation
 
@@ -193,10 +194,10 @@ after itself.
       password-strength, signature-pad, custom-tabs, otp-input, and meter-reading.
 - [x] Integrate new `ldm --feature` switch into `test-runner.sh` once LDM is
       updated.
-- [ ] Investigate Liferay Auto-Deploy bug (Empty Collections vs Manual UI
+- [x] Investigate Liferay Auto-Deploy bug (Empty Collections vs Manual UI
       Import).
 - [x] Roadmap: Enhance `.process-signal` state coordinator to write estimated completion times/percentages, allowing calling agents to schedule check reminders dynamically.
-- [ ] Roadmap: Investigate extending fragment bootstrapping to include provisioning Liferay Object definitions and mapping them dynamically inside Form Containers for input fragments (type: input) E2E verification.
+- [x] Roadmap: Investigate extending fragment bootstrapping to include provisioning Liferay Object definitions and mapping them dynamically inside Form Containers for input fragments (type: input) E2E verification.
 - [x] Optimize fragment selector in Playwright to match Liferay 2026.Q1
       structure items (using div[id^="fragment-"]), resolving 15s timeouts and
       speeding up tests.

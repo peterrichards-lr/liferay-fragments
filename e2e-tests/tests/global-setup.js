@@ -59,12 +59,12 @@ function convertConfigToFieldValues(config, fragmentDir) {
 
     if (type === 'Checkbox') {
       fieldValues[k] = {
-        type,
+        type: type,
         value: typeof val === 'string' ? val === 'true' : !!val,
       };
     } else {
       fieldValues[k] = {
-        type,
+        type: type,
         value: val !== null && val !== undefined ? val.toString() : '',
       };
     }
@@ -488,7 +488,6 @@ function buildPageElementTree(
         node.definition.formContainerConfig.formContainerReference.className ||
         className;
     }
-
     // Resolve className from ERC if present
     if (className.includes('#')) {
       const erc = className.split('#')[1];
@@ -522,23 +521,38 @@ function buildPageElementTree(
     };
 
     if (node.children && node.children.length > 0) {
-      element.pageElements = node.children.map((child) => {
-        // Automatically treat children of FormContainer as FormFragments if they are Fragments
-        if (typeof child === 'string') {
-          child = { type: 'FormFragment', key: child };
-        } else if (child && (child.type === 'Fragment' || !child.type)) {
-          child = { ...child, type: 'FormFragment' };
+      const flattenFormElements = (childrenList) => {
+        let list = [];
+        for (let child of childrenList) {
+          if (typeof child === 'string') {
+            child = { type: 'FormFragment', key: child };
+          }
+          const cType = child.type || 'Fragment';
+          if (cType === 'Section' || cType === 'Row' || cType === 'Column') {
+            if (child.children) {
+              list.push(...flattenFormElements(child.children));
+            }
+          } else {
+            let leaf = child;
+            if (!leaf.type || leaf.type === 'Fragment') {
+              leaf = { ...leaf, type: 'FormFragment' };
+            }
+            list.push(
+              buildPageElementTree(
+                leaf,
+                siteERC,
+                assetMap,
+                defaultFragmentKey,
+                defaultFragmentConfig,
+                fragmentKeyToDir,
+                objectDefinitions
+              )
+            );
+          }
         }
-        return buildPageElementTree(
-          child,
-          siteERC,
-          assetMap,
-          defaultFragmentKey,
-          defaultFragmentConfig,
-          fragmentKeyToDir,
-          objectDefinitions
-        );
-      });
+        return list;
+      };
+      element.pageElements = flattenFormElements(node.children);
     }
     return element;
   } else if (type === 'Widget') {
@@ -1192,11 +1206,15 @@ async function globalSetup(config) {
   let registeredKeys = [];
   let verificationSucceeded = false;
   try {
-    // Find the Global site to query fragment collections since they are auto-deployed globally
-    const globalSite =
-      siteData.items.find(
-        (s) => s.name === 'Global' || s.externalReferenceCode === 'GLOBAL'
-      ) || targetSite;
+    // Fetch sites to find the Global site ID
+    const sitesResp = await apiContext.get('/o/headless-admin-site/v1.0/sites');
+    if (!sitesResp.ok()) {
+      throw new Error(`Failed to fetch sites: ${sitesResp.status()}`);
+    }
+    const siteData = await sitesResp.json();
+    const globalSite = siteData.items.find(
+      (s) => s.name === 'Global' || s.externalReferenceCode === 'GLOBAL'
+    ) || { id: siteId };
     let querySiteId = globalSite.id;
 
     // 1. Get all fragment collections using the CSRF token
@@ -1407,7 +1425,7 @@ async function globalSetup(config) {
     console.error('  -> Error fetching existing layouts:', e.message);
   }
 
-  // Fetch all object definitions to resolve site-scoped API paths
+  // Search OpenAPI layout definitions to resolve site-scoped API paths
   let objectDefinitions = [];
   try {
     const objDefsResp = await apiContext.get(
@@ -1523,6 +1541,7 @@ async function globalSetup(config) {
   }
 
   // ----- PHASE 4.8: SEED COMMERCE PRODUCTS -----
+  const commerceAssetMap = {};
   try {
     console.log('Seeding Liferay Commerce products...');
     let catalogId = 33837; // Default fallback catalog ID
@@ -1599,7 +1618,7 @@ async function globalSetup(config) {
       }
 
       // Add product ID to assetMap so test-data.json can resolve it
-      assetMap[prodData.key] = productId;
+      commerceAssetMap[prodData.key] = productId;
     }
   } catch (commErr) {
     console.warn(
@@ -1661,7 +1680,7 @@ async function globalSetup(config) {
     const testDataFile = path.join(path.dirname(file), 'test-data.json');
     let seededConfigOverrides = {};
     let testData = null;
-    const assetMap = {}; // Maps ERC -> Liferay ID
+    const assetMap = { ...commerceAssetMap }; // Maps ERC -> Liferay ID
     const assetEntryIdMap = {}; // Maps ERC -> AssetEntry ID
 
     if (fs.existsSync(testDataFile)) {
@@ -2190,6 +2209,51 @@ async function globalSetup(config) {
               type: 'Root',
               pageElements: [current],
             };
+          } else if (current.type === 'FormFragment') {
+            const applicantDef = objectDefinitions.find(
+              (d) => d.externalReferenceCode === 'APPLICANT'
+            );
+            const applicantClassName = applicantDef
+              ? applicantDef.className
+              : 'com.liferay.object.model.ObjectDefinition#APPLICANT';
+
+            // Wrap FormFragment in FormContainer -> FormFragments (no nested Section/Row/Column)
+            current = {
+              type: 'FormContainer',
+              definition: {
+                formContainerConfig: {
+                  formContainerReference: {
+                    className: applicantClassName,
+                    type: 'FormContainerClassSubtypeReference',
+                  },
+                  formContainerType: 'Simple',
+                  numberOfSteps: 0,
+                },
+                indexed: true,
+                layout: {},
+              },
+              pageElements: [
+                current,
+                {
+                  type: 'FormFragment',
+                  definition: {
+                    fieldKey: '',
+                    fragmentInstance: {
+                      fragmentReference: {
+                        key: 'submit-button',
+                        siteKey: siteERC,
+                      },
+                      fragmentConfigurationFieldValues: {},
+                      fragmentEditableElements: [],
+                    },
+                  },
+                },
+              ],
+            };
+            current = {
+              type: 'Root',
+              pageElements: [current],
+            };
           } else if (current.type === 'FormContainer') {
             current = {
               type: 'Root',
@@ -2259,64 +2323,38 @@ async function globalSetup(config) {
               },
               pageElements: [
                 {
-                  type: 'Section',
+                  type: 'FormFragment',
                   definition: {
-                    indexed: true,
-                    layout: {},
-                  },
-                  pageElements: [
-                    {
-                      type: 'Row',
-                      definition: {
-                        gutters: true,
-                        columnsSpacing: true,
-                        numberOfColumns: 1,
+                    fieldKey: 'ObjectField_emailAddress',
+                    fragmentInstance: {
+                      fragmentReference: {
+                        key: fragmentKey,
+                        siteKey: siteERC,
                       },
-                      pageElements: [
-                        {
-                          type: 'Column',
-                          definition: {
-                            size: 12,
-                            width: '12',
-                          },
-                          pageElements: [
-                            {
-                              type: 'FormFragment',
-                              definition: {
-                                fieldKey: 'ObjectField_emailAddress',
-                                fragmentInstance: {
-                                  fragmentReference: {
-                                    key: fragmentKey,
-                                    siteKey: siteERC,
-                                  },
-                                  fragmentConfigurationFieldValues:
-                                    convertConfigToFieldValues(
-                                      seededConfigOverrides,
-                                      fragmentKeyToDir
-                                        ? fragmentKeyToDir[fragmentKey]
-                                        : null
-                                    ),
-                                },
-                              },
-                            },
-                            {
-                              type: 'FormFragment',
-                              definition: {
-                                fieldKey: '',
-                                fragmentInstance: {
-                                  fragmentReference: {
-                                    key: 'submit-button',
-                                    siteKey: siteERC,
-                                  },
-                                  fragmentConfigurationFieldValues: {},
-                                },
-                              },
-                            },
-                          ],
-                        },
-                      ],
+                      fragmentConfigurationFieldValues:
+                        convertConfigToFieldValues(
+                          seededConfigOverrides,
+                          fragmentKeyToDir
+                            ? fragmentKeyToDir[fragmentKey]
+                            : null
+                        ),
+                      fragmentEditableElements: [],
                     },
-                  ],
+                  },
+                },
+                {
+                  type: 'FormFragment',
+                  definition: {
+                    fieldKey: '',
+                    fragmentInstance: {
+                      fragmentReference: {
+                        key: 'submit-button',
+                        siteKey: siteERC,
+                      },
+                      fragmentConfigurationFieldValues: {},
+                      fragmentEditableElements: [],
+                    },
+                  },
                 },
               ],
             },
