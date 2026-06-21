@@ -328,36 +328,48 @@ fi
 echo ""
 echo "[3/5] Configuring LDM Prerequisites..."
 
+# Locate LDM common directory dynamically
+LDM_COMMON_DIR="$HOME/.ldm/common"
+if [ ! -d "$LDM_COMMON_DIR" ]; then
+    # Try typical WSL/MSYS mount paths for Windows user profiles
+    WINDOWS_USER=$(cmd.exe /c "echo %USERNAME%" 2>/dev/null | tr -d '\r' || whoami)
+    if [ -d "/mnt/c/Users/$WINDOWS_USER/.ldm/common" ]; then
+        LDM_COMMON_DIR="/mnt/c/Users/$WINDOWS_USER/.ldm/common"
+    elif [ -d "/c/Users/$WINDOWS_USER/.ldm/common" ]; then
+        LDM_COMMON_DIR="/c/Users/$WINDOWS_USER/.ldm/common"
+    fi
+fi
+
 echo "  -> Initializing LDM common assets..."
 log_command "ldm init-common -y"
 ldm init-common -y > /dev/null 2>&1
 
 echo "  -> Enabling modern Headless API feature flags in common properties..."
 # Ensure properties file and parent directories exist to prevent grep errors
-mkdir -p ~/.ldm/common
-touch ~/.ldm/common/portal-ext.properties
+mkdir -p "$LDM_COMMON_DIR"
+touch "$LDM_COMMON_DIR/portal-ext.properties"
 # Ensure file ends with newline before appending
-[ -f ~/.ldm/common/portal-ext.properties ] && sed -i '' -e '$a\' ~/.ldm/common/portal-ext.properties 2>/dev/null || true
+[ -f "$LDM_COMMON_DIR/portal-ext.properties" ] && sed -i '' -e '$a\' "$LDM_COMMON_DIR/portal-ext.properties" 2>/dev/null || true
 
 # Disable Terms of Use to prevent modal from blocking E2E screenshots
-if ! grep -q "terms.of.use.required=false" ~/.ldm/common/portal-ext.properties; then
-    echo "terms.of.use.required=false" >> ~/.ldm/common/portal-ext.properties
+if ! grep -q "terms.of.use.required=false" "$LDM_COMMON_DIR/portal-ext.properties"; then
+    echo "terms.of.use.required=false" >> "$LDM_COMMON_DIR/portal-ext.properties"
 fi
 
 # LPD-35443: Page Management API
-if ! grep -q "feature.flag.LPD-35443=true" ~/.ldm/common/portal-ext.properties; then
-    echo "feature.flag.LPD-35443=true" >> ~/.ldm/common/portal-ext.properties
+if ! grep -q "feature.flag.LPD-35443=true" "$LDM_COMMON_DIR/portal-ext.properties"; then
+    echo "feature.flag.LPD-35443=true" >> "$LDM_COMMON_DIR/portal-ext.properties"
 fi
 
 # LPS-178052: Headless Site Pages
-if ! grep -q "feature.flag.LPS-178052=true" ~/.ldm/common/portal-ext.properties; then
-    echo "feature.flag.LPS-178052=true" >> ~/.ldm/common/portal-ext.properties
+if ! grep -q "feature.flag.LPS-178052=true" "$LDM_COMMON_DIR/portal-ext.properties"; then
+    echo "feature.flag.LPS-178052=true" >> "$LDM_COMMON_DIR/portal-ext.properties"
 fi
 
 echo "  -> Verifying Liferay DXP activation key..."
-if ! ls ~/.ldm/common/*.xml 1> /dev/null 2>&1; then
-    echo "Error: No activation key (.xml) found in ~/.ldm/common."
-    echo "Hint: Please place a valid Liferay DXP activation key in ~/.ldm/common/ before running this script."
+if ! ls "$LDM_COMMON_DIR"/*.xml 1> /dev/null 2>&1; then
+    echo "Error: No activation key (.xml) found in $LDM_COMMON_DIR."
+    echo "Hint: Please place a valid Liferay DXP activation key in $LDM_COMMON_DIR/ before running this script."
     exit 1
 fi
 echo "  -> Activation key found."
