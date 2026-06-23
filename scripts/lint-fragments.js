@@ -132,6 +132,7 @@ const fragmentFiles = globSync('**/fragment.json', {
     'node_modules/**',
     'temp_extract/**',
     'temp_inspect/**',
+    'temp_inspect_zip/**',
     ...ldmIgnores,
   ],
 });
