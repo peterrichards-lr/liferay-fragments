@@ -16,6 +16,7 @@ npm run create-fragment "[Collection Name]" "[Fragment Name]"
 ```
 
 This runs `scripts/create-fragment.js`, which does the following:
+
 - Scaffolds a directory at `<Collection Name>/fragments/<safe-fragment-name>/`.
 - Creates `fragment.json` with explicit paths.
 - Creates `fragment-build.json` linking `commons.js` by default.
@@ -27,13 +28,17 @@ This runs `scripts/create-fragment.js`, which does the following:
 Every fragment must follow these structural guidelines:
 
 - **Explicit Paths**: `fragment.json` must explicitly define `htmlPath`, `jsPath`, `cssPath`, and `configurationPath`. Do not rely on Liferay's implicit folder naming defaults.
-- **JavaScript Encapsulation**: 
+- **JavaScript Encapsulation**:
   - All client-side JavaScript must be encapsulated within an initialization function (e.g. `initMyFragment()`).
   - Top-level `return` statements are strictly prohibited.
   - To prevent collision with other fragments on the page, always query internal elements using `fragmentElement.querySelector` instead of the global `document.querySelector`.
 - **Template Extension Rule (FTL vs HTML)**:
   - Use `.ftl` if the fragment contains ANY FreeMarker logic (e.g., conditional checks `[#if]`, loops `[#list]`, `[#assign]`) or references Liferay variables (e.g., `${siteSpritemap}`).
   - Use `.html` ONLY for strictly static HTML or basic `data-lfr-editable` fields.
+- **Input Type Fragments & Context Variables**:
+  - Any fragment designed to capture user inputs (e.g. form fields, rating components, date/signature selectors) must have `"type": "input"` (instead of `"type": "component"`) and a `typeOptions` mapping in `fragment.json` (e.g., `"typeOptions": { "fieldTypes": ["text", "number"] }`).
+  - Specifying `"type": "input"` instructs Liferay DXP to inject the `input` context map (containing `input.label`, `input.required`, `input.errorMessage`, `input.readOnly`, `input.name`) into the FreeMarker template context.
+  - When referencing the `input` context map in your template code, always declare a defensive fallback (e.g. `[#assign lfrInput = input!{}]`) to prevent Liferay DXP from raising compile-time `NullPointerException` errors during import and saving it in `DRAFT` status.
 
 ## 3. Theme & Styling Fidelity
 
