@@ -1,5 +1,17 @@
 // playwright.config.js
 import { defineConfig, devices } from '@playwright/test';
+import fs from 'fs';
+
+let resolvedBaseUrl = process.env.BASE_URL;
+if (!resolvedBaseUrl) {
+  if (fs.existsSync('resolved_base_url.txt')) {
+    resolvedBaseUrl = fs.readFileSync('resolved_base_url.txt', 'utf8').trim();
+  } else if (fs.existsSync('e2e-tests/resolved_base_url.txt')) {
+    resolvedBaseUrl = fs
+      .readFileSync('e2e-tests/resolved_base_url.txt', 'utf8')
+      .trim();
+  }
+}
 
 export default defineConfig({
   testDir: './tests',
@@ -15,7 +27,7 @@ export default defineConfig({
   globalSetup: require.resolve('./tests/global-setup'),
   globalTeardown: require.resolve('./tests/global-teardown'),
   use: {
-    baseURL: process.env.BASE_URL || 'http://localhost:8080',
+    baseURL: resolvedBaseUrl || 'http://localhost:8080',
     trace: 'on-first-retry',
     storageState: './state.json',
     ignoreHTTPSErrors: true,

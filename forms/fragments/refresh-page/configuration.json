@@ -18,9 +18,10 @@
           "dataType": "string",
           "typeOptions": {
             "dependency": {
-              "enableAutoRefresh": {
+              "field": "enableAutoRefresh",
+              "condition": {
                 "type": "equal",
-                "value": "true"
+                "value": true
               }
             }
           }
@@ -40,9 +41,10 @@
           "type": "text",
           "typeOptions": {
             "dependency": {
-              "enableManualRefresh": {
+              "field": "enableManualRefresh",
+              "condition": {
                 "type": "equal",
-                "value": "true"
+                "value": true
               }
             }
           }

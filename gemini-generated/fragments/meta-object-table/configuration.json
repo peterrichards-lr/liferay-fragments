@@ -24,9 +24,10 @@
           "defaultValue": "date,title,description",
           "typeOptions": {
             "dependency": {
-              "customizeColumns": {
+              "field": "customizeColumns",
+              "condition": {
                 "type": "equal",
-                "value": "true"
+                "value": true
               }
             }
           }
@@ -113,9 +114,10 @@
           "type": "select",
           "typeOptions": {
             "dependency": {
-              "enableStriped": {
+              "field": "enableStriped",
+              "condition": {
                 "type": "equal",
-                "value": "true"
+                "value": true
               }
             },
             "validValues": [
@@ -138,9 +140,10 @@
           "type": "colorPicker",
           "typeOptions": {
             "dependency": {
-              "enableStriped": {
+              "field": "enableStriped",
+              "condition": {
                 "type": "equal",
-                "value": "true"
+                "value": true
               }
             }
           }
@@ -175,9 +178,10 @@
               }
             ],
             "dependency": {
-              "enableAdd": {
+              "field": "enableAdd",
+              "condition": {
                 "type": "equal",
-                "value": "true"
+                "value": true
               }
             }
           }
@@ -190,7 +194,8 @@
           "type": "checkbox",
           "typeOptions": {
             "dependency": {
-              "addMode": {
+              "field": "addMode",
+              "condition": {
                 "type": "equal",
                 "value": "modal"
               }
@@ -205,7 +210,8 @@
           "type": "checkbox",
           "typeOptions": {
             "dependency": {
-              "addMode": {
+              "field": "addMode",
+              "condition": {
                 "type": "equal",
                 "value": "modal"
               }
@@ -220,7 +226,8 @@
           "type": "select",
           "typeOptions": {
             "dependency": {
-              "addMode": {
+              "field": "addMode",
+              "condition": {
                 "type": "equal",
                 "value": "modal"
               }
@@ -248,9 +255,10 @@
           "type": "text",
           "typeOptions": {
             "dependency": {
-              "enableAdd": {
+              "field": "enableAdd",
+              "condition": {
                 "type": "equal",
-                "value": "true"
+                "value": true
               }
             }
           }
@@ -288,9 +296,10 @@
               }
             ],
             "dependency": {
-              "enableView": {
+              "field": "enableView",
+              "condition": {
                 "type": "equal",
-                "value": "true"
+                "value": true
               }
             }
           }
@@ -303,9 +312,10 @@
           "type": "select",
           "typeOptions": {
             "dependency": {
-              "enableView": {
+              "field": "enableView",
+              "condition": {
                 "type": "equal",
-                "value": "true"
+                "value": true
               }
             },
             "validValues": [
@@ -328,7 +338,8 @@
           "type": "checkbox",
           "typeOptions": {
             "dependency": {
-              "viewMode": {
+              "field": "viewMode",
+              "condition": {
                 "type": "equal",
                 "value": "modal"
               }
@@ -343,7 +354,8 @@
           "type": "checkbox",
           "typeOptions": {
             "dependency": {
-              "viewMode": {
+              "field": "viewMode",
+              "condition": {
                 "type": "equal",
                 "value": "modal"
               }
@@ -358,7 +370,8 @@
           "type": "select",
           "typeOptions": {
             "dependency": {
-              "viewMode": {
+              "field": "viewMode",
+              "condition": {
                 "type": "equal",
                 "value": "modal"
               }
@@ -386,9 +399,10 @@
           "type": "text",
           "typeOptions": {
             "dependency": {
-              "enableView": {
+              "field": "enableView",
+              "condition": {
                 "type": "equal",
-                "value": "true"
+                "value": true
               }
             }
           }
@@ -426,9 +440,10 @@
               }
             ],
             "dependency": {
-              "enableEdit": {
+              "field": "enableEdit",
+              "condition": {
                 "type": "equal",
-                "value": "true"
+                "value": true
               }
             }
           }
@@ -441,9 +456,10 @@
           "type": "select",
           "typeOptions": {
             "dependency": {
-              "enableEdit": {
+              "field": "enableEdit",
+              "condition": {
                 "type": "equal",
-                "value": "true"
+                "value": true
               }
             },
             "validValues": [
@@ -466,7 +482,8 @@
           "type": "checkbox",
           "typeOptions": {
             "dependency": {
-              "editMode": {
+              "field": "editMode",
+              "condition": {
                 "type": "equal",
                 "value": "modal"
               }
@@ -481,7 +498,8 @@
           "type": "checkbox",
           "typeOptions": {
             "dependency": {
-              "editMode": {
+              "field": "editMode",
+              "condition": {
                 "type": "equal",
                 "value": "modal"
               }
@@ -496,7 +514,8 @@
           "type": "select",
           "typeOptions": {
             "dependency": {
-              "editMode": {
+              "field": "editMode",
+              "condition": {
                 "type": "equal",
                 "value": "modal"
               }
@@ -524,9 +543,10 @@
           "type": "text",
           "typeOptions": {
             "dependency": {
-              "enableEdit": {
+              "field": "enableEdit",
+              "condition": {
                 "type": "equal",
-                "value": "true"
+                "value": true
               }
             }
           }

@@ -21,7 +21,6 @@
           }
         },
         {
-          "dataType": "string",
           "defaultValue": "400px",
           "label": "lfr.hero-assets.height",
           "description": "lfr.hero-assets.height-description",

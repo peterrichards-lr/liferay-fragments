@@ -46,24 +46,52 @@ configFiles.forEach((file) => {
           }
         }
 
-        // 2. Convert boolean dependency values to strings
+        // 2. Align dependency values with target field types
         if (field.typeOptions && field.typeOptions.dependency) {
-          Object.keys(field.typeOptions.dependency).forEach((depKey) => {
-            const dep = field.typeOptions.dependency[depKey];
-            if (
-              dep &&
-              dep.value !== undefined &&
-              typeof dep.value === 'boolean'
-            ) {
-              const strVal = String(dep.value);
-              console.log(
-                `[DEPENDENCY] Converting dependency value to string in ${path.relative(rootDir, file)} -> field "${field.name}" depends on "${depKey}" = "${strVal}"`
-              );
-              dep.value = strVal;
-              modified = true;
-              dependencyFixes++;
+          const dep = field.typeOptions.dependency;
+          if (
+            dep &&
+            dep.field &&
+            dep.condition &&
+            dep.condition.value !== undefined
+          ) {
+            // Find target field
+            let targetField = null;
+            json.fieldSets.forEach((fsEntry2) => {
+              if (fsEntry2.fields) {
+                const found = fsEntry2.fields.find((f) => f.name === dep.field);
+                if (found) targetField = found;
+              }
+            });
+
+            if (targetField) {
+              if (targetField.type === 'checkbox') {
+                // Checkbox dependency values must be boolean literals false/true
+                if (typeof dep.condition.value !== 'boolean') {
+                  const boolVal =
+                    dep.condition.value === 'true' ||
+                    dep.condition.value === true;
+                  console.log(
+                    `[DEPENDENCY] Converting checkbox dependency value to boolean in ${path.relative(rootDir, file)} -> field "${field.name}" depends on "${dep.field}" = ${boolVal}`
+                  );
+                  dep.condition.value = boolVal;
+                  modified = true;
+                  dependencyFixes++;
+                }
+              } else {
+                // Non-checkbox dependency values must be string representations
+                if (typeof dep.condition.value !== 'string') {
+                  const strVal = String(dep.condition.value);
+                  console.log(
+                    `[DEPENDENCY] Converting dependency value to string in ${path.relative(rootDir, file)} -> field "${field.name}" depends on "${dep.field}" = "${strVal}"`
+                  );
+                  dep.condition.value = strVal;
+                  modified = true;
+                  dependencyFixes++;
+                }
+              }
             }
-          });
+          }
         }
 
         // 3. Remove dataType from non-primitive input fields (like select, colorPicker, length, itemSelector)

@@ -19,14 +19,14 @@ try {
   });
   console.log(logTail);
 
-  console.log('=== Liferay Docker Logs Tail ===');
+  console.log('=== Liferay LDM Logs Tail ===');
   try {
-    const dockerLogs = execSync('docker logs fragments-test-env --tail 30', {
+    const ldmLogs = execSync('ldm logs e2e-test-env liferay -n 30', {
       encoding: 'utf8',
     });
-    console.log(dockerLogs);
+    console.log(ldmLogs);
   } catch (e) {
-    console.log('Failed to fetch docker logs:', e.message);
+    console.log('Failed to fetch ldm logs:', e.message);
   }
 } catch (err) {
   console.log('Error executing diagnostics:', err.message);

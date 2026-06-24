@@ -9,10 +9,12 @@
 		"name": (input.name)!"meterReading",
 		"readOnly": (input.readOnly)!false
 	}
-    integerDigitCount = (configuration.integerDigitCount!"5")?number
-    decimalDigitCount = (configuration.decimalDigitCount!"1")?number
-    totalDigits = integerDigitCount + decimalDigitCount
+    integerDigitCount = configuration.integerDigitCount!5
+    decimalDigitCount = configuration.decimalDigitCount!3
 /]
+[#if integerDigitCount?is_string][#assign integerDigitCount = integerDigitCount?number][/#if]
+[#if decimalDigitCount?is_string][#assign decimalDigitCount = decimalDigitCount?number][/#if]
+[#assign totalDigits = integerDigitCount + decimalDigitCount /]
 
 <div class="meter-reading meter-reading-content">
     <div class="singleton-error d-none alert alert-danger">
@@ -54,7 +56,7 @@
 
             <div class="control mt-3">
                 <span class="status"></span>
-                <button class="btn btn-primary" type="submit">[@liferay.language key="lfr.meter-reading.submit-reading" /]</button>
+                <button class="btn btn-${configuration.buttonSize!'nm'} btn-${configuration.buttonType!'primary'}" type="submit">[@liferay.language key="lfr.meter-reading.submit-reading" /]</button>
             </div>
         </form>
 

@@ -178,7 +178,8 @@
               }
             ],
             "dependency": {
-              "displayStyle": {
+              "field": "displayStyle",
+              "condition": {
                 "type": "equal",
                 "value": "inset"
               }
@@ -216,9 +217,10 @@
               "type": "number"
             },
             "dependency": {
-              "autoplay": {
+              "field": "autoplay",
+              "condition": {
                 "type": "equal",
-                "value": "true"
+                "value": true
               }
             }
           }

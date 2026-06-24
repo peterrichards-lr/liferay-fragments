@@ -15,6 +15,14 @@
     "prepare": "node scripts/install-git-hooks.js",
     "fix-dependencies": "node scripts/fix-dependencies.js",
     "fix-schemas": "node scripts/fix-configuration-schemas.js",
+    "build": "bash create-fragment-zips.sh --all",
+    "deploy:local": "bash deploy-fragment-zips.sh e2e-test-env --all",
+    "test:e2e": "bash scripts/test-runner.sh -k -p e2e-test-env",
+    "test:e2e:fast": "bash scripts/test-runner.sh -k -p e2e-test-env -s",
+    "test:e2e:only": "bash scripts/test-runner.sh -k -p e2e-test-env -f",
+    "verify": "npm run fix-dependencies && npm run fix-schemas && npm run format && npm run lint && npm run detect-secrets",
+    "verify:e2e": "npm run verify && npm run test:e2e && npm run docs:gallery",
+    "verify:e2e:fast": "npm run verify && npm run test:e2e:fast && npm run docs:gallery",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [

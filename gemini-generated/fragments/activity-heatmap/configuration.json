@@ -38,9 +38,10 @@
           "type": "text",
           "typeOptions": {
             "dependency": {
-              "showSizeSelector": {
+              "field": "showSizeSelector",
+              "condition": {
                 "type": "equal",
-                "value": "true"
+                "value": true
               }
             }
           }

@@ -6,6 +6,8 @@ const { globSync } = require('glob');
 
 const projectRoot = path.join(__dirname, '..', '..');
 
+let globalSiteKey = 'L_GLOBAL';
+
 function convertConfigToFieldValues(config, fragmentDir) {
   const fieldValues = {};
   if (!config) return fieldValues;
@@ -71,6 +73,16 @@ function convertConfigToFieldValues(config, fragmentDir) {
   });
 
   return fieldValues;
+}
+
+function getFragmentERC(key, fragmentKeyToDir) {
+  const dir = fragmentKeyToDir ? fragmentKeyToDir[key] : null;
+  if (dir) {
+    const grandparentDir = path.dirname(path.dirname(dir));
+    const collectionFolderName = path.basename(grandparentDir);
+    return `${collectionFolderName}-${key}`;
+  }
+  return `form-fragments-${key}`;
 }
 
 async function getAssetEntryId(apiContext, pAuthToken, className, classPK) {
@@ -288,54 +300,13 @@ function buildPageElementTree(
     // Resolve if it is an input fragment
     const parentDir = fragmentKeyToDir ? fragmentKeyToDir[key] : null;
     let isInputType = false;
-    if (parentDir) {
-      try {
-        const fragJsonPath = path.join(parentDir, 'fragment.json');
-        if (fs.existsSync(fragJsonPath)) {
-          const fragJson = JSON.parse(fs.readFileSync(fragJsonPath, 'utf8'));
-          if (fragJson.type === 'input') {
-            isInputType = true;
-          }
-        }
-      } catch (e) {}
-    }
-
-    if (isInputType) {
-      // In Liferay 2026.Q1, bare input fragments must be of type FormFragment inside a FormContainer
-      const fieldKey = node.fieldKey || 'emailAddress';
-      const element = {
-        type: 'FormFragment',
-        definition: {
-          fieldKey: fieldKey.startsWith('ObjectField_')
-            ? fieldKey
-            : `ObjectField_${fieldKey}`,
-          fragmentInstance: {
-            fragmentReference: {
-              key: key,
-              siteKey: siteERC,
-            },
-            fragmentConfigurationFieldValues: convertConfigToFieldValues(
-              {
-                ...resolvedConfig,
-                inputFieldId: fieldKey.startsWith('ObjectField_')
-                  ? fieldKey
-                  : `ObjectField_${fieldKey}`,
-              },
-              parentDir
-            ),
-            fragmentEditableElements: resolvedFields,
-          },
-        },
-      };
-      return element;
-    }
 
     const element = {
       type: 'Fragment',
       definition: {
         fragment: {
           key: key,
-          siteKey: key === 'BASIC_COMPONENT-html' ? 'L_GLOBAL' : siteERC,
+          siteKey: globalSiteKey,
         },
         fragmentConfig: resolvedConfig,
         fragmentFields: resolvedFields,
@@ -452,8 +423,13 @@ function buildPageElementTree(
           : `ObjectField_${fieldKey}`,
         fragmentInstance: {
           fragmentReference: {
-            key: key,
-            siteKey: siteERC,
+            fragmentReferenceType: 'FragmentItemExternalReference',
+            externalReferenceCode: getFragmentERC(key, fragmentKeyToDir),
+            className: 'com.liferay.fragment.model.FragmentEntry',
+            scope: {
+              externalReferenceCode: 'L_GLOBAL',
+              type: 'Site',
+            },
           },
           fragmentConfigurationFieldValues: convertConfigToFieldValues(
             {
@@ -666,22 +642,25 @@ async function globalSetup(config) {
     .fill(liferayPassword);
 
   // Click the sign-in button
-  await Promise.all([
-    page.waitForNavigation({ waitUntil: 'load' }),
-    page.click('button[type="submit"]'),
-  ]);
-
-  // Check if we are still on the login page (indicates failure)
-  if (page.url().includes('login') || page.url().includes('sign-in')) {
-    const errorAlert = page.locator('.alert-danger');
-    let errorText = 'Unknown login failure';
-    if ((await errorAlert.count()) > 0) {
-      errorText = await errorAlert.first().innerText();
-    }
-    await page.screenshot({ path: 'login-failure.png' });
-    throw new Error(
-      `Login failed! Still on login page. Error message: ${errorText.trim()}. Screenshot saved to login-failure.png`
+  await page.click('form.sign-in-form button[type="submit"]');
+  try {
+    await page.waitForURL(
+      (url) => !url.href.includes('login') && !url.href.includes('sign-in'),
+      { timeout: 60000 }
     );
+  } catch (err) {
+    if (page.url().includes('login') || page.url().includes('sign-in')) {
+      const errorAlert = page.locator('.alert-danger');
+      let errorText = 'Unknown login failure';
+      if ((await errorAlert.count()) > 0) {
+        errorText = await errorAlert.first().innerText();
+      }
+      await page.screenshot({ path: 'login-failure.png' });
+      throw new Error(
+        `Login failed or timed out! Still on login page. Error message: ${errorText.trim()}. Screenshot saved to login-failure.png`
+      );
+    }
+    throw err;
   }
 
   // Handle "Terms of Use" page if it appears
@@ -1216,6 +1195,7 @@ async function globalSetup(config) {
       (s) => s.name === 'Global' || s.externalReferenceCode === 'GLOBAL'
     ) || { id: siteId };
     let querySiteId = globalSite.id;
+    globalSiteKey = globalSite.key || 'L_GLOBAL';
 
     // 1. Get all fragment collections using the CSRF token
     let collectionsResp = await apiContext.post(
@@ -2240,8 +2220,13 @@ async function globalSetup(config) {
                     fieldKey: '',
                     fragmentInstance: {
                       fragmentReference: {
-                        key: 'submit-button',
-                        siteKey: siteERC,
+                        fragmentReferenceType: 'FragmentItemExternalReference',
+                        externalReferenceCode: 'form-fragments-submit-button',
+                        className: 'com.liferay.fragment.model.FragmentEntry',
+                        scope: {
+                          externalReferenceCode: 'L_GLOBAL',
+                          type: 'Site',
+                        },
                       },
                       fragmentConfigurationFieldValues: {},
                       fragmentEditableElements: [],
@@ -2296,116 +2281,50 @@ async function globalSetup(config) {
     }
 
     if (!rootPageElement) {
-      if (fragmentData.type === 'input') {
-        const applicantDef = objectDefinitions.find(
-          (d) => d.externalReferenceCode === 'APPLICANT'
-        );
-        const applicantClassName = applicantDef
-          ? applicantDef.className
-          : 'com.liferay.object.model.ObjectDefinition#APPLICANT';
-
-        rootPageElement = {
-          type: 'Root',
-          pageElements: [
-            {
-              type: 'FormContainer',
-              definition: {
-                formContainerConfig: {
-                  formContainerReference: {
-                    className: applicantClassName,
-                    type: 'FormContainerClassSubtypeReference',
-                  },
-                  formContainerType: 'Simple',
-                  numberOfSteps: 0,
-                },
-                indexed: true,
-                layout: {},
-              },
-              pageElements: [
-                {
-                  type: 'FormFragment',
-                  definition: {
-                    fieldKey: 'ObjectField_emailAddress',
-                    fragmentInstance: {
-                      fragmentReference: {
-                        key: fragmentKey,
-                        siteKey: siteERC,
-                      },
-                      fragmentConfigurationFieldValues:
-                        convertConfigToFieldValues(
-                          seededConfigOverrides,
-                          fragmentKeyToDir
-                            ? fragmentKeyToDir[fragmentKey]
-                            : null
-                        ),
-                      fragmentEditableElements: [],
-                    },
-                  },
-                },
-                {
-                  type: 'FormFragment',
-                  definition: {
-                    fieldKey: '',
-                    fragmentInstance: {
-                      fragmentReference: {
-                        key: 'submit-button',
-                        siteKey: siteERC,
-                      },
-                      fragmentConfigurationFieldValues: {},
-                      fragmentEditableElements: [],
-                    },
-                  },
-                },
-              ],
+      rootPageElement = {
+        type: 'Root',
+        pageElements: [
+          {
+            type: 'Section',
+            definition: {
+              indexed: true,
+              layout: {},
             },
-          ],
-        };
-      } else {
-        rootPageElement = {
-          type: 'Root',
-          pageElements: [
-            {
-              type: 'Section',
-              definition: {
-                indexed: true,
-                layout: {},
-              },
-              pageElements: [
-                {
-                  type: 'Row',
-                  definition: {
-                    gutters: true,
-                    columnsSpacing: true,
-                    numberOfColumns: 1,
-                  },
-                  pageElements: [
-                    {
-                      type: 'Column',
-                      definition: {
-                        size: 12,
-                        width: '12',
-                      },
-                      pageElements: [
-                        {
-                          type: 'Fragment',
-                          definition: {
-                            fragment: {
-                              key: fragmentKey,
-                              siteKey: siteERC,
-                            },
-                            fragmentConfig: seededConfigOverrides,
-                            indexed: true,
+            pageElements: [
+              {
+                type: 'Row',
+                definition: {
+                  gutters: true,
+                  columnsSpacing: true,
+                  numberOfColumns: 1,
+                },
+                pageElements: [
+                  {
+                    type: 'Column',
+                    definition: {
+                      size: 12,
+                      width: '12',
+                    },
+                    pageElements: [
+                      {
+                        type: 'Fragment',
+                        definition: {
+                          fragment: {
+                            key: fragmentKey,
+                            siteKey: globalSiteKey,
                           },
+                          fragmentConfig: seededConfigOverrides,
+                          indexed: true,
                         },
-                      ],
-                    },
-                  ],
-                },
-              ],
-            },
-          ],
-        };
-      }
+                      },
+                    ],
+                  },
+                ],
+              },
+            ],
+          },
+        ],
+      };
     }
 
     const payload = {

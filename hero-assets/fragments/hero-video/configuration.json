@@ -82,9 +82,10 @@
           "type": "colorPicker",
           "typeOptions": {
             "dependency": {
-              "useCustomControls": {
+              "field": "useCustomControls",
+              "condition": {
                 "type": "equal",
-                "value": "true"
+                "value": true
               }
             }
           }

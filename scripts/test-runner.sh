@@ -139,7 +139,7 @@ trap handle_exit EXIT INT TERM ERR
 MIN_LDM_VERSION="2.8.0"
 LIFERAY_TAG="2026.q1"
 PROJECT_NAME="e2e-test-env"
-PORT=8080
+PORT="${PORT:-8080}"
 VERBOSE=false
 KEEP_ALIVE=false
 EXISTING_PROJECT=false
@@ -283,9 +283,11 @@ echo "  -> Purging old visual snapshots..."
 rm -rf e2e-tests/snapshots/ e2e-tests/playwright-report/ e2e-tests/playwright_output.log \
        playwright-report/ test-results/ state.json ldm_startup.log
 # Clean up any orphaned Docker containers to prevent port or naming conflicts
-if command -v docker &> /dev/null && docker info &> /dev/null; then
-    echo "  -> Cleaning up orphaned Docker containers..."
-    docker rm -f "${PROJECT_NAME}" "${PROJECT_NAME}-db" > /dev/null 2>&1 || true
+if [ "$EXISTING_PROJECT" = false ]; then
+    if command -v docker &> /dev/null && docker info &> /dev/null; then
+        echo "  -> Cleaning up orphaned Docker containers..."
+        docker rm -f "${PROJECT_NAME}" "${PROJECT_NAME}-db" > /dev/null 2>&1 || true
+    fi
 fi
 echo "  -> Old logs and reports cleared."
 
@@ -432,7 +434,9 @@ echo "  -> LDM Project Path: $PROJECT_PATH"
 
 echo "  -> Waiting for Liferay to become ready..."
 log_command "ldm wait \"$PROJECT_NAME\""
-if ! ldm wait "$PROJECT_NAME"; then
+if curl -s -I "$BASE_URL" &> /dev/null; then
+    echo "  -> Liferay is already up and responsive!"
+elif ! ldm wait "$PROJECT_NAME"; then
     echo "Error: Liferay did not start within the expected time or failed readiness checks."
     exit 1
 fi
@@ -578,16 +582,6 @@ else
         fi
     fi
 
-    # Clean up pre-existing fragment resource files from the database to prevent duplicate (1).css, (2).css creation by auto-deploy scanner
-    if [ "$(docker ps -q -f name=fragments-test-env-db)" ]; then
-        echo "  -> Purging duplicate/stale fragment resource database entries..."
-        docker exec -i fragments-test-env-db psql -U lportal -d lportal -c "
-          DELETE FROM dlfileentrymetadata WHERE fileentryid IN (SELECT fileentryid FROM dlfileentry WHERE folderid IN (SELECT folderid FROM dlfolder WHERE parentfolderid = (SELECT folderid FROM dlfolder WHERE name = 'com_liferay_fragment_web_portlet_FragmentPortlet')));
-          DELETE FROM dlfileversion WHERE fileentryid IN (SELECT fileentryid FROM dlfileentry WHERE folderid IN (SELECT folderid FROM dlfolder WHERE parentfolderid = (SELECT folderid FROM dlfolder WHERE name = 'com_liferay_fragment_web_portlet_FragmentPortlet')));
-          DELETE FROM dlfileentry WHERE folderid IN (SELECT folderid FROM dlfolder WHERE parentfolderid = (SELECT folderid FROM dlfolder WHERE name = 'com_liferay_fragment_web_portlet_FragmentPortlet'));
-        " > /dev/null 2>&1 || true
-    fi
-
     echo "  -> Deploying ZIPs (Zero-Race Atomic Deployments via LDM bind mount)..."
     for zip_file in zips/fragments/*"$TARGET_ZIP_SUFFIX"; do
         [[ "$zip_file" == *"-debug"* ]] && continue # Skip debug zips if minified exist
@@ -637,7 +631,9 @@ else
     
     echo "  -> Waiting for system to settle (Monitoring CPU and OSGi wiring)..."
     log_command "ldm wait \"$PROJECT_NAME\""
-    if ! ldm wait "$PROJECT_NAME"; then
+    if curl -s -I "$BASE_URL" &> /dev/null; then
+        echo "  -> Liferay is responsive, skipping OSGi settle wait."
+    elif ! ldm wait "$PROJECT_NAME"; then
         echo "Error: System did not settle properly after deployment."
         exit 1
     fi
@@ -648,14 +644,23 @@ fi
 echo ""
 echo "Executing Playwright Test Suite..."
 write_signal "TESTING" "$EST_TESTING"
+export BASE_URL="$BASE_URL"
+export LIFERAY_VERSION="$REALISED_VERSION"
+export PW_TEST_SCREENSHOT_NO_FONTS_READY=1
+export KEEP_ALIVE="$KEEP_ALIVE"
+
+echo -n "$BASE_URL" > e2e-tests/resolved_base_url.txt
+
 set +e
 cd e2e-tests
+
 if [ -n "$FILTER_PATTERN" ]; then
-    log_command "LIFERAY_VERSION=\"$REALISED_VERSION\" PW_TEST_SCREENSHOT_NO_FONTS_READY=1 npx playwright test --grep \"$FILTER_PATTERN\""
-    LIFERAY_VERSION="$REALISED_VERSION" PW_TEST_SCREENSHOT_NO_FONTS_READY=1 TEST_FILTER="$FILTER_PATTERN" npx playwright test --grep "$FILTER_PATTERN" > playwright_output.log 2>&1
+    export TEST_FILTER="$FILTER_PATTERN"
+    log_command "npx playwright test --grep \"$FILTER_PATTERN\""
+    npx playwright test --grep "$FILTER_PATTERN" > playwright_output.log 2>&1
 else
-    log_command "LIFERAY_VERSION=\"$REALISED_VERSION\" PW_TEST_SCREENSHOT_NO_FONTS_READY=1 npx playwright test"
-    LIFERAY_VERSION="$REALISED_VERSION" PW_TEST_SCREENSHOT_NO_FONTS_READY=1 npx playwright test > playwright_output.log 2>&1
+    log_command "npx playwright test"
+    npx playwright test > playwright_output.log 2>&1
 fi
 TEST_EXIT_CODE=$?
 cd ..

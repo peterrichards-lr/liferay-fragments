@@ -93,6 +93,8 @@ extract_logs() {
     echo -e "${YELLOW}>>> Logs for $ENV_NAME <<<${NC}"
     if [[ "$SOURCE" == "file" ]]; then
         [ -f "$CMD" ] && grep -iE "FragmentFileInstaller|liferay-deploy-fragments.json|ERROR|Exception" "$CMD" | tail -n 10 || echo "Log file not found."
+    elif [[ "$SOURCE" == "ldm" ]]; then
+        ldm logs "$CMD" liferay -n 500 2>&1 | grep -iE "FragmentFileInstaller|liferay-deploy-fragments.json|ERROR|Exception" | tail -n 10 || echo "No relevant logs found."
     else
         docker logs "$CMD" --tail 500 2>&1 | grep -iE "FragmentFileInstaller|liferay-deploy-fragments.json|ERROR|Exception" | tail -n 10 || echo "No relevant logs found."
     fi
@@ -108,8 +110,8 @@ if [ -n "$CONTAINER_ID" ]; then
     extract_logs "Standalone Docker" "docker" "$CONTAINER_ID"
 fi
 
-if [ -n "$LDM_CONTAINER" ]; then
-    extract_logs "LDM Project" "docker" "$LDM_CONTAINER"
+if ldm list | grep -q "$LDM_PROJECT"; then
+    extract_logs "LDM Project" "ldm" "$LDM_PROJECT"
 fi
 
 log "Diagnostic complete."

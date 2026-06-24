@@ -11,10 +11,44 @@ fi
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/scripts"
 
+# Fallback zip function using tar (built-in on modern Windows/macOS/Linux) if zip is not available
+if ! command -v zip &> /dev/null; then
+    zip() {
+        local zip_file=""
+        local args=()
+        local excludes=()
+        local i=1
+        while [ $i -le $# ]; do
+            eval arg=\$$i
+            if [[ "$arg" == -* ]]; then
+                if [[ "$arg" == "-x" ]]; then
+                    let i++
+                    eval pat=\$$i
+                    excludes+=("--exclude=$pat")
+                fi
+            elif [ -z "$zip_file" ]; then
+                zip_file="$arg"
+            else
+                args+=("$arg")
+            fi
+            let i++
+        done
+        if [ -z "$zip_file" ]; then
+            echo "Error: No zip file specified" >&2
+            return 1
+        fi
+        if [ ${#args[@]} -eq 0 ]; then
+            args=(".")
+        fi
+        tar.exe -cf "$zip_file" --format zip "${excludes[@]}" "${args[@]}"
+    }
+fi
+
+
 # Variables mimicking your Gradle properties
 # Defaulting to Guest site as a workaround for Liferay 2026.Q1 system-wide deployment bug
 COMPANY_WEB_ID="${COMPANY_WEB_ID:-liferay.com}"
-GROUP_KEY="${GROUP_KEY:-Guest}"
+GROUP_KEY="${GROUP_KEY:-Global}"
 
 # Robust timestamp for both macOS and Linux (numeric)
 TIMESTAMP=$(date +%s)000
@@ -215,7 +249,7 @@ else
     FRAGMENTS=($ALL_FRAGMENTS)
 fi
 
-ZIPS_ROOT="$(pwd)/zips"
+ZIPS_ROOT="zips"
 
 # Helper function to generate fragment deployment descriptor
 ensure_descriptor() {
@@ -245,7 +279,12 @@ ensure_descriptor() {
             # System-wide scope only uses companyWebId
             JSON_CONTENT=$(jq -n --arg id "*" '{companyWebId: $id}')
             
-        # 2. Specific Site or Company Scoping
+        # 2. Global Site Scoping
+        elif [[ "$GROUP_KEY" == "Global" ]]; then
+            # Target the default virtual instance to deploy to Global scope without hitting groupKey resolution errors
+            JSON_CONTENT=$(jq -n --arg id "liferay.com" '{companyWebId: $id}')
+
+        # 3. Specific Site or Company Scoping
         else
             JSON_CONTENT=$(jq -n --arg id "$COMPANY_WEB_ID" '{companyWebId: $id}')
             
@@ -328,7 +367,7 @@ if [ "$BUILD_FRAGMENTS" = true ]; then
        OUTPUT_ZIP_ABS="$ZIPS_ROOT/fragments/${FRAGMENT_NAME}${BUILD_SUFFIX}.zip"
        # ZIP creation: Include the fragment folder AND the descriptor file from the temp root.
        # This ensures liferay-deploy-fragments.json is at the root of the zip.
-       (cd "$TEMP_FRAG" && zip -qr "$OUTPUT_ZIP_ABS" . -x "*.DS_Store" -x "*/fragment-build.json" -x "*/collection-build.json" -x "*/client-extension.yaml" -x "*/test-data.json" -x "*/test-data.yaml")
+       (cd "$TEMP_FRAG" && zip -qr "../$OUTPUT_ZIP_ABS" . -x "*.DS_Store" -x "*/fragment-build.json" -x "*/collection-build.json" -x "*/client-extension.yaml" -x "*/test-data.json" -x "*/test-data.yaml")
        rm -rf "$TEMP_FRAG"
 
     done
@@ -355,7 +394,7 @@ for COLLECTION_NAME in "${COLLECTIONS[@]}"; do
            echo "name=$COLLECTION_NAME Language Overrides" >> "$CX_ROOT/WEB-INF/liferay-plugin-package.properties"
            CONFIG_KEY="com.liferay.oauth2.provider.configuration.OAuth2ProviderApplicationHeadlessServerConfiguration~$COLLECTION_NAME-language-batch-oauth"
            jq -n -c --arg key "$CONFIG_KEY" --arg name "$COLLECTION_NAME Language Batch OAuth" --arg proj "$COLLECTION_NAME-language" --argjson ts "$TIMESTAMP" '{$key:{".serviceAddress":"localhost:8080",".serviceScheme":"http",":configurator:policy":"force",baseURL:"${portalURL}/o/language",buildTimestamp:$ts,description:"", "dxp.lxc.liferay.com.virtualInstanceId":"default",homePageURL:"$[conf:.serviceScheme]://$[conf:.serviceAddress]",name:$name,projectId:$proj,projectName:$proj,properties:[],scopes:["Liferay.Headless.Admin.Workflow.everything","Liferay.Headless.Batch.Engine.everything","Liferay.Message.Admin.REST.everything"],sourceCodeURL:"",type:"oAuthApplicationHeadlessServer",typeSettings:[".serviceAddress=localhost:8080",".serviceScheme=http","scopes=Liferay.Headless.Admin.Workflow.everything\nLiferay.Headless.Batch.Engine.everything\nLiferay.Message.Admin.REST.everything"],webContextPath:("/"+$proj)}}' > "$CX_ROOT/client-extension-config.json"
-           (cd "$CX_ROOT" && zip -qr "$ZIPS_ROOT/language/${COLLECTION_NAME}-language-batch-cx.zip" .)
+           (cd "$CX_ROOT" && zip -qr "../$ZIPS_ROOT/language/${COLLECTION_NAME}-language-batch-cx.zip" .)
            rm -rf "$CX_ROOT"
        fi
    fi
@@ -386,6 +425,12 @@ for COLLECTION_NAME in "${COLLECTIONS[@]}"; do
 
        # Ensure descriptor at the ROOT of the zip (sibling to collection folder)
        ensure_descriptor "$TEMP_COLL" "$COLLECTION_NAME"
+        
+        # Transform configuration for Latest (convert string defaults of numeric fields to number literals)
+        find "$TEMP_COLL/$COLLECTION_NAME" -name "configuration.json" -print0 | while IFS= read -r -d '' config_file; do
+            jq "(.. | objects | select(.dataType == \"number\" and .defaultValue != null)) .defaultValue |= tonumber" "$config_file" > "$config_file.tmp" && mv "$config_file.tmp" "$config_file"
+        done
+
         process_dir "$TEMP_COLL/$COLLECTION_NAME" "$COLLECTION_NAME"
        
        # Clean up OS-specific files from temp dir
@@ -393,7 +438,7 @@ for COLLECTION_NAME in "${COLLECTIONS[@]}"; do
        
        OUTPUT_ZIP_ABS="$ZIPS_ROOT/fragments/${COLLECTION_NAME}-collection${BUILD_SUFFIX}.zip"
        # Zipping from temp root content. Include everything (folder + descriptor).
-       (cd "$TEMP_COLL" && zip -qr "$OUTPUT_ZIP_ABS" . -x "*.DS_Store" -x "$COLLECTION_NAME/Language*.properties" -x "$COLLECTION_NAME/client-extension.yaml" -x "*/fragment-build.json" -x "*/collection-build.json" -x "*/test-data.json" -x "*/test-data.yaml")
+       (cd "$TEMP_COLL" && zip -qr "../$OUTPUT_ZIP_ABS" . -x "*.DS_Store" -x "$COLLECTION_NAME/Language*.properties" -x "$COLLECTION_NAME/client-extension.yaml" -x "*/fragment-build.json" -x "*/collection-build.json" -x "*/test-data.json" -x "*/test-data.yaml")
        rm -rf "$TEMP_COLL"
        
         # --- C. Legacy (pre2025q3) Collection ---
@@ -442,7 +487,7 @@ for COLLECTION_NAME in "${COLLECTIONS[@]}"; do
         find "$BUILD_TEMP" -name ".DS_Store" -delete
 
         OUTPUT_ZIP_LEGACY_ABS="$ZIPS_ROOT/fragments/${COLLECTION_NAME}-pre2025q3${BUILD_SUFFIX}.zip"
-        (cd "$BUILD_TEMP" && zip -qr "$OUTPUT_ZIP_LEGACY_ABS" . -x "*.DS_Store" -x "*/fragment-build.json" -x "*/collection-build.json" -x "*/test-data.json" -x "*/test-data.yaml")
+        (cd "$BUILD_TEMP" && zip -qr "../$OUTPUT_ZIP_LEGACY_ABS" . -x "*.DS_Store" -x "*/fragment-build.json" -x "*/collection-build.json" -x "*/test-data.json" -x "*/test-data.yaml")
         rm -rf "$BUILD_TEMP"
         
         # --- D. Legacy (pre2026q1) Collection ---
@@ -476,7 +521,7 @@ for COLLECTION_NAME in "${COLLECTIONS[@]}"; do
         find "$BUILD_TEMP_2026/$COLLECTION_NAME" -name "client-extension.yaml" -delete
         # Transform configuration for pre2026q1 compatibility using jq
         find "$BUILD_TEMP_2026/$COLLECTION_NAME" -name "configuration.json" -print0 | while IFS= read -r -d '' config_file; do
-            jq "(.. | objects | select(.dataType == \"number\" and .defaultValue != null)) .defaultValue |= tostring | (.. | objects | select(.dataType == \"boolean\" and .defaultValue != null)) .defaultValue |= tostring" "$config_file" > "$config_file.tmp" && mv "$config_file.tmp" "$config_file"
+            jq "(.. | objects | select(.dataType == \"number\" and .defaultValue != null)) .defaultValue |= tostring | (.. | objects | select(.dataType == \"boolean\" and .defaultValue != null)) .defaultValue |= tostring | (.. | objects | select(.dependency?.condition?.value != null)) .dependency.condition.value |= tostring" "$config_file" > "$config_file.tmp" && mv "$config_file.tmp" "$config_file"
         done
         process_dir "$BUILD_TEMP_2026/$COLLECTION_NAME" "$COLLECTION_NAME"
         
@@ -484,7 +529,7 @@ for COLLECTION_NAME in "${COLLECTIONS[@]}"; do
         find "$BUILD_TEMP_2026" -name ".DS_Store" -delete
 
         OUTPUT_ZIP_2026_ABS="$ZIPS_ROOT/fragments/${COLLECTION_NAME}-pre2026q1${BUILD_SUFFIX}.zip"
-        (cd "$BUILD_TEMP_2026" && zip -qr "$OUTPUT_ZIP_2026_ABS" . -x "*.DS_Store" -x "*/fragment-build.json" -x "*/collection-build.json" -x "*/test-data.json" -x "*/test-data.yaml")
+        (cd "$BUILD_TEMP_2026" && zip -qr "../$OUTPUT_ZIP_2026_ABS" . -x "*.DS_Store" -x "*/fragment-build.json" -x "*/collection-build.json" -x "*/test-data.json" -x "*/test-data.yaml")
         rm -rf "$BUILD_TEMP_2026"
    fi
 done
@@ -514,7 +559,7 @@ if [ "$BUILD_SHOWCASE" = true ] && [ -d "other-resources/showcase-data" ]; then
         jq -n -c --arg key "$CONFIG_KEY" --arg name "$RESOURCE_NAME Batch OAuth" --arg proj "$RESOURCE_NAME" --argjson ts "$TIMESTAMP" '{$key:{".serviceAddress":"localhost:8080",".serviceScheme":"http",":configurator:policy":"force",baseURL:("${portalURL}/o/"+$proj),buildTimestamp:$ts,description:"", "dxp.lxc.liferay.com.virtualInstanceId":"default",homePageURL:"$[conf:.serviceScheme]://$[conf:.serviceAddress]",name:$name,projectId:$proj,projectName:$proj,properties:[],scopes:["Liferay.Headless.Batch.Engine.everything","Liferay.Object.Admin.REST.everything"],sourceCodeURL:"",type:"oAuthApplicationHeadlessServer",typeSettings:[".serviceAddress=localhost:8080", ".serviceScheme=http", "scopes=Liferay.Headless.Admin.Workflow.everything\nLiferay.Headless.Batch.Engine.everything\nLiferay.Message.Admin.REST.everything"],webContextPath:("/"+$proj)}}' > "$CX_ROOT/client-extension-config.json"
         
         OUTPUT_ZIP_SHOWCASE_ABS="$ZIPS_ROOT/showcase/${RESOURCE_NAME}-batch-cx.zip"
-        (cd "$CX_ROOT" && zip -qr "$OUTPUT_ZIP_SHOWCASE_ABS" .)
+        (cd "$CX_ROOT" && zip -qr "../$OUTPUT_ZIP_SHOWCASE_ABS" .)
         rm -rf "$CX_ROOT"
     done
 fi

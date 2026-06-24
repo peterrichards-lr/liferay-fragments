@@ -15,7 +15,12 @@ async function globalTeardown(config) {
     return;
   }
 
-  const { baseURL, storageState } = config.projects[0].use;
+  const baseURL =
+    process.env.BASE_URL ||
+    config.projects[0].use?.baseURL ||
+    config.use?.baseURL ||
+    'http://localhost:8080';
+  const { storageState } = config.projects[0].use;
   const testPages = JSON.parse(fs.readFileSync(dataPath, 'utf8'));
 
   const liferayUser = process.env.LIFERAY_USER || 'test@liferay.com';

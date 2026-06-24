@@ -17,7 +17,6 @@
           }
         },
         {
-          "dataType": "boolean",
           "defaultValue": true,
           "description": "lfr.misc.persist-selected-tab-description",
           "label": "lfr.misc.persist-selected-tab",
