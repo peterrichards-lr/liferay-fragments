@@ -5,6 +5,9 @@
   "cssPath": "index.css",
   "icon": "bolt",
   "name": "Meter Reading",
-  "type": "component",
+  "typeOptions": {
+    "fieldTypes": ["number", "text"]
+  },
+  "type": "input",
   "thumbnailPath": "thumbnail.png"
 }

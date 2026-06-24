@@ -2327,6 +2327,17 @@ async function globalSetup(config) {
       };
     }
 
+    const normalizePageElementTypes = (element) => {
+      if (!element) return;
+      if (element.type === 'FormFragment') {
+        element.type = 'Fragment';
+      }
+      if (element.pageElements) {
+        element.pageElements.forEach(normalizePageElementTypes);
+      }
+    };
+    normalizePageElementTypes(rootPageElement);
+
     const payload = {
       title: pageTitle,
       friendlyUrlPath: friendlyUrl,

@@ -1,16 +1,18 @@
 [#-- prettier-ignore --]
 [#assign
-	labels = (configuration.labelList!"")?split(";")
+    lfrInput = input!{}
+	labels = ((configuration.labelList)!"")?split(";")
 	input = {
-		"errorMessage": (input.errorMessage)!"",
-		"showLabel": (input.showLabel)!true,
-		"label": (input.label)!"Meter Reading",
-		"required": (input.required)!false,
-		"name": (input.name)!"meterReading",
-		"readOnly": (input.readOnly)!false
+		"errorMessage": (lfrInput.errorMessage)!"",
+		"showLabel": (lfrInput.showLabel)!true,
+		"label": (lfrInput.label)!"Meter Reading",
+		"required": (lfrInput.required)!false,
+		"name": (lfrInput.name)!"meterReading",
+		"readOnly": (lfrInput.readOnly)!false
 	}
-    integerDigitCount = configuration.integerDigitCount!5
-    decimalDigitCount = configuration.decimalDigitCount!3
+    integerDigitCount = (configuration.integerDigitCount)!5
+    decimalDigitCount = (configuration.decimalDigitCount)!3
+    showDateSelector = ((configuration.showDateSelector)!false)?is_string?then(((configuration.showDateSelector)!"") == "true", (configuration.showDateSelector)!false)
 /]
 [#if integerDigitCount?is_string][#assign integerDigitCount = integerDigitCount?number][/#if]
 [#if decimalDigitCount?is_string][#assign decimalDigitCount = decimalDigitCount?number][/#if]
@@ -49,14 +51,14 @@
                 [/#list]
             </div>
 
-            <div class="date-input mt-3 [#if !configuration.showDateSelector]hide-date-selector[/#if]">
+            <div class="date-input mt-3 [#if !showDateSelector]hide-date-selector[/#if]">
                 <label for="${fragmentEntryLinkNamespace}-date">[@liferay.language key="lfr.meter-reading.date-of-reading" /]</label>
                 <input class="form-control date" type="date" id="${fragmentEntryLinkNamespace}-date" />
             </div>
 
             <div class="control mt-3">
                 <span class="status"></span>
-                <button class="btn btn-${configuration.buttonSize!'nm'} btn-${configuration.buttonType!'primary'}" type="submit">[@liferay.language key="lfr.meter-reading.submit-reading" /]</button>
+                <button class="btn btn-${(configuration.buttonSize)!'nm'} btn-${(configuration.buttonType)!'primary'}" type="submit">[@liferay.language key="lfr.meter-reading.submit-reading" /]</button>
             </div>
         </form>
 

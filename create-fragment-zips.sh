@@ -426,11 +426,6 @@ for COLLECTION_NAME in "${COLLECTIONS[@]}"; do
        # Ensure descriptor at the ROOT of the zip (sibling to collection folder)
        ensure_descriptor "$TEMP_COLL" "$COLLECTION_NAME"
         
-        # Transform configuration for Latest (convert string defaults of numeric fields to number literals)
-        find "$TEMP_COLL/$COLLECTION_NAME" -name "configuration.json" -print0 | while IFS= read -r -d '' config_file; do
-            jq "(.. | objects | select(.dataType == \"number\" and .defaultValue != null)) .defaultValue |= tonumber" "$config_file" > "$config_file.tmp" && mv "$config_file.tmp" "$config_file"
-        done
-
         process_dir "$TEMP_COLL/$COLLECTION_NAME" "$COLLECTION_NAME"
        
        # Clean up OS-specific files from temp dir

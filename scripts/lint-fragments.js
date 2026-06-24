@@ -239,7 +239,13 @@ fragmentFiles.forEach((file) => {
         set.fields?.forEach((field) => {
           // 1. Strict dataType constraints
           if (field.dataType !== undefined && field.dataType !== null) {
-            const allowedDataTypes = ['string', 'number', 'boolean', 'object'];
+            const allowedDataTypes = [
+              'string',
+              'number',
+              'int',
+              'boolean',
+              'object',
+            ];
             if (!allowedDataTypes.includes(field.dataType)) {
               logError(
                 fragmentName,
@@ -290,7 +296,7 @@ fragmentFiles.forEach((file) => {
 
           // 3. Strict defaultValue type constraints
           if (field.defaultValue !== undefined && field.defaultValue !== null) {
-            if (field.dataType === 'number') {
+            if (field.dataType === 'number' || field.dataType === 'int') {
               if (typeof field.defaultValue !== 'string') {
                 logError(
                   fragmentName,
