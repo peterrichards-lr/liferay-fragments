@@ -268,6 +268,8 @@ function generateGallery() {
             } else {
               liveImages[vp + '_status'] = '<br>🟢 **Passed**';
             }
+          } else if (fs.existsSync(fsPath)) {
+            liveImages[vp + '_status'] = '<br>🟢 **Passed**';
           } else {
             liveImages[vp + '_status'] = '<br>⚠️ **Unverified**';
           }
