@@ -176,7 +176,7 @@ if [ ${#ITEMS[@]} -eq 0 ]; then
                     cp "$f" "$DEPLOY_DIR/"
                 fi
             else
-                if [[ "$FILENAME" != *"-pre2025q3"* ]]; then
+                if [[ "$FILENAME" != *"-pre2025q3"* && "$FILENAME" != *"-pre2026q1"* ]]; then
                     echo "  -> Deploying Fragment $FILENAME"
                     cp "$f" "$DEPLOY_DIR/"
                 fi

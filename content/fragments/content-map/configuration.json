@@ -29,10 +29,9 @@
           "type": "text",
           "typeOptions": {
             "dependency": {
-              "field": "autoFitBounds",
-              "condition": {
+              "autoFitBounds": {
                 "type": "equal",
-                "value": false
+                "value": "false"
               }
             }
           }
@@ -46,10 +45,9 @@
           "type": "text",
           "typeOptions": {
             "dependency": {
-              "field": "autoFitBounds",
-              "condition": {
+              "autoFitBounds": {
                 "type": "equal",
-                "value": false
+                "value": "false"
               }
             }
           }
@@ -63,10 +61,9 @@
           "type": "text",
           "typeOptions": {
             "dependency": {
-              "field": "autoFitBounds",
-              "condition": {
+              "autoFitBounds": {
                 "type": "equal",
-                "value": false
+                "value": "false"
               }
             }
           }
@@ -102,8 +99,7 @@
           "type": "text",
           "typeOptions": {
             "dependency": {
-              "field": "mapProvider",
-              "condition": {
+              "mapProvider": {
                 "type": "equal",
                 "value": "google"
               }
@@ -118,8 +114,7 @@
           "type": "text",
           "typeOptions": {
             "dependency": {
-              "field": "mapProvider",
-              "condition": {
+              "mapProvider": {
                 "type": "equal",
                 "value": "google"
               }
@@ -145,10 +140,9 @@
           "type": "text",
           "typeOptions": {
             "dependency": {
-              "field": "useCustomMarkers",
-              "condition": {
+              "useCustomMarkers": {
                 "type": "equal",
-                "value": true
+                "value": "true"
               }
             }
           }
@@ -161,10 +155,9 @@
           "type": "checkbox",
           "typeOptions": {
             "dependency": {
-              "field": "useCustomMarkers",
-              "condition": {
+              "useCustomMarkers": {
                 "type": "equal",
-                "value": true
+                "value": "true"
               }
             }
           }
@@ -219,10 +212,9 @@
           "type": "text",
           "typeOptions": {
             "dependency": {
-              "field": "useCustomInfoTemplate",
-              "condition": {
+              "useCustomInfoTemplate": {
                 "type": "equal",
-                "value": true
+                "value": "true"
               }
             }
           }
@@ -235,10 +227,9 @@
           "type": "checkbox",
           "typeOptions": {
             "dependency": {
-              "field": "useCustomInfoTemplate",
-              "condition": {
+              "useCustomInfoTemplate": {
                 "type": "equal",
-                "value": true
+                "value": "true"
               }
             }
           }
@@ -263,10 +254,9 @@
           "type": "checkbox",
           "typeOptions": {
             "dependency": {
-              "field": "navigateOnClick",
-              "condition": {
+              "navigateOnClick": {
                 "type": "equal",
-                "value": true
+                "value": "true"
               }
             }
           }
@@ -285,10 +275,9 @@
           "type": "text",
           "typeOptions": {
             "dependency": {
-              "field": "useCustomDisplayPage",
-              "condition": {
+              "useCustomDisplayPage": {
                 "type": "equal",
-                "value": true
+                "value": "true"
               }
             }
           }

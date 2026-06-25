@@ -514,9 +514,8 @@ for COLLECTION_NAME in "${COLLECTIONS[@]}"; do
 
         find "$BUILD_TEMP_2026/$COLLECTION_NAME" -name "Language*.properties" -delete
         find "$BUILD_TEMP_2026/$COLLECTION_NAME" -name "client-extension.yaml" -delete
-        # Transform configuration for pre2026q1 compatibility using jq
         find "$BUILD_TEMP_2026/$COLLECTION_NAME" -name "configuration.json" -print0 | while IFS= read -r -d '' config_file; do
-            jq "(.. | objects | select(.dataType == \"number\" and .defaultValue != null)) .defaultValue |= tostring | (.. | objects | select(.dataType == \"boolean\" and .defaultValue != null)) .defaultValue |= tostring | (.. | objects | select(.dependency?.condition?.value != null)) .dependency.condition.value |= tostring" "$config_file" > "$config_file.tmp" && mv "$config_file.tmp" "$config_file"
+            jq "(.. | objects | select(.dataType == \"number\" and .defaultValue != null)) .defaultValue |= tostring | (.. | objects | select(.dataType == \"boolean\" and .defaultValue != null)) .defaultValue |= tostring | (.fieldSets[].fields[] | select(.typeOptions?.dependency != null)) .typeOptions.dependency |= (to_entries | .[0] | { field: .key, condition: { type: .value.type, value: .value.value } })" "$config_file" > "$config_file.tmp" && mv "$config_file.tmp" "$config_file"
         done
         process_dir "$BUILD_TEMP_2026/$COLLECTION_NAME" "$COLLECTION_NAME"
         

@@ -31,7 +31,8 @@ iVBORw0KGgoAAAANSUhEUgAAAeAAAAEOCAYAAABRmsRnAAAACXBIWXMAAC4jAAAuIwF4pT92AAAK9klE
     --overlay-height: ${configuration.height!'400px'};
   "
 >
-  [#assign imageSrc = placeholderImage]
+  [#assign cleanedPlaceholderImage = placeholderImage?replace("\n", "")?replace("\r", "")?replace(" ", "")?replace("\t", "")]
+  [#assign imageSrc = cleanedPlaceholderImage]
   [#if configuration.backgroundImage?? && configuration.backgroundImage.url??]
     [#assign imageSrc = configuration.backgroundImage.url]
   [/#if]

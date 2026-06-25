@@ -1,20 +1,72 @@
 {
-  "excludeFromGallery": true,
+  "pageConfig": {
+    "settings": {
+      "themeSettings": {
+        "lfr-theme:regular:show-header": "false",
+        "lfr-theme:regular:show-footer": "false"
+      }
+    }
+  },
   "pageLayout": {
-    "type": "Fragment",
-    "key": "upper-header-layout",
+    "type": "Section",
     "children": [
       {
-        "type": "Fragment",
-        "key": "logo"
+        "type": "Row",
+        "children": [
+          {
+            "type": "Column",
+            "children": [
+              {
+                "type": "Fragment",
+                "key": "upper-header-layout",
+                "children": [
+                  {
+                    "type": "Fragment",
+                    "key": "logo"
+                  },
+                  {
+                    "type": "Fragment",
+                    "key": "site-name"
+                  },
+                  {
+                    "type": "Fragment",
+                    "key": "navigation"
+                  },
+                  {
+                    "type": "Fragment",
+                    "key": "search-button"
+                  },
+                  {
+                    "type": "Fragment",
+                    "key": "search-bar"
+                  },
+                  {
+                    "type": "Fragment",
+                    "key": "login-and-user-menu"
+                  },
+                  {
+                    "type": "Fragment",
+                    "key": "user-bar"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
       },
       {
-        "type": "Fragment",
-        "key": "site-name"
-      },
-      {
-        "type": "Fragment",
-        "key": "login-and-user-menu"
+        "type": "Row",
+        "children": [
+          {
+            "type": "Column",
+            "children": [
+              {
+                "type": "Fragment",
+                "key": "lower-header-layout"
+              }
+            ]
+          }
+        ]
       }
     ]
   }
