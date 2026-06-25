@@ -3,7 +3,7 @@
     {
       "fields": [
         {
-          "dataType": "number",
+          "dataType": "string",
           "defaultValue": "6",
           "label": "lfr.form-fragments.number-of-boxes",
           "description": "lfr.form-fragments.number-of-boxes-description",
@@ -37,7 +37,6 @@
           }
         },
         {
-          "dataType": "boolean",
           "defaultValue": true,
           "label": "lfr.form-fragments.auto-focus",
           "description": "lfr.form-fragments.auto-focus-description",

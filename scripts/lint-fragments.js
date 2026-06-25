@@ -239,13 +239,7 @@ fragmentFiles.forEach((file) => {
         set.fields?.forEach((field) => {
           // 1. Strict dataType constraints
           if (field.dataType !== undefined && field.dataType !== null) {
-            const allowedDataTypes = [
-              'string',
-              'number',
-              'int',
-              'boolean',
-              'object',
-            ];
+            const allowedDataTypes = ['string', 'int', 'object'];
             if (!allowedDataTypes.includes(field.dataType)) {
               logError(
                 fragmentName,
@@ -279,10 +273,10 @@ fragmentFiles.forEach((file) => {
 
           // 2. Strict type vs dataType alignment
           if (field.type === 'checkbox') {
-            if (field.dataType !== undefined && field.dataType !== 'boolean') {
+            if (field.dataType !== undefined) {
               logError(
                 fragmentName,
-                `Field '${field.name}' of type 'checkbox' must have dataType: 'boolean' or omit it (found '${field.dataType}')`
+                `Field '${field.name}' of type 'checkbox' must omit dataType (found '${field.dataType}')`
               );
             }
           } else if (field.type === 'select') {
@@ -296,7 +290,7 @@ fragmentFiles.forEach((file) => {
 
           // 3. Strict defaultValue type constraints
           if (field.defaultValue !== undefined && field.defaultValue !== null) {
-            if (field.dataType === 'number' || field.dataType === 'int') {
+            if (field.dataType === 'int') {
               if (typeof field.defaultValue !== 'string') {
                 logError(
                   fragmentName,
@@ -329,8 +323,13 @@ fragmentFiles.forEach((file) => {
           }
 
           if (field.typeOptions?.dependency) {
-            const depField = field.typeOptions.dependency.field;
-            if (depField) {
+            const depFields = [];
+            if (field.typeOptions.dependency.field) {
+              depFields.push(field.typeOptions.dependency.field);
+            } else {
+              depFields.push(...Object.keys(field.typeOptions.dependency));
+            }
+            depFields.forEach((depField) => {
               const depFieldSetIndex = fieldToFieldSet.get(depField);
               if (
                 depFieldSetIndex !== undefined &&
@@ -341,7 +340,7 @@ fragmentFiles.forEach((file) => {
                   `Field '${field.name}' in fieldset ${index} depends on '${depField}' in fieldset ${depFieldSetIndex}. Dependencies cannot cross fieldsets.`
                 );
               }
-            }
+            });
           }
 
           if (field.label) {
@@ -547,7 +546,12 @@ const currentGalleryContent = fs.existsSync(GALLERY_FILE)
   : '';
 const expectedGalleryContent = generateGallery();
 
-const normalize = (str) => str.trim().replace(/\s+/g, ' ');
+const normalize = (str) =>
+  str
+    .trim()
+    .replace(/\(<([^>]+)>\)/g, '($1)')
+    .replace(/-{3,}/g, '---')
+    .replace(/\s+/g, ' ');
 
 if (normalize(currentGalleryContent) !== normalize(expectedGalleryContent)) {
   logWarn(

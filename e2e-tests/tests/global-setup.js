@@ -7,6 +7,7 @@ const { globSync } = require('glob');
 const projectRoot = path.join(__dirname, '..', '..');
 
 let globalSiteKey = 'L_GLOBAL';
+const dbFragmentKeyToERC = {};
 
 function convertConfigToFieldValues(config, fragmentDir) {
   const fieldValues = {};
@@ -76,6 +77,9 @@ function convertConfigToFieldValues(config, fragmentDir) {
 }
 
 function getFragmentERC(key, fragmentKeyToDir) {
+  if (dbFragmentKeyToERC[key]) {
+    return dbFragmentKeyToERC[key];
+  }
   const dir = fragmentKeyToDir ? fragmentKeyToDir[key] : null;
   if (dir) {
     const grandparentDir = path.dirname(path.dirname(dir));
@@ -418,9 +422,14 @@ function buildPageElementTree(
     const element = {
       type: 'FormFragment',
       definition: {
+        type: 'FormFragment',
         fieldKey: fieldKey.startsWith('ObjectField_')
           ? fieldKey
           : `ObjectField_${fieldKey}`,
+        fragment: {
+          key: key,
+          siteKey: globalSiteKey,
+        },
         fragmentInstance: {
           fragmentReference: {
             fragmentReferenceType: 'FragmentItemExternalReference',
@@ -479,13 +488,14 @@ function buildPageElementTree(
     }
 
     const definition = {
-      formContainerConfig: {
-        formContainerReference: {
+      type: 'FormContainer',
+      formConfig: {
+        formReference: {
           className: className,
-          type: 'FormContainerClassSubtypeReference',
+          type: 'FormClassSubtypeReference',
         },
-        formContainerType: 'Simple',
-        numberOfSteps: 0,
+        formType: 'simple',
+        numberOfSteps: 1,
       },
       indexed: true,
       layout: {},
@@ -496,7 +506,19 @@ function buildPageElementTree(
       definition: definition,
     };
 
-    if (node.children && node.children.length > 0) {
+    if (node.pageElements) {
+      element.pageElements = node.pageElements.map((child) =>
+        buildPageElementTree(
+          child,
+          siteERC,
+          assetMap,
+          defaultFragmentKey,
+          defaultFragmentConfig,
+          fragmentKeyToDir,
+          objectDefinitions
+        )
+      );
+    } else if (node.children && node.children.length > 0) {
       const flattenFormElements = (childrenList) => {
         let list = [];
         for (let child of childrenList) {
@@ -528,7 +550,46 @@ function buildPageElementTree(
         }
         return list;
       };
-      element.pageElements = flattenFormElements(node.children);
+
+      const firstChild = node.children[0];
+      const fcType =
+        typeof firstChild === 'object' && firstChild !== null
+          ? firstChild.type || ''
+          : '';
+      if (fcType === 'FormStepContainer' || fcType === 'FormStep') {
+        element.pageElements = node.children.map((child) =>
+          buildPageElementTree(
+            child,
+            siteERC,
+            assetMap,
+            defaultFragmentKey,
+            defaultFragmentConfig,
+            fragmentKeyToDir,
+            objectDefinitions
+          )
+        );
+      } else {
+        const stepElements = flattenFormElements(node.children);
+        element.pageElements = [
+          {
+            type: 'FormStepContainer',
+            definition: {
+              type: 'FormStepContainer',
+              indexed: true,
+            },
+            pageElements: [
+              {
+                type: 'FormStep',
+                definition: {
+                  type: 'FormStep',
+                  indexed: true,
+                },
+                pageElements: stepElements,
+              },
+            ],
+          },
+        ];
+      }
     }
     return element;
   } else if (type === 'Widget') {
@@ -611,6 +672,12 @@ function findObjectDefinitionPayload(erc, rootPath) {
 }
 
 async function globalSetup(config) {
+  if (process.env.SKIP_GLOBAL_SETUP === 'true') {
+    console.log(
+      '  -> SKIP_GLOBAL_SETUP is true. Skipping global setup execution.'
+    );
+    return;
+  }
   const { baseURL, storageState } = config.projects[0].use;
   // projectRoot is defined at top level
 
@@ -1246,7 +1313,7 @@ async function globalSetup(config) {
             form: {
               groupId: querySiteId,
               fragmentCollectionId: collection.fragmentCollectionId,
-              status: 0,
+              status: -1, // Get all statuses to auto-approve drafts/pending
               start: -1,
               end: -1,
             },
@@ -1255,7 +1322,58 @@ async function globalSetup(config) {
 
         if (entriesResp.ok()) {
           const entries = await entriesResp.json();
-          entries.forEach((e) => registeredKeys.push(e.fragmentEntryKey));
+          for (const entry of entries) {
+            let approved = entry.status === 0;
+            if (!approved) {
+              console.log(
+                `  -> [PENDING/DRAFT] Fragment "${entry.name}" (${entry.fragmentEntryKey}) has status ${entry.status}. Approving...`
+              );
+              try {
+                const approveResp = await apiContext.post(
+                  `/api/jsonws/fragment.fragmententry/update-fragment-entry?p_auth=${pAuthToken}`,
+                  {
+                    form: {
+                      fragmentEntryId: entry.fragmentEntryId,
+                      fragmentCollectionId: entry.fragmentCollectionId,
+                      name: entry.name,
+                      css: entry.css || '',
+                      html: entry.html || '',
+                      js: entry.js || '',
+                      cacheable:
+                        entry.cacheable !== undefined ? entry.cacheable : true,
+                      configuration: entry.configuration || '',
+                      icon: entry.icon || '',
+                      previewFileEntryId: entry.previewFileEntryId || 0,
+                      readOnly:
+                        entry.readOnly !== undefined ? entry.readOnly : false,
+                      typeOptions: entry.typeOptions || '',
+                      status: 0, // Approve
+                    },
+                  }
+                );
+                if (approveResp.ok()) {
+                  approved = true;
+                  console.log(
+                    `     🟢 Successfully approved fragment: ${entry.name}`
+                  );
+                } else {
+                  console.warn(
+                    `     🔴 Failed to approve fragment: ${entry.name} - ${approveResp.status()}`
+                  );
+                }
+              } catch (err) {
+                console.error(
+                  `     🔴 Exception during fragment approval: ${entry.name}`,
+                  err.message
+                );
+              }
+            }
+            if (approved) {
+              registeredKeys.push(entry.fragmentEntryKey);
+              dbFragmentKeyToERC[entry.fragmentEntryKey] =
+                entry.externalReferenceCode;
+            }
+          }
         }
       }
 
@@ -2281,56 +2399,262 @@ async function globalSetup(config) {
     }
 
     if (!rootPageElement) {
-      rootPageElement = {
-        type: 'Root',
-        pageElements: [
-          {
-            type: 'Section',
-            definition: {
-              indexed: true,
-              layout: {},
-            },
-            pageElements: [
-              {
-                type: 'Row',
-                definition: {
-                  gutters: true,
-                  columnsSpacing: true,
-                  numberOfColumns: 1,
-                },
-                pageElements: [
-                  {
-                    type: 'Column',
-                    definition: {
-                      size: 12,
-                      width: '12',
-                    },
-                    pageElements: [
-                      {
-                        type: 'Fragment',
-                        definition: {
-                          fragment: {
-                            key: fragmentKey,
-                            siteKey: globalSiteKey,
-                          },
-                          fragmentConfig: seededConfigOverrides,
-                          indexed: true,
-                        },
-                      },
-                    ],
-                  },
-                ],
+      let isInputType = false;
+      const parentDir = fragmentKeyToDir ? fragmentKeyToDir[fragmentKey] : null;
+      if (parentDir) {
+        try {
+          const fragJsonPath = path.join(parentDir, 'fragment.json');
+          if (fs.existsSync(fragJsonPath)) {
+            const fragJson = JSON.parse(fs.readFileSync(fragJsonPath, 'utf8'));
+            if (fragJson.type === 'input') {
+              isInputType = true;
+            }
+          }
+        } catch (e) {
+          // Ignore reading errors
+        }
+      }
+
+      if (isInputType) {
+        const applicantDef = objectDefinitions.find(
+          (d) => d.externalReferenceCode === 'APPLICANT'
+        );
+        const applicantClassName = applicantDef
+          ? applicantDef.className
+          : 'com.liferay.object.model.ObjectDefinition#APPLICANT';
+
+        let fieldKey = 'favoriteColor'; // Fallback for color swatches / other inputs
+        if (parentDir) {
+          try {
+            const configPath = path.join(parentDir, 'configuration.json');
+            if (fs.existsSync(configPath)) {
+              const configJson = JSON.parse(
+                fs.readFileSync(configPath, 'utf8')
+              );
+              if (configJson.fieldSets) {
+                for (const set of configJson.fieldSets) {
+                  if (set.fields) {
+                    const mappedField = set.fields.find(
+                      (f) =>
+                        f.type === 'checkbox' ||
+                        f.type === 'select' ||
+                        f.type === 'text'
+                    );
+                    if (mappedField) {
+                      fieldKey = mappedField.name;
+                    }
+                  }
+                }
+              }
+            }
+          } catch (e) {}
+        }
+
+        rootPageElement = {
+          type: 'Root',
+          pageElements: [
+            {
+              type: 'Section',
+              definition: {
+                indexed: true,
+                layout: {},
               },
-            ],
-          },
-        ],
-      };
+              pageElements: [
+                {
+                  type: 'Row',
+                  definition: {
+                    gutters: true,
+                    columnsSpacing: true,
+                    numberOfColumns: 1,
+                  },
+                  pageElements: [
+                    {
+                      type: 'Column',
+                      definition: {
+                        size: 12,
+                        width: '100%',
+                      },
+                      pageElements: [
+                        {
+                          type: 'FormContainer',
+                          definition: {
+                            type: 'FormContainer',
+                            formConfig: {
+                              formReference: {
+                                className: applicantClassName,
+                                type: 'FormClassSubtypeReference',
+                              },
+                              formType: 'simple',
+                              numberOfSteps: 1,
+                            },
+                            indexed: true,
+                            layout: {},
+                          },
+                          pageElements: [
+                            {
+                              type: 'FormStepContainer',
+                              definition: {
+                                type: 'FormStepContainer',
+                                indexed: true,
+                              },
+                              pageElements: [
+                                {
+                                  type: 'FormStep',
+                                  definition: {
+                                    type: 'FormStep',
+                                    indexed: true,
+                                  },
+                                  pageElements: [
+                                    {
+                                      type: 'FormFragment',
+                                      definition: {
+                                        type: 'FormFragment',
+                                        fieldKey: fieldKey.startsWith(
+                                          'ObjectField_'
+                                        )
+                                          ? fieldKey
+                                          : `ObjectField_${fieldKey}`,
+                                        fragment: {
+                                          key: fragmentKey,
+                                          siteKey: globalSiteKey,
+                                        },
+                                        fragmentInstance: {
+                                          fragmentReference: {
+                                            fragmentReferenceType:
+                                              'FragmentItemExternalReference',
+                                            externalReferenceCode:
+                                              getFragmentERC(
+                                                fragmentKey,
+                                                fragmentKeyToDir
+                                              ),
+                                            className:
+                                              'com.liferay.fragment.model.FragmentEntry',
+                                            scope: {
+                                              externalReferenceCode: 'L_GLOBAL',
+                                              type: 'Site',
+                                            },
+                                          },
+                                          fragmentConfigurationFieldValues:
+                                            convertConfigToFieldValues(
+                                              {
+                                                ...seededConfigOverrides,
+                                                inputFieldId:
+                                                  fieldKey.startsWith(
+                                                    'ObjectField_'
+                                                  )
+                                                    ? fieldKey
+                                                    : `ObjectField_${fieldKey}`,
+                                              },
+                                              parentDir
+                                            ),
+                                          fragmentEditableElements: [],
+                                        },
+                                      },
+                                    },
+                                    {
+                                      type: 'FormFragment',
+                                      definition: {
+                                        type: 'FormFragment',
+                                        fieldKey: '',
+                                        fragment: {
+                                          key: 'submit-button',
+                                          siteKey: globalSiteKey,
+                                        },
+                                        fragmentInstance: {
+                                          fragmentReference: {
+                                            fragmentReferenceType:
+                                              'FragmentItemExternalReference',
+                                            externalReferenceCode:
+                                              getFragmentERC(
+                                                'submit-button',
+                                                fragmentKeyToDir
+                                              ),
+                                            className:
+                                              'com.liferay.fragment.model.FragmentEntry',
+                                            scope: {
+                                              externalReferenceCode: 'L_GLOBAL',
+                                              type: 'Site',
+                                            },
+                                          },
+                                          fragmentConfigurationFieldValues: {},
+                                          fragmentEditableElements: [],
+                                        },
+                                      },
+                                    },
+                                  ],
+                                },
+                              ],
+                            },
+                          ],
+                        },
+                      ],
+                    },
+                  ],
+                },
+              ],
+            },
+          ],
+        };
+      } else {
+        rootPageElement = {
+          type: 'Root',
+          pageElements: [
+            {
+              type: 'Section',
+              definition: {
+                indexed: true,
+                layout: {},
+              },
+              pageElements: [
+                {
+                  type: 'Row',
+                  definition: {
+                    gutters: true,
+                    columnsSpacing: true,
+                    numberOfColumns: 1,
+                  },
+                  pageElements: [
+                    {
+                      type: 'Column',
+                      definition: {
+                        size: 12,
+                        width: '12',
+                      },
+                      pageElements: [
+                        {
+                          type: 'Fragment',
+                          definition: {
+                            fragment: {
+                              key: fragmentKey,
+                              siteKey: globalSiteKey,
+                            },
+                            fragmentConfig: seededConfigOverrides,
+                            indexed: true,
+                          },
+                        },
+                      ],
+                    },
+                  ],
+                },
+              ],
+            },
+          ],
+        };
+      }
     }
 
     const normalizePageElementTypes = (element) => {
       if (!element) return;
-      if (element.type === 'FormFragment') {
+      if (element.type === 'FormContainer') {
+        element.type = 'Form';
+        if (element.definition && !element.definition.type) {
+          element.definition.type = 'FormContainer';
+        }
+      } else if (element.type === 'FormFragment') {
         element.type = 'Fragment';
+        if (element.definition && !element.definition.type) {
+          element.definition.type = 'FormFragment';
+        }
       }
       if (element.pageElements) {
         element.pageElements.forEach(normalizePageElementTypes);
@@ -2509,3 +2833,25 @@ async function globalSetup(config) {
 }
 
 module.exports = globalSetup;
+
+if (require.main === module) {
+  const mockConfig = {
+    projects: [
+      {
+        use: {
+          baseURL: process.env.BASE_URL || 'http://localhost:8081',
+          storageState: './state.json',
+        },
+      },
+    ],
+  };
+  globalSetup(mockConfig)
+    .then(() => {
+      console.log('Setup completed successfully.');
+      process.exit(0);
+    })
+    .catch((err) => {
+      console.error('Setup failed:', err);
+      process.exit(1);
+    });
+}

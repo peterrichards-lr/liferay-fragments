@@ -129,10 +129,9 @@
           "type": "text",
           "typeOptions": {
             "dependency": {
-              "field": "enableSecondaryYAxis",
-              "condition": {
+              "enableSecondaryYAxis": {
                 "type": "equal",
-                "value": true
+                "value": "true"
               }
             }
           }
