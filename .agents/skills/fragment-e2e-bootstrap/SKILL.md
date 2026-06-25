@@ -39,6 +39,7 @@ The E2E bootstrap framework automatically provisions the following resources on 
    - You can declare local files (like images, icons, or PDF brochures) in the top-level `"documents"` array of `test-data.json`.
    - The framework uploads these files to Liferay's Document Library using the Headless Delivery API and assigns them the specified `externalReferenceCode` (ERC).
    - In page layout configurations (e.g. image URLs), the ERC placeholder is automatically resolved to the real published URL of the uploaded asset.
+   - **Stringified JSON Configurations**: For fragments that accept stringified JSON (like `"optionsJSON"`), the framework performs a deep global substring replacement (`replacedStr.split(erc).join(url)`). This ensures ERC placeholders embedded inside nested structures or stringified configuration properties are correctly mapped to their Liferay URLs.
    - Guest view permissions are automatically granted to these files so that E2E visual capture executes cleanly.
 
 3. **Structured Content (Web Content Articles)**:

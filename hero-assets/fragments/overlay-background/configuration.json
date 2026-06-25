@@ -108,7 +108,8 @@
           "label": "lfr.hero-assets.enable-debug",
           "description": "lfr.hero-assets.enable-debug-description",
           "name": "enableDebug",
-          "type": "checkbox"
+          "type": "checkbox",
+          "dataType": "boolean"
         }
       ],
       "label": "lfr.hero-assets.miscellaneous"

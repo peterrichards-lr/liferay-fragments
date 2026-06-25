@@ -167,14 +167,16 @@
           "label": "lfr.layout-components.inverted",
           "description": "lfr.layout-components.inverted-description",
           "name": "inverted",
-          "type": "checkbox"
+          "type": "checkbox",
+          "dataType": "boolean"
         },
         {
           "defaultValue": false,
           "label": "lfr.layout-components.uppercase",
           "description": "lfr.layout-components.uppercase-description",
           "name": "uppercase",
-          "type": "checkbox"
+          "type": "checkbox",
+          "dataType": "boolean"
         }
       ],
       "label": "lfr.layout-components.general"

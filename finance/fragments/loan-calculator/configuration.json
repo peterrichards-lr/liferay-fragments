@@ -15,7 +15,8 @@
           "label": "lfr.finance.show",
           "description": "lfr.finance.show-description",
           "name": "show",
-          "type": "checkbox"
+          "type": "checkbox",
+          "dataType": "boolean"
         },
         {
           "defaultValue": "solid",
@@ -95,14 +96,16 @@
           "label": "lfr.finance.inverted",
           "description": "lfr.finance.inverted-description",
           "name": "inverted",
-          "type": "checkbox"
+          "type": "checkbox",
+          "dataType": "boolean"
         },
         {
           "defaultValue": false,
           "label": "lfr.finance.uppercase",
           "description": "lfr.finance.uppercase-description",
           "name": "uppercase",
-          "type": "checkbox"
+          "type": "checkbox",
+          "dataType": "boolean"
         }
       ],
       "label": "lfr.finance.general"

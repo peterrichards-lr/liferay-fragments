@@ -57,7 +57,8 @@
           "label": "lfr.responsive-menus.limit-menu-width",
           "description": "lfr.responsive-menus.limit-menu-width",
           "name": "limitMenuWidth",
-          "type": "checkbox"
+          "type": "checkbox",
+          "dataType": "boolean"
         },
         {
           "defaultValue": "0",
@@ -140,7 +141,8 @@
           "label": "lfr.responsive-menus.hide-on-scroll",
           "description": "lfr.responsive-menus.hide-on-scroll-description",
           "name": "hideOnScroll",
-          "type": "checkbox"
+          "type": "checkbox",
+          "dataType": "boolean"
         }
       ],
       "label": "lfr.responsive-menus.general"
@@ -249,14 +251,16 @@
           "label": "lfr.responsive-menus.scroll-lock",
           "description": "lfr.responsive-menus.scroll-lock",
           "name": "enableScrollLock",
-          "type": "checkbox"
+          "type": "checkbox",
+          "dataType": "boolean"
         },
         {
           "defaultValue": true,
           "label": "lfr.responsive-menus.close-on-internal-nav",
           "description": "lfr.responsive-menus.close-on-internal-nav",
           "name": "enableCloseOnInternalNav",
-          "type": "checkbox"
+          "type": "checkbox",
+          "dataType": "boolean"
         }
       ],
       "label": "lfr.responsive-menus.behavior"
@@ -310,7 +314,8 @@
           "label": "lfr.responsive-menus.separator",
           "description": "lfr.responsive-menus.separator",
           "name": "separator",
-          "type": "checkbox"
+          "type": "checkbox",
+          "dataType": "boolean"
         },
         {
           "defaultValue": "#bbb",
@@ -416,7 +421,8 @@
           "label": "lfr.responsive-menus.scroll-back-to-top",
           "description": "lfr.responsive-menus.scroll-back-to-top",
           "name": "scrollBackToTop",
-          "type": "checkbox"
+          "type": "checkbox",
+          "dataType": "boolean"
         },
         {
           "defaultValue": "order-arrow-up",
@@ -463,7 +469,8 @@
           "label": "lfr.responsive-menus.enable-portrait-phone",
           "description": "lfr.responsive-menus.enable-portrait-phone",
           "name": "enablePortraitPhoneBreakpoint",
-          "type": "checkbox"
+          "type": "checkbox",
+          "dataType": "boolean"
         },
         {
           "defaultValue": "360px",
@@ -484,7 +491,8 @@
           "label": "lfr.responsive-menus.enable-landscape-phone",
           "description": "lfr.responsive-menus.enable-landscape-phone",
           "name": "enableLandscapePhoneBreakpoint",
-          "type": "checkbox"
+          "type": "checkbox",
+          "dataType": "boolean"
         },
         {
           "defaultValue": "576px",
@@ -505,7 +513,8 @@
           "label": "lfr.responsive-menus.enable-tablet",
           "description": "lfr.responsive-menus.enable-tablet",
           "name": "enableTabletBreakpoint",
-          "type": "checkbox"
+          "type": "checkbox",
+          "dataType": "boolean"
         },
         {
           "defaultValue": "768px",
@@ -545,7 +554,8 @@
           "label": "lfr.responsive-menus.override-menu-colors",
           "description": "lfr.responsive-menus.override-menu-colors",
           "name": "overrideMenuColors",
-          "type": "checkbox"
+          "type": "checkbox",
+          "dataType": "boolean"
         },
         {
           "defaultValue": "var(--light, white)",
@@ -656,7 +666,8 @@
           "label": "lfr.responsive-menus.menu-header",
           "description": "lfr.responsive-menus.menu-header",
           "name": "menuHeader",
-          "type": "checkbox"
+          "type": "checkbox",
+          "dataType": "boolean"
         }
       ],
       "label": "lfr.responsive-menus.styling"
@@ -668,7 +679,8 @@
           "label": "lfr.responsive-menus.debug-enabled",
           "description": "lfr.responsive-menus.debug-enabled",
           "name": "enableDebug",
-          "type": "checkbox"
+          "type": "checkbox",
+          "dataType": "boolean"
         },
         {
           "dataType": "string",

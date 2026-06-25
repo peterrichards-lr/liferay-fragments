@@ -240,7 +240,13 @@ fragmentFiles.forEach((file) => {
         set.fields?.forEach((field) => {
           // 1. Strict dataType constraints
           if (field.dataType !== undefined && field.dataType !== null) {
-            const allowedDataTypes = ['string', 'int', 'object'];
+            const allowedDataTypes = [
+              'string',
+              'int',
+              'object',
+              'boolean',
+              'number',
+            ];
             if (!allowedDataTypes.includes(field.dataType)) {
               logError(
                 fragmentName,
@@ -274,10 +280,10 @@ fragmentFiles.forEach((file) => {
 
           // 2. Strict type vs dataType alignment
           if (field.type === 'checkbox') {
-            if (field.dataType !== undefined) {
+            if (field.dataType !== 'boolean') {
               logError(
                 fragmentName,
-                `Field '${field.name}' of type 'checkbox' must omit dataType (found '${field.dataType}')`
+                `Field '${field.name}' of type 'checkbox' must have dataType 'boolean' (found '${field.dataType}')`
               );
             }
           } else if (field.type === 'select') {
@@ -291,7 +297,7 @@ fragmentFiles.forEach((file) => {
 
           // 3. Strict defaultValue type constraints
           if (field.defaultValue !== undefined && field.defaultValue !== null) {
-            if (field.dataType === 'int') {
+            if (field.dataType === 'int' || field.dataType === 'number') {
               if (typeof field.defaultValue !== 'string') {
                 logError(
                   fragmentName,

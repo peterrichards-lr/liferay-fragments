@@ -7,7 +7,8 @@
           "description": "lfr.header-components.use-commerce-search-description",
           "label": "lfr.header-components.use-commerce-search",
           "name": "useCommerceSearch",
-          "type": "checkbox"
+          "type": "checkbox",
+          "dataType": "boolean"
         }
       ],
       "label": "lfr.header-components.search"

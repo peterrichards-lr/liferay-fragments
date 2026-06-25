@@ -16,7 +16,8 @@
           "label": "lfr.form-fragments.custom-range",
           "description": "lfr.form-fragments.custom-range",
           "name": "customRange",
-          "type": "checkbox"
+          "type": "checkbox",
+          "dataType": "boolean"
         },
         {
           "dataType": "string",
@@ -47,7 +48,8 @@
           "label": "lfr.form-fragments.display-value",
           "description": "lfr.form-fragments.display-value",
           "name": "displayValue",
-          "type": "checkbox"
+          "type": "checkbox",
+          "dataType": "boolean"
         },
         {
           "dataType": "string",
@@ -70,7 +72,8 @@
           "label": "lfr.form-fragments.add-id",
           "description": "lfr.form-fragments.add-id",
           "name": "addId",
-          "type": "checkbox"
+          "type": "checkbox",
+          "dataType": "boolean"
         },
         {
           "dataType": "string",
