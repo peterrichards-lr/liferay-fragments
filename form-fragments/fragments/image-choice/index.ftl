@@ -44,7 +44,7 @@ options = [] /] [/#attempt] [/#if]
       [/#list] [#else]
       <div class="alert alert-info">
         ${languageUtil.get(locale,
-        "please-configure-image-options-in-json-format.")}
+        "lfr.form-fragments.please-configure-image-options-in-json-format.")}
       </div>
       [/#if]
     </div>

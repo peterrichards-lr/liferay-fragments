@@ -18,7 +18,7 @@
     [#if configuration.showValue]
     <div class="current-value-display mb-2">
       <span class="text-secondary"
-        >${languageUtil.get(locale, "selected-color")}:</span
+        >${languageUtil.get(locale, "lfr.form-fragments.selected-color")}:</span
       >
       <span class="selected-color-name font-weight-bold">${input.value!}</span>
     </div>

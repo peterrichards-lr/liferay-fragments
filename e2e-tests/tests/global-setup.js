@@ -318,7 +318,29 @@ function buildPageElementTree(
       },
     };
 
-    if (node.children && node.children.length > 0) {
+    if (node.dropZones) {
+      element.pageElements = node.dropZones.map((dz) => {
+        const uniqueDropZoneId = Math.random().toString(36).substring(7);
+        return {
+          type: 'FragmentDropZone',
+          id: uniqueDropZoneId,
+          definition: {
+            fragmentDropZoneId: dz.id || '1',
+          },
+          pageElements: dz.children.map((child) =>
+            buildPageElementTree(
+              child,
+              siteERC,
+              assetMap,
+              defaultFragmentKey,
+              defaultFragmentConfig,
+              fragmentKeyToDir,
+              objectDefinitions
+            )
+          ),
+        };
+      });
+    } else if (node.children && node.children.length > 0) {
       const parentDir = fragmentKeyToDir ? fragmentKeyToDir[key] : null;
       let dropZoneId = node.dropZoneId || '1';
 
@@ -2501,30 +2523,8 @@ async function globalSetup(config) {
           : 'com.liferay.object.model.ObjectDefinition#APPLICANT';
 
         let fieldKey = 'favoriteColor'; // Fallback for color swatches / other inputs
-        if (parentDir) {
-          try {
-            const configPath = path.join(parentDir, 'configuration.json');
-            if (fs.existsSync(configPath)) {
-              const configJson = JSON.parse(
-                fs.readFileSync(configPath, 'utf8')
-              );
-              if (configJson.fieldSets) {
-                for (const set of configJson.fieldSets) {
-                  if (set.fields) {
-                    const mappedField = set.fields.find(
-                      (f) =>
-                        f.type === 'checkbox' ||
-                        f.type === 'select' ||
-                        f.type === 'text'
-                    );
-                    if (mappedField) {
-                      fieldKey = mappedField.name;
-                    }
-                  }
-                }
-              }
-            }
-          } catch (e) {}
+        if (fragmentKey === 'listbox-multiselect') {
+          fieldKey = 'interests';
         }
 
         rootPageElement = {

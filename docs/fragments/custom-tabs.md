@@ -1,16 +1,24 @@
 # Custom Tabs
 
-The **Custom Tabs** fragment provides a flexible tabbed interface for organizing
-content on a page.
+The **Custom Tabs** fragment provides a flexible, highly interactive tabbed container layout. It allows content creators to organize layout areas under separate tabs to maximize screen real estate and improve page aesthetics.
 
-## Key Features
+## Overview
 
-- **Dynamic Headers**: Configurable tab labels using a JSON definition.
-- **Deep Linking**: Optional URL hash tracking to allow users to link directly
-  to a specific tab.
-- **Meridian Styling**: Clean, modern tab design with active/inactive states.
+- **Dynamic Number of Tabs**: Supports up to 10 dynamically configurable tabs via the fragment configuration.
+- **Embedded Drop Zones**: Each tab exposes a native Liferay layout drop zone (`lfr-drop-zone`) allowing content editors to drag and drop arbitrary fragments (like rich text, images, or widgets) inside them.
+- **Accessible Design**: Keyboard accessibility with support for Arrow keys, Home, End, and focus state indicators.
+- **State Persistence**: Optionally persists the active tab in `SessionStorage` so that the user's active tab is maintained across page refreshes.
 
 ## Configuration
 
-- **Tabs JSON**: A list of tab objects containing labels and internal IDs.
-- **Initial Tab**: The tab that should be active by default.
+The fragment can be configured using the following configuration options:
+
+- **Number of Tabs** (`numberOfTabs`): The number of active tabs to display (1 to 10). Excess tabs are hidden using FreeMarker conditions. Defaults to `4`.
+- **Persist Selected Tab** (`persistSelectedTab`): If checked (true), the selected tab index is stored in the browser session storage. When the user returns to the page, the last selected tab is automatically reopened. Defaults to `true`.
+
+## Usage & Placement
+
+1. Place the **Custom Tabs** fragment onto a content page.
+2. In the configuration panel, specify the number of tabs (e.g., `3`).
+3. Click directly on each tab header to edit its label text (e.g., "Overview", "Specifications", "Support").
+4. Drag and drop any desired fragments or widgets into the corresponding tab panel drop zones (e.g. drop a rich-text block or an image card inside the active panel area).
