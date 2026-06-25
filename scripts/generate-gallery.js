@@ -287,7 +287,7 @@ function generateGallery() {
 
       if (Object.keys(liveImages).length > 0) {
         if (fallbackPath) {
-          markdown += `#### Original Design\n<img src="${fallbackPath}" width="800" alt="Original Image">\n\n`;
+          markdown += `#### Original Design\n<img src="${fallbackPath}" style="max-width: 600px; max-height: 400px; width: auto; height: auto; display: block;" alt="Original Image">\n\n`;
         }
         if (liveImages.desktop) {
           const status = liveImages.desktop_status || '';
@@ -311,7 +311,7 @@ function generateGallery() {
         }
       } else {
         if (fallbackPath) {
-          markdown += `![${fragMetadata.name}](${fallbackPath})\n\n`;
+          markdown += `<img src="${fallbackPath}" style="max-width: 600px; max-height: 400px; width: auto; height: auto; display: block;" alt="${fragMetadata.name}">\n\n`;
         } else {
           markdown += `*No image available*\n\n`;
         }

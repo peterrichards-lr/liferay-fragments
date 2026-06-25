@@ -57,12 +57,12 @@ test.describe('Responsive Fragment Rendering', () => {
 
       // 3. Inject CSS to hide the Liferay navigation menu visually.
       // This prevents the giant menu of 124 test pages from crushing the fragment in the screenshot.
+      const isHeaderComponent =
+        pageInfo.collectionFolder === 'header-components' ||
+        pageInfo.collectionName === 'Header Components';
       await page.addStyleTag({
         content: `
-          #banner, 
-          #wrapper header, 
-          .navbar, 
-          .site-navigation,
+          ${isHeaderComponent ? '' : '#banner, #wrapper header, .navbar, .site-navigation,'}
           #controlMenu,
           .control-menu,
           #productMenu,
@@ -219,7 +219,38 @@ test.describe('Responsive Fragment Rendering', () => {
             await page.waitForTimeout(500);
           }
 
+          if (pageInfo.fragmentName === 'Search Bar') {
+            const btn = page.locator('.btn-search').first();
+            if ((await btn.count()) > 0) {
+              await btn.click();
+              await page.waitForTimeout(500);
+            } else {
+              await page.evaluate(() => {
+                const sb = document.querySelector('#searchBar');
+                if (sb) {
+                  sb.classList.add('show');
+                  sb.style.display = 'block';
+                }
+              });
+            }
+            // Use the parent row to capture the expanded bar in context without clipping
+            fragmentElement = page
+              .locator('.lfr-layout-structure-item-row, .row')
+              .first();
+          }
+
+          if (pageInfo.fragmentName === 'Search Overlay') {
+            const triggerEl = page.locator('.search-trigger').first();
+            if ((await triggerEl.count()) > 0) {
+              await triggerEl.click();
+              await page.waitForTimeout(500);
+            }
+            // Use the wrapper to capture the modal overlay in context without clipping
+            fragmentElement = page.locator('#wrapper, .portlet-layout').first();
+          }
+
           // Verify the bounding box is non-zero and has height
+
           const box = await fragmentElement.boundingBox();
           if (!box || box.height <= 10) {
             throw new Error(
