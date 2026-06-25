@@ -25,7 +25,7 @@ EST_BUILD_NEW_DEPLOY=220
 EST_WAITING_HEALTHY_DEPLOY=100
 EST_WAITING_HEALTHY_SKIP_DEPLOY=0
 
-EST_TESTING=350
+EST_TESTING=3600
 
 write_signal() {
     local status="$1"
@@ -71,6 +71,43 @@ write_signal() {
 # Initial write (generic BUILDING phase)
 write_signal "BUILDING" 500
 
+# Watchdog Timer
+watchdog_timer() {
+    # The watchdog runs in the background and terminates the main process if a phase exceeds its deadline.
+    while true; do
+        sleep 60
+        if [ -f "$PROGRESS_SIGNAL_FILE" ]; then
+            local state=$(head -n 1 "$PROGRESS_SIGNAL_FILE" | tr -d '\r')
+            if [ "$state" = "SUCCESS" ] || [ "$state" = "FAILED" ]; then
+                exit 0
+            fi
+            
+            # Read ESTIMATED_REMAINING_SECONDS
+            local remaining=$(grep "ESTIMATED_REMAINING_SECONDS" "$PROGRESS_SIGNAL_FILE" | cut -d'=' -f2 | tr -d '\r')
+            if [ -n "$remaining" ]; then
+                # Check modification time
+                local modified
+                modified=$(stat -c %Y "$PROGRESS_SIGNAL_FILE" 2>/dev/null || stat -f %m "$PROGRESS_SIGNAL_FILE" 2>/dev/null || echo 0)
+                local now
+                now=$(date +%s)
+                local elapsed=$((now - modified))
+                
+                # Buffer of 15 minutes (900 seconds) beyond the estimated remaining time
+                local max_wait=$((remaining + 900))
+                
+                if [ "$elapsed" -gt "$max_wait" ]; then
+                    echo ""
+                    echo "[WATCHDOG] CRITICAL: Phase '$state' has hung for $elapsed seconds (exceeded estimate + buffer of $max_wait). Terminating test runner!"
+                    kill -TERM $$ 2>/dev/null
+                    exit 1
+                fi
+            fi
+        fi
+    done
+}
+watchdog_timer &
+WATCHDOG_PID=$!
+
 # Logging Helpers
 log_command() {
     if [ "$VERBOSE" = true ]; then
@@ -113,6 +150,11 @@ handle_exit() {
     EXIT_HANDLED=true
     
     EXIT_CODE=$?
+    
+    # Kill the background watchdog
+    if [ -n "$WATCHDOG_PID" ]; then
+        kill -9 "$WATCHDOG_PID" 2>/dev/null || true
+    fi
     
     cleanup
     
