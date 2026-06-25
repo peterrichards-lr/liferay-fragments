@@ -1798,5 +1798,45 @@
     "type": "article",
     "id": 126915,
     "erc": "MAP-MARKER-ARTICLE-02"
+  },
+  {
+    "type": "document",
+    "id": 138312,
+    "erc": "COFFEE-AUTH"
+  },
+  {
+    "type": "document",
+    "id": 138324,
+    "erc": "GRAVITY-RECOMMENDATION"
+  },
+  {
+    "type": "document",
+    "id": 139218,
+    "erc": "COFFEE-AUTH"
+  },
+  {
+    "type": "document",
+    "id": 139230,
+    "erc": "GRAVITY-RECOMMENDATION"
+  },
+  {
+    "type": "document",
+    "id": 38081,
+    "erc": "COFFEE-AUTH"
+  },
+  {
+    "type": "document",
+    "id": 38093,
+    "erc": "GRAVITY-RECOMMENDATION"
+  },
+  {
+    "type": "document",
+    "id": 37461,
+    "erc": "COFFEE-AUTH"
+  },
+  {
+    "type": "document",
+    "id": 37473,
+    "erc": "GRAVITY-RECOMMENDATION"
   }
 ]

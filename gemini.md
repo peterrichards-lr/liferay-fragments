@@ -334,3 +334,4 @@ after itself.
   - `Protect Version Tags` ruleset (preventing deletion and modification of version tags).
 - [x] Add `.github/dependabot.yml` for auto-upgrades of GitHub Action dependencies.
 - [x] Add `.github/PULL_REQUEST_TEMPLATE.md` to guide contributions and checklist validation.
+- [x] **NOTE:** Repository-level Auto-Merge is currently disabled, meaning `gh pr merge --auto` operations will fail. Pull requests must be merged manually via the UI.

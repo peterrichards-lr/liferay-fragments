@@ -17,8 +17,25 @@
 				[#else]
 				[#assign options=(input.attributes.options)![]]
 				[/#if]
-				<select class="list-avaialble-options" size="${configuration.numberOfOptions!}" name="${input.name}-available" multiple>
-					[#list options as option]
+				[#assign selectedValues = [] /]
+				[#if input.value?? && input.value?has_content]
+					[#if input.value?is_enumerable]
+						[#assign selectedValues = input.value /]
+					[#elseif input.value?is_string]
+						[#assign selectedValues = input.value?split(",") /]
+					[/#if]
+				[/#if]
+				[#assign availableOptionsList = [] /]
+				[#assign selectedOptionsList = [] /]
+				[#list options as option]
+					[#if selectedValues?seq_contains(option.value)]
+						[#assign selectedOptionsList = selectedOptionsList + [option] /]
+					[#else]
+						[#assign availableOptionsList = availableOptionsList + [option] /]
+					[/#if]
+				[/#list]
+				<select class="list-available-options" size="${configuration.numberOfOptions!}" name="${input.name}-available" multiple>
+					[#list availableOptionsList as option]
 					<option value="${option.value}">${htmlUtil.escape(option.label)}</option>
 					[/#list]
 				</select>
@@ -39,6 +56,9 @@
 				<label for="${input.name}" class="d-block mb-1 text-secondary">Selected</label>
 				<select class="list-selected-options" size="${configuration.numberOfOptions!}"
 					${input.required?then('required', '' )} name="${input.name}" multiple>
+					[#list selectedOptionsList as option]
+					<option value="${option.value}" selected>${htmlUtil.escape(option.label)}</option>
+					[/#list]
 				</select>
 			</div>
 		</div>

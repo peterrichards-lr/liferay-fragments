@@ -3,6 +3,15 @@
 [#assign options = configuration.optionsJSON?eval_json /] [#recover] [#assign
 options = [] /] [/#attempt] [/#if]
 
+[#assign selectedValues = [] /]
+[#if input.value?? && input.value?has_content]
+  [#if input.value?is_enumerable]
+    [#assign selectedValues = input.value /]
+  [#elseif input.value?is_string]
+    [#assign selectedValues = input.value?split(",") /]
+  [/#if]
+[/#if]
+
 <div
   class="image-choice-input"
   style="--grid-columns: ${configuration.gridColumns!3}"
@@ -32,7 +41,7 @@ options = [] /] [/#attempt] [/#if]
           type="${configuration.selectionType!'radio'}"
           value="${option.value!}"
           [#if readOnly]disabled[/#if]
-          [#if input.value?? && input.value?contains(option.value)]checked[/#if]
+          [#if selectedValues?seq_contains(option.value!)]checked[/#if]
         />
         <div class="image-card">
           [#if option.imageUrl?has_content]
