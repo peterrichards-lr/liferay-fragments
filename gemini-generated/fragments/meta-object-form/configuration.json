@@ -64,10 +64,9 @@
           "defaultValue": "date,title,description",
           "typeOptions": {
             "dependency": {
-              "field": "customizeColumns",
-              "condition": {
+              "customizeColumns": {
                 "type": "equal",
-                "value": true
+                "value": "true"
               }
             }
           }

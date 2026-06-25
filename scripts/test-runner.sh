@@ -638,6 +638,8 @@ else
         exit 1
     fi
     echo "  -> System has settled."
+    echo "  -> Triggering search index rebuild via LDM reindex..."
+    ldm reindex "$PROJECT_NAME" || true
 fi
 
 # 6. Execute Tests

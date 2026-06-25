@@ -1633,5 +1633,170 @@
     "type": "article",
     "id": 38286,
     "erc": "MAP-MARKER-ARTICLE-02"
+  },
+  {
+    "type": "document",
+    "id": 116584,
+    "erc": "PARALLAX-HERO-BG"
+  },
+  {
+    "type": "document",
+    "id": 116729,
+    "erc": "SLIDE-IMG-01"
+  },
+  {
+    "type": "document",
+    "id": 116741,
+    "erc": "SLIDE-IMG-02"
+  },
+  {
+    "type": "document",
+    "id": 116753,
+    "erc": "SLIDE-IMG-03"
+  },
+  {
+    "type": "structure",
+    "id": "116763",
+    "erc": "SLIDER-SLIDE-STRUCT-V3"
+  },
+  {
+    "type": "article",
+    "id": 116771,
+    "erc": "SLIDE-ARTICLE-01"
+  },
+  {
+    "type": "article",
+    "id": 116781,
+    "erc": "SLIDE-ARTICLE-02"
+  },
+  {
+    "type": "article",
+    "id": 116791,
+    "erc": "SLIDE-ARTICLE-03"
+  },
+  {
+    "type": "structure",
+    "id": "117545",
+    "erc": "MAP-MARKER-STRUCT-V1"
+  },
+  {
+    "type": "article",
+    "id": 117551,
+    "erc": "MAP-MARKER-ARTICLE-01"
+  },
+  {
+    "type": "article",
+    "id": 117561,
+    "erc": "MAP-MARKER-ARTICLE-02"
+  },
+  {
+    "type": "document",
+    "id": 121294,
+    "erc": "PARALLAX-HERO-BG"
+  },
+  {
+    "type": "document",
+    "id": 121439,
+    "erc": "SLIDE-IMG-01"
+  },
+  {
+    "type": "document",
+    "id": 121451,
+    "erc": "SLIDE-IMG-02"
+  },
+  {
+    "type": "document",
+    "id": 121463,
+    "erc": "SLIDE-IMG-03"
+  },
+  {
+    "type": "structure",
+    "id": "121469",
+    "erc": "SLIDER-SLIDE-STRUCT-V3"
+  },
+  {
+    "type": "article",
+    "id": 121481,
+    "erc": "SLIDE-ARTICLE-01"
+  },
+  {
+    "type": "article",
+    "id": 121491,
+    "erc": "SLIDE-ARTICLE-02"
+  },
+  {
+    "type": "article",
+    "id": 121501,
+    "erc": "SLIDE-ARTICLE-03"
+  },
+  {
+    "type": "structure",
+    "id": "122255",
+    "erc": "MAP-MARKER-STRUCT-V1"
+  },
+  {
+    "type": "article",
+    "id": 122261,
+    "erc": "MAP-MARKER-ARTICLE-01"
+  },
+  {
+    "type": "article",
+    "id": 122271,
+    "erc": "MAP-MARKER-ARTICLE-02"
+  },
+  {
+    "type": "document",
+    "id": 125780,
+    "erc": "PARALLAX-HERO-BG"
+  },
+  {
+    "type": "document",
+    "id": 125951,
+    "erc": "SLIDE-IMG-01"
+  },
+  {
+    "type": "document",
+    "id": 125963,
+    "erc": "SLIDE-IMG-02"
+  },
+  {
+    "type": "document",
+    "id": 125975,
+    "erc": "SLIDE-IMG-03"
+  },
+  {
+    "type": "structure",
+    "id": "125983",
+    "erc": "SLIDER-SLIDE-STRUCT-V3"
+  },
+  {
+    "type": "article",
+    "id": 125993,
+    "erc": "SLIDE-ARTICLE-01"
+  },
+  {
+    "type": "article",
+    "id": 126003,
+    "erc": "SLIDE-ARTICLE-02"
+  },
+  {
+    "type": "article",
+    "id": 126013,
+    "erc": "SLIDE-ARTICLE-03"
+  },
+  {
+    "type": "structure",
+    "id": "126899",
+    "erc": "MAP-MARKER-STRUCT-V1"
+  },
+  {
+    "type": "article",
+    "id": 126905,
+    "erc": "MAP-MARKER-ARTICLE-01"
+  },
+  {
+    "type": "article",
+    "id": 126915,
+    "erc": "MAP-MARKER-ARTICLE-02"
   }
 ]

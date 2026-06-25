@@ -46,4 +46,20 @@ generated-test-pages.json
 *.db
 **/*.db
 
+# Scratch files and HTML dumps
+/*.html
+/inspect_page.js
+/query_pages.js
+/scratch_login.js
+
+# E2E test runner local state and cache
+/e2e-tests/resolved_base_url.txt
+/e2e-tests/test_payloads.js
+/liferay-deploy-fragments.json
+/common/
+
+# Scripts wrappers/dependencies
+/scripts/jq
+/scripts/node
+
 
