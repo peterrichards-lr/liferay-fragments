@@ -2,9 +2,8 @@ name: E2E Integration Tests
 
 on:
   push:
-    branches: [main]
-  pull_request:
-    branches: [main]
+    tags:
+      - 'v*'
   workflow_dispatch: # Allows manual triggering from the GitHub UI
 
 # Optimize resources by canceling redundant runs for the same branch/PR
