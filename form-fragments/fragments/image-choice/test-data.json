@@ -1,0 +1,19 @@
+{
+  "documents": [
+    {
+      "externalReferenceCode": "COFFEE-AUTH",
+      "title": "coffee_authentication.png",
+      "filePath": "e2e-tests/assets/coffee_authentication.png"
+    },
+    {
+      "externalReferenceCode": "GRAVITY-RECOMMENDATION",
+      "title": "gravity_recommendation.png",
+      "filePath": "e2e-tests/assets/gravity_recommendation.png"
+    }
+  ],
+  "pageConfig": {
+    "fragmentConfig": {
+      "optionsJSON": "[{\"label\": \"Coffee Auth\", \"value\": \"coffee\", \"imageUrl\": \"COFFEE-AUTH\"}, {\"label\": \"Gravity Rec\", \"value\": \"gravity\", \"imageUrl\": \"GRAVITY-RECOMMENDATION\"}]"
+    }
+  }
+}

@@ -639,7 +639,7 @@ else
     fi
     echo "  -> System has settled."
     echo "  -> Triggering search index rebuild via LDM reindex..."
-    ldm reindex "$PROJECT_NAME" || true
+    ldm reindex "$PROJECT_NAME" -y || true
 fi
 
 # 6. Execute Tests
