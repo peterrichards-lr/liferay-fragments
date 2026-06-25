@@ -62,4 +62,6 @@ generated-test-pages.json
 /scripts/jq
 /scripts/node
 
-
+/scratch/
+/temp_extract/
+/temp_inspect/
