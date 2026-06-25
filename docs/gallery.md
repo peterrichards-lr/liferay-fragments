@@ -1020,10 +1020,6 @@ Prominent visuals, such as videos or banners, that capture attention and define 
 
 ### Custom Tabs
 
-**Snapshot Prerequisites / Layout Components:**
-
-- Fragment: `HTML (System Component)`
-
 #### Desktop (1920px) <br>🟢 **Passed**
 
 <img src="./images/live/miscellaneous-custom-tabs-desktop.png" width="100%" alt="Desktop">

@@ -2,21 +2,70 @@
   "pageLayout": {
     "type": "Fragment",
     "key": "custom-tabs",
-    "dropZoneId": "1",
-    "children": [
+    "fragmentConfig": {
+      "numberOfTabs": "3"
+    },
+    "dropZones": [
       {
-        "type": "Fragment",
-        "key": "rich-text",
-        "fragmentFields": [
+        "id": "1",
+        "children": [
           {
-            "id": "text",
-            "value": {
-              "text": {
-                "value_i18n": {
-                  "en_US": "<div class=\"text-center\"><img src=\"https://images.unsplash.com/photo-1506744038136-46273834b3fb?q=80&w=400&auto=format&fit=crop\" style=\"max-width:100%; border-radius:8px;\" /><h3 class=\"mt-3\">Showcase Content</h3><p>This is semantic content dropped into a container to demonstrate layout and transparency.</p></div>"
+            "type": "Fragment",
+            "key": "rich-text",
+            "fragmentFields": [
+              {
+                "id": "text",
+                "value": {
+                  "text": {
+                    "value_i18n": {
+                      "en_US": "<div class=\"text-center\"><img src=\"https://images.unsplash.com/photo-1506744038136-46273834b3fb?q=80&w=400&auto=format&fit=crop\" style=\"max-width:100%; border-radius:8px;\" /><h3 class=\"mt-3\">Tab 1: Showcase Content</h3><p>This is semantic content dropped into the first tab of Custom Tabs.</p></div>"
+                    }
+                  }
                 }
               }
-            }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "2",
+        "children": [
+          {
+            "type": "Fragment",
+            "key": "rich-text",
+            "fragmentFields": [
+              {
+                "id": "text",
+                "value": {
+                  "text": {
+                    "value_i18n": {
+                      "en_US": "<div class=\"text-center\"><h3 class=\"mt-3\">Tab 2: Technical Specifications</h3><p>Detailed performance benchmarks and system compatibility requirements for the custom collection.</p></div>"
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "3",
+        "children": [
+          {
+            "type": "Fragment",
+            "key": "rich-text",
+            "fragmentFields": [
+              {
+                "id": "text",
+                "value": {
+                  "text": {
+                    "value_i18n": {
+                      "en_US": "<div class=\"text-center\"><h3 class=\"mt-3\">Tab 3: Contact & Support</h3><p>Reach out to the customer support team or consult the documentation for further developer help.</p></div>"
+                    }
+                  }
+                }
+              }
+            ]
           }
         ]
       }
