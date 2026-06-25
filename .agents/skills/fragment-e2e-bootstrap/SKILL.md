@@ -29,10 +29,11 @@ Every fragment must have a `test-data.json` file in its root directory defining 
 
 The E2E bootstrap framework automatically provisions the following resources on the target Liferay instance if they are not already present:
 
-1. **Commerce Products Seeding**:
-   - The framework queries the active Liferay Commerce channels and catalog.
-   - If empty, it programmatically seeds up to 4 mock commerce products (assigning SKUs, names, descriptions, and configuring prices and promotional discount differentials) via Liferay's Headless Commerce Admin API.
-   - It replaces `"COMMERCE_PRODUCT_1"` through `"COMMERCE_PRODUCT_4"` placeholders in the page configuration JSON with the real generated ID numbers.
+1. **Commerce Channels & Products Seeding**:
+   - **Channel Provisioning**: The framework checks for an active Liferay Commerce Channel mapped to the E2E site Group ID. If none is found, it programmatically creates a channel of type `"site"` and links it to the site Group ID using the Headless Commerce Channels API.
+   - **Products Seeding**: The framework programmatically seeds up to 4 mock commerce products (assigning SKUs, names, descriptions, and configuring prices and promotional discount differentials) via Liferay's Headless Commerce Admin API if they are not already present in the catalog.
+   - **Product-to-Channel Mapping**: All seeded mock products are automatically mapped/linked to the E2E Commerce Channel using a Headless Catalog API `PATCH` request, ensuring they are visible on the site storefront context.
+   - **Placeholder Replacement**: The framework replaces `"COMMERCE_PRODUCT_1"` through `"COMMERCE_PRODUCT_4"` placeholders in the page configuration JSON with the real generated ID numbers.
 
 2. **Documents & Media Assets**:
    - You can declare local files (like images, icons, or PDF brochures) in the top-level `"documents"` array of `test-data.json`.
