@@ -1639,6 +1639,7 @@ async function globalSetup(config) {
   }
 
   // ----- PHASE 4.75: SEED COMMERCE CHANNEL -----
+  let e2eChannelId = null;
   try {
     console.log('Verifying Liferay Commerce channels for the E2E site...');
     const channelsResp = await apiContext.get(
@@ -1650,6 +1651,7 @@ async function globalSetup(config) {
         channelsJson.items &&
         channelsJson.items.find((c) => c.siteGroupId === siteId);
       if (existingChannel) {
+        e2eChannelId = existingChannel.id;
         console.log(
           `  -> Commerce Channel already exists for E2E site. ID: ${existingChannel.id}`
         );
@@ -1668,6 +1670,7 @@ async function globalSetup(config) {
         );
         if (createChannelResp.ok()) {
           const newChannel = await createChannelResp.json();
+          e2eChannelId = newChannel.id;
           console.log(
             `  -> Successfully created Commerce Channel. ID: ${newChannel.id}`
           );
@@ -1760,6 +1763,32 @@ async function globalSetup(config) {
             await createResp.text()
           );
           continue;
+        }
+      }
+
+      // Link product to the E2E channel if present
+      if (productId && e2eChannelId) {
+        const linkResp = await apiContext.patch(
+          `/o/headless-commerce-admin-catalog/v1.0/products/${productId}`,
+          {
+            data: {
+              productChannels: [
+                {
+                  channelId: e2eChannelId,
+                },
+              ],
+            },
+          }
+        );
+        if (linkResp.ok()) {
+          console.log(
+            `  -> Successfully linked product ${productId} to channel ${e2eChannelId}`
+          );
+        } else {
+          console.warn(
+            `  -> [WARN] Failed to link product ${productId} to channel ${e2eChannelId}:`,
+            await linkResp.text()
+          );
         }
       }
 
