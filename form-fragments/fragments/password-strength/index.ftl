@@ -33,7 +33,7 @@
                 <div class="progress" style="height: 6px;">
                     <div class="progress-bar strength-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
                 </div>
-                <small class="strength-text text-secondary mt-1 d-block">${languageUtil.get(locale, "password-strength")}: <span class="strength-label"></span></small>
+                <small class="strength-text text-secondary mt-1 d-block">${languageUtil.get(locale, "lfr.form-fragments.password-strength")}: <span class="strength-label"></span></small>
             </div>
         [/#if]
 
@@ -41,25 +41,25 @@
             [#if configuration.minLength??]
                 <li class="requirement" data-type="length" data-min="${configuration.minLength}">
                     <span class="status-icon mr-1">[@clay["icon"] symbol="circle" /]</span>
-                    ${languageUtil.format(locale, "at-least-x-characters", configuration.minLength)}
+                    ${languageUtil.format(locale, "lfr.form-fragments.at-least-x-characters", configuration.minLength)}
                 </li>
             [/#if]
             [#if configuration.requireUppercase!true]
                 <li class="requirement" data-type="uppercase">
                     <span class="status-icon mr-1">[@clay["icon"] symbol="circle" /]</span>
-                    ${languageUtil.get(locale, "one-uppercase-character")}
+                    ${languageUtil.get(locale, "lfr.form-fragments.one-uppercase-character")}
                 </li>
             [/#if]
             [#if configuration.requireNumber!true]
                 <li class="requirement" data-type="number">
                     <span class="status-icon mr-1">[@clay["icon"] symbol="circle" /]</span>
-                    ${languageUtil.get(locale, "one-number")}
+                    ${languageUtil.get(locale, "lfr.form-fragments.one-number")}
                 </li>
             [/#if]
             [#if configuration.requireSpecial!true]
                 <li class="requirement" data-type="special">
                     <span class="status-icon mr-1">[@clay["icon"] symbol="circle" /]</span>
-                    ${languageUtil.get(locale, "one-special-character")}
+                    ${languageUtil.get(locale, "lfr.form-fragments.one-special-character")}
                 </li>
             [/#if]
         </ul>

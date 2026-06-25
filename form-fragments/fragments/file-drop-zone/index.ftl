@@ -31,7 +31,7 @@
                     data-url="${(input.attributes.selectFromDocumentLibraryURL)!}"
                 >
                     [@clay["icon"] className="mr-1" symbol="folder" /]
-                    ${languageUtil.get(locale, "select-from-document-library")}
+                    ${languageUtil.get(locale, "lfr.form-fragments.select-from-document-library")}
                 </button>
             [/#if]
 		</div>

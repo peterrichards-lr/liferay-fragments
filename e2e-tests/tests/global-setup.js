@@ -2501,6 +2501,10 @@ async function globalSetup(config) {
           : 'com.liferay.object.model.ObjectDefinition#APPLICANT';
 
         let fieldKey = 'favoriteColor'; // Fallback for color swatches / other inputs
+        if (fragmentKey === 'listbox-multiselect') {
+          fieldKey = 'interests';
+        }
+
         if (parentDir) {
           try {
             const configPath = path.join(parentDir, 'configuration.json');

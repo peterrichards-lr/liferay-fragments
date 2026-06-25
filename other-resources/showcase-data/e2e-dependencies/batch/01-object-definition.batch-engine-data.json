@@ -525,6 +525,17 @@
           "name": "signature",
           "required": false,
           "type": "String"
+        },
+        {
+          "businessType": "MultiselectPicklist",
+          "externalReferenceCode": "INTERESTS",
+          "label": {
+            "en_US": "Interests"
+          },
+          "name": "interests",
+          "required": false,
+          "type": "String",
+          "listTypeDefinitionExternalReferenceCode": "INTERESTS_PICKLIST"
         }
       ],
       "pluralLabel": {
