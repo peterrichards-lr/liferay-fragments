@@ -131,6 +131,7 @@ const fragmentFiles = globSync('**/fragment.json', {
   ignore: [
     'node_modules/**',
     'temp_extract/**',
+    'temp_extract_zip/**',
     'temp_inspect/**',
     'temp_inspect_zip/**',
     ...ldmIgnores,
