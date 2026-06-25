@@ -326,3 +326,11 @@ after itself.
 - **Dashboard Container CSS**: Added base CSS to `dashboard-container/index.css` so the component renders with a visible frame in E2E screenshots.
 - **Linter Exclusions**: Added `temp_extract/**` and `temp_inspect/**` to the lint-fragments.js ignore list to prevent false positives from diagnostic extraction folders.
 - **search-button CSS Tokens**: Replaced hardcoded hex colors (`#30313f`, `#e2e8f0`, `#f8fafc`, `#0053a0`, `#cbd5e1`) with Meridian CSS variable tokens (`var(--body-color)`, `var(--border-color)`, `var(--light)`, `var(--primary)`, `var(--gray-400)`). Resolves the final linter warning — project now passes `npm run lint` with **0 errors, 0 warnings**.
+
+### Repository Protection Setup (June 2026)
+
+- [x] Implement GitHub Repository Rulesets for `liferay-fragments`:
+  - `Protect Main Branch` ruleset (requiring squash merges, linear history, and status checks `Lint Fragments` + `Playwright Tests (LDM)`).
+  - `Protect Version Tags` ruleset (preventing deletion and modification of version tags).
+- [x] Add `.github/dependabot.yml` for auto-upgrades of GitHub Action dependencies.
+- [x] Add `.github/PULL_REQUEST_TEMPLATE.md` to guide contributions and checklist validation.
