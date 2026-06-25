@@ -546,7 +546,12 @@ const currentGalleryContent = fs.existsSync(GALLERY_FILE)
   : '';
 const expectedGalleryContent = generateGallery();
 
-const normalize = (str) => str.trim().replace(/\s+/g, ' ');
+const normalize = (str) =>
+  str
+    .trim()
+    .replace(/\(<([^>]+)>\)/g, '($1)')
+    .replace(/-{3,}/g, '---')
+    .replace(/\s+/g, ' ');
 
 if (normalize(currentGalleryContent) !== normalize(expectedGalleryContent)) {
   logWarn(
