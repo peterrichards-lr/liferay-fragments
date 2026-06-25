@@ -159,7 +159,9 @@ test.describe('Responsive Fragment Rendering', () => {
             `Fragment '${pageInfo.fragmentName}' was not found on the page! (Selector: ${fragmentSelector} returned 0 elements)`
           );
         }
-        if (fragmentCount > 1) {
+        if (pageInfo.fragmentName === 'Master Page Header') {
+          fragmentElement = page.locator('#wrapper, .portlet-layout').first();
+        } else if (fragmentCount > 1) {
           fragmentElement = page
             .locator('.lfr-layout-structure-item-row, .row')
             .first();
@@ -219,7 +221,10 @@ test.describe('Responsive Fragment Rendering', () => {
             await page.waitForTimeout(500);
           }
 
-          if (pageInfo.fragmentName === 'Search Bar') {
+          if (
+            pageInfo.fragmentName === 'Search Bar' ||
+            pageInfo.fragmentName === 'Master Page Header'
+          ) {
             const btn = page.locator('.btn-search').first();
             if ((await btn.count()) > 0) {
               await btn.click();
@@ -233,10 +238,12 @@ test.describe('Responsive Fragment Rendering', () => {
                 }
               });
             }
-            // Use the parent row to capture the expanded bar in context without clipping
-            fragmentElement = page
-              .locator('.lfr-layout-structure-item-row, .row')
-              .first();
+            if (pageInfo.fragmentName !== 'Master Page Header') {
+              // Use the parent row to capture the expanded bar in context without clipping
+              fragmentElement = page
+                .locator('.lfr-layout-structure-item-row, .row')
+                .first();
+            }
           }
 
           if (pageInfo.fragmentName === 'Search Overlay') {

@@ -34,5 +34,5 @@ Refer to individual documentation files for deep configuration details.
 - [Search Bar](./search-bar.md)
 - [Search Button](./search-button.md)
 - [Site Name](./site-name.md)
-- [Upper Header Layout](./upper-header-layout.md)
+- [Master Page Header](./master-page-header.md)
 - [User Bar](./user-bar.md)

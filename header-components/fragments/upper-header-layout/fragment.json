@@ -4,7 +4,7 @@
   "htmlPath": "index.ftl",
   "cssPath": "index.css",
   "icon": "bolt",
-  "name": "Upper Header Bar Layout",
+  "name": "Master Page Header",
   "type": "component",
   "thumbnailPath": "thumbnail.png"
 }

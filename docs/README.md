@@ -208,7 +208,7 @@ portals.
   - [Site Name](./fragments/site-name.md)
   - [User Bar](./fragments/user-bar.md)
   - [Vertical Bar](./fragments/vertical-bar.md)
-  - [Upper Header Layout](./fragments/upper-header-layout.md)
+  - [Master Page Header](./fragments/master-page-header.md)
   - [Lower Header Layout](./fragments/lower-header-layout.md)
   - [Linear Gradient Container](./fragments/linear-gradient-container.md)
   - [Linear Gradient Container (Custom)](<./fragments/linear-gradient-container-(custom).md>)
