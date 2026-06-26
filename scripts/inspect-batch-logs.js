@@ -3,7 +3,9 @@ const { execSync } = require('child_process');
 
 try {
   console.log('=== Searching Liferay Logs for Batch / Structure Import ===');
-  const logs = execSync('ldm logs e2e-test-env liferay -n 1000', { encoding: 'utf8' });
+  const logs = execSync('ldm logs e2e-test-env liferay -n 1000', {
+    encoding: 'utf8',
+  });
   const lines = logs.split('\n');
   const filtered = lines.filter(
     (line) =>
