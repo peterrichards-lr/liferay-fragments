@@ -10,6 +10,7 @@ This skill provides step-by-step instructions for developers and AI agents to ca
 ## 1. Capturing Screenshots
 
 To capture screenshots of page fragments, run the automated test suite. Visual snapshots are captured across three viewports:
+
 - **Desktop**: 1920x1080
 - **Tablet**: 768x1024
 - **Mobile**: 375x812
@@ -18,16 +19,17 @@ To capture screenshots of page fragments, run the automated test suite. Visual s
 
 In Windows environments, run these commands from the workspace root using Git Bash:
 
-*   **Capture All Fragments**:
-    ```powershell
-    $env:PORT="8081"; & "C:\Program Files\Git\bin\bash.exe" scripts/test-runner.sh -p e2e-test-env -k
-    ```
-*   **Capture Specific Fragment or Collection**:
-    ```powershell
-    $env:PORT="8081"; & "C:\Program Files\Git\bin\bash.exe" scripts/test-runner.sh -p e2e-test-env -k -f "<Fragment/Collection Name>"
-    ```
+- **Capture All Fragments**:
+  ```powershell
+  $env:PORT="8081"; & "C:\Program Files\Git\bin\bash.exe" scripts/test-runner.sh -p e2e-test-env -k
+  ```
+- **Capture Specific Fragment or Collection**:
+  ```powershell
+  $env:PORT="8081"; & "C:\Program Files\Git\bin\bash.exe" scripts/test-runner.sh -p e2e-test-env -k -f "<Fragment/Collection Name>"
+  ```
 
 > [!NOTE]
+>
 > - `-p e2e-test-env` hooks into the active running container, bypassing long container boot times.
 > - `-k` or `--keep-alive` keeps the Liferay Docker container running after execution for debugging.
 
@@ -59,9 +61,11 @@ To track visual regression across commits, the captured screenshots under `docs/
 ## 4. Troubleshooting Common Errors
 
 ### 4.1 Broken Images / Blank Snapshots
+
 - **Cause**: Liferay failed to seed mock assets or custom objects before browser rendering.
 - **Fix**: Verify Liferay's custom objects are deployed successfully. Check `e2e-tests/tests/global-setup.js` for proper Guest API permissions configurations.
 
 ### 4.2 Gallery Drift Warnings
+
 - **Cause**: Fragment collections were created, modified, or deleted without updating `docs/gallery.md`.
 - **Fix**: Re-run `node scripts/generate-gallery.js` to compile the visual table structures again.
