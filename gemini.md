@@ -288,6 +288,8 @@ after itself.
 - [x] Implement Image Choice E2E bootstrapping and verification (Issue #27).
 - [x] Implement Listbox Multiselect picklist/object field E2E bootstrapping (Issue #28).
 - [x] Configure nested elements inside Custom Tabs E2E layouts (Issue #29).
+- [x] Implement support for LDM plain-text switches (`--no-color` and `--no-unicode`) and native log-filtering (`--grep` / `--grep-i`).
+- **NEXT ACTION (Windows PC):** Verify the committed and pushed changes on the Windows environment and continue with any further development.
 
 ### Backward-Compatibility Rules (Three-Target ZIP Build)
 
