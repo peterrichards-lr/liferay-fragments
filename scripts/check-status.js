@@ -3,7 +3,9 @@ const { execSync } = require('child_process');
 
 try {
   console.log('=== Liferay Container Status ===');
-  const ldmStatus = execSync('ldm list', { encoding: 'utf8' });
+  const ldmStatus = execSync('ldm list', {
+    encoding: 'utf8',
+  });
   console.log(ldmStatus);
 
   console.log('=== Running Processes ===');

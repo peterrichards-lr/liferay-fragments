@@ -7,6 +7,12 @@
 
 set -e
 
+# Wrapper function to enforce clean, color-free plain-text outputs for all LDM commands
+ldm() {
+    command ldm "$@"
+}
+
+
 # Configuration (Override these via ENV if needed)
 BUNDLE_PATH="${BUNDLE_PATH:-}"
 DOCKER_CONTAINER="${DOCKER_CONTAINER:-liferay-standalone}"
@@ -94,7 +100,8 @@ extract_logs() {
     if [[ "$SOURCE" == "file" ]]; then
         [ -f "$CMD" ] && grep -iE "FragmentFileInstaller|liferay-deploy-fragments.json|ERROR|Exception" "$CMD" | tail -n 10 || echo "Log file not found."
     elif [[ "$SOURCE" == "ldm" ]]; then
-        ldm logs "$CMD" liferay -n 500 2>&1 | grep -iE "FragmentFileInstaller|liferay-deploy-fragments.json|ERROR|Exception" | tail -n 10 || echo "No relevant logs found."
+        ldm logs "$CMD" liferay -n 500 -g "FragmentFileInstaller|liferay-deploy-fragments.json|ERROR|Exception" --grep-i 2>&1 | tail -n 10 || echo "No relevant logs found."
+
     else
         docker logs "$CMD" --tail 500 2>&1 | grep -iE "FragmentFileInstaller|liferay-deploy-fragments.json|ERROR|Exception" | tail -n 10 || echo "No relevant logs found."
     fi

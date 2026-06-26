@@ -283,7 +283,13 @@ after itself.
 
 ### Active Fix (In Progress)
 
-- [ ] _No active issues in progress._
+- [x] Clean up local `liferay-ai-commerce-accelerator` directory from codebase (PR #26 open).
+- [x] Run automated E2E tests against clean `e2e-test-env` instance (Task 1263 completed).
+- [x] Implement Image Choice E2E bootstrapping and verification (Issue #27).
+- [x] Implement Listbox Multiselect picklist/object field E2E bootstrapping (Issue #28).
+- [x] Configure nested elements inside Custom Tabs E2E layouts (Issue #29).
+- [x] Implement support for LDM plain-text switches (`--no-color` and `--no-unicode`) and native log-filtering (`--grep` / `--grep-i`).
+- **NEXT ACTION (Windows PC):** Verify the committed and pushed changes on the Windows environment and continue with any further development.
 
 ### Backward-Compatibility Rules (Three-Target ZIP Build)
 
@@ -341,3 +347,8 @@ after itself.
 - [x] Add `.github/dependabot.yml` for auto-upgrades of GitHub Action dependencies.
 - [x] Add `.github/PULL_REQUEST_TEMPLATE.md` to guide contributions and checklist validation.
 - [x] **NOTE:** Repository-level Auto-Merge is currently disabled, meaning `gh pr merge --auto` operations will fail. Pull requests must be merged manually via the UI.
+
+### Upgraded LDM Formatting Switches (June 2026)
+
+- [x] Update `scripts/test-runner.sh` and `scripts/compare-deployments.sh` to pass `--no-color` and `--no-unicode` to all `ldm` commands to ensure clean, color-free, plain-text output across terminal locales.
+- [x] Refactor `scripts/compare-deployments.sh` and `scripts/inspect-batch-logs.js` to use native LDM log filtering (`--grep`, `--grep-i`) for optimization.

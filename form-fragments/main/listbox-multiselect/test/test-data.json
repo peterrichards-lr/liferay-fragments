@@ -1,0 +1,10 @@
+{
+  "requiredObjects": ["APPLICANT"],
+  "requiredPicklists": [
+    {
+      "erc": "INTERESTS_PICKLIST",
+      "name": "Interests Picklist",
+      "items": ["Sports", "Music", "Reading"]
+    }
+  ]
+}

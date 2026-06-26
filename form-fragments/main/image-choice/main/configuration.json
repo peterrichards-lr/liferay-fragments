@@ -12,7 +12,7 @@
           "type": "text"
         },
         {
-          "dataType": "number",
+          "dataType": "int",
           "defaultValue": "3",
           "label": "lfr.form-fragments.grid-columns",
           "description": "lfr.form-fragments.grid-columns-description",

@@ -18,7 +18,9 @@
     },
     "requiredObjects": {
       "type": "array",
-      "items": { "type": "string" },
+      "items": {
+        "type": "string"
+      },
       "description": "Objects definitions required by this fragment"
     },
     "documents": {
@@ -36,6 +38,28 @@
     "collections": {
       "type": "array",
       "description": "Collection providers/elements to seed"
+    },
+    "requiredPicklists": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "erc": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "items": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "required": ["erc", "name", "items"],
+        "additionalProperties": false
+      }
     }
   }
 }

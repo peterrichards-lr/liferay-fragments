@@ -479,27 +479,7 @@ function buildPageElementTree(
           key: key,
           siteKey: globalSiteKey,
         },
-        fragmentInstance: {
-          fragmentReference: {
-            fragmentReferenceType: 'FragmentItemExternalReference',
-            externalReferenceCode: getFragmentERC(key, fragmentKeyToDir),
-            className: 'com.liferay.fragment.model.FragmentEntry',
-            scope: {
-              externalReferenceCode: 'L_GLOBAL',
-              type: 'Site',
-            },
-          },
-          fragmentConfigurationFieldValues: convertConfigToFieldValues(
-            {
-              ...resolvedConfig,
-              inputFieldId: fieldKey.startsWith('ObjectField_')
-                ? fieldKey
-                : `ObjectField_${fieldKey}`,
-            },
-            parentDir
-          ),
-          fragmentEditableElements: resolvedFields,
-        },
+        fragmentConfig: { ...resolvedConfig, inputFieldId: fieldKey.startsWith('ObjectField_') ? fieldKey : ObjectField_\ }, fragmentFields: resolvedFields,
       },
     };
     return element;
@@ -1859,7 +1839,8 @@ async function globalSetup(config) {
     const fragmentName = fragmentData.name;
 
     // Liferay fragment keys are typically derived from the folder name or explicitly defined.
-    let baseFragmentKey = fragmentData.key || path.basename(path.dirname(file));
+    let baseFragmentKey =
+      fragmentData.key || path.basename(path.dirname(path.dirname(file)));
 
     // Find the nearest collection.json
     let currentDir = path.dirname(file);
@@ -1928,6 +1909,73 @@ async function globalSetup(config) {
         let seededAssets = [];
         if (fs.existsSync(seededAssetsPath)) {
           seededAssets = JSON.parse(fs.readFileSync(seededAssetsPath, 'utf8'));
+        }
+
+        // -1. Seed Picklists
+        if (testData.requiredPicklists) {
+          for (const pl of testData.requiredPicklists) {
+            console.log(
+              `       Seeding Picklist: ${pl.name} (${pl.erc})...`
+            );
+            
+            let picklistId = null;
+            try {
+              const fetchResp = await apiContext.get(
+                `/o/headless-admin-list-type/v1.0/list-type-definitions/by-external-reference-code/${pl.erc}`
+              );
+              if (fetchResp.ok()) {
+                const json = await fetchResp.json();
+                picklistId = json.id;
+                console.log(`       Found existing picklist ${pl.erc}`);
+              }
+            } catch(e) {}
+            
+            if (!picklistId) {
+              const createResp = await apiContext.post(
+                `/o/headless-admin-list-type/v1.0/list-type-definitions`,
+                {
+                  data: {
+                    externalReferenceCode: pl.erc,
+                    name: pl.name,
+                    name_i18n: { en_US: pl.name }
+                  }
+                }
+              );
+              if (createResp.ok()) {
+                const json = await createResp.json();
+                picklistId = json.id;
+                console.log(`       Successfully created picklist ${pl.erc}`);
+              } else {
+                console.warn(`       [WARN] Failed to create picklist ${pl.erc} : ${createResp.status()}`);
+              }
+            }
+            
+            if (picklistId && pl.items) {
+               const entriesResp = await apiContext.get(`/o/headless-admin-list-type/v1.0/list-type-definitions/${picklistId}/list-type-entries`);
+               let existingEntries = [];
+               if (entriesResp.ok()) {
+                  existingEntries = (await entriesResp.json()).items || [];
+               }
+               
+               for (const item of pl.items) {
+                  if (!existingEntries.find(e => e.name === item)) {
+                     const postEntryResp = await apiContext.post(`/o/headless-admin-list-type/v1.0/list-type-definitions/${picklistId}/list-type-entries`, {
+                        data: {
+                           externalReferenceCode: pl.erc + '_' + item.toUpperCase().replace(/[^A-Z0-9]/g, '_'),
+                           key: item.toLowerCase().replace(/[^a-z0-9]/g, '-'),
+                           name: item,
+                           name_i18n: { en_US: item }
+                        }
+                     });
+                     if (postEntryResp.ok()) {
+                        console.log(`       Added picklist entry: ${item}`);
+                     } else {
+                        console.warn(`       [WARN] Failed to add entry ${item}`);
+                     }
+                  }
+               }
+            }
+          }
         }
 
         // 0. Seed Documents
@@ -2339,18 +2387,28 @@ async function globalSetup(config) {
           Object.keys(seededConfigOverrides).forEach((key) => {
             const val = seededConfigOverrides[key];
             if (typeof val === 'string') {
+              let replacedStr = val;
               if (assetMap[val]) {
-                seededConfigOverrides[key] = assetMap[val].toString();
-              } else if (val.includes('/o/c/')) {
-                let cleanPath = val.trim().replace(/\/$/, '');
+                replacedStr = assetMap[val].toString();
+              } else {
+                Object.keys(assetMap).forEach((assetKey) => {
+                  if (replacedStr.includes(assetKey)) {
+                    replacedStr = replacedStr
+                      .split(assetKey)
+                      .join(assetMap[assetKey].toString());
+                  }
+                });
+              }
+              if (replacedStr.includes('/o/c/')) {
+                let cleanPath = replacedStr.trim().replace(/\/$/, '');
                 const def = objectDefinitions.find(
                   (d) => d.restContextPath === cleanPath
                 );
                 if (def && def.scope === 'site') {
-                  seededConfigOverrides[key] =
-                    `${cleanPath}/scopes/${siteId}${val.endsWith('/') ? '/' : ''}`;
+                  replacedStr = `${cleanPath}/scopes/${siteId}${replacedStr.endsWith('/') ? '/' : ''}`;
                 }
               }
+              seededConfigOverrides[key] = replacedStr;
             }
           });
         }
@@ -2467,19 +2525,7 @@ async function globalSetup(config) {
                   type: 'FormFragment',
                   definition: {
                     fieldKey: '',
-                    fragmentInstance: {
-                      fragmentReference: {
-                        fragmentReferenceType: 'FragmentItemExternalReference',
-                        externalReferenceCode: 'form-fragments-submit-button',
-                        className: 'com.liferay.fragment.model.FragmentEntry',
-                        scope: {
-                          externalReferenceCode: 'L_GLOBAL',
-                          type: 'Site',
-                        },
-                      },
-                      fragmentConfigurationFieldValues: {},
-                      fragmentEditableElements: [],
-                    },
+                    fragmentConfig: {}, fragmentFields: [],
                   },
                 },
               ],
@@ -2627,67 +2673,7 @@ async function globalSetup(config) {
                                           key: fragmentKey,
                                           siteKey: globalSiteKey,
                                         },
-                                        fragmentInstance: {
-                                          fragmentReference: {
-                                            fragmentReferenceType:
-                                              'FragmentItemExternalReference',
-                                            externalReferenceCode:
-                                              getFragmentERC(
-                                                fragmentKey,
-                                                fragmentKeyToDir
-                                              ),
-                                            className:
-                                              'com.liferay.fragment.model.FragmentEntry',
-                                            scope: {
-                                              externalReferenceCode: 'L_GLOBAL',
-                                              type: 'Site',
-                                            },
-                                          },
-                                          fragmentConfigurationFieldValues:
-                                            convertConfigToFieldValues(
-                                              {
-                                                ...seededConfigOverrides,
-                                                inputFieldId:
-                                                  fieldKey.startsWith(
-                                                    'ObjectField_'
-                                                  )
-                                                    ? fieldKey
-                                                    : `ObjectField_${fieldKey}`,
-                                              },
-                                              parentDir
-                                            ),
-                                          fragmentEditableElements: [],
-                                        },
-                                      },
-                                    },
-                                    {
-                                      type: 'FormFragment',
-                                      definition: {
-                                        type: 'FormFragment',
-                                        fieldKey: '',
-                                        fragment: {
-                                          key: 'submit-button',
-                                          siteKey: globalSiteKey,
-                                        },
-                                        fragmentInstance: {
-                                          fragmentReference: {
-                                            fragmentReferenceType:
-                                              'FragmentItemExternalReference',
-                                            externalReferenceCode:
-                                              getFragmentERC(
-                                                'submit-button',
-                                                fragmentKeyToDir
-                                              ),
-                                            className:
-                                              'com.liferay.fragment.model.FragmentEntry',
-                                            scope: {
-                                              externalReferenceCode: 'L_GLOBAL',
-                                              type: 'Site',
-                                            },
-                                          },
-                                          fragmentConfigurationFieldValues: {},
-                                          fragmentEditableElements: [],
-                                        },
+                                        fragmentConfig: {}, fragmentFields: [],
                                       },
                                     },
                                   ],

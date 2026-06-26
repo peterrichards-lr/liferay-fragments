@@ -1893,5 +1893,55 @@
     "type": "article",
     "id": 40940,
     "erc": "MAP-MARKER-ARTICLE-02"
+  },
+  {
+    "type": "document",
+    "id": 37466,
+    "erc": "COFFEE-AUTH"
+  },
+  {
+    "type": "document",
+    "id": 37478,
+    "erc": "GRAVITY-RECOMMENDATION"
+  },
+  {
+    "type": "document",
+    "id": 37958,
+    "erc": "COFFEE-AUTH"
+  },
+  {
+    "type": "document",
+    "id": 37970,
+    "erc": "GRAVITY-RECOMMENDATION"
+  },
+  {
+    "type": "document",
+    "id": 38460,
+    "erc": "COFFEE-AUTH"
+  },
+  {
+    "type": "document",
+    "id": 38472,
+    "erc": "GRAVITY-RECOMMENDATION"
+  },
+  {
+    "type": "document",
+    "id": 36864,
+    "erc": "COFFEE-AUTH"
+  },
+  {
+    "type": "document",
+    "id": 36876,
+    "erc": "GRAVITY-RECOMMENDATION"
+  },
+  {
+    "type": "document",
+    "id": 37687,
+    "erc": "COFFEE-AUTH"
+  },
+  {
+    "type": "document",
+    "id": 37699,
+    "erc": "GRAVITY-RECOMMENDATION"
   }
 ]

@@ -217,23 +217,30 @@ fragmentFiles.forEach((file) => {
       const folderSafeName = folderName
         .replace(/[^a-z0-9]+/gi, '-')
         .toLowerCase();
+      const collectionName =
+        path.dirname(fragRoot) === '.'
+          ? fragRoot
+          : path.basename(path.dirname(path.dirname(fragRoot)));
 
       const docPath1 = path.join(
         process.cwd(),
         'docs',
         'fragments',
+        collectionName,
         `${fragSafeName}.md`
       );
       const docPath2 = path.join(
         process.cwd(),
         'docs',
         'fragments',
+        collectionName,
         `${folderSafeName}.md`
       );
       const docPath3 = path.join(
         process.cwd(),
         'docs',
         'fragments',
+        collectionName,
         `${folderName}.md`
       );
 
@@ -244,7 +251,7 @@ fragmentFiles.forEach((file) => {
       ) {
         logError(
           fragmentName,
-          `Missing detailed documentation file. Expected at: docs/fragments/${fragSafeName}.md`
+          `Missing detailed documentation file. Expected at: docs/fragments/${collectionName}/${fragSafeName}.md`
         );
       }
     }
