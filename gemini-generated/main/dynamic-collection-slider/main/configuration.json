@@ -1,0 +1,251 @@
+{
+  "fieldSets": [
+    {
+      "fields": [
+        {
+          "label": "lfr.gemini-generated.collection-name-key-or-id",
+          "description": "lfr.gemini-generated.collection-name-key-or-id-description",
+          "name": "collectionId",
+          "type": "text",
+          "defaultValue": ""
+        }
+      ],
+      "label": "lfr.gemini-generated.data"
+    },
+    {
+      "fields": [
+        {
+          "defaultValue": "top",
+          "description": "lfr.gemini-generated.display-style-description",
+          "label": "lfr.gemini-generated.display-style",
+          "name": "displayStyle",
+          "type": "select",
+          "typeOptions": {
+            "validValues": [
+              {
+                "label": "lfr.gemini-generated.image-at-top",
+                "value": "top"
+              },
+              {
+                "label": "lfr.gemini-generated.image-as-background",
+                "value": "background"
+              },
+              {
+                "label": "lfr.gemini-generated.editorial-split",
+                "value": "split"
+              },
+              {
+                "label": "lfr.gemini-generated.inset-overlay-card",
+                "value": "inset"
+              },
+              {
+                "label": "lfr.gemini-generated.spotlight-avatar",
+                "value": "spotlight"
+              }
+            ]
+          }
+        },
+        {
+          "defaultValue": "350px",
+          "description": "lfr.gemini-generated.slide-height-description",
+          "label": "lfr.gemini-generated.slide-height",
+          "name": "slideHeight",
+          "type": "length"
+        },
+        {
+          "defaultValue": "var(--primary)",
+          "description": "lfr.gemini-generated.theme-color-description",
+          "label": "lfr.gemini-generated.theme-color",
+          "name": "themeColor",
+          "type": "colorPicker"
+        },
+        {
+          "defaultValue": "var(--spacer-4)",
+          "description": "lfr.gemini-generated.spacing-description",
+          "label": "lfr.gemini-generated.spacing",
+          "name": "spacing",
+          "type": "length"
+        },
+        {
+          "defaultValue": true,
+          "description": "lfr.gemini-generated.enable-depth-effect-description",
+          "label": "lfr.gemini-generated.enable-depth-effect",
+          "name": "enableDepthEffect",
+          "type": "checkbox"
+        },
+        {
+          "defaultValue": "0.5",
+          "description": "lfr.gemini-generated.background-overlay-opacity-description",
+          "label": "lfr.gemini-generated.background-overlay-opacity",
+          "name": "bgOpacity",
+          "type": "select",
+          "typeOptions": {
+            "validValues": [
+              {
+                "label": "lfr.gemini-generated.0-percent",
+                "value": "0"
+              },
+              {
+                "label": "lfr.gemini-generated.10-percent",
+                "value": "0.1"
+              },
+              {
+                "label": "lfr.gemini-generated.20-percent",
+                "value": "0.2"
+              },
+              {
+                "label": "lfr.gemini-generated.30-percent",
+                "value": "0.3"
+              },
+              {
+                "label": "lfr.gemini-generated.40-percent",
+                "value": "0.4"
+              },
+              {
+                "label": "lfr.gemini-generated.50-percent",
+                "value": "0.5"
+              },
+              {
+                "label": "lfr.gemini-generated.60-percent",
+                "value": "0.6"
+              },
+              {
+                "label": "lfr.gemini-generated.70-percent",
+                "value": "0.7"
+              },
+              {
+                "label": "lfr.gemini-generated.80-percent",
+                "value": "0.8"
+              },
+              {
+                "label": "lfr.gemini-generated.90-percent",
+                "value": "0.9"
+              }
+            ]
+          }
+        },
+        {
+          "defaultValue": "0.9",
+          "description": "lfr.gemini-generated.inset-box-opacity-description",
+          "label": "lfr.gemini-generated.inset-box-opacity",
+          "name": "insetOpacity",
+          "type": "select",
+          "typeOptions": {
+            "validValues": [
+              {
+                "label": "lfr.gemini-generated.0-percent",
+                "value": "0"
+              },
+              {
+                "label": "lfr.gemini-generated.10-percent",
+                "value": "0.1"
+              },
+              {
+                "label": "lfr.gemini-generated.20-percent",
+                "value": "0.2"
+              },
+              {
+                "label": "lfr.gemini-generated.30-percent",
+                "value": "0.3"
+              },
+              {
+                "label": "lfr.gemini-generated.40-percent",
+                "value": "0.4"
+              },
+              {
+                "label": "lfr.gemini-generated.50-percent",
+                "value": "0.5"
+              },
+              {
+                "label": "lfr.gemini-generated.60-percent",
+                "value": "0.6"
+              },
+              {
+                "label": "lfr.gemini-generated.70-percent",
+                "value": "0.7"
+              },
+              {
+                "label": "lfr.gemini-generated.80-percent",
+                "value": "0.8"
+              },
+              {
+                "label": "lfr.gemini-generated.90-percent",
+                "value": "0.9"
+              },
+              {
+                "label": "lfr.gemini-generated.100-percent",
+                "value": "1.0"
+              }
+            ],
+            "dependency": {
+              "displayStyle": {
+                "type": "equal",
+                "value": "inset"
+              }
+            }
+          }
+        }
+      ],
+      "label": "lfr.gemini-generated.style"
+    },
+    {
+      "fields": [
+        {
+          "defaultValue": "3",
+          "description": "lfr.gemini-generated.slides-per-view-description",
+          "label": "lfr.gemini-generated.slides-per-view",
+          "name": "slidesPerView",
+          "type": "text",
+          "dataType": "string"
+        },
+        {
+          "defaultValue": true,
+          "description": "lfr.gemini-generated.autoplay-description",
+          "label": "lfr.gemini-generated.autoplay",
+          "name": "autoplay",
+          "type": "checkbox"
+        },
+        {
+          "defaultValue": "5000",
+          "description": "lfr.gemini-generated.autoplay-interval-ms-description",
+          "label": "lfr.gemini-generated.autoplay-interval-ms",
+          "name": "autoplayInterval",
+          "type": "text",
+          "typeOptions": {
+            "validation": {
+              "type": "number"
+            },
+            "dependency": {
+              "autoplay": {
+                "type": "equal",
+                "value": "true"
+              }
+            }
+          }
+        },
+        {
+          "defaultValue": false,
+          "description": "lfr.gemini-generated.loop-description",
+          "label": "lfr.gemini-generated.loop",
+          "name": "loop",
+          "type": "checkbox"
+        },
+        {
+          "defaultValue": true,
+          "description": "lfr.gemini-generated.show-controls-description",
+          "label": "lfr.gemini-generated.show-controls",
+          "name": "showControls",
+          "type": "checkbox"
+        },
+        {
+          "defaultValue": true,
+          "description": "lfr.gemini-generated.show-pagination-description",
+          "label": "lfr.gemini-generated.show-pagination",
+          "name": "showPagination",
+          "type": "checkbox"
+        }
+      ],
+      "label": "lfr.gemini-generated.behavior"
+    }
+  ]
+}

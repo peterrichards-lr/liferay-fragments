@@ -1,0 +1,116 @@
+{
+  "fieldSets": [
+    {
+      "fields": [
+        {
+          "label": "lfr.gemini-generated.object-external-reference-code",
+          "description": "lfr.gemini-generated.object-external-reference-code-description",
+          "name": "objectERC",
+          "type": "text",
+          "defaultValue": "COMPANY_MILESTONE"
+        },
+        {
+          "label": "lfr.gemini-generated.fallback-record-identifier",
+          "description": "lfr.gemini-generated.fallback-record-identifier-description",
+          "name": "fallbackRecordIdentifier",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "defaultValue": false,
+          "label": "lfr.gemini-generated.customize-display-columns",
+          "description": "lfr.gemini-generated.customize-display-columns-description",
+          "name": "customizeColumns",
+          "type": "checkbox"
+        },
+        {
+          "label": "lfr.gemini-generated.columns-to-display",
+          "description": "lfr.gemini-generated.columns-to-display-description",
+          "name": "columnsToDisplay",
+          "type": "text",
+          "defaultValue": "date,title,description",
+          "typeOptions": {
+            "dependency": {
+              "customizeColumns": {
+                "type": "equal",
+                "value": "true"
+              }
+            }
+          }
+        },
+        {
+          "label": "lfr.gemini-generated.enable-record-selection",
+          "description": "lfr.gemini-generated.enable-record-selection-description",
+          "name": "enableRecordSelection",
+          "type": "checkbox",
+          "defaultValue": false
+        },
+        {
+          "defaultValue": "id",
+          "label": "lfr.gemini-generated.identifier-type",
+          "description": "lfr.gemini-generated.identifier-type-description",
+          "name": "fallbackRecordIdentifierType",
+          "type": "select",
+          "typeOptions": {
+            "validValues": [
+              {
+                "label": "lfr.gemini-generated.id",
+                "value": "id"
+              },
+              {
+                "label": "lfr.gemini-generated.erc",
+                "value": "erc"
+              }
+            ]
+          }
+        }
+      ],
+      "label": "lfr.gemini-generated.data"
+    },
+    {
+      "fields": [
+        {
+          "defaultValue": true,
+          "label": "lfr.gemini-generated.show-fragment-header",
+          "description": "lfr.gemini-generated.show-fragment-header-description",
+          "name": "showFragmentHeader",
+          "type": "checkbox"
+        },
+        {
+          "defaultValue": "Record Detail",
+          "label": "lfr.gemini-generated.view-title",
+          "description": "lfr.gemini-generated.view-title-description",
+          "name": "viewTitle",
+          "type": "text"
+        }
+      ],
+      "label": "lfr.gemini-generated.display"
+    },
+    {
+      "fields": [
+        {
+          "defaultValue": "var(--primary)",
+          "label": "lfr.gemini-generated.accent-color",
+          "description": "lfr.gemini-generated.accent-color-description",
+          "name": "accentColor",
+          "type": "colorPicker"
+        },
+        {
+          "defaultValue": "var(--primary)",
+          "label": "lfr.gemini-generated.label-color",
+          "description": "lfr.gemini-generated.label-color-description",
+          "name": "labelColor",
+          "type": "colorPicker"
+        },
+        {
+          "defaultValue": "var(--body-color)",
+          "label": "lfr.gemini-generated.value-color",
+          "description": "lfr.gemini-generated.value-color-description",
+          "name": "valueColor",
+          "type": "colorPicker"
+        }
+      ],
+      "label": "lfr.gemini-generated.style"
+    }
+  ]
+}

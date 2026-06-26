@@ -1,0 +1,50 @@
+{
+  "fieldSets": [
+    {
+      "fields": [
+        {
+          "dataType": "string",
+          "defaultValue": "6",
+          "label": "lfr.form-fragments.number-of-boxes",
+          "description": "lfr.form-fragments.number-of-boxes-description",
+          "name": "numberOfBoxes",
+          "type": "text"
+        },
+        {
+          "defaultValue": "3rem",
+          "label": "lfr.form-fragments.box-size",
+          "description": "lfr.form-fragments.box-size-description",
+          "name": "boxSize",
+          "type": "length"
+        },
+        {
+          "defaultValue": "number",
+          "label": "lfr.form-fragments.otp-type",
+          "description": "lfr.form-fragments.otp-type-description",
+          "name": "otpType",
+          "type": "select",
+          "typeOptions": {
+            "validValues": [
+              {
+                "label": "lfr.form-fragments.numeric",
+                "value": "number"
+              },
+              {
+                "label": "lfr.form-fragments.alphanumeric",
+                "value": "text"
+              }
+            ]
+          }
+        },
+        {
+          "defaultValue": true,
+          "label": "lfr.form-fragments.auto-focus",
+          "description": "lfr.form-fragments.auto-focus-description",
+          "name": "autoFocus",
+          "type": "checkbox"
+        }
+      ],
+      "label": "lfr.form-fragments.otp-options"
+    }
+  ]
+}

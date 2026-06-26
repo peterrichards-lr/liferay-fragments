@@ -1,0 +1,96 @@
+{
+  "fieldSets": [
+    {
+      "fields": [
+        {
+          "defaultValue": "solid",
+          "description": "lfr.misc.button-type-description",
+          "label": "lfr.misc.type",
+          "name": "type",
+          "type": "select",
+          "typeOptions": {
+            "validValues": [
+              {
+                "label": "lfr.misc.solid",
+                "value": "solid"
+              },
+              {
+                "label": "lfr.misc.ghost",
+                "value": "ghost"
+              },
+              {
+                "label": "lfr.misc.borderless",
+                "value": "borderless"
+              },
+              {
+                "label": "lfr.misc.rounded",
+                "value": "rounded"
+              }
+            ]
+          }
+        },
+        {
+          "defaultValue": "primary",
+          "description": "lfr.misc.style-description",
+          "label": "lfr.misc.style",
+          "name": "style",
+          "type": "select",
+          "typeOptions": {
+            "validValues": [
+              {
+                "label": "lfr.misc.primary",
+                "value": "primary"
+              },
+              {
+                "label": "lfr.misc.secondary",
+                "value": "secondary"
+              },
+              {
+                "label": "lfr.misc.neutral",
+                "value": "neutral"
+              }
+            ]
+          }
+        },
+        {
+          "defaultValue": "",
+          "description": "lfr.misc.button-size-description",
+          "label": "lfr.misc.size",
+          "name": "buttonSize",
+          "type": "select",
+          "typeOptions": {
+            "validValues": [
+              {
+                "label": "lfr.misc.small",
+                "value": "btn-sm"
+              },
+              {
+                "label": "lfr.misc.medium",
+                "value": ""
+              },
+              {
+                "label": "lfr.misc.large",
+                "value": "btn-lg"
+              }
+            ]
+          }
+        },
+        {
+          "defaultValue": false,
+          "description": "lfr.misc.inverted-description",
+          "label": "lfr.misc.inverted",
+          "name": "inverted",
+          "type": "checkbox"
+        },
+        {
+          "defaultValue": false,
+          "description": "lfr.misc.uppercase-description",
+          "label": "lfr.misc.uppercase",
+          "name": "uppercase",
+          "type": "checkbox"
+        }
+      ],
+      "label": "lfr.misc.general"
+    }
+  ]
+}

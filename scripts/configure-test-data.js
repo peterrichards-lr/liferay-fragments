@@ -107,7 +107,7 @@ const mappings = {
   },
 };
 
-const fragmentFiles = globSync('**/fragment.json', {
+const fragmentFiles = globSync('**/main/fragment.json', {
   cwd: projectRoot,
   absolute: true,
   ignore: [
@@ -121,11 +121,12 @@ const fragmentFiles = globSync('**/fragment.json', {
 let updatedCount = 0;
 
 fragmentFiles.forEach((file) => {
-  const dir = path.dirname(file);
+  const dir = path.dirname(file); // main directory
+  const fragRoot = path.dirname(dir); // fragment root
   const fragmentData = JSON.parse(fs.readFileSync(file, 'utf8'));
-  const fragmentKey = fragmentData.key || path.basename(dir);
+  const fragmentKey = fragmentData.key || path.basename(fragRoot);
 
-  const testDataFile = path.join(dir, 'test-data.json');
+  const testDataFile = path.join(fragRoot, 'test', 'test-data.json');
   let testData = {};
   if (fs.existsSync(testDataFile)) {
     try {

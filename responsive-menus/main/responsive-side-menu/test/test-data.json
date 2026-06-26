@@ -1,0 +1,28 @@
+{
+  "pageConfig": {
+    "settings": {
+      "themeSettings": {
+        "lfr-theme:regular:show-header": "false",
+        "lfr-theme:regular:show-footer": "false"
+      }
+    }
+  },
+  "pageLayout": {
+    "type": "Fragment",
+    "key": "responsive-side-menu",
+    "children": [
+      {
+        "type": "Fragment",
+        "key": "logo"
+      },
+      {
+        "type": "Fragment",
+        "key": "site-name"
+      },
+      {
+        "type": "Fragment",
+        "key": "login-and-user-menu"
+      }
+    ]
+  }
+}

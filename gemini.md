@@ -273,11 +273,17 @@ after itself.
       fragment `configuration.json` files to resolve page creation 500 errors.
 - [x] Optimize duplicate page detection in `global-setup.js` by fetching all
       layouts once before the main loop to speed up E2E page setup.
+- [x] **Issue #18.2**: Restructure all collections and fragments to have only `main/` and `test/` folders immediately below their roots.
+- [x] **Issue #19.2**: Update `create-fragment-zips.sh` build script to read metadata from the new layout and compile/stage accordingly.
+- [x] **Issue #20.2**: Update fragment linter (`scripts/lint-fragments.js`) and fragment scaffolder (`scripts/create-fragment.js`) to support and enforce the new layout.
+- [x] **Issue #21.2**: Update path resolution in `scripts/initialize-build-config.js` and `scripts/configure-test-data.js` to locate files under the new structure.
+
+- [x] **Issue #22**: Fix fragment deployment validation errors due to `dataType: boolean` on Liferay 2026.Q1+.
+- [x] **Issue #23**: Extract linter JSON schemas to external files and integrate VS Code validation.
 
 ### Active Fix (In Progress)
 
-- [x] Run automated E2E tests using `./scripts/test-runner.sh` (or using existing project via `-p`).
-- [x] Standardize `form-fragments/fragments/toggle-switch` to use the standard Clay HTML structure, resolving the outstanding task in `todo.md`.
+- [ ] _No active issues in progress._
 
 ### Backward-Compatibility Rules (Three-Target ZIP Build)
 

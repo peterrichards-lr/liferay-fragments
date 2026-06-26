@@ -25,13 +25,14 @@ try {
   }
 } catch (e) {}
 
-const fragments = globSync('**/fragment.json', {
+const fragments = globSync('**/main/fragment.json', {
   ignore: ['node_modules/**', ...ldmIgnores],
 });
 
 fragments.forEach((fragFile) => {
-  const dir = path.dirname(fragFile);
-  const buildFile = path.join(dir, 'fragment-build.json');
+  const dir = path.dirname(fragFile); // main directory
+  const fragRoot = path.dirname(dir); // fragment root
+  const buildFile = path.join(fragRoot, 'test', 'fragment-build.json');
   const jsFile = path.join(dir, 'index.js');
 
   // Base configuration
@@ -88,7 +89,7 @@ fragments.forEach((fragFile) => {
     (r) => r !== 'commons.js'
   );
 
-  console.log(`Syncing fragment-build.json for: ${path.basename(dir)}`);
+  console.log(`Syncing fragment-build.json for: ${path.basename(fragRoot)}`);
   fs.writeFileSync(buildFile, JSON.stringify(config, null, 2));
 });
 

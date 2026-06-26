@@ -1,0 +1,72 @@
+{
+  "fieldSets": [
+    {
+      "fields": [
+        {
+          "defaultValue": true,
+          "label": "lfr.commerce.use-commerce-context",
+          "description": "lfr.commerce.use-commerce-context-description",
+          "name": "useCommerceContext",
+          "type": "checkbox"
+        },
+        {
+          "label": "lfr.commerce.account-id",
+          "description": "lfr.commerce.account-id-description",
+          "name": "accountId",
+          "defaultValue": "",
+          "type": "text",
+          "typeOptions": {
+            "validation": {
+              "type": "number"
+            }
+          }
+        },
+        {
+          "label": "lfr.commerce.channel-id",
+          "description": "lfr.commerce.channel-id-description",
+          "name": "channelId",
+          "defaultValue": "",
+          "type": "text",
+          "typeOptions": {
+            "validation": {
+              "type": "number"
+            }
+          }
+        },
+        {
+          "defaultValue": true,
+          "label": "lfr.commerce.enable-cookie",
+          "description": "lfr.commerce.enable-cookie-description",
+          "name": "enableCookie",
+          "type": "checkbox"
+        },
+        {
+          "label": "lfr.commerce.cookie-expiry-seconds",
+          "description": "lfr.commerce.cookie-expiry-seconds-description",
+          "name": "cookieExpirySeconds",
+          "defaultValue": "10",
+          "type": "text",
+          "typeOptions": {
+            "validation": {
+              "min": 10,
+              "type": "number"
+            }
+          }
+        }
+      ],
+      "label": "lfr.commerce.behaviour"
+    },
+    {
+      "fields": [
+        {
+          "defaultValue": "You currently have no purchased products",
+          "label": "lfr.commerce.not-found-message",
+          "description": "lfr.commerce.not-found-message-description",
+          "name": "notfoundMessage",
+          "type": "text"
+        }
+      ],
+      "label": "lfr.commerce.general"
+    }
+  ]
+}

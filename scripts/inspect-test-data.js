@@ -2,7 +2,7 @@ const fs = require('fs');
 const path = require('path');
 const { globSync } = require('glob');
 
-const files = globSync('gemini-generated/fragments/**/test-data.json');
+const files = globSync('gemini-generated/fragments/**/test/test-data.json');
 
 files.forEach((file) => {
   console.log(`\n=========================================`);

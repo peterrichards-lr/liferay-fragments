@@ -1,0 +1,16 @@
+{
+  "fieldSets": [
+    {
+      "fields": [
+        {
+          "defaultValue": false,
+          "label": "lfr.profile.enable-preview-mode",
+          "description": "lfr.profile.enable-preview-mode",
+          "name": "enablePreviewMode",
+          "type": "checkbox"
+        }
+      ],
+      "label": "lfr.profile.general"
+    }
+  ]
+}

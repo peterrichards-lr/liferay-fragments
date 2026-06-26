@@ -1,0 +1,28 @@
+{
+  "pageLayout": {
+    "type": "Fragment",
+    "key": "interactive-wizard",
+    "children": [
+      {
+        "type": "Fragment",
+        "key": "user-field",
+        "fragmentConfig": {
+          "label": "Full Name",
+          "fieldName": "name"
+        }
+      },
+      {
+        "type": "Fragment",
+        "key": "signature-pad",
+        "fragmentConfig": {
+          "label": "Signature",
+          "fieldName": "signature"
+        }
+      },
+      {
+        "type": "Fragment",
+        "key": "submit-button"
+      }
+    ]
+  }
+}

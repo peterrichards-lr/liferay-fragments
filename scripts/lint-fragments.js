@@ -7,72 +7,35 @@ const { generateGallery } = require('./generate-gallery');
 const ajv = new Ajv({ allErrors: true });
 
 // --- SCHEMAS ---
-const fragmentSchema = {
-  type: 'object',
-  required: [
-    'name',
-    'type',
-    'htmlPath',
-    'jsPath',
-    'cssPath',
-    'configurationPath',
-  ],
-  properties: {
-    name: { type: 'string' },
-    type: { type: 'string' },
-    htmlPath: { type: 'string' },
-    jsPath: { type: 'string' },
-    cssPath: { type: 'string' },
-    configurationPath: { type: 'string' },
-  },
-};
-
-const configurationSchema = {
-  type: 'object',
-  properties: {
-    fieldSets: {
-      type: 'array',
-      items: {
-        type: 'object',
-        required: ['fields'],
-        properties: {
-          fields: {
-            type: 'array',
-            items: {
-              type: 'object',
-              required: ['name', 'type', 'label'],
-              properties: {
-                name: { type: 'string' },
-                type: { type: 'string' },
-                label: { type: 'string' },
-                description: { type: 'string' },
-              },
-            },
-          },
-        },
-      },
-    },
-  },
-};
-
-const testDataSchema = {
-  type: 'object',
-  additionalProperties: false,
-  properties: {
-    excludeFromGallery: { type: 'boolean' },
-    pageConfig: { type: 'object' },
-    pageLayout: { type: 'object' },
-    requiredObjects: { type: 'array', items: { type: 'string' } },
-    documents: { type: 'array' },
-    webContentStructures: { type: 'array' },
-    webContentArticles: { type: 'array' },
-    collections: { type: 'array' },
-  },
-};
+const fragmentSchema = JSON.parse(
+  fs.readFileSync(
+    path.join(__dirname, '../schemas/fragment.schema.json'),
+    'utf8'
+  )
+);
+const configurationSchema = JSON.parse(
+  fs.readFileSync(
+    path.join(__dirname, '../schemas/configuration.schema.json'),
+    'utf8'
+  )
+);
+const testDataSchema = JSON.parse(
+  fs.readFileSync(
+    path.join(__dirname, '../schemas/test-data.schema.json'),
+    'utf8'
+  )
+);
+const collectionSchema = JSON.parse(
+  fs.readFileSync(
+    path.join(__dirname, '../schemas/collection.schema.json'),
+    'utf8'
+  )
+);
 
 const validateFragment = ajv.compile(fragmentSchema);
 const validateConfiguration = ajv.compile(configurationSchema);
 const validateTestData = ajv.compile(testDataSchema);
+const validateCollection = ajv.compile(collectionSchema);
 
 // --- UTILS ---
 const getLangKeys = (dir) => {
@@ -143,7 +106,7 @@ try {
 } catch (e) {}
 
 // 1. Find all fragments
-const fragmentFiles = globSync('**/fragment.json', {
+const fragmentFiles = globSync('**/main/fragment.json', {
   ignore: [
     'node_modules/**',
     'temp_extract/**',
@@ -157,9 +120,83 @@ audit.total = fragmentFiles.length;
 
 console.log(`Starting audit of ${audit.total} fragments...\n`);
 
+// Validate collection directory structures (must only contain main/ and test/)
+const collectionsList = globSync('**/main/collection.json', {
+  ignore: [
+    'node_modules/**',
+    'temp_extract/**',
+    'temp_inspect/**',
+    'temp_inspect_zip/**',
+    'temp_extract_zip/**',
+    ...ldmIgnores,
+  ],
+});
+
+collectionsList.forEach((file) => {
+  const mainDir = path.dirname(file);
+  const collRoot = path.dirname(mainDir);
+  const collName = path.basename(collRoot);
+
+  try {
+    const files = fs.readdirSync(collRoot);
+    files.forEach((f) => {
+      if (f === '.DS_Store') return;
+      if (f !== 'main' && f !== 'test') {
+        logError(
+          collName,
+          `Illegal file or directory found in collection root: "${f}". Collection roots must only contain "main/" and "test/" directories.`
+        );
+      }
+    });
+  } catch (e) {
+    logError(
+      collName,
+      `Failed to validate collection directory structure: ${e.message}`
+    );
+  }
+
+  // Validate collection.json content
+  try {
+    const content = fs.readFileSync(file, 'utf8');
+    const json = JSON.parse(content);
+    if (!validateCollection(json)) {
+      logError(
+        collName,
+        `collection.json schema mismatch: ${ajv.errorsText(validateCollection.errors)}`
+      );
+    }
+  } catch (e) {
+    logError(
+      collName,
+      `Failed to parse/validate collection.json: ${e.message}`
+    );
+  }
+});
+
 fragmentFiles.forEach((file) => {
-  const dir = path.dirname(file);
-  const fragmentName = path.basename(dir);
+  const dir = path.dirname(file); // main directory
+  const fragRoot = path.dirname(dir); // fragment root folder
+  const fragmentName = path.basename(fragRoot);
+
+  // Validate fragment directory structure (must only contain main/ and test/)
+  try {
+    const files = fs.readdirSync(fragRoot);
+    files.forEach((f) => {
+      if (f === '.DS_Store') return;
+      if (f !== 'main' && f !== 'test') {
+        logError(
+          fragmentName,
+          `Illegal file or directory found in fragment root: "${f}". Fragment roots must only contain "main/" and "test/" directories.`
+        );
+      }
+    });
+  } catch (e) {
+    logError(
+      fragmentName,
+      `Failed to validate directory structure: ${e.message}`
+    );
+  }
+
   let fragJson;
 
   try {
@@ -176,7 +213,7 @@ fragmentFiles.forEach((file) => {
       const fragSafeName = fragJson.name
         .replace(/[^a-z0-9]+/gi, '-')
         .toLowerCase();
-      const folderName = path.basename(dir);
+      const folderName = path.basename(fragRoot);
       const folderSafeName = folderName
         .replace(/[^a-z0-9]+/gi, '-')
         .toLowerCase();
@@ -256,13 +293,7 @@ fragmentFiles.forEach((file) => {
         set.fields?.forEach((field) => {
           // 1. Strict dataType constraints
           if (field.dataType !== undefined && field.dataType !== null) {
-            const allowedDataTypes = [
-              'string',
-              'int',
-              'object',
-              'boolean',
-              'number',
-            ];
+            const allowedDataTypes = ['string', 'int', 'object', 'number'];
             if (!allowedDataTypes.includes(field.dataType)) {
               logError(
                 fragmentName,
@@ -296,10 +327,10 @@ fragmentFiles.forEach((file) => {
 
           // 2. Strict type vs dataType alignment
           if (field.type === 'checkbox') {
-            if (field.dataType !== 'boolean') {
+            if (field.dataType !== undefined) {
               logError(
                 fragmentName,
-                `Field '${field.name}' of type 'checkbox' must have dataType 'boolean' (found '${field.dataType}')`
+                `Field '${field.name}' of type 'checkbox' must not have 'dataType' defined in source configurations (found '${field.dataType}'). dataType is injected at build-time for legacy targets.`
               );
             }
           } else if (field.type === 'select') {
@@ -523,7 +554,7 @@ fragmentFiles.forEach((file) => {
     }
   }
 
-  const testDataPath = path.join(dir, 'test-data.json');
+  const testDataPath = path.join(fragRoot, 'test', 'test-data.json');
   if (fs.existsSync(testDataPath)) {
     try {
       const testDataJson = JSON.parse(fs.readFileSync(testDataPath, 'utf8'));

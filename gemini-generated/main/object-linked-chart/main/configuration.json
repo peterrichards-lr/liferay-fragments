@@ -1,0 +1,242 @@
+{
+  "fieldSets": [
+    {
+      "fields": [
+        {
+          "defaultValue": "SALES_REPORT",
+          "label": "lfr.gemini-generated.object-external-reference-code",
+          "description": "lfr.gemini-generated.object-external-reference-code-description",
+          "name": "objectERC",
+          "type": "text"
+        },
+        {
+          "defaultValue": "salesRegion",
+          "label": "lfr.gemini-generated.label-field",
+          "description": "lfr.gemini-generated.label-field-description",
+          "name": "labelField",
+          "type": "text"
+        },
+        {
+          "defaultValue": "revenue,unitsSold",
+          "label": "lfr.gemini-generated.value-fields",
+          "description": "lfr.gemini-generated.value-fields-description",
+          "name": "valueFields",
+          "type": "text"
+        },
+        {
+          "defaultValue": "sum",
+          "label": "lfr.gemini-generated.aggregation-type",
+          "description": "lfr.gemini-generated.aggregation-type-description",
+          "name": "aggregationType",
+          "type": "select",
+          "typeOptions": {
+            "validValues": [
+              {
+                "label": "lfr.gemini-generated.none",
+                "value": "none"
+              },
+              {
+                "label": "lfr.gemini-generated.sum",
+                "value": "sum"
+              },
+              {
+                "label": "lfr.gemini-generated.average",
+                "value": "avg"
+              },
+              {
+                "label": "lfr.gemini-generated.count",
+                "value": "count"
+              }
+            ]
+          }
+        },
+        {
+          "defaultValue": "none",
+          "label": "lfr.gemini-generated.sort-order",
+          "description": "lfr.gemini-generated.sort-order-description",
+          "name": "sortOrder",
+          "type": "select",
+          "typeOptions": {
+            "validValues": [
+              {
+                "label": "lfr.gemini-generated.none",
+                "value": "none"
+              },
+              {
+                "label": "lfr.gemini-generated.label-asc",
+                "value": "label-asc"
+              },
+              {
+                "label": "lfr.gemini-generated.label-desc",
+                "value": "label-desc"
+              },
+              {
+                "label": "lfr.gemini-generated.value-asc",
+                "value": "value-asc"
+              },
+              {
+                "label": "lfr.gemini-generated.value-desc",
+                "value": "value-desc"
+              }
+            ]
+          }
+        }
+      ],
+      "label": "lfr.gemini-generated.data"
+    },
+    {
+      "fields": [
+        {
+          "defaultValue": true,
+          "label": "lfr.gemini-generated.show-fragment-header",
+          "description": "lfr.gemini-generated.show-fragment-header-description",
+          "name": "showFragmentHeader",
+          "type": "checkbox"
+        },
+        {
+          "defaultValue": "Regional Sales Performance",
+          "label": "lfr.gemini-generated.chart-title",
+          "description": "lfr.gemini-generated.chart-title-description",
+          "name": "chartTitle",
+          "type": "text"
+        },
+        {
+          "defaultValue": "Region",
+          "label": "lfr.gemini-generated.x-axis-label",
+          "description": "lfr.gemini-generated.x-axis-label-description",
+          "name": "xAxisLabel",
+          "type": "text"
+        },
+        {
+          "defaultValue": "Values",
+          "label": "lfr.gemini-generated.y-axis-label",
+          "description": "lfr.gemini-generated.y-axis-label-description",
+          "name": "yAxisLabel",
+          "type": "text"
+        },
+        {
+          "defaultValue": false,
+          "label": "lfr.gemini-generated.enable-secondary-y-axis",
+          "description": "lfr.gemini-generated.enable-secondary-y-axis-description",
+          "name": "enableSecondaryYAxis",
+          "type": "checkbox"
+        },
+        {
+          "defaultValue": "Secondary Values",
+          "label": "lfr.gemini-generated.secondary-y-axis-label",
+          "description": "lfr.gemini-generated.secondary-y-axis-label-description",
+          "name": "secondaryYAxisLabel",
+          "type": "text",
+          "typeOptions": {
+            "dependency": {
+              "enableSecondaryYAxis": {
+                "type": "equal",
+                "value": "true"
+              }
+            }
+          }
+        },
+        {
+          "defaultValue": "bar",
+          "label": "lfr.gemini-generated.chart-type",
+          "description": "lfr.gemini-generated.chart-type-description",
+          "name": "chartType",
+          "type": "select",
+          "typeOptions": {
+            "validValues": [
+              {
+                "label": "lfr.gemini-generated.bar",
+                "value": "bar"
+              },
+              {
+                "label": "lfr.gemini-generated.line",
+                "value": "line"
+              },
+              {
+                "label": "lfr.gemini-generated.pie",
+                "value": "pie"
+              },
+              {
+                "label": "lfr.gemini-generated.doughnut",
+                "value": "doughnut"
+              },
+              {
+                "label": "lfr.gemini-generated.polar-area",
+                "value": "polarArea"
+              },
+              {
+                "label": "lfr.gemini-generated.radar",
+                "value": "radar"
+              }
+            ]
+          }
+        },
+        {
+          "defaultValue": true,
+          "label": "lfr.gemini-generated.show-legend",
+          "description": "lfr.gemini-generated.show-legend-description",
+          "name": "showLegend",
+          "type": "checkbox"
+        },
+        {
+          "defaultValue": "brightness(85%)",
+          "label": "lfr.gemini-generated.border-filter",
+          "description": "lfr.gemini-generated.border-filter-description",
+          "name": "borderFilter",
+          "type": "text"
+        },
+        {
+          "defaultValue": "auto",
+          "label": "lfr.gemini-generated.color-mapping",
+          "description": "lfr.gemini-generated.color-mapping-description",
+          "name": "colorMapping",
+          "type": "select",
+          "typeOptions": {
+            "validValues": [
+              {
+                "label": "lfr.gemini-generated.automatic",
+                "value": "auto"
+              },
+              {
+                "label": "lfr.gemini-generated.by-data-series",
+                "value": "series"
+              },
+              {
+                "label": "lfr.gemini-generated.by-category-label",
+                "value": "label"
+              }
+            ]
+          }
+        },
+        {
+          "defaultValue": "standard",
+          "label": "lfr.gemini-generated.color-palette",
+          "description": "lfr.gemini-generated.color-palette-description",
+          "name": "colorPalette",
+          "type": "select",
+          "typeOptions": {
+            "validValues": [
+              {
+                "label": "lfr.gemini-generated.standard-theme",
+                "value": "standard"
+              },
+              {
+                "label": "lfr.gemini-generated.rainbow",
+                "value": "rainbow"
+              },
+              {
+                "label": "lfr.gemini-generated.cool",
+                "value": "cool"
+              },
+              {
+                "label": "lfr.gemini-generated.warm",
+                "value": "warm"
+              }
+            ]
+          }
+        }
+      ],
+      "label": "lfr.gemini-generated.display"
+    }
+  ]
+}

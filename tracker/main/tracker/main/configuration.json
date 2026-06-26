@@ -1,0 +1,16 @@
+{
+  "fieldSets": [
+    {
+      "fields": [
+        {
+          "defaultValue": false,
+          "label": "lfr.tracker.enable-debug",
+          "description": "lfr.tracker.enable-debug",
+          "name": "enableDebug",
+          "type": "checkbox"
+        }
+      ],
+      "label": "lfr.tracker.debugging"
+    }
+  ]
+}

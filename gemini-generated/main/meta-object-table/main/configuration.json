@@ -1,0 +1,538 @@
+{
+  "fieldSets": [
+    {
+      "fields": [
+        {
+          "label": "lfr.gemini-generated.object-external-reference-code",
+          "description": "lfr.gemini-generated.object-external-reference-code-description",
+          "name": "objectERC",
+          "type": "text",
+          "defaultValue": "COMPANY_MILESTONE"
+        },
+        {
+          "defaultValue": false,
+          "label": "lfr.gemini-generated.customize-display-columns",
+          "description": "lfr.gemini-generated.customize-display-columns-description",
+          "name": "customizeColumns",
+          "type": "checkbox"
+        },
+        {
+          "label": "lfr.gemini-generated.columns-to-display",
+          "description": "lfr.gemini-generated.columns-to-display-description",
+          "name": "columnsToDisplay",
+          "type": "text",
+          "defaultValue": "date,title,description",
+          "typeOptions": {
+            "dependency": {
+              "customizeColumns": {
+                "type": "equal",
+                "value": "true"
+              }
+            }
+          }
+        }
+      ],
+      "label": "lfr.gemini-generated.data"
+    },
+    {
+      "fields": [
+        {
+          "defaultValue": true,
+          "label": "lfr.gemini-generated.show-fragment-header",
+          "description": "lfr.gemini-generated.show-fragment-header-description",
+          "name": "showFragmentHeader",
+          "type": "checkbox"
+        },
+        {
+          "defaultValue": "Milestones",
+          "label": "lfr.gemini-generated.table-title",
+          "description": "lfr.gemini-generated.table-title-description",
+          "name": "tableTitle",
+          "type": "text"
+        },
+        {
+          "defaultValue": true,
+          "label": "lfr.gemini-generated.enable-pagination",
+          "description": "lfr.gemini-generated.enable-pagination-description",
+          "name": "enablePagination",
+          "type": "checkbox"
+        },
+        {
+          "defaultValue": "10",
+          "label": "lfr.gemini-generated.page-size",
+          "description": "lfr.gemini-generated.page-size-description",
+          "name": "pageSize",
+          "type": "text",
+          "dataType": "string"
+        }
+      ],
+      "label": "lfr.gemini-generated.display"
+    },
+    {
+      "fields": [
+        {
+          "defaultValue": "var(--gray-900)",
+          "label": "lfr.gemini-generated.header-text-color",
+          "description": "lfr.gemini-generated.header-text-color-description",
+          "name": "headerTextColor",
+          "type": "colorPicker"
+        },
+        {
+          "defaultValue": "var(--gray-100)",
+          "label": "lfr.gemini-generated.header-background-color",
+          "description": "lfr.gemini-generated.header-background-color-description",
+          "name": "headerBgColor",
+          "type": "colorPicker"
+        },
+        {
+          "defaultValue": "var(--body-color)",
+          "label": "lfr.gemini-generated.body-text-color",
+          "description": "lfr.gemini-generated.body-text-color-description",
+          "name": "bodyTextColor",
+          "type": "colorPicker"
+        },
+        {
+          "defaultValue": "var(--gray-600)",
+          "label": "lfr.gemini-generated.action-icon-color",
+          "description": "lfr.gemini-generated.action-icon-color-description",
+          "name": "actionIconColor",
+          "type": "colorPicker"
+        },
+        {
+          "defaultValue": false,
+          "label": "lfr.gemini-generated.enable-striped",
+          "description": "lfr.gemini-generated.enable-striped-description",
+          "name": "enableStriped",
+          "type": "checkbox"
+        },
+        {
+          "defaultValue": "even",
+          "label": "lfr.gemini-generated.striped-row-type",
+          "description": "lfr.gemini-generated.striped-row-type-description",
+          "name": "stripedRowType",
+          "type": "select",
+          "typeOptions": {
+            "dependency": {
+              "enableStriped": {
+                "type": "equal",
+                "value": "true"
+              }
+            },
+            "validValues": [
+              {
+                "label": "lfr.gemini-generated.even-rows",
+                "value": "even"
+              },
+              {
+                "label": "lfr.gemini-generated.odd-rows",
+                "value": "odd"
+              }
+            ]
+          }
+        },
+        {
+          "defaultValue": "var(--gray-100)",
+          "label": "lfr.gemini-generated.striped-background-color",
+          "description": "lfr.gemini-generated.striped-background-color-description",
+          "name": "stripedBgColor",
+          "type": "colorPicker",
+          "typeOptions": {
+            "dependency": {
+              "enableStriped": {
+                "type": "equal",
+                "value": "true"
+              }
+            }
+          }
+        }
+      ],
+      "label": "lfr.gemini-generated.style"
+    },
+    {
+      "fields": [
+        {
+          "defaultValue": false,
+          "label": "lfr.gemini-generated.enable-add-action",
+          "description": "lfr.gemini-generated.enable-add-action-description",
+          "name": "enableAdd",
+          "type": "checkbox"
+        },
+        {
+          "defaultValue": "modal",
+          "label": "lfr.gemini-generated.add-action-mode",
+          "description": "lfr.gemini-generated.add-action-mode-description",
+          "name": "addMode",
+          "type": "select",
+          "typeOptions": {
+            "validValues": [
+              {
+                "label": "lfr.gemini-generated.modal-window",
+                "value": "modal"
+              },
+              {
+                "label": "lfr.gemini-generated.page-redirect",
+                "value": "redirect"
+              }
+            ],
+            "dependency": {
+              "enableAdd": {
+                "type": "equal",
+                "value": "true"
+              }
+            }
+          }
+        },
+        {
+          "defaultValue": true,
+          "label": "lfr.gemini-generated.show-drop-zone-header",
+          "description": "lfr.gemini-generated.show-drop-zone-header-description",
+          "name": "addShowHeader",
+          "type": "checkbox",
+          "typeOptions": {
+            "dependency": {
+              "addMode": {
+                "type": "equal",
+                "value": "modal"
+              }
+            }
+          }
+        },
+        {
+          "defaultValue": true,
+          "label": "lfr.gemini-generated.show-modal-title",
+          "description": "lfr.gemini-generated.show-modal-title-description",
+          "name": "addShowTitle",
+          "type": "checkbox",
+          "typeOptions": {
+            "dependency": {
+              "addMode": {
+                "type": "equal",
+                "value": "modal"
+              }
+            }
+          }
+        },
+        {
+          "defaultValue": "lg",
+          "label": "lfr.gemini-generated.add-modal-size",
+          "description": "lfr.gemini-generated.add-modal-size-description",
+          "name": "addModalSize",
+          "type": "select",
+          "typeOptions": {
+            "dependency": {
+              "addMode": {
+                "type": "equal",
+                "value": "modal"
+              }
+            },
+            "validValues": [
+              {
+                "label": "lfr.gemini-generated.small",
+                "value": "sm"
+              },
+              {
+                "label": "lfr.gemini-generated.medium",
+                "value": "md"
+              },
+              {
+                "label": "lfr.gemini-generated.large",
+                "value": "lg"
+              }
+            ]
+          }
+        },
+        {
+          "label": "lfr.gemini-generated.add-target-url",
+          "description": "lfr.gemini-generated.add-target-url-description",
+          "name": "addUrl",
+          "type": "text",
+          "typeOptions": {
+            "dependency": {
+              "enableAdd": {
+                "type": "equal",
+                "value": "true"
+              }
+            }
+          }
+        },
+        {
+          "defaultValue": false,
+          "label": "lfr.gemini-generated.enable-view-action",
+          "description": "lfr.gemini-generated.enable-view-action-description",
+          "name": "enableView",
+          "type": "checkbox"
+        },
+        {
+          "defaultValue": "event",
+          "label": "lfr.gemini-generated.view-action-mode",
+          "description": "lfr.gemini-generated.view-action-mode-description",
+          "name": "viewMode",
+          "type": "select",
+          "typeOptions": {
+            "validValues": [
+              {
+                "label": "lfr.gemini-generated.js-event",
+                "value": "event"
+              },
+              {
+                "label": "lfr.gemini-generated.modal-window",
+                "value": "modal"
+              },
+              {
+                "label": "lfr.gemini-generated.page-redirect",
+                "value": "redirect"
+              },
+              {
+                "label": "lfr.gemini-generated.new-tab",
+                "value": "tab"
+              }
+            ],
+            "dependency": {
+              "enableView": {
+                "type": "equal",
+                "value": "true"
+              }
+            }
+          }
+        },
+        {
+          "defaultValue": "id",
+          "label": "lfr.gemini-generated.identifier-type",
+          "description": "lfr.gemini-generated.identifier-type-description",
+          "name": "viewIdentifierType",
+          "type": "select",
+          "typeOptions": {
+            "dependency": {
+              "enableView": {
+                "type": "equal",
+                "value": "true"
+              }
+            },
+            "validValues": [
+              {
+                "label": "lfr.gemini-generated.id",
+                "value": "id"
+              },
+              {
+                "label": "lfr.gemini-generated.erc",
+                "value": "erc"
+              }
+            ]
+          }
+        },
+        {
+          "defaultValue": true,
+          "label": "lfr.gemini-generated.show-drop-zone-header",
+          "description": "lfr.gemini-generated.show-drop-zone-header-description",
+          "name": "viewShowHeader",
+          "type": "checkbox",
+          "typeOptions": {
+            "dependency": {
+              "viewMode": {
+                "type": "equal",
+                "value": "modal"
+              }
+            }
+          }
+        },
+        {
+          "defaultValue": true,
+          "label": "lfr.gemini-generated.show-modal-title",
+          "description": "lfr.gemini-generated.show-modal-title-description",
+          "name": "viewShowTitle",
+          "type": "checkbox",
+          "typeOptions": {
+            "dependency": {
+              "viewMode": {
+                "type": "equal",
+                "value": "modal"
+              }
+            }
+          }
+        },
+        {
+          "defaultValue": "md",
+          "label": "lfr.gemini-generated.view-modal-size",
+          "description": "lfr.gemini-generated.view-modal-size-description",
+          "name": "viewModalSize",
+          "type": "select",
+          "typeOptions": {
+            "dependency": {
+              "viewMode": {
+                "type": "equal",
+                "value": "modal"
+              }
+            },
+            "validValues": [
+              {
+                "label": "lfr.gemini-generated.small",
+                "value": "sm"
+              },
+              {
+                "label": "lfr.gemini-generated.medium",
+                "value": "md"
+              },
+              {
+                "label": "lfr.gemini-generated.large",
+                "value": "lg"
+              }
+            ]
+          }
+        },
+        {
+          "label": "lfr.gemini-generated.view-target-url",
+          "description": "lfr.gemini-generated.view-target-url-description",
+          "name": "viewUrl",
+          "type": "text",
+          "typeOptions": {
+            "dependency": {
+              "enableView": {
+                "type": "equal",
+                "value": "true"
+              }
+            }
+          }
+        },
+        {
+          "defaultValue": false,
+          "label": "lfr.gemini-generated.enable-edit-action",
+          "description": "lfr.gemini-generated.enable-edit-action-description",
+          "name": "enableEdit",
+          "type": "checkbox"
+        },
+        {
+          "defaultValue": "event",
+          "label": "lfr.gemini-generated.edit-action-mode",
+          "description": "lfr.gemini-generated.edit-action-mode-description",
+          "name": "editMode",
+          "type": "select",
+          "typeOptions": {
+            "validValues": [
+              {
+                "label": "lfr.gemini-generated.js-event",
+                "value": "event"
+              },
+              {
+                "label": "lfr.gemini-generated.modal-window",
+                "value": "modal"
+              },
+              {
+                "label": "lfr.gemini-generated.page-redirect",
+                "value": "redirect"
+              },
+              {
+                "label": "lfr.gemini-generated.new-tab",
+                "value": "tab"
+              }
+            ],
+            "dependency": {
+              "enableEdit": {
+                "type": "equal",
+                "value": "true"
+              }
+            }
+          }
+        },
+        {
+          "defaultValue": "id",
+          "label": "lfr.gemini-generated.identifier-type",
+          "description": "lfr.gemini-generated.identifier-type-description",
+          "name": "editIdentifierType",
+          "type": "select",
+          "typeOptions": {
+            "dependency": {
+              "enableEdit": {
+                "type": "equal",
+                "value": "true"
+              }
+            },
+            "validValues": [
+              {
+                "label": "lfr.gemini-generated.id",
+                "value": "id"
+              },
+              {
+                "label": "lfr.gemini-generated.erc",
+                "value": "erc"
+              }
+            ]
+          }
+        },
+        {
+          "defaultValue": true,
+          "label": "lfr.gemini-generated.show-drop-zone-header",
+          "description": "lfr.gemini-generated.show-drop-zone-header-description",
+          "name": "editShowHeader",
+          "type": "checkbox",
+          "typeOptions": {
+            "dependency": {
+              "editMode": {
+                "type": "equal",
+                "value": "modal"
+              }
+            }
+          }
+        },
+        {
+          "defaultValue": true,
+          "label": "lfr.gemini-generated.show-modal-title",
+          "description": "lfr.gemini-generated.show-modal-title-description",
+          "name": "editShowTitle",
+          "type": "checkbox",
+          "typeOptions": {
+            "dependency": {
+              "editMode": {
+                "type": "equal",
+                "value": "modal"
+              }
+            }
+          }
+        },
+        {
+          "defaultValue": "lg",
+          "label": "lfr.gemini-generated.edit-modal-size",
+          "description": "lfr.gemini-generated.edit-modal-size-description",
+          "name": "editModalSize",
+          "type": "select",
+          "typeOptions": {
+            "dependency": {
+              "editMode": {
+                "type": "equal",
+                "value": "modal"
+              }
+            },
+            "validValues": [
+              {
+                "label": "lfr.gemini-generated.small",
+                "value": "sm"
+              },
+              {
+                "label": "lfr.gemini-generated.medium",
+                "value": "md"
+              },
+              {
+                "label": "lfr.gemini-generated.large",
+                "value": "lg"
+              }
+            ]
+          }
+        },
+        {
+          "label": "lfr.gemini-generated.edit-target-url",
+          "description": "lfr.gemini-generated.edit-target-url-description",
+          "name": "editUrl",
+          "type": "text",
+          "typeOptions": {
+            "dependency": {
+              "enableEdit": {
+                "type": "equal",
+                "value": "true"
+              }
+            }
+          }
+        }
+      ],
+      "label": "lfr.gemini-generated.actions"
+    }
+  ]
+}

@@ -12,7 +12,7 @@ if (!collection || !fragmentName) {
 }
 
 const safeName = fragmentName.toLowerCase().replace(/\s+/g, '-');
-const targetDir = path.join(process.cwd(), collection, 'fragments', safeName);
+const targetDir = path.join(process.cwd(), collection, 'main', safeName);
 
 if (fs.existsSync(targetDir)) {
   console.error(`Error: Fragment directory already exists at ${targetDir}`);
@@ -101,29 +101,30 @@ console.log(
   `Creating fragment "${fragmentName}" in collection "${collection}"...`
 );
 
-fs.mkdirSync(targetDir, { recursive: true });
+fs.mkdirSync(path.join(targetDir, 'main'), { recursive: true });
 fs.mkdirSync(path.join(targetDir, 'test'), { recursive: true });
 
 fs.writeFileSync(
-  path.join(targetDir, 'fragment.json'),
+  path.join(targetDir, 'main', 'fragment.json'),
   JSON.stringify(fragmentJson, null, 2)
 );
 fs.writeFileSync(
-  path.join(targetDir, 'fragment-build.json'),
+  path.join(targetDir, 'test', 'fragment-build.json'),
   JSON.stringify(fragmentBuildJson, null, 2)
 );
 fs.writeFileSync(
-  path.join(targetDir, 'configuration.json'),
+  path.join(targetDir, 'main', 'configuration.json'),
   JSON.stringify(configurationJson, null, 2)
 );
-fs.writeFileSync(path.join(targetDir, 'index.html'), indexHtml.trim());
-fs.writeFileSync(path.join(targetDir, 'index.js'), indexJs.trim());
-fs.writeFileSync(path.join(targetDir, 'index.css'), indexCss.trim());
+fs.writeFileSync(path.join(targetDir, 'main', 'index.html'), indexHtml.trim());
+fs.writeFileSync(path.join(targetDir, 'main', 'index.js'), indexJs.trim());
+fs.writeFileSync(path.join(targetDir, 'main', 'index.css'), indexCss.trim());
 
 // Update or Create Language properties in the collection root
 const langPath = path.join(
   process.cwd(),
   collection,
+  'main',
   'Language_en_US.properties'
 );
 let langContent = fs.existsSync(langPath)

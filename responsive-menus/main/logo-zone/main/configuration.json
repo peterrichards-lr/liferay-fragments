@@ -1,0 +1,174 @@
+{
+  "fieldSets": [
+    {
+      "fields": [
+        {
+          "defaultValue": "block",
+          "label": "lfr.responsive-menus.content-display",
+          "description": "lfr.responsive-menus.content-display",
+          "name": "contentDisplay",
+          "type": "select",
+          "typeOptions": {
+            "validValues": [
+              {
+                "value": "block",
+                "label": "lfr.responsive-menus.block"
+              },
+              {
+                "value": "flex-row",
+                "label": "lfr.responsive-menus.flex-row"
+              },
+              {
+                "value": "flex-column",
+                "label": "lfr.responsive-menus.flex-column"
+              }
+            ]
+          }
+        },
+        {
+          "defaultValue": "nowrap",
+          "label": "lfr.responsive-menus.flex-wrap",
+          "description": "lfr.responsive-menus.flex-wrap",
+          "name": "flexWrap",
+          "type": "select",
+          "typeOptions": {
+            "validValues": [
+              {
+                "value": "nowrap",
+                "label": "lfr.responsive-menus.nowrap"
+              },
+              {
+                "value": "wrap",
+                "label": "lfr.responsive-menus.wrap"
+              },
+              {
+                "value": "wrap-reverse",
+                "label": "lfr.responsive-menus.wrap-reverse"
+              }
+            ]
+          }
+        },
+        {
+          "defaultValue": "stretch",
+          "label": "lfr.responsive-menus.align-items",
+          "description": "lfr.responsive-menus.align-items",
+          "name": "alignItems",
+          "type": "select",
+          "typeOptions": {
+            "validValues": [
+              {
+                "value": "start",
+                "label": "lfr.responsive-menus.start"
+              },
+              {
+                "value": "center",
+                "label": "lfr.responsive-menus.center"
+              },
+              {
+                "value": "end",
+                "label": "lfr.responsive-menus.end"
+              },
+              {
+                "value": "stretch",
+                "label": "lfr.responsive-menus.stretch"
+              },
+              {
+                "value": "baseline",
+                "label": "lfr.responsive-menus.baseline"
+              }
+            ]
+          }
+        },
+        {
+          "defaultValue": "start",
+          "label": "lfr.responsive-menus.justify-content",
+          "description": "lfr.responsive-menus.justify-content",
+          "name": "justifyContent",
+          "type": "select",
+          "typeOptions": {
+            "validValues": [
+              {
+                "value": "start",
+                "label": "lfr.responsive-menus.start"
+              },
+              {
+                "value": "center",
+                "label": "lfr.responsive-menus.center"
+              },
+              {
+                "value": "end",
+                "label": "lfr.responsive-menus.end"
+              },
+              {
+                "value": "between",
+                "label": "lfr.responsive-menus.between"
+              },
+              {
+                "value": "around",
+                "label": "lfr.responsive-menus.around"
+              }
+            ]
+          }
+        },
+        {
+          "defaultValue": "var(--spacer-2, .5rem)",
+          "label": "lfr.responsive-menus.flex-gap",
+          "description": "lfr.responsive-menus.flex-gap",
+          "name": "flexGap",
+          "type": "length"
+        },
+        {
+          "name": "allowMenuOverride",
+          "label": "lfr.responsive-menus.allow-menu-override",
+          "description": "lfr.responsive-menus.allow-menu-override",
+          "type": "checkbox",
+          "defaultValue": true
+        }
+      ],
+      "label": "lfr.responsive-menus.layout"
+    },
+    {
+      "fields": [
+        {
+          "defaultValue": "increase-hamburger",
+          "label": "lfr.responsive-menus.logo-adaption",
+          "description": "lfr.responsive-menus.logo-adaption",
+          "name": "logoAdaption",
+          "type": "select",
+          "typeOptions": {
+            "validValues": [
+              {
+                "value": "reduce-logo",
+                "label": "lfr.responsive-menus.reduce-logo"
+              },
+              {
+                "value": "increase-hamburger",
+                "label": "lfr.responsive-menus.increase-hamburger"
+              }
+            ]
+          }
+        },
+        {
+          "name": "alwaysDisplayLogo",
+          "label": "lfr.responsive-menus.always-display-logo",
+          "description": "lfr.responsive-menus.always-display-logo",
+          "type": "checkbox",
+          "defaultValue": false
+        }
+      ],
+      "label": "lfr.responsive-menus.logo"
+    },
+    {
+      "fields": [
+        {
+          "defaultValue": true,
+          "label": "lfr.responsive-menus.logo-zone-header",
+          "description": "lfr.responsive-menus.logo-zone-header",
+          "name": "logoZoneHeader",
+          "type": "checkbox"
+        }
+      ],
+      "label": "lfr.responsive-menus.editor"
+    }
+  ]
+}

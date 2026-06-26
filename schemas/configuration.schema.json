@@ -1,0 +1,91 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Liferay Fragment Configuration Schema",
+  "type": "object",
+  "properties": {
+    "fieldSets": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["fields"],
+        "properties": {
+          "label": {
+            "type": "string",
+            "description": "Label for the fieldset"
+          },
+          "fields": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["name", "type", "label"],
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "description": "Unique name of the configuration field"
+                },
+                "type": {
+                  "type": "string",
+                  "enum": [
+                    "text",
+                    "textarea",
+                    "select",
+                    "checkbox",
+                    "colorPicker",
+                    "colorPalette",
+                    "length",
+                    "item",
+                    "itemSelector",
+                    "url",
+                    "navigationMenuSelector"
+                  ],
+                  "description": "The UI input type for the field"
+                },
+                "label": {
+                  "type": "string",
+                  "description": "The user-facing label for the field"
+                },
+                "description": {
+                  "type": "string",
+                  "description": "A description/tooltip for the field"
+                },
+                "dataType": {
+                  "type": "string",
+                  "enum": ["string", "int", "object", "number"],
+                  "description": "The backend data type of the field"
+                },
+                "defaultValue": {
+                  "anyOf": [
+                    { "type": "string" },
+                    { "type": "number" },
+                    { "type": "boolean" },
+                    { "type": "object" },
+                    { "type": "array" }
+                  ],
+                  "description": "The default value of the field"
+                },
+                "typeOptions": {
+                  "type": "object",
+                  "description": "Additional input UI options (e.g., choices, item selector types)"
+                }
+              },
+              "allOf": [
+                {
+                  "if": {
+                    "properties": {
+                      "type": { "const": "checkbox" }
+                    }
+                  },
+                  "then": {
+                    "not": {
+                      "required": ["dataType"]
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

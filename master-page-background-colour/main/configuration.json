@@ -1,0 +1,51 @@
+{
+  "fieldSets": [
+    {
+      "fields": [
+        {
+          "name": "colour",
+          "label": "lfr.master-page-background-colour.colour",
+          "description": "lfr.master-page-background-colour.colour",
+          "type": "colorPicker",
+          "defaultValue": "#3C1053"
+        },
+        {
+          "name": "tint",
+          "label": "lfr.master-page-background-colour.tint",
+          "description": "lfr.master-page-background-colour.tint",
+          "type": "select",
+          "typeOptions": {
+            "validValues": [
+              {
+                "label": "lfr.master-page-background-colour.30-percent",
+                "value": "0.3"
+              },
+              {
+                "label": "lfr.master-page-background-colour.50-percent",
+                "value": "0.5"
+              },
+              {
+                "label": "lfr.master-page-background-colour.70-percent",
+                "value": "0.7"
+              }
+            ]
+          },
+          "defaultValue": "0.3"
+        }
+      ],
+      "label": "lfr.master-page-background-colour.general"
+    },
+    {
+      "fields": [
+        {
+          "defaultValue": false,
+          "label": "lfr.master-page-background-colour.enable-debug",
+          "description": "lfr.master-page-background-colour.enable-debug",
+          "name": "enableDebug",
+          "type": "checkbox"
+        }
+      ],
+      "label": "lfr.master-page-background-colour.debugging"
+    }
+  ]
+}

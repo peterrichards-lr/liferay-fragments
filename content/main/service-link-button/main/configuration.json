@@ -1,0 +1,162 @@
+{
+  "fieldSets": [
+    {
+      "fields": [
+        {
+          "dataType": "string",
+          "description": "lfr.content.destination-site-id-description",
+          "label": "lfr.content.destination-site-id",
+          "name": "destinationSiteId",
+          "type": "text"
+        },
+        {
+          "dataType": "string",
+          "label": "lfr.content.content-structure-id",
+          "description": "lfr.content.content-structure-id",
+          "name": "contentStructureId",
+          "type": "text"
+        },
+        {
+          "defaultValue": false,
+          "label": "lfr.content.asset-library-collection",
+          "description": "lfr.content.asset-library-collection",
+          "name": "assetLibraryCollection",
+          "type": "checkbox"
+        },
+        {
+          "dataType": "string",
+          "description": "lfr.content.asset-library-id-description",
+          "label": "lfr.content.asset-library-id",
+          "name": "assetLibraryId",
+          "type": "text"
+        }
+      ],
+      "label": "lfr.content.content"
+    },
+    {
+      "configurationRole": "advanced",
+      "fields": [
+        {
+          "defaultValue": false,
+          "description": "lfr.content.use-default-page-url-description",
+          "label": "lfr.content.use-default-page-url",
+          "name": "useDefaultPageUrl",
+          "type": "checkbox"
+        },
+        {
+          "description": "lfr.content.default-page-url-description",
+          "label": "lfr.content.default-page-url",
+          "name": "defaultPageUrl",
+          "type": "text"
+        },
+        {
+          "defaultValue": false,
+          "description": "lfr.content.open-in-new-tab-description",
+          "label": "lfr.content.open-in-new-tab",
+          "name": "openInNewTab",
+          "type": "checkbox"
+        }
+      ],
+      "label": "lfr.content.page-url"
+    },
+    {
+      "configurationRole": "style",
+      "fields": [
+        {
+          "defaultValue": "link",
+          "label": "lfr.content.type",
+          "description": "lfr.content.type",
+          "name": "type",
+          "type": "select",
+          "typeOptions": {
+            "validValues": [
+              {
+                "label": "lfr.content.link",
+                "value": "link"
+              },
+              {
+                "label": "lfr.content.action",
+                "value": "action"
+              }
+            ]
+          }
+        },
+        {
+          "defaultValue": "primary",
+          "label": "lfr.content.style",
+          "description": "lfr.content.style",
+          "name": "buttonType",
+          "type": "select",
+          "typeOptions": {
+            "validValues": [
+              {
+                "label": "lfr.content.primary",
+                "value": "primary"
+              },
+              {
+                "label": "lfr.content.secondary",
+                "value": "secondary"
+              },
+              {
+                "label": "lfr.content.link",
+                "value": "link"
+              },
+              {
+                "label": "lfr.content.outline-primary",
+                "value": "outline-primary"
+              },
+              {
+                "label": "lfr.content.outline-secondary",
+                "value": "outline-secondary"
+              }
+            ]
+          }
+        },
+        {
+          "defaultValue": "nm",
+          "label": "lfr.content.size",
+          "description": "lfr.content.size",
+          "name": "buttonSize",
+          "type": "select",
+          "typeOptions": {
+            "validValues": [
+              {
+                "label": "lfr.content.small",
+                "value": "sm"
+              },
+              {
+                "label": "lfr.content.normal",
+                "value": "nm"
+              },
+              {
+                "label": "lfr.content.large",
+                "value": "lg"
+              }
+            ]
+          }
+        }
+      ],
+      "label": "lfr.content.button-options"
+    },
+    {
+      "configurationRole": "advanced",
+      "fields": [
+        {
+          "defaultValue": false,
+          "label": "lfr.content.debug-enabled",
+          "description": "lfr.content.debug-enabled",
+          "name": "enableDebug",
+          "type": "checkbox"
+        },
+        {
+          "defaultValue": false,
+          "description": "lfr.content.debug-in-error-handler-description",
+          "label": "lfr.content.debug-in-error-handler",
+          "name": "debugInErrorHandler",
+          "type": "checkbox"
+        }
+      ],
+      "label": "lfr.content.miscellaneous"
+    }
+  ]
+}

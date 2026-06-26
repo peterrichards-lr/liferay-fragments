@@ -1,0 +1,42 @@
+{
+  "fieldSets": [
+    {
+      "fields": [
+        {
+          "defaultValue": "LFR_APP",
+          "label": "lfr.populated-form-fields.storage-key-prefix",
+          "description": "lfr.populated-form-fields.storage-key-prefix-description",
+          "name": "storageKeyPrefix",
+          "type": "text"
+        },
+        {
+          "defaultValue": "",
+          "label": "lfr.populated-form-fields.fields-list",
+          "description": "lfr.populated-form-fields.fields-list-description",
+          "name": "fieldsList",
+          "type": "text"
+        }
+      ],
+      "label": "lfr.populated-form-fields.general"
+    },
+    {
+      "fields": [
+        {
+          "defaultValue": true,
+          "label": "lfr.populated-form-fields.fragment-header",
+          "description": "lfr.populated-form-fields.fragment-header-description",
+          "name": "fragmentHeader",
+          "type": "checkbox"
+        },
+        {
+          "defaultValue": false,
+          "label": "lfr.populated-form-fields.enable-debug",
+          "description": "lfr.populated-form-fields.enable-debug-description",
+          "name": "enableDebug",
+          "type": "checkbox"
+        }
+      ],
+      "label": "lfr.populated-form-fields.debugging"
+    }
+  ]
+}

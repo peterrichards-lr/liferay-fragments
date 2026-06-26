@@ -1,0 +1,68 @@
+{
+  "fieldSets": [
+    {
+      "fields": [
+        {
+          "defaultValue": false,
+          "label": "lfr.misc.enable-debug",
+          "description": "lfr.misc.enable-debug",
+          "name": "enableDebug",
+          "type": "checkbox"
+        }
+      ],
+      "label": "lfr.misc.general"
+    },
+    {
+      "fields": [
+        {
+          "defaultValue": true,
+          "label": "lfr.misc.enable-menu-text",
+          "description": "lfr.misc.enable-menu-text",
+          "name": "enableMenuText",
+          "type": "checkbox"
+        },
+        {
+          "defaultValue": false,
+          "label": "lfr.misc.run-menu-text-onload",
+          "description": "lfr.misc.run-menu-text-onload",
+          "name": "runMenuTextOnload",
+          "type": "checkbox"
+        },
+        {
+          "defaultValue": "My Dashboard",
+          "description": "lfr.misc.menu-text-description",
+          "label": "lfr.misc.menu-text",
+          "name": "menuText",
+          "type": "text"
+        },
+        {
+          "defaultValue": "/dashboard",
+          "description": "lfr.misc.page-link-description",
+          "label": "lfr.misc.page-link",
+          "name": "pageLink",
+          "type": "text"
+        },
+        {
+          "defaultValue": "group",
+          "description": "lfr.misc.page-location-description",
+          "label": "lfr.misc.page-location",
+          "name": "pageLocation",
+          "type": "select",
+          "typeOptions": {
+            "validValues": [
+              {
+                "label": "lfr.misc.private",
+                "value": "group"
+              },
+              {
+                "label": "lfr.misc.public",
+                "value": "web"
+              }
+            ]
+          }
+        }
+      ],
+      "label": "lfr.misc.navigation"
+    }
+  ]
+}

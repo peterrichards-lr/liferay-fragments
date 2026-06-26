@@ -38,7 +38,7 @@ fi
 # 2. Synchronize fragment-build.json dependencies based on code usage
 echo "Syncing fragment-build.json dependencies..."
 node scripts/initialize-build-config.js
-git add "**/fragment-build.json" 2>/dev/null || true
+git add "**/test/fragment-build.json" 2>/dev/null || true
 
 # 2.5 Generate Visual Gallery
 echo "Syncing visual gallery documentation..."
