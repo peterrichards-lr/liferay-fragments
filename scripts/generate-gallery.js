@@ -91,12 +91,7 @@ function generateGallery() {
       return;
     }
 
-    markdown += `## ${collectionMetadata.name}\n\n`;
-
-    if (collectionMetadata.description) {
-      markdown += `${collectionMetadata.description}\n\n`;
-    }
-
+    const validFragments = [];
     fragments.sort().forEach((fragFile) => {
       const fragDir = path.dirname(fragFile); // main directory
       const fragRoot = path.dirname(fragDir); // fragment root folder
@@ -120,7 +115,18 @@ function generateGallery() {
           }
         } catch (e) {}
       }
+      validFragments.push({ fragFile, fragRoot, fragMetadata, testData });
+    });
 
+    if (validFragments.length === 0) return;
+
+    markdown += `## ${collectionMetadata.name}\n\n`;
+
+    if (collectionMetadata.description) {
+      markdown += `${collectionMetadata.description}\n\n`;
+    }
+
+    validFragments.forEach(({ fragFile, fragRoot, fragMetadata, testData }) => {
       const fragSafeName = path.basename(fragRoot);
 
       markdown += `### ${fragMetadata.name}\n\n`;
@@ -283,9 +289,9 @@ function generateGallery() {
       let fallbackPath = '';
       if (fs.existsSync(manualImg)) {
         fallbackPath = `./images/${fragSafeName}.png`;
-      } else if (fs.existsSync(path.join(fragDir, 'screenshot.png'))) {
+      } else if (fs.existsSync(path.join(fragRoot, 'screenshot.png'))) {
         fallbackPath = path
-          .relative(DOCS_DIR, path.join(fragDir, 'screenshot.png'))
+          .relative(DOCS_DIR, path.join(fragRoot, 'screenshot.png'))
           .replace(/\\/g, '/');
       }
 

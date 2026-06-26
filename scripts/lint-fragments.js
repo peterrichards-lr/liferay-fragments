@@ -553,6 +553,63 @@ fragmentFiles.forEach((file) => {
         checkFieldReferences(f);
         validateFreeMarker(f);
       });
+
+      const testConfigPath = path.join(
+        fragRoot,
+        'test',
+        'test-fragment-config.json'
+      );
+      if (fs.existsSync(testConfigPath)) {
+        try {
+          const testConfigJson = JSON.parse(
+            fs.readFileSync(testConfigPath, 'utf8')
+          );
+          if (configJson.fieldSets) {
+            const allFields = configJson.fieldSets.flatMap(
+              (fs) => fs.fields || []
+            );
+            Object.keys(testConfigJson).forEach((key) => {
+              const fieldDef = allFields.find((f) => f.name === key);
+              if (!fieldDef) {
+                logError(
+                  fragmentName,
+                  `test-fragment-config.json contains key '${key}' which is not defined in configuration.json`
+                );
+              } else {
+                const val = testConfigJson[key];
+                if (
+                  fieldDef.dataType === 'number' ||
+                  fieldDef.dataType === 'int'
+                ) {
+                  if (isNaN(Number(val))) {
+                    logWarn(
+                      fragmentName,
+                      `test-fragment-config.json key '${key}' expects a number but got '${val}'`
+                    );
+                  }
+                } else if (fieldDef.dataType === 'boolean') {
+                  if (
+                    val !== true &&
+                    val !== false &&
+                    val !== 'true' &&
+                    val !== 'false'
+                  ) {
+                    logWarn(
+                      fragmentName,
+                      `test-fragment-config.json key '${key}' expects a boolean but got '${val}'`
+                    );
+                  }
+                }
+              }
+            });
+          }
+        } catch (e) {
+          logError(
+            fragmentName,
+            `Could not parse test-fragment-config.json: ${e.message}`
+          );
+        }
+      }
     } catch (e) {
       logError(
         fragmentName,

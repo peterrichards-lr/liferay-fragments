@@ -78,20 +78,19 @@ A lifestyle-focused design system with a scoped container architecture, high-fid
 
 **Snapshot Prerequisites / Layout Components:**
 
-- Fragment: `HTML (System Component)`
-- Fragment: `account-selector`
+- Fragment: `purchased-products`
 
 #### Original Design
 
 <img src="./images/dynamic-badge-overlay.png" width="350" alt="Original Image">
 
-#### Desktop (1920px) <br>🟢 **Passed**
+#### Desktop (1920px) <br>⚠️ **Blank/Solid Color**
 
 <img src="./images/live/commerce-dynamic-badge-overlay-desktop.png" width="100%" alt="Desktop">
 
-|                                                Tablet (768px)                                                 |                                                Mobile (375px)                                                 |
-| :-----------------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------------: |
-| <img src="./images/live/commerce-dynamic-badge-overlay-tablet.png" width="350" alt="Tablet"><br>🟢 **Passed** | <img src="./images/live/commerce-dynamic-badge-overlay-mobile.png" width="175" alt="Mobile"><br>🟢 **Passed** |
+|                                                      Tablet (768px)                                                      |                                                      Mobile (375px)                                                      |
+| :----------------------------------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------------------------------: |
+| <img src="./images/live/commerce-dynamic-badge-overlay-tablet.png" width="350" alt="Tablet"><br>⚠️ **Blank/Solid Color** | <img src="./images/live/commerce-dynamic-badge-overlay-mobile.png" width="175" alt="Mobile"><br>⚠️ **Blank/Solid Color** |
 
 ---
 
@@ -180,27 +179,25 @@ A lifestyle-focused design system with a scoped container architecture, high-fid
 
 ---
 
-## Date Display
-
 ## Finance
 
 ### Loan Application Calculator
 
 **Snapshot Prerequisites / Layout Components:**
 
-- Fragment: `HTML (System Component)`
+- FormFragment: `range`
 
 #### Original Design
 
 <img src="./images/loan-application-calculator.png" width="350" alt="Original Image">
 
-#### Desktop (1920px) <br>🟢 **Passed**
+#### Desktop (1920px) <br>❌ **Diff: 48.4%**<br>[View Diff](./images/diffs/finance-loan-application-calculator-desktop-diff.png)
 
 <img src="./images/live/finance-loan-application-calculator-desktop.png" width="100%" alt="Desktop">
 
-|                                                   Tablet (768px)                                                   |                                                   Mobile (375px)                                                   |
-| :----------------------------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------------------------: |
-| <img src="./images/live/finance-loan-application-calculator-tablet.png" width="350" alt="Tablet"><br>🟢 **Passed** | <img src="./images/live/finance-loan-application-calculator-mobile.png" width="175" alt="Mobile"><br>🟢 **Passed** |
+|                                                                                               Tablet (768px)                                                                                               |                                                                                               Mobile (375px)                                                                                               |
+| :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: |
+| <img src="./images/live/finance-loan-application-calculator-tablet.png" width="350" alt="Tablet"><br>❌ **Diff: 65.0%**<br>[View Diff](./images/diffs/finance-loan-application-calculator-tablet-diff.png) | <img src="./images/live/finance-loan-application-calculator-mobile.png" width="175" alt="Mobile"><br>❌ **Diff: 84.6%**<br>[View Diff](./images/diffs/finance-loan-application-calculator-mobile-diff.png) |
 
 ---
 
@@ -308,13 +305,13 @@ A lifestyle-focused design system with a scoped container architecture, high-fid
 
 ### Image Choice
 
-#### Desktop (1920px) <br>🟢 **Passed**
+#### Desktop (1920px) <br>❌ **Diff: 22.4%**<br>[View Diff](./images/diffs/forms-fragments--image-choice-desktop-diff.png)
 
 <img src="./images/live/forms-fragments--image-choice-desktop.png" width="100%" alt="Desktop">
 
-|                                                Tablet (768px)                                                |                                                Mobile (375px)                                                |
-| :----------------------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------------------: |
-| <img src="./images/live/forms-fragments--image-choice-tablet.png" width="350" alt="Tablet"><br>🟢 **Passed** | <img src="./images/live/forms-fragments--image-choice-mobile.png" width="175" alt="Mobile"><br>🟢 **Passed** |
+|                                                                                         Tablet (768px)                                                                                         |                                                                                         Mobile (375px)                                                                                         |
+| :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: |
+| <img src="./images/live/forms-fragments--image-choice-tablet.png" width="350" alt="Tablet"><br>❌ **Diff: 43.2%**<br>[View Diff](./images/diffs/forms-fragments--image-choice-tablet-diff.png) | <img src="./images/live/forms-fragments--image-choice-mobile.png" width="175" alt="Mobile"><br>❌ **Diff: 67.2%**<br>[View Diff](./images/diffs/forms-fragments--image-choice-mobile-diff.png) |
 
 ---
 
@@ -572,19 +569,13 @@ Visually appealing fragments generated by Gemini.
 
 ### Interactive Wizard
 
-**Snapshot Prerequisites / Layout Components:**
-
-- Fragment: `signature-pad`
-- Fragment: `submit-button`
-- Fragment: `user-field`
-
 #### Desktop (1920px) <br>🟢 **Passed**
 
 <img src="./images/live/gemini-generated-interactive-wizard-desktop.png" width="100%" alt="Desktop">
 
-|                                                   Tablet (768px)                                                   |                                                   Mobile (375px)                                                   |
-| :----------------------------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------------------------: |
-| <img src="./images/live/gemini-generated-interactive-wizard-tablet.png" width="350" alt="Tablet"><br>🟢 **Passed** | <img src="./images/live/gemini-generated-interactive-wizard-mobile.png" width="175" alt="Mobile"><br>🟢 **Passed** |
+|                                                   Tablet (768px)                                                   |                                                                                              Mobile (375px)                                                                                               |
+| :----------------------------------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: |
+| <img src="./images/live/gemini-generated-interactive-wizard-tablet.png" width="350" alt="Tablet"><br>🟢 **Passed** | <img src="./images/live/gemini-generated-interactive-wizard-mobile.png" width="175" alt="Mobile"><br>❌ **Diff: 1.2%**<br>[View Diff](./images/diffs/gemini-generated-interactive-wizard-mobile-diff.png) |
 
 ---
 
@@ -861,9 +852,9 @@ Prominent visuals, such as videos or banners, that capture attention and define 
 
 <img src="./images/live/layout-components-secondary-card-desktop.png" width="100%" alt="Desktop">
 
-|                                                 Tablet (768px)                                                  |                                                 Mobile (375px)                                                  |
-| :-------------------------------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------------------------: |
-| <img src="./images/live/layout-components-secondary-card-tablet.png" width="350" alt="Tablet"><br>🟢 **Passed** | <img src="./images/live/layout-components-secondary-card-mobile.png" width="175" alt="Mobile"><br>🟢 **Passed** |
+|                                                                                           Tablet (768px)                                                                                            |                                                                                           Mobile (375px)                                                                                            |
+| :-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: |
+| <img src="./images/live/layout-components-secondary-card-tablet.png" width="350" alt="Tablet"><br>❌ **Diff: 1.0%**<br>[View Diff](./images/diffs/layout-components-secondary-card-tablet-diff.png) | <img src="./images/live/layout-components-secondary-card-mobile.png" width="175" alt="Mobile"><br>❌ **Diff: 3.0%**<br>[View Diff](./images/diffs/layout-components-secondary-card-mobile-diff.png) |
 
 ---
 
@@ -1127,8 +1118,6 @@ A collection of high-fidelity fragments for constructing modern corporate intran
 
 ---
 
-## Profile
-
 ## Pulse
 
 ### Pulse Button
@@ -1140,28 +1129,6 @@ A collection of high-fidelity fragments for constructing modern corporate intran
 |                                          Tablet (768px)                                           |                                          Mobile (375px)                                           |
 | :-----------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------: |
 | <img src="./images/live/pulse-pulse-button-tablet.png" width="350" alt="Tablet"><br>🟢 **Passed** | <img src="./images/live/pulse-pulse-button-mobile.png" width="175" alt="Mobile"><br>🟢 **Passed** |
-
----
-
-## Remote App Utilities
-
-### Liferay Iframer
-
-**Snapshot Prerequisites / Layout Components:**
-
-- Fragment: `HTML (System Component)`
-
-#### Original Design
-
-<img src="./images/liferay-iframer.png" width="350" alt="Original Image">
-
-#### Desktop (1920px) <br>⚠️ **Blank/Solid Color**
-
-<img src="./images/live/remote-app-utilities-liferay-iframer-desktop.png" width="100%" alt="Desktop">
-
-|                                                         Tablet (768px)                                                         |                                                   Mobile (375px)                                                    |
-| :----------------------------------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------------------: |
-| <img src="./images/live/remote-app-utilities-liferay-iframer-tablet.png" width="350" alt="Tablet"><br>⚠️ **Blank/Solid Color** | <img src="./images/live/remote-app-utilities-liferay-iframer-mobile.png" width="175" alt="Mobile"><br>🟢 **Passed** |
 
 ---
 
@@ -1202,8 +1169,6 @@ A collection of high-fidelity fragments for constructing modern corporate intran
 | <img src="./images/live/responsive-menus-responsive-side-menu-tablet.png" width="350" alt="Tablet"><br>🟢 **Passed** | <img src="./images/live/responsive-menus-responsive-side-menu-mobile.png" width="175" alt="Mobile"><br>🟢 **Passed** |
 
 ---
-
-## Tracker
 
 ## User Account
 

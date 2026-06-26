@@ -1998,5 +1998,60 @@
     "type": "article",
     "id": 40858,
     "erc": "MAP-MARKER-ARTICLE-02"
+  },
+  {
+    "type": "document",
+    "id": 39773,
+    "erc": "PARALLAX-HERO-BG"
+  },
+  {
+    "type": "document",
+    "id": 39944,
+    "erc": "SLIDE-IMG-01"
+  },
+  {
+    "type": "document",
+    "id": 39956,
+    "erc": "SLIDE-IMG-02"
+  },
+  {
+    "type": "document",
+    "id": 39968,
+    "erc": "SLIDE-IMG-03"
+  },
+  {
+    "type": "structure",
+    "id": "39978",
+    "erc": "SLIDER-SLIDE-STRUCT-V3"
+  },
+  {
+    "type": "article",
+    "id": 39986,
+    "erc": "SLIDE-ARTICLE-01"
+  },
+  {
+    "type": "article",
+    "id": 39996,
+    "erc": "SLIDE-ARTICLE-02"
+  },
+  {
+    "type": "article",
+    "id": 40006,
+    "erc": "SLIDE-ARTICLE-03"
+  },
+  {
+    "type": "structure",
+    "id": "40856",
+    "erc": "MAP-MARKER-STRUCT-V1"
+  },
+  {
+    "type": "article",
+    "id": 40862,
+    "erc": "MAP-MARKER-ARTICLE-01"
+  },
+  {
+    "type": "article",
+    "id": 40872,
+    "erc": "MAP-MARKER-ARTICLE-02"
   }
 ]

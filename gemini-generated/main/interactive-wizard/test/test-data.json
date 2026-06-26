@@ -2,26 +2,69 @@
   "pageLayout": {
     "type": "Fragment",
     "key": "interactive-wizard",
-    "children": [
+    "dropZones": [
       {
-        "type": "Fragment",
-        "key": "user-field",
-        "fragmentConfig": {
-          "label": "Full Name",
-          "fieldName": "name"
-        }
+        "id": "step-1",
+        "children": [
+          {
+            "type": "Fragment",
+            "key": "rich-text",
+            "fragmentFields": [
+              {
+                "id": "text",
+                "value": {
+                  "text": {
+                    "value_i18n": {
+                      "en_US": "<div class=\"text-center\"><h3 class=\"mt-3\">Step 1</h3><p>Welcome to the wizard. Please review the terms.</p></div>"
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        ]
       },
       {
-        "type": "Fragment",
-        "key": "signature-pad",
-        "fragmentConfig": {
-          "label": "Signature",
-          "fieldName": "signature"
-        }
+        "id": "step-2",
+        "children": [
+          {
+            "type": "Fragment",
+            "key": "rich-text",
+            "fragmentFields": [
+              {
+                "id": "text",
+                "value": {
+                  "text": {
+                    "value_i18n": {
+                      "en_US": "<div class=\"text-center\"><h3 class=\"mt-3\">Step 2</h3><p>Configure your options here.</p></div>"
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        ]
       },
       {
-        "type": "Fragment",
-        "key": "submit-button"
+        "id": "step-3",
+        "children": [
+          {
+            "type": "Fragment",
+            "key": "rich-text",
+            "fragmentFields": [
+              {
+                "id": "text",
+                "value": {
+                  "text": {
+                    "value_i18n": {
+                      "en_US": "<div class=\"text-center\"><h3 class=\"mt-3\">Step 3</h3><p>You are almost done. Click finish to proceed.</p></div>"
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        ]
       }
     ]
   }
