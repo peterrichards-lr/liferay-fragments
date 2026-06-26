@@ -3,7 +3,7 @@
     {
       "fields": [
         {
-          "dataType": "number",
+          "dataType": "int",
           "defaultValue": "8",
           "label": "lfr.form-fragments.number-of-options",
           "description": "lfr.form-fragments.number-of-options",

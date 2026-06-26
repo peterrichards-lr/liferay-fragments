@@ -1859,7 +1859,8 @@ async function globalSetup(config) {
     const fragmentName = fragmentData.name;
 
     // Liferay fragment keys are typically derived from the folder name or explicitly defined.
-    let baseFragmentKey = fragmentData.key || path.basename(path.dirname(file));
+    let baseFragmentKey =
+      fragmentData.key || path.basename(path.dirname(path.dirname(file)));
 
     // Find the nearest collection.json
     let currentDir = path.dirname(file);
@@ -2339,18 +2340,28 @@ async function globalSetup(config) {
           Object.keys(seededConfigOverrides).forEach((key) => {
             const val = seededConfigOverrides[key];
             if (typeof val === 'string') {
+              let replacedStr = val;
               if (assetMap[val]) {
-                seededConfigOverrides[key] = assetMap[val].toString();
-              } else if (val.includes('/o/c/')) {
-                let cleanPath = val.trim().replace(/\/$/, '');
+                replacedStr = assetMap[val].toString();
+              } else {
+                Object.keys(assetMap).forEach((assetKey) => {
+                  if (replacedStr.includes(assetKey)) {
+                    replacedStr = replacedStr
+                      .split(assetKey)
+                      .join(assetMap[assetKey].toString());
+                  }
+                });
+              }
+              if (replacedStr.includes('/o/c/')) {
+                let cleanPath = replacedStr.trim().replace(/\/$/, '');
                 const def = objectDefinitions.find(
                   (d) => d.restContextPath === cleanPath
                 );
                 if (def && def.scope === 'site') {
-                  seededConfigOverrides[key] =
-                    `${cleanPath}/scopes/${siteId}${val.endsWith('/') ? '/' : ''}`;
+                  replacedStr = `${cleanPath}/scopes/${siteId}${replacedStr.endsWith('/') ? '/' : ''}`;
                 }
               }
+              seededConfigOverrides[key] = replacedStr;
             }
           });
         }

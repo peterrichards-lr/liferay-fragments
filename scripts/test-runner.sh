@@ -15,6 +15,12 @@ export PATH="$PATH:/c/Windows/System32"
 export PATH="$PATH:/c/Users/prichards/AppData/Local/Microsoft/WinGet/Packages/jqlang.jq_Microsoft.Winget.Source_8wekyb3d8bbwe"
 export PATH="$PATH:/c/Users/prichards/AppData/Local/Microsoft/WinGet/Links"
 
+# Wrapper function to enforce clean, color-free plain-text outputs for all LDM commands
+ldm() {
+    command ldm "$@" --no-color --no-unicode
+}
+
+
 
 # Estimate variables (ballpark seconds)
 EST_BUILD_EXISTING_SKIP_DEPLOY=5
@@ -527,9 +533,9 @@ else
         # 1. Check collections
         for coll_dir in *; do
             [ -d "$coll_dir" ] || continue
-            [ -f "$coll_dir/collection.json" ] || continue
+            [ -f "$coll_dir/main/collection.json" ] || continue
             
-            COLL_NAME=$(jq -r '.name // empty' "$coll_dir/collection.json" 2>/dev/null || echo "")
+            COLL_NAME=$(jq -r '.name // empty' "$coll_dir/main/collection.json" 2>/dev/null || echo "")
             if matches_filter "$coll_dir" || matches_filter "$COLL_NAME"; then
                 DEPLOY_LIST+=("$coll_dir")
                 continue
@@ -537,13 +543,13 @@ else
             
             # Check fragments inside collection
             MATCHED=false
-            if [ -d "$coll_dir/fragments" ]; then
-                for frag_dir in "$coll_dir/fragments"/*; do
+            if [ -d "$coll_dir/main" ]; then
+                for frag_dir in "$coll_dir/main"/*; do
                     [ -d "$frag_dir" ] || continue
-                    [ -f "$frag_dir/fragment.json" ] || continue
+                    [ -f "$frag_dir/main/fragment.json" ] || continue
                     FRAG_FOLDER=$(basename "$frag_dir")
-                    FRAG_NAME=$(jq -r '.name // empty' "$frag_dir/fragment.json" 2>/dev/null || echo "")
-                    FRAG_KEY=$(jq -r '.key // empty' "$frag_dir/fragment.json" 2>/dev/null || echo "")
+                    FRAG_NAME=$(jq -r '.name // empty' "$frag_dir/main/fragment.json" 2>/dev/null || echo "")
+                    FRAG_KEY=$(jq -r '.key // empty' "$frag_dir/main/fragment.json" 2>/dev/null || echo "")
                     if matches_filter "$FRAG_FOLDER" || matches_filter "$FRAG_NAME" || matches_filter "$FRAG_KEY"; then
                         MATCHED=true
                         break
@@ -558,10 +564,10 @@ else
         # 2. Check root fragments (not in a collection)
         for frag_dir in *; do
             [ -d "$frag_dir" ] || continue
-            [ -f "$frag_dir/fragment.json" ] || continue
+            [ -f "$frag_dir/main/fragment.json" ] || continue
             
-            FRAG_NAME=$(jq -r '.name // empty' "$frag_dir/fragment.json" 2>/dev/null || echo "")
-            FRAG_KEY=$(jq -r '.key // empty' "$frag_dir/fragment.json" 2>/dev/null || echo "")
+            FRAG_NAME=$(jq -r '.name // empty' "$frag_dir/main/fragment.json" 2>/dev/null || echo "")
+            FRAG_KEY=$(jq -r '.key // empty' "$frag_dir/main/fragment.json" 2>/dev/null || echo "")
             if matches_filter "$frag_dir" || matches_filter "$FRAG_NAME" || matches_filter "$FRAG_KEY"; then
                 DEPLOY_LIST+=("$frag_dir")
             fi
