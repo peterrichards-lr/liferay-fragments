@@ -14,7 +14,7 @@ const TEST_RESULTS_DIR = path.join(DOCS_DIR, 'test-results');
  */
 function generateGallery() {
   // 1. Find all collections
-  const collections = globSync('*/collection.json');
+  const collections = globSync('*/main/collection.json');
 
   // Ensure live images directory exists
   if (!fs.existsSync(LIVE_IMAGES_DIR)) {
@@ -79,7 +79,7 @@ function generateGallery() {
     );
 
     // Find fragments in this collection
-    const fragments = globSync(`${collectionDir}/fragments/*/fragment.json`);
+    const fragments = globSync(`${collectionDir}/*/main/fragment.json`);
 
     if (fragments.length === 0) return;
 
@@ -95,7 +95,8 @@ function generateGallery() {
     }
 
     fragments.sort().forEach((fragFile) => {
-      const fragDir = path.dirname(fragFile);
+      const fragDir = path.dirname(fragFile); // main directory
+      const fragRoot = path.dirname(fragDir); // fragment root folder
       const fragMetadata = JSON.parse(fs.readFileSync(fragFile, 'utf8'));
       const isDeprecated =
         fragMetadata.name &&
@@ -106,7 +107,7 @@ function generateGallery() {
       }
 
       // Skip fragments that are explicitly excluded from the gallery (e.g. utility containers)
-      const testDataFile = path.join(fragDir, 'test-data.json');
+      const testDataFile = path.join(fragRoot, 'test', 'test-data.json');
       let testData = null;
       if (fs.existsSync(testDataFile)) {
         try {
@@ -117,7 +118,7 @@ function generateGallery() {
         } catch (e) {}
       }
 
-      const fragSafeName = path.basename(fragDir);
+      const fragSafeName = path.basename(fragRoot);
 
       markdown += `### ${fragMetadata.name}\n\n`;
 

@@ -143,7 +143,7 @@ try {
 } catch (e) {}
 
 // 1. Find all fragments
-const fragmentFiles = globSync('**/fragment.json', {
+const fragmentFiles = globSync('**/main/fragment.json', {
   ignore: [
     'node_modules/**',
     'temp_extract/**',
@@ -157,9 +157,66 @@ audit.total = fragmentFiles.length;
 
 console.log(`Starting audit of ${audit.total} fragments...\n`);
 
+// Validate collection directory structures (must only contain main/ and test/)
+const collectionsList = globSync('**/main/collection.json', {
+  ignore: [
+    'node_modules/**',
+    'temp_extract/**',
+    'temp_inspect/**',
+    'temp_inspect_zip/**',
+    'temp_extract_zip/**',
+    ...ldmIgnores,
+  ],
+});
+
+collectionsList.forEach((file) => {
+  const mainDir = path.dirname(file);
+  const collRoot = path.dirname(mainDir);
+  const collName = path.basename(collRoot);
+
+  try {
+    const files = fs.readdirSync(collRoot);
+    files.forEach((f) => {
+      if (f === '.DS_Store') return;
+      if (f !== 'main' && f !== 'test') {
+        logError(
+          collName,
+          `Illegal file or directory found in collection root: "${f}". Collection roots must only contain "main/" and "test/" directories.`
+        );
+      }
+    });
+  } catch (e) {
+    logError(
+      collName,
+      `Failed to validate collection directory structure: ${e.message}`
+    );
+  }
+});
+
 fragmentFiles.forEach((file) => {
-  const dir = path.dirname(file);
-  const fragmentName = path.basename(dir);
+  const dir = path.dirname(file); // main directory
+  const fragRoot = path.dirname(dir); // fragment root folder
+  const fragmentName = path.basename(fragRoot);
+
+  // Validate fragment directory structure (must only contain main/ and test/)
+  try {
+    const files = fs.readdirSync(fragRoot);
+    files.forEach((f) => {
+      if (f === '.DS_Store') return;
+      if (f !== 'main' && f !== 'test') {
+        logError(
+          fragmentName,
+          `Illegal file or directory found in fragment root: "${f}". Fragment roots must only contain "main/" and "test/" directories.`
+        );
+      }
+    });
+  } catch (e) {
+    logError(
+      fragmentName,
+      `Failed to validate directory structure: ${e.message}`
+    );
+  }
+
   let fragJson;
 
   try {
@@ -176,7 +233,7 @@ fragmentFiles.forEach((file) => {
       const fragSafeName = fragJson.name
         .replace(/[^a-z0-9]+/gi, '-')
         .toLowerCase();
-      const folderName = path.basename(dir);
+      const folderName = path.basename(fragRoot);
       const folderSafeName = folderName
         .replace(/[^a-z0-9]+/gi, '-')
         .toLowerCase();
@@ -523,7 +580,7 @@ fragmentFiles.forEach((file) => {
     }
   }
 
-  const testDataPath = path.join(dir, 'test-data.json');
+  const testDataPath = path.join(fragRoot, 'test', 'test-data.json');
   if (fs.existsSync(testDataPath)) {
     try {
       const testDataJson = JSON.parse(fs.readFileSync(testDataPath, 'utf8'));

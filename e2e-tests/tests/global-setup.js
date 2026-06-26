@@ -16,7 +16,7 @@ function convertConfigToFieldValues(config, fragmentDir) {
   let fieldsConfig = {};
   if (fragmentDir) {
     try {
-      const configPath = path.join(fragmentDir, 'configuration.json');
+      const configPath = path.join(fragmentDir, 'main/configuration.json');
       if (fs.existsSync(configPath)) {
         const configJson = JSON.parse(fs.readFileSync(configPath, 'utf8'));
         if (configJson.fieldSets) {
@@ -942,7 +942,7 @@ async function globalSetup(config) {
     ]);
 
     // projectRoot is defined at top level
-    const testDataFiles = globSync('**/test-data.json', {
+    const testDataFiles = globSync('**/test/test-data.json', {
       cwd: projectRoot,
       absolute: true,
       ignore: [
@@ -966,7 +966,8 @@ async function globalSetup(config) {
         filterRegex = new RegExp(escaped, 'i');
       }
       filteredTestDataFiles = testDataFiles.filter((file) => {
-        const parentDir = path.dirname(file);
+        const testDir = path.dirname(file);
+        const parentDir = path.dirname(testDir); // fragment root folder
         const fragmentFolder = path.basename(parentDir);
         let collectionFolder = '';
         let currentDir = parentDir;
@@ -1439,7 +1440,7 @@ async function globalSetup(config) {
   }
 
   // Build a comprehensive map of all fragment keys to their directory paths (unfiltered)
-  const allFragmentFiles = globSync('**/fragment.json', {
+  const allFragmentFiles = globSync('**/main/fragment.json', {
     cwd: projectRoot,
     absolute: true,
     ignore: [
@@ -1454,8 +1455,8 @@ async function globalSetup(config) {
     try {
       const fragmentData = JSON.parse(fs.readFileSync(file, 'utf8'));
       const baseFragmentKey =
-        fragmentData.key || path.basename(path.dirname(file));
-      fragmentKeyToDir[baseFragmentKey] = path.dirname(file);
+        fragmentData.key || path.basename(path.dirname(path.dirname(file)));
+      fragmentKeyToDir[baseFragmentKey] = path.dirname(path.dirname(file));
     } catch (e) {}
   }
 
@@ -1480,7 +1481,7 @@ async function globalSetup(config) {
     }
   } catch (e) {}
 
-  let fragmentFiles = globSync('**/fragment.json', {
+  let fragmentFiles = globSync('**/main/fragment.json', {
     cwd: projectRoot,
     absolute: true,
     ignore: [
@@ -1507,7 +1508,7 @@ async function globalSetup(config) {
       const fragmentData = JSON.parse(fs.readFileSync(file, 'utf8'));
       const fragmentName = fragmentData.name || '';
       const baseFragmentKey =
-        fragmentData.key || path.basename(path.dirname(file));
+        fragmentData.key || path.basename(path.dirname(path.dirname(file)));
 
       let currentDir = path.dirname(file);
       let collectionName = '';
@@ -1901,7 +1902,11 @@ async function globalSetup(config) {
     }
 
     // ----- SEED TEST DATA IF PRESENT -----
-    const testDataFile = path.join(path.dirname(file), 'test-data.json');
+    const testDataFile = path.join(
+      path.dirname(path.dirname(file)),
+      'test',
+      'test-data.json'
+    );
     let seededConfigOverrides = {};
     let testData = null;
     const assetMap = { ...commerceAssetMap }; // Maps ERC -> Liferay ID
@@ -2529,7 +2534,7 @@ async function globalSetup(config) {
       const parentDir = fragmentKeyToDir ? fragmentKeyToDir[fragmentKey] : null;
       if (parentDir) {
         try {
-          const fragJsonPath = path.join(parentDir, 'fragment.json');
+          const fragJsonPath = path.join(parentDir, 'main', 'fragment.json');
           if (fs.existsSync(fragJsonPath)) {
             const fragJson = JSON.parse(fs.readFileSync(fragJsonPath, 'utf8'));
             if (fragJson.type === 'input') {

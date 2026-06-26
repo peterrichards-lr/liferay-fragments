@@ -140,7 +140,7 @@ fi
 
 # Helper to check if a fragment is deprecated
 is_deprecated() {
-    local FRAG_JSON="$1/fragment.json"
+    local FRAG_JSON="$1/main/fragment.json"
     if [ -f "$FRAG_JSON" ]; then
         if jq -e '.name | contains("(Deprecated)")' "$FRAG_JSON" > /dev/null; then
             return 0
@@ -149,11 +149,20 @@ is_deprecated() {
     return 1
 }
 
+# Helper to flatten fragment structure from main/ up to parent level and remove main and test directories
+flatten_fragment() {
+    local FRAG_DIR=$1
+    if [ -d "$FRAG_DIR/main" ]; then
+        mv "$FRAG_DIR/main"/* "$FRAG_DIR/" 2>/dev/null || true
+        rm -rf "$FRAG_DIR/main" "$FRAG_DIR/test"
+    fi
+}
+
 # Helper to handle shared logic based on fragment-build.json and collection-build.json
 handle_shared_resources() {
     local FRAG_DIR=$1
     local COLLECTION_DIR=$2
-    local FRAG_BUILD_FILE="$FRAG_DIR/fragment-build.json"
+    local FRAG_BUILD_FILE="$FRAG_DIR/test/fragment-build.json"
     local COLL_BUILD_FILE="$COLLECTION_DIR/collection-build.json"
     local SHARED_LOGIC_ROOT="shared-resources"
 
@@ -180,16 +189,16 @@ handle_shared_resources() {
                 if [[ "$RES" == *.js ]]; then
                     log_debug "Concatenating shared logic: $RES"
                     # Prepend shared JS to index.js
-                    if [ -f "$FRAG_DIR/index.js" ]; then
-                        cat "$SHARED_LOGIC_ROOT/$RES" "$FRAG_DIR/index.js" > "$FRAG_DIR/index.js.tmp" && mv "$FRAG_DIR/index.js.tmp" "$FRAG_DIR/index.js"
+                    if [ -f "$FRAG_DIR/main/index.js" ]; then
+                        cat "$SHARED_LOGIC_ROOT/$RES" "$FRAG_DIR/main/index.js" > "$FRAG_DIR/main/index.js.tmp" && mv "$FRAG_DIR/main/index.js.tmp" "$FRAG_DIR/main/index.js"
                     else
-                        cp "$SHARED_LOGIC_ROOT/$RES" "$FRAG_DIR/index.js"
+                        cp "$SHARED_LOGIC_ROOT/$RES" "$FRAG_DIR/main/index.js"
                     fi
                 else
                     log_debug "Including shared resource: $RES"
                     # For non-JS files, place in a resources folder
-                    mkdir -p "$FRAG_DIR/resources"
-                    cp "$SHARED_LOGIC_ROOT/$RES" "$FRAG_DIR/resources/$RES"
+                    mkdir -p "$FRAG_DIR/main/resources"
+                    cp "$SHARED_LOGIC_ROOT/$RES" "$FRAG_DIR/main/resources/$RES"
                 fi
             else
                 log_warn "Shared logic not found: $SHARED_LOGIC_ROOT/$RES"
@@ -203,8 +212,8 @@ handle_shared_resources() {
     # 4. Perform theme strategy validation
     log_debug "Theme Strategy: $STRATEGY"
     if [[ "$STRATEGY" == "generic" ]]; then
-        if [ -f "$FRAG_DIR/index.css" ]; then
-            if grep -qE "#[0-9a-fA-F]{3,6}" "$FRAG_DIR/index.css" | grep -qv "var("; then
+        if [ -f "$FRAG_DIR/main/index.css" ]; then
+            if grep -qE "#[0-9a-fA-F]{3,6}" "$FRAG_DIR/main/index.css" | grep -qv "var("; then
                 log_warn "Generic fragment $(basename "$FRAG_DIR") contains hardcoded colors. Use safe tokens."
             fi
         fi
@@ -212,8 +221,8 @@ handle_shared_resources() {
 }
 
 # 2. Gather all available root items, sorted alphabetically
-ALL_COLLECTIONS=$(find . -type d -maxdepth 1 -exec test -e '{}'/collection.json \; -print | sed 's|^\./||' | sort)
-ALL_FRAGMENTS=$(find . -type d -maxdepth 1 -exec test -e '{}'/fragment.json \; -print | sed 's|^\./||' | sort)
+ALL_COLLECTIONS=$(find . -type d -maxdepth 1 -exec test -e '{}'/main/collection.json \; -print | sed 's|^\./||' | sort)
+ALL_FRAGMENTS=$(find . -type d -maxdepth 1 -exec test -e '{}'/main/fragment.json \; -print | sed 's|^\./||' | sort)
 
 # 3. Filter lists based on TARGET_ITEMS if provided
 COLLECTIONS=()
@@ -354,9 +363,10 @@ if [ "$BUILD_FRAGMENTS" = true ]; then
        handle_shared_resources "$TEMP_FRAG/$FRAGMENT_NAME" "."
        
        # Convert to FTL if it was HTML but contains shared resources (Rule 11)
-       if [ -f "$TEMP_FRAG/$FRAGMENT_NAME/index.ftl" ]; then
-           rm -f "$TEMP_FRAG/$FRAGMENT_NAME/index.html"
+       if [ -f "$TEMP_FRAG/$FRAGMENT_NAME/main/index.ftl" ]; then
+           rm -f "$TEMP_FRAG/$FRAGMENT_NAME/main/index.html"
        fi
+       flatten_fragment "$TEMP_FRAG/$FRAGMENT_NAME"
 
        # Ensure descriptor at the ROOT of the zip (sibling to fragment folder)
        ensure_descriptor "$TEMP_FRAG" "$FRAGMENT_NAME"
@@ -379,7 +389,7 @@ for COLLECTION_NAME in "${COLLECTIONS[@]}"; do
    
    # --- A. Batch Language ---
    if [ "$BUILD_LANGUAGE" = true ]; then
-       PROP_FILE="$COLLECTION_NAME/Language_en_US.properties"
+        PROP_FILE="$COLLECTION_NAME/main/Language_en_US.properties"
        if [ -f "$PROP_FILE" ]; then
            CX_ROOT="temp_cx_${COLLECTION_NAME}"
            mkdir -p "$CX_ROOT/batch" "$CX_ROOT/WEB-INF"
@@ -403,25 +413,20 @@ for COLLECTION_NAME in "${COLLECTIONS[@]}"; do
    if [ "$BUILD_FRAGMENTS" = true ]; then
        TEMP_COLL="temp_build_coll_${COLLECTION_NAME}"
        mkdir -p "$TEMP_COLL/$COLLECTION_NAME"
-       cp -r "$COLLECTION_NAME/." "$TEMP_COLL/$COLLECTION_NAME/"
+       cp -r "$COLLECTION_NAME/main/." "$TEMP_COLL/$COLLECTION_NAME/"
        
        # Recurse through collection fragments
-       for FRAG_PATH in "$TEMP_COLL/$COLLECTION_NAME/fragments"/*; do
+       for FRAG_PATH in "$TEMP_COLL/$COLLECTION_NAME"/*; do
            if [ -d "$FRAG_PATH" ]; then
                handle_shared_resources "$FRAG_PATH" "$TEMP_COLL/$COLLECTION_NAME"
                
                # Safety: Remove index.html if index.ftl exists to avoid double entry zips
-               if [ -f "$FRAG_PATH/index.ftl" ]; then
+               if [ -f "$FRAG_PATH/main/index.ftl" ]; then
                    rm -f "$FRAG_PATH/index.html"
                fi
+               flatten_fragment "$FRAG_PATH"
            fi
        done
-
-       # Flatten structure: Liferay expects fragments to be siblings of collection.json
-       if [ -d "$TEMP_COLL/$COLLECTION_NAME/fragments" ]; then
-           mv "$TEMP_COLL/$COLLECTION_NAME/fragments"/* "$TEMP_COLL/$COLLECTION_NAME/" 2>/dev/null || true
-           rm -rf "$TEMP_COLL/$COLLECTION_NAME/fragments"
-       fi
 
        # Ensure descriptor at the ROOT of the zip (sibling to collection folder)
        ensure_descriptor "$TEMP_COLL" "$COLLECTION_NAME"
@@ -439,11 +444,11 @@ for COLLECTION_NAME in "${COLLECTIONS[@]}"; do
         # --- C. Legacy (pre2025q3) Collection ---
         BUILD_TEMP="temp_legacy_${COLLECTION_NAME}"
         mkdir -p "$BUILD_TEMP/$COLLECTION_NAME"
-        cp -r "$COLLECTION_NAME/." "$BUILD_TEMP/$COLLECTION_NAME/"
+        cp -r "$COLLECTION_NAME/main/." "$BUILD_TEMP/$COLLECTION_NAME/"
         
         if [ "$INCLUDE_DEPRECATED" = false ]; then
             # Remove deprecated fragments from legacy zip too
-            for FRAG_PATH in "$BUILD_TEMP/$COLLECTION_NAME/fragments"/*; do
+            for FRAG_PATH in "$BUILD_TEMP/$COLLECTION_NAME"/*; do
                 if [ -d "$FRAG_PATH" ] && is_deprecated "$FRAG_PATH"; then
                     rm -rf "$FRAG_PATH"
                 fi
@@ -451,21 +456,16 @@ for COLLECTION_NAME in "${COLLECTIONS[@]}"; do
         fi
 
         # Shared resources injection for legacy too (Liferay requirement)
-        for FRAG_PATH in "$BUILD_TEMP/$COLLECTION_NAME/fragments"/*; do
+        for FRAG_PATH in "$BUILD_TEMP/$COLLECTION_NAME"/*; do
             if [ -d "$FRAG_PATH" ]; then
                 handle_shared_resources "$FRAG_PATH" "$BUILD_TEMP/$COLLECTION_NAME"
                 # Safety: Remove index.html if index.ftl exists
-                if [ -f "$FRAG_PATH/index.ftl" ]; then
+                if [ -f "$FRAG_PATH/main/index.ftl" ]; then
                     rm -f "$FRAG_PATH/index.html"
                 fi
+                flatten_fragment "$FRAG_PATH"
             fi
         done
-
-        # Flatten structure: Liferay expects fragments to be siblings of collection.json
-        if [ -d "$BUILD_TEMP/$COLLECTION_NAME/fragments" ]; then
-            mv "$BUILD_TEMP/$COLLECTION_NAME/fragments"/* "$BUILD_TEMP/$COLLECTION_NAME/" 2>/dev/null || true
-            rm -rf "$BUILD_TEMP/$COLLECTION_NAME/fragments"
-        fi
 
         find "$BUILD_TEMP/$COLLECTION_NAME" -name "Language*.properties" -delete
         find "$BUILD_TEMP/$COLLECTION_NAME" -name "client-extension.yaml" -delete
@@ -488,29 +488,27 @@ for COLLECTION_NAME in "${COLLECTIONS[@]}"; do
         # --- D. Legacy (pre2026q1) Collection ---
         BUILD_TEMP_2026="temp_pre2026q1_${COLLECTION_NAME}"
         mkdir -p "$BUILD_TEMP_2026/$COLLECTION_NAME"
-        cp -r "$COLLECTION_NAME/." "$BUILD_TEMP_2026/$COLLECTION_NAME/"
+        cp -r "$COLLECTION_NAME/main/." "$BUILD_TEMP_2026/$COLLECTION_NAME/"
         
         if [ "$INCLUDE_DEPRECATED" = false ]; then
-            for FRAG_PATH in "$BUILD_TEMP_2026/$COLLECTION_NAME/fragments"/*; do
-                if [ -d "$FRAG_PATH" ] && is_deprecated "$FRAG_PATH"; then
-                    rm -rf "$FRAG_PATH"
+            for FRAG_PATH in "$BUILD_TEMP_2026/$COLLECTION_NAME"/*; do
+                if [ -d "$FRAG_PATH" ]; then
+                    if is_deprecated "$FRAG_PATH"; then
+                        rm -rf "$FRAG_PATH"
+                     fi
                 fi
             done
         fi
 
-        for FRAG_PATH in "$BUILD_TEMP_2026/$COLLECTION_NAME/fragments"/*; do
+        for FRAG_PATH in "$BUILD_TEMP_2026/$COLLECTION_NAME"/*; do
             if [ -d "$FRAG_PATH" ]; then
                 handle_shared_resources "$FRAG_PATH" "$BUILD_TEMP_2026/$COLLECTION_NAME"
-                if [ -f "$FRAG_PATH/index.ftl" ]; then
-                    rm -f "$FRAG_PATH/index.html"
+                if [ -f "$FRAG_PATH/main/index.ftl" ]; then
+                    rm -f "$FRAG_PATH/main/index.html"
                 fi
+                flatten_fragment "$FRAG_PATH"
             fi
         done
-
-        if [ -d "$BUILD_TEMP_2026/$COLLECTION_NAME/fragments" ]; then
-            mv "$BUILD_TEMP_2026/$COLLECTION_NAME/fragments"/* "$BUILD_TEMP_2026/$COLLECTION_NAME/" 2>/dev/null || true
-            rm -rf "$BUILD_TEMP_2026/$COLLECTION_NAME/fragments"
-        fi
 
         find "$BUILD_TEMP_2026/$COLLECTION_NAME" -name "Language*.properties" -delete
         find "$BUILD_TEMP_2026/$COLLECTION_NAME" -name "client-extension.yaml" -delete

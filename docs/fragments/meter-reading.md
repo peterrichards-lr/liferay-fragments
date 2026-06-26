@@ -16,7 +16,7 @@ To submit the reading to a Liferay Object or third party system, simply change
 the readingCallback() method. There is a sample implementation included within
 the fragment.
 
-The [Language.properties](../../meter-reading/Language_en_US.properties) file
+The [Language.properties](../../meter-reading/main/Language_en_US.properties) file
 can be imported to give more help in the Page Editor view.
 
 The JavaScript will not execute when the fragment is viewed in either the
