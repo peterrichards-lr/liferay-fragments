@@ -38,21 +38,24 @@
           "description": "lfr.objects.use-button-text-description",
           "label": "lfr.objects.use-button-text",
           "name": "useButtonText",
-          "type": "checkbox"
+          "type": "checkbox",
+          "dataType": "boolean"
         },
         {
           "defaultValue": false,
           "description": "lfr.objects.use-prefix-suffix-description",
           "label": "lfr.objects.use-prefix-suffix",
           "name": "usePrefixAndSuffix",
-          "type": "checkbox"
+          "type": "checkbox",
+          "dataType": "boolean"
         },
         {
           "defaultValue": true,
           "description": "lfr.objects.add-space-description",
           "label": "lfr.objects.add-space",
           "name": "addSpace",
-          "type": "checkbox"
+          "type": "checkbox",
+          "dataType": "boolean"
         },
         {
           "dataType": "string",

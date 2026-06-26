@@ -261,8 +261,23 @@ function buildPageElementTree(
     const resolvedConfig = {};
     Object.keys(config).forEach((k) => {
       const val = config[k];
-      if (typeof val === 'string' && assetMap[val]) {
-        resolvedConfig[k] = assetMap[val].toString();
+      if (typeof val === 'string') {
+        let replacedStr = val;
+        // Check exact match first
+        if (assetMap[val]) {
+          replacedStr = assetMap[val].toString();
+        } else {
+          // Check substring matches for stringified JSON (like optionsJSON in image-choice)
+          Object.keys(assetMap).forEach((assetKey) => {
+            if (replacedStr.includes(assetKey)) {
+              // Note: using string split/join to support all environments for replaceAll
+              replacedStr = replacedStr
+                .split(assetKey)
+                .join(assetMap[assetKey].toString());
+            }
+          });
+        }
+        resolvedConfig[k] = replacedStr;
       } else {
         resolvedConfig[k] = val;
       }
@@ -403,8 +418,20 @@ function buildPageElementTree(
     const resolvedConfig = {};
     Object.keys(config).forEach((k) => {
       const val = config[k];
-      if (typeof val === 'string' && assetMap[val]) {
-        resolvedConfig[k] = assetMap[val].toString();
+      if (typeof val === 'string') {
+        let replacedStr = val;
+        if (assetMap[val]) {
+          replacedStr = assetMap[val].toString();
+        } else {
+          Object.keys(assetMap).forEach((assetKey) => {
+            if (replacedStr.includes(assetKey)) {
+              replacedStr = replacedStr
+                .split(assetKey)
+                .join(assetMap[assetKey].toString());
+            }
+          });
+        }
+        resolvedConfig[k] = replacedStr;
       } else {
         resolvedConfig[k] = val;
       }

@@ -24,35 +24,40 @@
           "label": "lfr.form-fragments.require-uppercase",
           "description": "lfr.form-fragments.require-uppercase-description",
           "name": "requireUppercase",
-          "type": "checkbox"
+          "type": "checkbox",
+          "dataType": "boolean"
         },
         {
           "defaultValue": true,
           "label": "lfr.form-fragments.require-number",
           "description": "lfr.form-fragments.require-number-description",
           "name": "requireNumber",
-          "type": "checkbox"
+          "type": "checkbox",
+          "dataType": "boolean"
         },
         {
           "defaultValue": true,
           "label": "lfr.form-fragments.require-special",
           "description": "lfr.form-fragments.require-special-description",
           "name": "requireSpecial",
-          "type": "checkbox"
+          "type": "checkbox",
+          "dataType": "boolean"
         },
         {
           "defaultValue": true,
           "label": "lfr.form-fragments.show-strength-meter",
           "description": "lfr.form-fragments.show-strength-meter-description",
           "name": "showStrengthMeter",
-          "type": "checkbox"
+          "type": "checkbox",
+          "dataType": "boolean"
         },
         {
           "defaultValue": true,
           "label": "lfr.form-fragments.enable-toggle-visibility",
           "description": "lfr.form-fragments.enable-toggle-visibility-description",
           "name": "enableToggleVisibility",
-          "type": "checkbox"
+          "type": "checkbox",
+          "dataType": "boolean"
         }
       ],
       "label": "lfr.form-fragments.password-options"

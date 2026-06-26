@@ -1,0 +1,15 @@
+[ERROR] Current global-setup structure (nested fragment object, key, L_GLOBAL)
+
+[ERROR] Nested fragment object, key, GLOBAL
+
+[ERROR] Nested fragment object, key, explicit Global site ID
+
+[ERROR] Flat properties on definition (fragmentEntryKey, siteKey: GLOBAL)
+
+[ERROR] Flat properties on definition (fragmentEntryKey, siteKey: L_GLOBAL)
+
+[ERROR] Flat properties on definition (fragmentKey, siteKey: GLOBAL)
+
+[ERROR] Using fragmentReference (same structure as FormFragment / Submit button)
+
+[ERROR] Using fragmentReference (scope explicit siteId instead of GLOBAL)

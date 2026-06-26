@@ -46,11 +46,14 @@ generated-test-pages.json
 *.db
 **/*.db
 
-# Scratch files and HTML dumps
+# Scratch files, HTML dumps, and diagnostics
 /*.html
 /inspect_page.js
 /query_pages.js
 /scratch_login.js
+/scratch/
+/temp_extract/
+/temp_inspect/
 
 # E2E test runner local state and cache
 /e2e-tests/resolved_base_url.txt
