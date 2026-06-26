@@ -479,7 +479,13 @@ function buildPageElementTree(
           key: key,
           siteKey: globalSiteKey,
         },
-        fragmentConfig: { ...resolvedConfig, inputFieldId: fieldKey.startsWith('ObjectField_') ? fieldKey : ObjectField_\ }, fragmentFields: resolvedFields,
+        fragmentConfig: {
+          ...resolvedConfig,
+          inputFieldId: fieldKey.startsWith('ObjectField_')
+            ? fieldKey
+            : `ObjectField_${fieldKey}`,
+        },
+        fragmentFields: resolvedFields,
       },
     };
     return element;
@@ -1914,10 +1920,8 @@ async function globalSetup(config) {
         // -1. Seed Picklists
         if (testData.requiredPicklists) {
           for (const pl of testData.requiredPicklists) {
-            console.log(
-              `       Seeding Picklist: ${pl.name} (${pl.erc})...`
-            );
-            
+            console.log(`       Seeding Picklist: ${pl.name} (${pl.erc})...`);
+
             let picklistId = null;
             try {
               const fetchResp = await apiContext.get(
@@ -1928,8 +1932,8 @@ async function globalSetup(config) {
                 picklistId = json.id;
                 console.log(`       Found existing picklist ${pl.erc}`);
               }
-            } catch(e) {}
-            
+            } catch (e) {}
+
             if (!picklistId) {
               const createResp = await apiContext.post(
                 `/o/headless-admin-list-type/v1.0/list-type-definitions`,
@@ -1937,8 +1941,8 @@ async function globalSetup(config) {
                   data: {
                     externalReferenceCode: pl.erc,
                     name: pl.name,
-                    name_i18n: { en_US: pl.name }
-                  }
+                    name_i18n: { en_US: pl.name },
+                  },
                 }
               );
               if (createResp.ok()) {
@@ -1946,34 +1950,44 @@ async function globalSetup(config) {
                 picklistId = json.id;
                 console.log(`       Successfully created picklist ${pl.erc}`);
               } else {
-                console.warn(`       [WARN] Failed to create picklist ${pl.erc} : ${createResp.status()}`);
+                console.warn(
+                  `       [WARN] Failed to create picklist ${pl.erc} : ${createResp.status()}`
+                );
               }
             }
-            
+
             if (picklistId && pl.items) {
-               const entriesResp = await apiContext.get(`/o/headless-admin-list-type/v1.0/list-type-definitions/${picklistId}/list-type-entries`);
-               let existingEntries = [];
-               if (entriesResp.ok()) {
-                  existingEntries = (await entriesResp.json()).items || [];
-               }
-               
-               for (const item of pl.items) {
-                  if (!existingEntries.find(e => e.name === item)) {
-                     const postEntryResp = await apiContext.post(`/o/headless-admin-list-type/v1.0/list-type-definitions/${picklistId}/list-type-entries`, {
-                        data: {
-                           externalReferenceCode: pl.erc + '_' + item.toUpperCase().replace(/[^A-Z0-9]/g, '_'),
-                           key: item.toLowerCase().replace(/[^a-z0-9]/g, '-'),
-                           name: item,
-                           name_i18n: { en_US: item }
-                        }
-                     });
-                     if (postEntryResp.ok()) {
-                        console.log(`       Added picklist entry: ${item}`);
-                     } else {
-                        console.warn(`       [WARN] Failed to add entry ${item}`);
-                     }
+              const entriesResp = await apiContext.get(
+                `/o/headless-admin-list-type/v1.0/list-type-definitions/${picklistId}/list-type-entries`
+              );
+              let existingEntries = [];
+              if (entriesResp.ok()) {
+                existingEntries = (await entriesResp.json()).items || [];
+              }
+
+              for (const item of pl.items) {
+                if (!existingEntries.find((e) => e.name === item)) {
+                  const postEntryResp = await apiContext.post(
+                    `/o/headless-admin-list-type/v1.0/list-type-definitions/${picklistId}/list-type-entries`,
+                    {
+                      data: {
+                        externalReferenceCode:
+                          pl.erc +
+                          '_' +
+                          item.toUpperCase().replace(/[^A-Z0-9]/g, '_'),
+                        key: item.toLowerCase().replace(/[^a-z0-9]/g, '-'),
+                        name: item,
+                        name_i18n: { en_US: item },
+                      },
+                    }
+                  );
+                  if (postEntryResp.ok()) {
+                    console.log(`       Added picklist entry: ${item}`);
+                  } else {
+                    console.warn(`       [WARN] Failed to add entry ${item}`);
                   }
-               }
+                }
+              }
             }
           }
         }
@@ -2525,7 +2539,8 @@ async function globalSetup(config) {
                   type: 'FormFragment',
                   definition: {
                     fieldKey: '',
-                    fragmentConfig: {}, fragmentFields: [],
+                    fragmentConfig: {},
+                    fragmentFields: [],
                   },
                 },
               ],
@@ -2673,7 +2688,8 @@ async function globalSetup(config) {
                                           key: fragmentKey,
                                           siteKey: globalSiteKey,
                                         },
-                                        fragmentConfig: {}, fragmentFields: [],
+                                        fragmentConfig: {},
+                                        fragmentFields: [],
                                       },
                                     },
                                   ],
