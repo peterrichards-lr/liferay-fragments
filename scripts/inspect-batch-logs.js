@@ -4,7 +4,7 @@ const { execSync } = require('child_process');
 try {
   console.log('=== Searching Liferay Logs for Batch / Structure Import ===');
   const logs = execSync(
-    'ldm logs e2e-test-env liferay -n 1000 -g "batch|structure|slider-slide-struct|error|fail" --grep-i --no-color --no-unicode',
+    'ldm logs e2e-test-env liferay -n 1000 -g "batch|structure|slider-slide-struct|error|fail" --grep-i',
     {
       encoding: 'utf8',
     }

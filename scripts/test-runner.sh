@@ -17,7 +17,7 @@ export PATH="$PATH:/c/Users/prichards/AppData/Local/Microsoft/WinGet/Links"
 
 # Wrapper function to enforce clean, color-free plain-text outputs for all LDM commands
 ldm() {
-    command ldm "$@" --no-color --no-unicode
+    command ldm "$@"
 }
 
 
