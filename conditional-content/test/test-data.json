@@ -2,6 +2,21 @@
   "pageLayout": {
     "type": "Fragment",
     "key": "conditional-content",
+    "fragmentConfig": {
+      "displayDropZones": true
+    },
+    "fragmentFields": [
+      {
+        "id": "outcome-value",
+        "value": {
+          "text": {
+            "value_i18n": {
+              "en_US": "approved"
+            }
+          }
+        }
+      }
+    ],
     "children": [
       {
         "type": "Fragment",

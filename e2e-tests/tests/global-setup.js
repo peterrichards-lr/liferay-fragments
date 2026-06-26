@@ -265,8 +265,9 @@ function buildPageElementTree(
         let replacedStr = val;
         // Check exact match first
         if (assetMap[val]) {
-          replacedStr = assetMap[val].toString();
+          resolvedConfig[k] = assetMap[val];
         } else {
+          let replacedStr = val;
           // Check substring matches for stringified JSON (like optionsJSON in image-choice)
           Object.keys(assetMap).forEach((assetKey) => {
             if (replacedStr.includes(assetKey)) {
@@ -276,8 +277,8 @@ function buildPageElementTree(
                 .join(assetMap[assetKey].toString());
             }
           });
+          resolvedConfig[k] = replacedStr;
         }
-        resolvedConfig[k] = replacedStr;
       } else {
         resolvedConfig[k] = val;
       }
@@ -1830,6 +1831,47 @@ async function globalSetup(config) {
 
       // Add product ID to assetMap so test-data.json can resolve it
       commerceAssetMap[prodData.key] = productId;
+
+      // Create SKU and Base Price for the product
+      if (productId) {
+        const skuResp = await apiContext.post(
+          `/o/headless-commerce-admin-catalog/v1.0/products/${productId}/skus`,
+          {
+            data: {
+              sku: prodData.sku,
+              published: true,
+              purchasable: true,
+            },
+          }
+        );
+        if (skuResp.ok()) {
+          const skuData = await skuResp.json();
+          console.log(
+            `  -> Successfully created SKU ${prodData.sku} (ID: ${skuData.id})`
+          );
+
+          // Set a mock price and promo price so it registers as an offer
+          const priceResp = await apiContext.patch(
+            `/o/headless-commerce-admin-catalog/v1.0/skus/${skuData.id}`,
+            {
+              data: {
+                price: 150.0,
+                promoPrice: 99.0,
+              },
+            }
+          );
+          if (priceResp.ok()) {
+            console.log(
+              `  -> Successfully set pricing for SKU ${prodData.sku}`
+            );
+          }
+        } else {
+          console.warn(
+            `  -> [WARN] Failed to create SKU ${prodData.sku}:`,
+            await skuResp.text()
+          );
+        }
+      }
     }
   } catch (commErr) {
     console.warn(
@@ -1905,6 +1947,25 @@ async function globalSetup(config) {
       );
       try {
         testData = JSON.parse(fs.readFileSync(testDataFile, 'utf8'));
+
+        const testConfigPath = path.join(
+          path.dirname(testDataFile),
+          'test-fragment-config.json'
+        );
+        if (fs.existsSync(testConfigPath)) {
+          console.log(
+            `     Found fragment configuration override at ${testConfigPath}.`
+          );
+          try {
+            const testConfig = JSON.parse(
+              fs.readFileSync(testConfigPath, 'utf8')
+            );
+            if (!testData.pageConfig) testData.pageConfig = {};
+            testData.pageConfig.fragmentConfig = testConfig;
+          } catch (e) {
+            console.error(`     [ERROR] Failed to parse ${testConfigPath}:`, e);
+          }
+        }
 
         // Load existing manifest of seeded assets or start fresh
         const seededAssetsPath = path.join(
@@ -1989,6 +2050,51 @@ async function globalSetup(config) {
                 }
               }
             }
+          }
+        }
+
+        // -1.5 Patch APPLICANT Object with Picklist (if seeded)
+        if (
+          testData.requiredPicklists &&
+          testData.requiredPicklists.find((p) => p.erc === 'INTERESTS_PICKLIST')
+        ) {
+          console.log(
+            `       Patching APPLICANT object definition to bind INTERESTS_PICKLIST...`
+          );
+          try {
+            const getFieldsResp = await apiContext.get(
+              `/o/object-admin/v1.0/object-definitions/by-external-reference-code/APPLICANT/object-fields`
+            );
+            if (getFieldsResp.ok()) {
+              const fieldsJson = await getFieldsResp.json();
+              const interestsField = (fieldsJson.items || []).find(
+                (f) => f.externalReferenceCode === 'INTERESTS'
+              );
+              if (interestsField) {
+                const patchResp = await apiContext.patch(
+                  `/o/object-admin/v1.0/object-fields/${interestsField.id}`,
+                  {
+                    data: {
+                      listTypeDefinitionExternalReferenceCode:
+                        'INTERESTS_PICKLIST',
+                    },
+                  }
+                );
+                if (patchResp.ok()) {
+                  console.log(
+                    `       Successfully bound INTERESTS_PICKLIST to APPLICANT.interests`
+                  );
+                } else {
+                  console.warn(
+                    `       [WARN] Failed to bind picklist to field: ${patchResp.status()}`
+                  );
+                }
+              }
+            }
+          } catch (e) {
+            console.warn(
+              `       [WARN] Error patching APPLICANT object: ${e.message}`
+            );
           }
         }
 
@@ -2403,7 +2509,8 @@ async function globalSetup(config) {
             if (typeof val === 'string') {
               let replacedStr = val;
               if (assetMap[val]) {
-                replacedStr = assetMap[val].toString();
+                seededConfigOverrides[key] = assetMap[val];
+                return;
               } else {
                 Object.keys(assetMap).forEach((assetKey) => {
                   if (replacedStr.includes(assetKey)) {
@@ -2539,7 +2646,10 @@ async function globalSetup(config) {
                   type: 'FormFragment',
                   definition: {
                     fieldKey: '',
-                    fragmentConfig: {},
+                    fragmentConfig:
+                      testData.pageConfig && testData.pageConfig.fragmentConfig
+                        ? testData.pageConfig.fragmentConfig
+                        : {},
                     fragmentFields: [],
                   },
                 },
@@ -2688,7 +2798,12 @@ async function globalSetup(config) {
                                           key: fragmentKey,
                                           siteKey: globalSiteKey,
                                         },
-                                        fragmentConfig: {},
+                                        fragmentConfig:
+                                          testData &&
+                                          testData.pageConfig &&
+                                          testData.pageConfig.fragmentConfig
+                                            ? testData.pageConfig.fragmentConfig
+                                            : {},
                                         fragmentFields: [],
                                       },
                                     },

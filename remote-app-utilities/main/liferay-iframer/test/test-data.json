@@ -20,5 +20,6 @@
         ]
       }
     ]
-  }
+  },
+  "excludeFromGallery": true
 }

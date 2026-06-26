@@ -6,5 +6,10 @@
       "name": "Interests Picklist",
       "items": ["Sports", "Music", "Reading"]
     }
-  ]
+  ],
+  "pageLayout": {
+    "type": "Fragment",
+    "key": "listbox-multiselect",
+    "fieldKey": "interests"
+  }
 }
