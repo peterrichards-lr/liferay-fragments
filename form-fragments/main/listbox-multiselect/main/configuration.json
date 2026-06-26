@@ -44,7 +44,6 @@
           }
         },
         {
-          "dataType": "boolean",
           "defaultValue": false,
           "label": "lfr.form-fragments.order-options-alphabetically",
           "description": "lfr.form-fragments.order-options-alphabetically",
@@ -55,7 +54,6 @@
           }
         },
         {
-          "dataType": "boolean",
           "defaultValue": false,
           "label": "lfr.form-fragments.show-all-buttons",
           "description": "lfr.form-fragments.show-all-buttons",

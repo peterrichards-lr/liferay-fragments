@@ -14,8 +14,7 @@
           "label": "lfr.conditional-content.display-drop-zones",
           "description": "lfr.conditional-content.display-drop-zones-description",
           "name": "displayDropZones",
-          "type": "checkbox",
-          "dataType": "boolean"
+          "type": "checkbox"
         }
       ],
       "label": "lfr.conditional-content.general"

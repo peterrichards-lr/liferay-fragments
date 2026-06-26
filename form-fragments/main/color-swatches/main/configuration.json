@@ -58,8 +58,7 @@
           "label": "lfr.form-fragments.show-value",
           "description": "lfr.form-fragments.show-value-description",
           "name": "showValue",
-          "type": "checkbox",
-          "dataType": "boolean"
+          "type": "checkbox"
         }
       ],
       "label": "lfr.form-fragments.color-swatch-options"

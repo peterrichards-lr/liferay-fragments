@@ -7,8 +7,7 @@
           "label": "lfr.populated-form-fields.use-storage-value",
           "description": "lfr.populated-form-fields.use-storage-value-description",
           "name": "useStorageValue",
-          "type": "checkbox",
-          "dataType": "boolean"
+          "type": "checkbox"
         },
         {
           "defaultValue": "LFR_APP",

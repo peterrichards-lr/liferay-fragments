@@ -26,16 +26,14 @@
           "label": "lfr.populated-form-fields.fragment-header",
           "description": "lfr.populated-form-fields.fragment-header-description",
           "name": "fragmentHeader",
-          "type": "checkbox",
-          "dataType": "boolean"
+          "type": "checkbox"
         },
         {
           "defaultValue": false,
           "label": "lfr.populated-form-fields.enable-debug",
           "description": "lfr.populated-form-fields.enable-debug-description",
           "name": "enableDebug",
-          "type": "checkbox",
-          "dataType": "boolean"
+          "type": "checkbox"
         }
       ],
       "label": "lfr.populated-form-fields.debugging"

@@ -7,8 +7,7 @@
           "label": "lfr.forms.enable-auto-refresh",
           "description": "lfr.forms.enable-auto-refresh-description",
           "name": "enableAutoRefresh",
-          "type": "checkbox",
-          "dataType": "boolean"
+          "type": "checkbox"
         },
         {
           "defaultValue": "5",
@@ -31,8 +30,7 @@
           "label": "lfr.forms.enable-manual-refresh",
           "description": "lfr.forms.enable-manual-refresh-description",
           "name": "enableManualRefresh",
-          "type": "checkbox",
-          "dataType": "boolean"
+          "type": "checkbox"
         },
         {
           "defaultValue": "click here",
@@ -59,8 +57,7 @@
           "label": "lfr.forms.enable-refresh-trigger",
           "description": "lfr.forms.enable-refresh-trigger-description",
           "name": "enableRefreshTrigger",
-          "type": "checkbox",
-          "dataType": "boolean"
+          "type": "checkbox"
         },
         {
           "defaultValue": "Success",
@@ -95,8 +92,7 @@
           "label": "lfr.forms.enable-debug",
           "description": "lfr.forms.enable-debug-description",
           "name": "enableDebug",
-          "type": "checkbox",
-          "dataType": "boolean"
+          "type": "checkbox"
         }
       ],
       "label": "lfr.forms.debugging"

@@ -7,8 +7,7 @@
           "label": "lfr.profile.enable-preview-mode",
           "description": "lfr.profile.enable-preview-mode-description",
           "name": "enablePreviewMode",
-          "type": "checkbox",
-          "dataType": "boolean"
+          "type": "checkbox"
         }
       ],
       "label": "lfr.profile.general"

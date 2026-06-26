@@ -14,8 +14,7 @@
           "label": "lfr.pulse.force-initialization",
           "description": "lfr.pulse.force-initialization-description",
           "name": "force",
-          "type": "checkbox",
-          "dataType": "boolean"
+          "type": "checkbox"
         }
       ],
       "label": "lfr.pulse.campaign-options"
@@ -27,8 +26,7 @@
           "label": "lfr.pulse.enable-debug",
           "description": "lfr.pulse.enable-debug-description",
           "name": "enableDebug",
-          "type": "checkbox",
-          "dataType": "boolean"
+          "type": "checkbox"
         }
       ],
       "label": "lfr.pulse.debugging"

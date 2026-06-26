@@ -16,8 +16,7 @@
           "label": "lfr.populated-form-fields.custom-range",
           "description": "lfr.populated-form-fields.custom-range",
           "name": "customRange",
-          "type": "checkbox",
-          "dataType": "boolean"
+          "type": "checkbox"
         },
         {
           "dataType": "string",
@@ -48,8 +47,7 @@
           "label": "lfr.populated-form-fields.display-value",
           "description": "lfr.populated-form-fields.display-value",
           "name": "displayValue",
-          "type": "checkbox",
-          "dataType": "boolean"
+          "type": "checkbox"
         },
         {
           "dataType": "string",
@@ -72,8 +70,7 @@
           "label": "lfr.populated-form-fields.add-id",
           "description": "lfr.populated-form-fields.add-id",
           "name": "addId",
-          "type": "checkbox",
-          "dataType": "boolean"
+          "type": "checkbox"
         },
         {
           "dataType": "string",
@@ -93,8 +90,7 @@
           "label": "lfr.populated-form-fields.use-storage-value",
           "description": "lfr.populated-form-fields.use-storage-value",
           "name": "useStorageValue",
-          "type": "checkbox",
-          "dataType": "boolean"
+          "type": "checkbox"
         },
         {
           "defaultValue": "LFR_APP",
@@ -108,8 +104,7 @@
           "label": "lfr.populated-form-fields.use-specific-storage-key",
           "description": "lfr.populated-form-fields.use-specific-storage-key",
           "name": "useSpecificStorageKey",
-          "type": "checkbox",
-          "dataType": "boolean"
+          "type": "checkbox"
         },
         {
           "defaultValue": "",

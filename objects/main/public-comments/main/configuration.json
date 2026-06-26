@@ -80,8 +80,7 @@
           "label": "lfr.objects.use-dummy-id",
           "description": "lfr.objects.use-dummy-id-description",
           "name": "useDummyId",
-          "type": "checkbox",
-          "dataType": "boolean"
+          "type": "checkbox"
         },
         {
           "defaultValue": "91133",

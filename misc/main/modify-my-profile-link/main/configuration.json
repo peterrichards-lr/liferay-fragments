@@ -7,8 +7,7 @@
           "label": "lfr.misc.enable-debug",
           "description": "lfr.misc.enable-debug",
           "name": "enableDebug",
-          "type": "checkbox",
-          "dataType": "boolean"
+          "type": "checkbox"
         }
       ],
       "label": "lfr.misc.general"
@@ -20,16 +19,14 @@
           "label": "lfr.misc.enable-menu-text",
           "description": "lfr.misc.enable-menu-text",
           "name": "enableMenuText",
-          "type": "checkbox",
-          "dataType": "boolean"
+          "type": "checkbox"
         },
         {
           "defaultValue": true,
           "label": "lfr.misc.run-menu-text-onload",
           "description": "lfr.misc.run-menu-text-onload",
           "name": "runMenuTextOnload",
-          "type": "checkbox",
-          "dataType": "boolean"
+          "type": "checkbox"
         },
         {
           "defaultValue": "My Profile",

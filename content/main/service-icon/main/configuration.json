@@ -14,8 +14,7 @@
           "label": "lfr.content.asset-library-collection",
           "description": "lfr.content.asset-library-collection",
           "name": "assetLibraryCollection",
-          "type": "checkbox",
-          "dataType": "boolean"
+          "type": "checkbox"
         },
         {
           "dataType": "string",
@@ -89,8 +88,7 @@
           "label": "lfr.content.debug-enabled",
           "description": "lfr.content.debug-enabled",
           "name": "enableDebug",
-          "type": "checkbox",
-          "dataType": "boolean"
+          "type": "checkbox"
         }
       ],
       "label": "lfr.content.miscellaneous"

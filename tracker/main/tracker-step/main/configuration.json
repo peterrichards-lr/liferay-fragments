@@ -34,16 +34,14 @@
           "label": "lfr.tracker.left-arrow",
           "description": "lfr.tracker.left-arrow-description",
           "name": "leftArrow",
-          "type": "checkbox",
-          "dataType": "boolean"
+          "type": "checkbox"
         },
         {
           "defaultValue": true,
           "label": "lfr.tracker.right-arrow",
           "description": "lfr.tracker.right-arrow-description",
           "name": "rightArrow",
-          "type": "checkbox",
-          "dataType": "boolean"
+          "type": "checkbox"
         }
       ],
       "label": "lfr.tracker.general"

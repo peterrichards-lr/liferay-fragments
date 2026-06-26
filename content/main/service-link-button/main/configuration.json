@@ -21,8 +21,7 @@
           "label": "lfr.content.asset-library-collection",
           "description": "lfr.content.asset-library-collection",
           "name": "assetLibraryCollection",
-          "type": "checkbox",
-          "dataType": "boolean"
+          "type": "checkbox"
         },
         {
           "dataType": "string",
@@ -42,8 +41,7 @@
           "description": "lfr.content.use-default-page-url-description",
           "label": "lfr.content.use-default-page-url",
           "name": "useDefaultPageUrl",
-          "type": "checkbox",
-          "dataType": "boolean"
+          "type": "checkbox"
         },
         {
           "description": "lfr.content.default-page-url-description",
@@ -56,8 +54,7 @@
           "description": "lfr.content.open-in-new-tab-description",
           "label": "lfr.content.open-in-new-tab",
           "name": "openInNewTab",
-          "type": "checkbox",
-          "dataType": "boolean"
+          "type": "checkbox"
         }
       ],
       "label": "lfr.content.page-url"
@@ -149,16 +146,14 @@
           "label": "lfr.content.debug-enabled",
           "description": "lfr.content.debug-enabled",
           "name": "enableDebug",
-          "type": "checkbox",
-          "dataType": "boolean"
+          "type": "checkbox"
         },
         {
           "defaultValue": false,
           "description": "lfr.content.debug-in-error-handler-description",
           "label": "lfr.content.debug-in-error-handler",
           "name": "debugInErrorHandler",
-          "type": "checkbox",
-          "dataType": "boolean"
+          "type": "checkbox"
         }
       ],
       "label": "lfr.content.miscellaneous"

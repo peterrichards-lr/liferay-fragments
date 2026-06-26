@@ -313,13 +313,7 @@ fragmentFiles.forEach((file) => {
         set.fields?.forEach((field) => {
           // 1. Strict dataType constraints
           if (field.dataType !== undefined && field.dataType !== null) {
-            const allowedDataTypes = [
-              'string',
-              'int',
-              'object',
-              'boolean',
-              'number',
-            ];
+            const allowedDataTypes = ['string', 'int', 'object', 'number'];
             if (!allowedDataTypes.includes(field.dataType)) {
               logError(
                 fragmentName,
@@ -353,10 +347,10 @@ fragmentFiles.forEach((file) => {
 
           // 2. Strict type vs dataType alignment
           if (field.type === 'checkbox') {
-            if (field.dataType !== 'boolean') {
+            if (field.dataType !== undefined) {
               logError(
                 fragmentName,
-                `Field '${field.name}' of type 'checkbox' must have dataType 'boolean' (found '${field.dataType}')`
+                `Field '${field.name}' of type 'checkbox' must not have 'dataType' defined in source configurations (found '${field.dataType}'). dataType is injected at build-time for legacy targets.`
               );
             }
           } else if (field.type === 'select') {

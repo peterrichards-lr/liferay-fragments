@@ -86,8 +86,7 @@
           "type": "checkbox",
           "typeOptions": {
             "displayType": "toggle"
-          },
-          "dataType": "boolean"
+          }
         }
       ],
       "label": "lfr.form-fragments.general"

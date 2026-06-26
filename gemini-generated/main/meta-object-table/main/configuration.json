@@ -14,8 +14,7 @@
           "label": "lfr.gemini-generated.customize-display-columns",
           "description": "lfr.gemini-generated.customize-display-columns-description",
           "name": "customizeColumns",
-          "type": "checkbox",
-          "dataType": "boolean"
+          "type": "checkbox"
         },
         {
           "label": "lfr.gemini-generated.columns-to-display",
@@ -42,8 +41,7 @@
           "label": "lfr.gemini-generated.show-fragment-header",
           "description": "lfr.gemini-generated.show-fragment-header-description",
           "name": "showFragmentHeader",
-          "type": "checkbox",
-          "dataType": "boolean"
+          "type": "checkbox"
         },
         {
           "defaultValue": "Milestones",
@@ -57,8 +55,7 @@
           "label": "lfr.gemini-generated.enable-pagination",
           "description": "lfr.gemini-generated.enable-pagination-description",
           "name": "enablePagination",
-          "type": "checkbox",
-          "dataType": "boolean"
+          "type": "checkbox"
         },
         {
           "defaultValue": "10",
@@ -106,8 +103,7 @@
           "label": "lfr.gemini-generated.enable-striped",
           "description": "lfr.gemini-generated.enable-striped-description",
           "name": "enableStriped",
-          "type": "checkbox",
-          "dataType": "boolean"
+          "type": "checkbox"
         },
         {
           "defaultValue": "even",
@@ -159,8 +155,7 @@
           "label": "lfr.gemini-generated.enable-add-action",
           "description": "lfr.gemini-generated.enable-add-action-description",
           "name": "enableAdd",
-          "type": "checkbox",
-          "dataType": "boolean"
+          "type": "checkbox"
         },
         {
           "defaultValue": "modal",
@@ -200,8 +195,7 @@
                 "value": "modal"
               }
             }
-          },
-          "dataType": "boolean"
+          }
         },
         {
           "defaultValue": true,
@@ -216,8 +210,7 @@
                 "value": "modal"
               }
             }
-          },
-          "dataType": "boolean"
+          }
         },
         {
           "defaultValue": "lg",
@@ -267,8 +260,7 @@
           "label": "lfr.gemini-generated.enable-view-action",
           "description": "lfr.gemini-generated.enable-view-action-description",
           "name": "enableView",
-          "type": "checkbox",
-          "dataType": "boolean"
+          "type": "checkbox"
         },
         {
           "defaultValue": "event",
@@ -341,8 +333,7 @@
                 "value": "modal"
               }
             }
-          },
-          "dataType": "boolean"
+          }
         },
         {
           "defaultValue": true,
@@ -357,8 +348,7 @@
                 "value": "modal"
               }
             }
-          },
-          "dataType": "boolean"
+          }
         },
         {
           "defaultValue": "md",
@@ -408,8 +398,7 @@
           "label": "lfr.gemini-generated.enable-edit-action",
           "description": "lfr.gemini-generated.enable-edit-action-description",
           "name": "enableEdit",
-          "type": "checkbox",
-          "dataType": "boolean"
+          "type": "checkbox"
         },
         {
           "defaultValue": "event",
@@ -482,8 +471,7 @@
                 "value": "modal"
               }
             }
-          },
-          "dataType": "boolean"
+          }
         },
         {
           "defaultValue": true,
@@ -498,8 +486,7 @@
                 "value": "modal"
               }
             }
-          },
-          "dataType": "boolean"
+          }
         },
         {
           "defaultValue": "lg",

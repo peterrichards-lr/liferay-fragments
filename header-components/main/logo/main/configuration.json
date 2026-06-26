@@ -7,8 +7,7 @@
           "label": "lfr.header-components.override-site-config",
           "description": "lfr.header-components.override-site-config-description",
           "type": "checkbox",
-          "defaultValue": false,
-          "dataType": "boolean"
+          "defaultValue": false
         }
       ],
       "label": "lfr.header-components.general"
@@ -53,8 +52,7 @@
           "label": "lfr.header-components.show-site-name",
           "description": "lfr.header-components.show-site-name-description",
           "type": "checkbox",
-          "defaultValue": false,
-          "dataType": "boolean"
+          "defaultValue": false
         },
         {
           "name": "siteName",
@@ -73,8 +71,7 @@
           "label": "lfr.header-components.enable-link",
           "description": "lfr.header-components.enable-link-description",
           "type": "checkbox",
-          "defaultValue": true,
-          "dataType": "boolean"
+          "defaultValue": true
         },
         {
           "name": "linkUrl",

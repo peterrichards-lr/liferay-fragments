@@ -21,8 +21,7 @@
           "label": "lfr.gemini-generated.customize-display-columns",
           "description": "lfr.gemini-generated.customize-display-columns-description",
           "name": "customizeColumns",
-          "type": "checkbox",
-          "dataType": "boolean"
+          "type": "checkbox"
         },
         {
           "label": "lfr.gemini-generated.columns-to-display",
@@ -44,8 +43,7 @@
           "description": "lfr.gemini-generated.enable-record-selection-description",
           "name": "enableRecordSelection",
           "type": "checkbox",
-          "defaultValue": false,
-          "dataType": "boolean"
+          "defaultValue": false
         },
         {
           "defaultValue": "id",
@@ -76,8 +74,7 @@
           "label": "lfr.gemini-generated.show-fragment-header",
           "description": "lfr.gemini-generated.show-fragment-header-description",
           "name": "showFragmentHeader",
-          "type": "checkbox",
-          "dataType": "boolean"
+          "type": "checkbox"
         },
         {
           "defaultValue": "Record Detail",
