@@ -28,7 +28,8 @@
           "description": "lfr.gemini-generated.show-size-selector-description",
           "label": "lfr.gemini-generated.show-size-selector",
           "name": "showSizeSelector",
-          "type": "checkbox"
+          "type": "checkbox",
+          "dataType": "boolean"
         },
         {
           "defaultValue": "5, 7, 14, 28, 30, 60, 90",

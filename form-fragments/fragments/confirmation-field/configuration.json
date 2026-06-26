@@ -78,7 +78,8 @@
           "label": "lfr.form-fragments.convert-label-to-lowercase",
           "description": "lfr.form-fragments.convert-label-to-lowercase",
           "name": "convertLabelToLowercase",
-          "type": "checkbox"
+          "type": "checkbox",
+          "dataType": "boolean"
         },
         {
           "dataType": "string",

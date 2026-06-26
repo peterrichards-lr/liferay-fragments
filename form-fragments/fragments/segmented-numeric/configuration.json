@@ -7,14 +7,16 @@
           "label": "lfr.form-fragments.integer-number",
           "description": "lfr.form-fragments.integer-number-desc",
           "name": "integerNumber",
-          "type": "checkbox"
+          "type": "checkbox",
+          "dataType": "boolean"
         },
         {
           "defaultValue": true,
           "label": "lfr.form-fragments.allow-partial-paste",
           "description": "lfr.form-fragments.allow-partial-paste-desc",
           "name": "allowPartialPaste",
-          "type": "checkbox"
+          "type": "checkbox",
+          "dataType": "boolean"
         }
       ],
       "label": "lfr.form-fragments.general"
@@ -26,7 +28,8 @@
           "label": "lfr.form-fragments.enable-spinner",
           "description": "lfr.form-fragments.enable-spinner",
           "name": "enableSpinner",
-          "type": "checkbox"
+          "type": "checkbox",
+          "dataType": "boolean"
         },
         {
           "defaultValue": "4rem",
@@ -89,7 +92,8 @@
           "label": "lfr.form-fragments.show-labels",
           "description": "lfr.form-fragments.show-labels",
           "name": "showLabels",
-          "type": "checkbox"
+          "type": "checkbox",
+          "dataType": "boolean"
         },
         {
           "label": "lfr.form-fragments.label-color",
@@ -122,7 +126,8 @@
           "label": "lfr.form-fragments.debug-enabled",
           "description": "lfr.form-fragments.debug-enabled",
           "name": "enableDebug",
-          "type": "checkbox"
+          "type": "checkbox",
+          "dataType": "boolean"
         }
       ],
       "label": "lfr.form-fragments.miscellaneous"

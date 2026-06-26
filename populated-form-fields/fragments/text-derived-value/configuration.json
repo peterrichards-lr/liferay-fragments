@@ -16,14 +16,16 @@
           "label": "lfr.populated-form-fields.show-characters-count",
           "description": "lfr.populated-form-fields.show-characters-count",
           "name": "showCharactersCount",
-          "type": "checkbox"
+          "type": "checkbox",
+          "dataType": "boolean"
         },
         {
           "defaultValue": true,
           "label": "lfr.populated-form-fields.derive-value",
           "description": "lfr.populated-form-fields.derive-value",
           "name": "deriveValue",
-          "type": "checkbox"
+          "type": "checkbox",
+          "dataType": "boolean"
         },
         {
           "defaultValue": "",

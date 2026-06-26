@@ -23,6 +23,13 @@ This runs `scripts/create-fragment.js`, which does the following:
 - Creates boilerplate configuration (`configuration.json`), HTML (`index.html`), JS (`index.js`), CSS (`index.css`), and metadata (`test/metadata.json`).
 - Automatically inserts default labels and descriptions into `<Collection Name>/Language_en_US.properties`.
 
+### 1.1 Configuration Schema Data Types
+
+Liferay 2026.Q1 imposes strict validation rules on `configuration.json` properties:
+
+- **Checkboxes**: Any configuration field with `"type": "checkbox"` MUST explicitly set `"dataType": "boolean"`. Omitting this or using a different data type will cause page creation API calls to fail with 500 errors.
+- **Numeric Fields**: Any configuration field designed to capture numeric values (e.g., using `typeOptions.validation.type: "number"`) MUST use `"dataType": "number"`. Note: Even when `"dataType": "number"` is specified, the `"defaultValue"` must remain a string representation (e.g. `"defaultValue": "8"`, not `8`).
+
 ## 2. Structure & Metadata
 
 Every fragment must follow these structural guidelines:

@@ -7,7 +7,8 @@
           "label": "lfr.header-components.enable-debug",
           "description": "lfr.header-components.enable-debug-description",
           "name": "enableDebug",
-          "type": "checkbox"
+          "type": "checkbox",
+          "dataType": "boolean"
         }
       ],
       "label": "lfr.header-components.general"
@@ -19,14 +20,16 @@
           "label": "lfr.header-components.enable-menu-text",
           "description": "lfr.header-components.enable-menu-text-description",
           "name": "enableMenuText",
-          "type": "checkbox"
+          "type": "checkbox",
+          "dataType": "boolean"
         },
         {
           "defaultValue": false,
           "label": "lfr.header-components.run-menu-text-onload",
           "description": "lfr.header-components.run-menu-text-onload-description",
           "name": "runMenuTextOnload",
-          "type": "checkbox"
+          "type": "checkbox",
+          "dataType": "boolean"
         },
         {
           "defaultValue": "Register",
@@ -40,14 +43,16 @@
           "label": "lfr.header-components.enable-register-page",
           "description": "lfr.header-components.enable-register-page-description",
           "name": "enableRegisterPage",
-          "type": "checkbox"
+          "type": "checkbox",
+          "dataType": "boolean"
         },
         {
           "defaultValue": true,
           "label": "lfr.header-components.run-register-page-onload",
           "description": "lfr.header-components.run-register-page-onload-description",
           "name": "runRegisterPageOnload",
-          "type": "checkbox"
+          "type": "checkbox",
+          "dataType": "boolean"
         },
         {
           "defaultValue": "/web/liferaybotics/register",

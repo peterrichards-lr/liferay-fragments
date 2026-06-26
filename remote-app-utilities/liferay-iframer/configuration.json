@@ -33,7 +33,8 @@
           "label": "lfr.remote-app-utilities.enable-resize",
           "description": "lfr.remote-app-utilities.enable-resize-description",
           "name": "enableResize",
-          "type": "checkbox"
+          "type": "checkbox",
+          "dataType": "boolean"
         },
         {
           "dataType": "string",

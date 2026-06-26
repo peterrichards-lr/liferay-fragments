@@ -80,14 +80,16 @@
           "description": "lfr.misc.inverted-description",
           "label": "lfr.misc.inverted",
           "name": "inverted",
-          "type": "checkbox"
+          "type": "checkbox",
+          "dataType": "boolean"
         },
         {
           "defaultValue": false,
           "description": "lfr.misc.uppercase-description",
           "label": "lfr.misc.uppercase",
           "name": "uppercase",
-          "type": "checkbox"
+          "type": "checkbox",
+          "dataType": "boolean"
         }
       ],
       "label": "lfr.misc.general"
