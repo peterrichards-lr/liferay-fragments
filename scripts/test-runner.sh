@@ -98,6 +98,10 @@ watchdog_timer() {
                 if [ "$elapsed" -gt "$max_wait" ]; then
                     echo ""
                     echo "[WATCHDOG] CRITICAL: Phase '$state' has hung for $elapsed seconds (exceeded estimate + buffer of $max_wait). Terminating test runner!"
+                    if [ "$state" = "WAITING_HEALTHY" ]; then
+                        echo "[WATCHDOG] Dumping LDM logs for project $PROJECT_NAME before termination:"
+                        ldm logs "$PROJECT_NAME" || true
+                    fi
                     kill -TERM $$ 2>/dev/null
                     exit 1
                 fi
