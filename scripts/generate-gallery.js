@@ -78,8 +78,11 @@ function generateGallery() {
       fs.readFileSync(collectionFile, 'utf8')
     );
 
+    // Normalize path separators for globSync on Windows
+    const collectionGlobDir = collectionDir.replace(/\\/g, '/');
+
     // Find fragments in this collection
-    const fragments = globSync(`${collectionDir}/*/main/fragment.json`);
+    const fragments = globSync(`${collectionGlobDir}/*/main/fragment.json`);
 
     if (fragments.length === 0) return;
 
