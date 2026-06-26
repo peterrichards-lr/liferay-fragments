@@ -113,6 +113,7 @@ const fragmentFiles = globSync('**/main/fragment.json', {
     'temp_inspect/**',
     'temp_inspect_zip/**',
     'temp_extract_zip/**',
+    'docs/test-results/**',
     ...ldmIgnores,
   ],
 });
@@ -698,7 +699,16 @@ if (normalize(currentGalleryContent) !== normalize(expectedGalleryContent)) {
 // --- MARKDOWN BROKEN LINK CHECKER ---
 console.log(`Checking Markdown files for broken local links...`);
 const mdFiles = globSync('**/*.md', {
-  ignore: ['node_modules/**', '**/node_modules/**', '.git/**'],
+  ignore: [
+    'node_modules/**',
+    '**/node_modules/**',
+    '.git/**',
+    'temp_extract/**',
+    'temp_inspect/**',
+    'temp_inspect_zip/**',
+    'temp_extract_zip/**',
+    'docs/test-results/**',
+  ],
 });
 
 mdFiles.forEach((mdFile) => {
@@ -719,7 +729,12 @@ mdFiles.forEach((mdFile) => {
     if (!linkPath) return;
 
     const resolvedPath = path.resolve(mdDir, linkPath);
-    if (!fs.existsSync(resolvedPath)) {
+    if (rawPath.includes('images/diffs/')) {
+      logError(
+        mdFile,
+        `Diff images are temporary and must not be checked into documentation. Please run scripts/generate-gallery.js to clean up diff links before committing. Reference: "${rawPath}"`
+      );
+    } else if (!fs.existsSync(resolvedPath)) {
       // Missing live images (under docs/images/live) should be warnings, not errors
       // since they are generated dynamically on successful test runs
       if (rawPath.includes('images/live/')) {

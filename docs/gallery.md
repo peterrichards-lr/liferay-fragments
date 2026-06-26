@@ -84,13 +84,13 @@ A lifestyle-focused design system with a scoped container architecture, high-fid
 
 <img src="./images/dynamic-badge-overlay.png" width="350" alt="Original Image">
 
-#### Desktop (1920px) <br>⚠️ **Blank/Solid Color**
+#### Desktop (1920px) <br>🟢 **Passed**
 
 <img src="./images/live/commerce-dynamic-badge-overlay-desktop.png" width="100%" alt="Desktop">
 
-|                                                      Tablet (768px)                                                      |                                                      Mobile (375px)                                                      |
-| :----------------------------------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------------------------------: |
-| <img src="./images/live/commerce-dynamic-badge-overlay-tablet.png" width="350" alt="Tablet"><br>⚠️ **Blank/Solid Color** | <img src="./images/live/commerce-dynamic-badge-overlay-mobile.png" width="175" alt="Mobile"><br>⚠️ **Blank/Solid Color** |
+|                                                Tablet (768px)                                                 |                                                Mobile (375px)                                                 |
+| :-----------------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------------: |
+| <img src="./images/live/commerce-dynamic-badge-overlay-tablet.png" width="350" alt="Tablet"><br>🟢 **Passed** | <img src="./images/live/commerce-dynamic-badge-overlay-mobile.png" width="175" alt="Mobile"><br>🟢 **Passed** |
 
 ---
 
@@ -191,13 +191,13 @@ A lifestyle-focused design system with a scoped container architecture, high-fid
 
 <img src="./images/loan-application-calculator.png" width="350" alt="Original Image">
 
-#### Desktop (1920px) <br>❌ **Diff: 48.4%**<br>[View Diff](./images/diffs/finance-loan-application-calculator-desktop-diff.png)
+#### Desktop (1920px) <br>🟢 **Passed**
 
 <img src="./images/live/finance-loan-application-calculator-desktop.png" width="100%" alt="Desktop">
 
-|                                                                                               Tablet (768px)                                                                                               |                                                                                               Mobile (375px)                                                                                               |
-| :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: |
-| <img src="./images/live/finance-loan-application-calculator-tablet.png" width="350" alt="Tablet"><br>❌ **Diff: 65.0%**<br>[View Diff](./images/diffs/finance-loan-application-calculator-tablet-diff.png) | <img src="./images/live/finance-loan-application-calculator-mobile.png" width="175" alt="Mobile"><br>❌ **Diff: 84.6%**<br>[View Diff](./images/diffs/finance-loan-application-calculator-mobile-diff.png) |
+|                                                   Tablet (768px)                                                   |                                                   Mobile (375px)                                                   |
+| :----------------------------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------------------------: |
+| <img src="./images/live/finance-loan-application-calculator-tablet.png" width="350" alt="Tablet"><br>🟢 **Passed** | <img src="./images/live/finance-loan-application-calculator-mobile.png" width="175" alt="Mobile"><br>🟢 **Passed** |
 
 ---
 
@@ -305,13 +305,13 @@ A lifestyle-focused design system with a scoped container architecture, high-fid
 
 ### Image Choice
 
-#### Desktop (1920px) <br>❌ **Diff: 22.4%**<br>[View Diff](./images/diffs/forms-fragments--image-choice-desktop-diff.png)
+#### Desktop (1920px) <br>🟢 **Passed**
 
 <img src="./images/live/forms-fragments--image-choice-desktop.png" width="100%" alt="Desktop">
 
-|                                                                                         Tablet (768px)                                                                                         |                                                                                         Mobile (375px)                                                                                         |
-| :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: |
-| <img src="./images/live/forms-fragments--image-choice-tablet.png" width="350" alt="Tablet"><br>❌ **Diff: 43.2%**<br>[View Diff](./images/diffs/forms-fragments--image-choice-tablet-diff.png) | <img src="./images/live/forms-fragments--image-choice-mobile.png" width="175" alt="Mobile"><br>❌ **Diff: 67.2%**<br>[View Diff](./images/diffs/forms-fragments--image-choice-mobile-diff.png) |
+|                                                Tablet (768px)                                                |                                                Mobile (375px)                                                |
+| :----------------------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------------------: |
+| <img src="./images/live/forms-fragments--image-choice-tablet.png" width="350" alt="Tablet"><br>🟢 **Passed** | <img src="./images/live/forms-fragments--image-choice-mobile.png" width="175" alt="Mobile"><br>🟢 **Passed** |
 
 ---
 
@@ -573,9 +573,9 @@ Visually appealing fragments generated by Gemini.
 
 <img src="./images/live/gemini-generated-interactive-wizard-desktop.png" width="100%" alt="Desktop">
 
-|                                                   Tablet (768px)                                                   |                                                                                              Mobile (375px)                                                                                               |
-| :----------------------------------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: |
-| <img src="./images/live/gemini-generated-interactive-wizard-tablet.png" width="350" alt="Tablet"><br>🟢 **Passed** | <img src="./images/live/gemini-generated-interactive-wizard-mobile.png" width="175" alt="Mobile"><br>❌ **Diff: 1.2%**<br>[View Diff](./images/diffs/gemini-generated-interactive-wizard-mobile-diff.png) |
+|                                                   Tablet (768px)                                                   |                                                   Mobile (375px)                                                   |
+| :----------------------------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------------------------: |
+| <img src="./images/live/gemini-generated-interactive-wizard-tablet.png" width="350" alt="Tablet"><br>🟢 **Passed** | <img src="./images/live/gemini-generated-interactive-wizard-mobile.png" width="175" alt="Mobile"><br>🟢 **Passed** |
 
 ---
 
@@ -852,9 +852,9 @@ Prominent visuals, such as videos or banners, that capture attention and define 
 
 <img src="./images/live/layout-components-secondary-card-desktop.png" width="100%" alt="Desktop">
 
-|                                                                                           Tablet (768px)                                                                                            |                                                                                           Mobile (375px)                                                                                            |
-| :-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: |
-| <img src="./images/live/layout-components-secondary-card-tablet.png" width="350" alt="Tablet"><br>❌ **Diff: 1.0%**<br>[View Diff](./images/diffs/layout-components-secondary-card-tablet-diff.png) | <img src="./images/live/layout-components-secondary-card-mobile.png" width="175" alt="Mobile"><br>❌ **Diff: 3.0%**<br>[View Diff](./images/diffs/layout-components-secondary-card-mobile-diff.png) |
+|                                                 Tablet (768px)                                                  |                                                 Mobile (375px)                                                  |
+| :-------------------------------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------------------------: |
+| <img src="./images/live/layout-components-secondary-card-tablet.png" width="350" alt="Tablet"><br>🟢 **Passed** | <img src="./images/live/layout-components-secondary-card-mobile.png" width="175" alt="Mobile"><br>🟢 **Passed** |
 
 ---
 
