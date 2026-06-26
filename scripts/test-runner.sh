@@ -9,6 +9,9 @@ PROGRESS_SIGNAL_FILE="$(pwd)/.progress-signal"
 TESTS_PASSED=false
 EXIT_HANDLED=false
 
+SCRIPT_START_TIME=$(date +%s)
+SCRIPT_START_DATE=$(date)
+
 # Ensure scripts directory and System32 are in PATH
 export PATH="$(pwd)/scripts:$(pwd)/node_modules/.bin:$PATH"
 export PATH="$PATH:/c/Windows/System32"
@@ -168,6 +171,16 @@ handle_exit() {
     
     cleanup
     
+    SCRIPT_END_TIME=$(date +%s)
+    SCRIPT_END_DATE=$(date)
+    DURATION=$((SCRIPT_END_TIME - SCRIPT_START_TIME))
+    MINS=$((DURATION / 60))
+    SECS=$((DURATION % 60))
+    echo "======================================================"
+    echo " Script Finished at: $SCRIPT_END_DATE"
+    echo " Total Execution Time: ${MINS}m ${SECS}s"
+    echo "======================================================"
+
     if [ "$TESTS_PASSED" = true ]; then
         # Clean up transient logs and reports on successful execution
         rm -rf ldm_startup.log e2e-tests/playwright_output.log state.json \
@@ -270,6 +283,7 @@ fi
 
 echo "======================================================"
 echo " Starting Liferay Fragments Automated Test Runner "
+echo " Started at: $SCRIPT_START_DATE"
 echo " Target Liferay Tag/Prefix: $LIFERAY_TAG"
 if [ -n "$FILTER_PATTERN" ]; then echo " Test Filter: $FILTER_PATTERN"; fi
 if [ "$VERBOSE" = true ]; then echo " Verbose Mode: Enabled"; fi
