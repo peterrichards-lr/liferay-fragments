@@ -479,27 +479,7 @@ function buildPageElementTree(
           key: key,
           siteKey: globalSiteKey,
         },
-        fragmentInstance: {
-          fragmentReference: {
-            fragmentReferenceType: 'FragmentItemExternalReference',
-            externalReferenceCode: getFragmentERC(key, fragmentKeyToDir),
-            className: 'com.liferay.fragment.model.FragmentEntry',
-            scope: {
-              externalReferenceCode: 'L_GLOBAL',
-              type: 'Site',
-            },
-          },
-          fragmentConfigurationFieldValues: convertConfigToFieldValues(
-            {
-              ...resolvedConfig,
-              inputFieldId: fieldKey.startsWith('ObjectField_')
-                ? fieldKey
-                : `ObjectField_${fieldKey}`,
-            },
-            parentDir
-          ),
-          fragmentEditableElements: resolvedFields,
-        },
+        fragmentConfig: { ...resolvedConfig, inputFieldId: fieldKey.startsWith('ObjectField_') ? fieldKey : ObjectField_\ }, fragmentFields: resolvedFields,
       },
     };
     return element;
@@ -2478,19 +2458,7 @@ async function globalSetup(config) {
                   type: 'FormFragment',
                   definition: {
                     fieldKey: '',
-                    fragmentInstance: {
-                      fragmentReference: {
-                        fragmentReferenceType: 'FragmentItemExternalReference',
-                        externalReferenceCode: 'form-fragments-submit-button',
-                        className: 'com.liferay.fragment.model.FragmentEntry',
-                        scope: {
-                          externalReferenceCode: 'L_GLOBAL',
-                          type: 'Site',
-                        },
-                      },
-                      fragmentConfigurationFieldValues: {},
-                      fragmentEditableElements: [],
-                    },
+                    fragmentConfig: {}, fragmentFields: [],
                   },
                 },
               ],
@@ -2638,67 +2606,7 @@ async function globalSetup(config) {
                                           key: fragmentKey,
                                           siteKey: globalSiteKey,
                                         },
-                                        fragmentInstance: {
-                                          fragmentReference: {
-                                            fragmentReferenceType:
-                                              'FragmentItemExternalReference',
-                                            externalReferenceCode:
-                                              getFragmentERC(
-                                                fragmentKey,
-                                                fragmentKeyToDir
-                                              ),
-                                            className:
-                                              'com.liferay.fragment.model.FragmentEntry',
-                                            scope: {
-                                              externalReferenceCode: 'L_GLOBAL',
-                                              type: 'Site',
-                                            },
-                                          },
-                                          fragmentConfigurationFieldValues:
-                                            convertConfigToFieldValues(
-                                              {
-                                                ...seededConfigOverrides,
-                                                inputFieldId:
-                                                  fieldKey.startsWith(
-                                                    'ObjectField_'
-                                                  )
-                                                    ? fieldKey
-                                                    : `ObjectField_${fieldKey}`,
-                                              },
-                                              parentDir
-                                            ),
-                                          fragmentEditableElements: [],
-                                        },
-                                      },
-                                    },
-                                    {
-                                      type: 'FormFragment',
-                                      definition: {
-                                        type: 'FormFragment',
-                                        fieldKey: '',
-                                        fragment: {
-                                          key: 'submit-button',
-                                          siteKey: globalSiteKey,
-                                        },
-                                        fragmentInstance: {
-                                          fragmentReference: {
-                                            fragmentReferenceType:
-                                              'FragmentItemExternalReference',
-                                            externalReferenceCode:
-                                              getFragmentERC(
-                                                'submit-button',
-                                                fragmentKeyToDir
-                                              ),
-                                            className:
-                                              'com.liferay.fragment.model.FragmentEntry',
-                                            scope: {
-                                              externalReferenceCode: 'L_GLOBAL',
-                                              type: 'Site',
-                                            },
-                                          },
-                                          fragmentConfigurationFieldValues: {},
-                                          fragmentEditableElements: [],
-                                        },
+                                        fragmentConfig: {}, fragmentFields: [],
                                       },
                                     },
                                   ],

@@ -67,3 +67,5 @@ generated-test-pages.json
 # Scripts wrappers/dependencies
 /scripts/jq
 /scripts/node
+/e2e-tests/test-results/
+/e2e-tests/playwright-report/

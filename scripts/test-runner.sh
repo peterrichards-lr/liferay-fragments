@@ -710,8 +710,8 @@ cd e2e-tests
 
 if [ -n "$FILTER_PATTERN" ]; then
     export TEST_FILTER="$FILTER_PATTERN"
-    log_command "npx playwright test --grep \"$FILTER_PATTERN\""
-    npx playwright test --grep "$FILTER_PATTERN" > playwright_output.log 2>&1
+    log_command "npx playwright test --grep \"(?i)$FILTER_PATTERN\""
+    npx playwright test --grep "(?i)$FILTER_PATTERN" > playwright_output.log 2>&1
 else
     log_command "npx playwright test"
     npx playwright test > playwright_output.log 2>&1

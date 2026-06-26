@@ -1923,5 +1923,25 @@
     "type": "document",
     "id": 38472,
     "erc": "GRAVITY-RECOMMENDATION"
+  },
+  {
+    "type": "document",
+    "id": 36864,
+    "erc": "COFFEE-AUTH"
+  },
+  {
+    "type": "document",
+    "id": 36876,
+    "erc": "GRAVITY-RECOMMENDATION"
+  },
+  {
+    "type": "document",
+    "id": 37687,
+    "erc": "COFFEE-AUTH"
+  },
+  {
+    "type": "document",
+    "id": 37699,
+    "erc": "GRAVITY-RECOMMENDATION"
   }
 ]

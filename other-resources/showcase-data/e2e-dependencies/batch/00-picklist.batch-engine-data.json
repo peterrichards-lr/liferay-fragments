@@ -11,29 +11,7 @@
   "items": [
     {
       "externalReferenceCode": "INTERESTS_PICKLIST",
-      "name": "Interests",
-      "listTypeEntries": [
-        {
-          "externalReferenceCode": "TECH",
-          "key": "tech",
-          "name": "Technology"
-        },
-        {
-          "externalReferenceCode": "FINANCE",
-          "key": "finance",
-          "name": "Finance"
-        },
-        {
-          "externalReferenceCode": "HEALTH",
-          "key": "health",
-          "name": "Health & Wellness"
-        },
-        {
-          "externalReferenceCode": "EDUCATION",
-          "key": "education",
-          "name": "Education"
-        }
-      ]
+      "name": "Interests"
     }
   ]
 }

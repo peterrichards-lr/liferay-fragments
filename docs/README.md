@@ -1,329 +1,221 @@
 # Liferay Fragments Documentation
 
-A collection of robust, accessible, and responsive Liferay fragments for DXP
-platforms.
+Welcome to the documentation for the Liferay Fragments library.
 
-## 📋 Table of Contents
+## 📚 Table of Contents
 
-- [🚀 Deployment](#-deployment)
-- [Core Fragments](#core-fragments)
-- [Specialized Collections](#specialized-collections)
-- [🖼️ Visual Gallery](./gallery.md)
-- [📖 Recipes & Workflows](./recipes.md)
-- [⚙️ Prerequisites & Setup](./setup.md)
-- [📊 Bootstrap & Seed Data](./bootstrap-data.md)
-- [❓ Troubleshooting & FAQ](./troubleshooting.md)
-- [🛠️ Developer Resources](#-developer-resources)
+- **[⚙️ Setup & Deployment](./setup.md)**: Mandatory Liferay configurations and deployment instructions.
+- **[🖼️ Visual Gallery](./gallery.md)**: Browse screenshots of every fragment.
+- **[📖 Common Recipes](./recipes.md)**: Step-by-step workflows for combining fragments.
+- **[🎨 Theme Standards](./THEMES.md)**: Reference for cross-theme safe CSS tokens.
+- **[🔌 JSON WS Reference](./json-ws-reference.md)**: Useful legacy API endpoints.
+- **[❓ Troubleshooting & FAQ](./troubleshooting.md)**: Solutions to common issues.
+- **[🧪 Automated Testing](./automated-testing.md)**: E2E Testing architecture.
 
-## 🚀 Deployment
+## 🧩 Fragment Reference
 
-### Option 1: Automated Deployment (Recommended)
+### aura
 
-Use the provided `deploy-fragment-zips.sh` script to automate the deployment of
-your fragment and Language ZIPs.
+- [Aura - Final CTA Banner](./fragments/aura/aura-final-cta.md)
+- [Aura - Lookbook Row](./fragments/aura/aura-lookbook.md)
+- [Aura - Product Gallery](./fragments/aura/aura-product-gallery.md)
+- [Aura - Scoped Container](./fragments/aura/aura-scoped-container.md)
+- [Aura - USP Grid](./fragments/aura/aura-usp-grid.md)
 
-#### Usage
+### commerce
 
-```bash
-./deploy-fragment-zips.sh [TARGET_PATH] [--all | folder_name1 folder_name2 ...]
-```
+- [Dynamic Badge Overlay](./fragments/commerce/dynamic-badge-overlay.md)
+- [Purchased Products](./fragments/commerce/purchased-products.md)
 
-- **TARGET_PATH**: The root of a Liferay Workspace or a standalone Liferay
-  bundle.
-- **--all**: Deploys all ZIPs found in the `/zips` directory.
-- **folder_name**: Space-separated list of specific fragment or collection
-  folder names to deploy.
+### conditional-content
 
-#### Example
+- [Conditional Content](./fragments/conditional-content/conditional-content.md)
 
-```bash
-./deploy-fragment-zips.sh ~/liferay-workspace --all
-./deploy-fragment-zips.sh /opt/liferay gemini-generated master-page-background-colour
-```
+### content
 
-### Option 3: Showcase Data Deployment
+- [Content Map](./fragments/content/content-map.md)
+- [Service Card](./fragments/content/service-card.md)
+- [Service Icon](./fragments/content/service-icon.md)
+- [Service Link Button](./fragments/content/service-link-button.md)
 
-To demonstrate the data-driven capabilities of fragments like `Activity Heatmap`
-or `Object-Linked Chart`, you can deploy the sample showcase datasets.
+### dashboard-components
 
-**Note: Liferay 2025.Q4.10 or later is required for these datasets to function
-correctly due to site-scoping requirements.**
+- [Dashboard Container](./fragments/dashboard-components/dashboard-container.md)
+- [Dashboard Filter](./fragments/dashboard-components/dashboard-filter.md)
 
-```bash
-./deploy-fragment-zips.sh [TARGET_PATH] --showcase
-```
+### date-display
 
-This will deploy all showcase resources found in
-`other-resources/showcase-data/`.
+- [Date Display (Collection Display)](./fragments/date-display/date-display-collection-display.md)
+- [Date Display (Static)](./fragments/date-display/date-display-static.md)
 
-For a detailed guide on how to configure and utilize these seeded datasets to test and preview each fragment, see the [Bootstrap & Seed Data Guide](./bootstrap-data.md).
+### finance
 
-### Option 4: Manual Deployment
+- [Loan Application Calculator](./fragments/finance/loan-application-calculator.md)
+- [Loan Calculator](./fragments/finance/loan-calculator.md)
 
-1.  **Build the assets**: Run `./create-fragment-zips.sh` to generate the ZIP
-    files.
-2.  **Deploy Fragments**: Copy the correct version of the `.zip` files from `./zips/fragments/` to your Liferay instance's `/deploy` folder.
-    - **Liferay 2026.Q1+ (Latest)**: Copy `*-collection-min.zip`. These use `"dataType": "number"` and boolean literals for checkboxes, while numeric text/length fields use string representations.
-    - **Intermediate versions before 2026.Q1 (pre-2026.Q1)**: Copy `*-pre2026q1-min.zip`. These use `"dataType": "number"` but convert checkbox boolean values back to string representations.
-    - **Legacy versions before 2025.Q3 (pre-2025.Q3)**: Copy `*-pre2025q3-min.zip`. These convert `"dataType": "number"` to legacy `"int"` and use stringified default values for all fields.
-3.  **Deploy Language Overrides**: Copy the `-language-batch-cx.zip` files from
-    `./zips/language/` to your Liferay instance's `/osgi/client-extensions/`
-    folder.
-4.  **Deploy Special Resources**: Copy any `.zip` files from
-    `/other-resources/*/dist/` to your Liferay instance's
-    `/osgi/client-extensions/` folder.
+### form-fragments
 
-Liferay will automatically import the fragments and register the language
-overrides as Client Extensions.
+- [Address Autocomplete](./fragments/form-fragments/address-autocomplete.md)
+- [Autocomplete (Object)](<./fragments/form-fragments/autocomplete-(object).md>)
+- [Autocomplete (Picklist)](<./fragments/form-fragments/autocomplete-(picklist).md>)
+- [Color Swatches](./fragments/form-fragments/color-swatches.md)
+- [Confirmation Field](./fragments/form-fragments/confirmation-field.md)
+- [Currency Input](./fragments/form-fragments/currency-input.md)
+- [File Drop Zone](./fragments/form-fragments/file-drop-zone.md)
+- [Hidden Relationship](./fragments/form-fragments/hidden-relationship.md)
+- [Image Choice](./fragments/form-fragments/image-choice.md)
+- [Listbox Multiselect](./fragments/form-fragments/listbox-multiselect.md)
+- [OTP - Verification Code](./fragments/form-fragments/otp-input.md)
+- [Password Strength](./fragments/form-fragments/password-strength.md)
+- [Range Input](./fragments/form-fragments/range.md)
+- [Segmented Numeric Input](./fragments/form-fragments/segmented-numeric.md)
+- [Signature Pad](./fragments/form-fragments/signature-pad.md)
+- [Star Rating](./fragments/form-fragments/star-rating.md)
+- [Submit Button (Modified)](./fragments/form-fragments/submit-button.md)
+- [Toggle Switch](./fragments/form-fragments/toggle-switch.md)
+- [URL Populated Hidden Relationship](./fragments/form-fragments/url-populated-hidden-relationship.md)
+- [User Field](./fragments/form-fragments/user-field.md)
 
-### Custom Build Options
+### forms
 
-If you want to target a specific Virtual Instance or Site, set these environment
-variables before running `./create-fragment-zips.sh`:
+- [Form Populator](./fragments/forms/form-populator.md)
+- [Form Session ID](./fragments/forms/form-session-id.md)
+- [Generate Form Session ID](./fragments/forms/generate-form-session-id.md)
+- [Masthead Call To Action Form Header](./fragments/forms/masthead-call-to-action-form-header.md)
+- [Redirect Page](./fragments/forms/redirect-page.md)
+- [Refresh Page](./fragments/forms/refresh-page.md)
 
-- `COMPANY_WEB_ID`: The Web ID of the Virtual Instance (Defaults to `*` /
-  Global).
-- `GROUP_KEY`: The Site Friendly URL or Name (Ignored if `COMPANY_WEB_ID` is
-  `*`).
+### gemini-generated
 
----
+- [Activity Heatmap](./fragments/gemini-generated/activity-heatmap.md)
+- [AI Assistant Chat UI](./fragments/gemini-generated/ai-chat-ui.md)
+- [Animated Metric Counter](./fragments/gemini-generated/animated-metric-counter.md)
+- [Dynamic Collection Slider](./fragments/gemini-generated/dynamic-collection-slider.md)
+- [Dynamic Object Gallery](./fragments/gemini-generated/dynamic-object-gallery.md)
+- [Interactive Event Timeline](./fragments/gemini-generated/interactive-event-timeline.md)
+- [Interactive Wizard](./fragments/gemini-generated/interactive-wizard.md)
+- [Meta-Object Form](./fragments/gemini-generated/meta-object-form.md)
+- [Meta-Object Record View](./fragments/gemini-generated/meta-object-record-view.md)
+- [Meta-Object Table](./fragments/gemini-generated/meta-object-table.md)
+- [Modern Parallax Hero](./fragments/gemini-generated/modern-parallax-hero.md)
+- [Object-Linked Chart](./fragments/gemini-generated/object-linked-chart.md)
+- [Pricing Comparison Grid](./fragments/gemini-generated/pricing-comparison-grid.md)
+- [Radial KPI Gauge](./fragments/gemini-generated/radial-kpi-gauge.md)
+- [Search Overlay](./fragments/gemini-generated/search-overlay.md)
 
-## Core Fragments
+### header-components
 
-These fragments provide foundational utility and data display capabilities.
+- [Customer Registration (Deprecated)](./fragments/header-components/customer-registration.md)
+- [Linear Gradient Container (Custom)](<./fragments/header-components/linear-gradient-container-(custom).md>)
+- [Linear Gradient Container](./fragments/header-components/linear-gradient-container.md)
+- [Login and User Menu](./fragments/header-components/login-and-user-menu.md)
+- [Login Card (Deprecated)](./fragments/header-components/login-card.md)
+- [Logo](./fragments/header-components/logo.md)
+- [Lower Header Layout](./fragments/header-components/lower-header-layout.md)
+- [Master Page Header](./fragments/header-components/master-page-header.md)
+- [Navigation (Deprecated)](./fragments/header-components/navigation.md)
+- [Search Bar](./fragments/header-components/search-bar.md)
+- [Search Button](./fragments/header-components/search-button.md)
+- [Site Name](./fragments/header-components/site-name.md)
+- [User Bar](./fragments/header-components/user-bar.md)
+- [Vertical Bar](./fragments/header-components/vertical-bar.md)
 
-- **Commerce**
-  - [Dynamic Badge Overlay](./fragments/dynamic-badge-overlay.md)
-  - [Purchased Products](./fragments/purchased-products.md)
-  - [Collection Summary](./fragments/commerce.md)
-- **Content**
-  - [Content Map](./fragments/content-map.md)
-  - [Service Link Button](./fragments/service-link-button.md)
-  - [Collection Summary](./fragments/content.md)
-- **Form Utilities**
-  - [Form Populator](./fragments/form-populator.md)
-  - [Form Session ID](./fragments/form-session-id.md)
-  - [Generate Form Session ID](./fragments/generate-form-session-id.md)
-  - [Redirect Page](./fragments/redirect-page.md)
-  - [Refresh Page](./fragments/refresh-page.md)
-  - [Collection Summary](./fragments/forms.md)
-- **Form Field Enhancements**
-  - [Autocomplete (Object)](<./fragments/autocomplete-(object).md>)
-  - [Autocomplete (Picklist)](<./fragments/autocomplete-(picklist).md>)
-  - [Confirmation Field](./fragments/confirmation-field.md)
-  - [Hidden Relationship](./fragments/hidden-relationship.md)
-  - [Listbox Multiselect](./fragments/listbox-multiselect.md)
-  - [Range Input](./fragments/range.md)
-  - [Segmented Numeric](./fragments/segmented-numeric.md)
-  - [Star Rating](./fragments/star-rating.md)
-  - [Submit Button (Custom)](./fragments/submit-button.md)
-  - [Toggle Switch](./fragments/toggle-switch.md)
-  - [URL Populated Hidden Relationship](./fragments/url-populated-hidden-relationship.md)
-  - [User Field](./fragments/user-field.md)
-  - [Collection Summary](./fragments/form-fragments.md)
-- [Populated Form Fields](./fragments/populated-form-fields.md) (Persistence,
-  Derived Values)
-- [Liferay Iframer](./fragments/liferay-iframer.md)
-- [Meter Reading](./fragments/meter-reading.md) (DEPRECATED)
-- [Date Display](./fragments/date-display.md) (DEPRECATED)
+### hero-assets
 
-## Specialized Collections
+- [Hero Video](./fragments/hero-assets/hero-video.md)
+- [Overlay Background](./fragments/hero-assets/overlay-background.md)
 
-### Gemini Generated
+### layout-components
 
-A suite of high-fidelity, data-driven fragments designed for modern Liferay
-portals.
+- [Card Content](./fragments/layout-components/card-content.md)
+- [Grid Column](./fragments/layout-components/grid-column.md)
+- [Primary Card](./fragments/layout-components/primary-card.md)
+- [Secondary Card](./fragments/layout-components/secondary-card.md)
 
-- **Data Visualization**
-  - [Object-Linked Chart](./fragments/object-linked-chart.md)
-  - [Radial KPI Gauge](./fragments/radial-kpi-gauge.md)
-  - [Activity Heatmap](./fragments/activity-heatmap.md)
-- **Object Integration**
-  - [Meta-Object Table](./fragments/meta-object-table.md)
-  - [Meta-Object Form](./fragments/meta-object-form.md)
-  - [Meta-Object Record View](./fragments/meta-object-record-view.md)
-- **High-Fidelity UI**
-  - [Dynamic Collection Slider](./fragments/dynamic-collection-slider.md)
-  - [Dynamic Object Gallery](./fragments/dynamic-object-gallery.md)
-  - [Modern Parallax Hero](./fragments/modern-parallax-hero.md)
-  - [Interactive Event Timeline](./fragments/interactive-event-timeline.md)
-  - [Animated Metric Counter](./fragments/animated-metric-counter.md)
-  - [Pricing Comparison Grid](./fragments/pricing-comparison-grid.md)
-  - [AI Assistant Chat UI](./fragments/ai-chat-ui.md)
+### master-page-background-colour
 
-### Integration & Data
+- [Master Page Utilities](./fragments/master-page-background-colour/master-page-background-colour.md)
 
-- **Content Fragments**
-  - [Content Map](./fragments/content-map.md)
-  - [Service Card](./fragments/service-card.md)
-  - [Service Icon](./fragments/service-icon.md)
-  - [Service Link Button](./fragments/service-link-button.md)
-  - [Collection Summary](./fragments/content.md)
-- **Object Fragments**
-  - [Audit Button](./fragments/audit-button.md)
-  - [Comment](./fragments/comment.md)
-  - [Public Comments](./fragments/public-comments.md)
-  - [Collection Summary](./fragments/objects.md)
-- **Pulse Integration Fragments**
-  - [Campaign Initialiser](./fragments/campaign-initialiser.md)
-  - [Cookie Sniffer](./fragments/cookie-sniffer.md)
-  - [Custom Event Listener](./fragments/custom-event-listener.md)
-  - [Pulse Button](./fragments/pulse-button.md)
-  - [Collection Summary](./fragments/pulse.md) (Campaign Tracking)
-- **Finance Fragments**
-  - [Loan Application Calculator](./fragments/loan-application-calculator.md)
-  - [Loan Calculator](./fragments/loan-calculator.md)
-  - [Collection Summary](./fragments/finance.md)
+### meter-reading
 
-### Advanced UI & Interactivity
+- [Meter Reading](./fragments/meter-reading/meter-reading.md)
 
-- [Conditional Content](./fragments/conditional-content.md) (Outcome-based Drop
-  Zones)
-- **Tracker Fragments**
-  - [Tracker (Container)](./fragments/tracker.md)
-  - [Tracker Step](./fragments/tracker-step.md)
-  - [Collection Summary](./fragments/tracker.md) (Multi-step Process Indicators)
-- **Dashboard Components**
-  - [Dashboard Container](./fragments/dashboard-container.md)
-  - [Dashboard Filter](./fragments/dashboard-filter.md)
-  - [Collection Summary](./fragments/dashboard-components.md)
-- **Widget Modifiers**
-  - [Alerts Modifier](./fragments/alerts-modifier.md)
-  - [Collection Summary](./fragments/widget-modifiers.md) (Alerts/Announcements
-    Enhancements)
+### misc
 
-### Layout & Theme
+- [Back Button](./fragments/misc/back-button.md)
+- [Custom Tabs](./fragments/misc/custom-tabs.md)
+- [Customer Registration (Deprecated)](./fragments/misc/customer-registration.md)
+- [Dynamic Copyright](./fragments/misc/dynamic-copyright.md)
+- [Hide Control Menu](./fragments/misc/hide-control-menu.md)
+- [Icon Button](./fragments/misc/icon-button.md)
+- [Launch Analytics Cloud](./fragments/misc/launch-analytics-cloud.md)
+- [Modify My Profile Link](./fragments/misc/modify-my-profile-link.md)
+- [My Dashboard Link](./fragments/misc/my-dashboard-link.md)
+- [Trigger Ray](./fragments/misc/trigger-ray.md)
 
-- **Layout Components**
-  - [Primary Card](./fragments/primary-card.md)
-  - [Secondary Card](./fragments/secondary-card.md)
-  - [Card Content](./fragments/card-content.md)
-  - [Collection Summary](./fragments/layout-components.md)
-- **Header Components**
-  - [Logo](./fragments/logo.md)
-  - [Navigation](./fragments/navigation.md)
-  - [Login and User Menu](./fragments/login-and-user-menu.md)
-  - [Search Bar](./fragments/search-bar.md)
-  - [Search Button](./fragments/search-button.md)
-  - [Site Name](./fragments/site-name.md)
-  - [User Bar](./fragments/user-bar.md)
-  - [Vertical Bar](./fragments/vertical-bar.md)
-  - [Master Page Header](./fragments/master-page-header.md)
-  - [Lower Header Layout](./fragments/lower-header-layout.md)
-  - [Linear Gradient Container](./fragments/linear-gradient-container.md)
-  - [Linear Gradient Container (Custom)](<./fragments/linear-gradient-container-(custom).md>)
-  - [Collection Summary](./fragments/header-components.md)
-- **Responsive Menu Fragments**
-  - [Responsive Menu](./fragments/responsive-menu.md)
-  - [Responsive Side Menu](./fragments/responsive-side-menu.md)
-  - [Logo Zone](./fragments/logo-zone.md)
-  - [Zone Layout](./fragments/zone-layout.md)
-  - [Collection Summary](./fragments/responsive-menus.md)
-- **Hero Assets**
-  - [Hero Video](./fragments/hero-video.md)
-  - [Overlay Background](./fragments/overlay-background.md)
-  - [Collection Summary](./fragments/hero-assets.md)
-- [Master Page Utilities](./fragments/master-page-background-colour.md) (Global
-  BG Control)
+### modern-intranet
 
-### User & Account
+- [App Launcher](./fragments/modern-intranet/app-launcher.md)
+- [Course Progress Card](./fragments/modern-intranet/course-progress-card.md)
+- [File Repository List](./fragments/modern-intranet/file-repository-list.md)
+- [Intranet Feed](./fragments/modern-intranet/intranet-feed.md)
+- [News Hero](./fragments/modern-intranet/news-hero.md)
+- [Stat Card](./fragments/modern-intranet/stat-card.md)
+- [Welcome Banner](./fragments/modern-intranet/welcome-banner.md)
 
-- **Profile Fragments** (DEPRECATED)
-  - [Profile Summary](./fragments/profile-summary.md)
-  - [Profile Detail](./fragments/profile-detail.md)
-  - [Customer Profile](./fragments/customer-profile.md)
-  - [PDF Export](./fragments/pdf-export.md)
-  - [Collection Summary](./fragments/profile.md)
-- [Commerce Fragments](./fragments/commerce.md)
-- **User & Account Fragments**
-  - [My Rights](./fragments/my-rights.md)
-  - [Ping](./fragments/ping.md)
-  - [Who Am I](./fragments/who-am-i.md)
-  - [Collection Summary](./fragments/user-account.md)
+### objects
 
----
+- [Audit Button](./fragments/objects/audit-button.md)
+- [Object Comment](./fragments/objects/comment.md)
+- [Public Comments](./fragments/objects/public-comments.md)
 
-## 🛠️ Developer Resources
+### populated-form-fields
 
-For more information on developing Liferay fragments, refer to the following
-official Liferay Learn guides:
+- [Populate Select](./fragments/populated-form-fields/populate-select.md)
+- [Populated Range](./fragments/populated-form-fields/populated-range.md)
+- [Store Default Value](./fragments/populated-form-fields/store-default-value.md)
+- [Store Form Field Values](./fragments/populated-form-fields/store-form-field-values.md)
+- [Text Derived Value](./fragments/populated-form-fields/text-derived-value.md)
 
-- **[Fragment-Specific Tags and Attributes Reference](https://learn.liferay.com/w/dxp/development/developing-page-fragments/reference/fragment-specific-tags-and-attributes-reference)**:
-  A comprehensive guide to the `data-lfr` attributes and FreeMarker variables
-  available within fragments.
-- **[Fragment Configuration Types Reference](https://learn.liferay.com/w/dxp/development/developing-page-fragments/reference/fragment-configuration-types-reference)**:
-  Details on all available configuration field types (text, checkbox, select,
-  etc.) for `configuration.json`.
-- **[Page Fragment Editor Interface Reference](https://learn.liferay.com/w/dxp/development/developing-page-fragments/reference/page-fragment-editor-interface-reference)**:
-  An overview of the built-in Page Editor interface and how it interacts with
-  your fragment code.
+### profile
 
-### 🛠 Fragment Development Standards
+- [Customer Profile](./fragments/profile/customer-profile.md)
+- [PDF Export (Dashboard) (Deprecated)](<./fragments/profile/pdf-export-(dashboard).md>)
+- [PDF Export (Deprecated)](./fragments/profile/pdf-export.md)
+- [Profile Detail (Dashboard)](<./fragments/profile/profile-detail-(dashboard).md>)
+- [Profile Detail (Deprecated)](./fragments/profile/profile-detail.md)
+- [Profile Summary (Dashboard)](<./fragments/profile/profile-summary-(dashboard).md>)
+- [Profile Summary (Deprecated)](./fragments/profile/profile-summary.md)
 
-To maintain high quality and compatibility across all fragments, all
-contributions must adhere to these mandatory standards:
+### pulse
 
-#### 1. Structure & Metadata
+- [Campaign Initialiser](./fragments/pulse/campaign-initialiser.md)
+- [Cookie Sniffer](./fragments/pulse/cookie-sniffer.md)
+- [Custom Event Listener](./fragments/pulse/custom-event-listener.md)
+- [Pulse Button](./fragments/pulse/pulse-button.md)
 
-- **Explicit Paths**: `fragment.json` MUST explicitly define `htmlPath`,
-  `jsPath`, `cssPath`, and `configurationPath`. Defaults are not permitted.
-- **JS Encapsulation**: All JavaScript must be encapsulated in an initialization
-  function (e.g., `initMyFragment()`). Top-level `return` statements are
-  strictly prohibited.
-- **Site-Scoping**: Fragments using Object APIs must support Site-scoped data
-  via dynamic discovery (see `gemini.md` for the pattern).
+### remote-app-utilities
 
-#### 2. Configuration & Dependencies
+- [Liferay Iframer](./fragments/remote-app-utilities/liferay-iframer.md)
 
-- **Grouped Fields**: Fields must be logically grouped into named field sets
-  (e.g., Data, Behavior, Style).
-- **Dependency Scope**: Dependent fields and their source fields MUST reside
-  within the same field set. Liferay does not support cross-field-set
-  dependencies.
-- **Holistic Renaming**: Renaming a field in `configuration.json` requires
-  immediate, coordinated updates to all references in `index.js`, `index.html`,
-  and `index.ftl`.
+### responsive-menus
 
-#### 3. Localization (i18n)
+- [Logo Zone](./fragments/responsive-menus/logo-zone.md)
+- [Responsive Menu](./fragments/responsive-menus/responsive-menu.md)
+- [Responsive Side Menu](./fragments/responsive-menus/responsive-side-menu.md)
+- [Zone Layout](./fragments/responsive-menus/zone-layout.md)
 
-- **Comprehensive Coverage**: ALL labels and descriptions in
-  `configuration.json` (including `validValues`) MUST have a corresponding entry
-  in `Language_en_US.properties`.
-- **No Lazy Keys**: Properties where the key equals the value (e.g.,
-  `lfr.key=lfr.key`) are prohibited and will fail the audit.
-- **Mandatory Descriptions**: Every configuration field MUST have a meaningful
-  description to assist content creators in the Page Editor.
+### tracker
 
-#### 4. Styling & Quality Gate
+- [Tracker Step](./fragments/tracker/tracker-step.md)
+- [Tracker (Container)](./fragments/tracker/tracker.md)
 
-- **Safe Tokens**: Use CSS variables defined in [THEMES.md](./THEMES.md). Avoid
-  hardcoded hex colors.
-- **Linter Enforcement**: Every change must pass the local audit script before
-  submission:
-  ```bash
-  npm run lint
-  ```
+### user-account
 
----
+- [My Rights](./fragments/user-account/my-rights.md)
+- [Ping](./fragments/user-account/ping.md)
+- [Who Am I](./fragments/user-account/who-am-i.md)
 
-## 📚 Resources
+### widget-modifiers
 
-- [🖼️ Visual Gallery](./gallery.md) - A screenshot-first guide to every
-  fragment.
-- [📖 Recipes & Workflows](./recipes.md) - Step-by-step guides for common
-  fragment combinations.
-- [⚙️ Prerequisites & Setup](./setup.md) - Mandatory Liferay configurations
-  (SAP, FreeMarker).
-- [❓ Troubleshooting & FAQ](./troubleshooting.md) - Common issues and
-  solutions.
-- [🎬 Videos](./videos/README.md) - Video tutorials and walkthroughs.
-- **Miscellaneous Fragments**
-  - [Custom Tabs](./fragments/custom-tabs.md)
-  - [Icon Button](./fragments/icon-button.md)
-  - [Launch Analytics Cloud](./fragments/launch-analytics-cloud.md)
-  - [Back Button](./fragments/back-button.md)
-  - [Cookie Sniffer](./fragments/cookie-sniffer.md)
-  - [Dynamic Copyright](./fragments/dynamic-copyright.md)
-  - [Trigger Ray](./fragments/trigger-ray.md)
-  - [Hide Control Menu](./fragments/hide-control-menu.md)
-  - [Collection Summary](./fragments/miscellaneous.md)
+- [Alerts Modifier](./fragments/widget-modifiers/alerts-modifier.md)
