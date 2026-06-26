@@ -54,6 +54,8 @@ generated-test-pages.json
 /scratch/
 /temp_extract/
 /temp_inspect/
+/temp_extract_zip/
+/temp_inspect_zip/
 
 # E2E test runner local state and cache
 /e2e-tests/resolved_base_url.txt
@@ -64,7 +66,3 @@ generated-test-pages.json
 # Scripts wrappers/dependencies
 /scripts/jq
 /scripts/node
-
-/scratch/
-/temp_extract/
-/temp_inspect/
