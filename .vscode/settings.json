@@ -1,0 +1,20 @@
+{
+  "json.schemas": [
+    {
+      "fileMatch": ["**/collection.json"],
+      "url": "./schemas/collection.schema.json"
+    },
+    {
+      "fileMatch": ["**/fragment.json"],
+      "url": "./schemas/fragment.schema.json"
+    },
+    {
+      "fileMatch": ["**/configuration.json"],
+      "url": "./schemas/configuration.schema.json"
+    },
+    {
+      "fileMatch": ["**/test-data.json"],
+      "url": "./schemas/test-data.schema.json"
+    }
+  ]
+}

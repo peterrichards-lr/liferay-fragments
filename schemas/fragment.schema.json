@@ -1,0 +1,68 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Liferay Fragment Schema",
+  "type": "object",
+  "required": [
+    "name",
+    "type",
+    "htmlPath",
+    "jsPath",
+    "cssPath",
+    "configurationPath"
+  ],
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "The name of the fragment"
+    },
+    "type": {
+      "type": "string",
+      "enum": ["component", "section", "input"],
+      "description": "The fragment type (component, section, or input)"
+    },
+    "htmlPath": {
+      "type": "string",
+      "description": "Path to the HTML/FTL template file (e.g., index.ftl)"
+    },
+    "jsPath": {
+      "type": "string",
+      "description": "Path to the JavaScript file (e.g., index.js)"
+    },
+    "cssPath": {
+      "type": "string",
+      "description": "Path to the CSS file (e.g., index.css)"
+    },
+    "configurationPath": {
+      "type": "string",
+      "description": "Path to the configuration file (e.g., configuration.json)"
+    },
+    "icon": {
+      "type": "string",
+      "description": "Liferay icon definition"
+    },
+    "thumbnail": {
+      "type": "string",
+      "description": "Legacy thumbnail file name"
+    },
+    "thumbnailPath": {
+      "type": "string",
+      "description": "Path to the thumbnail image file (e.g., thumbnail.png)"
+    },
+    "description": {
+      "type": "string",
+      "description": "A description of the fragment"
+    },
+    "typeOptions": {
+      "type": "object",
+      "properties": {
+        "fieldTypes": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      },
+      "additionalProperties": false,
+      "description": "Form input fragment support options"
+    }
+  },
+  "additionalProperties": false
+}

@@ -1,0 +1,41 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Liferay Fragment Test Data Schema",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "excludeFromGallery": {
+      "type": "boolean",
+      "description": "Exclude this fragment from the visual gallery screenshots"
+    },
+    "pageConfig": {
+      "type": "object",
+      "description": "Custom configuration overrides for the seeded test page"
+    },
+    "pageLayout": {
+      "type": "object",
+      "description": "Layout configuration for the fragment container"
+    },
+    "requiredObjects": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Objects definitions required by this fragment"
+    },
+    "documents": {
+      "type": "array",
+      "description": "Documents and Media files to upload and seed"
+    },
+    "webContentStructures": {
+      "type": "array",
+      "description": "Web Content Structures to create"
+    },
+    "webContentArticles": {
+      "type": "array",
+      "description": "Web Content Articles to create"
+    },
+    "collections": {
+      "type": "array",
+      "description": "Collection providers/elements to seed"
+    }
+  }
+}

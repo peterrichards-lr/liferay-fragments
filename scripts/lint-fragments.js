@@ -7,72 +7,35 @@ const { generateGallery } = require('./generate-gallery');
 const ajv = new Ajv({ allErrors: true });
 
 // --- SCHEMAS ---
-const fragmentSchema = {
-  type: 'object',
-  required: [
-    'name',
-    'type',
-    'htmlPath',
-    'jsPath',
-    'cssPath',
-    'configurationPath',
-  ],
-  properties: {
-    name: { type: 'string' },
-    type: { type: 'string' },
-    htmlPath: { type: 'string' },
-    jsPath: { type: 'string' },
-    cssPath: { type: 'string' },
-    configurationPath: { type: 'string' },
-  },
-};
-
-const configurationSchema = {
-  type: 'object',
-  properties: {
-    fieldSets: {
-      type: 'array',
-      items: {
-        type: 'object',
-        required: ['fields'],
-        properties: {
-          fields: {
-            type: 'array',
-            items: {
-              type: 'object',
-              required: ['name', 'type', 'label'],
-              properties: {
-                name: { type: 'string' },
-                type: { type: 'string' },
-                label: { type: 'string' },
-                description: { type: 'string' },
-              },
-            },
-          },
-        },
-      },
-    },
-  },
-};
-
-const testDataSchema = {
-  type: 'object',
-  additionalProperties: false,
-  properties: {
-    excludeFromGallery: { type: 'boolean' },
-    pageConfig: { type: 'object' },
-    pageLayout: { type: 'object' },
-    requiredObjects: { type: 'array', items: { type: 'string' } },
-    documents: { type: 'array' },
-    webContentStructures: { type: 'array' },
-    webContentArticles: { type: 'array' },
-    collections: { type: 'array' },
-  },
-};
+const fragmentSchema = JSON.parse(
+  fs.readFileSync(
+    path.join(__dirname, '../schemas/fragment.schema.json'),
+    'utf8'
+  )
+);
+const configurationSchema = JSON.parse(
+  fs.readFileSync(
+    path.join(__dirname, '../schemas/configuration.schema.json'),
+    'utf8'
+  )
+);
+const testDataSchema = JSON.parse(
+  fs.readFileSync(
+    path.join(__dirname, '../schemas/test-data.schema.json'),
+    'utf8'
+  )
+);
+const collectionSchema = JSON.parse(
+  fs.readFileSync(
+    path.join(__dirname, '../schemas/collection.schema.json'),
+    'utf8'
+  )
+);
 
 const validateFragment = ajv.compile(fragmentSchema);
 const validateConfiguration = ajv.compile(configurationSchema);
 const validateTestData = ajv.compile(testDataSchema);
+const validateCollection = ajv.compile(collectionSchema);
 
 // --- UTILS ---
 const getLangKeys = (dir) => {
@@ -189,6 +152,23 @@ collectionsList.forEach((file) => {
     logError(
       collName,
       `Failed to validate collection directory structure: ${e.message}`
+    );
+  }
+
+  // Validate collection.json content
+  try {
+    const content = fs.readFileSync(file, 'utf8');
+    const json = JSON.parse(content);
+    if (!validateCollection(json)) {
+      logError(
+        collName,
+        `collection.json schema mismatch: ${ajv.errorsText(validateCollection.errors)}`
+      );
+    }
+  } catch (e) {
+    logError(
+      collName,
+      `Failed to parse/validate collection.json: ${e.message}`
     );
   }
 });
