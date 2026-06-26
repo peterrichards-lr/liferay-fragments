@@ -55,8 +55,24 @@ const configurationSchema = {
   },
 };
 
+const testDataSchema = {
+  type: 'object',
+  additionalProperties: false,
+  properties: {
+    excludeFromGallery: { type: 'boolean' },
+    pageConfig: { type: 'object' },
+    pageLayout: { type: 'object' },
+    requiredObjects: { type: 'array', items: { type: 'string' } },
+    documents: { type: 'array' },
+    webContentStructures: { type: 'array' },
+    webContentArticles: { type: 'array' },
+    collections: { type: 'array' },
+  },
+};
+
 const validateFragment = ajv.compile(fragmentSchema);
 const validateConfiguration = ajv.compile(configurationSchema);
+const validateTestData = ajv.compile(testDataSchema);
 
 // --- UTILS ---
 const getLangKeys = (dir) => {
@@ -504,6 +520,21 @@ fragmentFiles.forEach((file) => {
         fragmentName,
         `Could not parse configuration.json: ${e.message}`
       );
+    }
+  }
+
+  const testDataPath = path.join(dir, 'test-data.json');
+  if (fs.existsSync(testDataPath)) {
+    try {
+      const testDataJson = JSON.parse(fs.readFileSync(testDataPath, 'utf8'));
+      if (!validateTestData(testDataJson)) {
+        logError(
+          fragmentName,
+          `test-data.json schema mismatch: ${ajv.errorsText(validateTestData.errors)}`
+        );
+      }
+    } catch (e) {
+      logError(fragmentName, `Could not parse test-data.json: ${e.message}`);
     }
   }
 
