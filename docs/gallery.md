@@ -22,6 +22,8 @@ A lifestyle-focused design system with a scoped container architecture, high-fid
 | :---------------------------------------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------------------------------------: |
 | <img src="./images/live/aura-design-system-aura-final-cta-banner-tablet.png" width="350" alt="Tablet"><br>🟢 **Passed** | <img src="./images/live/aura-design-system-aura-final-cta-banner-mobile.png" width="175" alt="Mobile"><br>🟢 **Passed** |
 
+[Detailed Documentation](./fragments/aura/aura-final-cta.md)
+
 ---
 
 ### Aura - Lookbook Row
@@ -37,6 +39,8 @@ A lifestyle-focused design system with a scoped container architecture, high-fid
 |                                                   Tablet (768px)                                                    |                                                   Mobile (375px)                                                    |
 | :-----------------------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------------------: |
 | <img src="./images/live/aura-design-system-aura-lookbook-row-tablet.png" width="350" alt="Tablet"><br>🟢 **Passed** | <img src="./images/live/aura-design-system-aura-lookbook-row-mobile.png" width="175" alt="Mobile"><br>🟢 **Passed** |
+
+[Detailed Documentation](./fragments/aura/aura-lookbook.md)
 
 ---
 
@@ -54,6 +58,8 @@ A lifestyle-focused design system with a scoped container architecture, high-fid
 | :--------------------------------------------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------------------------------------------: |
 | <img src="./images/live/aura-design-system-aura-product-gallery-tablet.png" width="350" alt="Tablet"><br>🟢 **Passed** | <img src="./images/live/aura-design-system-aura-product-gallery-mobile.png" width="175" alt="Mobile"><br>🟢 **Passed** |
 
+[Detailed Documentation](./fragments/aura/aura-product-gallery.md)
+
 ---
 
 ### Aura - USP Grid
@@ -69,6 +75,8 @@ A lifestyle-focused design system with a scoped container architecture, high-fid
 |                                                 Tablet (768px)                                                  |                                                 Mobile (375px)                                                  |
 | :-------------------------------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------------------------: |
 | <img src="./images/live/aura-design-system-aura-usp-grid-tablet.png" width="350" alt="Tablet"><br>🟢 **Passed** | <img src="./images/live/aura-design-system-aura-usp-grid-mobile.png" width="175" alt="Mobile"><br>🟢 **Passed** |
+
+[Detailed Documentation](./fragments/aura/aura-usp-grid.md)
 
 ---
 
@@ -92,6 +100,8 @@ A lifestyle-focused design system with a scoped container architecture, high-fid
 | :-----------------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------------: |
 | <img src="./images/live/commerce-dynamic-badge-overlay-tablet.png" width="350" alt="Tablet"><br>🟢 **Passed** | <img src="./images/live/commerce-dynamic-badge-overlay-mobile.png" width="175" alt="Mobile"><br>🟢 **Passed** |
 
+[Detailed Documentation](./fragments/commerce/dynamic-badge-overlay.md)
+
 ---
 
 ## Content
@@ -110,6 +120,8 @@ A lifestyle-focused design system with a scoped container architecture, high-fid
 | :------------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------------: |
 | <img src="./images/live/content-content-map-tablet.png" width="350" alt="Tablet"><br>🟢 **Passed** | <img src="./images/live/content-content-map-mobile.png" width="175" alt="Mobile"><br>🟢 **Passed** |
 
+[Detailed Documentation](./fragments/content/content-map.md)
+
 ---
 
 ### Service Card
@@ -121,6 +133,8 @@ A lifestyle-focused design system with a scoped container architecture, high-fid
 |                                           Tablet (768px)                                            |                                           Mobile (375px)                                            |
 | :-------------------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------------: |
 | <img src="./images/live/content-service-card-tablet.png" width="350" alt="Tablet"><br>🟢 **Passed** | <img src="./images/live/content-service-card-mobile.png" width="175" alt="Mobile"><br>🟢 **Passed** |
+
+[Detailed Documentation](./fragments/content/service-card.md)
 
 ---
 
@@ -134,6 +148,8 @@ A lifestyle-focused design system with a scoped container architecture, high-fid
 | :-------------------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------------: |
 | <img src="./images/live/content-service-icon-tablet.png" width="350" alt="Tablet"><br>🟢 **Passed** | <img src="./images/live/content-service-icon-mobile.png" width="175" alt="Mobile"><br>🟢 **Passed** |
 
+[Detailed Documentation](./fragments/content/service-icon.md)
+
 ---
 
 ### Service Link Button
@@ -145,6 +161,8 @@ A lifestyle-focused design system with a scoped container architecture, high-fid
 |                                               Tablet (768px)                                               |                                               Mobile (375px)                                               |
 | :--------------------------------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------------------------------: |
 | <img src="./images/live/content-service-link-button-tablet.png" width="350" alt="Tablet"><br>🟢 **Passed** | <img src="./images/live/content-service-link-button-mobile.png" width="175" alt="Mobile"><br>🟢 **Passed** |
+
+[Detailed Documentation](./fragments/content/service-link-button.md)
 
 ---
 
@@ -165,6 +183,8 @@ A lifestyle-focused design system with a scoped container architecture, high-fid
 | :-----------------------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------------------: |
 | <img src="./images/live/heathcare-portal-dashboard-container-tablet.png" width="350" alt="Tablet"><br>🟢 **Passed** | <img src="./images/live/heathcare-portal-dashboard-container-mobile.png" width="175" alt="Mobile"><br>🟢 **Passed** |
 
+[Detailed Documentation](./fragments/dashboard-components/dashboard-container.md)
+
 ---
 
 ### Dashboard Filter
@@ -176,6 +196,8 @@ A lifestyle-focused design system with a scoped container architecture, high-fid
 |                                                  Tablet (768px)                                                  |                                                  Mobile (375px)                                                  |
 | :--------------------------------------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------------------------------------: |
 | <img src="./images/live/heathcare-portal-dashboard-filter-tablet.png" width="350" alt="Tablet"><br>🟢 **Passed** | <img src="./images/live/heathcare-portal-dashboard-filter-mobile.png" width="175" alt="Mobile"><br>🟢 **Passed** |
+
+[Detailed Documentation](./fragments/dashboard-components/dashboard-filter.md)
 
 ---
 
@@ -199,6 +221,8 @@ A lifestyle-focused design system with a scoped container architecture, high-fid
 | :----------------------------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------------------------: |
 | <img src="./images/live/finance-loan-application-calculator-tablet.png" width="350" alt="Tablet"><br>🟢 **Passed** | <img src="./images/live/finance-loan-application-calculator-mobile.png" width="175" alt="Mobile"><br>🟢 **Passed** |
 
+[Detailed Documentation](./fragments/finance/loan-application-calculator.md)
+
 ---
 
 ### Loan Calculator
@@ -215,6 +239,8 @@ A lifestyle-focused design system with a scoped container architecture, high-fid
 | :----------------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------------: |
 | <img src="./images/live/finance-loan-calculator-tablet.png" width="350" alt="Tablet"><br>🟢 **Passed** | <img src="./images/live/finance-loan-calculator-mobile.png" width="175" alt="Mobile"><br>🟢 **Passed** |
 
+[Detailed Documentation](./fragments/finance/loan-calculator.md)
+
 ---
 
 ## Forms (Fragments)
@@ -229,6 +255,8 @@ A lifestyle-focused design system with a scoped container architecture, high-fid
 | :------------------------------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------------------------------: |
 | <img src="./images/live/forms-fragments--address-autocomplete-tablet.png" width="350" alt="Tablet"><br>🟢 **Passed** | <img src="./images/live/forms-fragments--address-autocomplete-mobile.png" width="175" alt="Mobile"><br>🟢 **Passed** |
 
+[Detailed Documentation](./fragments/form-fragments/address-autocomplete.md)
+
 ---
 
 ### Autocomplete (Object)
@@ -240,6 +268,8 @@ A lifestyle-focused design system with a scoped container architecture, high-fid
 |                                                    Tablet (768px)                                                    |                                                    Mobile (375px)                                                    |
 | :------------------------------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------------------------------: |
 | <img src="./images/live/forms-fragments--autocomplete-object--tablet.png" width="350" alt="Tablet"><br>🟢 **Passed** | <img src="./images/live/forms-fragments--autocomplete-object--mobile.png" width="175" alt="Mobile"><br>🟢 **Passed** |
+
+[Detailed Documentation](<./fragments/form-fragments/autocomplete-(object).md>)
 
 ---
 
@@ -253,6 +283,8 @@ A lifestyle-focused design system with a scoped container architecture, high-fid
 | :--------------------------------------------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------------------------------------------: |
 | <img src="./images/live/forms-fragments--autocomplete-picklist--tablet.png" width="350" alt="Tablet"><br>🟢 **Passed** | <img src="./images/live/forms-fragments--autocomplete-picklist--mobile.png" width="175" alt="Mobile"><br>🟢 **Passed** |
 
+[Detailed Documentation](<./fragments/form-fragments/autocomplete-(picklist).md>)
+
 ---
 
 ### Color Swatches
@@ -264,6 +296,8 @@ A lifestyle-focused design system with a scoped container architecture, high-fid
 |                                                 Tablet (768px)                                                 |                                                 Mobile (375px)                                                 |
 | :------------------------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------------------------: |
 | <img src="./images/live/forms-fragments--color-swatches-tablet.png" width="350" alt="Tablet"><br>🟢 **Passed** | <img src="./images/live/forms-fragments--color-swatches-mobile.png" width="175" alt="Mobile"><br>🟢 **Passed** |
+
+[Detailed Documentation](./fragments/form-fragments/color-swatches.md)
 
 ---
 
@@ -277,6 +311,8 @@ A lifestyle-focused design system with a scoped container architecture, high-fid
 | :----------------------------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------------------------: |
 | <img src="./images/live/forms-fragments--confirmation-field-tablet.png" width="350" alt="Tablet"><br>🟢 **Passed** | <img src="./images/live/forms-fragments--confirmation-field-mobile.png" width="175" alt="Mobile"><br>🟢 **Passed** |
 
+[Detailed Documentation](./fragments/form-fragments/confirmation-field.md)
+
 ---
 
 ### Currency Masked Input
@@ -288,6 +324,8 @@ A lifestyle-focused design system with a scoped container architecture, high-fid
 |                                                    Tablet (768px)                                                     |                                                    Mobile (375px)                                                     |
 | :-------------------------------------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------------------------------: |
 | <img src="./images/live/forms-fragments--currency-masked-input-tablet.png" width="350" alt="Tablet"><br>🟢 **Passed** | <img src="./images/live/forms-fragments--currency-masked-input-mobile.png" width="175" alt="Mobile"><br>🟢 **Passed** |
+
+[Detailed Documentation](./fragments/form-fragments/currency-input.md)
 
 ---
 
@@ -301,6 +339,8 @@ A lifestyle-focused design system with a scoped container architecture, high-fid
 | :------------------------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------------------------: |
 | <img src="./images/live/forms-fragments--file-drop-zone-tablet.png" width="350" alt="Tablet"><br>🟢 **Passed** | <img src="./images/live/forms-fragments--file-drop-zone-mobile.png" width="175" alt="Mobile"><br>🟢 **Passed** |
 
+[Detailed Documentation](./fragments/form-fragments/file-drop-zone.md)
+
 ---
 
 ### Image Choice
@@ -312,6 +352,8 @@ A lifestyle-focused design system with a scoped container architecture, high-fid
 |                                                Tablet (768px)                                                |                                                Mobile (375px)                                                |
 | :----------------------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------------------: |
 | <img src="./images/live/forms-fragments--image-choice-tablet.png" width="350" alt="Tablet"><br>🟢 **Passed** | <img src="./images/live/forms-fragments--image-choice-mobile.png" width="175" alt="Mobile"><br>🟢 **Passed** |
+
+[Detailed Documentation](./fragments/form-fragments/image-choice.md)
 
 ---
 
@@ -329,6 +371,8 @@ A lifestyle-focused design system with a scoped container architecture, high-fid
 | :-----------------------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------------------: |
 | <img src="./images/live/forms-fragments--listbox-multiselect-tablet.png" width="350" alt="Tablet"><br>🟢 **Passed** | <img src="./images/live/forms-fragments--listbox-multiselect-mobile.png" width="175" alt="Mobile"><br>🟢 **Passed** |
 
+[Detailed Documentation](./fragments/form-fragments/listbox-multiselect.md)
+
 ---
 
 ### OTP - Verification Code
@@ -340,6 +384,8 @@ A lifestyle-focused design system with a scoped container architecture, high-fid
 |                                                    Tablet (768px)                                                     |                                                    Mobile (375px)                                                     |
 | :-------------------------------------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------------------------------: |
 | <img src="./images/live/forms-fragments--otp-verification-code-tablet.png" width="350" alt="Tablet"><br>🟢 **Passed** | <img src="./images/live/forms-fragments--otp-verification-code-mobile.png" width="175" alt="Mobile"><br>🟢 **Passed** |
+
+[Detailed Documentation](./fragments/form-fragments/otp-input.md)
 
 ---
 
@@ -353,6 +399,8 @@ A lifestyle-focused design system with a scoped container architecture, high-fid
 | :---------------------------------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------------------------------: |
 | <img src="./images/live/forms-fragments--password-strength-tablet.png" width="350" alt="Tablet"><br>🟢 **Passed** | <img src="./images/live/forms-fragments--password-strength-mobile.png" width="175" alt="Mobile"><br>🟢 **Passed** |
 
+[Detailed Documentation](./fragments/form-fragments/password-strength.md)
+
 ---
 
 ### Range
@@ -364,6 +412,8 @@ A lifestyle-focused design system with a scoped container architecture, high-fid
 |                                            Tablet (768px)                                             |                                            Mobile (375px)                                             |
 | :---------------------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------------------: |
 | <img src="./images/live/forms-fragments--range-tablet.png" width="350" alt="Tablet"><br>🟢 **Passed** | <img src="./images/live/forms-fragments--range-mobile.png" width="175" alt="Mobile"><br>🟢 **Passed** |
+
+[Detailed Documentation](./fragments/form-fragments/range.md)
 
 ---
 
@@ -381,6 +431,8 @@ A lifestyle-focused design system with a scoped container architecture, high-fid
 | :---------------------------------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------------------------------: |
 | <img src="./images/live/forms-fragments--segmented-numeric-tablet.png" width="350" alt="Tablet"><br>🟢 **Passed** | <img src="./images/live/forms-fragments--segmented-numeric-mobile.png" width="175" alt="Mobile"><br>🟢 **Passed** |
 
+[Detailed Documentation](./fragments/form-fragments/segmented-numeric.md)
+
 ---
 
 ### Signature Pad
@@ -392,6 +444,8 @@ A lifestyle-focused design system with a scoped container architecture, high-fid
 |                                                Tablet (768px)                                                 |                                                Mobile (375px)                                                 |
 | :-----------------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------------: |
 | <img src="./images/live/forms-fragments--signature-pad-tablet.png" width="350" alt="Tablet"><br>🟢 **Passed** | <img src="./images/live/forms-fragments--signature-pad-mobile.png" width="175" alt="Mobile"><br>🟢 **Passed** |
+
+[Detailed Documentation](./fragments/form-fragments/signature-pad.md)
 
 ---
 
@@ -409,6 +463,8 @@ A lifestyle-focused design system with a scoped container architecture, high-fid
 | :---------------------------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------------------------: |
 | <img src="./images/live/forms-fragments--star-rating-tablet.png" width="350" alt="Tablet"><br>🟢 **Passed** | <img src="./images/live/forms-fragments--star-rating-mobile.png" width="175" alt="Mobile"><br>🟢 **Passed** |
 
+[Detailed Documentation](./fragments/form-fragments/star-rating.md)
+
 ---
 
 ### Submit Button (Confirmation)
@@ -420,6 +476,8 @@ A lifestyle-focused design system with a scoped container architecture, high-fid
 |                                                       Tablet (768px)                                                        |                                                       Mobile (375px)                                                        |
 | :-------------------------------------------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------------------------------------: |
 | <img src="./images/live/forms-fragments--submit-button-confirmation--tablet.png" width="350" alt="Tablet"><br>🟢 **Passed** | <img src="./images/live/forms-fragments--submit-button-confirmation--mobile.png" width="175" alt="Mobile"><br>🟢 **Passed** |
+
+[Detailed Documentation](./fragments/form-fragments/submit-button.md)
 
 ---
 
@@ -437,6 +495,8 @@ A lifestyle-focused design system with a scoped container architecture, high-fid
 | :-----------------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------------: |
 | <img src="./images/live/forms-fragments--toggle-switch-tablet.png" width="350" alt="Tablet"><br>🟢 **Passed** | <img src="./images/live/forms-fragments--toggle-switch-mobile.png" width="175" alt="Mobile"><br>🟢 **Passed** |
 
+[Detailed Documentation](./fragments/form-fragments/toggle-switch.md)
+
 ---
 
 ### User Attribute
@@ -448,6 +508,8 @@ A lifestyle-focused design system with a scoped container architecture, high-fid
 |                                                 Tablet (768px)                                                 |                                                 Mobile (375px)                                                 |
 | :------------------------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------------------------: |
 | <img src="./images/live/forms-fragments--user-attribute-tablet.png" width="350" alt="Tablet"><br>🟢 **Passed** | <img src="./images/live/forms-fragments--user-attribute-mobile.png" width="175" alt="Mobile"><br>🟢 **Passed** |
+
+[Detailed Documentation](./fragments/form-fragments/user-field.md)
 
 ---
 
@@ -469,6 +531,8 @@ A lifestyle-focused design system with a scoped container architecture, high-fid
 | :----------------------------------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------------------------------: |
 | <img src="./images/live/forms-masthead-call-to-action-form-holder-tablet.png" width="350" alt="Tablet"><br>🟢 **Passed** | <img src="./images/live/forms-masthead-call-to-action-form-holder-mobile.png" width="175" alt="Mobile"><br>🟢 **Passed** |
 
+[Detailed Documentation](./fragments/forms/masthead-call-to-action-form-header.md)
+
 ---
 
 ## Gemini Generated
@@ -489,6 +553,8 @@ Visually appealing fragments generated by Gemini.
 | :--------------------------------------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------------------------------------: |
 | <img src="./images/live/gemini-generated-activity-heatmap-tablet.png" width="350" alt="Tablet"><br>🟢 **Passed** | <img src="./images/live/gemini-generated-activity-heatmap-mobile.png" width="175" alt="Mobile"><br>🟢 **Passed** |
 
+[Detailed Documentation](./fragments/gemini-generated/activity-heatmap.md)
+
 ---
 
 ### AI Assistant Chat UI
@@ -500,6 +566,8 @@ Visually appealing fragments generated by Gemini.
 |                                                    Tablet (768px)                                                    |                                                    Mobile (375px)                                                    |
 | :------------------------------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------------------------------: |
 | <img src="./images/live/gemini-generated-ai-assistant-chat-ui-tablet.png" width="350" alt="Tablet"><br>🟢 **Passed** | <img src="./images/live/gemini-generated-ai-assistant-chat-ui-mobile.png" width="175" alt="Mobile"><br>🟢 **Passed** |
+
+[Detailed Documentation](./fragments/gemini-generated/ai-chat-ui.md)
 
 ---
 
@@ -517,6 +585,8 @@ Visually appealing fragments generated by Gemini.
 | :---------------------------------------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------------------------------------: |
 | <img src="./images/live/gemini-generated-animated-metric-counter-tablet.png" width="350" alt="Tablet"><br>🟢 **Passed** | <img src="./images/live/gemini-generated-animated-metric-counter-mobile.png" width="175" alt="Mobile"><br>🟢 **Passed** |
 
+[Detailed Documentation](./fragments/gemini-generated/animated-metric-counter.md)
+
 ---
 
 ### Dynamic Collection Slider
@@ -532,6 +602,8 @@ Visually appealing fragments generated by Gemini.
 |                                                      Tablet (768px)                                                       |                                                      Mobile (375px)                                                       |
 | :-----------------------------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------------------------: |
 | <img src="./images/live/gemini-generated-dynamic-collection-slider-tablet.png" width="350" alt="Tablet"><br>🟢 **Passed** | <img src="./images/live/gemini-generated-dynamic-collection-slider-mobile.png" width="175" alt="Mobile"><br>🟢 **Passed** |
+
+[Detailed Documentation](./fragments/gemini-generated/dynamic-collection-slider.md)
 
 ---
 
@@ -549,6 +621,8 @@ Visually appealing fragments generated by Gemini.
 | :--------------------------------------------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------------------------------------------: |
 | <img src="./images/live/gemini-generated-dynamic-object-gallery-tablet.png" width="350" alt="Tablet"><br>🟢 **Passed** | <img src="./images/live/gemini-generated-dynamic-object-gallery-mobile.png" width="175" alt="Mobile"><br>🟢 **Passed** |
 
+[Detailed Documentation](./fragments/gemini-generated/dynamic-object-gallery.md)
+
 ---
 
 ### Interactive Event Timeline
@@ -565,6 +639,8 @@ Visually appealing fragments generated by Gemini.
 | :------------------------------------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------------------------------------: |
 | <img src="./images/live/gemini-generated-interactive-event-timeline-tablet.png" width="350" alt="Tablet"><br>🟢 **Passed** | <img src="./images/live/gemini-generated-interactive-event-timeline-mobile.png" width="175" alt="Mobile"><br>🟢 **Passed** |
 
+[Detailed Documentation](./fragments/gemini-generated/interactive-event-timeline.md)
+
 ---
 
 ### Interactive Wizard
@@ -576,6 +652,8 @@ Visually appealing fragments generated by Gemini.
 |                                                   Tablet (768px)                                                   |                                                   Mobile (375px)                                                   |
 | :----------------------------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------------------------: |
 | <img src="./images/live/gemini-generated-interactive-wizard-tablet.png" width="350" alt="Tablet"><br>🟢 **Passed** | <img src="./images/live/gemini-generated-interactive-wizard-mobile.png" width="175" alt="Mobile"><br>🟢 **Passed** |
+
+[Detailed Documentation](./fragments/gemini-generated/interactive-wizard.md)
 
 ---
 
@@ -593,6 +671,8 @@ Visually appealing fragments generated by Gemini.
 | :--------------------------------------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------------------------------------: |
 | <img src="./images/live/gemini-generated-meta-object-form-tablet.png" width="350" alt="Tablet"><br>🟢 **Passed** | <img src="./images/live/gemini-generated-meta-object-form-mobile.png" width="175" alt="Mobile"><br>🟢 **Passed** |
 
+[Detailed Documentation](./fragments/gemini-generated/meta-object-form.md)
+
 ---
 
 ### Meta-Object Record View
@@ -608,6 +688,8 @@ Visually appealing fragments generated by Gemini.
 |                                                     Tablet (768px)                                                      |                                                     Mobile (375px)                                                      |
 | :---------------------------------------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------------------------------------: |
 | <img src="./images/live/gemini-generated-meta-object-record-view-tablet.png" width="350" alt="Tablet"><br>🟢 **Passed** | <img src="./images/live/gemini-generated-meta-object-record-view-mobile.png" width="175" alt="Mobile"><br>🟢 **Passed** |
+
+[Detailed Documentation](./fragments/gemini-generated/meta-object-record-view.md)
 
 ---
 
@@ -630,6 +712,8 @@ Visually appealing fragments generated by Gemini.
 | :---------------------------------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------------------------------: |
 | <img src="./images/live/gemini-generated-meta-object-table-tablet.png" width="350" alt="Tablet"><br>🟢 **Passed** | <img src="./images/live/gemini-generated-meta-object-table-mobile.png" width="175" alt="Mobile"><br>🟢 **Passed** |
 
+[Detailed Documentation](./fragments/gemini-generated/meta-object-table.md)
+
 ---
 
 ### Modern Parallax Hero
@@ -650,6 +734,8 @@ Visually appealing fragments generated by Gemini.
 | :------------------------------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------------------------------: |
 | <img src="./images/live/gemini-generated-modern-parallax-hero-tablet.png" width="350" alt="Tablet"><br>🟢 **Passed** | <img src="./images/live/gemini-generated-modern-parallax-hero-mobile.png" width="175" alt="Mobile"><br>🟢 **Passed** |
 
+[Detailed Documentation](./fragments/gemini-generated/modern-parallax-hero.md)
+
 ---
 
 ### Object-Linked Chart
@@ -665,6 +751,8 @@ Visually appealing fragments generated by Gemini.
 |                                                   Tablet (768px)                                                    |                                                   Mobile (375px)                                                    |
 | :-----------------------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------------------: |
 | <img src="./images/live/gemini-generated-object-linked-chart-tablet.png" width="350" alt="Tablet"><br>🟢 **Passed** | <img src="./images/live/gemini-generated-object-linked-chart-mobile.png" width="175" alt="Mobile"><br>🟢 **Passed** |
+
+[Detailed Documentation](./fragments/gemini-generated/object-linked-chart.md)
 
 ---
 
@@ -682,6 +770,8 @@ Visually appealing fragments generated by Gemini.
 | :---------------------------------------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------------------------------------: |
 | <img src="./images/live/gemini-generated-pricing-comparison-grid-tablet.png" width="350" alt="Tablet"><br>🟢 **Passed** | <img src="./images/live/gemini-generated-pricing-comparison-grid-mobile.png" width="175" alt="Mobile"><br>🟢 **Passed** |
 
+[Detailed Documentation](./fragments/gemini-generated/pricing-comparison-grid.md)
+
 ---
 
 ### Radial KPI Gauge
@@ -698,6 +788,8 @@ Visually appealing fragments generated by Gemini.
 | :--------------------------------------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------------------------------------: |
 | <img src="./images/live/gemini-generated-radial-kpi-gauge-tablet.png" width="350" alt="Tablet"><br>🟢 **Passed** | <img src="./images/live/gemini-generated-radial-kpi-gauge-mobile.png" width="175" alt="Mobile"><br>🟢 **Passed** |
 
+[Detailed Documentation](./fragments/gemini-generated/radial-kpi-gauge.md)
+
 ---
 
 ### Modern Search Overlay
@@ -709,6 +801,8 @@ Visually appealing fragments generated by Gemini.
 |                                                    Tablet (768px)                                                     |                                                    Mobile (375px)                                                     |
 | :-------------------------------------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------------------------------: |
 | <img src="./images/live/gemini-generated-modern-search-overlay-tablet.png" width="350" alt="Tablet"><br>🟢 **Passed** | <img src="./images/live/gemini-generated-modern-search-overlay-mobile.png" width="175" alt="Mobile"><br>🟢 **Passed** |
+
+[Detailed Documentation](./fragments/gemini-generated/search-overlay.md)
 
 ---
 
@@ -728,6 +822,8 @@ Visually appealing fragments generated by Gemini.
 | :------------------------------------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------------------------------------: |
 | <img src="./images/live/header-components-linear-gradient-container-tablet.png" width="350" alt="Tablet"><br>🟢 **Passed** | <img src="./images/live/header-components-linear-gradient-container-mobile.png" width="175" alt="Mobile"><br>🟢 **Passed** |
 
+[Detailed Documentation](<./fragments/header-components/linear-gradient-container-(custom).md>)
+
 ---
 
 ### Site Logo
@@ -744,6 +840,8 @@ Visually appealing fragments generated by Gemini.
 | :--------------------------------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------------------------------: |
 | <img src="./images/live/header-components-site-logo-tablet.png" width="350" alt="Tablet"><br>🟢 **Passed** | <img src="./images/live/header-components-site-logo-mobile.png" width="175" alt="Mobile"><br>🟢 **Passed** |
 
+[Detailed Documentation](./fragments/header-components/logo.md)
+
 ---
 
 ### Site Name
@@ -755,6 +853,8 @@ Visually appealing fragments generated by Gemini.
 |                                               Tablet (768px)                                               |                                               Mobile (375px)                                               |
 | :--------------------------------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------------------------------: |
 | <img src="./images/live/header-components-site-name-tablet.png" width="350" alt="Tablet"><br>🟢 **Passed** | <img src="./images/live/header-components-site-name-mobile.png" width="175" alt="Mobile"><br>🟢 **Passed** |
+
+[Detailed Documentation](./fragments/header-components/site-name.md)
 
 ---
 
@@ -774,6 +874,8 @@ Visually appealing fragments generated by Gemini.
 | :-----------------------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------------------: |
 | <img src="./images/live/header-components-master-page-header-tablet.png" width="350" alt="Tablet"><br>🟢 **Passed** | <img src="./images/live/header-components-master-page-header-mobile.png" width="175" alt="Mobile"><br>🟢 **Passed** |
 
+[Detailed Documentation](./fragments/header-components/master-page-header.md)
+
 ---
 
 ## Hero Assets
@@ -790,6 +892,8 @@ Prominent visuals, such as videos or banners, that capture attention and define 
 | :-----------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------: |
 | <img src="./images/live/hero-assets-banner-video-tablet.png" width="350" alt="Tablet"><br>🟢 **Passed** | <img src="./images/live/hero-assets-banner-video-mobile.png" width="175" alt="Mobile"><br>🟢 **Passed** |
 
+[Detailed Documentation](./fragments/hero-assets/hero-video.md)
+
 ---
 
 ### Overlay Background
@@ -805,6 +909,8 @@ Prominent visuals, such as videos or banners, that capture attention and define 
 |                                                Tablet (768px)                                                 |                                                Mobile (375px)                                                 |
 | :-----------------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------------: |
 | <img src="./images/live/hero-assets-overlay-background-tablet.png" width="350" alt="Tablet"><br>🟢 **Passed** | <img src="./images/live/hero-assets-overlay-background-mobile.png" width="175" alt="Mobile"><br>🟢 **Passed** |
+
+[Detailed Documentation](./fragments/hero-assets/overlay-background.md)
 
 ---
 
@@ -824,6 +930,8 @@ Prominent visuals, such as videos or banners, that capture attention and define 
 | :-----------------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------------: |
 | <img src="./images/live/layout-components-card-content-tablet.png" width="350" alt="Tablet"><br>🟢 **Passed** | <img src="./images/live/layout-components-card-content-mobile.png" width="175" alt="Mobile"><br>🟢 **Passed** |
 
+[Detailed Documentation](./fragments/layout-components/card-content.md)
+
 ---
 
 ### Primary Card
@@ -839,6 +947,8 @@ Prominent visuals, such as videos or banners, that capture attention and define 
 |                                                Tablet (768px)                                                 |                                                Mobile (375px)                                                 |
 | :-----------------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------------: |
 | <img src="./images/live/layout-components-primary-card-tablet.png" width="350" alt="Tablet"><br>🟢 **Passed** | <img src="./images/live/layout-components-primary-card-mobile.png" width="175" alt="Mobile"><br>🟢 **Passed** |
+
+[Detailed Documentation](./fragments/layout-components/primary-card.md)
 
 ---
 
@@ -856,6 +966,8 @@ Prominent visuals, such as videos or banners, that capture attention and define 
 | :-------------------------------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------------------------: |
 | <img src="./images/live/layout-components-secondary-card-tablet.png" width="350" alt="Tablet"><br>🟢 **Passed** | <img src="./images/live/layout-components-secondary-card-mobile.png" width="175" alt="Mobile"><br>🟢 **Passed** |
 
+[Detailed Documentation](./fragments/layout-components/secondary-card.md)
+
 ---
 
 ## Meter Reading
@@ -869,6 +981,8 @@ Prominent visuals, such as videos or banners, that capture attention and define 
 |                                               Tablet (768px)                                               |                                               Mobile (375px)                                               |
 | :--------------------------------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------------------------------: |
 | <img src="./images/live/meter-reading-meter-reading-tablet.png" width="350" alt="Tablet"><br>🟢 **Passed** | <img src="./images/live/meter-reading-meter-reading-mobile.png" width="175" alt="Mobile"><br>🟢 **Passed** |
+
+[Detailed Documentation](./fragments/meter-reading/meter-reading.md)
 
 ---
 
@@ -884,6 +998,8 @@ Prominent visuals, such as videos or banners, that capture attention and define 
 | :------------------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------------------: |
 | <img src="./images/live/miscellaneous-back-button-tablet.png" width="350" alt="Tablet"><br>🟢 **Passed** | <img src="./images/live/miscellaneous-back-button-mobile.png" width="175" alt="Mobile"><br>🟢 **Passed** |
 
+[Detailed Documentation](./fragments/misc/back-button.md)
+
 ---
 
 ### Custom Tabs
@@ -895,6 +1011,8 @@ Prominent visuals, such as videos or banners, that capture attention and define 
 |                                              Tablet (768px)                                              |                                              Mobile (375px)                                              |
 | :------------------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------------------: |
 | <img src="./images/live/miscellaneous-custom-tabs-tablet.png" width="350" alt="Tablet"><br>🟢 **Passed** | <img src="./images/live/miscellaneous-custom-tabs-mobile.png" width="175" alt="Mobile"><br>🟢 **Passed** |
+
+[Detailed Documentation](./fragments/misc/custom-tabs.md)
 
 ---
 
@@ -912,6 +1030,8 @@ Prominent visuals, such as videos or banners, that capture attention and define 
 | :------------------------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------------------------: |
 | <img src="./images/live/miscellaneous-dynamic-copyright-tablet.png" width="350" alt="Tablet"><br>🟢 **Passed** | <img src="./images/live/miscellaneous-dynamic-copyright-mobile.png" width="175" alt="Mobile"><br>🟢 **Passed** |
 
+[Detailed Documentation](./fragments/misc/dynamic-copyright.md)
+
 ---
 
 ### Icon Button
@@ -928,6 +1048,8 @@ Prominent visuals, such as videos or banners, that capture attention and define 
 | :------------------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------------------: |
 | <img src="./images/live/miscellaneous-icon-button-tablet.png" width="350" alt="Tablet"><br>🟢 **Passed** | <img src="./images/live/miscellaneous-icon-button-mobile.png" width="175" alt="Mobile"><br>🟢 **Passed** |
 
+[Detailed Documentation](./fragments/misc/icon-button.md)
+
 ---
 
 ### Launch Analytics Cloud
@@ -939,6 +1061,8 @@ Prominent visuals, such as videos or banners, that capture attention and define 
 |                                                   Tablet (768px)                                                    |                                                   Mobile (375px)                                                    |
 | :-----------------------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------------------: |
 | <img src="./images/live/miscellaneous-launch-analytics-cloud-tablet.png" width="350" alt="Tablet"><br>🟢 **Passed** | <img src="./images/live/miscellaneous-launch-analytics-cloud-mobile.png" width="175" alt="Mobile"><br>🟢 **Passed** |
+
+[Detailed Documentation](./fragments/misc/launch-analytics-cloud.md)
 
 ---
 
@@ -952,6 +1076,8 @@ Prominent visuals, such as videos or banners, that capture attention and define 
 | :-----------------------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------------------: |
 | <img src="./images/live/miscellaneous-modify-my-profile-link-tablet.png" width="350" alt="Tablet"><br>🟢 **Passed** | <img src="./images/live/miscellaneous-modify-my-profile-link-mobile.png" width="175" alt="Mobile"><br>🟢 **Passed** |
 
+[Detailed Documentation](./fragments/misc/modify-my-profile-link.md)
+
 ---
 
 ### My Dashboard Link
@@ -963,6 +1089,8 @@ Prominent visuals, such as videos or banners, that capture attention and define 
 |                                                 Tablet (768px)                                                 |                                                 Mobile (375px)                                                 |
 | :------------------------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------------------------: |
 | <img src="./images/live/miscellaneous-my-dashboard-link-tablet.png" width="350" alt="Tablet"><br>🟢 **Passed** | <img src="./images/live/miscellaneous-my-dashboard-link-mobile.png" width="175" alt="Mobile"><br>🟢 **Passed** |
+
+[Detailed Documentation](./fragments/misc/my-dashboard-link.md)
 
 ---
 
@@ -980,6 +1108,8 @@ A collection of high-fidelity fragments for constructing modern corporate intran
 | :---------------------------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------------------------: |
 | <img src="./images/live/modern-intranet-app-launcher-tablet.png" width="350" alt="Tablet"><br>🟢 **Passed** | <img src="./images/live/modern-intranet-app-launcher-mobile.png" width="175" alt="Mobile"><br>🟢 **Passed** |
 
+[Detailed Documentation](./fragments/modern-intranet/app-launcher.md)
+
 ---
 
 ### Course Progress Card
@@ -991,6 +1121,8 @@ A collection of high-fidelity fragments for constructing modern corporate intran
 |                                                   Tablet (768px)                                                    |                                                   Mobile (375px)                                                    |
 | :-----------------------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------------------: |
 | <img src="./images/live/modern-intranet-course-progress-card-tablet.png" width="350" alt="Tablet"><br>🟢 **Passed** | <img src="./images/live/modern-intranet-course-progress-card-mobile.png" width="175" alt="Mobile"><br>🟢 **Passed** |
+
+[Detailed Documentation](./fragments/modern-intranet/course-progress-card.md)
 
 ---
 
@@ -1004,6 +1136,8 @@ A collection of high-fidelity fragments for constructing modern corporate intran
 | :-----------------------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------------------: |
 | <img src="./images/live/modern-intranet-file-repository-list-tablet.png" width="350" alt="Tablet"><br>🟢 **Passed** | <img src="./images/live/modern-intranet-file-repository-list-mobile.png" width="175" alt="Mobile"><br>🟢 **Passed** |
 
+[Detailed Documentation](./fragments/modern-intranet/file-repository-list.md)
+
 ---
 
 ### Intranet Feed
@@ -1015,6 +1149,8 @@ A collection of high-fidelity fragments for constructing modern corporate intran
 |                                                Tablet (768px)                                                |                                                Mobile (375px)                                                |
 | :----------------------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------------------: |
 | <img src="./images/live/modern-intranet-intranet-feed-tablet.png" width="350" alt="Tablet"><br>🟢 **Passed** | <img src="./images/live/modern-intranet-intranet-feed-mobile.png" width="175" alt="Mobile"><br>🟢 **Passed** |
+
+[Detailed Documentation](./fragments/modern-intranet/intranet-feed.md)
 
 ---
 
@@ -1028,6 +1164,8 @@ A collection of high-fidelity fragments for constructing modern corporate intran
 | :------------------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------------------: |
 | <img src="./images/live/modern-intranet-news-hero-tablet.png" width="350" alt="Tablet"><br>🟢 **Passed** | <img src="./images/live/modern-intranet-news-hero-mobile.png" width="175" alt="Mobile"><br>🟢 **Passed** |
 
+[Detailed Documentation](./fragments/modern-intranet/news-hero.md)
+
 ---
 
 ### Stat Card
@@ -1040,6 +1178,8 @@ A collection of high-fidelity fragments for constructing modern corporate intran
 | :------------------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------------------: |
 | <img src="./images/live/modern-intranet-stat-card-tablet.png" width="350" alt="Tablet"><br>🟢 **Passed** | <img src="./images/live/modern-intranet-stat-card-mobile.png" width="175" alt="Mobile"><br>🟢 **Passed** |
 
+[Detailed Documentation](./fragments/modern-intranet/stat-card.md)
+
 ---
 
 ### Welcome Banner
@@ -1051,6 +1191,8 @@ A collection of high-fidelity fragments for constructing modern corporate intran
 |                                                Tablet (768px)                                                 |                                                Mobile (375px)                                                 |
 | :-----------------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------------: |
 | <img src="./images/live/modern-intranet-welcome-banner-tablet.png" width="350" alt="Tablet"><br>🟢 **Passed** | <img src="./images/live/modern-intranet-welcome-banner-mobile.png" width="175" alt="Mobile"><br>🟢 **Passed** |
+
+[Detailed Documentation](./fragments/modern-intranet/welcome-banner.md)
 
 ---
 
@@ -1065,6 +1207,8 @@ A collection of high-fidelity fragments for constructing modern corporate intran
 |                                           Tablet (768px)                                            |                                           Mobile (375px)                                            |
 | :-------------------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------------: |
 | <img src="./images/live/objects-audit-button-tablet.png" width="350" alt="Tablet"><br>🟢 **Passed** | <img src="./images/live/objects-audit-button-mobile.png" width="175" alt="Mobile"><br>🟢 **Passed** |
+
+[Detailed Documentation](./fragments/objects/audit-button.md)
 
 ---
 
@@ -1082,6 +1226,8 @@ A collection of high-fidelity fragments for constructing modern corporate intran
 | :--------------------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------------------: |
 | <img src="./images/live/objects-comment-tablet.png" width="350" alt="Tablet"><br>🟢 **Passed** | <img src="./images/live/objects-comment-mobile.png" width="175" alt="Mobile"><br>🟢 **Passed** |
 
+[Detailed Documentation](./fragments/objects/comment.md)
+
 ---
 
 ### View Comments
@@ -1097,6 +1243,8 @@ A collection of high-fidelity fragments for constructing modern corporate intran
 |                                            Tablet (768px)                                            |                                            Mobile (375px)                                            |
 | :--------------------------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------------------------: |
 | <img src="./images/live/objects-view-comments-tablet.png" width="350" alt="Tablet"><br>🟢 **Passed** | <img src="./images/live/objects-view-comments-mobile.png" width="175" alt="Mobile"><br>🟢 **Passed** |
+
+[Detailed Documentation](./fragments/objects/public-comments.md)
 
 ---
 
@@ -1116,6 +1264,8 @@ A collection of high-fidelity fragments for constructing modern corporate intran
 | :------------------------------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------------------------------: |
 | <img src="./images/live/populated-form-fields-populated-range-tablet.png" width="350" alt="Tablet"><br>🟢 **Passed** | <img src="./images/live/populated-form-fields-populated-range-mobile.png" width="175" alt="Mobile"><br>🟢 **Passed** |
 
+[Detailed Documentation](./fragments/populated-form-fields/populated-range.md)
+
 ---
 
 ## Pulse
@@ -1129,6 +1279,8 @@ A collection of high-fidelity fragments for constructing modern corporate intran
 |                                          Tablet (768px)                                           |                                          Mobile (375px)                                           |
 | :-----------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------: |
 | <img src="./images/live/pulse-pulse-button-tablet.png" width="350" alt="Tablet"><br>🟢 **Passed** | <img src="./images/live/pulse-pulse-button-mobile.png" width="175" alt="Mobile"><br>🟢 **Passed** |
+
+[Detailed Documentation](./fragments/pulse/pulse-button.md)
 
 ---
 
@@ -1150,6 +1302,8 @@ A collection of high-fidelity fragments for constructing modern corporate intran
 | :-------------------------------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------------------------: |
 | <img src="./images/live/responsive-menus-responsive-menu-tablet.png" width="350" alt="Tablet"><br>🟢 **Passed** | <img src="./images/live/responsive-menus-responsive-menu-mobile.png" width="175" alt="Mobile"><br>🟢 **Passed** |
 
+[Detailed Documentation](./fragments/responsive-menus/responsive-menu.md)
+
 ---
 
 ### Responsive Side Menu
@@ -1168,6 +1322,8 @@ A collection of high-fidelity fragments for constructing modern corporate intran
 | :------------------------------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------------------------------: |
 | <img src="./images/live/responsive-menus-responsive-side-menu-tablet.png" width="350" alt="Tablet"><br>🟢 **Passed** | <img src="./images/live/responsive-menus-responsive-side-menu-mobile.png" width="175" alt="Mobile"><br>🟢 **Passed** |
 
+[Detailed Documentation](./fragments/responsive-menus/responsive-side-menu.md)
+
 ---
 
 ## User Account
@@ -1181,5 +1337,7 @@ A collection of high-fidelity fragments for constructing modern corporate intran
 |                                            Tablet (768px)                                             |                                            Mobile (375px)                                             |
 | :---------------------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------------------: |
 | <img src="./images/live/user-account-my-rights-tablet.png" width="350" alt="Tablet"><br>🟢 **Passed** | <img src="./images/live/user-account-my-rights-mobile.png" width="175" alt="Mobile"><br>🟢 **Passed** |
+
+[Detailed Documentation](./fragments/user-account/my-rights.md)
 
 ---
