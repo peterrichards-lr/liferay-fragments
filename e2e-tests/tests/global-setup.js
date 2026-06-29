@@ -421,18 +421,22 @@ function buildPageElementTree(
       const val = config[k];
       if (typeof val === 'string') {
         let replacedStr = val;
+        // Check exact match first
         if (assetMap[val]) {
-          replacedStr = assetMap[val].toString();
+          resolvedConfig[k] = assetMap[val];
         } else {
+          let replacedStr = val;
+          // Check substring matches for stringified JSON (like optionsJSON in image-choice)
           Object.keys(assetMap).forEach((assetKey) => {
             if (replacedStr.includes(assetKey)) {
+              // Note: using string split/join to support all environments for replaceAll
               replacedStr = replacedStr
                 .split(assetKey)
                 .join(assetMap[assetKey].toString());
             }
           });
+          resolvedConfig[k] = replacedStr;
         }
-        resolvedConfig[k] = replacedStr;
       } else {
         resolvedConfig[k] = val;
       }

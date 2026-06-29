@@ -14,7 +14,18 @@
   ],
   "pageConfig": {
     "fragmentConfig": {
-      "optionsJSON": "[{\"label\": \"Coffee\", \"value\": \"coffee\", \"imageERC\": \"COFFEE-AUTH\"}, {\"label\": \"Gravity\", \"value\": \"gravity\", \"imageERC\": \"GRAVITY-RECOMMENDATION\"}]"
+      "optionsJSON": "[{\"label\": \"Coffee\", \"value\": \"coffee\", \"imageUrl\": \"COFFEE-AUTH\"}, {\"label\": \"Gravity\", \"value\": \"gravity\", \"imageUrl\": \"GRAVITY-RECOMMENDATION\"}]"
     }
+  },
+  "pageLayout": {
+    "type": "FormContainer",
+    "mappedObjectERC": "CAMPAIGN_INTERACTION",
+    "children": [
+      {
+        "type": "FormFragment",
+        "key": "image-choice",
+        "fieldKey": "interactionType"
+      }
+    ]
   }
 }

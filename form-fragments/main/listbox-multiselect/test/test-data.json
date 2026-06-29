@@ -8,8 +8,14 @@
     }
   ],
   "pageLayout": {
-    "type": "Fragment",
-    "key": "listbox-multiselect",
-    "fieldKey": "interests"
+    "type": "FormContainer",
+    "mappedObjectERC": "APPLICANT",
+    "children": [
+      {
+        "type": "FormFragment",
+        "key": "listbox-multiselect",
+        "fieldKey": "interests"
+      }
+    ]
   }
 }
