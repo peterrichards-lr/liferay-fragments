@@ -2,6 +2,20 @@
   "pageLayout": {
     "type": "Fragment",
     "key": "custom-tabs",
+    "fragmentFields": [
+      {
+        "id": "title1",
+        "value": { "text": { "value_i18n": { "en_US": "Overview" } } }
+      },
+      {
+        "id": "title2",
+        "value": { "text": { "value_i18n": { "en_US": "Specifications" } } }
+      },
+      {
+        "id": "title3",
+        "value": { "text": { "value_i18n": { "en_US": "Support" } } }
+      }
+    ],
     "dropZones": [
       {
         "id": "1",
