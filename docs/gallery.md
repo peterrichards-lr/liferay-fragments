@@ -86,7 +86,7 @@ A lifestyle-focused design system with a scoped container architecture, high-fid
 
 **Snapshot Prerequisites / Layout Components:**
 
-- Fragment: `purchased-products`
+- Fragment: `HTML (System Component)`
 
 #### Original Design
 

@@ -26,13 +26,74 @@
     ],
     "children": [
       {
-        "type": "Fragment",
-        "key": "purchased-products",
-        "fragmentConfig": {
-          "useCommerceContext": false,
-          "accountId": "40101",
-          "channelId": "40101"
-        }
+        "type": "CollectionDisplay",
+        "definition": {
+          "numberOfColumns": 4,
+          "displayAllItems": true,
+          "displayAllPages": false,
+          "numberOfItems": 4,
+          "numberOfItemsPerPage": 4,
+          "numberOfPages": 1,
+          "paginationType": "None",
+          "collectionDisplayListStyle": {
+            "collectionDisplayListStyleType": "ListStyle",
+            "listStyleType": "Grid"
+          },
+          "collectionSettings": {
+            "collectionReference": {
+              "collectionType": "CollectionProvider",
+              "className": "com.liferay.commerce.product.content.collection.provider.ProductsCollectionProvider"
+            }
+          },
+          "collectionDisplayViewports": [
+            {
+              "id": "Desktop",
+              "collectionDisplayViewportDefinition": {
+                "numberOfColumns": 4,
+                "hidden": false
+              }
+            },
+            {
+              "id": "Tablet",
+              "collectionDisplayViewportDefinition": {
+                "numberOfColumns": 2,
+                "hidden": false
+              }
+            },
+            {
+              "id": "LandscapeMobile",
+              "collectionDisplayViewportDefinition": {
+                "numberOfColumns": 1,
+                "hidden": false
+              }
+            },
+            {
+              "id": "PortraitMobile",
+              "collectionDisplayViewportDefinition": {
+                "numberOfColumns": 1,
+                "hidden": false
+              }
+            }
+          ]
+        },
+        "children": [
+          {
+            "type": "Fragment",
+            "key": "rich-text",
+            "fragmentFields": [
+              {
+                "id": "text",
+                "value": {
+                  "text": {
+                    "value_i18n": {
+                      "en_US": "<div class=\"product-card\" style=\"border: 1px solid var(--border-color, #e2e8f0); border-radius: 8px; padding: 16px; max-width: 300px; text-align: center;\"><a class=\"product-card-picture\" style=\"background-image: url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?q=80&w=400'); height: 200px; display: block; background-size: cover; background-position: center; border-radius: 6px; margin-bottom: 12px;\"></a><div class=\"product-card-info\"><a><h3 style=\"margin: 0; font-size: 1.1rem; color: var(--body-color, #333);\">Timing Belt</h3></a></div></div>"
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        ]
       }
     ]
   }

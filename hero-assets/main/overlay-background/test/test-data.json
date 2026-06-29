@@ -9,7 +9,8 @@
   "pageConfig": {
     "fragmentConfig": {
       "backgroundImage": {
-        "url": "HERO-BG"
+        "url": "HERO-BG",
+        "fileEntryId": "HERO-BG"
       }
     }
   },

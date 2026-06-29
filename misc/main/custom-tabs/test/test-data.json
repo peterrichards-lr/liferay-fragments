@@ -1,4 +1,9 @@
 {
+  "pageConfig": {
+    "fragmentConfig": {
+      "numberOfTabs": "3"
+    }
+  },
   "pageLayout": {
     "type": "Fragment",
     "key": "custom-tabs",
