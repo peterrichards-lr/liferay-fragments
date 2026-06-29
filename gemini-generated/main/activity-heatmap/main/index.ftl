@@ -28,7 +28,7 @@
     ></div>
   </div>
 
-  <div class="heatmap-grid" id="grid-${fragmentEntryLinkNamespace}">
+  <div class="heatmap-grid" id="heatmap-grid-${fragmentEntryLinkNamespace}">
     <div class="heatmap-status text-center p-4">Initializing heatmap...</div>
   </div>
 

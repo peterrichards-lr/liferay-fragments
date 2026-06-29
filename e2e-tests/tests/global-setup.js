@@ -321,28 +321,32 @@ function buildPageElementTree(
     const parentDir = fragmentKeyToDir ? fragmentKeyToDir[key] : null;
     let isInputType = false;
 
+    const definition = {
+      type: 'BasicFragment',
+      fragment: {
+        key: key,
+        siteKey: globalSiteKey,
+      },
+      fragmentConfig: resolvedConfig,
+      fragmentFields: resolvedFields,
+      indexed: true,
+    };
     const element = {
       type: 'Fragment',
-      definition: {
-        fragment: {
-          key: key,
-          siteKey: globalSiteKey,
-        },
-        fragmentConfig: resolvedConfig,
-        fragmentFields: resolvedFields,
-        indexed: true,
-      },
+      definition: definition,
     };
 
     if (node.dropZones) {
       element.pageElements = node.dropZones.map((dz) => {
         const uniqueDropZoneId = Math.random().toString(36).substring(7);
+        const definition = {
+          type: 'FragmentDropZone',
+          fragmentDropZoneId: dz.id || '1',
+        };
         return {
           type: 'FragmentDropZone',
           id: uniqueDropZoneId,
-          definition: {
-            fragmentDropZoneId: dz.id || '1',
-          },
+          definition: definition,
           pageElements: dz.children.map((child) =>
             buildPageElementTree(
               child,
@@ -386,13 +390,15 @@ function buildPageElementTree(
       }
 
       const uniqueDropZoneId = Math.random().toString(36).substring(7);
+      const dropZoneDefinition = {
+        type: 'FragmentDropZone',
+        fragmentDropZoneId: dropZoneId,
+      };
       element.pageElements = [
         {
           type: 'FragmentDropZone',
           id: uniqueDropZoneId,
-          definition: {
-            fragmentDropZoneId: dropZoneId,
-          },
+          definition: dropZoneDefinition,
           pageElements: node.children.map((child) =>
             buildPageElementTree(
               child,
@@ -473,25 +479,26 @@ function buildPageElementTree(
       (node.fragmentConfig && node.fragmentConfig.inputFieldId) ||
       'emailAddress';
 
-    const element = {
+    const definition = {
       type: 'FormFragment',
-      definition: {
-        type: 'FormFragment',
-        fieldKey: fieldKey.startsWith('ObjectField_')
+      fieldKey: fieldKey.startsWith('ObjectField_')
+        ? fieldKey
+        : `ObjectField_${fieldKey}`,
+      fragment: {
+        key: key,
+        siteKey: globalSiteKey,
+      },
+      fragmentConfig: {
+        ...resolvedConfig,
+        inputFieldId: fieldKey.startsWith('ObjectField_')
           ? fieldKey
           : `ObjectField_${fieldKey}`,
-        fragment: {
-          key: key,
-          siteKey: globalSiteKey,
-        },
-        fragmentConfig: {
-          ...resolvedConfig,
-          inputFieldId: fieldKey.startsWith('ObjectField_')
-            ? fieldKey
-            : `ObjectField_${fieldKey}`,
-        },
-        fragmentFields: resolvedFields,
       },
+      fragmentFields: resolvedFields,
+    };
+    const element = {
+      type: 'FormFragment',
+      definition: definition,
     };
     return element;
   } else if (type === 'Form' || type === 'FormContainer') {
@@ -633,23 +640,34 @@ function buildPageElementTree(
     }
     return element;
   } else if (type === 'Widget') {
+    const definition = node.definition
+      ? { ...node.definition }
+      : {
+          widgetInstance: {
+            widgetConfig: {},
+            widgetName:
+              node.key ||
+              'com_liferay_portal_search_web_search_bar_portlet_SearchBarPortlet',
+          },
+        };
+    definition.type = 'Widget';
     return {
       type: 'Widget',
-      definition: node.definition || {
-        widgetInstance: {
-          widgetConfig: {},
-          widgetName:
-            node.key ||
-            'com_liferay_portal_search_web_search_bar_portlet_SearchBarPortlet',
-        },
-      },
+      definition: definition,
       id: node.id || Math.random().toString(36).substring(7),
     };
   } else {
-    // Root, Section, Row, Column
+    // Root, Section, Row, Column, CollectionDisplay
+    const definition = node.definition ? { ...node.definition } : {};
+    let definitionType = type;
+    if (type === 'Section') definitionType = 'Container';
+    else if (type === 'Row') definitionType = 'Grid';
+    else if (type === 'Column') definitionType = 'Grid';
+    definition.type = definitionType;
+
     const element = {
       type: type,
-      definition: node.definition ? { ...node.definition } : {},
+      definition: definition,
     };
 
     if (type === 'Column' && element.definition.size === undefined) {
@@ -671,17 +689,41 @@ function buildPageElementTree(
     }
 
     if (node.children && node.children.length > 0) {
-      element.pageElements = node.children.map((child) =>
-        buildPageElementTree(
-          child,
-          siteERC,
-          assetMap,
-          defaultFragmentKey,
-          defaultFragmentConfig,
-          fragmentKeyToDir,
-          objectDefinitions
-        )
-      );
+      if (type === 'CollectionDisplay') {
+        const uniqueId = Math.random().toString(36).substring(7);
+        element.pageElements = [
+          {
+            type: 'CollectionItem',
+            id: uniqueId,
+            definition: {
+              type: 'CollectionItem',
+            },
+            pageElements: node.children.map((child) =>
+              buildPageElementTree(
+                child,
+                siteERC,
+                assetMap,
+                defaultFragmentKey,
+                defaultFragmentConfig,
+                fragmentKeyToDir,
+                objectDefinitions
+              )
+            ),
+          },
+        ];
+      } else {
+        element.pageElements = node.children.map((child) =>
+          buildPageElementTree(
+            child,
+            siteERC,
+            assetMap,
+            defaultFragmentKey,
+            defaultFragmentConfig,
+            fragmentKeyToDir,
+            objectDefinitions
+          )
+        );
+      }
     }
 
     return element;
@@ -1160,11 +1202,11 @@ async function globalSetup(config) {
             `     [WARN] Guest role save button not found for ${erc}.`
           );
         }
-      } else {
-        console.log(
-          `     Guest entry permissions are already up-to-date for ${erc}.`
-        );
       }
+      console.log(
+        `     Object ${erc} setup complete. Cooldown for 3 seconds...`
+      );
+      await new Promise((resolve) => setTimeout(resolve, 3000));
     }
   } catch (permErr) {
     console.warn(
@@ -1944,6 +1986,7 @@ async function globalSetup(config) {
     let testData = null;
     const assetMap = { ...commerceAssetMap }; // Maps ERC -> Liferay ID
     const assetEntryIdMap = {}; // Maps ERC -> AssetEntry ID
+    const documentIdMap = {}; // Maps ERC -> DLFileEntry ID
 
     if (fs.existsSync(testDataFile)) {
       console.log(
@@ -2163,6 +2206,7 @@ async function globalSetup(config) {
                   `       Successfully uploaded document ${doc.title} -> URL: ${contentUrl}, ID: ${docId}`
                 );
                 assetMap[doc.externalReferenceCode] = contentUrl;
+                documentIdMap[doc.externalReferenceCode] = docId;
                 seededAssets.push({
                   type: 'document',
                   id: docId,
@@ -2198,6 +2242,7 @@ async function globalSetup(config) {
                       `       Found existing document ${doc.title} -> URL: ${contentUrl}, ID: ${docId}`
                     );
                     assetMap[doc.externalReferenceCode] = contentUrl;
+                    documentIdMap[doc.externalReferenceCode] = docId;
 
                     // Resolve and store assetEntryId
                     const assetEntryId = await getAssetEntryId(
@@ -2508,13 +2553,12 @@ async function globalSetup(config) {
         // 4. Extract Configuration Overrides
         if (testData.pageConfig && testData.pageConfig.fragmentConfig) {
           seededConfigOverrides = { ...testData.pageConfig.fragmentConfig };
-          Object.keys(seededConfigOverrides).forEach((key) => {
-            const val = seededConfigOverrides[key];
+
+          const resolveValue = (val) => {
             if (typeof val === 'string') {
               let replacedStr = val;
               if (assetMap[val]) {
-                seededConfigOverrides[key] = assetMap[val];
-                return;
+                return assetMap[val];
               } else {
                 Object.keys(assetMap).forEach((assetKey) => {
                   if (replacedStr.includes(assetKey)) {
@@ -2533,8 +2577,37 @@ async function globalSetup(config) {
                   replacedStr = `${cleanPath}/scopes/${siteId}${replacedStr.endsWith('/') ? '/' : ''}`;
                 }
               }
-              seededConfigOverrides[key] = replacedStr;
+              return replacedStr;
+            } else if (Array.isArray(val)) {
+              return val.map(resolveValue);
+            } else if (val && typeof val === 'object') {
+              const res = {};
+              Object.keys(val).forEach((k) => {
+                if (
+                  k === 'url' &&
+                  typeof val[k] === 'string' &&
+                  assetMap[val[k]]
+                ) {
+                  res[k] = assetMap[val[k]];
+                } else if (
+                  k === 'fileEntryId' &&
+                  typeof val[k] === 'string' &&
+                  documentIdMap[val[k]]
+                ) {
+                  res[k] = documentIdMap[val[k]].toString();
+                } else {
+                  res[k] = resolveValue(val[k]);
+                }
+              });
+              return res;
             }
+            return val;
+          };
+
+          Object.keys(seededConfigOverrides).forEach((key) => {
+            seededConfigOverrides[key] = resolveValue(
+              seededConfigOverrides[key]
+            );
           });
         }
       } catch (err) {
@@ -2884,6 +2957,11 @@ async function globalSetup(config) {
         element.type = 'Fragment';
         if (element.definition && !element.definition.type) {
           element.definition.type = 'FormFragment';
+        }
+      } else if (element.type === 'CollectionDisplay') {
+        element.type = 'Collection';
+        if (element.definition && !element.definition.type) {
+          element.definition.type = 'CollectionDisplay';
         }
       }
       if (element.pageElements) {

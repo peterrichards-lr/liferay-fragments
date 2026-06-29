@@ -466,11 +466,18 @@ echo "[4/5] Provisioning Liferay environment via LDM..."
 
 if [ "$EXISTING_PROJECT" = true ]; then
     echo "  -> Checking status of existing project $PROJECT_NAME..."
-    STATUS=$(ldm list | grep "$PROJECT_NAME" | awk -F'[|?│]' '{print $4}' | xargs)
+    STATUS=$(ldm list | grep "$PROJECT_NAME" | awk -F'[|?│]' '{print $4}' | sed 's/\x1b\[[0-9;]*m//g' | xargs)
     if [ "$STATUS" != "Running" ]; then
         echo "  -> Project '$PROJECT_NAME' is $STATUS. Starting it..."
         log_command "ldm up \"$PROJECT_NAME\""
         ldm up "$PROJECT_NAME" > /dev/null 2>&1
+        BASE_URL=$(ldm list | grep "$PROJECT_NAME" | grep -Eo "https?://[a-zA-Z0-9.:-]+" | head -n 1)
+        if [ -z "$BASE_URL" ]; then
+            echo "Error: Could not find URL for project '$PROJECT_NAME' after starting."
+            exit 1
+        fi
+        echo "  -> Re-resolved URL after start: $BASE_URL"
+        export BASE_URL
     else
         echo "  -> Project '$PROJECT_NAME' is $STATUS."
     fi
@@ -733,8 +740,9 @@ cd e2e-tests
 
 if [ -n "$FILTER_PATTERN" ]; then
     export TEST_FILTER="$FILTER_PATTERN"
-    log_command "npx playwright test --grep \"(?i)$FILTER_PATTERN\""
-    npx playwright test --grep "(?i)$FILTER_PATTERN" > playwright_output.log 2>&1
+    GREP_PATTERN="${FILTER_PATTERN//-/[- ]}"
+    log_command "npx playwright test --grep \"$GREP_PATTERN\""
+    npx playwright test --grep "$GREP_PATTERN" > playwright_output.log 2>&1
 else
     log_command "npx playwright test"
     npx playwright test > playwright_output.log 2>&1
