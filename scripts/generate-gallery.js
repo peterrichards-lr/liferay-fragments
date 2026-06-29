@@ -344,13 +344,25 @@ function generateGallery() {
       const rootDocFile2 = path.join(DOCS_DIR, `${safeFragmentName}.md`);
 
       if (fs.existsSync(docFile1)) {
-        markdown += `[Detailed Documentation](./fragments/${collectionFolder}/${fragSafeName}.md)\n\n`;
+        const url = `./fragments/${collectionFolder}/${fragSafeName}.md`
+          .replace(/\(/g, '%28')
+          .replace(/\)/g, '%29');
+        markdown += `[Detailed Documentation](${url})\n\n`;
       } else if (fs.existsSync(docFile2)) {
-        markdown += `[Detailed Documentation](./fragments/${collectionFolder}/${safeFragmentName}.md)\n\n`;
+        const url = `./fragments/${collectionFolder}/${safeFragmentName}.md`
+          .replace(/\(/g, '%28')
+          .replace(/\)/g, '%29');
+        markdown += `[Detailed Documentation](${url})\n\n`;
       } else if (fs.existsSync(rootDocFile1)) {
-        markdown += `[Detailed Documentation](./${fragSafeName}.md)\n\n`;
+        const url = `./${fragSafeName}.md`
+          .replace(/\(/g, '%28')
+          .replace(/\)/g, '%29');
+        markdown += `[Detailed Documentation](${url})\n\n`;
       } else if (fs.existsSync(rootDocFile2)) {
-        markdown += `[Detailed Documentation](./${safeFragmentName}.md)\n\n`;
+        const url = `./${safeFragmentName}.md`
+          .replace(/\(/g, '%28')
+          .replace(/\)/g, '%29');
+        markdown += `[Detailed Documentation](${url})\n\n`;
       } else {
         console.warn(
           `[WARN] No documentation file found for fragment: ${fragMetadata.name} in gallery`
