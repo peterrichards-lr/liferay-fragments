@@ -327,19 +327,26 @@ function generateGallery() {
         }
       }
 
-      const docFile1 = path.join(DOCS_DIR, 'fragments', `${fragSafeName}.md`);
+      const collectionFolder = path.basename(path.dirname(collectionDir));
+      const docFile1 = path.join(
+        DOCS_DIR,
+        'fragments',
+        collectionFolder,
+        `${fragSafeName}.md`
+      );
       const docFile2 = path.join(
         DOCS_DIR,
         'fragments',
+        collectionFolder,
         `${safeFragmentName}.md`
       );
       const rootDocFile1 = path.join(DOCS_DIR, `${fragSafeName}.md`);
       const rootDocFile2 = path.join(DOCS_DIR, `${safeFragmentName}.md`);
 
       if (fs.existsSync(docFile1)) {
-        markdown += `[Detailed Documentation](./fragments/${fragSafeName}.md)\n\n`;
+        markdown += `[Detailed Documentation](./fragments/${collectionFolder}/${fragSafeName}.md)\n\n`;
       } else if (fs.existsSync(docFile2)) {
-        markdown += `[Detailed Documentation](./fragments/${safeFragmentName}.md)\n\n`;
+        markdown += `[Detailed Documentation](./fragments/${collectionFolder}/${safeFragmentName}.md)\n\n`;
       } else if (fs.existsSync(rootDocFile1)) {
         markdown += `[Detailed Documentation](./${fragSafeName}.md)\n\n`;
       } else if (fs.existsSync(rootDocFile2)) {
