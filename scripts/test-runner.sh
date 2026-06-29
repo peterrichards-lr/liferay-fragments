@@ -465,6 +465,15 @@ echo ""
 echo "[4/5] Provisioning Liferay environment via LDM..."
 
 if [ "$EXISTING_PROJECT" = true ]; then
+    echo "  -> Checking status of existing project $PROJECT_NAME..."
+    STATUS=$(ldm list | grep "$PROJECT_NAME" | awk -F'[|?│]' '{print $4}' | xargs)
+    if [ "$STATUS" != "Running" ]; then
+        echo "  -> Project '$PROJECT_NAME' is $STATUS. Starting it..."
+        log_command "ldm up \"$PROJECT_NAME\""
+        ldm up "$PROJECT_NAME" > /dev/null 2>&1
+    else
+        echo "  -> Project '$PROJECT_NAME' is $STATUS."
+    fi
     echo "  -> Skipping LDM run (using existing project $PROJECT_NAME)..."
 else
     echo "  -> Starting LDM project '$PROJECT_NAME' with $TAG_FLAG $LIFERAY_TAG on port $PORT..."
