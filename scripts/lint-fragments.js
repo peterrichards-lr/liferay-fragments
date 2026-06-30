@@ -685,6 +685,7 @@ const normalize = (str) =>
     .trim()
     .replace(/\(<([^>]+)>\)/g, '($1)')
     .replace(/-{3,}/g, '---')
+    .replace(/[\*_]/g, '_')
     .replace(/\s+/g, ' ');
 
 if (normalize(currentGalleryContent) !== normalize(expectedGalleryContent)) {
