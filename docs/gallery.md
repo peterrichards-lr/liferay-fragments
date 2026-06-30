@@ -2,8 +2,7 @@
 
 A visual reference for the high-fidelity fragments available in this Liferay DXP repository. Generated automatically.
 
-**Last Tested Against Liferay Version:** `Unknown`
-_(Note: Live snapshots disabled due to pending or failed test suite)_
+**Last Tested Against Liferay Version:** `2026.q1.10-lts`
 
 ## Aura Design System
 

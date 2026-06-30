@@ -2443,5 +2443,60 @@
     "type": "article",
     "id": 39283,
     "erc": "MAP-MARKER-ARTICLE-02"
+  },
+  {
+    "type": "document",
+    "id": 39540,
+    "erc": "HERO-BG"
+  },
+  {
+    "type": "document",
+    "id": 40143,
+    "erc": "SLIDE-IMG-01"
+  },
+  {
+    "type": "document",
+    "id": 40155,
+    "erc": "SLIDE-IMG-02"
+  },
+  {
+    "type": "document",
+    "id": 40167,
+    "erc": "SLIDE-IMG-03"
+  },
+  {
+    "type": "structure",
+    "id": "40177",
+    "erc": "SLIDER-SLIDE-STRUCT-V3"
+  },
+  {
+    "type": "article",
+    "id": 40185,
+    "erc": "SLIDE-ARTICLE-01"
+  },
+  {
+    "type": "article",
+    "id": 40195,
+    "erc": "SLIDE-ARTICLE-02"
+  },
+  {
+    "type": "article",
+    "id": 40205,
+    "erc": "SLIDE-ARTICLE-03"
+  },
+  {
+    "type": "structure",
+    "id": "41055",
+    "erc": "MAP-MARKER-STRUCT-V1"
+  },
+  {
+    "type": "article",
+    "id": 41061,
+    "erc": "MAP-MARKER-ARTICLE-01"
+  },
+  {
+    "type": "article",
+    "id": 41071,
+    "erc": "MAP-MARKER-ARTICLE-02"
   }
 ]
