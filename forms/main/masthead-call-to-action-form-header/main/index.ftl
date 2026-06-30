@@ -1,5 +1,21 @@
+[#assign bgImageUrl = "https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=1920"]
+[#if configuration.backgroundImage?? && configuration.backgroundImage?has_content]
+  [#attempt]
+    [#assign bgImage = configuration.backgroundImage?eval_json]
+    [#if bgImage.url?? && bgImage.url?has_content]
+      [#assign bgImageUrl = bgImage.url]
+    [/#if]
+  [#recover]
+    [#if configuration.backgroundImage.url??]
+      [#assign bgImageUrl = configuration.backgroundImage.url]
+    [#elseif configuration.backgroundImage?is_string]
+      [#assign bgImageUrl = configuration.backgroundImage]
+    [/#if]
+  [/#attempt]
+[/#if]
+
 <section class="masthead masthead-form text-white d-flex py-5" style="
-  background-image: linear-gradient(rgba(0,0,0,${configuration.overlayOpacity!"0.5"}), rgba(0,0,0,${configuration.overlayOpacity!"0.5"})), url('${(configuration.backgroundImage.url)!"https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=1920"}');
+  background-image: linear-gradient(rgba(0,0,0,${configuration.overlayOpacity!"0.5"}), rgba(0,0,0,${configuration.overlayOpacity!"0.5"})), url('${bgImageUrl}');
   background-size: cover;
   background-position: center;
   min-height: 500px;
