@@ -102,6 +102,14 @@ test.describe('Responsive Fragment Rendering', () => {
           .fragment-menu ul > li:nth-child(n+6) {
             display: none !important;
           }
+          /* Do not hide nested navbars inside page fragments */
+          div[id^="fragment-"] .navbar {
+            display: flex !important;
+            visibility: visible !important;
+            opacity: 1 !important;
+            width: auto !important;
+            height: auto !important;
+          }
         `,
       });
 
