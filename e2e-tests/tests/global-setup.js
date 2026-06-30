@@ -1828,7 +1828,7 @@ async function globalSetup(config) {
             data: {
               catalogId,
               name: { en_US: prodData.name },
-              productType: 'simple',
+              productType: 'virtual',
               active: true,
             },
           }
