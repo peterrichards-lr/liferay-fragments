@@ -1,4 +1,4 @@
-const SINGLETON_KEY = 'LFR_FRAG_SINGLETON_METER_READING';
+const SINGLETON_KEY = 'LFR_FRAG_SINGLETON_METER_READING'; // pragma: allowlist secret
 
 const { isValidIdentifier, resolveObjectPath } = Liferay.Fragment.Commons;
 
@@ -26,7 +26,7 @@ if (window[SINGLETON_KEY]) {
 
   const debugMode = configuration.enableDebug;
 
-  const meterReadingContainer = fragmentElement.querySelector('div');
+  const meterReadingContainer = fragmentElement.querySelector('.meter-reading');
   const status = meterReadingContainer.querySelector('span.status');
 
   const digits = meterReadingContainer.querySelectorAll('input.digit');
