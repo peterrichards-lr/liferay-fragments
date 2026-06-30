@@ -749,6 +749,28 @@ mdFiles.forEach((mdFile) => {
           `Broken ${type} reference to "${rawPath}" (Resolved: ${path.relative(process.cwd(), resolvedPath)})`
         );
       }
+    } else if (resolvedPath.endsWith('.png')) {
+      // Validate PNG file integrity (must start with standard PNG header)
+      try {
+        const fd = fs.openSync(resolvedPath, 'r');
+        const buffer = Buffer.alloc(8);
+        fs.readSync(fd, buffer, 0, 8, 0);
+        fs.closeSync(fd);
+        const pngSignature = Buffer.from([
+          0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a,
+        ]);
+        if (!buffer.equals(pngSignature)) {
+          logError(
+            mdFile,
+            `Corrupt or invalid PNG image: "${rawPath}" (Resolved: ${path.relative(process.cwd(), resolvedPath)})`
+          );
+        }
+      } catch (err) {
+        logError(
+          mdFile,
+          `Failed to read image signature: "${rawPath}" (Error: ${err.message})`
+        );
+      }
     }
   };
 
