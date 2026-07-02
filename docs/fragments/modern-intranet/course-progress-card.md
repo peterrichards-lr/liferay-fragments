@@ -32,3 +32,7 @@ The fragment utilizes Liferay's inline editing and mapping capabilities (`data-l
 - **JavaScript**: A single initialization function handles the logic for the progress bar rendering and sets up a `MutationObserver` for real-time authoring feedback.
 - **FreeMarker**: Basic layout generation pulling in the URL and label configurations.
 - **CSS**: Depends heavily on Bootstrap grid/utility classes (`d-flex`, `justify-content-between`, `progress`, `progress-bar`, `btn-primary`, `border-left`). Specific component styles are assumed to be in `index.css` (e.g., `.course-card-image-container`, `.course-card-title`).
+
+## <!-- markdownlint-disable MD049 -->
+
+_Last Updated: 2026-07-02_ | _Last Reviewed: 2026-07-02_

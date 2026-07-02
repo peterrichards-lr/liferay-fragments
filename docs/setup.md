@@ -192,3 +192,7 @@ that does not support this API, you may need to "backport" the logic.
   `if (typeof fragmentNamespace !== 'undefined')`.
 - **Preview Detection**: In legacy environments, `fragmentNamespace` was
   typically undefined during "Preview" but defined in "Edit" and "View" modes.
+
+## <!-- markdownlint-disable MD049 -->
+
+_Last Updated: 2026-07-02_ | _Last Reviewed: 2026-07-02_

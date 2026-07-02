@@ -17,3 +17,7 @@ pre-integrated with Liferay Analytics Cloud and Pulse tracking logic.
 - **Button Text**: The label shown on the button.
 - **Action Type**: Choose between navigation (link) or event trigger.
 - **Goal Category**: Categorize the conversion for reporting in Analytics Cloud.
+
+## <!-- markdownlint-disable MD049 -->
+
+_Last Updated: 2026-07-02_ | _Last Reviewed: 2026-07-02_

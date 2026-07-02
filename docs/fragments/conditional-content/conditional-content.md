@@ -30,3 +30,7 @@ dynamically based on the value of a mapped field.
 4. Place different fragments into the corresponding drop zones for each outcome.
 5. In the Page Editor, you may need to check "Display Drop Zones" to see and
    populate all the zones.
+
+## <!-- markdownlint-disable MD049 -->
+
+_Last Updated: 2026-07-02_ | _Last Reviewed: 2026-07-02_

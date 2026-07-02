@@ -22,3 +22,7 @@ Editable elements include:
 - Relies on `aura-container` and `aura-card` CSS classes for the main structural styling.
 - Uses `var(--aura-body-background)` CSS token for the background color, ensuring fidelity with the Aura theme.
 - Uses Liferay core utility classes such as `btn` and `btn-primary`.
+
+## <!-- markdownlint-disable MD049 -->
+
+_Last Updated: 2026-07-02_ | _Last Reviewed: 2026-07-02_

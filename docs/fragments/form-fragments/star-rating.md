@@ -16,3 +16,7 @@ for capturing user ratings.
 - **Total Stars**: Number of stars to display (default: 5).
 - **Active Color**: Color of selected stars.
 - **Inactive Color**: Color of unselected stars.
+
+## <!-- markdownlint-disable MD049 -->
+
+_Last Updated: 2026-07-02_ | _Last Reviewed: 2026-07-02_

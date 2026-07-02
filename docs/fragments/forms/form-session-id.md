@@ -26,3 +26,7 @@ This fragment utilizes the **Shared Resources Architecture**:
 - **`discovery.js`**: Uses `resolveObjectPath` to dynamically discover the REST
   endpoint.
 - **`validation.js`**: Uses `isValidIdentifier` for robust session ID checking.
+
+## <!-- markdownlint-disable MD049 -->
+
+_Last Updated: 2026-07-02_ | _Last Reviewed: 2026-07-02_

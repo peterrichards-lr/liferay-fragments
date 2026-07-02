@@ -23,3 +23,7 @@ products, or pages.
     search button to be redirected to the site's search results page.
 
 ![Search Overlay](../../images/live/gemini-generated-modern-search-overlay-mobile.png)
+
+## <!-- markdownlint-disable MD049 -->
+
+_Last Updated: 2026-07-02_ | _Last Reviewed: 2026-07-02_

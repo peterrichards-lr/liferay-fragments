@@ -77,3 +77,7 @@ Refactor `scripts/configure-test-data.js` to utilize the mapping registry.
 
 - Verify the generated `test-data.json` files have the correct parent-child relationships.
 - (Deferred) Execute E2E tests to ensure Playwright correctly resolves the nested fragments and captures accurate gallery screenshots.
+
+## <!-- markdownlint-disable MD049 -->
+
+_Last Updated: 2026-07-02_ | _Last Reviewed: 2026-07-02_

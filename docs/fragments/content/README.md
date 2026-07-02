@@ -74,3 +74,7 @@ authentication status.
 - **Signed In**: Displays "Go to Service" and links to the service URL.
 - **Guest**: Displays "Login for Service" and redirects the user to the login
   page.
+
+## <!-- markdownlint-disable MD049 -->
+
+_Last Updated: 2026-07-02_ | _Last Reviewed: 2026-07-02_

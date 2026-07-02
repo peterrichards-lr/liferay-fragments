@@ -23,3 +23,7 @@ color of the main content area (`#main-content`) on a Liferay page.
 This fragment is intended to be placed on a **Master Page**. Once added, it will
 affect all pages that utilize that master page, providing a consistent
 background theme across the entire site or section.
+
+## <!-- markdownlint-disable MD049 -->
+
+_Last Updated: 2026-07-02_ | _Last Reviewed: 2026-07-02_

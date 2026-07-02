@@ -24,3 +24,7 @@ animations.
 - **Parallax Speed**: Control the intensity of the depth effect.
 - **Height**: Adjustable vertical span (e.g., "80vh", "600px").
 - **Overlay Color**: Custom scrim to ensure text readability over images.
+
+## <!-- markdownlint-disable MD049 -->
+
+_Last Updated: 2026-07-02_ | _Last Reviewed: 2026-07-02_

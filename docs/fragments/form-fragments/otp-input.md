@@ -28,3 +28,7 @@ The fragment provides the following configuration options within `configuration.
 - **JavaScript**: Manages auto-advance on input, keyboard navigation (left/right/backspace), paste event interception and distribution, and synchronizes the individual box values into the hidden input.
 - **FreeMarker**: Dynamically iterates over the `boxCount` to generate the correct number of input elements. Applies CSS variables (`--box-size`) dynamically.
 - **CSS**: Uses standard Bootstrap/Clay classes (`d-flex gap-2`, `form-control`) alongside custom styling (assumed in `index.css`) for the box sizes and alignment.
+
+## <!-- markdownlint-disable MD049 -->
+
+_Last Updated: 2026-07-02_ | _Last Reviewed: 2026-07-02_

@@ -49,3 +49,7 @@ For fragments with auto-defaulting titles (e.g., "Sales Reports"):
   displaying a user-friendly alert or toast.
 - **Authentication**: Use `Liferay.Util.fetch` to automatically include required
   security tokens.
+
+## <!-- markdownlint-disable MD049 -->
+
+_Last Updated: 2026-07-02_ | _Last Reviewed: 2026-07-02_

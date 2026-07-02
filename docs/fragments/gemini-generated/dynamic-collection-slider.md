@@ -22,3 +22,7 @@ rendering items with multiple layout options.
 - **Enable Depth Effect**: Toggle the 3D active slide highlighting.
 - **Slide Height**: Manually adjust the vertical height of slides.
 - **Autoplay**: Configurable timing and looping options.
+
+## <!-- markdownlint-disable MD049 -->
+
+_Last Updated: 2026-07-02_ | _Last Reviewed: 2026-07-02_

@@ -30,3 +30,7 @@ The fragment can be configured via standard Liferay fragment configuration prope
 
 - Uses modern CSS Custom Properties corresponding to standard Liferay/Meridian themes (e.g., `var(--primary)`, `var(--gray-200)`, `var(--white)`).
 - Specific `.meta-editor-mappable-fields` styling is applied for editing layout mode (`[data-layout-mode='edit']`) to hide configuration data from end-users.
+
+## <!-- markdownlint-disable MD049 -->
+
+_Last Updated: 2026-07-02_ | _Last Reviewed: 2026-07-02_

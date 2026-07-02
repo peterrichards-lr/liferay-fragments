@@ -17,3 +17,7 @@ external web applications or pages.
   restricted environments.
 - **Visual Polish**: Includes configurable borders, shadows, and loading states
   to match your Liferay theme.
+
+## <!-- markdownlint-disable MD049 -->
+
+_Last Updated: 2026-07-02_ | _Last Reviewed: 2026-07-02_

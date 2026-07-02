@@ -101,3 +101,7 @@ This registry documents all page fragments that are excluded from the main [Visu
 | User Account          | Ping                                           | Utility        | Explicitly set excludeFromGallery: true in test-data.json | _Standalone / None_                                                                                                                                                                               |
 | User Account          | Who Am I                                       | Utility        | Explicitly set excludeFromGallery: true in test-data.json | _Standalone / None_                                                                                                                                                                               |
 | Widget Modifiers      | Announcements Modifier                         | Utility        | Collection is Widget Modifiers (no visual representation) | _Standalone / None_                                                                                                                                                                               |
+
+## <!-- markdownlint-disable MD049 -->
+
+_Last Updated: 2026-07-02_ | _Last Reviewed: 2026-07-02_

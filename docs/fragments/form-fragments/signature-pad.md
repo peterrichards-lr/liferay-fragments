@@ -28,3 +28,7 @@ The fragment provides the following configuration options within `configuration.
 - **JavaScript**: Uses the HTML5 Canvas 2D context API to capture coordinates (`mousemove`, `touchmove`, etc.) and draw paths. Converts the canvas to a Data URL and handles resize debouncing using `Liferay.Fragment.Commons.debounce`.
 - **FreeMarker**: Maps form inputs and applies inline CSS variables (`--pad-height`).
 - **CSS**: Uses Bootstrap/Clay classes (`btn-outline-secondary`) and custom CSS (assumed in `index.css`) for the canvas borders and layout.
+
+## <!-- markdownlint-disable MD049 -->
+
+_Last Updated: 2026-07-02_ | _Last Reviewed: 2026-07-02_

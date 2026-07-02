@@ -21,3 +21,7 @@ The fragment wraps a standard form input. Custom Javascript (or native browser h
 ## Dependencies
 
 - Inherits Clay standard `form-control` styles.
+
+## <!-- markdownlint-disable MD049 -->
+
+_Last Updated: 2026-07-02_ | _Last Reviewed: 2026-07-02_

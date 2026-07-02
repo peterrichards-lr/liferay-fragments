@@ -133,3 +133,7 @@ The batch job creates the following site-scoped Objects:
    collections.
 3. The fragments will automatically render the sample data provided in the batch
    entries.
+
+## <!-- markdownlint-disable MD049 -->
+
+_Last Updated: 2026-07-02_ | _Last Reviewed: 2026-07-02_

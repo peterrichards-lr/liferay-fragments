@@ -30,3 +30,7 @@ site menus. Once everything is ready the load animation is removed, and the
 portlet can be used as normal.
 
 ![Liferay Iframer](../../images/liferay-iframer.png)
+
+## <!-- markdownlint-disable MD049 -->
+
+_Last Updated: 2026-07-02_ | _Last Reviewed: 2026-07-02_

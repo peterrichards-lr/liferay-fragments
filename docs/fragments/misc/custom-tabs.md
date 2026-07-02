@@ -22,3 +22,7 @@ The fragment can be configured using the following configuration options:
 2. In the configuration panel, specify the number of tabs (e.g., `3`).
 3. Click directly on each tab header to edit its label text (e.g., "Overview", "Specifications", "Support").
 4. Drag and drop any desired fragments or widgets into the corresponding tab panel drop zones (e.g. drop a rich-text block or an image card inside the active panel area).
+
+## <!-- markdownlint-disable MD049 -->
+
+_Last Updated: 2026-07-02_ | _Last Reviewed: 2026-07-02_

@@ -16,3 +16,7 @@ experience, ideal for complex applications and dashboards.
 - **Menu Style**: Choose the sidebar orientation (Left vs. Right).
 - **Breakpoints**: Configurable widths for tablet and phone layouts.
 - **Scroll Lock**: Toggle background scrolling when the menu is active.
+
+## <!-- markdownlint-disable MD049 -->
+
+_Last Updated: 2026-07-02_ | _Last Reviewed: 2026-07-02_

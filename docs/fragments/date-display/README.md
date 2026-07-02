@@ -43,3 +43,7 @@ The JavaScript will not execute when the fragment is viewed in either the
 Fragment Editor or the Page Content Editor.
 
 ![Date Display](../../images/date-display.png)
+
+## <!-- markdownlint-disable MD049 -->
+
+_Last Updated: 2026-07-02_ | _Last Reviewed: 2026-07-02_

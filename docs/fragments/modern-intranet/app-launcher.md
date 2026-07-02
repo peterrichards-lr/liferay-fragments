@@ -25,3 +25,7 @@ The fragment provides the following configuration options within `configuration.
 
 - **FreeMarker**: Iterates (`[#list 1..6 as i]`) dynamically over the configuration keys (e.g., `configuration["appName${i}"]`) to generate the HTML for each application slot. Resolves the `siteSpritemap` variable for SVG icons.
 - **CSS**: Assumes custom CSS (in `index.css`) for the grid layout (`.app-launcher-grid`), icon sizing (`.app-launcher-icon-container`), and typography (`.app-launcher-name`). No custom JavaScript is required for this component.
+
+## <!-- markdownlint-disable MD049 -->
+
+_Last Updated: 2026-07-02_ | _Last Reviewed: 2026-07-02_

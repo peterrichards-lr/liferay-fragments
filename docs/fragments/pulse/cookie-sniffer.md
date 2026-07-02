@@ -16,3 +16,7 @@ of specific browser cookies and triggers actions based on their values.
 
 - **Cookie Name**: The name of the cookie to monitor.
 - **Match Value**: The value to look for within the cookie.
+
+## <!-- markdownlint-disable MD049 -->
+
+_Last Updated: 2026-07-02_ | _Last Reviewed: 2026-07-02_

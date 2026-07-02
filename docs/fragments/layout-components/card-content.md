@@ -17,3 +17,7 @@ a **Primary Card** or **Secondary Card**.
     Card.
 2.  **Configure**: Fill in the text and link details. The styling will update
     automatically based on the parent container.
+
+## <!-- markdownlint-disable MD049 -->
+
+_Last Updated: 2026-07-02_ | _Last Reviewed: 2026-07-02_

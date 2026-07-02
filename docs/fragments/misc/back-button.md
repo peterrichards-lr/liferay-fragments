@@ -15,3 +15,7 @@ navigates the user to the previously visited page or a parent Liferay page.
 - **Target URL**: (Optional) A specific fallback page if no history is
   available.
 - **Label**: The text shown on the button (e.g., "Back to List").
+
+## <!-- markdownlint-disable MD049 -->
+
+_Last Updated: 2026-07-02_ | _Last Reviewed: 2026-07-02_

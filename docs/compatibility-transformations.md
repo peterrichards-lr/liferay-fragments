@@ -102,3 +102,7 @@ After implementing a new compatibility transformation:
    ```powershell
    $env:PORT="8081"; & "C:\Program Files\Git\bin\bash.exe" scripts/test-runner.sh -p e2e-test-env -f <fragment-name>
    ```
+
+## <!-- markdownlint-disable MD049 -->
+
+_Last Updated: 2026-07-02_ | _Last Reviewed: 2026-07-02_

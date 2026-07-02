@@ -36,3 +36,7 @@ Refer to individual documentation files for deep configuration details.
 - [Site Name](./site-name.md)
 - [Master Page Header](./master-page-header.md)
 - [User Bar](./user-bar.md)
+
+## <!-- markdownlint-disable MD049 -->
+
+_Last Updated: 2026-07-02_ | _Last Reviewed: 2026-07-02_

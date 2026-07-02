@@ -32,3 +32,7 @@ To achieve the best results, fragments should be nested in the following order:
 - [Primary Card](./primary-card.md)
 - [Secondary Card](./secondary-card.md)
 - [Card Content](./card-content.md)
+
+## <!-- markdownlint-disable MD049 -->
+
+_Last Updated: 2026-07-02_ | _Last Reviewed: 2026-07-02_

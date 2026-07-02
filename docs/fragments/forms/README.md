@@ -90,3 +90,7 @@ or pages using a unique session ID.
 - **Masthead Call to Action Form Header**: A stylized masthead section designed
   to house a form or call-to-action within a hero-style banner. It features a
   semi-transparent background for better text legibility over images.
+
+## <!-- markdownlint-disable MD049 -->
+
+_Last Updated: 2026-07-02_ | _Last Reviewed: 2026-07-02_

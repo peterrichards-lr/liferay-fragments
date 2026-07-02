@@ -34,3 +34,7 @@ This fragment in another JavaScript which rather than hides a Liferay menu bar
 item, it changes the target of it. For example, if you want a public and private
 link to both point to a private page without 'hardcoding' the absolute URL, then
 this fragment can update the link using a relative location.
+
+## <!-- markdownlint-disable MD049 -->
+
+_Last Updated: 2026-07-02_ | _Last Reviewed: 2026-07-02_

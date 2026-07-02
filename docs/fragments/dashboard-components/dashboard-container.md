@@ -16,3 +16,7 @@ host multiple widgets or charts in a responsive grid.
 - **Layout Style**: Choose between single column, multi-column, or masonry.
 - **Padding/Margin**: Configurable spacing using theme spacers
   (`var(--spacer-*)`).
+
+## <!-- markdownlint-disable MD049 -->
+
+_Last Updated: 2026-07-02_ | _Last Reviewed: 2026-07-02_

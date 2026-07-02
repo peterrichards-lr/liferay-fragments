@@ -40,3 +40,7 @@ different forms in a user's session.
   authoring experience.
 - **Meridian Theme Ready**: All components utilize Meridian CSS tokens for
   consistent typography and spacing.
+
+## <!-- markdownlint-disable MD049 -->
+
+_Last Updated: 2026-07-02_ | _Last Reviewed: 2026-07-02_

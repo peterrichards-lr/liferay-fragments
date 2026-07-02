@@ -16,3 +16,7 @@ mobile.
 
 - **Menu Selection**: Choose the Liferay Navigation Menu to display.
 - **Initial Delay**: Time to wait before initializing animations.
+
+## <!-- markdownlint-disable MD049 -->
+
+_Last Updated: 2026-07-02_ | _Last Reviewed: 2026-07-02_

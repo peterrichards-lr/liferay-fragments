@@ -42,3 +42,7 @@ interactions and cookie management.
   performance.
 - **Flexible Event Targeting**: Use CSS selectors to target specific elements
   for event listening, either globally or scoped to a specific drop zone.
+
+## <!-- markdownlint-disable MD049 -->
+
+_Last Updated: 2026-07-02_ | _Last Reviewed: 2026-07-02_

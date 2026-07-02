@@ -37,3 +37,7 @@ This fragment utilizes the **Shared Resources Architecture**:
   endpoint for the configured Object Path.
 - **`validation.js`**: Uses `isValidIdentifier` for robust Account ID and
   configuration checking.
+
+## <!-- markdownlint-disable MD049 -->
+
+_Last Updated: 2026-07-02_ | _Last Reviewed: 2026-07-02_

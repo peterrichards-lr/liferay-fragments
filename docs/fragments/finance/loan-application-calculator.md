@@ -18,3 +18,7 @@ combines a repayment calculator with a pre-qualification workflow.
 - **Default Interest Rate**: The base annual percentage rate (APR).
 - **Target Object**: The Object where application data should be stored upon
   submission.
+
+## <!-- markdownlint-disable MD049 -->
+
+_Last Updated: 2026-07-02_ | _Last Reviewed: 2026-07-02_

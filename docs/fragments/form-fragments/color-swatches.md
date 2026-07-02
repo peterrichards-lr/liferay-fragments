@@ -20,3 +20,7 @@ The colors are derived from the `swatchesJSON` configuration field. Selecting a 
 ## Dependencies
 
 - Native Liferay form APIs and standard Clay component styling.
+
+## <!-- markdownlint-disable MD049 -->
+
+_Last Updated: 2026-07-02_ | _Last Reviewed: 2026-07-02_

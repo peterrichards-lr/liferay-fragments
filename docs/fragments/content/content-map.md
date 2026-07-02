@@ -18,3 +18,7 @@ for visualizing content locations or service points.
 - **Map Center**: Latitude and Longitude for initial view.
 - **Zoom Level**: Default zoom magnification.
 - **Category Icons**: Mapping of category IDs to SVG icon paths.
+
+## <!-- markdownlint-disable MD049 -->
+
+_Last Updated: 2026-07-02_ | _Last Reviewed: 2026-07-02_

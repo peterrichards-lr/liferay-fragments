@@ -24,3 +24,7 @@ from Object data.
 - **Target Value**: The goal number representing 100% completion.
 - **Value Field**: The field to aggregate from the Object.
 - **Gauge Color**: Custom color for the progress ring.
+
+## <!-- markdownlint-disable MD049 -->
+
+_Last Updated: 2026-07-02_ | _Last Reviewed: 2026-07-02_

@@ -18,3 +18,7 @@ Form fields using URL query parameters and JSON mapping.
   parameters and form fields.
 - **Debug Mode**: Logs mapping attempts to the console for easier
   troubleshooting.
+
+## <!-- markdownlint-disable MD049 -->
+
+_Last Updated: 2026-07-02_ | _Last Reviewed: 2026-07-02_

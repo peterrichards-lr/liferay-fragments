@@ -366,3 +366,7 @@ control via `.gitignore`.
 If you use the `-k` flag, this `fragments-test-env/` directory will remain on
 your disk so you can manually inspect the `deploy/` and `logs/` folders.
 Otherwise, the script automatically deletes it during the cleanup phase.
+
+## <!-- markdownlint-disable MD049 -->
+
+_Last Updated: 2026-07-02_ | _Last Reviewed: 2026-07-02_
