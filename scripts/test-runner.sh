@@ -9,6 +9,9 @@ PROGRESS_SIGNAL_FILE="$(pwd)/.progress-signal"
 TESTS_PASSED=false
 EXIT_HANDLED=false
 
+SCRIPT_START_TIME=$(date +%s)
+SCRIPT_START_DATE=$(date)
+
 # Ensure scripts directory and System32 are in PATH
 export PATH="$(pwd)/scripts:$(pwd)/node_modules/.bin:$PATH"
 export PATH="$PATH:/c/Windows/System32"
@@ -17,7 +20,7 @@ export PATH="$PATH:/c/Users/prichards/AppData/Local/Microsoft/WinGet/Links"
 
 # Wrapper function to enforce clean, color-free plain-text outputs for all LDM commands
 ldm() {
-    command ldm "$@" --no-color --no-unicode
+    command ldm "$@"
 }
 
 
@@ -168,6 +171,16 @@ handle_exit() {
     
     cleanup
     
+    SCRIPT_END_TIME=$(date +%s)
+    SCRIPT_END_DATE=$(date)
+    DURATION=$((SCRIPT_END_TIME - SCRIPT_START_TIME))
+    MINS=$((DURATION / 60))
+    SECS=$((DURATION % 60))
+    echo "======================================================"
+    echo " Script Finished at: $SCRIPT_END_DATE"
+    echo " Total Execution Time: ${MINS}m ${SECS}s"
+    echo "======================================================"
+
     if [ "$TESTS_PASSED" = true ]; then
         # Clean up transient logs and reports on successful execution
         rm -rf ldm_startup.log e2e-tests/playwright_output.log state.json \
@@ -270,6 +283,7 @@ fi
 
 echo "======================================================"
 echo " Starting Liferay Fragments Automated Test Runner "
+echo " Started at: $SCRIPT_START_DATE"
 echo " Target Liferay Tag/Prefix: $LIFERAY_TAG"
 if [ -n "$FILTER_PATTERN" ]; then echo " Test Filter: $FILTER_PATTERN"; fi
 if [ "$VERBOSE" = true ]; then echo " Verbose Mode: Enabled"; fi
@@ -451,6 +465,22 @@ echo ""
 echo "[4/5] Provisioning Liferay environment via LDM..."
 
 if [ "$EXISTING_PROJECT" = true ]; then
+    echo "  -> Checking status of existing project $PROJECT_NAME..."
+    STATUS=$(ldm list | grep "$PROJECT_NAME" | awk -F'[|?│]' '{print $4}' | sed 's/\x1b\[[0-9;]*m//g' | xargs)
+    if [ "$STATUS" != "Running" ]; then
+        echo "  -> Project '$PROJECT_NAME' is $STATUS. Starting it..."
+        log_command "ldm up \"$PROJECT_NAME\""
+        ldm up "$PROJECT_NAME" > /dev/null 2>&1
+        BASE_URL=$(ldm list | grep "$PROJECT_NAME" | grep -Eo "https?://[a-zA-Z0-9.:-]+" | head -n 1)
+        if [ -z "$BASE_URL" ]; then
+            echo "Error: Could not find URL for project '$PROJECT_NAME' after starting."
+            exit 1
+        fi
+        echo "  -> Re-resolved URL after start: $BASE_URL"
+        export BASE_URL
+    else
+        echo "  -> Project '$PROJECT_NAME' is $STATUS."
+    fi
     echo "  -> Skipping LDM run (using existing project $PROJECT_NAME)..."
 else
     echo "  -> Starting LDM project '$PROJECT_NAME' with $TAG_FLAG $LIFERAY_TAG on port $PORT..."
@@ -710,8 +740,9 @@ cd e2e-tests
 
 if [ -n "$FILTER_PATTERN" ]; then
     export TEST_FILTER="$FILTER_PATTERN"
-    log_command "npx playwright test --grep \"$FILTER_PATTERN\""
-    npx playwright test --grep "$FILTER_PATTERN" > playwright_output.log 2>&1
+    GREP_PATTERN="${FILTER_PATTERN//-/[- ]}"
+    log_command "npx playwright test --grep \"$GREP_PATTERN\""
+    npx playwright test --grep "$GREP_PATTERN" > playwright_output.log 2>&1
 else
     log_command "npx playwright test"
     npx playwright test > playwright_output.log 2>&1

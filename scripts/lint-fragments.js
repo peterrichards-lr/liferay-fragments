@@ -113,6 +113,7 @@ const fragmentFiles = globSync('**/main/fragment.json', {
     'temp_inspect/**',
     'temp_inspect_zip/**',
     'temp_extract_zip/**',
+    'docs/test-results/**',
     ...ldmIgnores,
   ],
 });
@@ -217,23 +218,30 @@ fragmentFiles.forEach((file) => {
       const folderSafeName = folderName
         .replace(/[^a-z0-9]+/gi, '-')
         .toLowerCase();
+      const collectionName =
+        path.dirname(fragRoot) === '.'
+          ? fragRoot
+          : path.basename(path.dirname(path.dirname(fragRoot)));
 
       const docPath1 = path.join(
         process.cwd(),
         'docs',
         'fragments',
+        collectionName,
         `${fragSafeName}.md`
       );
       const docPath2 = path.join(
         process.cwd(),
         'docs',
         'fragments',
+        collectionName,
         `${folderSafeName}.md`
       );
       const docPath3 = path.join(
         process.cwd(),
         'docs',
         'fragments',
+        collectionName,
         `${folderName}.md`
       );
 
@@ -244,7 +252,7 @@ fragmentFiles.forEach((file) => {
       ) {
         logError(
           fragmentName,
-          `Missing detailed documentation file. Expected at: docs/fragments/${fragSafeName}.md`
+          `Missing detailed documentation file. Expected at: docs/fragments/${collectionName}/${fragSafeName}.md`
         );
       }
     }
@@ -546,6 +554,63 @@ fragmentFiles.forEach((file) => {
         checkFieldReferences(f);
         validateFreeMarker(f);
       });
+
+      const testConfigPath = path.join(
+        fragRoot,
+        'test',
+        'test-fragment-config.json'
+      );
+      if (fs.existsSync(testConfigPath)) {
+        try {
+          const testConfigJson = JSON.parse(
+            fs.readFileSync(testConfigPath, 'utf8')
+          );
+          if (configJson.fieldSets) {
+            const allFields = configJson.fieldSets.flatMap(
+              (fs) => fs.fields || []
+            );
+            Object.keys(testConfigJson).forEach((key) => {
+              const fieldDef = allFields.find((f) => f.name === key);
+              if (!fieldDef) {
+                logError(
+                  fragmentName,
+                  `test-fragment-config.json contains key '${key}' which is not defined in configuration.json`
+                );
+              } else {
+                const val = testConfigJson[key];
+                if (
+                  fieldDef.dataType === 'number' ||
+                  fieldDef.dataType === 'int'
+                ) {
+                  if (isNaN(Number(val))) {
+                    logWarn(
+                      fragmentName,
+                      `test-fragment-config.json key '${key}' expects a number but got '${val}'`
+                    );
+                  }
+                } else if (fieldDef.dataType === 'boolean') {
+                  if (
+                    val !== true &&
+                    val !== false &&
+                    val !== 'true' &&
+                    val !== 'false'
+                  ) {
+                    logWarn(
+                      fragmentName,
+                      `test-fragment-config.json key '${key}' expects a boolean but got '${val}'`
+                    );
+                  }
+                }
+              }
+            });
+          }
+        } catch (e) {
+          logError(
+            fragmentName,
+            `Could not parse test-fragment-config.json: ${e.message}`
+          );
+        }
+      }
     } catch (e) {
       logError(
         fragmentName,
@@ -620,6 +685,7 @@ const normalize = (str) =>
     .trim()
     .replace(/\(<([^>]+)>\)/g, '($1)')
     .replace(/-{3,}/g, '---')
+    .replace(/[\*_]/g, '_')
     .replace(/\s+/g, ' ');
 
 if (normalize(currentGalleryContent) !== normalize(expectedGalleryContent)) {
@@ -634,7 +700,16 @@ if (normalize(currentGalleryContent) !== normalize(expectedGalleryContent)) {
 // --- MARKDOWN BROKEN LINK CHECKER ---
 console.log(`Checking Markdown files for broken local links...`);
 const mdFiles = globSync('**/*.md', {
-  ignore: ['node_modules/**', '**/node_modules/**', '.git/**'],
+  ignore: [
+    'node_modules/**',
+    '**/node_modules/**',
+    '.git/**',
+    'temp_extract/**',
+    'temp_inspect/**',
+    'temp_inspect_zip/**',
+    'temp_extract_zip/**',
+    'docs/test-results/**',
+  ],
 });
 
 mdFiles.forEach((mdFile) => {
@@ -655,7 +730,12 @@ mdFiles.forEach((mdFile) => {
     if (!linkPath) return;
 
     const resolvedPath = path.resolve(mdDir, linkPath);
-    if (!fs.existsSync(resolvedPath)) {
+    if (rawPath.includes('images/diffs/')) {
+      logError(
+        mdFile,
+        `Diff images are temporary and must not be checked into documentation. Please run scripts/generate-gallery.js to clean up diff links before committing. Reference: "${rawPath}"`
+      );
+    } else if (!fs.existsSync(resolvedPath)) {
       // Missing live images (under docs/images/live) should be warnings, not errors
       // since they are generated dynamically on successful test runs
       if (rawPath.includes('images/live/')) {
@@ -667,6 +747,28 @@ mdFiles.forEach((mdFile) => {
         logError(
           mdFile,
           `Broken ${type} reference to "${rawPath}" (Resolved: ${path.relative(process.cwd(), resolvedPath)})`
+        );
+      }
+    } else if (resolvedPath.endsWith('.png')) {
+      // Validate PNG file integrity (must start with standard PNG header)
+      try {
+        const fd = fs.openSync(resolvedPath, 'r');
+        const buffer = Buffer.alloc(8);
+        fs.readSync(fd, buffer, 0, 8, 0);
+        fs.closeSync(fd);
+        const pngSignature = Buffer.from([
+          0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a,
+        ]);
+        if (!buffer.equals(pngSignature)) {
+          logError(
+            mdFile,
+            `Corrupt or invalid PNG image: "${rawPath}" (Resolved: ${path.relative(process.cwd(), resolvedPath)})`
+          );
+        }
+      } catch (err) {
+        logError(
+          mdFile,
+          `Failed to read image signature: "${rawPath}" (Error: ${err.message})`
         );
       }
     }

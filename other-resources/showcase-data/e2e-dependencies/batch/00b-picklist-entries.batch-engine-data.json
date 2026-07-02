@@ -1,0 +1,45 @@
+{
+  "configuration": {
+    "className": "com.liferay.list.type.rest.dto.v1_0.ListTypeEntry",
+    "parameters": {
+      "containsHeaders": "true",
+      "createStrategy": "UPSERT",
+      "importStrategy": "ON_ERROR_CONTINUE",
+      "updateStrategy": "UPDATE"
+    }
+  },
+  "items": [
+    {
+      "externalReferenceCode": "TECH",
+      "key": "tech",
+      "name": {
+        "en_US": "Technology"
+      },
+      "listTypeDefinitionExternalReferenceCode": "INTERESTS_PICKLIST"
+    },
+    {
+      "externalReferenceCode": "FINANCE",
+      "key": "finance",
+      "name": {
+        "en_US": "Finance"
+      },
+      "listTypeDefinitionExternalReferenceCode": "INTERESTS_PICKLIST"
+    },
+    {
+      "externalReferenceCode": "HEALTH",
+      "key": "health",
+      "name": {
+        "en_US": "Health & Wellness"
+      },
+      "listTypeDefinitionExternalReferenceCode": "INTERESTS_PICKLIST"
+    },
+    {
+      "externalReferenceCode": "EDUCATION",
+      "key": "education",
+      "name": {
+        "en_US": "Education"
+      },
+      "listTypeDefinitionExternalReferenceCode": "INTERESTS_PICKLIST"
+    }
+  ]
+}

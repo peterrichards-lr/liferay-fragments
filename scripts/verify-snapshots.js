@@ -62,6 +62,17 @@ function updateBaselines() {
   console.log(
     `Successfully promoted ${snapshots.length} snapshots to baselines in: ${BASELINES_DIR}`
   );
+
+  // Clear out the visual analysis state and diffs so we don't accidentally link to them
+  if (fs.existsSync(ANALYSIS_JSON)) {
+    fs.unlinkSync(ANALYSIS_JSON);
+    console.log(`Cleared previous analysis state: ${ANALYSIS_JSON}`);
+  }
+  if (fs.existsSync(LIVE_DIFFS_DIR)) {
+    fs.rmSync(LIVE_DIFFS_DIR, { recursive: true, force: true });
+    console.log(`Cleared previous diffs: ${LIVE_DIFFS_DIR}`);
+  }
+  process.exit(0);
 }
 
 /**

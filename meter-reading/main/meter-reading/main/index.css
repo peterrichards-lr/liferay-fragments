@@ -38,11 +38,34 @@
 
 .meter-reading div.reading {
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: row;
+  flex-wrap: nowrap;
   gap: var(--meter-reading-spacing, 0.5rem);
   margin: var(--meter-reading-spacing, 0.5rem);
   height: auto;
   justify-content: center;
+  align-items: flex-start;
+}
+
+.meter-reading .integer-group,
+.meter-reading .decimal-group {
+  display: flex;
+  flex-direction: row;
+  gap: var(--meter-reading-spacing, 0.5rem);
+}
+
+@media (max-width: 767px) {
+  .meter-reading div.reading {
+    flex-direction: column;
+    align-items: flex-end;
+    width: 100%;
+    padding-right: var(--meter-reading-spacing, 0.5rem);
+  }
+  .meter-reading .integer-group,
+  .meter-reading .decimal-group {
+    justify-content: flex-end;
+    width: 100%;
+  }
 }
 
 .meter-reading div.reading.hide-label {

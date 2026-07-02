@@ -265,8 +265,9 @@ function buildPageElementTree(
         let replacedStr = val;
         // Check exact match first
         if (assetMap[val]) {
-          replacedStr = assetMap[val].toString();
+          resolvedConfig[k] = assetMap[val];
         } else {
+          let replacedStr = val;
           // Check substring matches for stringified JSON (like optionsJSON in image-choice)
           Object.keys(assetMap).forEach((assetKey) => {
             if (replacedStr.includes(assetKey)) {
@@ -276,8 +277,8 @@ function buildPageElementTree(
                 .join(assetMap[assetKey].toString());
             }
           });
+          resolvedConfig[k] = replacedStr;
         }
-        resolvedConfig[k] = replacedStr;
       } else {
         resolvedConfig[k] = val;
       }
@@ -320,28 +321,32 @@ function buildPageElementTree(
     const parentDir = fragmentKeyToDir ? fragmentKeyToDir[key] : null;
     let isInputType = false;
 
+    const definition = {
+      type: 'BasicFragment',
+      fragment: {
+        key: key,
+        siteKey: globalSiteKey,
+      },
+      fragmentConfig: resolvedConfig,
+      fragmentFields: resolvedFields,
+      indexed: true,
+    };
     const element = {
       type: 'Fragment',
-      definition: {
-        fragment: {
-          key: key,
-          siteKey: globalSiteKey,
-        },
-        fragmentConfig: resolvedConfig,
-        fragmentFields: resolvedFields,
-        indexed: true,
-      },
+      definition: definition,
     };
 
     if (node.dropZones) {
       element.pageElements = node.dropZones.map((dz) => {
         const uniqueDropZoneId = Math.random().toString(36).substring(7);
+        const definition = {
+          type: 'FragmentDropZone',
+          fragmentDropZoneId: dz.id || '1',
+        };
         return {
           type: 'FragmentDropZone',
           id: uniqueDropZoneId,
-          definition: {
-            fragmentDropZoneId: dz.id || '1',
-          },
+          definition: definition,
           pageElements: dz.children.map((child) =>
             buildPageElementTree(
               child,
@@ -385,13 +390,15 @@ function buildPageElementTree(
       }
 
       const uniqueDropZoneId = Math.random().toString(36).substring(7);
+      const dropZoneDefinition = {
+        type: 'FragmentDropZone',
+        fragmentDropZoneId: dropZoneId,
+      };
       element.pageElements = [
         {
           type: 'FragmentDropZone',
           id: uniqueDropZoneId,
-          definition: {
-            fragmentDropZoneId: dropZoneId,
-          },
+          definition: dropZoneDefinition,
           pageElements: node.children.map((child) =>
             buildPageElementTree(
               child,
@@ -420,18 +427,22 @@ function buildPageElementTree(
       const val = config[k];
       if (typeof val === 'string') {
         let replacedStr = val;
+        // Check exact match first
         if (assetMap[val]) {
-          replacedStr = assetMap[val].toString();
+          resolvedConfig[k] = assetMap[val];
         } else {
+          let replacedStr = val;
+          // Check substring matches for stringified JSON (like optionsJSON in image-choice)
           Object.keys(assetMap).forEach((assetKey) => {
             if (replacedStr.includes(assetKey)) {
+              // Note: using string split/join to support all environments for replaceAll
               replacedStr = replacedStr
                 .split(assetKey)
                 .join(assetMap[assetKey].toString());
             }
           });
+          resolvedConfig[k] = replacedStr;
         }
-        resolvedConfig[k] = replacedStr;
       } else {
         resolvedConfig[k] = val;
       }
@@ -468,39 +479,26 @@ function buildPageElementTree(
       (node.fragmentConfig && node.fragmentConfig.inputFieldId) ||
       'emailAddress';
 
-    const element = {
+    const definition = {
       type: 'FormFragment',
-      definition: {
-        type: 'FormFragment',
-        fieldKey: fieldKey.startsWith('ObjectField_')
+      fieldKey: fieldKey.startsWith('ObjectField_')
+        ? fieldKey
+        : `ObjectField_${fieldKey}`,
+      fragment: {
+        key: key,
+        siteKey: globalSiteKey,
+      },
+      fragmentConfig: {
+        ...resolvedConfig,
+        inputFieldId: fieldKey.startsWith('ObjectField_')
           ? fieldKey
           : `ObjectField_${fieldKey}`,
-        fragment: {
-          key: key,
-          siteKey: globalSiteKey,
-        },
-        fragmentInstance: {
-          fragmentReference: {
-            fragmentReferenceType: 'FragmentItemExternalReference',
-            externalReferenceCode: getFragmentERC(key, fragmentKeyToDir),
-            className: 'com.liferay.fragment.model.FragmentEntry',
-            scope: {
-              externalReferenceCode: 'L_GLOBAL',
-              type: 'Site',
-            },
-          },
-          fragmentConfigurationFieldValues: convertConfigToFieldValues(
-            {
-              ...resolvedConfig,
-              inputFieldId: fieldKey.startsWith('ObjectField_')
-                ? fieldKey
-                : `ObjectField_${fieldKey}`,
-            },
-            parentDir
-          ),
-          fragmentEditableElements: resolvedFields,
-        },
       },
+      fragmentFields: resolvedFields,
+    };
+    const element = {
+      type: 'FormFragment',
+      definition: definition,
     };
     return element;
   } else if (type === 'Form' || type === 'FormContainer') {
@@ -642,23 +640,34 @@ function buildPageElementTree(
     }
     return element;
   } else if (type === 'Widget') {
+    const definition = node.definition
+      ? { ...node.definition }
+      : {
+          widgetInstance: {
+            widgetConfig: {},
+            widgetName:
+              node.key ||
+              'com_liferay_portal_search_web_search_bar_portlet_SearchBarPortlet',
+          },
+        };
+    definition.type = 'Widget';
     return {
       type: 'Widget',
-      definition: node.definition || {
-        widgetInstance: {
-          widgetConfig: {},
-          widgetName:
-            node.key ||
-            'com_liferay_portal_search_web_search_bar_portlet_SearchBarPortlet',
-        },
-      },
+      definition: definition,
       id: node.id || Math.random().toString(36).substring(7),
     };
   } else {
-    // Root, Section, Row, Column
+    // Root, Section, Row, Column, CollectionDisplay
+    const definition = node.definition ? { ...node.definition } : {};
+    let definitionType = type;
+    if (type === 'Section') definitionType = 'Container';
+    else if (type === 'Row') definitionType = 'Grid';
+    else if (type === 'Column') definitionType = 'Grid';
+    definition.type = definitionType;
+
     const element = {
       type: type,
-      definition: node.definition ? { ...node.definition } : {},
+      definition: definition,
     };
 
     if (type === 'Column' && element.definition.size === undefined) {
@@ -680,17 +689,41 @@ function buildPageElementTree(
     }
 
     if (node.children && node.children.length > 0) {
-      element.pageElements = node.children.map((child) =>
-        buildPageElementTree(
-          child,
-          siteERC,
-          assetMap,
-          defaultFragmentKey,
-          defaultFragmentConfig,
-          fragmentKeyToDir,
-          objectDefinitions
-        )
-      );
+      if (type === 'CollectionDisplay') {
+        const uniqueId = Math.random().toString(36).substring(7);
+        element.pageElements = [
+          {
+            type: 'CollectionItem',
+            id: uniqueId,
+            definition: {
+              type: 'CollectionItem',
+            },
+            pageElements: node.children.map((child) =>
+              buildPageElementTree(
+                child,
+                siteERC,
+                assetMap,
+                defaultFragmentKey,
+                defaultFragmentConfig,
+                fragmentKeyToDir,
+                objectDefinitions
+              )
+            ),
+          },
+        ];
+      } else {
+        element.pageElements = node.children.map((child) =>
+          buildPageElementTree(
+            child,
+            siteERC,
+            assetMap,
+            defaultFragmentKey,
+            defaultFragmentConfig,
+            fragmentKeyToDir,
+            objectDefinitions
+          )
+        );
+      }
     }
 
     return element;
@@ -1169,11 +1202,11 @@ async function globalSetup(config) {
             `     [WARN] Guest role save button not found for ${erc}.`
           );
         }
-      } else {
-        console.log(
-          `     Guest entry permissions are already up-to-date for ${erc}.`
-        );
       }
+      console.log(
+        `     Object ${erc} setup complete. Cooldown for 3 seconds...`
+      );
+      await new Promise((resolve) => setTimeout(resolve, 3000));
     }
   } catch (permErr) {
     console.warn(
@@ -1844,6 +1877,47 @@ async function globalSetup(config) {
 
       // Add product ID to assetMap so test-data.json can resolve it
       commerceAssetMap[prodData.key] = productId;
+
+      // Create SKU and Base Price for the product
+      if (productId) {
+        const skuResp = await apiContext.post(
+          `/o/headless-commerce-admin-catalog/v1.0/products/${productId}/skus`,
+          {
+            data: {
+              sku: prodData.sku,
+              published: true,
+              purchasable: true,
+            },
+          }
+        );
+        if (skuResp.ok()) {
+          const skuData = await skuResp.json();
+          console.log(
+            `  -> Successfully created SKU ${prodData.sku} (ID: ${skuData.id})`
+          );
+
+          // Set a mock price and promo price so it registers as an offer
+          const priceResp = await apiContext.patch(
+            `/o/headless-commerce-admin-catalog/v1.0/skus/${skuData.id}`,
+            {
+              data: {
+                price: 150.0,
+                promoPrice: 99.0,
+              },
+            }
+          );
+          if (priceResp.ok()) {
+            console.log(
+              `  -> Successfully set pricing for SKU ${prodData.sku}`
+            );
+          }
+        } else {
+          console.warn(
+            `  -> [WARN] Failed to create SKU ${prodData.sku}:`,
+            await skuResp.text()
+          );
+        }
+      }
     }
   } catch (commErr) {
     console.warn(
@@ -1912,6 +1986,7 @@ async function globalSetup(config) {
     let testData = null;
     const assetMap = { ...commerceAssetMap }; // Maps ERC -> Liferay ID
     const assetEntryIdMap = {}; // Maps ERC -> AssetEntry ID
+    const documentIdMap = {}; // Maps ERC -> DLFileEntry ID
 
     if (fs.existsSync(testDataFile)) {
       console.log(
@@ -1919,6 +1994,25 @@ async function globalSetup(config) {
       );
       try {
         testData = JSON.parse(fs.readFileSync(testDataFile, 'utf8'));
+
+        const testConfigPath = path.join(
+          path.dirname(testDataFile),
+          'test-fragment-config.json'
+        );
+        if (fs.existsSync(testConfigPath)) {
+          console.log(
+            `     Found fragment configuration override at ${testConfigPath}.`
+          );
+          try {
+            const testConfig = JSON.parse(
+              fs.readFileSync(testConfigPath, 'utf8')
+            );
+            if (!testData.pageConfig) testData.pageConfig = {};
+            testData.pageConfig.fragmentConfig = testConfig;
+          } catch (e) {
+            console.error(`     [ERROR] Failed to parse ${testConfigPath}:`, e);
+          }
+        }
 
         // Load existing manifest of seeded assets or start fresh
         const seededAssetsPath = path.join(
@@ -1929,6 +2023,126 @@ async function globalSetup(config) {
         let seededAssets = [];
         if (fs.existsSync(seededAssetsPath)) {
           seededAssets = JSON.parse(fs.readFileSync(seededAssetsPath, 'utf8'));
+        }
+
+        // -1. Seed Picklists
+        if (testData.requiredPicklists) {
+          for (const pl of testData.requiredPicklists) {
+            console.log(`       Seeding Picklist: ${pl.name} (${pl.erc})...`);
+
+            let picklistId = null;
+            try {
+              const fetchResp = await apiContext.get(
+                `/o/headless-admin-list-type/v1.0/list-type-definitions/by-external-reference-code/${pl.erc}`
+              );
+              if (fetchResp.ok()) {
+                const json = await fetchResp.json();
+                picklistId = json.id;
+                console.log(`       Found existing picklist ${pl.erc}`);
+              }
+            } catch (e) {}
+
+            if (!picklistId) {
+              const createResp = await apiContext.post(
+                `/o/headless-admin-list-type/v1.0/list-type-definitions`,
+                {
+                  data: {
+                    externalReferenceCode: pl.erc,
+                    name: pl.name,
+                    name_i18n: { en_US: pl.name },
+                  },
+                }
+              );
+              if (createResp.ok()) {
+                const json = await createResp.json();
+                picklistId = json.id;
+                console.log(`       Successfully created picklist ${pl.erc}`);
+              } else {
+                console.warn(
+                  `       [WARN] Failed to create picklist ${pl.erc} : ${createResp.status()}`
+                );
+              }
+            }
+
+            if (picklistId && pl.items) {
+              const entriesResp = await apiContext.get(
+                `/o/headless-admin-list-type/v1.0/list-type-definitions/${picklistId}/list-type-entries`
+              );
+              let existingEntries = [];
+              if (entriesResp.ok()) {
+                existingEntries = (await entriesResp.json()).items || [];
+              }
+
+              for (const item of pl.items) {
+                if (!existingEntries.find((e) => e.name === item)) {
+                  const postEntryResp = await apiContext.post(
+                    `/o/headless-admin-list-type/v1.0/list-type-definitions/${picklistId}/list-type-entries`,
+                    {
+                      data: {
+                        externalReferenceCode:
+                          pl.erc +
+                          '_' +
+                          item.toUpperCase().replace(/[^A-Z0-9]/g, '_'),
+                        key: item.toLowerCase().replace(/[^a-z0-9]/g, '-'),
+                        name: item,
+                        name_i18n: { en_US: item },
+                      },
+                    }
+                  );
+                  if (postEntryResp.ok()) {
+                    console.log(`       Added picklist entry: ${item}`);
+                  } else {
+                    console.warn(`       [WARN] Failed to add entry ${item}`);
+                  }
+                }
+              }
+            }
+          }
+        }
+
+        // -1.5 Patch APPLICANT Object with Picklist (if seeded)
+        if (
+          testData.requiredPicklists &&
+          testData.requiredPicklists.find((p) => p.erc === 'INTERESTS_PICKLIST')
+        ) {
+          console.log(
+            `       Patching APPLICANT object definition to bind INTERESTS_PICKLIST...`
+          );
+          try {
+            const getFieldsResp = await apiContext.get(
+              `/o/object-admin/v1.0/object-definitions/by-external-reference-code/APPLICANT/object-fields`
+            );
+            if (getFieldsResp.ok()) {
+              const fieldsJson = await getFieldsResp.json();
+              const interestsField = (fieldsJson.items || []).find(
+                (f) => f.externalReferenceCode === 'INTERESTS'
+              );
+              if (interestsField) {
+                const patchResp = await apiContext.patch(
+                  `/o/object-admin/v1.0/object-fields/${interestsField.id}`,
+                  {
+                    data: {
+                      listTypeDefinitionExternalReferenceCode:
+                        'INTERESTS_PICKLIST',
+                    },
+                  }
+                );
+                if (patchResp.ok()) {
+                  console.log(
+                    `       Successfully bound INTERESTS_PICKLIST to APPLICANT.interests`
+                  );
+                } else {
+                  console.warn(
+                    `       [WARN] Failed to bind picklist to field: ${patchResp.status()}`
+                  );
+                }
+              }
+            }
+          } catch (e) {
+            console.warn(
+              `       [WARN] Error patching APPLICANT object: ${e.message}`
+            );
+          }
         }
 
         // 0. Seed Documents
@@ -1992,6 +2206,7 @@ async function globalSetup(config) {
                   `       Successfully uploaded document ${doc.title} -> URL: ${contentUrl}, ID: ${docId}`
                 );
                 assetMap[doc.externalReferenceCode] = contentUrl;
+                documentIdMap[doc.externalReferenceCode] = docId;
                 seededAssets.push({
                   type: 'document',
                   id: docId,
@@ -2027,6 +2242,7 @@ async function globalSetup(config) {
                       `       Found existing document ${doc.title} -> URL: ${contentUrl}, ID: ${docId}`
                     );
                     assetMap[doc.externalReferenceCode] = contentUrl;
+                    documentIdMap[doc.externalReferenceCode] = docId;
 
                     // Resolve and store assetEntryId
                     const assetEntryId = await getAssetEntryId(
@@ -2337,12 +2553,12 @@ async function globalSetup(config) {
         // 4. Extract Configuration Overrides
         if (testData.pageConfig && testData.pageConfig.fragmentConfig) {
           seededConfigOverrides = { ...testData.pageConfig.fragmentConfig };
-          Object.keys(seededConfigOverrides).forEach((key) => {
-            const val = seededConfigOverrides[key];
+
+          const resolveValue = (val) => {
             if (typeof val === 'string') {
               let replacedStr = val;
               if (assetMap[val]) {
-                replacedStr = assetMap[val].toString();
+                return assetMap[val];
               } else {
                 Object.keys(assetMap).forEach((assetKey) => {
                   if (replacedStr.includes(assetKey)) {
@@ -2361,8 +2577,37 @@ async function globalSetup(config) {
                   replacedStr = `${cleanPath}/scopes/${siteId}${replacedStr.endsWith('/') ? '/' : ''}`;
                 }
               }
-              seededConfigOverrides[key] = replacedStr;
+              return replacedStr;
+            } else if (Array.isArray(val)) {
+              return val.map(resolveValue);
+            } else if (val && typeof val === 'object') {
+              const res = {};
+              Object.keys(val).forEach((k) => {
+                if (
+                  k === 'url' &&
+                  typeof val[k] === 'string' &&
+                  assetMap[val[k]]
+                ) {
+                  res[k] = assetMap[val[k]];
+                } else if (
+                  k === 'fileEntryId' &&
+                  typeof val[k] === 'string' &&
+                  documentIdMap[val[k]]
+                ) {
+                  res[k] = documentIdMap[val[k]].toString();
+                } else {
+                  res[k] = resolveValue(val[k]);
+                }
+              });
+              return res;
             }
+            return val;
+          };
+
+          Object.keys(seededConfigOverrides).forEach((key) => {
+            seededConfigOverrides[key] = resolveValue(
+              seededConfigOverrides[key]
+            );
           });
         }
       } catch (err) {
@@ -2478,19 +2723,11 @@ async function globalSetup(config) {
                   type: 'FormFragment',
                   definition: {
                     fieldKey: '',
-                    fragmentInstance: {
-                      fragmentReference: {
-                        fragmentReferenceType: 'FragmentItemExternalReference',
-                        externalReferenceCode: 'form-fragments-submit-button',
-                        className: 'com.liferay.fragment.model.FragmentEntry',
-                        scope: {
-                          externalReferenceCode: 'L_GLOBAL',
-                          type: 'Site',
-                        },
-                      },
-                      fragmentConfigurationFieldValues: {},
-                      fragmentEditableElements: [],
-                    },
+                    fragmentConfig:
+                      testData.pageConfig && testData.pageConfig.fragmentConfig
+                        ? testData.pageConfig.fragmentConfig
+                        : {},
+                    fragmentFields: [],
                   },
                 },
               ],
@@ -2638,67 +2875,13 @@ async function globalSetup(config) {
                                           key: fragmentKey,
                                           siteKey: globalSiteKey,
                                         },
-                                        fragmentInstance: {
-                                          fragmentReference: {
-                                            fragmentReferenceType:
-                                              'FragmentItemExternalReference',
-                                            externalReferenceCode:
-                                              getFragmentERC(
-                                                fragmentKey,
-                                                fragmentKeyToDir
-                                              ),
-                                            className:
-                                              'com.liferay.fragment.model.FragmentEntry',
-                                            scope: {
-                                              externalReferenceCode: 'L_GLOBAL',
-                                              type: 'Site',
-                                            },
-                                          },
-                                          fragmentConfigurationFieldValues:
-                                            convertConfigToFieldValues(
-                                              {
-                                                ...seededConfigOverrides,
-                                                inputFieldId:
-                                                  fieldKey.startsWith(
-                                                    'ObjectField_'
-                                                  )
-                                                    ? fieldKey
-                                                    : `ObjectField_${fieldKey}`,
-                                              },
-                                              parentDir
-                                            ),
-                                          fragmentEditableElements: [],
-                                        },
-                                      },
-                                    },
-                                    {
-                                      type: 'FormFragment',
-                                      definition: {
-                                        type: 'FormFragment',
-                                        fieldKey: '',
-                                        fragment: {
-                                          key: 'submit-button',
-                                          siteKey: globalSiteKey,
-                                        },
-                                        fragmentInstance: {
-                                          fragmentReference: {
-                                            fragmentReferenceType:
-                                              'FragmentItemExternalReference',
-                                            externalReferenceCode:
-                                              getFragmentERC(
-                                                'submit-button',
-                                                fragmentKeyToDir
-                                              ),
-                                            className:
-                                              'com.liferay.fragment.model.FragmentEntry',
-                                            scope: {
-                                              externalReferenceCode: 'L_GLOBAL',
-                                              type: 'Site',
-                                            },
-                                          },
-                                          fragmentConfigurationFieldValues: {},
-                                          fragmentEditableElements: [],
-                                        },
+                                        fragmentConfig:
+                                          testData &&
+                                          testData.pageConfig &&
+                                          testData.pageConfig.fragmentConfig
+                                            ? testData.pageConfig.fragmentConfig
+                                            : {},
+                                        fragmentFields: [],
                                       },
                                     },
                                   ],
@@ -2774,6 +2957,11 @@ async function globalSetup(config) {
         element.type = 'Fragment';
         if (element.definition && !element.definition.type) {
           element.definition.type = 'FormFragment';
+        }
+      } else if (element.type === 'CollectionDisplay') {
+        element.type = 'Collection';
+        if (element.definition && !element.definition.type) {
+          element.definition.type = 'CollectionDisplay';
         }
       }
       if (element.pageElements) {

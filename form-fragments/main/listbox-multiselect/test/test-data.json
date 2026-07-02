@@ -1,3 +1,21 @@
 {
-  "requiredObjects": ["APPLICANT"]
+  "requiredObjects": ["APPLICANT"],
+  "requiredPicklists": [
+    {
+      "erc": "INTERESTS_PICKLIST",
+      "name": "Interests Picklist",
+      "items": ["Sports", "Music", "Reading"]
+    }
+  ],
+  "pageLayout": {
+    "type": "FormContainer",
+    "mappedObjectERC": "APPLICANT",
+    "children": [
+      {
+        "type": "FormFragment",
+        "key": "listbox-multiselect",
+        "fieldKey": "interests"
+      }
+    ]
+  }
 }

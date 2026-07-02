@@ -9,7 +9,7 @@ set -e
 
 # Wrapper function to enforce clean, color-free plain-text outputs for all LDM commands
 ldm() {
-    command ldm "$@" --no-color --no-unicode
+    command ldm "$@"
 }
 
 

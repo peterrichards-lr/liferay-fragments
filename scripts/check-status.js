@@ -3,7 +3,7 @@ const { execSync } = require('child_process');
 
 try {
   console.log('=== Liferay Container Status ===');
-  const ldmStatus = execSync('ldm list --no-color --no-unicode', {
+  const ldmStatus = execSync('ldm list', {
     encoding: 'utf8',
   });
   console.log(ldmStatus);
@@ -23,12 +23,9 @@ try {
 
   console.log('=== Liferay LDM Logs Tail ===');
   try {
-    const ldmLogs = execSync(
-      'ldm logs e2e-test-env liferay -n 30 --no-color --no-unicode',
-      {
-        encoding: 'utf8',
-      }
-    );
+    const ldmLogs = execSync('ldm logs e2e-test-env liferay -n 30', {
+      encoding: 'utf8',
+    });
     console.log(ldmLogs);
   } catch (e) {
     console.log('Failed to fetch ldm logs:', e.message);

@@ -78,8 +78,11 @@ function generateGallery() {
       fs.readFileSync(collectionFile, 'utf8')
     );
 
+    // Normalize path separators for globSync on Windows
+    const collectionGlobDir = collectionDir.replace(/\\/g, '/');
+
     // Find fragments in this collection
-    const fragments = globSync(`${collectionDir}/*/main/fragment.json`);
+    const fragments = globSync(`${collectionGlobDir}/*/main/fragment.json`);
 
     if (fragments.length === 0) return;
 
@@ -88,12 +91,7 @@ function generateGallery() {
       return;
     }
 
-    markdown += `## ${collectionMetadata.name}\n\n`;
-
-    if (collectionMetadata.description) {
-      markdown += `${collectionMetadata.description}\n\n`;
-    }
-
+    const validFragments = [];
     fragments.sort().forEach((fragFile) => {
       const fragDir = path.dirname(fragFile); // main directory
       const fragRoot = path.dirname(fragDir); // fragment root folder
@@ -117,7 +115,18 @@ function generateGallery() {
           }
         } catch (e) {}
       }
+      validFragments.push({ fragFile, fragRoot, fragMetadata, testData });
+    });
 
+    if (validFragments.length === 0) return;
+
+    markdown += `## ${collectionMetadata.name}\n\n`;
+
+    if (collectionMetadata.description) {
+      markdown += `${collectionMetadata.description}\n\n`;
+    }
+
+    validFragments.forEach(({ fragFile, fragRoot, fragMetadata, testData }) => {
       const fragSafeName = path.basename(fragRoot);
 
       markdown += `### ${fragMetadata.name}\n\n`;
@@ -280,9 +289,9 @@ function generateGallery() {
       let fallbackPath = '';
       if (fs.existsSync(manualImg)) {
         fallbackPath = `./images/${fragSafeName}.png`;
-      } else if (fs.existsSync(path.join(fragDir, 'screenshot.png'))) {
+      } else if (fs.existsSync(path.join(fragRoot, 'screenshot.png'))) {
         fallbackPath = path
-          .relative(DOCS_DIR, path.join(fragDir, 'screenshot.png'))
+          .relative(DOCS_DIR, path.join(fragRoot, 'screenshot.png'))
           .replace(/\\/g, '/');
       }
 
@@ -318,23 +327,42 @@ function generateGallery() {
         }
       }
 
-      const docFile1 = path.join(DOCS_DIR, 'fragments', `${fragSafeName}.md`);
+      const collectionFolder = path.basename(path.dirname(collectionDir));
+      const docFile1 = path.join(
+        DOCS_DIR,
+        'fragments',
+        collectionFolder,
+        `${fragSafeName}.md`
+      );
       const docFile2 = path.join(
         DOCS_DIR,
         'fragments',
+        collectionFolder,
         `${safeFragmentName}.md`
       );
       const rootDocFile1 = path.join(DOCS_DIR, `${fragSafeName}.md`);
       const rootDocFile2 = path.join(DOCS_DIR, `${safeFragmentName}.md`);
 
       if (fs.existsSync(docFile1)) {
-        markdown += `[Detailed Documentation](./fragments/${fragSafeName}.md)\n\n`;
+        const url = `./fragments/${collectionFolder}/${fragSafeName}.md`
+          .replace(/\(/g, '%28')
+          .replace(/\)/g, '%29');
+        markdown += `[Detailed Documentation](${url})\n\n`;
       } else if (fs.existsSync(docFile2)) {
-        markdown += `[Detailed Documentation](./fragments/${safeFragmentName}.md)\n\n`;
+        const url = `./fragments/${collectionFolder}/${safeFragmentName}.md`
+          .replace(/\(/g, '%28')
+          .replace(/\)/g, '%29');
+        markdown += `[Detailed Documentation](${url})\n\n`;
       } else if (fs.existsSync(rootDocFile1)) {
-        markdown += `[Detailed Documentation](./${fragSafeName}.md)\n\n`;
+        const url = `./${fragSafeName}.md`
+          .replace(/\(/g, '%28')
+          .replace(/\)/g, '%29');
+        markdown += `[Detailed Documentation](${url})\n\n`;
       } else if (fs.existsSync(rootDocFile2)) {
-        markdown += `[Detailed Documentation](./${safeFragmentName}.md)\n\n`;
+        const url = `./${safeFragmentName}.md`
+          .replace(/\(/g, '%28')
+          .replace(/\)/g, '%29');
+        markdown += `[Detailed Documentation](${url})\n\n`;
       } else {
         console.warn(
           `[WARN] No documentation file found for fragment: ${fragMetadata.name} in gallery`

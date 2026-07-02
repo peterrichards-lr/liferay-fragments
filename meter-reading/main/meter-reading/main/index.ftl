@@ -30,25 +30,54 @@
 
         <form>
             <div class="reading meter-container d-flex">
-                [#list 1..totalDigits as i]
-                    [#assign isDecimal = (i > integerDigitCount) /]
-                    <label class="digit meter-digit [#if isDecimal]dec[#else]int[/#if]">
-                        <input 
-                            class="form-control digit [#if isDecimal]dec[#else]int[/#if]" 
-                            type="text" 
-                            maxlength="1" 
-                            size="1"
-                            digit="${i}"
-                            name="${input.name}" 
-                            id="${fragmentEntryLinkNamespace}-digit-${i}"
-                            [#if input.readOnly]readonly[/#if]
-                            ${input.required?then('required', '')}
-                        />
-                        [#if (i-1) < labels?size]
-                            <span class="small text-muted d-block">${labels[i-1]?trim}</span>
+                <div class="integer-group d-flex">
+                    [#list 1..totalDigits as i]
+                        [#if i <= integerDigitCount]
+                            [#assign isDecimal = false /]
+                            <label class="digit meter-digit int">
+                                <input 
+                                    class="form-control digit int" 
+                                    type="text" 
+                                    maxlength="1" 
+                                    size="1"
+                                    digit="${i}"
+                                    name="${input.name}" 
+                                    id="${fragmentEntryLinkNamespace}-digit-${i}"
+                                    [#if input.readOnly]readonly[/#if]
+                                    ${input.required?then('required', '')}
+                                />
+                                [#if (i-1) < labels?size]
+                                    <span class="small text-muted d-block">${labels[i-1]?trim}</span>
+                                [/#if]
+                            </label>
                         [/#if]
-                    </label>
-                [/#list]
+                    [/#list]
+                </div>
+                [#if decimalDigitCount > 0]
+                    <div class="decimal-group d-flex">
+                        [#list 1..totalDigits as i]
+                            [#if i > integerDigitCount]
+                                [#assign isDecimal = true /]
+                                <label class="digit meter-digit dec">
+                                    <input 
+                                        class="form-control digit dec" 
+                                        type="text" 
+                                        maxlength="1" 
+                                        size="1"
+                                        digit="${i}"
+                                        name="${input.name}" 
+                                        id="${fragmentEntryLinkNamespace}-digit-${i}"
+                                        [#if input.readOnly]readonly[/#if]
+                                        ${input.required?then('required', '')}
+                                    />
+                                    [#if (i-1) < labels?size]
+                                        <span class="small text-muted d-block">${labels[i-1]?trim}</span>
+                                    [/#if]
+                                </label>
+                            [/#if]
+                        [/#list]
+                    </div>
+                [/#if]
             </div>
 
             <div class="date-input mt-3 [#if !showDateSelector]hide-date-selector[/#if]">

@@ -1,4 +1,5 @@
 {
+  "requiredObjects": ["CAMPAIGN_INTERACTION"],
   "documents": [
     {
       "externalReferenceCode": "COFFEE-AUTH",
@@ -13,7 +14,18 @@
   ],
   "pageConfig": {
     "fragmentConfig": {
-      "optionsJSON": "[{\"label\": \"Coffee Auth\", \"value\": \"coffee\", \"imageUrl\": \"COFFEE-AUTH\"}, {\"label\": \"Gravity Rec\", \"value\": \"gravity\", \"imageUrl\": \"GRAVITY-RECOMMENDATION\"}]"
+      "optionsJSON": "[{\"label\": \"Coffee\", \"value\": \"coffee\", \"imageUrl\": \"COFFEE-AUTH\"}, {\"label\": \"Gravity\", \"value\": \"gravity\", \"imageUrl\": \"GRAVITY-RECOMMENDATION\"}]"
     }
+  },
+  "pageLayout": {
+    "type": "FormContainer",
+    "mappedObjectERC": "CAMPAIGN_INTERACTION",
+    "children": [
+      {
+        "type": "FormFragment",
+        "key": "image-choice",
+        "fieldKey": "interactionType"
+      }
+    ]
   }
 }

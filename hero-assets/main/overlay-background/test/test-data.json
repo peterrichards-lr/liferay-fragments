@@ -1,4 +1,19 @@
 {
+  "documents": [
+    {
+      "externalReferenceCode": "HERO-BG",
+      "title": "parallax_hero_bg.png",
+      "filePath": "e2e-tests/assets/parallax_hero_bg.png"
+    }
+  ],
+  "pageConfig": {
+    "fragmentConfig": {
+      "backgroundImage": {
+        "url": "HERO-BG",
+        "fileEntryId": "HERO-BG"
+      }
+    }
+  },
   "pageLayout": {
     "type": "Fragment",
     "key": "overlay-background",
