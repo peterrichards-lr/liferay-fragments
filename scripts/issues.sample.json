@@ -1,0 +1,19 @@
+{
+  "title": "[Epic Name] Reusable Epic Title example",
+  "body": "Detailed epic description goes here.",
+  "labels": ["enhancement"],
+  "issues": [
+    {
+      "title": "Sub-Issue #1: Task A description",
+      "body": "Steps to resolve task A.",
+      "completed": true,
+      "labels": ["enhancement"]
+    },
+    {
+      "title": "Sub-Issue #2: Task B description",
+      "body": "Steps to resolve task B.",
+      "completed": false,
+      "labels": ["enhancement"]
+    }
+  ]
+}
