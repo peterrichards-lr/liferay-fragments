@@ -55,3 +55,7 @@
   `shared-resources/` directory.
 - **Build Integrity**: Ensure `Language_en_US.properties` is excluded from final
   ZIP packages to maintain clean fragment metadata.
+
+## <!-- markdownlint-disable MD049 -->
+
+_Last Updated: 2026-07-02_ | _Last Reviewed: 2026-07-02_

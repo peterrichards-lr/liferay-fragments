@@ -209,3 +209,7 @@ Follow these steps to explore how fragments utilize the seeded data:
 5. **Observe and Inspect**:
    - Notice how the fields (e.g., date formats, status colors, image URLs) bind automatically.
    - Open your browser's Developer Tools (`F12`), check the **Network** tab, and reload. You will see the clean REST API requests (`/o/headless-delivery/v1.0/content-sets/...` or `/o/c/waterreadings/...`) that the fragment makes to fetch its data.
+
+## <!-- markdownlint-disable MD049 -->
+
+_Last Updated: 2026-07-02_ | _Last Reviewed: 2026-07-02_

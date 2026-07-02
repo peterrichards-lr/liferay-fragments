@@ -13,3 +13,7 @@ a distinct visual style with prominent borders and shadows.
   fragment.
 - **Drop Zone**: Includes a single drop zone intended for **Card Content**.
 - **Meridian Ready**: Fully utilizes theme tokens for its visual identity.
+
+## <!-- markdownlint-disable MD049 -->
+
+_Last Updated: 2026-07-02_ | _Last Reviewed: 2026-07-02_

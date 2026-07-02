@@ -15,3 +15,7 @@ consistent linking across service-oriented pages.
 - **Label**: The text displayed on the button.
 - **URL**: The destination link.
 - **Icon**: The name of the icon to display.
+
+## <!-- markdownlint-disable MD049 -->
+
+_Last Updated: 2026-07-02_ | _Last Reviewed: 2026-07-02_

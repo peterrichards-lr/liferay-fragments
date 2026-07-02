@@ -16,3 +16,7 @@ new URL after a specific event, such as a form submission.
 
 - **Target URL**: The destination page.
 - **Delay (ms)**: Time to wait before redirecting.
+
+## <!-- markdownlint-disable MD049 -->
+
+_Last Updated: 2026-07-02_ | _Last Reviewed: 2026-07-02_

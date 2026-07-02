@@ -24,3 +24,7 @@ viewport.
 - **Animation Duration**: Time in milliseconds for the count animation.
 - **Prefix/Suffix**: Strings to display before or after the number.
 - **Text Color**: Custom theme color for the value.
+
+## <!-- markdownlint-disable MD049 -->
+
+_Last Updated: 2026-07-02_ | _Last Reviewed: 2026-07-02_

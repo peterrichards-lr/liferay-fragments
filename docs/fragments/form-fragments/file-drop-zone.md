@@ -25,3 +25,7 @@ The fragment provides the following configuration options within `configuration.
 - **JavaScript**: Vanilla JavaScript handles the drag-and-drop events (`dragenter`, `dragover`, `dragleave`, `drop`), file selection updates, and triggers Liferay's selection modal (`Liferay.Util.openSelectionModal`).
 - **CSS**: Uses Clay CSS classes and custom CSS (assumed in `index.css`) for the drop zone styling (`.drop-zone`, `.drag-over`, etc.).
 - **FreeMarker**: Renders the HTML structure, maps form input attributes (e.g., `required`, `accept`), and integrates with Liferay's localization and Clay icons.
+
+## <!-- markdownlint-disable MD049 -->
+
+_Last Updated: 2026-07-02_ | _Last Reviewed: 2026-07-02_

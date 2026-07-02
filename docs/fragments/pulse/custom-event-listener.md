@@ -30,3 +30,7 @@ This fragment utilizes the **Shared Resources Architecture**:
 - **`validation.js`**: Uses `isValidIdentifier` for robust Campaign ID checking.
 - **`storage.js`**: (Note: Declared in build but used internal cookie helper in
   current version).
+
+## <!-- markdownlint-disable MD049 -->
+
+_Last Updated: 2026-07-02_ | _Last Reviewed: 2026-07-02_

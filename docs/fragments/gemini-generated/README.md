@@ -47,3 +47,7 @@ generated via Gemini, leveraging modern Liferay APIs and the Meridian theme.
 - [Pricing Comparison Grid](./pricing-comparison-grid.md)
 - [Radial KPI Gauge](./radial-kpi-gauge.md)
 - [Search Overlay](./search-overlay.md)
+
+## <!-- markdownlint-disable MD049 -->
+
+_Last Updated: 2026-07-02_ | _Last Reviewed: 2026-07-02_

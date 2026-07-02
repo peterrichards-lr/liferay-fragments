@@ -22,3 +22,7 @@ Editable elements:
 - Leverages the `aura-container` class and a `grid grid-4` layout.
 - The gallery items use the `<figure>` and `<figcaption>` elements styled with `aura-card` and `img-soft` classes.
 - Uses the `var(--aura-heading-color)` CSS token for the heading, maintaining Theme Tokens compliance.
+
+## <!-- markdownlint-disable MD049 -->
+
+_Last Updated: 2026-07-02_ | _Last Reviewed: 2026-07-02_

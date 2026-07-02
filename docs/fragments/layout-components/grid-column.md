@@ -14,3 +14,7 @@ used inside a Liferay Grid row.
 
 - **Column Size**: Set the bootstrap-style column width (e.g., 6 for half-width,
   4 for third-width).
+
+## <!-- markdownlint-disable MD049 -->
+
+_Last Updated: 2026-07-02_ | _Last Reviewed: 2026-07-02_

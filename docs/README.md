@@ -219,3 +219,7 @@ Welcome to the documentation for the Liferay Fragments library.
 ### widget-modifiers
 
 - [Alerts Modifier](./fragments/widget-modifiers/alerts-modifier.md)
+
+## <!-- markdownlint-disable MD049 -->
+
+_Last Updated: 2026-07-02_ | _Last Reviewed: 2026-07-02_

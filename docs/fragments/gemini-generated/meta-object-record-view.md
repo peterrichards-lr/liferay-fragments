@@ -76,3 +76,7 @@ This fragment utilizes the **Shared Resources Architecture**:
 - **`dom.js`**: Uses `debounce` for search and filter actions.
 - **`validation.js`**: Uses `isValidIdentifier` for robust record and
   configuration checking.
+
+## <!-- markdownlint-disable MD049 -->
+
+_Last Updated: 2026-07-02_ | _Last Reviewed: 2026-07-02_

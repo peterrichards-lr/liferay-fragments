@@ -28,3 +28,7 @@ This fragment utilizes the **Shared Resources Architecture**:
 
 - **`validation.js`**: Uses `isValidIdentifier` to ensure all three endpoint
   URLs are configured before attempting to gather data.
+
+## <!-- markdownlint-disable MD049 -->
+
+_Last Updated: 2026-07-02_ | _Last Reviewed: 2026-07-02_

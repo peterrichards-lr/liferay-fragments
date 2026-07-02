@@ -64,3 +64,7 @@ user.
 - **Submit Button**: A customizable submit button with support for different
   styles, sizes, and inverted colors, fully integrated with the Liferay form
   lifecycle.
+
+## <!-- markdownlint-disable MD049 -->
+
+_Last Updated: 2026-07-02_ | _Last Reviewed: 2026-07-02_

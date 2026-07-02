@@ -29,3 +29,7 @@ The fragment can be configured via standard Liferay fragment configuration prope
 
 - **Design Tokens**: Relies on modern CSS variables like `var(--white)`, `var(--gray-200)`, `var(--secondary)`, and `var(--success)` for styling.
 - **Flexbox Layout**: Uses Flexbox to align the value and trend indicator appropriately across varying container widths.
+
+## <!-- markdownlint-disable MD049 -->
+
+_Last Updated: 2026-07-02_ | _Last Reviewed: 2026-07-02_

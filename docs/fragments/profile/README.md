@@ -27,3 +27,7 @@ way then this can be achieved by using a hidden element. The example Profile
 Summary fragment, does just that.
 
 ![Profile Fragments](../../images/profile-fragments.png)
+
+## <!-- markdownlint-disable MD049 -->
+
+_Last Updated: 2026-07-02_ | _Last Reviewed: 2026-07-02_

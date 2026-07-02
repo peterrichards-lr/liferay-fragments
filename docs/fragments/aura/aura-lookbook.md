@@ -24,3 +24,7 @@ The fragment is built upon a 2-column grid layout (`grid grid-2`) using native H
 - Uses `img-soft` for image styling.
 - Uses the `var(--aura-heading-color)` CSS token for theming the heading text.
 - Standard Liferay button classes (`btn`, `btn-primary`, `btn-secondary lighten`).
+
+## <!-- markdownlint-disable MD049 -->
+
+_Last Updated: 2026-07-02_ | _Last Reviewed: 2026-07-02_

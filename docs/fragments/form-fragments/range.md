@@ -16,3 +16,7 @@ within a defined interval.
 - **Minimum Value**: The lowest possible number.
 - **Maximum Value**: The highest possible number.
 - **Step**: The increment value between steps.
+
+## <!-- markdownlint-disable MD049 -->
+
+_Last Updated: 2026-07-02_ | _Last Reviewed: 2026-07-02_

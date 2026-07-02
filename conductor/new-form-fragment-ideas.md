@@ -180,3 +180,7 @@ targets specific UX improvements and data types.
       fileInput.files = dt.files;
       ```
     - Update the UI to show the selected file name or an image thumbnail.
+
+## <!-- markdownlint-disable MD049 -->
+
+_Last Updated: 2026-07-02_ | _Last Reviewed: 2026-07-02_

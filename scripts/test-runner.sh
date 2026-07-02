@@ -365,7 +365,7 @@ if [ "$EXISTING_PROJECT" = true ]; then
     echo "  -> Using Existing Project: $PROJECT_NAME"
     # Resolve URL and Path for existing project
     # Use grep to extract the actual HTTP URL, ignoring any ANSI color codes
-    BASE_URL=$(ldm list | grep "$PROJECT_NAME" | grep -Eo "https?://[a-zA-Z0-9.:-]+" | head -n 1)
+    BASE_URL=$(ldm list | grep "[│|] $PROJECT_NAME [│|]" | grep -Eo "https?://[a-zA-Z0-9.:-]+" | head -n 1)
     if [ -z "$BASE_URL" ]; then
         echo "Error: Could not find URL for existing project '$PROJECT_NAME'. Is it running?"
         exit 1
@@ -466,12 +466,12 @@ echo "[4/5] Provisioning Liferay environment via LDM..."
 
 if [ "$EXISTING_PROJECT" = true ]; then
     echo "  -> Checking status of existing project $PROJECT_NAME..."
-    STATUS=$(ldm list | grep "$PROJECT_NAME" | awk -F'[|?│]' '{print $4}' | sed 's/\x1b\[[0-9;]*m//g' | xargs)
+    STATUS=$(ldm list | grep "[│|] $PROJECT_NAME [│|]" | awk -F'[|?│]' '{print $4}' | sed 's/\x1b\[[0-9;]*m//g' | xargs)
     if [ "$STATUS" != "Running" ]; then
         echo "  -> Project '$PROJECT_NAME' is $STATUS. Starting it..."
-        log_command "ldm up \"$PROJECT_NAME\""
-        ldm up "$PROJECT_NAME" > /dev/null 2>&1
-        BASE_URL=$(ldm list | grep "$PROJECT_NAME" | grep -Eo "https?://[a-zA-Z0-9.:-]+" | head -n 1)
+        log_command "ldm up \"$PROJECT_NAME\" -y"
+        ldm up "$PROJECT_NAME" -y > /dev/null 2>&1
+        BASE_URL=$(ldm list | grep "[│|] $PROJECT_NAME [│|]" | grep -Eo "https?://[a-zA-Z0-9.:-]+" | head -n 1)
         if [ -z "$BASE_URL" ]; then
             echo "Error: Could not find URL for project '$PROJECT_NAME' after starting."
             exit 1

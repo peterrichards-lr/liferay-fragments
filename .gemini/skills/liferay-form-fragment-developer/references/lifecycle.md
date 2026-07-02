@@ -34,3 +34,7 @@ HTML files are processed as FreeMarker templates using square bracket syntax
   root element's `style` attribute.
 - **Static Asset Syntax**: Use `[resources:filename.ext]` for assets in the
   `resources/` directory.
+
+## <!-- markdownlint-disable MD049 -->
+
+_Last Updated: 2026-07-02_ | _Last Reviewed: 2026-07-02_

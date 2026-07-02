@@ -139,3 +139,7 @@ To ensure fragments render successfully for anonymous/Guest users in production 
 - **Guest Permissions**: Programmatically created test layouts, content structures, and articles must be granted Guest view permissions (`viewableBy: 'Anyone'` or `addGuestPermissions: true` in the setup service context) to prevent 403 Forbidden errors.
 - **Custom Objects (Batch Client Extensions)**: Custom object schemas must be seeded as batch client extensions rather than manual UI creation to ensure database-level stability and avoid E2E timing delays.
 - **Resolution Registry Fallback**: Ensure that client-side scripts query a fallback registry in `Liferay.Fragment.Commons.resolveObjectPath` when the definition endpoint is inaccessible, preventing JS errors.
+
+## <!-- markdownlint-disable MD049 -->
+
+_Last Updated: 2026-07-02_ | _Last Reviewed: 2026-07-02_

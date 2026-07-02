@@ -26,3 +26,7 @@ The following options are available in `configuration.json`:
 - Uses standard Clay UI classes (`form-group`, `form-control`, etc.).
 - Relies on `Liferay.Fragment.Commons.debounce` for managing input events.
 - Fetches data from external endpoints (e.g., `https://nominatim.openstreetmap.org/search`).
+
+## <!-- markdownlint-disable MD049 -->
+
+_Last Updated: 2026-07-02_ | _Last Reviewed: 2026-07-02_

@@ -23,3 +23,7 @@ consistency and reduce configuration overhead.
   `var(--my-var, default-token)`.
 - **Responsive Sizing**: Use `rem` units or theme-provided sizing tokens for
   fluid layouts.
+
+## <!-- markdownlint-disable MD049 -->
+
+_Last Updated: 2026-07-02_ | _Last Reviewed: 2026-07-02_

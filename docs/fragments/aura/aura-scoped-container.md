@@ -16,3 +16,7 @@ The fragment uses a Liferay `<lfr-drop-zone>` tag with an ID of `aura-dropzone`.
 
 - Dynamically loads `[resources:aura.css]` to ensure that any Aura-specific styles are applied within the scope.
 - Uses the `.aura-scope` and `.aura-container` classes to encapsulate nested elements.
+
+## <!-- markdownlint-disable MD049 -->
+
+_Last Updated: 2026-07-02_ | _Last Reviewed: 2026-07-02_

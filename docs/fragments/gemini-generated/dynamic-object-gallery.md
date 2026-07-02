@@ -24,3 +24,7 @@ description slots dynamically.
 - **Field Mappings**: Specify which fields should serve as the Image URL, Title,
   and Description.
 - **Columns**: Choose between 2, 3, or 4 column grid layouts.
+
+## <!-- markdownlint-disable MD049 -->
+
+_Last Updated: 2026-07-02_ | _Last Reviewed: 2026-07-02_

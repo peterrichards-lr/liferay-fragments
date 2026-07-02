@@ -70,3 +70,7 @@ container to provide a clean interface for Page Editors.
   `pointermove`, `pointerup`) for all custom drag/swipe interactions.
 - **Functional Pagination**: Pagination in data-driven fragments MUST be
   functional in `view` mode, re-fetching data via AJAX.
+
+## <!-- markdownlint-disable MD049 -->
+
+_Last Updated: 2026-07-02_ | _Last Reviewed: 2026-07-02_

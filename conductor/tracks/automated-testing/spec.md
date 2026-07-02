@@ -52,3 +52,7 @@ Manually verifying them in a new LTS release is unscalable.
   before testing those specific fragments.
 - **Reporting:** Designing a custom Playwright reporter or post-processing step
   to generate the markdown file with the specific failure details and hints.
+
+## <!-- markdownlint-disable MD049 -->
+
+_Last Updated: 2026-07-02_ | _Last Reviewed: 2026-07-02_

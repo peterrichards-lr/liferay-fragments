@@ -21,3 +21,7 @@ multi-stage processes. It dynamically manages the connections between steps.
 
 - **Orientation**: Default direction (Horizontal vs. Vertical).
 - **Connector Style**: Choose between solid lines, dashed lines, or arrows.
+
+## <!-- markdownlint-disable MD049 -->
+
+_Last Updated: 2026-07-02_ | _Last Reviewed: 2026-07-02_

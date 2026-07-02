@@ -16,3 +16,7 @@ context for Liferay Analytics Cloud campaign tracking on a specific page.
 - **Campaign ID**: The unique identifier for the Analytics Cloud campaign.
 - **Storage Strategy**: Choose how long to persist campaign context (Session vs.
   Persistent).
+
+## <!-- markdownlint-disable MD049 -->
+
+_Last Updated: 2026-07-02_ | _Last Reviewed: 2026-07-02_

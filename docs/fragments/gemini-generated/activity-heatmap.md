@@ -28,3 +28,7 @@ from Liferay Object data.
 - **Available Sizes**: Comma-separated list of day counts for the size selector
   (e.g., 7, 30, 90).
 - **Base Color**: The primary color used for the heatmap intensity levels.
+
+## <!-- markdownlint-disable MD049 -->
+
+_Last Updated: 2026-07-02_ | _Last Reviewed: 2026-07-02_

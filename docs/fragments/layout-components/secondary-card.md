@@ -10,3 +10,7 @@ softer visual style to differentiate it from primary actions.
 - **Drop Zone**: Includes a single drop zone intended for **Card Content**.
 - **Visual Hierarchy**: Uses distinct background and border tokens to sit lower
   in the visual hierarchy.
+
+## <!-- markdownlint-disable MD049 -->
+
+_Last Updated: 2026-07-02_ | _Last Reviewed: 2026-07-02_

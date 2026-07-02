@@ -18,3 +18,7 @@ data across multiple fragments on a dashboard page.
 - **Filter Fields**: Choose which fields should be available as filters (e.g.,
   Status, Region, Date).
 - **Event Name**: The custom event name used for broadcasting filter changes.
+
+## <!-- markdownlint-disable MD049 -->
+
+_Last Updated: 2026-07-02_ | _Last Reviewed: 2026-07-02_

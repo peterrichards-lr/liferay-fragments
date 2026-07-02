@@ -7,3 +7,7 @@
 
 The **Profile Detail** fragment provides a comprehensive view of a user's
 profile attributes and contact information.
+
+## <!-- markdownlint-disable MD049 -->
+
+_Last Updated: 2026-07-02_ | _Last Reviewed: 2026-07-02_

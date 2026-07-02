@@ -7,3 +7,7 @@
 
 The **PDF Export** fragment provides a button to generate a PDF document from a
 specific profile view.
+
+## <!-- markdownlint-disable MD049 -->
+
+_Last Updated: 2026-07-02_ | _Last Reviewed: 2026-07-02_

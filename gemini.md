@@ -352,3 +352,7 @@ after itself.
 
 - [x] Update `scripts/test-runner.sh` and `scripts/compare-deployments.sh` to pass `--no-color` and `--no-unicode` to all `ldm` commands to ensure clean, color-free, plain-text output across terminal locales.
 - [x] Refactor `scripts/compare-deployments.sh` and `scripts/inspect-batch-logs.js` to use native LDM log filtering (`--grep`, `--grep-i`) for optimization.
+
+## <!-- markdownlint-disable MD049 -->
+
+_Last Updated: 2026-07-02_ | _Last Reviewed: 2026-07-02_

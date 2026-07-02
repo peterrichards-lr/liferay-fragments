@@ -25,3 +25,7 @@ smooth transitions between steps.
     panels and updates the progress bar as the user navigates.
 
 ![Interactive Wizard](../../images/live/gemini-generated-interactive-wizard-mobile.png)
+
+## <!-- markdownlint-disable MD049 -->
+
+_Last Updated: 2026-07-02_ | _Last Reviewed: 2026-07-02_

@@ -46,3 +46,7 @@ The Aura collection uses a specific palette of custom CSS variables:
 - `--aura-color-secondary-default`: Warm Copper (#c8742e)
 - `--aura-radius-base`: 16px
 - `--aura-font-family-base`: Poppins
+
+## <!-- markdownlint-disable MD049 -->
+
+_Last Updated: 2026-07-02_ | _Last Reviewed: 2026-07-02_

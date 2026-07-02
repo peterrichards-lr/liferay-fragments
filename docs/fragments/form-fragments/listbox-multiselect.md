@@ -27,3 +27,7 @@ To use the **Listbox Multiselect** fragment on a page:
 3. Place a **Form Container** fragment on your page and target your custom Object.
 4. Drag the **Listbox Multiselect** input fragment inside the Form Container.
 5. In the fragment mapping sidebar, map the fragment to the **Multiselect Picklist** field you created. The options will populate dynamically.
+
+## <!-- markdownlint-disable MD049 -->
+
+_Last Updated: 2026-07-02_ | _Last Reviewed: 2026-07-02_

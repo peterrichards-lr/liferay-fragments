@@ -22,3 +22,7 @@ Commerce display.
 - **Date Field**: The field used to determine "New Product" status.
 - **Freshness**: Number of days a product is considered "New".
 - **Stock Threshold**: The level at which "Limited Stock" is triggered.
+
+## <!-- markdownlint-disable MD049 -->
+
+_Last Updated: 2026-07-02_ | _Last Reviewed: 2026-07-02_

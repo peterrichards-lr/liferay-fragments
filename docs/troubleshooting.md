@@ -171,3 +171,7 @@ Delivery API:
 - **CodeCache Full**: If you see `CodeCache is full. Compiler has been disabled`
   in the logs, the JVM has stalled. Increase `ReservedCodeCacheSize` to 512m in
   the LDM environment settings.
+
+## <!-- markdownlint-disable MD049 -->
+
+_Last Updated: 2026-07-02_ | _Last Reviewed: 2026-07-02_

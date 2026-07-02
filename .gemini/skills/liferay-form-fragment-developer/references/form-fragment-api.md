@@ -63,3 +63,7 @@ Accessed via `input.attributes`.
     list format** (including `items`, `page`, `pageSize`, and `totalCount`).
 5.  **Initialization**: Use `fragmentElement.querySelector` to find the input
     element within the fragment to avoid collisions.
+
+## <!-- markdownlint-disable MD049 -->
+
+_Last Updated: 2026-07-02_ | _Last Reviewed: 2026-07-02_

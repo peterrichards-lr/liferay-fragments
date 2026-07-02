@@ -132,3 +132,7 @@ Finally, to define a custom template, add this service signature:
 `com.liferay.headless.delivery.internal.resource.v1_0.ContentTemplateResourceImpl#getSiteContentTemplate`
 
 ![Service Access Policy](../../docs/images/content-map-service-access-policy.png)
+
+## <!-- markdownlint-disable MD049 -->
+
+_Last Updated: 2026-07-02_ | _Last Reviewed: 2026-07-02_

@@ -30,3 +30,7 @@ The fragment contains several mappable inline editable fields (`data-lfr-editabl
 - **FreeMarker**: Renders the HTML structure and conditionally displays the "View All" link based on configuration.
 - **CSS**: Relies heavily on Bootstrap classes (`table`, `d-flex`, `badge`, `custom-control`) and Liferay Clay icons `[@clay["icon"] ...]`. Assumes custom CSS exists in `index.css` for classes like `.file-repo-header` or `.file-repo-table`.
 - **JavaScript**: Currently contains no dynamic JavaScript functionality. Interactive elements (like check-all or action menus) are static placeholders meant for styling purposes or external integrations.
+
+## <!-- markdownlint-disable MD049 -->
+
+_Last Updated: 2026-07-02_ | _Last Reviewed: 2026-07-02_

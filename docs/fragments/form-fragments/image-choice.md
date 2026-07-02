@@ -26,3 +26,7 @@ The fragment provides the following configuration options within `configuration.
 - **JavaScript**: Minimal JavaScript is used. It disables inputs in edit mode and attaches a change event listener to ensure Liferay's dynamic form events propagate correctly.
 - **FreeMarker**: Processes the `optionsJSON`, maps it to the HTML structure, assigns the appropriate input type (radio or checkbox), and handles error/help text display.
 - **CSS**: Custom CSS (assumed in `index.css`) handles the grid layout, image sizing, and visual states for the selected cards.
+
+## <!-- markdownlint-disable MD049 -->
+
+_Last Updated: 2026-07-02_ | _Last Reviewed: 2026-07-02_
