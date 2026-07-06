@@ -7,6 +7,12 @@ description: Guidelines and workflows for creating, structuring, developing, and
 
 This skill guides AI agents and developers in creating, styling, structuring, and localizing Liferay page fragments according to the repository's rules.
 
+## Configuration Gate Check — Do This First
+
+> This configuration check needs to happen first.
+
+**First step**: Before scaffolding any fragment, verify if the current collection directory requires any specific theme-aware HTML or configuration setup. Stop and ask the user for clarification if the target collection path is not specified.
+
 ## 1. Creating a Fragment
 
 To bootstrap a new fragment with standard scaffolding, run the following command from the workspace root:
@@ -25,10 +31,7 @@ This runs `scripts/create-fragment.js`, which does the following:
 
 ### 1.1 Configuration Schema Data Types
 
-Liferay 2026.Q1 imposes strict validation rules on `configuration.json` properties:
-
-- **Checkboxes**: Any configuration field with `"type": "checkbox"` MUST explicitly set `"dataType": "boolean"`. Omitting this or using a different data type will cause page creation API calls to fail with 500 errors.
-- **Numeric Fields**: Any configuration field designed to capture numeric values (e.g., using `typeOptions.validation.type: "number"`) MUST use `"dataType": "number"`. Note: Even when `"dataType": "number"` is specified, the `"defaultValue"` must remain a string representation (e.g. `"defaultValue": "8"`, not `8`).
+**Load:** `references/configuration-schema.md` when defining `configuration.json`.
 
 ## 2. Structure & Metadata
 
@@ -60,21 +63,9 @@ Every fragment must follow these structural guidelines:
 - **No Lazy Keys**: Property entries where the key equals the value (e.g. `lfr.key=lfr.key`) are prohibited.
 - **Descriptions**: Every field in `configuration.json` must have a meaningful description to assist content creators.
 
-## 5. Site-Scoped Object Discovery (Dynamic Discovery Pattern)
+## 5. Site-Scoped Object Discovery
 
-If the fragment interacts with Liferay custom objects, it must support Site-scoped data using this dynamic lookup pattern:
-
-1. **Fetch definition via ERC**:
-   ```
-   /o/object-admin/v1.0/object-definitions/by-external-reference-code/${erc}
-   ```
-2. **Fallback Search**: If the ERC is not found, search by its REST Context Path:
-   ```
-   /o/object-admin/v1.0/object-definitions?search=${path}
-   ```
-   Filter the results to locate the exact definition.
-3. **Appended Scopes**: If the definition's scope is `'site'`, append `/scopes/${siteId}` to the base API path.
-4. **Validation Helper**: Always use a strict validation helper (e.g., `Liferay.Fragment.Commons.isValidIdentifier()`) before using record IDs or ERCs in API calls. Block invalid strings like `"undefined"`, `"null"`, `"0"`, and `"[object Object]"`.
+**Load:** `references/site-scoped-discovery.md` when the fragment interacts with custom objects to use the Dynamic Discovery Pattern.
 
 ## 6. Mappable Field Ergonomics
 
