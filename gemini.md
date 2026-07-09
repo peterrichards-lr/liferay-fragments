@@ -280,6 +280,8 @@ after itself.
 
 - [x] **Issue #22**: Fix fragment deployment validation errors due to `dataType: boolean` on Liferay 2026.Q1+.
 - [x] **Issue #23**: Extract linter JSON schemas to external files and integrate VS Code validation.
+- [x] **Issue #59**: Clean Up Redundant Page Deletions in global-teardown.js.
+- [x] **Issue #54**: Refactor CPU-Blocking Busy-Wait Pauses in background-manager.js.
 
 ### Active Fix (In Progress)
 
@@ -289,8 +291,7 @@ after itself.
 - [x] Implement Listbox Multiselect picklist/object field E2E bootstrapping (Issue #28).
 - [x] Configure nested elements inside Custom Tabs E2E layouts (Issue #29).
 - [x] Implement support for LDM plain-text switches (`--no-color` and `--no-unicode`) and native log-filtering (`--grep` / `--grep-i`).
-- [x] **Issue #59**: Clean Up Redundant Page Deletions in global-teardown.js.
-- [x] **Issue #54**: Refactor CPU-Blocking Busy-Wait Pauses in background-manager.js.
+- [x] **Issue #58**: Fix Non-Atomic Deployments in deploy-fragment-zips.sh.
 - **NEXT ACTION:** Refactor background-manager.js daemon initialization to prevent concurrent process race conditions (Issue #55).
 
 ### Backward-Compatibility Rules (Three-Target ZIP Build)
