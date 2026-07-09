@@ -28,6 +28,8 @@ async function configurePermissions(ctx, page) {
       'com.liferay.object.rest.resource.v1_0.ObjectEntryResource',
       'com.liferay.object.rest.internal.resource.v1_0.ObjectEntryRelatedObjectsResourceImpl',
       'com.liferay.object.rest.resource.v1_0.ObjectEntryRelatedObjectsResource',
+      'com.liferay.portal.service.impl.ResourcePermissionServiceImpl',
+      'com.liferay.asset.list.service.impl.AssetListEntryServiceImpl',
     ];
 
     let needsSave = false;
@@ -232,104 +234,85 @@ async function configurePermissions(ctx, page) {
         continue;
       }
 
-      // --- STEP 1: Set Object Definition Level Permissions ---
-      const defPermissionsUrl = `${ctx.baseURL}/group/control_panel/manage?p_p_id=com_liferay_portlet_configuration_web_portlet_PortletConfigurationPortlet&_com_liferay_portlet_configuration_web_portlet_PortletConfigurationPortlet_mvcPath=%2Fedit_permissions.jsp&_com_liferay_portlet_configuration_web_portlet_PortletConfigurationPortlet_modelResource=com.liferay.object.model.ObjectDefinition&_com_liferay_portlet_configuration_web_portlet_PortletConfigurationPortlet_resourcePrimKey=${objId}`;
+      const companyId = String(objJson.companyId || ctx.companyId);
 
-      await page.goto(defPermissionsUrl);
-      await page.waitForSelector('form#fm, table', {
-        state: 'visible',
-        timeout: 10000,
-      });
+      // Use page.evaluate/fetch() to run within the browser context, ensuring
+      // the full session cookies and p_auth token are sent correctly for portal
+      // JSON-WS services that require a live authenticated session.
+      const pAuth = ctx.pAuthToken;
+      const baseURL = ctx.baseURL;
 
-      const guestRow = page.locator('tr:has-text("Guest")');
-      if ((await guestRow.count()) > 0) {
-        const viewCheckbox = guestRow.locator('input[id="guest_ACTION_VIEW"]');
-        if ((await viewCheckbox.count()) > 0) {
-          const isChecked = await viewCheckbox.isChecked();
-          if (!isChecked) {
-            console.log(
-              `     Checking VIEW checkbox for Guest on ObjectDefinition...`
-            );
-            await viewCheckbox.check();
-            const saveButton = page.locator(
-              'button[type="submit"]:has-text("Save"), button.btn-primary:has-text("Save")'
-            );
-            if ((await saveButton.count()) > 0) {
-              await Promise.all([
-                page.waitForNavigation({ waitUntil: 'load' }),
-                saveButton.first().click(),
-              ]);
-              console.log(
-                `     Successfully saved Guest ObjectDefinition VIEW permission for ${erc}.`
-              );
-            }
-          } else {
-            console.log(
-              `     Guest VIEW permission on ObjectDefinition already up-to-date for ${erc}.`
-            );
-          }
-        }
-      }
+      const permResults = await page.evaluate(
+        async ({ baseURL, pAuth, companyId, objId, hashPart }) => {
+          const jsonWsPost = async (endpoint, params) => {
+            const body = new URLSearchParams(params);
+            const resp = await fetch(`${baseURL}${endpoint}?p_auth=${pAuth}`, {
+              method: 'POST',
+              credentials: 'include',
+              headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+              body: body.toString(),
+            });
+            return { status: resp.status, ok: resp.ok, body: await resp.text() };
+          };
 
-      // --- STEP 2: Set Object Entry Level Permissions in Guest Role ---
-      const roleId = '20106'; // Guest Role ID
-      const rolePermissionsUrl = `${ctx.baseURL}/group/control_panel/manage?p_p_id=com_liferay_roles_admin_web_portlet_RolesAdminPortlet&p_p_lifecycle=0&p_p_state=maximized&p_p_mode=view&_com_liferay_roles_admin_web_portlet_RolesAdminPortlet_mvcPath=%2Fedit_role_permissions.jsp&_com_liferay_roles_admin_web_portlet_RolesAdminPortlet_cmd=edit&_com_liferay_roles_admin_web_portlet_RolesAdminPortlet_portletResource=com_liferay_object_web_internal_object_definitions_portlet_ObjectDefinitionsPortlet_${hashPart}&_com_liferay_roles_admin_web_portlet_RolesAdminPortlet_tabs1=define-permissions&_com_liferay_roles_admin_web_portlet_RolesAdminPortlet_tabs2=roles&_com_liferay_roles_admin_web_portlet_RolesAdminPortlet_accountRoleGroupScope=false&_com_liferay_roles_admin_web_portlet_RolesAdminPortlet_roleId=${roleId}`;
+          const results = [];
 
-      await page.goto(rolePermissionsUrl);
-      await page.waitForSelector('form, table', {
-        state: 'visible',
-        timeout: 10000,
-      });
+          // Step 1: ObjectDefinition individual VIEW (scope=4)
+          results.push({
+            step: 1,
+            label: 'ObjectDefinition VIEW (individual)',
+            ...(await jsonWsPost('/api/jsonws/resourcepermission/add-resource-permission', {
+              groupId: '0', companyId, name: 'com.liferay.object.model.ObjectDefinition',
+              scope: '4', primKey: String(objId), roleId: '20106', actionId: 'VIEW',
+            })),
+          });
 
-      const targetCheckboxes = [
-        `com.liferay.object#${objId}ADD_OBJECT_ENTRY`,
-        `com.liferay.object.model.ObjectDefinition#${hashPart}VIEW`,
-        `com_liferay_object_web_internal_object_definitions_portlet_ObjectDefinitionsPortlet_${hashPart}VIEW`,
-      ];
+          // Step 2: Object ADD_OBJECT_ENTRY (scope=1, company level)
+          results.push({
+            step: 2,
+            label: 'Object ADD_OBJECT_ENTRY (company)',
+            ...(await jsonWsPost('/api/jsonws/resourcepermission/add-resource-permission', {
+              groupId: '0', companyId, name: `com.liferay.object#${objId}`,
+              scope: '1', primKey: companyId, roleId: '20106', actionId: 'ADD_OBJECT_ENTRY',
+            })),
+          });
 
-      let entryChanged = false;
-      for (const value of targetCheckboxes) {
-        const checkbox = page.locator(
-          `input[type="checkbox"][value="${value}"]`
-        );
-        if ((await checkbox.count()) > 0) {
-          const isChecked = await checkbox.isChecked();
-          if (!isChecked) {
-            console.log(
-              `     Checking Guest role checkbox for value: ${value}`
-            );
-            await checkbox.check();
-            entryChanged = true;
-          }
-        } else {
-          console.warn(`     [WARN] Checkbox not found for value: ${value}`);
-        }
-      }
+          // Step 3: ObjectDefinition#hash VIEW (scope=1, company level)
+          results.push({
+            step: 3,
+            label: `ObjectDefinition#${hashPart} VIEW (company)`,
+            ...(await jsonWsPost('/api/jsonws/resourcepermission/add-resource-permission', {
+              groupId: '0', companyId, name: `com.liferay.object.model.ObjectDefinition#${hashPart}`,
+              scope: '1', primKey: companyId, roleId: '20106', actionId: 'VIEW',
+            })),
+          });
 
-      if (entryChanged) {
-        const saveButton = page
-          .locator(
-            'button[type="submit"]:has-text("Save"), button.btn-primary:has-text("Save")'
-          )
-          .first();
-        if ((await saveButton.count()) > 0) {
-          await Promise.all([
-            page.waitForNavigation({ waitUntil: 'load' }),
-            saveButton.click(),
-          ]);
-          console.log(
-            `     Successfully saved Guest entry permissions for ${erc}.`
-          );
-        } else {
-          console.warn(
-            `     [WARN] Guest role save button not found for ${erc}.`
-          );
-        }
-      }
-      console.log(
-        `     Object ${erc} setup complete. Cooldown for 3 seconds...`
+          // Step 4: Portlet VIEW + ACCESS_IN_CONTROL_PANEL (scope=1)
+          const portletName = `com_liferay_object_web_internal_object_definitions_portlet_ObjectDefinitionsPortlet_${hashPart}`;
+          results.push({
+            step: 4,
+            label: 'Portlet VIEW+ACCESS_IN_CONTROL_PANEL (company)',
+            ...(await jsonWsPost('/api/jsonws/resourcepermission/set-individual-resource-permissions', {
+              groupId: '0', companyId, name: portletName,
+              primKey: companyId, roleId: '20106',
+              'actionIds[0]': 'VIEW', 'actionIds[1]': 'ACCESS_IN_CONTROL_PANEL',
+            })),
+          });
+
+          return results;
+        },
+        { baseURL, pAuth, companyId, objId: String(objId), hashPart }
       );
-      await new Promise((resolve) => setTimeout(resolve, 3000));
+
+      for (const r of permResults) {
+        if (r.ok) {
+          console.log(`     [API] Step ${r.step} OK: ${r.label}`);
+        } else {
+          console.warn(`     [API][WARN] Failed Step ${r.step} (${r.label}): HTTP ${r.status} - ${r.body.substring(0, 200)}`);
+        }
+      }
+
+      console.log(`     Object ${erc} setup complete.`);
     }
   } catch (permErr) {
     console.warn(

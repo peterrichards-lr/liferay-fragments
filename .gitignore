@@ -69,3 +69,7 @@ generated-test-pages.json
 /scripts/node
 /e2e-tests/test-results/
 /e2e-tests/playwright-report/
+
+# LDM project sandbox directories (created by 'ldm run <project>')
+/aica/
+/aica-e2e/

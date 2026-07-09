@@ -754,6 +754,29 @@ set -e
 echo "  -> Verifying visual rendering and checking regressions..."
 node scripts/verify-snapshots.js
 
+# Issue #68: DXP Container Log Analysis
+# Scan Liferay container logs for silent fatal exceptions that don't surface to
+# Playwright. These can indicate broken permission configurations, DB constraint
+# violations, or JIT stalls that allow tests to pass with broken state.
+echo "  -> Analyzing Liferay container logs for silent exceptions..."
+if command -v docker &> /dev/null && docker info &> /dev/null; then
+    CONTAINER_LOG_ERRORS=$(docker logs "$PROJECT_NAME" --tail 300 2>&1 | \
+        grep -E "NullPointerException|ResourcePermissionException|PrincipalException|PortalException.*permission" || true)
+    if [ -n "$CONTAINER_LOG_ERRORS" ]; then
+        echo ""
+        echo -e "\033[0;31m[ERROR] Fatal exception(s) detected in Liferay container logs:\033[0m"
+        echo "$CONTAINER_LOG_ERRORS" | head -n 20
+        echo ""
+        echo "  -> Dumping last 60 container log lines for context..."
+        docker logs "$PROJECT_NAME" --tail 60 2>&1
+        echo ""
+        echo -e "\033[0;31m[ERROR] Test run marked as FAILED due to container-level exceptions.\033[0m"
+        TEST_EXIT_CODE=1
+    else
+        echo "  -> No fatal exceptions detected in container logs."
+    fi
+fi
+
 if [ $TEST_EXIT_CODE -eq 0 ]; then
     echo "  -> All tests passed."
     TESTS_PASSED=true
