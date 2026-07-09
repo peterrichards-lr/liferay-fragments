@@ -367,9 +367,35 @@ If you use the `-k` flag, this `fragments-test-env/` directory will remain on
 your disk so you can manually inspect the `deploy/` and `logs/` folders.
 Otherwise, the script automatically deletes it during the cleanup phase.
 
-## <!-- markdownlint-disable MD049 -->
+### E2E Seeding & Verification Lifecycle Diagram
 
-_Last Updated: 2026-07-02_ | _Last Reviewed: 2026-07-02_
+```mermaid
+sequenceDiagram
+    autonumber
+    participant Runner as test-runner.sh
+    participant LDM as Liferay Docker Manager
+    participant DXP as Liferay DXP
+    participant Playwright as Playwright (Orchestrator)
+    participant Seeders as Modular Seeders (setup/)
+
+    Runner->>LDM: ldm run / ldm up (e2e-test-env)
+    LDM->>DXP: Start database, DXP container, apply Feature Flags
+    Runner->>Runner: Port check & validate CLI dependencies
+    Runner->>DXP: validate-api-signatures.js (signature drift diagnostics)
+    Runner->>Playwright: Launch E2E Suite (npx playwright test)
+    Playwright->>Seeders: orchestrator.js (globalSetup)
+    Seeders->>DXP: auth.js (Admin Login & save storageState)
+    Seeders->>DXP: permissions.js (UI: Add SAP rules for API access)
+    Seeders->>DXP: seeders/objects.js (Programmatic custom object definitions)
+    Seeders->>DXP: permissions.js (API: Grant Guest object & portlet permissions)
+    Seeders->>DXP: seeders/ (API: Seed Picklists, Documents, Web Content, Collections)
+    Seeders->>DXP: seeders/pages.js (API: Construct E2E Layouts & hide pages from menu)
+    Playwright->>DXP: fragments.spec.js (Viewports E2E visual screenshot capture)
+    Playwright->>DXP: globalTeardown (API: Cascade delete E2E Site)
+    Runner->>Runner: verify-snapshots.js (Compare visual regression screenshots)
+    Runner->>DXP: Scan container logs (ResourcePermissionException, SAP denied)
+    Runner->>Runner: generate-gallery.js (Compile documentation gallery md)
+```
 
 ## <!-- markdownlint-disable MD049 -->
 
