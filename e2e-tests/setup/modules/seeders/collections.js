@@ -75,6 +75,7 @@ async function seedCollection(
       groupId: siteId,
       externalReferenceCode: erc,
       name: title,
+      title: title,
       description: collection.description || '',
       type: 'manual',
       assetEntryIds: resolvedAssetEntryIds.join(','),

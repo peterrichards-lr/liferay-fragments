@@ -714,9 +714,7 @@ else
     
     echo "  -> Waiting for system to settle (Monitoring CPU and OSGi wiring)..."
     log_command "ldm wait \"$PROJECT_NAME\" -d --stream-status"
-    if curl -s -I "$BASE_URL" &> /dev/null; then
-        echo "  -> Liferay is responsive, skipping OSGi settle wait."
-    elif ! ldm wait "$PROJECT_NAME" -d --stream-status; then
+    if ! ldm wait "$PROJECT_NAME" -d --stream-status; then
         echo "Error: System did not settle properly after deployment."
         exit 1
     fi
