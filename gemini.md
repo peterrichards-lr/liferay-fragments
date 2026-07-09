@@ -289,8 +289,9 @@ after itself.
 - [x] Implement Listbox Multiselect picklist/object field E2E bootstrapping (Issue #28).
 - [x] Configure nested elements inside Custom Tabs E2E layouts (Issue #29).
 - [x] Implement support for LDM plain-text switches (`--no-color` and `--no-unicode`) and native log-filtering (`--grep` / `--grep-i`).
-- [/] **Issue #59**: Clean Up Redundant Page Deletions in global-teardown.js.
-- **NEXT ACTION:** Refactor `global-teardown.js` to remove redundant sequential page deletion loops and rely on site deletion cascading cleanup.
+- [x] **Issue #58**: Fix Non-Atomic Deployments in deploy-fragment-zips.sh.
+- [/] **Issue #55**: Fix Race Condition in Background Process Initialization.
+- **NEXT ACTION:** Decouple monolithic global-setup.js into modular seeders (Issue #56).
 
 ### Backward-Compatibility Rules (Three-Target ZIP Build)
 

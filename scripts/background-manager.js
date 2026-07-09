@@ -98,6 +98,7 @@ function isProcessRunning(pid, expectedStartTime) {
 // Helper: Write metadata json file
 function writeMetadata(instanceId, pid, port, startTime, executable, logPath) {
   const metadataPath = path.join(REGISTRY_DIR, `${instanceId}.json`);
+  const tempPath = `${metadataPath}.tmp`;
   const data = {
     id: instanceId,
     pid: pid,
@@ -107,7 +108,8 @@ function writeMetadata(instanceId, pid, port, startTime, executable, logPath) {
     logPath: logPath,
     startedAt: new Date().toISOString(),
   };
-  fs.writeFileSync(metadataPath, JSON.stringify(data, null, 2));
+  fs.writeFileSync(tempPath, JSON.stringify(data, null, 2));
+  fs.renameSync(tempPath, metadataPath);
 }
 
 // Helper: Read metadata
