@@ -289,7 +289,9 @@ after itself.
 - [x] Implement Listbox Multiselect picklist/object field E2E bootstrapping (Issue #28).
 - [x] Configure nested elements inside Custom Tabs E2E layouts (Issue #29).
 - [x] Implement support for LDM plain-text switches (`--no-color` and `--no-unicode`) and native log-filtering (`--grep` / `--grep-i`).
-- **NEXT ACTION (Windows PC):** Verify the committed and pushed changes on the Windows environment and continue with any further development.
+- [x] **Issue #59**: Clean Up Redundant Page Deletions in global-teardown.js.
+- [/] **Issue #54**: Refactor CPU-Blocking Busy-Wait Pauses in background-manager.js.
+- **NEXT ACTION:** Refactor `scripts/background-manager.js` to replace blocking busy-wait loops with asynchronous setTimeout promises.
 
 ### Backward-Compatibility Rules (Three-Target ZIP Build)
 
