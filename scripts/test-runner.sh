@@ -157,12 +157,13 @@ cleanup() {
 }
 
 handle_exit() {
+    local exit_code=$?
     if [ "$EXIT_HANDLED" = true ]; then
         return
     fi
     EXIT_HANDLED=true
     
-    EXIT_CODE=$?
+    EXIT_CODE=$exit_code
     
     # Kill the background watchdog
     if [ -n "$WATCHDOG_PID" ]; then
