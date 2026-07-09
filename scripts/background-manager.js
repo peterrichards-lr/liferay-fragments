@@ -26,8 +26,10 @@ const REGISTRY_LOCK = path.join(LOCKS_DIR, 'registry.lock');
   }
 });
 
+const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
 // Helper: Atomic File Locking using directory creation
-function acquireLock(timeout = 3000) {
+async function acquireLock(timeout = 3000) {
   const start = Date.now();
   while (Date.now() - start < timeout) {
     try {
@@ -36,8 +38,7 @@ function acquireLock(timeout = 3000) {
     } catch (err) {
       if (err.code !== 'EEXIST') throw err;
       // Sleep 50ms before retry
-      const waitTill = Date.now() + 50;
-      while (Date.now() < waitTill) {}
+      await delay(50);
     }
   }
   throw new Error('Lock acquisition timed out.');
@@ -226,8 +227,8 @@ function killForcefully(metadata) {
 }
 
 // Background Spawner
-function handleBackground(instanceId, executable, args) {
-  acquireLock();
+async function handleBackground(instanceId, executable, args) {
+  await acquireLock();
   try {
     const existing = readMetadata(instanceId);
     if (existing && isProcessRunning(existing.pid, existing.systemStartTime)) {
@@ -267,9 +268,8 @@ function handleBackground(instanceId, executable, args) {
         initialized = true;
         break;
       }
-      // Busy sleep 100ms
-      const waitTill = Date.now() + 100;
-      while (Date.now() < waitTill) {}
+      // Asynchronous sleep 100ms
+      await delay(100);
     }
 
     if (!initialized) {
@@ -441,7 +441,7 @@ function runDaemon(instanceId, executable, args) {
 }
 
 // Command Line Entry Point
-function main() {
+async function main() {
   const args = process.argv.slice(2);
   let mode = null;
   let instanceId = null;
@@ -494,7 +494,7 @@ function main() {
     }
     instanceId =
       customId || path.basename(executable, path.extname(executable));
-    handleBackground(instanceId, executable, execArgs);
+    await handleBackground(instanceId, executable, execArgs);
   } else {
     // status or stop
     instanceId = customId || 'test-runner'; // Default instance ID fallback
@@ -506,4 +506,7 @@ function main() {
   }
 }
 
-main();
+main().catch((err) => {
+  console.error('[Error] Execution failed:', err);
+  process.exit(1);
+});
