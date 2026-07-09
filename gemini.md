@@ -289,7 +289,8 @@ after itself.
 - [x] Implement Listbox Multiselect picklist/object field E2E bootstrapping (Issue #28).
 - [x] Configure nested elements inside Custom Tabs E2E layouts (Issue #29).
 - [x] Implement support for LDM plain-text switches (`--no-color` and `--no-unicode`) and native log-filtering (`--grep` / `--grep-i`).
-- **NEXT ACTION (Windows PC):** Verify the committed and pushed changes on the Windows environment and continue with any further development.
+- [/] **Issue #59**: Clean Up Redundant Page Deletions in global-teardown.js.
+- **NEXT ACTION:** Refactor `global-teardown.js` to remove redundant sequential page deletion loops and rely on site deletion cascading cleanup.
 
 ### Backward-Compatibility Rules (Three-Target ZIP Build)
 
@@ -355,4 +356,4 @@ after itself.
 
 ## <!-- markdownlint-disable MD049 -->
 
-_Last Updated: 2026-07-02_ | _Last Reviewed: 2026-07-02_
+_Last Updated: 2026-07-09_ | _Last Reviewed: 2026-07-09_
