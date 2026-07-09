@@ -27,12 +27,19 @@ if [ ! -d "node_modules" ]; then
     exit 1
 fi
 
+# 0.5. Workspace Cleanliness Check (Issue #66)
+echo "Checking workspace cleanliness..."
+node scripts/check-cleanliness.js
+if [ $? -ne 0 ]; then
+    exit 1
+fi
+
 # 1. Format staged JS, JSON, CSS, HTML, and MD files using Prettier
-STAGED_FILES=\$(git diff --cached --name-only --diff-filter=ACMR | grep -E '\\.(js|json|css|html|md)\$')
-if [ -n "\$STAGED_FILES" ]; then
+STAGED_FILES=$(git diff --cached --name-only --diff-filter=ACMR | grep -E '\\.(js|json|css|html|md)$')
+if [ -n "$STAGED_FILES" ]; then
     echo "Formatting staged files with Prettier..."
-    echo "\$STAGED_FILES" | xargs npx prettier --write
-    echo "\$STAGED_FILES" | xargs git add
+    echo "$STAGED_FILES" | xargs npx prettier --write
+    echo "$STAGED_FILES" | xargs git add
 fi
 
 # 2. Synchronize fragment-build.json dependencies based on code usage
@@ -48,7 +55,7 @@ git add docs/gallery.md
 # 3. Run Fragment Audit Quality Gate
 echo "Running Fragment Audit linter..."
 npm run lint
-if [ \$? -ne 0 ]; then
+if [ $? -ne 0 ]; then
     echo "[ERROR] Fragment Audit failed. Commit aborted."
     echo "Hint: Fix the errors above or bypass this quality gate using: git commit --no-verify"
     exit 1

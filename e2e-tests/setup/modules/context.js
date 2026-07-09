@@ -185,6 +185,47 @@ class SetupContext {
     }
     return null;
   }
+  /**
+   * Issue #65: Playwright JSON-WS Exception Interceptor.
+   * Liferay JSON-WS returns HTTP 200 even on Java exceptions. This helper
+   * parses the body and throws if an 'exception' key is present, preventing
+   * silent failures in setup/seeding tasks.
+   *
+   * @param {import('@playwright/test').APIRequestContext} apiContext
+   * @param {string} endpoint  e.g. '/api/jsonws/assetlist.assetlistentry/add-asset-list-entry'
+   * @param {Object} formPayload  Key-value pairs to send as form data
+   * @returns {Promise<Object>} Parsed JSON response body
+   */
+  async postJsonWs(apiContext, endpoint, formPayload) {
+    const url = `${endpoint}?p_auth=${this.pAuthToken}`;
+    const resp = await apiContext.post(url, { form: formPayload });
+
+    if (!resp.ok()) {
+      throw new Error(
+        `[JSON-WS] HTTP ${resp.status()} calling ${endpoint}`
+      );
+    }
+
+    let json;
+    try {
+      json = await resp.json();
+    } catch (e) {
+      // Non-JSON response (e.g. HTML error page) — treat as failure
+      const body = await resp.text().catch(() => '');
+      throw new Error(
+        `[JSON-WS] Non-JSON response from ${endpoint}: ${body.substring(0, 200)}`
+      );
+    }
+
+    if (json && json.exception) {
+      throw new Error(
+        `[JSON-WS] Liferay exception in ${endpoint}: ${json.exception}`
+      );
+    }
+
+    return json;
+  }
+
 }
 
 module.exports = SetupContext;
