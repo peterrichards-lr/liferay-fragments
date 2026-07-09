@@ -108,6 +108,17 @@ if [ ! -d "zips" ]; then
     exit 1
 fi
 
+# Helper function to perform atomic copy-then-move staging
+deploy_atomic() {
+    local SRC_FILE=$1
+    local DEST_DIR=$2
+    local BASE_NAME=$(basename "$SRC_FILE")
+    local STAGING_FILE="${DEST_DIR}/${BASE_NAME}.tmp"
+    
+    cp "$SRC_FILE" "$STAGING_FILE"
+    mv "$STAGING_FILE" "${DEST_DIR}/${BASE_NAME}"
+}
+
 # Helper function to deploy related ZIPs for a single name
 deploy_item() {
     local NAME=$1
@@ -124,14 +135,14 @@ deploy_item() {
         for sfx in "$BUILD_SUFFIX" "$ALT_SUFFIX"; do
             if [ -f "zips/fragments/${NAME}${LEGACY_SUFFIX}${sfx}.zip" ]; then
                 echo "  -> Deploying Fragment: ${NAME}${LEGACY_SUFFIX}${sfx}.zip"
-                cp "zips/fragments/${NAME}${LEGACY_SUFFIX}${sfx}.zip" "$DEPLOY_DIR/"
+                deploy_atomic "zips/fragments/${NAME}${LEGACY_SUFFIX}${sfx}.zip" "$DEPLOY_DIR"
                 FOUND=true
                 break
             fi
             
             if [ -f "zips/fragments/${NAME}-collection${sfx}.zip" ]; then
                 echo "  -> Deploying Collection: ${NAME}-collection${sfx}.zip"
-                cp "zips/fragments/${NAME}-collection${sfx}.zip" "$DEPLOY_DIR/"
+                deploy_atomic "zips/fragments/${NAME}-collection${sfx}.zip" "$DEPLOY_DIR"
                 FOUND=true
                 break
             fi
@@ -142,7 +153,7 @@ deploy_item() {
     if [[ "$DEPLOY_LANGUAGE" == "true" || "$CATEGORY_SELECTED" == "false" ]]; then
         if [ -f "zips/language/${NAME}-language-batch-cx.zip" ]; then
             echo "  -> Deploying Language CX: ${NAME}-language-batch-cx.zip"
-            cp "zips/language/${NAME}-language-batch-cx.zip" "$CX_DIR/"
+            deploy_atomic "zips/language/${NAME}-language-batch-cx.zip" "$CX_DIR"
             FOUND=true
         fi
     fi
@@ -151,7 +162,7 @@ deploy_item() {
     if [[ "$DEPLOY_SHOWCASE" == "true" || "$CATEGORY_SELECTED" == "false" ]]; then
         if [ -f "zips/showcase/${NAME}-batch-cx.zip" ]; then
             echo "  -> Deploying Showcase Resource: ${NAME}-batch-cx.zip"
-            cp "zips/showcase/${NAME}-batch-cx.zip" "$CX_DIR/"
+            deploy_atomic "zips/showcase/${NAME}-batch-cx.zip" "$CX_DIR"
             FOUND=true
         fi
     fi
@@ -173,12 +184,12 @@ if [ ${#ITEMS[@]} -eq 0 ]; then
             if [[ "$LEGACY_MODE" == "true" ]]; then
                 if [[ "$FILENAME" == *"${LEGACY_SUFFIX}${BUILD_SUFFIX}.zip" ]]; then
                     echo "  -> Deploying Legacy Fragment $FILENAME"
-                    cp "$f" "$DEPLOY_DIR/"
+                    deploy_atomic "$f" "$DEPLOY_DIR"
                 fi
             else
                 if [[ "$FILENAME" != *"-pre2025q3"* && "$FILENAME" != *"-pre2026q1"* ]]; then
                     echo "  -> Deploying Fragment $FILENAME"
-                    cp "$f" "$DEPLOY_DIR/"
+                    deploy_atomic "$f" "$DEPLOY_DIR"
                 fi
             fi
         done
@@ -190,7 +201,7 @@ if [ ${#ITEMS[@]} -eq 0 ]; then
         for l in zips/language/*.zip; do
             [ -e "$l" ] || continue
             echo "  -> Deploying Language CX $(basename "$l")"
-            cp "$l" "$CX_DIR/"
+            deploy_atomic "$l" "$CX_DIR"
         done
     fi
 
@@ -200,7 +211,7 @@ if [ ${#ITEMS[@]} -eq 0 ]; then
         for sz in zips/showcase/*.zip; do
             [ -e "$sz" ] || continue
             echo "  -> Deploying Showcase Resource $(basename "$sz")"
-            cp "$sz" "$CX_DIR/"
+            deploy_atomic "$sz" "$CX_DIR"
         done
     fi
 else
