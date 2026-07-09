@@ -103,9 +103,24 @@ After implementing a new compatibility transformation:
    $env:PORT="8081"; & "C:\Program Files\Git\bin\bash.exe" scripts/test-runner.sh -p e2e-test-env -f <fragment-name>
    ```
 
-## <!-- markdownlint-disable MD049 -->
+### Architecture Diagram
 
-_Last Updated: 2026-07-02_ | _Last Reviewed: 2026-07-02_
+```mermaid
+graph TD
+    A[Source Collection /main] --> B(create-fragment-zips.sh)
+    B --> C{Target Release}
+
+    C -->|Latest DXP 2026.Q1+| D["Latest ZIP<br/>(dataType: number, boolean defaults)"]
+    C -->|pre-2026.Q1 DXP| E["pre2026q1 ZIP<br/>(string checkbox defaults)"]
+    C -->|pre-2025.Q3 DXP| F["pre2025q3 ZIP<br/>(dataType: int, all string defaults)"]
+
+    B --> G[Language Properties]
+    G --> H[Message REST DTO mapping]
+    H --> I[Batch Language Client Extension ZIP]
+
+    D & E & F & I --> J(deploy-fragment-zips.sh)
+    J -->|Atomic staging: cp to .tmp -> mv| K[Liferay deploy/ or osgi/client-extensions/]
+```
 
 ## <!-- markdownlint-disable MD049 -->
 
