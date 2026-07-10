@@ -1,7 +1,7 @@
 {
   "pageConfig": {
     "fragmentConfig": {
-      "numberOfTabs": 3
+      "numberOfTabs": "3"
     }
   },
   "pageLayout": {

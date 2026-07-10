@@ -368,6 +368,11 @@ if [ "$BUILD_FRAGMENTS" = true ]; then
        fi
        flatten_fragment "$TEMP_FRAG/$FRAGMENT_NAME"
 
+       # Inject dataType: boolean into checkboxes for Liferay 2026.Q1+ strict validation
+       find "$TEMP_FRAG/$FRAGMENT_NAME" -name "configuration.json" -print0 | while IFS= read -r -d '' config_file; do
+           jq "(.. | objects | select(.type == \"checkbox\")) += {dataType: \"boolean\"}" "$config_file" > "$config_file.tmp" && mv "$config_file.tmp" "$config_file"
+       done
+
        # Ensure descriptor at the ROOT of the zip (sibling to fragment folder)
        ensure_descriptor "$TEMP_FRAG" "$FRAGMENT_NAME"
         process_dir "$TEMP_FRAG/$FRAGMENT_NAME" "$FRAGMENT_NAME"
@@ -426,6 +431,11 @@ for COLLECTION_NAME in "${COLLECTIONS[@]}"; do
                fi
                flatten_fragment "$FRAG_PATH"
            fi
+       done
+
+       # Inject dataType: boolean into checkboxes for Liferay 2026.Q1+ strict validation
+       find "$TEMP_COLL/$COLLECTION_NAME" -name "configuration.json" -print0 | while IFS= read -r -d '' config_file; do
+           jq "(.. | objects | select(.type == \"checkbox\")) += {dataType: \"boolean\"}" "$config_file" > "$config_file.tmp" && mv "$config_file.tmp" "$config_file"
        done
 
        # Ensure descriptor at the ROOT of the zip (sibling to collection folder)
