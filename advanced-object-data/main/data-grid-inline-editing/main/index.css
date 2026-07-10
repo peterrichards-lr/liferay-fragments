@@ -1,0 +1,6 @@
+.fragment-data-grid-inline {
+  width: 100%;
+}
+.fragment-data-grid-inline .grid-container {
+  min-height: 200px;
+}

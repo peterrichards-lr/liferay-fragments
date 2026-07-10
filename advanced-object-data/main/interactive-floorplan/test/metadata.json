@@ -1,0 +1,5 @@
+{
+  "theme": "meridian",
+  "thumbnailSelector": ".interactive-floorplan-fragment",
+  "screenshotSelector": "body"
+}

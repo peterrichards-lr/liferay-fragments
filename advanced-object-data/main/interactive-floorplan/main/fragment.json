@@ -1,0 +1,10 @@
+{
+  "configurationPath": "configuration.json",
+  "jsPath": "index.js",
+  "htmlPath": "index.ftl",
+  "cssPath": "index.css",
+  "icon": "apps",
+  "name": "Interactive Floorplan",
+  "type": "component",
+  "thumbnailPath": "thumbnail.png"
+}

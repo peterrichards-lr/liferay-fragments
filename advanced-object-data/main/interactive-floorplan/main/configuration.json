@@ -1,0 +1,31 @@
+{
+  "fieldSets": [
+    {
+      "fields": [
+        {
+          "dataType": "string",
+          "defaultValue": "https://www.w3schools.com/w3images/map.jpg",
+          "description": "background-image-desc",
+          "label": "background-image",
+          "name": "backgroundImage",
+          "type": "text"
+        },
+        {
+          "dataType": "string",
+          "defaultValue": "MAP_PIN",
+          "description": "object-erc-desc",
+          "label": "object-erc",
+          "name": "objectErc",
+          "type": "text"
+        },
+        {
+          "defaultValue": true,
+          "description": "allow-creation-desc",
+          "label": "allow-creation",
+          "name": "allowCreation",
+          "type": "checkbox"
+        }
+      ]
+    }
+  ]
+}

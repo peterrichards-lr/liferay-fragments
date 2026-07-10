@@ -1,0 +1,145 @@
+{
+  "fieldSets": [
+    {
+      "fields": [
+        {
+          "dataType": "string",
+          "defaultValue": "https://www.w3schools.com/html/mov_bbb.mp4",
+          "description": "video-url-desc",
+          "label": "video-url",
+          "name": "videoUrl",
+          "type": "text"
+        }
+      ]
+    },
+    {
+      "fields": [
+        {
+          "defaultValue": true,
+          "description": "enable-hotspot-1-desc",
+          "label": "enable-hotspot-1",
+          "name": "enableHotspot1",
+          "type": "checkbox"
+        },
+        {
+          "dataType": "int",
+          "defaultValue": "25",
+          "description": "hotspot-1-x-desc",
+          "label": "hotspot-1-x",
+          "name": "hotspot1X",
+          "type": "text"
+        },
+        {
+          "dataType": "int",
+          "defaultValue": "50",
+          "description": "hotspot-1-y-desc",
+          "label": "hotspot-1-y",
+          "name": "hotspot1Y",
+          "type": "text"
+        },
+        {
+          "dataType": "string",
+          "defaultValue": "Hotspot 1",
+          "description": "hotspot-1-text-desc",
+          "label": "hotspot-1-text",
+          "name": "hotspot1Text",
+          "type": "text"
+        },
+        {
+          "dataType": "string",
+          "defaultValue": "#",
+          "description": "hotspot-1-link-desc",
+          "label": "hotspot-1-link",
+          "name": "hotspot1Link",
+          "type": "text"
+        }
+      ]
+    },
+    {
+      "fields": [
+        {
+          "defaultValue": false,
+          "description": "enable-hotspot-2-desc",
+          "label": "enable-hotspot-2",
+          "name": "enableHotspot2",
+          "type": "checkbox"
+        },
+        {
+          "dataType": "int",
+          "defaultValue": "75",
+          "description": "hotspot-2-x-desc",
+          "label": "hotspot-2-x",
+          "name": "hotspot2X",
+          "type": "text"
+        },
+        {
+          "dataType": "int",
+          "defaultValue": "50",
+          "description": "hotspot-2-y-desc",
+          "label": "hotspot-2-y",
+          "name": "hotspot2Y",
+          "type": "text"
+        },
+        {
+          "dataType": "string",
+          "defaultValue": "Hotspot 2",
+          "description": "hotspot-2-text-desc",
+          "label": "hotspot-2-text",
+          "name": "hotspot2Text",
+          "type": "text"
+        },
+        {
+          "dataType": "string",
+          "defaultValue": "#",
+          "description": "hotspot-2-link-desc",
+          "label": "hotspot-2-link",
+          "name": "hotspot2Link",
+          "type": "text"
+        }
+      ]
+    },
+    {
+      "fields": [
+        {
+          "defaultValue": false,
+          "description": "enable-hotspot-3-desc",
+          "label": "enable-hotspot-3",
+          "name": "enableHotspot3",
+          "type": "checkbox"
+        },
+        {
+          "dataType": "int",
+          "defaultValue": "50",
+          "description": "hotspot-3-x-desc",
+          "label": "hotspot-3-x",
+          "name": "hotspot3X",
+          "type": "text"
+        },
+        {
+          "dataType": "int",
+          "defaultValue": "25",
+          "description": "hotspot-3-y-desc",
+          "label": "hotspot-3-y",
+          "name": "hotspot3Y",
+          "type": "text"
+        },
+        {
+          "dataType": "string",
+          "defaultValue": "Hotspot 3",
+          "description": "hotspot-3-text-desc",
+          "label": "hotspot-3-text",
+          "name": "hotspot3Text",
+          "type": "text"
+        },
+        {
+          "dataType": "string",
+          "defaultValue": "#",
+          "description": "hotspot-3-link-desc",
+          "label": "hotspot-3-link",
+          "name": "hotspot3Link",
+          "type": "text"
+        }
+      ]
+    }
+  ]
+}

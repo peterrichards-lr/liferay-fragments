@@ -1,0 +1,31 @@
+{
+  "fieldSets": [
+    {
+      "fields": [
+        {
+          "dataType": "string",
+          "defaultValue": "MAP_PIN",
+          "description": "object-erc-desc",
+          "label": "object-erc",
+          "name": "objectErc",
+          "type": "text"
+        },
+        {
+          "dataType": "string",
+          "defaultValue": "id,title,description",
+          "description": "columns-desc",
+          "label": "columns",
+          "name": "columns",
+          "type": "text"
+        },
+        {
+          "defaultValue": true,
+          "description": "enable-editing-desc",
+          "label": "enable-editing",
+          "name": "enableEditing",
+          "type": "checkbox"
+        }
+      ]
+    }
+  ]
+}
