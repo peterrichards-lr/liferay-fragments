@@ -34,7 +34,15 @@ const EXPECTED_SIGNATURES = [
     contextName: '',
     service: 'resourcepermission',
     method: 'add-resource-permission',
-    mustContainAll: ['companyId', 'groupId', 'name', 'scope', 'primKey', 'roleId', 'actionId'],
+    mustContainAll: [
+      'companyId',
+      'groupId',
+      'name',
+      'scope',
+      'primKey',
+      'roleId',
+      'actionId',
+    ],
     description: 'ResourcePermission add action parameters',
   },
   {
@@ -78,15 +86,15 @@ async function fetchSignaturePage(baseUrl, service, method, contextName) {
       let data = '';
       res.on('data', (chunk) => (data += chunk));
       res.on('end', () => {
-        // Find the first signature href that matches our service/method
         const hrefMatch = data.match(
-          new RegExp(`signature=(${encodeURIComponent(methodPath).replace(/\//g, '%2F')}[^"&]*)`)
+          new RegExp(
+            `signature=(${encodeURIComponent(methodPath).replace(/\//g, '%2F')}[^"&]*)`
+          )
         );
         if (!hrefMatch) {
           resolve({ status: res.statusCode, body: data, sigUrl: null });
           return;
         }
-        // Now fetch the specific signature page to get the form
         const sigUrl = `${baseUrl}/api/jsonws?contextName=&signature=${hrefMatch[1]}`;
         const sigParsed = url.parse(sigUrl);
         const sigOpts = {
@@ -99,10 +107,15 @@ async function fetchSignaturePage(baseUrl, service, method, contextName) {
         const req2 = https.request(sigOpts, (res2) => {
           let body2 = '';
           res2.on('data', (c) => (body2 += c));
-          res2.on('end', () => resolve({ status: res2.statusCode, body: body2, sigUrl }));
+          res2.on('end', () =>
+            resolve({ status: res2.statusCode, body: body2, sigUrl })
+          );
         });
         req2.on('error', reject);
-        req2.setTimeout(10000, () => { req2.destroy(); reject(new Error('Timeout on sig fetch')); });
+        req2.setTimeout(10000, () => {
+          req2.destroy();
+          reject(new Error('Timeout on sig fetch'));
+        });
         req2.end();
       });
     });
@@ -121,36 +134,65 @@ async function fetchSignaturePage(baseUrl, service, method, contextName) {
 async function validateSignatures(baseUrl) {
   baseUrl = baseUrl || process.env.BASE_URL || 'http://localhost:8080';
   console.log(`\n[Signature Validator] Connecting to: ${baseUrl}`);
-  console.log('[Signature Validator] Verifying critical JSON-WS method signatures...\n');
+  console.log(
+    '[Signature Validator] Verifying critical JSON-WS method signatures...\n'
+  );
 
   const results = [];
   let hasWarnings = false;
 
   for (const check of EXPECTED_SIGNATURES) {
-    const { contextName, service, method, mustContainAll, mustContainAny, description } = check;
-    process.stdout.write(`  Checking /${service}/${method} (${description})... `);
+    const {
+      contextName,
+      service,
+      method,
+      mustContainAll,
+      mustContainAny,
+      description,
+    } = check;
+    process.stdout.write(
+      `  Checking /${service}/${method} (${description})... `
+    );
 
     let result = { service, method, status: 'OK', warnings: [] };
 
     try {
-      const { status, body } = await fetchSignaturePage(baseUrl, service, method, contextName);
+      const { status, body } = await fetchSignaturePage(
+        baseUrl,
+        service,
+        method,
+        contextName
+      );
 
       if (status !== 200) {
         result.status = 'ERROR';
         result.warnings.push(`HTTP ${status} — method may not exist`);
       } else {
-        // Extract parameter names from form input/textarea name attributes
-        const paramMatches = [...body.matchAll(/name="([a-zA-Z][a-zA-Z0-9_]*)"/g)];
+        const paramMatches = [
+          ...body.matchAll(/name="([a-zA-Z][a-zA-Z0-9_]*)"/g),
+        ];
         const params = paramMatches
           .map((m) => m[1])
-          .filter((p) => !['formDate', 'p_auth', 'contextName', 'serviceSearch', 'result', 'execute'].includes(p))
-          .filter((v, i, a) => a.indexOf(v) === i); // deduplicate
+          .filter(
+            (p) =>
+              ![
+                'formDate',
+                'p_auth',
+                'contextName',
+                'serviceSearch',
+                'result',
+                'execute',
+              ].includes(p)
+          )
+          .filter((v, i, a) => a.indexOf(v) === i);
 
         if (mustContainAll) {
           for (const param of mustContainAll) {
             if (!params.includes(param)) {
               result.status = 'WARN';
-              result.warnings.push(`Expected parameter '${param}' not found. Found: [${params.join(', ')}]`);
+              result.warnings.push(
+                `Expected parameter '${param}' not found. Found: [${params.join(', ')}]`
+              );
             }
           }
         }
@@ -163,7 +205,6 @@ async function validateSignatures(baseUrl) {
               `None of expected parameters [${mustContainAny.join(', ')}] found. Found: [${params.join(', ')}]`
             );
           } else {
-            // Report which one was found for informational purposes
             const found = mustContainAny.find((p) => params.includes(p));
             result.foundParam = found;
           }
@@ -192,11 +233,19 @@ async function validateSignatures(baseUrl) {
   console.log('\n[Signature Validator] Validation complete.');
 
   if (hasWarnings) {
-    console.log('\x1b[33m[Signature Validator] ⚠ Some signatures may have drifted.\x1b[0m');
-    console.log('\x1b[33m  → Review the warnings above and update the seeder form payloads accordingly.\x1b[0m');
-    console.log('\x1b[33m  → Update EXPECTED_SIGNATURES in scripts/validate-api-signatures.js if intentional.\x1b[0m');
+    console.log(
+      '\x1b[33m[Signature Validator] ⚠ Some signatures may have drifted.\x1b[0m'
+    );
+    console.log(
+      '\x1b[33m  → Review the warnings above and update the seeder form payloads accordingly.\x1b[0m'
+    );
+    console.log(
+      '\x1b[33m  → Update EXPECTED_SIGNATURES in scripts/validate-api-signatures.js if intentional.\x1b[0m'
+    );
   } else {
-    console.log('\x1b[32m[Signature Validator] ✓ All signatures match expectations.\x1b[0m');
+    console.log(
+      '\x1b[32m[Signature Validator] ✓ All signatures match expectations.\x1b[0m'
+    );
   }
 
   return results;
