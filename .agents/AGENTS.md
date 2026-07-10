@@ -93,3 +93,21 @@ As you complete individual sub-issues:
    node scripts/gh-issue-sync.cjs scripts/feature-xyz-plan.json
    ```
    _The utility will automatically detect the completed state, post a reference comment with the current git commit hash, and close the issue on GitHub._
+
+# Contributor Development Guidelines (Humans & Agents)
+
+To maintain system quality and documentation context, all contributors (human or agentic) must adhere to these policies:
+
+## 1. Issue-Driven Requirements
+
+- Every bug, enhancement, or feature request MUST be recorded as a GitHub Issue prior to any development work.
+- For each issue, the contributor must analyze the requirements against the current codebase and write a step-by-step Implementation Plan.
+
+## 2. Review and Verification Gates
+
+- **Pull Requests:** All PRs must link back to a corresponding GitHub Issue (using `Closes #<id>` or `Addresses #<id>` syntax).
+- **Code Review:** Every PR must be reviewed and approved by another contributor (human or agent) before it is merged.
+
+## <!-- markdownlint-disable MD049 -->
+
+_Last Updated: 2026-07-10_ | _Last Reviewed: 2026-07-10_
