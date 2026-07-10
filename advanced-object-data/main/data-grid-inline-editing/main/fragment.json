@@ -1,0 +1,10 @@
+{
+  "configurationPath": "configuration.json",
+  "jsPath": "index.js",
+  "htmlPath": "index.html",
+  "cssPath": "index.css",
+  "icon": "component",
+  "name": "Data Grid Inline Editing",
+  "type": "component",
+  "thumbnailPath": "thumbnail.png"
+}

@@ -1,0 +1,5 @@
+{
+  "theme": "meridian",
+  "thumbnailSelector": ".video-hotspots-fragment",
+  "screenshotSelector": "body"
+}

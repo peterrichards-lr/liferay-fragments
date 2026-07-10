@@ -1,0 +1,123 @@
+.fragment-interactive-floorplan .floorplan-container {
+  position: relative;
+  width: 100%;
+  display: inline-block;
+}
+
+.fragment-interactive-floorplan .floorplan-bg {
+  width: 100%;
+  height: auto;
+  display: block;
+  cursor: crosshair;
+}
+
+.fragment-interactive-floorplan .pins-layer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.fragment-interactive-floorplan .map-pin {
+  position: absolute;
+  transform: translate(-50%, -100%);
+  pointer-events: auto;
+  cursor: pointer;
+}
+
+.fragment-interactive-floorplan .map-pin-icon {
+  width: 24px;
+  height: 24px;
+  background-color: var(--primary);
+  border-radius: 50% 50% 50% 0;
+  transform: rotate(-45deg);
+  display: block;
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.fragment-interactive-floorplan .map-pin-tooltip {
+  visibility: hidden;
+  opacity: 0;
+  position: absolute;
+  bottom: 120%;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: var(--dark);
+  color: var(--light);
+  padding: 0.5rem;
+  border-radius: 4px;
+  white-space: nowrap;
+  transition: opacity 0.3s;
+  z-index: 10;
+}
+
+.fragment-interactive-floorplan .map-pin-tooltip h4 {
+  margin: 0 0 0.5rem 0;
+  font-size: 1rem;
+}
+
+.fragment-interactive-floorplan .map-pin-tooltip p {
+  margin: 0;
+  font-size: 0.875rem;
+}
+
+.fragment-interactive-floorplan .map-pin:hover .map-pin-tooltip {
+  visibility: visible;
+  opacity: 1;
+}
+
+.fragment-interactive-floorplan .new-pin-modal {
+  border: 1px solid var(--border-color, #ccc);
+  border-radius: var(--border-radius, 8px);
+  padding: 0;
+  width: 400px;
+  max-width: 90vw;
+}
+
+.fragment-interactive-floorplan .new-pin-modal::backdrop {
+  background: rgba(0, 0, 0, 0.5);
+}
+
+.fragment-interactive-floorplan .modal-header,
+.fragment-interactive-floorplan .modal-body,
+.fragment-interactive-floorplan .modal-footer {
+  padding: 1rem;
+}
+
+.fragment-interactive-floorplan .modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid var(--border-color, #ccc);
+}
+
+.fragment-interactive-floorplan .modal-header h3 {
+  margin: 0;
+}
+
+.fragment-interactive-floorplan .modal-footer {
+  border-top: 1px solid var(--border-color, #ccc);
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
+}
+
+.fragment-interactive-floorplan .form-group {
+  margin-bottom: 1rem;
+}
+
+.fragment-interactive-floorplan .form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: bold;
+}
+
+.fragment-interactive-floorplan .form-control {
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid var(--border-color, #ccc);
+  border-radius: 4px;
+  box-sizing: border-box;
+}

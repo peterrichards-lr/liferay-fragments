@@ -12,7 +12,7 @@
             "value": {
               "text": {
                 "value_i18n": {
-                  "en_US": "<div class=\"text-center\"><img src=\"https://images.unsplash.com/photo-1506744038136-46273834b3fb?q=80&w=400&auto=format&fit=crop\" style=\"max-width:100%; border-radius:8px;\" /><h3 class=\"mt-3\">Secondary Content</h3><p>This is semantic content dropped into a secondary container.</p></div>"
+                  "en_US": "<div class=\"text-center\"><img src=\"https://images.unsplash.com/photo-1506744038136-46273834b3fb?q=80&w=400&auto=format&fit=crop\" style=\"max-width:100%; border-radius:8px;\" /><h3 class=\"mt-3\">Showcase Content</h3><p>This is semantic content dropped into a container to demonstrate layout and transparency.</p></div>"
                 }
               }
             }

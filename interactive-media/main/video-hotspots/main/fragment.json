@@ -1,0 +1,10 @@
+{
+  "configurationPath": "configuration.json",
+  "jsPath": "index.js",
+  "htmlPath": "index.ftl",
+  "cssPath": "index.css",
+  "icon": "component",
+  "name": "Video Hotspots",
+  "type": "component",
+  "thumbnailPath": "thumbnail.png"
+}

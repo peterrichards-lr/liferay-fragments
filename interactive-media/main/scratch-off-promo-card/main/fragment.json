@@ -1,0 +1,10 @@
+{
+  "configurationPath": "configuration.json",
+  "jsPath": "index.js",
+  "htmlPath": "index.html",
+  "cssPath": "index.css",
+  "icon": "component",
+  "name": "Scratch-Off Promo Card",
+  "type": "component",
+  "thumbnailPath": "thumbnail.png"
+}

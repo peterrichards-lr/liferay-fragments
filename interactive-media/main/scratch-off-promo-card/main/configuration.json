@@ -1,0 +1,40 @@
+{
+  "fieldSets": [
+    {
+      "fields": [
+        {
+          "dataType": "string",
+          "defaultValue": "#cccccc",
+          "description": "overlay-color-desc",
+          "label": "overlay-color",
+          "name": "overlayColor",
+          "type": "colorPicker"
+        },
+        {
+          "dataType": "string",
+          "defaultValue": "",
+          "description": "overlay-image-desc",
+          "label": "overlay-image",
+          "name": "overlayImage",
+          "type": "text"
+        },
+        {
+          "dataType": "int",
+          "defaultValue": "40",
+          "description": "brush-size-desc",
+          "label": "brush-size",
+          "name": "brushSize",
+          "type": "text"
+        },
+        {
+          "dataType": "int",
+          "defaultValue": "50",
+          "description": "clear-threshold-desc",
+          "label": "clear-threshold",
+          "name": "clearThreshold",
+          "type": "text"
+        }
+      ]
+    }
+  ]
+}

@@ -7,81 +7,20 @@
   "pageLayout": {
     "type": "Fragment",
     "key": "custom-tabs",
-    "fragmentFields": [
+    "children": [
       {
-        "id": "title1",
-        "value": { "text": { "value_i18n": { "en_US": "Overview" } } }
-      },
-      {
-        "id": "title2",
-        "value": { "text": { "value_i18n": { "en_US": "Specifications" } } }
-      },
-      {
-        "id": "title3",
-        "value": { "text": { "value_i18n": { "en_US": "Support" } } }
-      }
-    ],
-    "dropZones": [
-      {
-        "id": "1",
-        "children": [
+        "type": "Fragment",
+        "key": "rich-text",
+        "fragmentFields": [
           {
-            "type": "Fragment",
-            "key": "rich-text",
-            "fragmentFields": [
-              {
-                "id": "text",
-                "value": {
-                  "text": {
-                    "value_i18n": {
-                      "en_US": "<div class=\"text-center\"><h4 class=\"mt-3\">Overview Tab Panel</h4><p>This is semantic content dropped into Tab 1 drop zone.</p></div>"
-                    }
-                  }
+            "id": "text",
+            "value": {
+              "text": {
+                "value_i18n": {
+                  "en_US": "<div class=\"text-center\"><img src=\"https://images.unsplash.com/photo-1506744038136-46273834b3fb?q=80&w=400&auto=format&fit=crop\" style=\"max-width:100%; border-radius:8px;\" /><h3 class=\"mt-3\">Showcase Content</h3><p>This is semantic content dropped into a container to demonstrate layout and transparency.</p></div>"
                 }
               }
-            ]
-          }
-        ]
-      },
-      {
-        "id": "2",
-        "children": [
-          {
-            "type": "Fragment",
-            "key": "rich-text",
-            "fragmentFields": [
-              {
-                "id": "text",
-                "value": {
-                  "text": {
-                    "value_i18n": {
-                      "en_US": "<div class=\"text-center\"><h4 class=\"mt-3\">Specifications Tab Panel</h4><p>This is semantic content dropped into Tab 2 drop zone.</p></div>"
-                    }
-                  }
-                }
-              }
-            ]
-          }
-        ]
-      },
-      {
-        "id": "3",
-        "children": [
-          {
-            "type": "Fragment",
-            "key": "rich-text",
-            "fragmentFields": [
-              {
-                "id": "text",
-                "value": {
-                  "text": {
-                    "value_i18n": {
-                      "en_US": "<div class=\"text-center\"><h4 class=\"mt-3\">Support Tab Panel</h4><p>This is semantic content dropped into Tab 3 drop zone.</p></div>"
-                    }
-                  }
-                }
-              }
-            ]
+            }
           }
         ]
       }
