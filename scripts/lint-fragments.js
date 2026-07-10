@@ -582,22 +582,32 @@ function runLinter() {
                     fieldDef.dataType === 'number' ||
                     fieldDef.dataType === 'int'
                   ) {
-                    if (isNaN(Number(val))) {
+                    if (typeof val !== 'string') {
+                      logError(
+                        fragmentName,
+                        `test-fragment-config.json key '${key}' has numeric dataType but value is not a string: ${JSON.stringify(val)} (type: ${typeof val}). Numeric fields must use string-based values.`
+                      );
+                    } else if (isNaN(Number(val))) {
                       logWarn(
                         fragmentName,
-                        `test-fragment-config.json key '${key}' expects a number but got '${val}'`
+                        `test-fragment-config.json key '${key}' expects a number string but got '${val}'`
                       );
                     }
-                  } else if (fieldDef.dataType === 'boolean') {
-                    if (
-                      val !== true &&
-                      val !== false &&
-                      val !== 'true' &&
-                      val !== 'false'
-                    ) {
-                      logWarn(
+                  } else if (
+                    fieldDef.dataType === 'boolean' ||
+                    fieldDef.type === 'checkbox'
+                  ) {
+                    if (typeof val !== 'boolean') {
+                      logError(
                         fragmentName,
-                        `test-fragment-config.json key '${key}' expects a boolean but got '${val}'`
+                        `test-fragment-config.json key '${key}' has boolean dataType/type but value is not a boolean: ${JSON.stringify(val)} (type: ${typeof val})`
+                      );
+                    }
+                  } else {
+                    if (typeof val !== 'string' && typeof val !== 'object') {
+                      logError(
+                        fragmentName,
+                        `test-fragment-config.json key '${key}' has string type but value is not a string: ${JSON.stringify(val)} (type: ${typeof val})`
                       );
                     }
                   }
