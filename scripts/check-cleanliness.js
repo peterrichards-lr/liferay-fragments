@@ -29,6 +29,22 @@ const ALLOWED_UNTRACKED = new Set([
   'scratch/',
 ]);
 
+function parseGitStatus(statusOutput, allowedSet = ALLOWED_UNTRACKED) {
+  if (!statusOutput) return [];
+
+  return statusOutput
+    .split('\n')
+    .filter((line) => line.startsWith('?? '))
+    .map((line) => line.substring(3).trim())
+    .filter((entry) => {
+      // Only flag root-level items (no subdirectory separator, or first component is root)
+      const parts = entry.split('/');
+      if (parts.length > 2) return false;
+      const rootEntry = parts[0] + (entry.includes('/') ? '/' : '');
+      return !allowedSet.has(rootEntry) && !allowedSet.has(entry);
+    });
+}
+
 function checkCleanliness() {
   let statusOutput;
   try {
@@ -38,17 +54,7 @@ function checkCleanliness() {
     return;
   }
 
-  const violations = statusOutput
-    .split('\n')
-    .filter((line) => line.startsWith('?? '))
-    .map((line) => line.substring(3).trim())
-    .filter((entry) => {
-      // Only flag root-level items (no subdirectory separator, or first component is root)
-      const parts = entry.split('/');
-      if (parts.length > 2) return false;
-      const rootEntry = parts[0] + (entry.includes('/') ? '/' : '');
-      return !ALLOWED_UNTRACKED.has(rootEntry) && !ALLOWED_UNTRACKED.has(entry);
-    });
+  const violations = parseGitStatus(statusOutput);
 
   if (violations.length > 0) {
     console.error(
@@ -63,4 +69,8 @@ function checkCleanliness() {
   }
 }
 
-checkCleanliness();
+if (require.main === module) {
+  checkCleanliness();
+}
+
+module.exports = { parseGitStatus, ALLOWED_UNTRACKED };
