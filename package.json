@@ -20,10 +20,11 @@
     "test:e2e": "bash scripts/test-runner.sh -k -p e2e-test-env",
     "test:e2e:fast": "bash scripts/test-runner.sh -k -p e2e-test-env -s",
     "test:e2e:only": "bash scripts/test-runner.sh -k -p e2e-test-env -f",
+    "test:unit": "node --test scripts/tests/**/*.test.js",
     "verify": "npm run fix-dependencies && npm run fix-schemas && npm run format && npm run lint && npm run detect-secrets",
     "verify:e2e": "npm run verify && npm run test:e2e && npm run docs:gallery",
     "verify:e2e:fast": "npm run verify && npm run test:e2e:fast && npm run docs:gallery",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "npm run test:unit"
   },
   "keywords": [
     "liferay",
