@@ -128,6 +128,57 @@ async function fetchSignaturePage(baseUrl, service, method, contextName) {
   });
 }
 
+function parseParametersFromHTML(htmlContent) {
+  if (!htmlContent) return [];
+  const paramMatches = [
+    ...htmlContent.matchAll(/name="([a-zA-Z][a-zA-Z0-9_]*)"/g),
+  ];
+  return paramMatches
+    .map((m) => m[1])
+    .filter(
+      (p) =>
+        ![
+          'formDate',
+          'p_auth',
+          'contextName',
+          'serviceSearch',
+          'result',
+          'execute',
+        ].includes(p)
+    )
+    .filter((v, i, a) => a.indexOf(v) === i);
+}
+
+function checkSignatureDrift(params, expectedSignatureCheck) {
+  const result = { status: 'OK', warnings: [] };
+  const { mustContainAll, mustContainAny } = expectedSignatureCheck;
+
+  if (mustContainAll) {
+    for (const param of mustContainAll) {
+      if (!params.includes(param)) {
+        result.status = 'WARN';
+        result.warnings.push(
+          `Expected parameter '${param}' not found. Found: [${params.join(', ')}]`
+        );
+      }
+    }
+  }
+
+  if (mustContainAny) {
+    const anyFound = mustContainAny.some((p) => params.includes(p));
+    if (!anyFound) {
+      result.status = 'WARN';
+      result.warnings.push(
+        `None of expected parameters [${mustContainAny.join(', ')}] found. Found: [${params.join(', ')}]`
+      );
+    } else {
+      const found = mustContainAny.find((p) => params.includes(p));
+      result.foundParam = found;
+    }
+  }
+  return result;
+}
+
 // ---------------------------------------------------------------------------
 // Main validation function
 // ---------------------------------------------------------------------------
@@ -142,14 +193,7 @@ async function validateSignatures(baseUrl) {
   let hasWarnings = false;
 
   for (const check of EXPECTED_SIGNATURES) {
-    const {
-      contextName,
-      service,
-      method,
-      mustContainAll,
-      mustContainAny,
-      description,
-    } = check;
+    const { contextName, service, method, description } = check;
     process.stdout.write(
       `  Checking /${service}/${method} (${description})... `
     );
@@ -168,46 +212,12 @@ async function validateSignatures(baseUrl) {
         result.status = 'ERROR';
         result.warnings.push(`HTTP ${status} — method may not exist`);
       } else {
-        const paramMatches = [
-          ...body.matchAll(/name="([a-zA-Z][a-zA-Z0-9_]*)"/g),
-        ];
-        const params = paramMatches
-          .map((m) => m[1])
-          .filter(
-            (p) =>
-              ![
-                'formDate',
-                'p_auth',
-                'contextName',
-                'serviceSearch',
-                'result',
-                'execute',
-              ].includes(p)
-          )
-          .filter((v, i, a) => a.indexOf(v) === i);
-
-        if (mustContainAll) {
-          for (const param of mustContainAll) {
-            if (!params.includes(param)) {
-              result.status = 'WARN';
-              result.warnings.push(
-                `Expected parameter '${param}' not found. Found: [${params.join(', ')}]`
-              );
-            }
-          }
-        }
-
-        if (mustContainAny) {
-          const anyFound = mustContainAny.some((p) => params.includes(p));
-          if (!anyFound) {
-            result.status = 'WARN';
-            result.warnings.push(
-              `None of expected parameters [${mustContainAny.join(', ')}] found. Found: [${params.join(', ')}]`
-            );
-          } else {
-            const found = mustContainAny.find((p) => params.includes(p));
-            result.foundParam = found;
-          }
+        const params = parseParametersFromHTML(body);
+        const driftResult = checkSignatureDrift(params, check);
+        result.status = driftResult.status;
+        result.warnings = driftResult.warnings;
+        if (driftResult.foundParam) {
+          result.foundParam = driftResult.foundParam;
         }
       }
     } catch (err) {
@@ -264,4 +274,8 @@ if (require.main === module) {
     });
 }
 
-module.exports = { validateSignatures };
+module.exports = {
+  validateSignatures,
+  parseParametersFromHTML,
+  checkSignatureDrift,
+};
