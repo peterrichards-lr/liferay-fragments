@@ -1,7 +1,17 @@
 #!/usr/bin/env node
 const fs = require('fs');
 const path = require('path');
-const { execSync } = require('child_process');
+const { execSync, spawnSync } = require('child_process');
+
+function runGh(args) {
+  const result = spawnSync('gh', args, { encoding: 'utf8' });
+  if (result.status !== 0) {
+    throw new Error(
+      result.stderr || `gh command failed with exit code ${result.status}`
+    );
+  }
+  return result.stdout.trim();
+}
 
 function log(msg, type = 'info') {
   const colors = {
@@ -69,14 +79,25 @@ log(`Referencing commit: ${commitHash}`, 'info');
 log(`\nCreating Epic: "${config.title}"...`, 'info');
 let epicNumber = '123';
 
-const epicLabels = (config.labels || []).map((l) => `--label "${l}"`).join(' ');
-const epicCommand =
-  `gh issue create --title "${config.title}" --body "${config.body}" ${epicLabels}`.trim();
+const epicArgs = [
+  'issue',
+  'create',
+  '--title',
+  config.title,
+  '--body',
+  config.body,
+];
+(config.labels || []).forEach((l) => {
+  epicArgs.push('--label', l);
+});
 
 if (dryRun) {
-  log(`[DRY RUN] Would execute: ${epicCommand}`, 'success');
+  log(
+    `[DRY RUN] Would execute: gh ${epicArgs.map((a) => `"${a}"`).join(' ')}`,
+    'success'
+  );
 } else {
-  const epicUrl = execSync(epicCommand, { encoding: 'utf8' }).trim();
+  const epicUrl = runGh(epicArgs);
   epicNumber = epicUrl.split('/').pop();
   log(
     `Epic created successfully: Issue #${epicNumber} (${epicUrl})`,
@@ -91,20 +112,29 @@ if (config.issues && config.issues.length > 0) {
       `\nProcessing sub-issue [${idx + 1}/${config.issues.length}]: "${issue.title}"...`,
       'info'
     );
-    const issueLabels = (issue.labels || [])
-      .map((l) => `--label "${l}"`)
-      .join(' ');
     const bodyText = `${issue.body}\n\n(Belongs to Epic #${epicNumber})`;
-    const issueCommand =
-      `gh issue create --title "${issue.title}" --body "${bodyText}" ${issueLabels}`.trim();
+    const subArgs = [
+      'issue',
+      'create',
+      '--title',
+      issue.title,
+      '--body',
+      bodyText,
+    ];
+    (issue.labels || []).forEach((l) => {
+      subArgs.push('--label', l);
+    });
 
     if (dryRun) {
-      log(`[DRY RUN] Would execute: ${issueCommand}`, 'success');
+      log(
+        `[DRY RUN] Would execute: gh ${subArgs.map((a) => `"${a}"`).join(' ')}`,
+        'success'
+      );
       if (issue.completed) {
         log(`[DRY RUN] Would comment and close sub-issue.`, 'success');
       }
     } else {
-      const subIssueUrl = execSync(issueCommand, { encoding: 'utf8' }).trim();
+      const subIssueUrl = runGh(subArgs);
       const subIssueNumber = subIssueUrl.split('/').pop();
       log(
         `Sub-issue created: Issue #${subIssueNumber} (${subIssueUrl})`,
@@ -113,9 +143,14 @@ if (config.issues && config.issues.length > 0) {
 
       if (issue.completed) {
         log(`Closing completed sub-issue #${subIssueNumber}...`, 'info');
-        const commentCommand = `gh issue comment ${subIssueNumber} --body "This issue was successfully implemented and verified in commit ${commitHash}. Closing."`;
-        execSync(commentCommand);
-        execSync(`gh issue close ${subIssueNumber}`);
+        runGh([
+          'issue',
+          'comment',
+          subIssueNumber,
+          '--body',
+          `This issue was successfully implemented and verified in commit ${commitHash}. Closing.`,
+        ]);
+        runGh(['issue', 'close', subIssueNumber]);
         log(`Issue #${subIssueNumber} closed successfully.`, 'success');
       }
     }

@@ -45,7 +45,7 @@ function checkCleanliness() {
     .filter((entry) => {
       // Only flag root-level items (no subdirectory separator, or first component is root)
       const parts = entry.split('/');
-      if (parts.length > 2) return false; // Deeply nested — not a root-level item
+      if (parts.length > 2) return false;
       const rootEntry = parts[0] + (entry.includes('/') ? '/' : '');
       return !ALLOWED_UNTRACKED.has(rootEntry) && !ALLOWED_UNTRACKED.has(entry);
     });
@@ -54,15 +54,11 @@ function checkCleanliness() {
     console.error(
       '\x1b[31m[COMMIT BLOCKED] Untracked root-level items detected:\x1b[0m'
     );
-    violations.forEach((f) =>
-      console.error(`  \x1b[33m- ${f}\x1b[0m`)
-    );
+    violations.forEach((f) => console.error(`  \x1b[33m- ${f}\x1b[0m`));
     console.error(
       '\x1b[31mPlease add them to .gitignore or remove them before committing.\x1b[0m'
     );
-    console.error(
-      '\x1b[90mHint: Bypass with: git commit --no-verify\x1b[0m'
-    );
+    console.error('\x1b[90mHint: Bypass with: git commit --no-verify\x1b[0m');
     process.exit(1);
   }
 }
