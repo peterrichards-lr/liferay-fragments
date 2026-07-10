@@ -110,10 +110,7 @@ function runLinter() {
   const fragmentFiles = globSync('**/main/fragment.json', {
     ignore: [
       'node_modules/**',
-      'temp_extract/**',
-      'temp_inspect/**',
-      'temp_inspect_zip/**',
-      'temp_extract_zip/**',
+      'temp*/**',
       'docs/test-results/**',
       ...ldmIgnores,
     ],
@@ -124,14 +121,7 @@ function runLinter() {
 
   // Validate collection directory structures (must only contain main/ and test/)
   const collectionsList = globSync('**/main/collection.json', {
-    ignore: [
-      'node_modules/**',
-      'temp_extract/**',
-      'temp_inspect/**',
-      'temp_inspect_zip/**',
-      'temp_extract_zip/**',
-      ...ldmIgnores,
-    ],
+    ignore: ['node_modules/**', 'temp*/**', ...ldmIgnores],
   });
 
   collectionsList.forEach((file) => {
@@ -714,10 +704,7 @@ function runLinter() {
       'node_modules/**',
       '**/node_modules/**',
       '.git/**',
-      'temp_extract/**',
-      'temp_inspect/**',
-      'temp_inspect_zip/**',
-      'temp_extract_zip/**',
+      'temp*/**',
       'docs/test-results/**',
     ],
   });
