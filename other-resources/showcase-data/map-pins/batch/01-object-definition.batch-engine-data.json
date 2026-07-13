@@ -1,0 +1,73 @@
+{
+  "configuration": {
+    "className": "com.liferay.object.admin.rest.dto.v1_0.ObjectDefinition",
+    "parameters": {
+      "containsHeaders": "true",
+      "createStrategy": "UPSERT",
+      "importStrategy": "ON_ERROR_CONTINUE",
+      "updateStrategy": "UPDATE"
+    }
+  },
+  "items": [
+    {
+      "active": true,
+      "defaultLanguageId": "en_US",
+      "externalReferenceCode": "MAP_PIN",
+      "label": {
+        "en_US": "Map Pin"
+      },
+      "name": "MapPin",
+      "objectFields": [
+        {
+          "businessType": "Text",
+          "externalReferenceCode": "TITLE",
+          "label": {
+            "en_US": "Title"
+          },
+          "name": "title",
+          "required": true,
+          "type": "String"
+        },
+        {
+          "businessType": "Text",
+          "externalReferenceCode": "DESCRIPTION",
+          "label": {
+            "en_US": "Description"
+          },
+          "name": "description",
+          "required": false,
+          "type": "String"
+        },
+        {
+          "businessType": "Decimal",
+          "externalReferenceCode": "X_COORD",
+          "label": {
+            "en_US": "X Coordinate"
+          },
+          "name": "xCoord",
+          "required": true,
+          "type": "Double"
+        },
+        {
+          "businessType": "Decimal",
+          "externalReferenceCode": "Y_COORD",
+          "label": {
+            "en_US": "Y Coordinate"
+          },
+          "name": "yCoord",
+          "required": true,
+          "type": "Double"
+        }
+      ],
+      "pluralLabel": {
+        "en_US": "Map Pins"
+      },
+      "restContextPath": "/o/c/mappins",
+      "scope": "site",
+      "status": {
+        "code": 0,
+        "label": "approved"
+      }
+    }
+  ]
+}
