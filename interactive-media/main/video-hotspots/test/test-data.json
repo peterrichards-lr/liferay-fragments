@@ -1,0 +1,22 @@
+{
+  "pageConfig": {
+    "fragmentConfig": {
+      "videoUrl": "https://www.w3schools.com/html/mov_bbb.mp4",
+      "enableHotspot1": true,
+      "hotspot1X": "25",
+      "hotspot1Y": "50",
+      "hotspot1Text": "Feature 1",
+      "hotspot1Link": "#",
+      "enableHotspot2": false,
+      "hotspot2X": "75",
+      "hotspot2Y": "50",
+      "hotspot2Text": "Feature 2",
+      "hotspot2Link": "#",
+      "enableHotspot3": false,
+      "hotspot3X": "50",
+      "hotspot3Y": "25",
+      "hotspot3Text": "Feature 3",
+      "hotspot3Link": "#"
+    }
+  }
+}

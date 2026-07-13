@@ -105,40 +105,78 @@ async function provisionSite(ctx, apiContext) {
     let querySiteId = globalSite.id;
     ctx.globalSiteKey = globalSite.key || 'L_GLOBAL';
 
-    let collectionsResp = await apiContext.post(
-      `/api/jsonws/fragment.fragmentcollection/get-fragment-collections?p_auth=${ctx.pAuthToken}`,
-      {
-        form: {
-          groupId: querySiteId,
-          start: -1,
-          end: -1,
-        },
-      }
-    );
+    // Issue #134: Active deployment wait.
+    // Liferay's auto-deploy scanner can take 3–5 minutes in CI to process all
+    // fragment ZIPs. Poll until the expected minimum number of collections appear,
+    // or until the 10-minute timeout is reached, before proceeding.
+    const DEPLOY_MAX_ATTEMPTS = 30; // 30 × 20s = 10 minutes max
+    const DEPLOY_POLL_MS = 20 * 1000; // 20 seconds between attempts
+    const DEPLOY_MIN_COLLECTIONS = 5; // minimum expected deployed collections
 
     let collections = [];
-    if (collectionsResp.ok()) {
-      collections = await collectionsResp.json();
-    }
-
-    if (collections.length === 0 && querySiteId !== ctx.siteId) {
-      console.log(
-        `  -> No collections found on Global site (ID: ${querySiteId}). Trying Guest site (ID: ${ctx.siteId})...`
-      );
-      querySiteId = ctx.siteId;
-      collectionsResp = await apiContext.post(
+    for (let attempt = 0; attempt < DEPLOY_MAX_ATTEMPTS; attempt++) {
+      // Query the Global site first; fall back to Guest site if empty
+      let collectionsResp = await apiContext.post(
         `/api/jsonws/fragment.fragmentcollection/get-fragment-collections?p_auth=${ctx.pAuthToken}`,
         {
           form: {
-            groupId: ctx.siteId,
+            groupId: querySiteId,
             start: -1,
             end: -1,
           },
         }
       );
+
       if (collectionsResp.ok()) {
         collections = await collectionsResp.json();
       }
+
+      // Fallback: try Guest site if Global returned nothing
+      if (collections.length === 0 && querySiteId !== ctx.siteId) {
+        console.log(
+          `  -> No collections found on Global site (ID: ${querySiteId}). Trying Guest site (ID: ${ctx.siteId})...`
+        );
+        querySiteId = ctx.siteId;
+        collectionsResp = await apiContext.post(
+          `/api/jsonws/fragment.fragmentcollection/get-fragment-collections?p_auth=${ctx.pAuthToken}`,
+          {
+            form: {
+              groupId: ctx.siteId,
+              start: -1,
+              end: -1,
+            },
+          }
+        );
+        if (collectionsResp.ok()) {
+          collections = await collectionsResp.json();
+        }
+      }
+
+      if (collections.length >= DEPLOY_MIN_COLLECTIONS) {
+        if (attempt > 0) {
+          console.log(
+            `  -> [DEPLOY WAIT] ${collections.length} collections found after ${(attempt * DEPLOY_POLL_MS) / 1000}s. Proceeding.`
+          );
+        }
+        break;
+      }
+
+      const elapsed = (attempt * DEPLOY_POLL_MS) / 1000;
+      const remaining =
+        ((DEPLOY_MAX_ATTEMPTS - attempt - 1) * DEPLOY_POLL_MS) / 1000;
+      console.log(
+        `  -> [DEPLOY WAIT] Only ${collections.length}/${DEPLOY_MIN_COLLECTIONS} collections found ` +
+          `(attempt ${attempt + 1}/${DEPLOY_MAX_ATTEMPTS}, ${elapsed}s elapsed, up to ${remaining}s remaining). ` +
+          `Waiting for Liferay auto-deploy to complete...`
+      );
+      await new Promise((resolve) => setTimeout(resolve, DEPLOY_POLL_MS));
+    }
+
+    if (collections.length < DEPLOY_MIN_COLLECTIONS) {
+      console.warn(
+        `  -> [DEPLOY WAIT] Timed out. Only ${collections.length} collections found. ` +
+          `Proceeding optimistically — some fragment tests may fail.`
+      );
     }
 
     if (collections.length > 0) {
@@ -165,12 +203,6 @@ async function provisionSite(ctx, apiContext) {
                 `  -> [PENDING/DRAFT] Fragment "${entry.name}" (${entry.fragmentEntryKey}) has status ${entry.status}. Approving...`
               );
               try {
-                // Sanitize configuration to fix dataType values that the
-                // JSON WS update-fragment-entry endpoint rejects:
-                // - "boolean" is not a valid enum value (remove it entirely)
-                // - "number" is not a valid enum value (convert to "int")
-                // The auto-deploy importer accepts "number" but JSON WS
-                // uses the older schema that only allows "string"/"int"/"double"/"object".
                 let sanitizedConfig = entry.configuration || '';
                 if (sanitizedConfig) {
                   try {
@@ -185,7 +217,9 @@ async function provisionSite(ctx, apiContext) {
                               modifications.push('removed "boolean"');
                             } else if (field.dataType === 'number') {
                               field.dataType = 'int';
-                              modifications.push(`"number"→"int" for ${field.name}`);
+                              modifications.push(
+                                `"number"→"int" for ${field.name}`
+                              );
                             }
                           }
                         }

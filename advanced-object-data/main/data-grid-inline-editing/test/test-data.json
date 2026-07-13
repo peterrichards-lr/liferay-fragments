@@ -1,0 +1,10 @@
+{
+  "requiredObjects": ["MAP_PIN"],
+  "pageConfig": {
+    "fragmentConfig": {
+      "objectErc": "MAP_PIN",
+      "columns": "id,title,description",
+      "enableEditing": true
+    }
+  }
+}
