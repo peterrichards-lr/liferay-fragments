@@ -22,7 +22,11 @@
     >
       <ul class="navbar-nav" role="tablist">
         [#assign numTabs = configuration.numberOfTabs!4]
-        [#if numTabs?is_string][#assign numTabs = numTabs?number][/#if]
+        [#if numTabs?is_string && numTabs?has_content]
+          [#assign numTabs = numTabs?number]
+        [#elseif numTabs?is_string]
+          [#assign numTabs = 4]
+        [/#if]
         
         <li class="nav-item [#if numTabs < 1]d-none[/#if]" role="presentation">
           <button aria-controls="tabPanel1-${fragmentEntryLinkNamespace}" aria-selected="false" class="nav-link" data-fragment-namespace="${fragmentEntryLinkNamespace}" id="tab1-${fragmentEntryLinkNamespace}" role="tab">

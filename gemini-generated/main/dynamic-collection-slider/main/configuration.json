@@ -212,9 +212,6 @@
           "name": "autoplayInterval",
           "type": "text",
           "typeOptions": {
-            "validation": {
-              "type": "number"
-            },
             "dependency": {
               "autoplay": {
                 "type": "equal",

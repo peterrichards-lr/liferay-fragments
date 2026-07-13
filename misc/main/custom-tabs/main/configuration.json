@@ -3,18 +3,12 @@
     {
       "fields": [
         {
-          "dataType": "number",
+          "dataType": "int",
           "defaultValue": "4",
           "label": "lfr.misc.number-of-tabs",
           "description": "lfr.misc.number-of-tabs",
           "name": "numberOfTabs",
-          "type": "text",
-          "typeOptions": {
-            "validation": {
-              "min": 1,
-              "type": "number"
-            }
-          }
+          "type": "text"
         },
         {
           "defaultValue": true,

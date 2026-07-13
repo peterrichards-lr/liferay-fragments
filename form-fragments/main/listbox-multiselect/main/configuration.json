@@ -8,13 +8,7 @@
           "label": "lfr.form-fragments.number-of-options",
           "description": "lfr.form-fragments.number-of-options",
           "name": "numberOfOptions",
-          "type": "text",
-          "typeOptions": {
-            "validation": {
-              "min": 1,
-              "type": "number"
-            }
-          }
+          "type": "text"
         },
         {
           "defaultValue": "primary",

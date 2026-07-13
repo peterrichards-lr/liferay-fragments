@@ -14,8 +14,16 @@
     decimalDigitCount = (configuration.decimalDigitCount)!3
     showDateSelector = ((configuration.showDateSelector)!false)?is_string?then(((configuration.showDateSelector)!"") == "true", (configuration.showDateSelector)!false)
 /]
-[#if integerDigitCount?is_string][#assign integerDigitCount = integerDigitCount?number][/#if]
-[#if decimalDigitCount?is_string][#assign decimalDigitCount = decimalDigitCount?number][/#if]
+[#if integerDigitCount?is_string && integerDigitCount?has_content]
+  [#assign integerDigitCount = integerDigitCount?number]
+[#elseif integerDigitCount?is_string]
+  [#assign integerDigitCount = 5]
+[/#if]
+[#if decimalDigitCount?is_string && decimalDigitCount?has_content]
+  [#assign decimalDigitCount = decimalDigitCount?number]
+[#elseif decimalDigitCount?is_string]
+  [#assign decimalDigitCount = 3]
+[/#if]
 [#assign totalDigits = integerDigitCount + decimalDigitCount /]
 
 <div class="meter-reading meter-reading-content">

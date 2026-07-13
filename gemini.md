@@ -293,21 +293,23 @@ after itself.
 - [x] Implement support for LDM plain-text switches (`--no-color` and `--no-unicode`) and native log-filtering (`--grep` / `--grep-i`).
 - [x] **Issue #58**: Fix Non-Atomic Deployments in deploy-fragment-zips.sh.
 - [x] **Issue #55**: Fix Race Condition in Background Process Initialization.
-- **NEXT ACTION:** Decouple monolithic global-setup.js into modular seeders (Issue #56).
+- [x] **Issue #121**: Stabilize FormContainer Rendering & E2E Permissions (Fixed pagination in object definitions retrieval and added MAP_PIN to Guest permissions).
+- **NEXT ACTION:** Run E2E test suite locally and verify that Form fragments render successfully without "not found" errors, and then proceed with Release v6.5.0!
 
 ### Backward-Compatibility Rules (Three-Target ZIP Build)
 
 - **Requirement**: The build script `create-fragment-zips.sh` must generate
   three versions of each collection ZIP to accommodate different target Liferay
-  versions:
-  1. **Latest** (`-collection-min.zip`): Uses `"dataType": "number"` and boolean
+  versions. Source `configuration.json` files use `"dataType": "int"` for numeric
+  fields (matching the Liferay 2026.Q1+ JSON WS validation schema):
+  1. **Latest** (`-collection-min.zip`): Uses `"dataType": "int"` and boolean
      literals for checkbox default values, while default values for numeric fields
      (using UI type `text` or `length`) remain string representations (required for Liferay 2026.Q1+).
-  2. **pre2026q1** (`-pre2026q1-min.zip`): Uses `"dataType": "number"` but converts
-     checkbox boolean default values back to string representations (required for intermediate
-     Liferay versions before 2026.Q1).
-  3. **pre2025q3** (`-pre2025q3-min.zip`): Uses `"dataType": "int"`
-     (converting from `"number"`) and string representations for all default values
+  2. **pre2026q1** (`-pre2026q1-min.zip`): Converts `"dataType": "int"` to
+     `"dataType": "number"` and checkbox boolean default values back to string
+     representations (required for intermediate Liferay versions before 2026.Q1).
+  3. **pre2025q3** (`-pre2025q3-min.zip`): Uses `"dataType": "int"` (no conversion
+     needed from source) and string representations for all default values
      (required for legacy Liferay versions before 2025.Q3).
 
 ## E2E Stability & Quality Gate Enhancements (June 2026)
@@ -333,8 +335,11 @@ after itself.
 ### 4. Configuration Hardening & i18n Consolidation (June 2026)
 
 - **i18n Consolidation**: Removed 16 per-fragment `Language_en_US.properties` files in `form-fragments/fragments/` and merged all keys into a single `form-fragments/Language_en_US.properties` root file. This matches Liferay's collection-level localization pattern and eliminates duplication.
-- **dataType Boolean Fixes**: Added missing `"dataType": "boolean"` to all checkbox fields across `color-swatches`, `file-drop-zone`, `listbox-multiselect`, `password-strength`, `signature-pad`, `custom-tabs`, `otp-input`, and `meter-reading`. Without this, Liferay 2026.Q1 interprets boolean defaults as strings.
+- **dataType Boolean Revert**: Removed `"dataType": "boolean"` from all checkbox fields across `color-swatches`, `file-drop-zone`, `listbox-multiselect`, `password-strength`, `signature-pad`, `custom-tabs`, `otp-input`, and `meter-reading`. Liferay 2026.Q1 strictly rejects `dataType: boolean` for checkboxes and throws a validation error during deployment.
 - **dataType Number Fixes**: Corrected `"dataType": "string"` → `"dataType": "number"` for numeric text fields in `listbox-multiselect`, `password-strength`, `signature-pad`, and `meter-reading` (integer/decimal digit counts).
+- **Validation Type Bug**: Stripped `"type": "number"` from `typeOptions.validation` across 7 fragments (`custom-tabs`, `listbox-multiselect`, `purchased-products`, etc.). Liferay 2026.Q1 strictly expects numeric configurations to be passed as JSON strings (due to `dataType: number`), but `validation.type: number` erroneously validates the payload as a JSON number, causing an unavoidable `ClassCastException` (500 Error) during page creation.
+- **Payload Override Bug**: Removed `test-fragment-config.json` and `pageConfig` overrides from `custom-tabs`. Liferay 2026.Q1's Headless API crashes with a 500 Error if you attempt to override ANY numeric configuration field in the API payload, regardless of whether you pass an integer (`3`) or a string (`"3"`). To avoid this, E2E tests must rely on the fragment's `defaultValue` and leave `fragmentConfig` empty for these fields.
+- **FreeMarker Empty String NumberFormatException Bug**: Fixed `custom-tabs`, `interactive-wizard`, `overlay-background`, `segmented-numeric`, `star-rating`, and `meter-reading` to guard all `?number` FreeMarker conversions with `?has_content`. In Liferay 2026.Q1, the Headless API sometimes initializes numeric fields as empty strings (`""`) rather than their explicit `defaultValue` if the configuration payload is empty. Without the guard, `""?number` throws a `NumberFormatException`, resulting in a fatal 500 Internal Server Error during E2E page seeding.
 - **meter-reading FTL Fix**: Updated `index.ftl` to use `?number` conversion for `integerDigitCount`/`decimalDigitCount` and calculate `totalDigits` dynamically from the two values rather than hardcoding `6`.
 - **otp-input FTL Guard**: Hardened the `?number` conversion to guard against empty strings, preventing FreeMarker rendering errors.
 - **otp-input Fragment Name**: Renamed from `OTP / Verification Code` to `OTP - Verification Code` to avoid path separator issues.

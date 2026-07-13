@@ -45,14 +45,7 @@
           "label": "lfr.hero-assets.focal-x",
           "description": "lfr.hero-assets.focal-x-description",
           "name": "focalX",
-          "type": "text",
-          "typeOptions": {
-            "validation": {
-              "max": 100,
-              "min": 0,
-              "type": "number"
-            }
-          }
+          "type": "text"
         },
         {
           "dataType": "string",
@@ -60,14 +53,7 @@
           "label": "lfr.hero-assets.focal-y",
           "description": "lfr.hero-assets.focal-y-description",
           "name": "focalY",
-          "type": "text",
-          "typeOptions": {
-            "validation": {
-              "max": 100,
-              "min": 0,
-              "type": "number"
-            }
-          }
+          "type": "text"
         }
       ],
       "label": "lfr.hero-assets.image"
@@ -88,14 +74,7 @@
           "label": "lfr.hero-assets.alpha",
           "description": "lfr.hero-assets.alpha-description",
           "name": "alpha",
-          "type": "text",
-          "typeOptions": {
-            "validation": {
-              "max": 100,
-              "min": 0,
-              "type": "number"
-            }
-          }
+          "type": "text"
         }
       ],
       "label": "lfr.hero-assets.overlay"

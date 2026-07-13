@@ -3,7 +3,7 @@
     {
       "fields": [
         {
-          "dataType": "string",
+          "dataType": "int",
           "defaultValue": "",
           "label": "lfr.form-fragments.placeholder",
           "description": "lfr.form-fragments.placeholder-description",
@@ -12,7 +12,7 @@
           "type": "text"
         },
         {
-          "dataType": "string",
+          "dataType": "int",
           "defaultValue": "8",
           "label": "lfr.form-fragments.min-length",
           "description": "lfr.form-fragments.min-length-description",

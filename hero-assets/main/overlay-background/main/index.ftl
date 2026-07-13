@@ -3,7 +3,7 @@
 ({"0":0,"1":1,"2":2,"3":3,"4":4,"5":5,"6":6,"7":7,"8":8,"9":9,"a":10,"b":11,"c":12,"d":13,"e":14,"f":15})[c]!0]
 [/#function] [#function _hexPairToInt pair] [#return
 _hexDigit(pair?substring(0,1)) * 16 + _hexDigit(pair?substring(1,2))]
-[/#function] [#function hexToRgba hex alpha=1] [#assign a = alpha] [#if a?is_string][#assign a = a?number][/#if] [#if a
+[/#function] [#function hexToRgba hex alpha=1] [#assign a = alpha] [#if a?is_string && a?has_content][#assign a = a?number][#elseif a?is_string][#assign a = 1][/#if] [#if a
 < 0][#assign a = 0][/#if] [#if a > 1][#assign a = 1][/#if] [#assign h =
 hex?replace("^#", "", "r")?lower_case] [#if h?length == 3] [#assign h =
 h?substring(0,1) + h?substring(0,1) + h?substring(1,2) + h?substring(1,2) +
@@ -12,12 +12,12 @@ h?substring(2,3) + h?substring(2,3)] [/#if] [#if h?length != 6] [#return
 [#assign g = _hexPairToInt(h?substring(2,4))] [#assign b =
 _hexPairToInt(h?substring(4,6))] [#return "rgba(" + r + "," + g + "," + b + ","
 + a + ")"] [/#function] [#function overlayWithAlpha color alpha=1] [#assign a =
-alpha] [#if a?is_string][#assign a = a?number][/#if] [#if a < 0][#assign a = 0][/#if] [#if a > 1][#assign a = 1][/#if]
+alpha] [#if a?is_string && a?has_content][#assign a = a?number][#elseif a?is_string][#assign a = 1][/#if] [#if a < 0][#assign a = 0][/#if] [#if a > 1][#assign a = 1][/#if]
 [#if color?starts_with("var(")] [#if color?matches("^var\\([^)]*rgb[^)]*\\)$")]
 [#return "rgba(" + color + "," + a + ")"] [#else] [#assign pct = (a *
 100)?string["0.##"] + "%"] [#return "color-mix(in srgb, " + color + " " + pct +
 ", transparent)"] [/#if] [#else] [#return hexToRgba(color, a)] [/#if]
-[/#function] [#assign alphaVal = configuration.alpha!40] [#if alphaVal?is_string][#assign alphaVal = alphaVal?number][/#if] [#assign alpha = alphaVal / 100] [#assign
+[/#function] [#assign alphaVal = configuration.alpha!40] [#if alphaVal?is_string && alphaVal?has_content][#assign alphaVal = alphaVal?number][#elseif alphaVal?is_string][#assign alphaVal = 40][/#if] [#assign alpha = alphaVal / 100] [#assign
 overlayColor = overlayWithAlpha(configuration.overlayColor, alpha)]
 [#assign placeholderImage = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII="]
 <div

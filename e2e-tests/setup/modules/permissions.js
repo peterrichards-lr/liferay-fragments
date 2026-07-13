@@ -101,6 +101,7 @@ async function configurePermissions(ctx, page) {
       'AUDIT_ENTRY',
       'LOAN_APPLICATION',
       'OTP_VERIFICATION',
+      'MAP_PIN',
     ]);
 
     const testDataFiles = globSync('**/test/test-data.json', {

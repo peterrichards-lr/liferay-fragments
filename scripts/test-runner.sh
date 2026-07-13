@@ -366,7 +366,7 @@ if [ "$EXISTING_PROJECT" = true ]; then
     echo "  -> Using Existing Project: $PROJECT_NAME"
     # Resolve URL and Path for existing project
     # Use grep to extract the actual HTTP URL, ignoring any ANSI color codes
-    BASE_URL=$(ldm list | grep "[│|] $PROJECT_NAME [│|]" | grep -Eo "https?://[a-zA-Z0-9.:-]+" | head -n 1)
+    BASE_URL=$(ldm list | sed 's/\x1b\[[0-9;]*m//g' | grep "[│|] $PROJECT_NAME [│|]" | grep -Eo "https?://[a-zA-Z0-9.:-]+" | head -n 1)
     if [ -z "$BASE_URL" ]; then
         echo "Error: Could not find URL for existing project '$PROJECT_NAME'. Is it running?"
         exit 1
@@ -467,12 +467,12 @@ echo "[4/5] Provisioning Liferay environment via LDM..."
 
 if [ "$EXISTING_PROJECT" = true ]; then
     echo "  -> Checking status of existing project $PROJECT_NAME..."
-    STATUS=$(ldm list | grep "[│|] $PROJECT_NAME [│|]" | awk -F'[|?│]' '{print $4}' | sed 's/\x1b\[[0-9;]*m//g' | xargs)
+    STATUS=$(ldm list | sed 's/\x1b\[[0-9;]*m//g' | grep "[│|] $PROJECT_NAME [│|]" | awk -F'[|?│]' '{print $4}' | xargs)
     if [ "$STATUS" != "Running" ]; then
         echo "  -> Project '$PROJECT_NAME' is $STATUS. Starting it..."
         log_command "ldm up \"$PROJECT_NAME\" -y"
         ldm up "$PROJECT_NAME" -y > /dev/null 2>&1
-        BASE_URL=$(ldm list | grep "[│|] $PROJECT_NAME [│|]" | grep -Eo "https?://[a-zA-Z0-9.:-]+" | head -n 1)
+        BASE_URL=$(ldm list | sed 's/\x1b\[[0-9;]*m//g' | grep "[│|] $PROJECT_NAME [│|]" | grep -Eo "https?://[a-zA-Z0-9.:-]+" | head -n 1)
         if [ -z "$BASE_URL" ]; then
             echo "Error: Could not find URL for project '$PROJECT_NAME' after starting."
             exit 1
@@ -490,8 +490,8 @@ else
         FEATURE_ARGS="--feature ${FEATURES[*]}"
     fi
     # Increase CodeCache and Memory to prevent JIT stalls. 
-    log_command "ldm run \"$PROJECT_NAME\" \"$TAG_FLAG\" \"$LIFERAY_TAG\" --port \"$PORT\" --non-interactive --no-captcha --fast-login --sidecar --db postgresql $LDM_VERBOSE $FEATURE_ARGS --env \"LIFERAY_JVM_OPTS=-Xms2g -Xmx4g -XX:ReservedCodeCacheSize=512m\""
-    if ! ldm run "$PROJECT_NAME" "$TAG_FLAG" "$LIFERAY_TAG" --port "$PORT" --non-interactive --no-captcha --fast-login --sidecar --db postgresql $LDM_VERBOSE $FEATURE_ARGS --env "LIFERAY_JVM_OPTS=-Xms2g -Xmx4g -XX:ReservedCodeCacheSize=512m" > ldm_startup.log 2>&1; then
+    log_command "ldm run \"$PROJECT_NAME\" \"$TAG_FLAG\" \"$LIFERAY_TAG\" --port \"$PORT\" --non-interactive --no-captcha --fast-login --sidecar --db postgresql $LDM_VERBOSE $FEATURE_ARGS --jvm-args \"-Xms2g -Xmx4g -XX:ReservedCodeCacheSize=512m\""
+    if ! ldm run "$PROJECT_NAME" "$TAG_FLAG" "$LIFERAY_TAG" --port "$PORT" --non-interactive --no-captcha --fast-login --sidecar --db postgresql $LDM_VERBOSE $FEATURE_ARGS --jvm-args "-Xms2g -Xmx4g -XX:ReservedCodeCacheSize=512m" > ldm_startup.log 2>&1; then
         echo "Error: LDM failed to start the environment."
         echo "Hint: Check ldm_startup.log or run 'ldm logs $PROJECT_NAME' for more details."
         cat <<EOF >> "$RESULTS_FILE"

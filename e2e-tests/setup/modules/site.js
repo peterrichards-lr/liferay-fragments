@@ -165,6 +165,43 @@ async function provisionSite(ctx, apiContext) {
                 `  -> [PENDING/DRAFT] Fragment "${entry.name}" (${entry.fragmentEntryKey}) has status ${entry.status}. Approving...`
               );
               try {
+                // Sanitize configuration to fix dataType values that the
+                // JSON WS update-fragment-entry endpoint rejects:
+                // - "boolean" is not a valid enum value (remove it entirely)
+                // - "number" is not a valid enum value (convert to "int")
+                // The auto-deploy importer accepts "number" but JSON WS
+                // uses the older schema that only allows "string"/"int"/"double"/"object".
+                let sanitizedConfig = entry.configuration || '';
+                if (sanitizedConfig) {
+                  try {
+                    const configObj = JSON.parse(sanitizedConfig);
+                    let modifications = [];
+                    if (configObj.fieldSets) {
+                      for (const fieldSet of configObj.fieldSets) {
+                        if (fieldSet.fields) {
+                          for (const field of fieldSet.fields) {
+                            if (field.dataType === 'boolean') {
+                              delete field.dataType;
+                              modifications.push('removed "boolean"');
+                            } else if (field.dataType === 'number') {
+                              field.dataType = 'int';
+                              modifications.push(`"number"→"int" for ${field.name}`);
+                            }
+                          }
+                        }
+                      }
+                    }
+                    if (modifications.length > 0) {
+                      sanitizedConfig = JSON.stringify(configObj);
+                      console.log(
+                        `     [SANITIZED] ${entry.name}: ${modifications.join(', ')}`
+                      );
+                    }
+                  } catch (parseErr) {
+                    // If configuration is not valid JSON, pass it through as-is
+                  }
+                }
+
                 const approveResp = await apiContext.post(
                   `/api/jsonws/fragment.fragmententry/update-fragment-entry?p_auth=${ctx.pAuthToken}`,
                   {
@@ -177,7 +214,7 @@ async function provisionSite(ctx, apiContext) {
                       js: entry.js || '',
                       cacheable:
                         entry.cacheable !== undefined ? entry.cacheable : true,
-                      configuration: entry.configuration || '',
+                      configuration: sanitizedConfig,
                       icon: entry.icon || '',
                       previewFileEntryId: entry.previewFileEntryId || 0,
                       readOnly:
@@ -361,16 +398,28 @@ async function provisionSite(ctx, apiContext) {
   // 7. Resolve object definitions for scope mapping
   ctx.objectDefinitions = [];
   try {
-    const objDefsResp = await apiContext.get(
-      `/o/object-admin/v1.0/object-definitions?pageSize=100`
-    );
-    if (objDefsResp.ok()) {
-      const objDefsJson = await objDefsResp.json();
-      ctx.objectDefinitions = objDefsJson.items || [];
-      console.log(
-        `  -> Retrieved ${ctx.objectDefinitions.length} object definitions for scope mapping.`
+    let currentPage = 1;
+    let hasMore = true;
+    while (hasMore) {
+      const objDefsResp = await apiContext.get(
+        `/o/object-admin/v1.0/object-definitions?page=${currentPage}&pageSize=100`
       );
+      if (objDefsResp.ok()) {
+        const objDefsJson = await objDefsResp.json();
+        const items = objDefsJson.items || [];
+        ctx.objectDefinitions.push(...items);
+        if (items.length < 100) {
+          hasMore = false;
+        } else {
+          currentPage++;
+        }
+      } else {
+        hasMore = false;
+      }
     }
+    console.log(
+      `  -> Retrieved ${ctx.objectDefinitions.length} object definitions for scope mapping.`
+    );
   } catch (e) {
     console.warn('  -> [WARN] Failed to fetch object definitions:', e.message);
   }
