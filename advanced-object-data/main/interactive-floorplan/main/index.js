@@ -57,8 +57,8 @@ function initInteractiveFloorplan() {
   function renderPin(pin) {
     const pinEl = document.createElement('div');
     pinEl.className = 'map-pin';
-    pinEl.style.left = `${pin.x_coord}%`;
-    pinEl.style.top = `${pin.y_coord}%`;
+    pinEl.style.left = `${pin.xCoord}%`;
+    pinEl.style.top = `${pin.yCoord}%`;
 
     pinEl.innerHTML = `
 			<span class="map-pin-icon"></span>
@@ -99,8 +99,8 @@ function initInteractiveFloorplan() {
         const pinData = {
           title: formData.get('title'),
           description: formData.get('description'),
-          x_coord: parseFloat(formData.get('x_coord')),
-          y_coord: parseFloat(formData.get('y_coord')),
+          xCoord: parseFloat(formData.get('xCoord')),
+          yCoord: parseFloat(formData.get('yCoord')),
         };
 
         try {

@@ -25,6 +25,7 @@ generated-test-pages.json
 *.png
 !/docs/images/live/
 !/docs/images/live/**/*.png
+!/e2e-tests/assets/**/*.png
 
 # License files
 *.xml

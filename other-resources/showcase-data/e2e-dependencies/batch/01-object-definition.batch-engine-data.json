@@ -583,7 +583,7 @@
           "label": {
             "en_US": "X Coordinate"
           },
-          "name": "x_coord",
+          "name": "xCoord",
           "required": true,
           "type": "Double"
         },
@@ -593,7 +593,7 @@
           "label": {
             "en_US": "Y Coordinate"
           },
-          "name": "y_coord",
+          "name": "yCoord",
           "required": true,
           "type": "Double"
         }
