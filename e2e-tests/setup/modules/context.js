@@ -21,6 +21,7 @@ class SetupContext {
     this.realisedVersion = '';
     this.useStringForNumbers = true;
     this.globalSiteKey = 'L_GLOBAL';
+    this.companyGroupId = 0;
 
     this.dbFragmentKeyToERC = {};
     this.fragmentKeyToDir = {};
@@ -201,9 +202,7 @@ class SetupContext {
     const resp = await apiContext.post(url, { form: formPayload });
 
     if (!resp.ok()) {
-      throw new Error(
-        `[JSON-WS] HTTP ${resp.status()} calling ${endpoint}`
-      );
+      throw new Error(`[JSON-WS] HTTP ${resp.status()} calling ${endpoint}`);
     }
 
     let json;
@@ -225,7 +224,6 @@ class SetupContext {
 
     return json;
   }
-
 }
 
 module.exports = SetupContext;

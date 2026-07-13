@@ -94,33 +94,20 @@ async function provisionSite(ctx, apiContext) {
   );
   let registeredKeys = [];
   try {
-    // Issue #138: Resolve the correct groupId for fragment verification.
-    // Fragment ZIPs are auto-deployed with companyWebId='liferay.com' (set in
-    // create-fragment-zips.sh), which places them under the COMPANY GROUP —
-    // not the headless API's 'Global' site, which has a different groupId.
-    // Using the wrong groupId causes get-fragment-collections to return 0
-    // results even though fragments are deployed, breaking the approval loop.
-    let querySiteId = ctx.siteId; // fallback to test site
+    // Issue #138 / #140: Use the company group ID extracted from Liferay.ThemeDisplay
+    // during login. This is the definitive groupId where Global auto-deployed fragment
+    // ZIPs land — the headless API's 'Global' site ID is different, and the company
+    // JSON WS DTO does not expose groupId. ThemeDisplay.getCompanyGroupId() is the
+    // canonical source set by Liferay itself.
+    let querySiteId = ctx.companyGroupId || ctx.siteId;
     ctx.globalSiteKey = 'L_GLOBAL';
-    try {
-      const companyResp = await apiContext.post(
-        `/api/jsonws/company/get-company-by-web-id?p_auth=${ctx.pAuthToken}`,
-        { form: { webId: 'liferay.com' } }
+    if (ctx.companyGroupId) {
+      console.log(
+        `  -> Using company group ID from ThemeDisplay: ${querySiteId}`
       );
-      if (companyResp.ok()) {
-        const company = await companyResp.json();
-        if (company && company.groupId) {
-          querySiteId = company.groupId;
-          ctx.globalSiteKey = 'L_GLOBAL';
-          console.log(
-            `  -> Resolved company group ID: ${querySiteId} (webId: liferay.com)`
-          );
-        }
-      }
-    } catch (companyErr) {
+    } else {
       console.warn(
-        `  -> Could not resolve company group ID, falling back to test site ID (${ctx.siteId}):`,
-        companyErr.message
+        `  -> Company group ID not available, falling back to test site ID (${ctx.siteId})`
       );
     }
 
