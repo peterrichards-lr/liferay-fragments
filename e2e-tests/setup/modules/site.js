@@ -94,16 +94,35 @@ async function provisionSite(ctx, apiContext) {
   );
   let registeredKeys = [];
   try {
-    const sitesResp = await apiContext.get('/o/headless-admin-site/v1.0/sites');
-    if (!sitesResp.ok()) {
-      throw new Error(`Failed to fetch sites: ${sitesResp.status()}`);
+    // Issue #138: Resolve the correct groupId for fragment verification.
+    // Fragment ZIPs are auto-deployed with companyWebId='liferay.com' (set in
+    // create-fragment-zips.sh), which places them under the COMPANY GROUP —
+    // not the headless API's 'Global' site, which has a different groupId.
+    // Using the wrong groupId causes get-fragment-collections to return 0
+    // results even though fragments are deployed, breaking the approval loop.
+    let querySiteId = ctx.siteId; // fallback to test site
+    ctx.globalSiteKey = 'L_GLOBAL';
+    try {
+      const companyResp = await apiContext.post(
+        `/api/jsonws/company/get-company-by-web-id?p_auth=${ctx.pAuthToken}`,
+        { form: { webId: 'liferay.com' } }
+      );
+      if (companyResp.ok()) {
+        const company = await companyResp.json();
+        if (company && company.groupId) {
+          querySiteId = company.groupId;
+          ctx.globalSiteKey = 'L_GLOBAL';
+          console.log(
+            `  -> Resolved company group ID: ${querySiteId} (webId: liferay.com)`
+          );
+        }
+      }
+    } catch (companyErr) {
+      console.warn(
+        `  -> Could not resolve company group ID, falling back to test site ID (${ctx.siteId}):`,
+        companyErr.message
+      );
     }
-    const siteData = await sitesResp.json();
-    const globalSite = siteData.items.find(
-      (s) => s.name === 'Global' || s.externalReferenceCode === 'GLOBAL'
-    ) || { id: ctx.siteId };
-    let querySiteId = globalSite.id;
-    ctx.globalSiteKey = globalSite.key || 'L_GLOBAL';
 
     // Issue #134: Active deployment wait.
     // Liferay's auto-deploy scanner can take 3–5 minutes in CI to process all
@@ -131,13 +150,9 @@ async function provisionSite(ctx, apiContext) {
         collections = await collectionsResp.json();
       }
 
-      // Fallback: try Guest site if Global returned nothing
+      // If the company group returned nothing, also try the test site as a secondary check
       if (collections.length === 0 && querySiteId !== ctx.siteId) {
-        console.log(
-          `  -> No collections found on Global site (ID: ${querySiteId}). Trying Guest site (ID: ${ctx.siteId})...`
-        );
-        querySiteId = ctx.siteId;
-        collectionsResp = await apiContext.post(
+        const fallbackResp = await apiContext.post(
           `/api/jsonws/fragment.fragmentcollection/get-fragment-collections?p_auth=${ctx.pAuthToken}`,
           {
             form: {
@@ -147,8 +162,14 @@ async function provisionSite(ctx, apiContext) {
             },
           }
         );
-        if (collectionsResp.ok()) {
-          collections = await collectionsResp.json();
+        if (fallbackResp.ok()) {
+          const fallbackCollections = await fallbackResp.json();
+          if (fallbackCollections.length > 0) {
+            collections = fallbackCollections;
+            console.log(
+              `  -> [DEPLOY WAIT] Found ${collections.length} collections on test site (ID: ${ctx.siteId}) instead of company group.`
+            );
+          }
         }
       }
 
