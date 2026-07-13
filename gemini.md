@@ -294,7 +294,8 @@ after itself.
 - [x] **Issue #58**: Fix Non-Atomic Deployments in deploy-fragment-zips.sh.
 - [x] **Issue #55**: Fix Race Condition in Background Process Initialization.
 - [x] **Issue #121**: Stabilize FormContainer Rendering & E2E Permissions (Fixed pagination in object definitions retrieval and added MAP_PIN to Guest permissions).
-- **NEXT ACTION:** Run E2E test suite locally and verify that Form fragments render successfully without "not found" errors, and then proceed with Release v6.5.0!
+- [x] **PR #125**: Fix E2E GitHub Action failures — trap ERR bug, missing mock assets, MAP_PIN field naming (xCoord/yCoord).
+- [x] **Epic #126 / PR #135**: E2E Rock-Solid Stabilisation — resolved deployment race condition (Issue #134), added Playwright timeout caps (Issue #133), added test-data.json quality improvements (Issues #127–130). Release v6.5.1 follows.
 
 ### Backward-Compatibility Rules (Three-Target ZIP Build)
 
@@ -364,4 +365,4 @@ after itself.
 
 ## <!-- markdownlint-disable MD049 -->
 
-_Last Updated: 2026-07-09_ | _Last Reviewed: 2026-07-09_
+_Last Updated: 2026-07-13_ | _Last Reviewed: 2026-07-13_
