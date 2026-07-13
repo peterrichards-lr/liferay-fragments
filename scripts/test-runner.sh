@@ -737,16 +737,16 @@ echo -n "$BASE_URL" > e2e-tests/resolved_base_url.txt
 set +e
 cd e2e-tests
 
+TEST_EXIT_CODE=0
 if [ -n "$FILTER_PATTERN" ]; then
     export TEST_FILTER="$FILTER_PATTERN"
     GREP_PATTERN="${FILTER_PATTERN//-/[- ]}"
     log_command "npx playwright test --grep \"$GREP_PATTERN\""
-    npx playwright test --grep "$GREP_PATTERN" > playwright_output.log 2>&1
+    npx playwright test --grep "$GREP_PATTERN" > playwright_output.log 2>&1 || TEST_EXIT_CODE=$?
 else
     log_command "npx playwright test"
-    npx playwright test > playwright_output.log 2>&1
+    npx playwright test > playwright_output.log 2>&1 || TEST_EXIT_CODE=$?
 fi
-TEST_EXIT_CODE=$?
 cd ..
 set -e
 

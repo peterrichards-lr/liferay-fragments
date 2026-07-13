@@ -20,8 +20,8 @@
 					<label for="pinDescription">Description</label>
 					<textarea id="pinDescription" name="description" required class="form-control"></textarea>
 				</div>
-				<input type="hidden" id="pinX" name="x_coord" />
-				<input type="hidden" id="pinY" name="y_coord" />
+				<input type="hidden" id="pinX" name="xCoord" />
+				<input type="hidden" id="pinY" name="yCoord" />
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-secondary close-modal-btn">Cancel</button>
