@@ -96,8 +96,23 @@ async function login(ctx) {
   ctx.pAuthToken = await page.evaluate(() =>
     window.Liferay ? Liferay.authToken : ''
   );
+
+  // Extract the company group ID directly from Liferay's ThemeDisplay.
+  // This is the groupId where Global auto-deployed fragment ZIPs land —
+  // it differs from the headless API's "Global" site ID and is not exposed
+  // by the company JSON WS DTO. This is the correct groupId for the
+  // fragment collection approval loop.
+  ctx.companyGroupId = await page.evaluate(() => {
+    if (window.Liferay && Liferay.ThemeDisplay) {
+      return Liferay.ThemeDisplay.getCompanyGroupId
+        ? Liferay.ThemeDisplay.getCompanyGroupId()
+        : 0;
+    }
+    return 0;
+  });
+
   console.log(
-    `Successfully logged in and saved state. (CSRF Token: ${ctx.pAuthToken ? 'Found' : 'Missing'})`
+    `Successfully logged in and saved state. (CSRF Token: ${ctx.pAuthToken ? 'Found' : 'Missing'}, Company Group ID: ${ctx.companyGroupId || 'Unknown'})`
   );
 
   return { browser, page };
