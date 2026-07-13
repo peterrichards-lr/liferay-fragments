@@ -265,6 +265,21 @@ Example:
 & "C:\Program Files\Git\bin\bash.exe" ./scripts/test-runner.sh
 ```
 
+## Test Data & Configuration Overrides
+
+The Playwright test suite dynamically generates Liferay Content Pages to capture visual snapshots of each fragment. By default, it uses the fragment's default configuration values defined in `configuration.json` and a generic wrapper layout.
+
+You can customize the generated page layout or the fragment configuration used during E2E testing by providing specific manifest files alongside the fragment (in a `test/` subdirectory):
+
+### 1. `test-data.json`
+This file defines the semantic layout structure and inner child elements for the fragment. This is particularly useful for container fragments (like `dashboard-container` or `interactive-wizard`) which require nested components to render properly.
+- **Location:** `<fragment-name>/test/test-data.json`
+
+### 2. `test-fragment-config.json`
+If you need to override the fragment's default configuration values explicitly for E2E testing, you can provide this file. 
+- **Location:** `<fragment-name>/test/test-fragment-config.json`
+- **Strict Typing Warning:** Liferay 2026.Q1+ strictly enforces typing in Headless API payloads. Ensure that the JSON values provided in this override file exactly match the primitive type defined by their `dataType` in `configuration.json`. For example, if a configuration field has `"dataType": "number"`, you must provide an integer (e.g., `3`), not a stringified number (`"3"`), to avoid `500 Internal Server Error` failures during the automated seeding phase.
+
 ## Lessons Learned & Guest Rendering Standards
 
 During the implementation of the visual fragment testing suite, several critical

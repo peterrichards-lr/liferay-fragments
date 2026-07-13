@@ -6,25 +6,25 @@
     {
       "title": "Implement Video Hotspots Fragment",
       "body": "Create a new fragment in the `interactive-media` collection that overlays clickable hotspots onto a video element. Configuration should allow defining timestamped frames and positional data.",
-      "completed": false,
+      "completed": true,
       "labels": ["enhancement"]
     },
     {
       "title": "Implement Scratch-Off Promo Card Fragment",
       "body": "Create a new fragment in the `interactive-media` collection featuring an HTML5 canvas overlay that users can 'scratch off' via mouse or touch to reveal underlying promo content.",
-      "completed": false,
+      "completed": true,
       "labels": ["enhancement"]
     },
     {
       "title": "Implement Data Grid with Inline Editing",
       "body": "Create a new fragment in the `advanced-object-data` collection using a lightweight grid library (e.g., Tabulator or Grid.js). The grid should connect to Liferay Headless APIs for object retrieval and allow inline cell editing that patches the object via API.",
-      "completed": false,
+      "completed": true,
       "labels": ["enhancement"]
     },
     {
       "title": "Implement Interactive Floorplan / Map Annotator",
       "body": "Create a new fragment in the `advanced-object-data` collection. Users can upload a floorplan/map image and see static pins from a Liferay Object, and optionally (if configured) click to create new pins that save coordinates via the Headless API.",
-      "completed": false,
+      "completed": true,
       "labels": ["enhancement"]
     }
   ]

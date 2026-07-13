@@ -23,11 +23,12 @@ npm run create-fragment "[Collection Name]" "[Fragment Name]"
 
 This runs `scripts/create-fragment.js`, which does the following:
 
-- Scaffolds a directory at `<Collection Name>/fragments/<safe-fragment-name>/`.
+- If the collection directory is new, creates `collection.json` at `<Collection Name>/main/collection.json` with a display name and description. **This file is required** — the build script (`create-fragment-zips.sh`) discovers collections by looking for this file, and without it the collection is silently excluded from all ZIP builds.
+- Scaffolds a directory at `<Collection Name>/main/<safe-fragment-name>/`.
 - Creates `fragment.json` with explicit paths.
 - Creates `fragment-build.json` linking `commons.js` by default.
 - Creates boilerplate configuration (`configuration.json`), HTML (`index.html`), JS (`index.js`), CSS (`index.css`), and metadata (`test/metadata.json`).
-- Automatically inserts default labels and descriptions into `<Collection Name>/Language_en_US.properties`.
+- Automatically inserts default labels and descriptions into `<Collection Name>/main/Language_en_US.properties`.
 
 ### 1.1 Configuration Schema Data Types
 

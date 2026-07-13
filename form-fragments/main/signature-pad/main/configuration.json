@@ -10,7 +10,7 @@
           "defaultValue": "#000000"
         },
         {
-          "dataType": "string",
+          "dataType": "int",
           "defaultValue": "2",
           "label": "lfr.form-fragments.pen-width",
           "description": "lfr.form-fragments.pen-width-description",
@@ -25,7 +25,7 @@
           "type": "length"
         },
         {
-          "dataType": "string",
+          "dataType": "int",
           "defaultValue": "Clear Signature",
           "label": "lfr.form-fragments.clear-button-text",
           "description": "lfr.form-fragments.clear-button-text-description",

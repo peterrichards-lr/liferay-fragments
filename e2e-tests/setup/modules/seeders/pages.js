@@ -1004,6 +1004,7 @@ async function seed(ctx, apiContext) {
                         {
                           type: 'Fragment',
                           definition: {
+                            type: 'BasicFragment',
                             fragment: {
                               key: fragmentKey,
                               siteKey: globalSiteKey,

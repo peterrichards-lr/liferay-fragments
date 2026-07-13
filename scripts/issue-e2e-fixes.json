@@ -1,0 +1,19 @@
+{
+  "title": "[Epic] Stabilize FormContainer Rendering & E2E Permissions",
+  "body": "Fixing the empty rendering of Guest FormContainers caused by paginated object definition retrieval limitations, and resolving 404 data fetching errors for advanced-object-data Map Pins.",
+  "labels": ["bug", "e2e"],
+  "issues": [
+    {
+      "title": "Fix Paginated Retrieval of Object Definitions in Setup",
+      "body": "The `/o/object-admin/v1.0/object-definitions` endpoint defaults to 10 items or a single page of results. With 85+ custom objects, the `APPLICANT` object is skipped. This causes the FormContainer wrapper class lookup to fallback to an invalid hardcoded ID, resulting in silent API failures where 18+ Form Fragments render as completely empty pages. We must loop through all pagination pages in `site.js`.",
+      "completed": true,
+      "labels": ["bug"]
+    },
+    {
+      "title": "Grant Guest View Permissions for MAP_PIN Object",
+      "body": "The `MAP_PIN` object ERC was missing from the `dynamicERCs` list in `permissions.js`. Because `data-grid-inline-editing` does not have a `test-data.json`, its default `MAP_PIN` requirement wasn't automatically discovered, causing Data Grid tests to fail with a 404 Fetch error. We need to explicitly add `MAP_PIN` to the Guest permissions whitelist.",
+      "completed": true,
+      "labels": ["bug"]
+    }
+  ]
+}

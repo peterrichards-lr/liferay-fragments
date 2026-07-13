@@ -76,7 +76,8 @@
           class="star-label hidden"
           for="skip-star-${fragmentEntryLinkNamespace}"
         ></label>
-        [#assign limit = (configuration.numberOfStars!"5")?number]
+        [#assign rawLimit = configuration.numberOfStars!"5" /]
+        [#assign limit = (rawLimit?has_content)?then(rawLimit?number, 5) /]
         [#list 1..limit as i]
         <input
           class="star"

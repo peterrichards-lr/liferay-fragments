@@ -9,8 +9,10 @@
     [#assign labelClass=labelClass+" hide-label" /]
 [/#if]
 [#assign labels = configuration.labelList?split(";") /]
-[#assign integerDigitCount = (configuration.integerDigitCount!"5")?number /]
-[#assign decimalDigitCount = (configuration.decimalDigitCount!"3")?number /]
+[#assign rawInt = configuration.integerDigitCount!"5" /]
+[#assign integerDigitCount = (rawInt?has_content)?then(rawInt?number, 5) /]
+[#assign rawDec = configuration.decimalDigitCount!"3" /]
+[#assign decimalDigitCount = (rawDec?has_content)?then(rawDec?number, 3) /]
 [#assign totalDigits = integerDigitCount + decimalDigitCount /]
 <div class="segmented-numeric" data-localizable="${input.localizable?string('true', 'false')}"
      style="--segmented-numeric-integer-color: ${configuration.integerFGColor};--segmented-numeric-integer-background-color: ${configuration.integerBGColor};--segmented-numeric-decimal-color: ${configuration.decimalFGColor};;--segmented-numeric-decimal-background-color: ${configuration.decimalBGColor};--label-color: ${configuration.labelColor};--segmented-numeric-font-size: ${configuration.digitFontSize};;--label-font-size: ${configuration.labelFontSize};">

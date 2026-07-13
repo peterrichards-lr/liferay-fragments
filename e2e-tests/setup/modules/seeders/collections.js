@@ -74,12 +74,9 @@ async function seedCollection(
     const payload = {
       groupId: siteId,
       externalReferenceCode: erc,
-      name: title,
       title: title,
-      description: collection.description || '',
-      type: 'manual',
-      assetEntryIds: resolvedAssetEntryIds.join(','),
-      addGuestPermissions: 'true',
+      type: 0, // 0 for manual
+      'serviceContext.addGuestPermissions': 'true',
     };
 
     const createResp = await apiContext.post(
@@ -94,6 +91,25 @@ async function seedCollection(
         `       🟢 Successfully seeded collection ${title}. ID: ${newCollectionId}`
       );
       assetMap[erc] = newCollectionId;
+
+      if (resolvedAssetEntryIds.length > 0) {
+        let i = 0;
+        for (const assetEntryId of resolvedAssetEntryIds) {
+          const addSelectionResp = await apiContext.post(
+            `/api/jsonws/assetlist.assetlistentry/add-asset-entry-selection?p_auth=${pAuthToken}`,
+            {
+              form: {
+                assetListEntryId: newCollectionId,
+                assetEntryId: assetEntryId,
+                segmentsEntryId: 0,
+                'serviceContext.addGuestPermissions': 'true'
+              }
+            }
+          );
+          if (addSelectionResp.ok()) i++;
+        }
+        console.log(`       🟢 Successfully linked ${i} item(s) to collection ${title}.`);
+      }
     } else {
       console.warn(
         `       🔴 Failed to seed collection: ${createResp.status()} - ${await createResp.text()}`

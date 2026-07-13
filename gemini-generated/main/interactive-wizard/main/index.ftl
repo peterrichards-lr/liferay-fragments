@@ -7,7 +7,11 @@
   "
 >
   [#assign numSteps = configuration.numberOfSteps!3]
-  [#if numSteps?is_string][#assign numSteps = numSteps?number][/#if]
+  [#if numSteps?is_string && numSteps?has_content]
+    [#assign numSteps = numSteps?number]
+  [#elseif numSteps?is_string]
+    [#assign numSteps = 4]
+  [/#if]
   <!-- Step Indicator -->
   <nav class="wizard-nav" aria-label="Wizard Steps">
     <ul class="wizard-steps list-unstyled">

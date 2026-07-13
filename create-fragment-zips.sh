@@ -470,8 +470,10 @@ for COLLECTION_NAME in "${COLLECTIONS[@]}"; do
         find "$BUILD_TEMP/$COLLECTION_NAME" -name "Language*.properties" -delete
         find "$BUILD_TEMP/$COLLECTION_NAME" -name "client-extension.yaml" -delete
         # Transform configuration for pre2025q3 compatibility using jq
+        # Source uses "int" (matching 2026.Q1+). pre2025q3 also uses "int", so no dataType conversion needed.
+        # Only: remove dependency, inject "dataType": "boolean" on checkboxes, stringify all defaults.
         find "$BUILD_TEMP/$COLLECTION_NAME" -name "configuration.json" -print0 | while IFS= read -r -d '' config_file; do
-            jq "del(.fieldSets[].fields[].typeOptions.dependency) | (.. | objects | select(.type == \"checkbox\")) += {dataType: \"boolean\"} | (.. | objects | select(.dataType == \"number\" and .defaultValue != null)) .defaultValue |= tostring | (.. | objects | select(.dataType == \"boolean\" and .defaultValue != null)) .defaultValue |= tostring | (.. | objects | select(.dataType == \"number\")) .dataType = \"int\"" "$config_file" > "$config_file.tmp" && mv "$config_file.tmp" "$config_file"
+            jq "del(.fieldSets[].fields[].typeOptions.dependency) | (.. | objects | select(.type == \"checkbox\")) += {dataType: \"boolean\"} | (.. | objects | select(.dataType == \"int\" and .defaultValue != null)) .defaultValue |= tostring | (.. | objects | select(.dataType == \"boolean\" and .defaultValue != null)) .defaultValue |= tostring" "$config_file" > "$config_file.tmp" && mv "$config_file.tmp" "$config_file"
         done
         process_dir "$BUILD_TEMP/$COLLECTION_NAME" "$COLLECTION_NAME"
         
@@ -512,8 +514,11 @@ for COLLECTION_NAME in "${COLLECTIONS[@]}"; do
 
         find "$BUILD_TEMP_2026/$COLLECTION_NAME" -name "Language*.properties" -delete
         find "$BUILD_TEMP_2026/$COLLECTION_NAME" -name "client-extension.yaml" -delete
+        # Transform configuration for pre2026q1 compatibility using jq
+        # Source uses "int" (matching 2026.Q1+). pre2026q1 expects "number", so convert int → number.
+        # Also: inject "dataType": "boolean" on checkboxes, stringify checkbox/number defaults, transform dependency.
         find "$BUILD_TEMP_2026/$COLLECTION_NAME" -name "configuration.json" -print0 | while IFS= read -r -d '' config_file; do
-            jq "(.. | objects | select(.type == \"checkbox\")) += {dataType: \"boolean\"} | (.. | objects | select(.dataType == \"number\" and .defaultValue != null)) .defaultValue |= tostring | (.. | objects | select(.dataType == \"boolean\" and .defaultValue != null)) .defaultValue |= tostring | (.fieldSets[].fields[] | select(.typeOptions?.dependency != null)) .typeOptions.dependency |= (to_entries | .[0] | { field: .key, condition: { type: .value.type, value: .value.value } })" "$config_file" > "$config_file.tmp" && mv "$config_file.tmp" "$config_file"
+            jq "(.. | objects | select(.dataType == \"int\")) .dataType = \"number\" | (.. | objects | select(.type == \"checkbox\")) += {dataType: \"boolean\"} | (.. | objects | select(.dataType == \"number\" and .defaultValue != null)) .defaultValue |= tostring | (.. | objects | select(.dataType == \"boolean\" and .defaultValue != null)) .defaultValue |= tostring | (.fieldSets[].fields[] | select(.typeOptions?.dependency != null)) .typeOptions.dependency |= (to_entries | .[0] | { field: .key, condition: { type: .value.type, value: .value.value } })" "$config_file" > "$config_file.tmp" && mv "$config_file.tmp" "$config_file"
         done
         process_dir "$BUILD_TEMP_2026/$COLLECTION_NAME" "$COLLECTION_NAME"
         

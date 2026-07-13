@@ -104,6 +104,29 @@ console.log(
 fs.mkdirSync(path.join(targetDir, 'main'), { recursive: true });
 fs.mkdirSync(path.join(targetDir, 'test'), { recursive: true });
 
+// Ensure collection.json exists (required by the build script to discover collections)
+const collectionJsonPath = path.join(
+  process.cwd(),
+  collection,
+  'main',
+  'collection.json'
+);
+if (!fs.existsSync(collectionJsonPath)) {
+  const collectionDisplayName = collection
+    .split(/[-_]/)
+    .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
+    .join(' ');
+  const collectionJson = {
+    name: collectionDisplayName,
+    description: `Fragments for the ${collectionDisplayName} collection.`,
+  };
+  fs.writeFileSync(
+    collectionJsonPath,
+    JSON.stringify(collectionJson, null, 2) + '\n'
+  );
+  console.log(`  -> Created collection descriptor: ${collectionJsonPath}`);
+}
+
 fs.writeFileSync(
   path.join(targetDir, 'main', 'fragment.json'),
   JSON.stringify(fragmentJson, null, 2)

@@ -124,6 +124,35 @@ function runLinter() {
     ignore: ['node_modules/**', 'temp*/**', ...ldmIgnores],
   });
 
+  // Detect orphaned collections: directories with fragments but no collection.json
+  // Exclude root fragments (fragment.json directly in main/, not nested in a sub-folder)
+  const knownCollectionRoots = new Set(
+    collectionsList.map((f) => path.dirname(path.dirname(f)))
+  );
+  fragmentFiles.forEach((fragFile) => {
+    // fragFile patterns:
+    //   Collection fragment: "my-collection/main/my-fragment/main/fragment.json"
+    //   Root fragment:       "my-fragment/main/fragment.json"
+    const parts = fragFile.split(path.sep);
+    // Root fragments have fragment.json at parts[2] (e.g. ["my-fragment","main","fragment.json"])
+    // Collection fragments have it deeper (e.g. ["collection","main","frag","main","fragment.json"])
+    if (parts.length <= 3) return; // Root fragment — skip
+    const firstMainIdx = parts.indexOf('main');
+    if (firstMainIdx >= 1) {
+      const collRoot = parts.slice(0, firstMainIdx).join(path.sep);
+      if (
+        collRoot &&
+        !knownCollectionRoots.has(collRoot) &&
+        !collRoot.includes('node_modules')
+      ) {
+        logError(
+          path.basename(collRoot),
+          `Collection directory "${collRoot}" contains fragments but is missing "main/collection.json". The build script will silently skip this collection. Run: npm run create-fragment or add collection.json manually.`
+        );
+      }
+    }
+  });
+
   collectionsList.forEach((file) => {
     const mainDir = path.dirname(file);
     const collRoot = path.dirname(mainDir);

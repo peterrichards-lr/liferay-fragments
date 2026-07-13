@@ -8,13 +8,7 @@
           "label": "lfr.form-fragments.number-of-stars",
           "name": "numberOfStars",
           "description": "lfr.form-fragments.number-of-stars",
-          "type": "text",
-          "typeOptions": {
-            "validation": {
-              "min": 1,
-              "type": "number"
-            }
-          }
+          "type": "text"
         },
         {
           "defaultValue": "4rem",

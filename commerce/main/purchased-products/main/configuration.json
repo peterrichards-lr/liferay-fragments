@@ -14,24 +14,14 @@
           "description": "lfr.commerce.account-id-description",
           "name": "accountId",
           "defaultValue": "",
-          "type": "text",
-          "typeOptions": {
-            "validation": {
-              "type": "number"
-            }
-          }
+          "type": "text"
         },
         {
           "label": "lfr.commerce.channel-id",
           "description": "lfr.commerce.channel-id-description",
           "name": "channelId",
           "defaultValue": "",
-          "type": "text",
-          "typeOptions": {
-            "validation": {
-              "type": "number"
-            }
-          }
+          "type": "text"
         },
         {
           "defaultValue": true,
@@ -45,13 +35,7 @@
           "description": "lfr.commerce.cookie-expiry-seconds-description",
           "name": "cookieExpirySeconds",
           "defaultValue": "10",
-          "type": "text",
-          "typeOptions": {
-            "validation": {
-              "min": 10,
-              "type": "number"
-            }
-          }
+          "type": "text"
         }
       ],
       "label": "lfr.commerce.behaviour"
