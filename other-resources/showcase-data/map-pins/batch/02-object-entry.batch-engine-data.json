@@ -1,0 +1,35 @@
+{
+  "configuration": {
+    "className": "com.liferay.object.rest.dto.v1_0.ObjectEntry",
+    "parameters": {
+      "containsHeaders": "true",
+      "createStrategy": "UPSERT",
+      "importStrategy": "ON_ERROR_CONTINUE",
+      "updateStrategy": "UPDATE"
+    },
+    "taskItemDelegateName": "C_MapPin"
+  },
+  "items": [
+    {
+      "externalReferenceCode": "MAP-PIN-01",
+      "title": "Main Entrance",
+      "description": "Primary access point for visitors",
+      "xCoord": 20.5,
+      "yCoord": 75.0
+    },
+    {
+      "externalReferenceCode": "MAP-PIN-02",
+      "title": "Conference Room A",
+      "description": "Large meeting room, capacity 20",
+      "xCoord": 55.0,
+      "yCoord": 35.5
+    },
+    {
+      "externalReferenceCode": "MAP-PIN-03",
+      "title": "Server Room",
+      "description": "Restricted access — authorised personnel only",
+      "xCoord": 82.0,
+      "yCoord": 52.0
+    }
+  ]
+}
