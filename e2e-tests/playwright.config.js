@@ -15,6 +15,12 @@ if (!resolvedBaseUrl) {
 
 export default defineConfig({
   testDir: './tests',
+  // Issue #133: Global timeout cap prevents a single stuck test from hanging
+  // the entire GitHub Actions job until the 6-hour runner limit is hit.
+  // 90 minutes gives ample headroom above the typical ~40-minute run time.
+  globalTimeout: 90 * 60 * 1000,
+  // Per-test timeout increased from default 30s to 90s for slow CI runners.
+  timeout: 90 * 1000,
   fullyParallel: true,
   forbidOnly: !!process.env.CI,
   retries: process.env.CI ? 2 : 0,

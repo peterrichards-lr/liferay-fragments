@@ -1,0 +1,10 @@
+{
+  "requiredObjects": ["MAP_PIN"],
+  "pageConfig": {
+    "fragmentConfig": {
+      "backgroundImage": "https://www.w3schools.com/w3images/map.jpg",
+      "objectErc": "MAP_PIN",
+      "allowCreation": true
+    }
+  }
+}
