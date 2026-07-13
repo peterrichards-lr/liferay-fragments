@@ -351,6 +351,15 @@ rm -rf e2e-tests/snapshots/ e2e-tests/playwright-report/ e2e-tests/playwright_ou
        playwright-report/ test-results/ state.json ldm_startup.log
 # Clean up any orphaned Docker containers to prevent port or naming conflicts
 if [ "$EXISTING_PROJECT" = false ]; then
+    # Issue #140: Fully delete any pre-existing LDM project with the same name to ensure
+    # a completely fresh database on every run. Without this, `ldm run` reuses the
+    # existing project's PostgreSQL volume from the previous CI run, causing stale
+    # fragment data to persist and producing 252 consistent test failures.
+    if ldm list --no-color --no-unicode 2>/dev/null | grep -q "$PROJECT_NAME"; then
+        echo "  -> Found existing LDM project '$PROJECT_NAME'. Deleting to ensure a clean environment..."
+        ldm rm "$PROJECT_NAME" --delete -y > /dev/null 2>&1 || true
+        echo "  -> Existing LDM project deleted."
+    fi
     if command -v docker &> /dev/null && docker info &> /dev/null; then
         echo "  -> Cleaning up orphaned Docker containers..."
         docker rm -f "${PROJECT_NAME}" "${PROJECT_NAME}-db" > /dev/null 2>&1 || true
