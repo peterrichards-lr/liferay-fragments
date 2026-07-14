@@ -11,6 +11,12 @@ concurrency:
   group: e2e-${{ github.ref }}
   cancel-in-progress: true
 
+env:
+  # Pin to the LDM version that matches the local development environment.
+  # Update this single value when promoting to a new stable or pre-release:
+  # https://github.com/peterrichards-lr/liferay-docker-manager/releases
+  LDM_VERSION: v2.15.16-pre.10
+
 jobs:
   playwright-ldm:
     name: Playwright Tests (LDM)
@@ -32,13 +38,14 @@ jobs:
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps
 
-      - name: Install Latest LDM Binary
+      - name: Install LDM Binary (${{ env.LDM_VERSION }})
         run: |
-          DOWNLOAD_URL=$(curl -s https://api.github.com/repos/peterrichards-lr/liferay-docker-manager/releases/latest | jq -r '.assets[] | select(.name == "ldm-linux") | .browser_download_url')
-          echo "Downloading LDM from: $DOWNLOAD_URL"
+          DOWNLOAD_URL="https://github.com/peterrichards-lr/liferay-docker-manager/releases/download/${{ env.LDM_VERSION }}/ldm-linux"
+          echo "Downloading LDM ${{ env.LDM_VERSION }} from: $DOWNLOAD_URL"
           wget -q -O ldm-linux "$DOWNLOAD_URL"
           chmod +x ldm-linux
           sudo mv ldm-linux /usr/local/bin/ldm
+          ldm version --no-color --no-unicode
 
       - name: Provide Dummy LDM License
         # The test runner checks for an XML file in ~/.ldm/common/ to authorize DXP startup
