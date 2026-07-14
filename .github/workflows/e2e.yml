@@ -11,6 +11,9 @@ concurrency:
   group: e2e-${{ github.ref }}
   cancel-in-progress: true
 
+env:
+  LDM_REPO: peterrichards-lr/liferay-docker-manager
+
 jobs:
   playwright-ldm:
     name: Playwright Tests (LDM)
@@ -32,13 +35,18 @@ jobs:
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps
 
-      - name: Install Latest LDM Binary
+      - name: Install LDM Binary (latest)
         run: |
-          DOWNLOAD_URL=$(curl -s https://api.github.com/repos/peterrichards-lr/liferay-docker-manager/releases/latest | jq -r '.assets[] | select(.name == "ldm-linux") | .browser_download_url')
-          echo "Downloading LDM from: $DOWNLOAD_URL"
+          # Always resolve the most recent release (stable OR pre-release) so CI
+          # stays in sync with local development without any manual version pinning.
+          RELEASE=$(curl -s "https://api.github.com/repos/${{ env.LDM_REPO }}/releases?per_page=1")
+          LDM_VERSION=$(echo "$RELEASE" | jq -r '.[0].tag_name')
+          DOWNLOAD_URL=$(echo "$RELEASE" | jq -r '.[0].assets[] | select(.name == "ldm-linux") | .browser_download_url')
+          echo "Installing LDM ${LDM_VERSION} from: $DOWNLOAD_URL"
           wget -q -O ldm-linux "$DOWNLOAD_URL"
           chmod +x ldm-linux
           sudo mv ldm-linux /usr/local/bin/ldm
+          ldm version --no-color --no-unicode
 
       - name: Provide Dummy LDM License
         # The test runner checks for an XML file in ~/.ldm/common/ to authorize DXP startup
