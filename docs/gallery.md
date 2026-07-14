@@ -2,7 +2,7 @@
 
 A visual reference for the high-fidelity fragments available in this Liferay DXP repository. Generated automatically.
 
-**Last Tested Against Liferay Version:** `Unknown`
+**Last Tested Against Liferay Version:** `2026.q1.10-lts`
 *(Note: Live snapshots disabled due to pending or failed test suite)*
 
 ## Advanced Object Data

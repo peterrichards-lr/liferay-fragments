@@ -185,13 +185,24 @@ LIFERAY_USER="admin@mycompany.com" LIFERAY_PASSWORD="MySecurePassword123" ./scri
   computational load and infrastructure requirements (LDM). It contains a
   safeguard to prevent execution in CI environments (e.g., GitHub Actions, where
   `CI=true`).
-- **Deployment Scoping & 2026.Q1 Bug**: There is a known bug in Liferay 2026.Q1
-  LTS where deploying fragment ZIPs with a system-wide scope
-  (`companyWebId: "*"`) fails to register the fragments correctly in the UI.
-  Because of this, the test runner currently deploys all fragments specifically
-  to the **Guest** site (`--instance liferay.com --site Guest`) as a workaround.
-  Once this bug is fixed upstream, the test runner should be reverted to deploy
-  fragments system-wide to ensure they are verified as universally available.
+- **[LPD-91054] Global Fragment Auto-Deploy Silently Fails (Liferay 2026.Q1 LTS)**:
+  There is a confirmed Liferay platform bug ([LPD-91054](https://liferay.atlassian.net/browse/LPD-91054))
+  affecting **Liferay 2026.Q1 LTS** where fragment ZIPs dropped into the
+  auto-deploy folder with a global scope (`companyWebId: "liferay.com"`) are
+  **silently dropped** by the auto-deploy scanner. Affected collections are never
+  imported into the database — they are neither APPROVED nor DRAFT.
+
+  **Impact on E2E tests**: Approximately 84 of 130 tested fragments are affected,
+  causing their Playwright test pages to render with 0 DOM elements and producing
+  ~252 consistent test failures. The 46 fragments that pass are from collections
+  whose ZIPs happen to survive the broken scanner (typically simpler collections).
+
+  **Status**: Waiting for Liferay to release a hotfix or fix pack. No workaround
+  has been implemented — manual UI import or the Fragments Toolkit CLI can deploy
+  fragments successfully but are not suitable for automated CI.
+
+  **Resolution**: Once LPD-91054 is fixed in a Liferay patch release, the E2E
+  failure count should drop to 0 (or near 0) without any changes to this project.
 
 - **Liferay Version-Targeted Deployment**: The test runner queries the target Liferay instance to determine its release version (e.g. `2026.q1.8-lts`) and automatically selects the compatible ZIP suffix variant to deploy:
   - **Latest (`-collection-min.zip`)**: For Liferay `2026.q1` or later. These use `"dataType": "number"` and boolean literals for checkboxes, while numeric text/length fields use string representations.
@@ -272,11 +283,15 @@ The Playwright test suite dynamically generates Liferay Content Pages to capture
 You can customize the generated page layout or the fragment configuration used during E2E testing by providing specific manifest files alongside the fragment (in a `test/` subdirectory):
 
 ### 1. `test-data.json`
+
 This file defines the semantic layout structure and inner child elements for the fragment. This is particularly useful for container fragments (like `dashboard-container` or `interactive-wizard`) which require nested components to render properly.
+
 - **Location:** `<fragment-name>/test/test-data.json`
 
 ### 2. `test-fragment-config.json`
-If you need to override the fragment's default configuration values explicitly for E2E testing, you can provide this file. 
+
+If you need to override the fragment's default configuration values explicitly for E2E testing, you can provide this file.
+
 - **Location:** `<fragment-name>/test/test-fragment-config.json`
 - **Strict Typing Warning:** Liferay 2026.Q1+ strictly enforces typing in Headless API payloads. Ensure that the JSON values provided in this override file exactly match the primitive type defined by their `dataType` in `configuration.json`. For example, if a configuration field has `"dataType": "number"`, you must provide an integer (e.g., `3`), not a stringified number (`"3"`), to avoid `500 Internal Server Error` failures during the automated seeding phase.
 
