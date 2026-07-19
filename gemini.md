@@ -363,6 +363,55 @@ after itself.
 - [x] Update `scripts/test-runner.sh` and `scripts/compare-deployments.sh` to pass `--no-color` and `--no-unicode` to all `ldm` commands to ensure clean, color-free, plain-text output across terminal locales.
 - [x] Refactor `scripts/compare-deployments.sh` and `scripts/inspect-batch-logs.js` to use native LDM log filtering (`--grep`, `--grep-i`) for optimization.
 
+## E2E Blocked — Waiting on Liferay Platform Fix (July 2026)
+
+### Root Cause: LPD-91054
+
+The E2E test suite is currently producing ~252 consistent failures in both
+local (fresh instance) and GitHub Actions CI environments. The root cause is a
+confirmed Liferay platform bug:
+
+- **Bug**: [LPD-91054](https://liferay.atlassian.net/browse/LPD-91054) —
+  Fragment ZIPs deployed to the global auto-deploy folder are **silently dropped**
+  by the auto-deploy scanner in Liferay 2026.Q1 LTS. Affected collections are
+  never imported (neither APPROVED nor DRAFT).
+- **Symptom**: `DEPLOY WAIT` loop times out at 580s with `0/5 collections found`,
+  then proceeds optimistically. All fragment test pages render with 0 DOM
+  elements.
+- **Scope**: ~84 of 130 fragment collections affected. The remaining 46 that
+  previously appeared to pass were from a local instance with stale DB state
+  (fragments accumulated from pre-bug deployments).
+
+### What Is Working
+
+- ✅ LDM `v2.15.16-pre.10` now used in both local and CI (dynamic latest-release
+  fetch — no pinned version to maintain).
+- ✅ `Company Group ID` correctly extracted from `Liferay.ThemeDisplay.getCompanyGroupId()`.
+- ✅ Approval loop runs and queries the correct group.
+- ✅ All object definitions bootstrapped and Guest permissions configured.
+- ✅ All showcase object entries, Commerce products, and web content seeded.
+- ✅ All test pages created successfully.
+- ✅ `docs/automated-testing.md` documents LPD-91054 as the known blocker.
+
+### Known Minor Issues (Non-Blocking)
+
+- ⚠️ `CAMPAIGN_INTERACTION` — `[WARN] Could not parse className hash suffix`
+  from an empty string. Guest permissions step silently skipped for this object.
+- ⚠️ `parallax_hero_bg.png` — Missing from `e2e-tests/assets/`. Affects
+  `overlay-background` and `modern-parallax-hero` document seeding. These
+  pages still render but without the background image.
+
+### Resumption Plan (When LPD-91054 Is Patched)
+
+1. Upgrade the Liferay DXP version in `e2e-test-env` to the patched release.
+2. Run `./scripts/test-runner.sh -k` locally on a **fresh** instance
+   (`ldm rm --delete e2e-test-env` first).
+3. Confirm `DEPLOY WAIT` resolves with ≥5 collections found within 580s.
+4. Confirm approval loop finds 27 collections / 129 approved fragments.
+5. Trigger the GitHub Actions E2E workflow and confirm pass.
+6. Fix the two minor issues above (`CAMPAIGN_INTERACTION` hash parse,
+   `parallax_hero_bg.png` missing asset) as a follow-up PR.
+
 ## <!-- markdownlint-disable MD049 -->
 
-_Last Updated: 2026-07-13_ | _Last Reviewed: 2026-07-13_
+_Last Updated: 2026-07-14_ | _Last Reviewed: 2026-07-14_
