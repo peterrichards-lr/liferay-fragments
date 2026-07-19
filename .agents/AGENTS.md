@@ -1,113 +1,39 @@
-# Unified Project Management & Liferay Fragments Playbook
+# Liferay Fragments — Agent Skill Router
 
-This consolidated guide serves as a blueprint for AI agents and maintainers to standardize repository management, build pipelines, and E2E verification gates.
+This file is a **routing index only**. It contains no inline rules.
+All operational rules live in dedicated skill modules under `.agents/skills/`.
 
-## 1. Branch Protection & Integration Workflow
+When beginning any task, identify its domain from the table below and read the
+corresponding `SKILL.md` before taking action. This ensures the correct,
+complete, and up-to-date rules are always in context — not buried in a
+monolithic document.
 
-To maintain production stability, the `main` branch is protected against direct pushes. All integration must follow this strict protocol:
+## Skill Index
 
-- **Branch Isolation**: Create short-lived branches prefixed by scope:
-  - `feat/...` for new features or page fragments.
-  - `fix/...` for bug fixes or stylesheet adjustments.
-  - `docs/...` for documentation updates.
-- **Pre-Commit Validation**: Before pushing, local Git pre-commit hooks execute automatically:
-  - `gitleaks` to check for hardcoded credentials.
-  - `prettier` to format staged HTML/CSS/JS/JSON files.
-  - Dependency sync (`scripts/initialize-build-config.js`) to ensure all collections are updated.
-  - Fragment Quality Gate (`npm run lint`) to enforce schemas and link validity.
-- **Pull Request & Auto-Merge**: Open PRs via the GitHub CLI and immediately enable auto-merge with a squash fallback:
-  ```bash
-  gh pr create --title "feat: <description>" --body "<details>" --head <branch_name> --base main
-  gh pr merge <pr_number> --auto --squash --delete-branch
-  ```
-- **Local Synchronization**: Once merged, return to the base branch and pull changes:
-  ```bash
-  git checkout main && git pull origin main
-  ```
+| Skill | Activate when… | Path |
+|---|---|---|
+| **GitHub Workflow** | Creating a branch, opening a PR, merging code, or running any `git` / `gh` CLI operation | [`.agents/skills/github-workflow/SKILL.md`](skills/github-workflow/SKILL.md) |
+| **Issue Tracking** | Planning a new feature, bug fix, or any tracked piece of work; creating or closing GitHub Issues | [`.agents/skills/issue-tracking/SKILL.md`](skills/issue-tracking/SKILL.md) |
+| **Fragment Quality Gate** | Creating, modifying, or committing any Liferay fragment (configuration, CSS, JS, FTL, or docs) | [`.agents/skills/fragment-quality-gate/SKILL.md`](skills/fragment-quality-gate/SKILL.md) |
+| **Backward-Compat Build** | Building, packaging, or releasing fragment ZIP collections for any Liferay version target | [`.agents/skills/backward-compat-build/SKILL.md`](skills/backward-compat-build/SKILL.md) |
+| **E2E Verification** | Running E2E tests, capturing screenshots, promoting visual baselines, or interpreting test results | [`.agents/skills/e2e-verification/SKILL.md`](skills/e2e-verification/SKILL.md) |
 
-## 2. Fragment Quality Gate & Linting Rules
+## Existing Fragment Skills
 
-All fragments must pass validation before being committed. The linter checks for:
+The following skills pre-date this routing index and cover deeper technical
+domains. Load them in addition to the relevant skill above when working on
+the corresponding task:
 
-- **Localization Coverage**: Any property key or value defined in `configuration.json` must exist in the root collection `Language_en_US.properties` file.
-- **Detailed Documentation**: Every fragment folder must have an accompanying markdown documentation file under `docs/fragments/` including Overview, Configuration, and Usage sections.
-- **Theme Fidelity**: Hardcoded colors are prohibited. Fragments must use safe Meridian design tokens (`var(--primary)`, etc.) as specified in `docs/THEMES.md`.
+| Skill | Purpose | Path |
+|---|---|---|
+| **Fragment Orchestrator** | Single entry point that routes to all fragment sub-skills | [`.agents/skills/fragment-orchestrator/SKILL.md`](skills/fragment-orchestrator/SKILL.md) |
+| **Fragment Development** | Creating, structuring, and mapping properties for fragments | [`.agents/skills/liferay-fragment-development/SKILL.md`](skills/liferay-fragment-development/SKILL.md) |
+| **Fragment Linting** | Running and satisfying the fragment linter quality gate | [`.agents/skills/liferay-fragment-linting/SKILL.md`](skills/liferay-fragment-linting/SKILL.md) |
+| **Compat Transform** | Extending the three-target ZIP build transformations | [`.agents/skills/liferay-compat-transform/SKILL.md`](skills/liferay-compat-transform/SKILL.md) |
+| **E2E Bootstrap** | Zipping, seeding, and bootstrapping fragments for E2E testing | [`.agents/skills/fragment-e2e-bootstrap/SKILL.md`](skills/fragment-e2e-bootstrap/SKILL.md) |
+| **Screenshot Creation** | Capturing, verifying, and committing fragment screenshots | [`.agents/skills/fragment-screenshot-creation/SKILL.md`](skills/fragment-screenshot-creation/SKILL.md) |
+| **Visual Gallery** | Generating and updating the fragment visual gallery | [`.agents/skills/liferay-visual-gallery/SKILL.md`](skills/liferay-visual-gallery/SKILL.md) |
 
-## 3. Backward-Compatibility Build Rules (Three-Target ZIP Build)
-
-The build script `scripts/create-fragment-zips.sh` is responsible for packaging fragments into ZIP collections compatible with three distinct Liferay version profiles:
-
-1. **Latest DXP** (`-collection-min.zip`): Uses modern `"dataType": "number"` and boolean literals for checkboxes (Liferay 2026.Q1+).
-2. **pre2026q1 DXP** (`-pre2026q1-min.zip`): Converts checkbox defaults back to string representations.
-3. **pre2025q3 DXP** (`-pre2025q3-min.zip`): Converts `"dataType": "number"` fields to `"dataType": "int"` and uses string representations for all default values.
-
-## 4. Automated E2E Verification & Snapshot Baselines
-
-Before merging changes, fragments must be validated against Liferay 2026.Q1+ using the Playwright E2E suite:
-
-- **Local Execution**: Run the test suite on the LDM instance:
-  ```bash
-  & "C:\Program Files\Git\bin\bash.exe" scripts/test-runner.sh -p e2e-test-env -k
-  ```
-- **Targeted Runs**: Use the `-g` (grep) filter to run tests matching a specific fragment or tag:
-  ```bash
-  & "C:\Program Files\Git\bin\bash.exe" scripts/test-runner.sh -p e2e-test-env -k -g "meter-reading"
-  ```
-- **Visual Baselines**: If visual layout changes are intentional, promote the new snapshots to baseline references:
-  ```bash
-  npm run test:visual:update
-  node scripts/generate-gallery.js
-  ```
-
-# GitHub Issue Sync Workflow Rules
-
-When planning or implementing new features, you must use the automated JSON-driven issue sync tool located at `scripts/gh-issue-sync.cjs` to synchronize your task checklist with the GitHub issue tracker.
-
-## 1. Tool Setup & Location
-
-- Script: `scripts/gh-issue-sync.cjs` (executable Node.js script)
-- Sample Config: `scripts/issues.sample.json`
-
-## 2. Issue Tracking Workflow
-
-Before writing code for any feature or logic change:
-
-1. **Plan & Draft**: Create a temporary JSON file (e.g., `scripts/feature-xyz-plan.json`) containing the Epic description and target sub-issues. Follow the schema defined in `scripts/issues.sample.json`.
-2. **Dry Run**: Preview the CLI commands that will run:
-   ```bash
-   node scripts/gh-issue-sync.cjs scripts/feature-xyz-plan.json --dry-run
-   ```
-3. **Apply & Link**: Generate the Epic and sub-issues on GitHub:
-   ```bash
-   node scripts/gh-issue-sync.cjs scripts/feature-xyz-plan.json
-   ```
-   _Note: The script automatically links all sub-issues to the parent Epic._
-
-## 3. Resolving and Closing Tasks
-
-As you complete individual sub-issues:
-
-1. Update the target JSON file, changing the sub-issue's `"completed"` property to `true`.
-2. Execute the sync utility again:
-   ```bash
-   node scripts/gh-issue-sync.cjs scripts/feature-xyz-plan.json
-   ```
-   _The utility will automatically detect the completed state, post a reference comment with the current git commit hash, and close the issue on GitHub._
-
-# Contributor Development Guidelines (Humans & Agents)
-
-To maintain system quality and documentation context, all contributors (human or agentic) must adhere to these policies:
-
-## 1. Issue-Driven Requirements
-
-- Every bug, enhancement, or feature request MUST be recorded as a GitHub Issue prior to any development work.
-- For each issue, the contributor must analyze the requirements against the current codebase and write a step-by-step Implementation Plan.
-
-## 2. Review and Verification Gates
-
-- **Pull Requests:** All PRs must link back to a corresponding GitHub Issue (using `Closes #<id>` or `Addresses #<id>` syntax).
-- **Code Review:** Every PR must be reviewed and approved by another contributor (human or agent) before it is merged.
-
-## <!-- markdownlint-disable MD049 -->
-
-_Last Updated: 2026-07-10_ | _Last Reviewed: 2026-07-10_
+<!-- markdownlint-disable MD049 -->
+---
+*Last Updated: 2026-07-19* | *Last Reviewed: 2026-07-19*
