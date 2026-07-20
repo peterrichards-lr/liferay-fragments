@@ -64,6 +64,21 @@ gh pr merge <pr_number> --auto --squash --delete-branch
 > linking it to its corresponding GitHub Issue. PRs without an issue link will
 > be rejected.
 
+### Pre-PR Documentation Checkpoint
+
+Before running `gh pr create`, complete the documentation review pass required
+by the **Documentation Maintenance** skill
+([`.agents/skills/docs-maintenance/SKILL.md`](docs-maintenance/SKILL.md)):
+
+- Identify all markdown files affected by your change.
+- Apply Outcome A (review-only), B (review + update), or C (create new) to
+  each document.
+- Include any updated or new markdown files in the same PR commit.
+
+> [!IMPORTANT]
+> A PR that changes code without a corresponding documentation review is
+> **incomplete**. The documentation step is part of the Definition of Done.
+
 ## 4. Post-Merge Local Synchronisation
 
 After a PR is merged, return to `main` and pull:
@@ -85,4 +100,4 @@ not proceed until the required status checks pass:
 
 <!-- markdownlint-disable MD049 -->
 ---
-*Last Updated: 2026-07-19* | *Last Reviewed: 2026-07-19*
+*Last Updated: 2026-07-20* | *Last Reviewed: 2026-07-20*
