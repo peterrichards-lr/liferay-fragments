@@ -17,6 +17,7 @@ monolithic document.
 | **Fragment Quality Gate** | Creating, modifying, or committing any Liferay fragment (configuration, CSS, JS, FTL, or docs) | [`.agents/skills/fragment-quality-gate/SKILL.md`](skills/fragment-quality-gate/SKILL.md) |
 | **Backward-Compat Build** | Building, packaging, or releasing fragment ZIP collections for any Liferay version target | [`.agents/skills/backward-compat-build/SKILL.md`](skills/backward-compat-build/SKILL.md) |
 | **E2E Verification** | Running E2E tests, capturing screenshots, promoting visual baselines, or interpreting test results | [`.agents/skills/e2e-verification/SKILL.md`](skills/e2e-verification/SKILL.md) |
+| **Documentation Maintenance** | After completing any implementation task — review affected docs, update timestamps, and create missing documentation | [`.agents/skills/docs-maintenance/SKILL.md`](skills/docs-maintenance/SKILL.md) |
 
 ## Existing Fragment Skills
 
@@ -36,4 +37,4 @@ the corresponding task:
 
 <!-- markdownlint-disable MD049 -->
 ---
-*Last Updated: 2026-07-19* | *Last Reviewed: 2026-07-19*
+*Last Updated: 2026-07-20* | *Last Reviewed: 2026-07-20*
