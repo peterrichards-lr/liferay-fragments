@@ -18,6 +18,7 @@ monolithic document.
 | **Backward-Compat Build** | Building, packaging, or releasing fragment ZIP collections for any Liferay version target | [`.agents/skills/backward-compat-build/SKILL.md`](skills/backward-compat-build/SKILL.md) |
 | **E2E Verification** | Running E2E tests, capturing screenshots, promoting visual baselines, or interpreting test results | [`.agents/skills/e2e-verification/SKILL.md`](skills/e2e-verification/SKILL.md) |
 | **Documentation Maintenance** | After completing any implementation task — review affected docs, update timestamps, and create missing documentation | [`.agents/skills/docs-maintenance/SKILL.md`](skills/docs-maintenance/SKILL.md) |
+| **Tech Debt** | Whenever a code smell, duplication, over-complexity, or other debt signal is spotted during any task | [`.agents/skills/tech-debt/SKILL.md`](skills/tech-debt/SKILL.md) |
 
 ## Existing Fragment Skills
 
