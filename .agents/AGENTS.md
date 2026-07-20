@@ -8,6 +8,20 @@ corresponding `SKILL.md` before taking action. This ensures the correct,
 complete, and up-to-date rules are always in context — not buried in a
 monolithic document.
 
+---
+
+> [!CAUTION]
+> **No Assumptions (Anti-Hallucination Rule) — Always Active**
+> Any technical statement, explanation, or conclusion MUST be strictly based
+> on actual, referenceable code or documentation read during the current
+> session. You are expressly forbidden from making blind assumptions about
+> how systems behave without first verifying them via search, reading the
+> code, or consulting `AGENTS.md` / `GEMINI.md`. When verification resources
+> are available, use them before you speak.
+> → Full rule: [`.agents/skills/no-assumptions/SKILL.md`](skills/no-assumptions/SKILL.md)
+
+---
+
 ## Skill Index
 
 | Skill | Activate when… | Path |
@@ -19,6 +33,7 @@ monolithic document.
 | **E2E Verification** | Running E2E tests, capturing screenshots, promoting visual baselines, or interpreting test results | [`.agents/skills/e2e-verification/SKILL.md`](skills/e2e-verification/SKILL.md) |
 | **Documentation Maintenance** | After completing any implementation task — review affected docs, update timestamps, and create missing documentation | [`.agents/skills/docs-maintenance/SKILL.md`](skills/docs-maintenance/SKILL.md) |
 | **Tech Debt** | Whenever a code smell, duplication, over-complexity, or other debt signal is spotted during any task | [`.agents/skills/tech-debt/SKILL.md`](skills/tech-debt/SKILL.md) |
+| **No Assumptions** | Always active — before making any technical statement, verify it against actual code or documentation | [`.agents/skills/no-assumptions/SKILL.md`](skills/no-assumptions/SKILL.md) |
 
 ## Existing Fragment Skills
 
