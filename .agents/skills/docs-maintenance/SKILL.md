@@ -30,24 +30,41 @@ Apply this rule **after completing any of the following**:
 
 ### Step 1 — Identify Affected Documents
 
-After completing the implementation, identify all markdown files that are
-potentially affected. Check:
-
-| Location | What to look for |
-|---|---|
-| `docs/fragments/<collection>/<fragment>.md` | Fragment-specific docs |
-| `docs/automated-testing.md` | E2E test architecture or known issues |
-| `docs/THEMES.md` | Token changes or new CSS variables |
-| `docs/GALLERY.md` | Visual gallery (if screenshots updated) |
-| `GEMINI.md` | Project state, active tasks, known bugs |
-| `.agents/AGENTS.md` | Routing index (if a new skill is added) |
-| `.agents/skills/*/SKILL.md` | Skill rules (if a workflow changes) |
-| Fragment-level `README.md` files | Collection overviews |
-
-A single code change may require updates to **more than one document** — all
-must be reviewed.
+> [!CAUTION]
+> **ACTIVE CONSTRAINT — Document Enumeration**
+>
+> **TRIGGER**: Immediately after completing any implementation task, before
+> opening a PR.
+>
+> **MANDATORY**: Execute the following tool calls NOW to enumerate candidate
+> documents — do not rely on memory:
+> ```bash
+> # List all docs in scope
+> ls docs/fragments/
+> ls docs/
+> # Search for references to the changed file or component name
+> grep_search "<changed-component-name>" /Volumes/.../docs/
+> ```
+> Also check: `GEMINI.md`, `.agents/AGENTS.md`, any skill file whose domain
+> was touched, and collection-level `README.md` files.
+>
+> **BLOCK**: End your turn after the tool calls. You are FORBIDDEN from
+> declaring "no docs changes needed" or moving to Step 2 until the file list
+> is in your context window in the next turn.
 
 ### Step 2 — Review Each Document
+
+> [!CAUTION]
+> **ACTIVE CONSTRAINT — Mandatory Document Read**
+>
+> **TRIGGER**: For each document identified in Step 1.
+>
+> **MANDATORY**: Execute `view_file` on the document NOW. Do not paraphrase
+> or recall its contents from memory.
+>
+> **BLOCK**: End your turn after the `view_file` call. You are FORBIDDEN from
+> applying Outcome A, B, or C until the document's actual content is in your
+> context window in the next turn.
 
 For every identified document, read it against the implemented change and
 apply one of the three outcomes below.
@@ -158,4 +175,4 @@ to:
 
 <!-- markdownlint-disable MD049 -->
 ---
-*Last Updated: 2026-07-20* | *Last Reviewed: 2026-07-20*
+*Last Updated: 2026-07-21* | *Last Reviewed: 2026-07-21*

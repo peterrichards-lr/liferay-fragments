@@ -61,14 +61,21 @@ following the schema in `scripts/issues.sample.json`:
 
 ### Step 2 — Dry Run
 
-Preview the CLI commands before creating anything on GitHub:
-
-```bash
-node scripts/gh-issue-sync.cjs scripts/feature-xyz-plan.json --dry-run
-```
-
-Review the output carefully. Confirm issue titles, bodies, and labels are
-correct before proceeding.
+> [!CAUTION]
+> **ACTIVE CONSTRAINT — Mandatory Dry Run Before Live Issue Creation**
+>
+> **TRIGGER**: Before executing `gh-issue-sync.cjs` without the `--dry-run`
+> flag.
+>
+> **MANDATORY**: Execute the dry-run command NOW:
+> ```bash
+> node scripts/gh-issue-sync.cjs scripts/<plan-file>.json --dry-run
+> ```
+>
+> **BLOCK**: End your turn after the tool call. You are FORBIDDEN from
+> running the live sync until the dry-run output is in your context in the
+> next turn and you have confirmed that all issue titles, bodies, and labels
+> are correct.
 
 ### Step 3 — Apply & Link
 
@@ -104,4 +111,4 @@ the PR is merged and maintains a clean audit trail.
 
 <!-- markdownlint-disable MD049 -->
 ---
-*Last Updated: 2026-07-19* | *Last Reviewed: 2026-07-19*
+*Last Updated: 2026-07-21* | *Last Reviewed: 2026-07-21*

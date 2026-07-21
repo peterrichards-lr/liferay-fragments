@@ -5,7 +5,8 @@ description: >
   that applies to every task, every skill, and every response. It expressly
   forbids making any unverified technical statement about this repository —
   how a system behaves, what a file contains, what an API does, or what a
-  value is — without first reading the actual code or documentation.
+  value is — without first executing a verification tool and waiting for the
+  result.
 ---
 
 # No Assumptions (Anti-Hallucination Rule)
@@ -15,85 +16,90 @@ description: >
 > suspended by any other skill, task instruction, or time pressure. It applies
 > to every statement, explanation, and conclusion made during any task.
 
-## The Rule
+## The Core Constraint
 
 **Any technical statement, explanation, or conclusion MUST be strictly based
 on actual, referenceable code or documentation read during the current
 session.**
 
-You are expressly forbidden from:
+You are expressly forbidden from describing how a system behaves, claiming a
+file or value exists, or asserting what an API does based on training-data
+memory. Evidence must exist in your current context window — loaded by a tool
+call made in this session.
 
-- Describing how a system, function, or fragment behaves without reading its
-  source code.
-- Claiming that a file, path, variable, API endpoint, or configuration key
-  exists without verifying it with a search or file read.
-- Asserting what a default value, data type, or schema field is without
-  reading `configuration.json`, `GEMINI.md`, or the relevant skill file.
-- Summarising what a previous change did without reading the actual diff or
-  commit.
-- Stating that a fix worked without verifying the result via test output, a
-  file read, or a command run.
+---
+
+## Active Constraint — Verify Before You Speak
+
+> [!CAUTION]
+> **ACTIVE CONSTRAINT — Mandatory Verification Before Any Technical Claim**
+>
+> **TRIGGER**: Before making any technical statement about how code works,
+> what a file contains, what an API returns, what a default value is, or what
+> a previous change accomplished.
+>
+> **MANDATORY**: Identify the claim type from the table below and execute the
+> corresponding tool call NOW — before writing a single word of your answer.
+>
+> **BLOCK**: After executing the tool, you MUST end your turn and wait for the
+> result. You are FORBIDDEN from formulating or writing your answer until the
+> tool output is loaded into your context window in the next turn.
+
+| Claim type | Mandatory tool execution |
+|---|---|
+| File exists or has specific content | `grep_search` or `view_file` on the exact path |
+| API endpoint path or response shape | `view_file` on the relevant skill file or `GEMINI.md` |
+| Fragment behaviour or config field | `view_file` on `configuration.json`, the FTL/JS source, or `docs/fragments/` |
+| Build script behaviour | `view_file` on `scripts/create-fragment-zips.sh` or the relevant skill |
+| Previously implemented change | `run_command`: `git show <hash> --stat` or `git diff HEAD~1` |
+| Liferay platform behaviour | `view_file` on `GEMINI.md` or `docs/automated-testing.md` |
+| Test result or pass/fail status | `view_file` on the actual log file or test report |
+
+---
 
 ## Prohibited Patterns
 
-The following phrasing patterns are **red flags** indicating an unverified
-assumption. Do not use them without evidence:
+The following phrasing is **forbidden** because it signals an unverified
+assumption. If you find yourself writing any of these, stop, execute the
+appropriate tool, end your turn, and answer only after the result is in
+context:
 
-| Prohibited pattern | Why it is dangerous |
+| Forbidden pattern | Why it is prohibited |
 |---|---|
-| *"This should work because…"* | Predicts behaviour without verification |
+| *"This should work because…"* | Predicts behaviour without evidence |
 | *"That file probably contains…"* | Guesses file contents |
 | *"The API likely returns…"* | Assumes API behaviour |
-| *"As mentioned earlier…"* (without re-reading) | Relies on unreliable memory |
-| *"This is the standard Liferay approach"* | Asserts platform behaviour without a source |
+| *"As mentioned earlier…"* (without re-reading) | Relies on unreliable in-context memory |
+| *"This is the standard Liferay approach"* | Asserts platform behaviour without a cited source |
 | *"I believe the default is…"* | Guesses a configuration value |
+| *"The fix worked"* (without reading output) | Claims a result without verification |
 
-## Mandatory Verification Actions
-
-Before making any technical claim, use one of these verification methods:
-
-| Claim type | Verification action |
-|---|---|
-| File exists / has specific content | `view_file` or `grep_search` |
-| API endpoint path or response shape | Read the relevant skill file or `GEMINI.md` |
-| Fragment behaviour or config field | Read `configuration.json`, the FTL/JS source, or `docs/fragments/` |
-| Build script behaviour | Read `scripts/create-fragment-zips.sh` or the relevant skill |
-| Previously implemented change | Read the git diff or commit message |
-| Liferay platform behaviour | Read `GEMINI.md`, `docs/automated-testing.md`, or a cited issue (e.g. LPD-XXXXX) |
-| Test result | Read the actual test output from the terminal or log file |
+---
 
 ## Handling Genuine Uncertainty
 
-If verification resources are unavailable (e.g. a file cannot be read, a
-command fails, or the information is not in this repository), the correct
-response is to **state the uncertainty explicitly** rather than guess:
+If the required file cannot be read or the command fails, the correct response
+is to **state the uncertainty explicitly** — never guess:
 
-> "I cannot verify this without reading `<file>`. Based on the pattern I can
-> see in `<related-file>`, I expect `X` — but please confirm before acting on
-> this."
+> "I cannot verify this without reading `<file>`. I will not speculate.
+> Please confirm, or grant me access so I can verify it directly."
 
-This is always preferable to a confident but unverified statement.
+---
 
 ## Scope
 
-This rule applies to:
+This constraint applies to every response, in every skill, without exception:
 
-- All code explanations and summaries
-- All debugging hypotheses and root-cause analyses
-- All configuration recommendations
-- All statements about Liferay platform behaviour
-- All claims about what a previous change accomplished
-- All assertions about what tests do or do not cover
+- Code explanations and architecture summaries
+- Debugging hypotheses and root-cause analyses
+- Configuration recommendations
+- Statements about Liferay platform behaviour
+- Claims about what a previous change accomplished
+- Assertions about test coverage
 
-It does **not** prohibit reasonable inference when evidence is present — it
-prohibits confident statements when no evidence has been consulted.
-
-## Reference
-
-This rule exists because hallucinated statements in a codebase context cause
-real harm: incorrect fixes, wasted debugging time, and false confidence in
-broken implementations. Read first. Speak second.
+Reasonable inference *from evidence already in context* is permitted.
+Confident assertion *without having consulted any evidence* is forbidden.
 
 <!-- markdownlint-disable MD049 -->
 ---
-*Last Updated: 2026-07-20* | *Last Reviewed: 2026-07-20*
+*Last Updated: 2026-07-21* | *Last Reviewed: 2026-07-21*

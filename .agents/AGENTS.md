@@ -12,12 +12,16 @@ monolithic document.
 
 > [!CAUTION]
 > **No Assumptions (Anti-Hallucination Rule) — Always Active**
-> Any technical statement, explanation, or conclusion MUST be strictly based
-> on actual, referenceable code or documentation read during the current
-> session. You are expressly forbidden from making blind assumptions about
-> how systems behave without first verifying them via search, reading the
-> code, or consulting `AGENTS.md` / `GEMINI.md`. When verification resources
-> are available, use them before you speak.
+>
+> **TRIGGER**: Before making any technical statement about how code, a file,
+> an API, a configuration value, or a previous change behaves in this
+> repository.
+>
+> **MANDATORY**: Execute `view_file`, `grep_search`, or `run_command` to load
+> the relevant source into your context window NOW — before writing any answer.
+>
+> **BLOCK**: End your turn after the tool call. You are FORBIDDEN from
+> formulating or writing your answer until the tool output is in context.
 > → Full rule: [`.agents/skills/no-assumptions/SKILL.md`](skills/no-assumptions/SKILL.md)
 
 ---
@@ -53,4 +57,4 @@ the corresponding task:
 
 <!-- markdownlint-disable MD049 -->
 ---
-*Last Updated: 2026-07-20* | *Last Reviewed: 2026-07-20*
+*Last Updated: 2026-07-21* | *Last Reviewed: 2026-07-21*
