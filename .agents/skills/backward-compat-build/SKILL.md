@@ -18,6 +18,23 @@ version profiles. Source `configuration.json` files use the **2026.Q1+**
 schema as the canonical source of truth; the build script transforms them
 as required for older targets.
 
+> [!CAUTION]
+> **ACTIVE CONSTRAINT — Script Verification Before Any Build**
+>
+> **TRIGGER**: Before running `create-fragment-zips.sh` or any build/packaging
+> command for fragment collections.
+>
+> **MANDATORY**: Execute the following tool call NOW to confirm you are using
+> the correct script and that it has not changed:
+> ```bash
+> head -60 scripts/create-fragment-zips.sh
+> ```
+>
+> **BLOCK**: End your turn after the tool call. You are FORBIDDEN from
+> running the build until the script header is in your context in the next
+> turn and you have confirmed the correct profile flags (`-collection-min`,
+> `-pre2026q1-min`, `-pre2025q3-min`) exist.
+
 > [!IMPORTANT]
 > Never manually edit the intermediate or output ZIPs. All transformations are
 > applied exclusively by `create-fragment-zips.sh` using `jq`. Source files
@@ -79,4 +96,4 @@ dist/<collection-name>-pre2025q3-min.zip          # pre-2025.Q3
 
 <!-- markdownlint-disable MD049 -->
 ---
-*Last Updated: 2026-07-19* | *Last Reviewed: 2026-07-19*
+*Last Updated: 2026-07-21* | *Last Reviewed: 2026-07-21*

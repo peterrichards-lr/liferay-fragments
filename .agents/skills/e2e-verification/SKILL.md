@@ -19,6 +19,22 @@ description: >
 
 ## 1. Full Suite Execution (Local)
 
+> [!CAUTION]
+> **ACTIVE CONSTRAINT — Instance Health Verification Before Test Launch**
+>
+> **TRIGGER**: Before running `test-runner.sh` or any Playwright test command.
+>
+> **MANDATORY**: Execute the following command NOW:
+> ```bash
+> ldm list
+> ```
+>
+> **BLOCK**: End your turn after the tool call. You are FORBIDDEN from
+> launching the test suite until the LDM output is in your context in the
+> next turn and confirms that the target project (e.g. `e2e-test-env`) is
+> listed as **running** and **healthy**. If the instance is not running,
+> start it first and wait for health before proceeding.
+
 Run the complete Playwright test suite against a live LDM-provisioned Liferay
 instance:
 
@@ -108,4 +124,4 @@ tests. Key indicators:
 
 <!-- markdownlint-disable MD049 -->
 ---
-*Last Updated: 2026-07-19* | *Last Reviewed: 2026-07-19*
+*Last Updated: 2026-07-21* | *Last Reviewed: 2026-07-21*

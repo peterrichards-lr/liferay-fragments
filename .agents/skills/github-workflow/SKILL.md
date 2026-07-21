@@ -12,6 +12,22 @@ description: >
 
 ## 1. Branch Naming Conventions
 
+> [!CAUTION]
+> **ACTIVE CONSTRAINT — Branch State Verification**
+>
+> **TRIGGER**: Before creating any new branch.
+>
+> **MANDATORY**: Execute the following commands NOW:
+> ```bash
+> git status
+> git log --oneline -5
+> ```
+>
+> **BLOCK**: End your turn after the tool calls. You are FORBIDDEN from
+> naming or creating a branch until you have confirmed in the next turn that
+> you are on `main`, your working tree is clean, and you have read the recent
+> commit history.
+
 All work must be done on short-lived branches branched from `main`. Use the
 following scope prefixes:
 
@@ -64,20 +80,25 @@ gh pr merge <pr_number> --auto --squash --delete-branch
 > linking it to its corresponding GitHub Issue. PRs without an issue link will
 > be rejected.
 
-### Pre-PR Documentation Checkpoint
+### Pre-PR Gate
 
-Before running `gh pr create`, complete the documentation review pass required
-by the **Documentation Maintenance** skill
-([`.agents/skills/docs-maintenance/SKILL.md`](docs-maintenance/SKILL.md)):
-
-- Identify all markdown files affected by your change.
-- Apply Outcome A (review-only), B (review + update), or C (create new) to
-  each document.
-- Include any updated or new markdown files in the same PR commit.
-
-> [!IMPORTANT]
-> A PR that changes code without a corresponding documentation review is
-> **incomplete**. The documentation step is part of the Definition of Done.
+> [!CAUTION]
+> **ACTIVE CONSTRAINT — Mandatory Pre-PR Verification**
+>
+> **TRIGGER**: Before executing `gh pr create` for any branch.
+>
+> **MANDATORY**: Execute ALL of the following tool calls NOW, in order:
+> 1. `run_command`: `git diff --stat main` — confirm the exact set of changed files
+> 2. `run_command`: `npm run lint` — confirm zero lint errors
+> 3. Read the **Documentation Maintenance** skill and execute its Step 1
+>    file-enumeration constraint before declaring docs complete
+>    → [`docs-maintenance/SKILL.md`](docs-maintenance/SKILL.md)
+>
+> **BLOCK**: End your turn after each tool call. You are FORBIDDEN from
+> running `gh pr create` until ALL three outputs are in context and show:
+> - The diff contains only the intended files
+> - Lint exits with zero errors
+> - Every affected document has been reviewed and its timestamp updated
 
 ## 4. Post-Merge Local Synchronisation
 
@@ -100,4 +121,4 @@ not proceed until the required status checks pass:
 
 <!-- markdownlint-disable MD049 -->
 ---
-*Last Updated: 2026-07-20* | *Last Reviewed: 2026-07-20*
+*Last Updated: 2026-07-21* | *Last Reviewed: 2026-07-21*

@@ -14,6 +14,23 @@ All fragments **must** pass these three checks before being committed. The
 `npm run lint` command (`scripts/lint-fragments.js`) enforces them
 automatically as part of the pre-commit hook.
 
+> [!CAUTION]
+> **ACTIVE CONSTRAINT — Lint Gate Before Any Fragment Commit**
+>
+> **TRIGGER**: Before committing, staging, or opening a PR that includes any
+> change to a fragment file (JS, CSS, FTL, HTML, `configuration.json`,
+> `Language_en_US.properties`, or documentation).
+>
+> **MANDATORY**: Execute the following command NOW:
+> ```bash
+> npm run lint
+> ```
+>
+> **BLOCK**: End your turn after the tool call. You are FORBIDDEN from
+> running `git commit`, `git push`, or `gh pr create` until the lint output
+> is in your context in the next turn and shows **zero errors**. If errors
+> are present, fix them before proceeding.
+
 ## Rule 1 — Localization Coverage
 
 Every property key and display value defined in a fragment's
@@ -87,4 +104,4 @@ node scripts/lint-fragments.js --collection form-fragments
 
 <!-- markdownlint-disable MD049 -->
 ---
-*Last Updated: 2026-07-19* | *Last Reviewed: 2026-07-19*
+*Last Updated: 2026-07-21* | *Last Reviewed: 2026-07-21*

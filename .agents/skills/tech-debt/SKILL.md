@@ -132,16 +132,21 @@ Do **not** raise a tech debt issue for:
 
 ## 6. Batch Deduplication Check
 
-Before raising a new issue, run a quick search to avoid duplicates:
-
-```bash
-# Search open tech debt issues for the affected file or component
-gh issue list --label "tech debt" --state open --search "<fragment-name or filename>"
-```
-
-If an existing open issue already covers the same smell, add a comment to that
-issue rather than creating a duplicate.
+> [!CAUTION]
+> **ACTIVE CONSTRAINT — Deduplication Search Before Raising Any Issue**
+>
+> **TRIGGER**: Before executing `gh issue create` for any tech debt item.
+>
+> **MANDATORY**: Execute the following command NOW:
+> ```bash
+> gh issue list --label "tech debt" --state open --search "<fragment-name or filename>"
+> ```
+>
+> **BLOCK**: End your turn after the tool call. You are FORBIDDEN from
+> running `gh issue create` until the search results are in your context
+> in the next turn. If an existing open issue covers the same smell, add a
+> comment to that issue instead of creating a duplicate.
 
 <!-- markdownlint-disable MD049 -->
 ---
-*Last Updated: 2026-07-20* | *Last Reviewed: 2026-07-20*
+*Last Updated: 2026-07-21* | *Last Reviewed: 2026-07-21*
