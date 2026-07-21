@@ -88,15 +88,42 @@ gh pr merge <pr_number> --auto --squash --delete-branch
 > **TRIGGER**: Before executing `gh pr create` for any branch.
 >
 > **MANDATORY**: Execute ALL of the following tool calls NOW, in order:
-> 1. `run_command`: `git diff --stat main` — confirm the exact set of changed files
-> 2. `run_command`: `npm run lint` — confirm zero lint errors
-> 3. Read the **Documentation Maintenance** skill and execute its Step 1
->    file-enumeration constraint before declaring docs complete
->    → [`docs-maintenance/SKILL.md`](docs-maintenance/SKILL.md)
 >
-> **BLOCK**: End your turn after each tool call. You are FORBIDDEN from
-> running `gh pr create` until ALL three outputs are in context and show:
-> - The diff contains only the intended files
+> **Step 1 — Branch Sync (MUST run first)**
+> ```bash
+> git fetch origin main
+> git status
+> git log --oneline origin/main..HEAD   # shows commits ahead of main
+> git log --oneline HEAD..origin/main   # shows commits you are BEHIND main
+> ```
+> If the "behind" output is non-empty, the branch is stale. Execute:
+> ```bash
+> git rebase origin/main
+> ```
+> If the rebase reports conflicts, resolve them before proceeding. You are
+> FORBIDDEN from opening a PR on a branch that is behind `origin/main`.
+>
+> **Step 2 — Diff Check**
+> ```bash
+> git diff --stat main
+> ```
+> Confirm the diff contains only the intended files.
+>
+> **Step 3 — Lint**
+> ```bash
+> npm run lint
+> ```
+> Confirm lint exits with zero errors.
+>
+> **Step 4 — Docs Review**
+> Read the **Documentation Maintenance** skill and execute its Step 1
+> file-enumeration constraint before declaring docs complete.
+> → [`docs-maintenance/SKILL.md`](docs-maintenance/SKILL.md)
+>
+> **BLOCK**: End your turn after each step's tool call. You are FORBIDDEN
+> from running `gh pr create` until ALL four steps are complete and show:
+> - Branch is at or ahead of `origin/main` (zero commits behind)
+> - Diff contains only the intended files
 > - Lint exits with zero errors
 > - Every affected document has been reviewed and its timestamp updated
 
@@ -122,3 +149,4 @@ not proceed until the required status checks pass:
 <!-- markdownlint-disable MD049 -->
 ---
 *Last Updated: 2026-07-21* | *Last Reviewed: 2026-07-21*
+
