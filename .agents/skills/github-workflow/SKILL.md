@@ -185,8 +185,63 @@ not proceed until the required status checks pass:
 - `Lint Fragments` workflow
 - `Playwright Tests (LDM)` workflow (when applicable)
 
+## 6. Failed CI Check Recovery
+
+> [!CAUTION]
+> **ACTIVE CONSTRAINT — Delete Failed Run Records After Fixing a CI Failure**
+>
+> **TRIGGER**: After pushing a fix commit that addresses a GitHub Actions check
+> failure on any PR branch.
+>
+> **MANDATORY — Step 1: Verify the fix is passing**
+>
+> Wait for the new run to complete, then confirm it is green:
+> ```bash
+> gh run list --branch <branch-name> --limit 5
+> ```
+> End your turn. You are FORBIDDEN from deleting any runs until you have
+> confirmed in the next turn that at least one run shows `completed` /
+> `success` status for the fix commit.
+>
+> **MANDATORY — Step 2: Enumerate all failed runs for this branch**
+>
+> Once the fix is confirmed passing, find every failed run:
+> ```bash
+> gh run list --branch <branch-name> --status failure --json databaseId,name,conclusion \
+>   --jq '.[] | "\(.databaseId)  \(.name)  \(.conclusion)"'
+> ```
+> End your turn after this command. You are FORBIDDEN from proceeding until
+> the failed run IDs are in your context.
+>
+> **MANDATORY — Step 3: Delete each failed run**
+>
+> For every run ID returned in Step 2, execute:
+> ```bash
+> gh run delete <run-id>
+> ```
+> Run this once per failed run. End your turn after each deletion.
+>
+> **MANDATORY — Step 4: Confirm clean history**
+>
+> After all deletions, verify no failed runs remain:
+> ```bash
+> gh run list --branch <branch-name> --status failure
+> ```
+>
+> **BLOCK**: You are FORBIDDEN from declaring the PR fix complete until this
+> command returns an **empty list**. Only runs on the current branch are
+> deleted — do not delete runs from `main` or other branches.
+>
+> > [!NOTE]
+> > **Why this matters**: Failed CI runs are our signal that corrective action
+> > is needed. Once the fix is merged and verified, retaining failure records
+> > creates noise that obscures the true signal. A clean, all-green run history
+> > means every visible failure is an active, unresolved issue — not a resolved
+> > one that was already addressed.
+
 <!-- markdownlint-disable MD049 -->
 ---
 *Last Updated: 2026-07-21* | *Last Reviewed: 2026-07-21*
+
 
 
