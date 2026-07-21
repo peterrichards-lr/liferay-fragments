@@ -16,11 +16,64 @@ description: >
 > Issue **before** any development work begins. Writing code without a
 > corresponding issue is not permitted.
 
-For each issue, the contributor must:
+### Mandatory Issue Content
 
-1. Analyse the requirements against the current codebase.
-2. Write a step-by-step **Implementation Plan** as part of the issue body or as
-   a linked comment before the first commit.
+> [!CAUTION]
+> **ACTIVE CONSTRAINT — Issue Content Completeness**
+>
+> **TRIGGER**: Before creating any GitHub Issue (via `gh issue create`,
+> `gh-issue-sync.cjs`, or `gh issue edit`).
+>
+> **MANDATORY**: Confirm the issue body contains ALL three required sections.
+> If any section is absent, add it before saving the issue.
+>
+> **BLOCK**: End your turn after creating or editing the issue. You are
+> FORBIDDEN from beginning any implementation work until you have read back
+> the issue body (via `gh issue view <number> --json body`) in the next turn
+> and confirmed all three sections are present.
+
+Every issue body **MUST** contain the following three sections:
+
+#### 1. Description
+
+What is the problem, change, or request? Provide enough context for any
+contributor to understand the scope without needing to ask.
+
+```markdown
+## Description
+
+<Clear statement of the problem or desired change. Include relevant
+behaviour, error messages, or user-facing impact.>
+```
+
+#### 2. Analysis
+
+How does this affect the codebase? What is the root cause (for bugs) or
+the technical approach (for features/enhancements)?
+
+```markdown
+## Analysis
+
+<Root cause identification, affected files/components, constraints,
+or chosen approach with rationale.>
+```
+
+#### 3. Implementation Plan
+
+A step-by-step list of the concrete actions required to resolve the issue.
+This does not need to be exhaustive, but must be specific enough to act on.
+
+```markdown
+## Implementation Plan
+
+1. <First concrete action>
+2. <Second concrete action>
+3. <...>
+```
+
+> [!NOTE]
+> For Epic issues created via `gh-issue-sync.cjs`, embed all three sections
+> in the `"body"` field of the JSON plan file before running the sync.
 
 ## 2. Tool: `gh-issue-sync.cjs`
 
