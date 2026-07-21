@@ -87,9 +87,44 @@ gh pr merge <pr_number> --auto --squash --delete-branch
 >
 > **TRIGGER**: Before executing `gh pr create` for any branch.
 >
-> **MANDATORY**: Execute ALL of the following tool calls NOW, in order:
+> **MANDATORY**: Execute ALL of the following steps NOW, in order. Each step
+> requires a tool call followed by ending your turn before proceeding.
 >
-> **Step 1 — Branch Sync (MUST run first)**
+> ---
+>
+> **Step 1 — Issue Verification (MUST run first)**
+>
+> Identify every issue number you intend to close with this PR. For **each**
+> issue number, execute:
+> ```bash
+> gh issue view <number> --json number,title,state,body
+> ```
+>
+> **BLOCK**: End your turn after each `gh issue view` call. You are FORBIDDEN
+> from proceeding until the issue output is in context and you have confirmed:
+>
+> - [ ] The issue **exists** (command did not return a 404/error)
+> - [ ] The issue **state is `OPEN`** (not already closed by another PR)
+> - [ ] The issue body contains a **Description** section
+> - [ ] The issue body contains an **Analysis** section (root cause, approach,
+>       or how to resolve/implement the change)
+> - [ ] The issue body contains an **Implementation Plan** section (step-by-step
+>       actions)
+>
+> If any section is missing, update the issue body before proceeding:
+> ```bash
+> gh issue edit <number> --body "<updated body with all required sections>"
+> ```
+>
+> > [!NOTE]
+> > A single PR may close multiple issues where it makes logical sense — for
+> > example, closing the last sub-issue of an epic simultaneously closes the
+> > parent epic. List all issue numbers with `Closes #X` / `Closes #Y` in the
+> > PR body. Each linked issue must individually pass this verification.
+>
+> ---
+>
+> **Step 2 — Branch Sync**
 > ```bash
 > git fetch origin main
 > git status
@@ -103,25 +138,29 @@ gh pr merge <pr_number> --auto --squash --delete-branch
 > If the rebase reports conflicts, resolve them before proceeding. You are
 > FORBIDDEN from opening a PR on a branch that is behind `origin/main`.
 >
-> **Step 2 — Diff Check**
+> **Step 3 — Diff Check**
 > ```bash
 > git diff --stat main
 > ```
 > Confirm the diff contains only the intended files.
 >
-> **Step 3 — Lint**
+> **Step 4 — Lint**
 > ```bash
 > npm run lint
 > ```
 > Confirm lint exits with zero errors.
 >
-> **Step 4 — Docs Review**
+> **Step 5 — Docs Review**
 > Read the **Documentation Maintenance** skill and execute its Step 1
 > file-enumeration constraint before declaring docs complete.
 > → [`docs-maintenance/SKILL.md`](docs-maintenance/SKILL.md)
 >
-> **BLOCK**: End your turn after each step's tool call. You are FORBIDDEN
-> from running `gh pr create` until ALL four steps are complete and show:
+> ---
+>
+> **BLOCK**: You are FORBIDDEN from running `gh pr create` until ALL five
+> steps are complete and show:
+> - Every linked issue exists, is open, and has Description + Analysis +
+>   Implementation Plan sections
 > - Branch is at or ahead of `origin/main` (zero commits behind)
 > - Diff contains only the intended files
 > - Lint exits with zero errors
@@ -149,4 +188,5 @@ not proceed until the required status checks pass:
 <!-- markdownlint-disable MD049 -->
 ---
 *Last Updated: 2026-07-21* | *Last Reviewed: 2026-07-21*
+
 
