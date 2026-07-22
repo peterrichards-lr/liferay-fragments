@@ -37,6 +37,8 @@ monolithic document.
 | **E2E Verification** | Running E2E tests, capturing screenshots, promoting visual baselines, or interpreting test results | [`.agents/skills/e2e-verification/SKILL.md`](skills/e2e-verification/SKILL.md) |
 | **Documentation Maintenance** | After completing any implementation task — review affected docs, update timestamps, and create missing documentation | [`.agents/skills/docs-maintenance/SKILL.md`](skills/docs-maintenance/SKILL.md) |
 | **Tech Debt** | Whenever a code smell, duplication, over-complexity, or other debt signal is spotted during any task | [`.agents/skills/tech-debt/SKILL.md`](skills/tech-debt/SKILL.md) |
+| **Sequential Workflows** | Executing any multi-phase task (scaffold → lint → build → E2E → docs) where phase ordering and gate passing must be enforced | [`.agents/skills/sequential-workflows/SKILL.md`](skills/sequential-workflows/SKILL.md) |
+| **Multi-Agent Collaboration** | Splitting a task across concurrent or hierarchical subagents — research workers, parallel builders, or delegated pipelines | [`.agents/skills/multi-agent-collaboration/SKILL.md`](skills/multi-agent-collaboration/SKILL.md) |
 | **No Assumptions** | Always active — before making any technical statement, verify it against actual code or documentation | [`.agents/skills/no-assumptions/SKILL.md`](skills/no-assumptions/SKILL.md) |
 
 ## Existing Fragment Skills
@@ -57,4 +59,4 @@ the corresponding task:
 
 <!-- markdownlint-disable MD049 -->
 ---
-*Last Updated: 2026-07-21* | *Last Reviewed: 2026-07-21*
+*Last Updated: 2026-07-22* | *Last Reviewed: 2026-07-22*
