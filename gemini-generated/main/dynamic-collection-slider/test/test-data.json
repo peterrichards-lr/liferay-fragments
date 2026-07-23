@@ -127,5 +127,20 @@
       "displayStyle": "split",
       "autoplayInterval": "5000"
     }
+  },
+  "verification": {
+    "requiredSelectors": [
+      {
+        "selector": ".slider-slide",
+        "minCount": 1,
+        "description": "At least one slide must render (proves collection items were loaded)"
+      }
+    ],
+    "forbiddenSelectors": [
+      {
+        "selector": "[id^='error-']:not(.d-none)",
+        "description": "Error banner must not be visible (no fetch or API error occurred)"
+      }
+    ]
   }
 }

@@ -22,72 +22,67 @@ test.describe('Responsive Fragment Rendering', () => {
       page,
       baseURL,
     }) => {
-      const errors = [];
-      page.on('pageerror', (err) => errors.push(err.message));
+      // ─── Unified Failure Accumulator ─────────────────────────────────────────
+      // ALL failure signals push to failures[]. No signal is silently swallowed.
+      // The screenshot is always attempted so the gallery captures the broken state
+      // as evidence. A single expect at the end reports the full list.
+      const failures = [];
+
+      // Capture all browser console errors (not just TypeError/ReferenceError).
+      // Filter only benign noise (favicon 404s, expected Liferay resource 404s).
+      page.on('pageerror', (err) => {
+        failures.push(`JS exception: ${err.message}`);
+      });
       page.on('console', (msg) => {
         if (msg.type() === 'error') {
           const text = msg.text();
           if (!text.includes('favicon') && !text.includes('status of 404')) {
-            errors.push(text);
+            failures.push(`Console error: ${text}`);
           }
         }
       });
 
-      // 1. Go directly to the generated page
+      // 1. Navigate to the generated test page
       const base = baseURL || process.env.BASE_URL || 'http://localhost:8080';
       const response = await page.goto(base + pageInfo.url);
 
-      // Fail early if navigation returns an error page (e.g. 404, 500)
+      // HTTP 4xx/5xx — push to failures (do not throw early, so screenshot still runs)
       if (response) {
         const status = response.status();
         if (status >= 400) {
-          throw new Error(
-            `Page navigation failed with status code ${status} for URL: ${pageInfo.url}`
+          failures.push(
+            `Page navigation failed with HTTP ${status} for URL: ${pageInfo.url}`
           );
         }
       }
 
-      // 2. Wait for the page to load (stretching timeout in CI to handle slow runner initialization)
+      // 2. Wait for network idle (best-effort — timeout is non-fatal)
       try {
         const idleTimeout = process.env.CI ? 15000 : 5000;
         await page.waitForLoadState('networkidle', { timeout: idleTimeout });
       } catch (e) {
-        // Ignore networkidle timeouts to prevent background requests from blocking test completion
+        // Ignore networkidle timeouts — background requests must not block completion
       }
 
-      // 3. Inject CSS to hide the Liferay navigation menu visually.
-      // This prevents the giant menu of 124 test pages from crushing the fragment in the screenshot.
+      // 3. Inject CSS to hide Liferay chrome (navigation, footer, control menu)
       const isHeaderComponent =
         pageInfo.collectionFolder === 'header-components' ||
         pageInfo.collectionName === 'Header Components';
       await page.addStyleTag({
         content: `
           ${isHeaderComponent ? '' : '#banner, #wrapper header, .navbar, .site-navigation,'}
-          #controlMenu,
-          .control-menu,
-          #productMenu,
-          .product-menu,
-          .lfr-product-menu-panel,
-          .sidenav,
-          .sidenav-slider,
-          .sidenav-menu,
-          #sidenav-slider-productMenu,
-          .c-admin-user-personal-bar,
-          #footer,
-          footer,
-          .footer,
-          #wrapper footer,
-          [role="contentinfo"],
-          .powered-by,
-          [id*="footer"],
-          [class*="footer"] { 
-            display: none !important; 
+          #controlMenu, .control-menu, #productMenu, .product-menu,
+          .lfr-product-menu-panel, .sidenav, .sidenav-slider, .sidenav-menu,
+          #sidenav-slider-productMenu, .c-admin-user-personal-bar,
+          #footer, footer, .footer, #wrapper footer,
+          [role="contentinfo"], .powered-by, [id*="footer"], [class*="footer"] {
+            display: none !important;
             visibility: hidden !important;
             opacity: 0 !important;
             width: 0 !important;
             height: 0 !important;
           }
-          html, body, #wrapper { 
+          html, body, #wrapper {
             margin: 0 !important;
             padding: 0 !important;
             margin-left: 0 !important;
@@ -99,9 +94,7 @@ test.describe('Responsive Fragment Rendering', () => {
           .fragment-menu .navbar-nav > li:nth-child(n+6),
           .fragment-menu .navbar-nav > .nav-item:nth-child(n+6),
           .fragment-menu .navbar-nav > .lfr-nav-item:nth-child(n+6),
-          .fragment-menu ul > li:nth-child(n+6) {
-            display: none !important;
-          }
+          .fragment-menu ul > li:nth-child(n+6) { display: none !important; }
           /* Do not hide nested navbars inside page fragments */
           div[id^="fragment-"] .navbar {
             display: flex !important;
@@ -113,33 +106,30 @@ test.describe('Responsive Fragment Rendering', () => {
         `,
       });
 
-      // 4. Verify actual fragment rendering
-      // In Liferay, a successfully rendered fragment will have these markers
+      // 4. Locate fragment element and wrapper
       const fragmentSelector =
         'div[id^="fragment-"], .lfr-layout-structure-item-fragment, .lfr-fragment-entry';
       const wrapper = page.locator('#wrapper, .portlet-layout');
 
-      // Ensure the main wrapper is visible
+      // Main wrapper must be visible — hard prerequisite
       await expect(wrapper.first()).toBeVisible({ timeout: 15000 });
 
-      // FAIL if we see "Fragment is unavailable" or "not found" text patterns
+      // "Fragment is unavailable" — Liferay-rendered error
       const failureText = page.locator(
         'text=/Fragment (is unavailable|not found)/i'
       );
-      const failureCount = await failureText.count();
-      if (failureCount > 0) {
-        throw new Error(
-          `Fragment '${pageInfo.fragmentName}' failed to render! Found Liferay error text on page.`
+      if ((await failureText.count()) > 0) {
+        failures.push(
+          `Fragment '${pageInfo.fragmentName}' failed to render — Liferay reported "Fragment is unavailable or not found"`
         );
       }
 
-      // 4. Capture Visual Snapshot
+      // ─── Capture Visual Snapshot ──────────────────────────────────────────────
       if (pageInfo.excludeFromGallery) {
         console.log(
           `[SKIP] Skipping screenshot for ${pageInfo.fragmentName} (excludeFromGallery: true)`
         );
       } else {
-        // Create a clean filename: collection-fragment-viewport.png
         const viewportName = test.info().project.name;
         const snapshotDir = path.join(
           __dirname,
@@ -159,48 +149,54 @@ test.describe('Responsive Fragment Rendering', () => {
           `${pageInfo.fragmentName}-${viewportName}.html`
         );
 
-        // Target the fragment element directly, scroll it into view, and screenshot it
+        // Locate the primary fragment element to screenshot
         let fragmentElement;
         const fragmentCount = await page.locator(fragmentSelector).count();
         if (fragmentCount === 0) {
-          throw new Error(
-            `Fragment '${pageInfo.fragmentName}' was not found on the page! (Selector: ${fragmentSelector} returned 0 elements)`
+          failures.push(
+            `Fragment '${pageInfo.fragmentName}' was not found on the page (selector: ${fragmentSelector} returned 0 elements)`
           );
-        }
-        if (pageInfo.fragmentName === 'Master Page Header') {
-          fragmentElement = page.locator('#wrapper, .portlet-layout').first();
-        } else if (fragmentCount > 1) {
-          fragmentElement = page
-            .locator('.lfr-layout-structure-item-row, .row')
-            .first();
         } else {
-          fragmentElement = page.locator(fragmentSelector).first();
+          if (pageInfo.fragmentName === 'Master Page Header') {
+            fragmentElement = page.locator('#wrapper, .portlet-layout').first();
+          } else if (fragmentCount > 1) {
+            fragmentElement = page
+              .locator('.lfr-layout-structure-item-row, .row')
+              .first();
+          } else {
+            fragmentElement = page.locator(fragmentSelector).first();
+          }
         }
 
-        try {
+        if (fragmentElement) {
+          // ─── Phase 1: Content-Quality Assertions ───────────────────────────
+          // All checks accumulate to failures[]. We do NOT throw early so that
+          // every failure is reported and the screenshot is still captured.
+
           await expect(fragmentElement).toBeVisible({ timeout: 5000 });
           await fragmentElement.scrollIntoViewIfNeeded();
 
-          // Check for any visible loading spinners/animations within the fragment
+          // Loading spinners — wait for them to disappear
           const loaders = fragmentElement.locator(
-            '.loading-animation, .loading-animation-squares, .spinner, .loading-animation-bounce, .loading-animation-dots, [class*="loading-animation"], [class*="spinner"]'
+            '.loading-animation, .loading-animation-squares, .spinner, ' +
+            '.loading-animation-bounce, .loading-animation-dots, ' +
+            '[class*="loading-animation"], [class*="spinner"]'
           );
           const loaderCount = await loaders.count();
           for (let i = 0; i < loaderCount; i++) {
             const loader = loaders.nth(i);
             if (await loader.isVisible()) {
-              // Wait for it to become hidden
               try {
                 await expect(loader).toBeHidden({ timeout: 10000 });
-              } catch (err) {
-                throw new Error(
-                  `Fragment '${pageInfo.fragmentName}' is stuck in a loading state. Spinner/loader remains visible after 10s.`
+              } catch {
+                failures.push(
+                  `Fragment '${pageInfo.fragmentName}' is stuck in a loading state — spinner remains visible after 10s`
                 );
               }
             }
           }
 
-          // Check for any visible loading text elements (e.g. "Loading object...", "Loading collection...")
+          // Loading text — wait for it to disappear
           const loadingTexts = fragmentElement.locator('text=/Loading/i');
           const loadingTextCount = await loadingTexts.count();
           for (let i = 0; i < loadingTextCount; i++) {
@@ -208,24 +204,24 @@ test.describe('Responsive Fragment Rendering', () => {
             if (await loader.isVisible()) {
               try {
                 await expect(loader).toBeHidden({ timeout: 15000 });
-              } catch (err) {
-                throw new Error(
-                  `Fragment '${pageInfo.fragmentName}' is stuck in a loading state. Loading text '${await loader.textContent()}' remains visible after 15s.`
+              } catch {
+                failures.push(
+                  `Fragment '${pageInfo.fragmentName}' is stuck in a loading state — "${await loader.textContent()}" remains visible after 15s`
                 );
               }
             }
           }
 
-          // Let rendering settle for 500ms (especially for leaflet maps or chart animations)
+          // Let rendering settle (leaflet maps, chart animations)
           await page.waitForTimeout(500);
 
+          // Fragment-specific interaction before screenshot
           if (pageInfo.fragmentName === 'Content Map') {
             const marker = page.locator('.leaflet-marker-icon').first();
             await expect(marker).toBeVisible({ timeout: 5000 });
             await marker.click();
             const popup = page.locator('.leaflet-popup-content-wrapper');
             await expect(popup).toBeVisible({ timeout: 5000 });
-            // Extra wait for popup transition to finish
             await page.waitForTimeout(500);
           }
 
@@ -240,14 +236,10 @@ test.describe('Responsive Fragment Rendering', () => {
             } else {
               await page.evaluate(() => {
                 const sb = document.querySelector('#searchBar');
-                if (sb) {
-                  sb.classList.add('show');
-                  sb.style.display = 'block';
-                }
+                if (sb) { sb.classList.add('show'); sb.style.display = 'block'; }
               });
             }
             if (pageInfo.fragmentName !== 'Master Page Header') {
-              // Use the parent row to capture the expanded bar in context without clipping
               fragmentElement = page
                 .locator('.lfr-layout-structure-item-row, .row')
                 .first();
@@ -260,94 +252,110 @@ test.describe('Responsive Fragment Rendering', () => {
               await triggerEl.click();
               await page.waitForTimeout(500);
             }
-            // Use the wrapper to capture the modal overlay in context without clipping
             fragmentElement = page.locator('#wrapper, .portlet-layout').first();
           }
 
-          // Detect fragments that rendered the shared Liferay empty state instead of real content.
-          // renderEmptyState() injects <div class="c-empty-state c-empty-state-animation"> into
-          // the fragment. A fragment that shows an empty state has NOT passed — its data failed
-          // to load (missing collection seed, API permission issue, or bad config).
-          // This check must run BEFORE the bounding box check because CSS min-height rules
-          // (e.g. min-height: 350px on .slider-track) give the container a non-zero height even
-          // when completely empty, which would fool the height > 10px guard below.
+          // Generic: empty state (applies to all fragments using renderEmptyState)
+          // Must run before bounding box — CSS min-height keeps height > 10px even when empty
           const emptyState = fragmentElement.locator('.c-empty-state');
-          const emptyStateCount = await emptyState.count();
-          if (emptyStateCount > 0 && (await emptyState.first().isVisible())) {
-            throw new Error(
-              `Fragment '${pageInfo.fragmentName}' rendered an empty state instead of content. ` +
-              `Data was not loaded — check collection seeding, API permissions, or fragment configuration. ` +
-              `(Selector: .c-empty-state found ${emptyStateCount} element(s) inside fragment)`
+          if (
+            (await emptyState.count()) > 0 &&
+            (await emptyState.first().isVisible())
+          ) {
+            failures.push(
+              `Fragment '${pageInfo.fragmentName}' rendered an empty state instead of content — ` +
+              `data was not loaded (check collection seeding, API permissions, or fragment configuration)`
             );
           }
 
-          // Verify the bounding box is non-zero and has height
-
+          // Generic: bounding box height
           const box = await fragmentElement.boundingBox();
           if (!box || box.height <= 10) {
-            throw new Error(
+            failures.push(
               `Fragment '${pageInfo.fragmentName}' rendered with insufficient height (${
                 box ? box.height : 0
-              }px). It might be empty or failing to render content.`
+              }px) — it may be empty or failing to render content`
             );
           }
 
-          await fragmentElement.screenshot({
-            path: snapshotPath,
-            timeout: 5000,
-          });
+          // ─── Phase 1b: Per-Fragment Verification Block ──────────────────────
+          // Each fragment can declare custom success criteria in test-data.json
+          // under a "verification" key. This is passed through to pageInfo by
+          // global-setup.js. Generic checks above are always applied in addition.
+          //
+          // Schema:
+          //   verification.requiredSelectors: [{ selector, minCount, description }]
+          //   verification.forbiddenSelectors: [{ selector, description }]
+          const verification = pageInfo.verification;
+          if (verification) {
+            // Required selectors — must be present and meet minCount threshold
+            for (const req of verification.requiredSelectors || []) {
+              const found = await fragmentElement
+                .locator(req.selector)
+                .count();
+              const min = req.minCount ?? 1;
+              if (found < min) {
+                failures.push(
+                  `Verification failed — ${req.description}: ` +
+                  `required selector '${req.selector}' found ${found} element(s), expected ≥ ${min}`
+                );
+              }
+            }
 
-          // Capture and save the outer HTML of the fragment
-          const htmlContent = await fragmentElement.evaluate(
-            (el) => el.outerHTML
-          );
-          fs.writeFileSync(htmlPath, htmlContent, 'utf8');
-        } catch (e) {
-          // Fallback to wrapper screenshot if fragment is 0-height or missing (e.g., due to missing prerequisites)
-          console.warn(
-            `[WARN] Could not capture fragment element directly for ${pageInfo.fragmentName}. Falling back to wrapper. Reason: ${e.message}`
-          );
-
-          // Propagate the specific failure if it's a verification assertion
-          if (
-            e.message.includes('stuck in a loading state') ||
-            e.message.includes('insufficient height')
-          ) {
-            errors.push(e.message);
+            // Forbidden selectors — must not be visible
+            for (const forb of verification.forbiddenSelectors || []) {
+              const el = fragmentElement.locator(forb.selector).first();
+              if (
+                (await fragmentElement.locator(forb.selector).count()) > 0 &&
+                (await el.isVisible())
+              ) {
+                failures.push(
+                  `Verification failed — ${forb.description}: ` +
+                  `forbidden selector '${forb.selector}' is visible`
+                );
+              }
+            }
           }
 
-          await wrapper
-            .first()
-            .screenshot({ path: snapshotPath, timeout: 5000 });
-
-          // Capture and save the outer HTML of the fallback wrapper
+          // ─── Phase 2: Screenshot Capture ────────────────────────────────────
+          // Always attempt the screenshot — even if Phase 1 found failures —
+          // so the gallery shows the broken state as evidence for diagnosis.
           try {
-            const fallbackHtmlContent = await wrapper
-              .first()
-              .evaluate((el) => el.outerHTML);
-            fs.writeFileSync(htmlPath, fallbackHtmlContent, 'utf8');
-          } catch (htmlErr) {
-            console.warn(
-              `[WARN] Could not capture fallback HTML for ${pageInfo.fragmentName}: ${htmlErr.message}`
+            await fragmentElement.screenshot({
+              path: snapshotPath,
+              timeout: 5000,
+            });
+            const htmlContent = await fragmentElement.evaluate(
+              (el) => el.outerHTML
             );
+            fs.writeFileSync(htmlPath, htmlContent, 'utf8');
+          } catch (e) {
+            // Fallback to full wrapper screenshot if element capture fails
+            console.warn(
+              `[WARN] Element screenshot failed for ${pageInfo.fragmentName}, falling back to wrapper. Reason: ${e.message}`
+            );
+            try {
+              await wrapper.first().screenshot({ path: snapshotPath, timeout: 5000 });
+              const fallbackHtml = await wrapper.first().evaluate((el) => el.outerHTML);
+              fs.writeFileSync(htmlPath, fallbackHtml, 'utf8');
+            } catch (wrapperErr) {
+              failures.push(
+                `Screenshot capture failed entirely for '${pageInfo.fragmentName}': ${wrapperErr.message}`
+              );
+            }
           }
         }
       }
 
-      // Log if there were severe errors
-      if (errors.length > 0) {
-        console.log(
-          `[WARN] Console errors in ${pageInfo.fragmentName}:`,
-          errors
-        );
+      // ─── Final Unified Assertion ──────────────────────────────────────────────
+      // Report every accumulated failure in one place so Playwright marks the test
+      // as 'failed' and the gallery shows 🔴 Failed (Test) with the full detail.
+      if (failures.length > 0) {
+        const report =
+          `Fragment '${pageInfo.fragmentName}' failed verification with ${failures.length} issue(s):\n` +
+          failures.map((f, i) => `  ${i + 1}. ${f}`).join('\n');
+        throw new Error(report);
       }
-
-      // Soft assert on errors
-      expect(
-        errors.filter(
-          (e) => e.includes('TypeError') || e.includes('ReferenceError')
-        ).length
-      ).toBe(0);
     });
   }
 });

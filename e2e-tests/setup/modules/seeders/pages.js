@@ -1200,6 +1200,10 @@ async function seed(ctx, apiContext) {
       siteERC: siteERC,
       excludeFromGallery:
         isDeprecatedFlag || (testData ? !!testData.excludeFromGallery : false),
+      // Per-fragment custom verification criteria (requiredSelectors / forbiddenSelectors).
+      // Defined in each fragment's test/test-data.json under "verification".
+      // Applied by fragments.spec.js after generic content-quality checks.
+      verification: testData ? (testData.verification || null) : null,
     });
   }
 
