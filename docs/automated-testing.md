@@ -59,7 +59,22 @@ configured.
 
 Ensure the following tools are installed and available in your `PATH`:
 
-- `node` & `npm`
+- `node` & `npm` — **via [nvm](https://github.com/nvm-sh/nvm) (recommended)**
+
+  > [!NOTE]
+  > `test-runner.sh` includes an **nvm self-bootstrap**: if `npm` is not on
+  > `PATH` when the script starts and `$NVM_DIR/nvm.sh` exists, it silently
+  > sources nvm before the dependency check. This covers non-interactive agent
+  > and cron invocations on macOS where `.zshrc`/`.bashrc` is not sourced.
+  >
+  > If your nvm install lives in a non-standard location, set `NVM_DIR`
+  > before invoking the script:
+  > ```bash
+  > NVM_DIR=/path/to/nvm bash scripts/test-runner.sh
+  > ```
+  >
+  > In CI environments where `node`/`npm` are installed globally (not via nvm),
+  > the bootstrap block is a no-op and adds no overhead.
 - `docker`
 - `curl` & `jq`
 - `ldm` (Liferay Docker Manager, minimum version 2.5.0)
@@ -429,4 +444,4 @@ sequenceDiagram
 
 ## <!-- markdownlint-disable MD049 -->
 
-_Last Updated: 2026-07-09_ | _Last Reviewed: 2026-07-09_
+_Last Updated: 2026-07-23_ | _Last Reviewed: 2026-07-23_
