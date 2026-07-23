@@ -292,6 +292,21 @@ if [ "$VERBOSE" = true ]; then echo " Verbose Mode: Enabled"; fi
 echo " (Press Ctrl+C to safely abort and cleanup at any time)"
 echo "======================================================"
 
+# nvm self-bootstrap: silently source nvm if npm is not already on PATH.
+# This is a no-op in CI (node/npm are pre-installed globally) and in
+# interactive shells (nvm already sourced by .zshrc/.bashrc). It fixes
+# the "Required dependency 'npm' is not installed" failure when the script
+# is invoked from a non-interactive agent or cron context on macOS with nvm.
+if ! command -v npm &> /dev/null && [ -s "${NVM_DIR:-$HOME/.nvm}/nvm.sh" ]; then
+    # shellcheck source=/dev/null
+    source "${NVM_DIR:-$HOME/.nvm}/nvm.sh"
+    # If a .nvmrc exists in the project root, honour it; otherwise use the
+    # current default nvm version.
+    if [ -f "$(git rev-parse --show-toplevel 2>/dev/null)/.nvmrc" ]; then
+        nvm use --silent 2>/dev/null || true
+    fi
+fi
+
 # 1. Dependency Validation (Fail Fast)
 echo "[1/5] Validating dependencies..."
 
