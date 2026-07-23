@@ -91,15 +91,42 @@ Commit the updated snapshots under `docs/images/live/` and the regenerated
 ## 4. Interpreting Results
 
 After a test run, Playwright outputs a summary of passed, failed, and skipped
-tests. Key indicators:
+tests. Key indicators in the console:
 
 - **`[SKIP]`** — Fragment has `excludeFromGallery: true` in its
   `test-data.json`. The fragment is still functionally verified; only the
   screenshot is skipped.
-- **`✓`** — Fragment rendered correctly and (if applicable) screenshot
-  captured.
+- **`✓`** — Fragment rendered correctly and (if applicable) screenshot captured.
 - **`✘`** — Fragment failed to render. Check the Playwright HTML report under
   `e2e-tests/playwright-report/`.
+
+### Gallery Status Labels
+
+The visual gallery (`docs/gallery.md`) shows per-fragment, per-viewport status
+derived from the Playwright JSON results file (`playwright-results.json`), the
+visual pixel analysis (`visual-analysis.json`), and the screenshot file.
+
+Status priority (highest wins):
+
+| Icon | Label | Source | Meaning |
+|---|---|---|---|
+| 🔴 | **Failed (Test)** | `playwright-results.json` | Playwright test threw an assertion error. The first line of the error message is shown inline. |
+| 🔴 | **Failed (404 Page)** | HTML snapshot / file size | Page returned 404 or the file size matches a known Liferay 404 page. |
+| ⚠️ | **Blank/Solid Color** | `visual-analysis.json` | Pixel analysis detected a blank or solid-colour image. |
+| ❌ | **Diff %** | `visual-analysis.json` | Snapshot differs from baseline by more than 1%. Diff image linked. |
+| 🟢 | **Passed** | `playwright-results.json` | Playwright test passed. |
+| ⏭️ | **Skipped** | `playwright-results.json` | Test was skipped (`excludeFromGallery: true`). |
+| ⚠️ | **Unverified** | Fallback | Results file exists but no entry for this fragment/viewport, or no PNG file found. |
+
+> [!NOTE]
+> If `playwright-results.json` is absent (e.g. gallery regenerated manually),
+> the gallery falls back to the legacy file-existence check and shows
+> `🟢 Passed` for any fragment with a PNG on disk. This is less accurate but
+> preserves backward compatibility.
+
+> [!IMPORTANT]
+> The gallery is now regenerated on **both pass and fail** runs, so it always
+> reflects the latest test outcomes — including fragments that failed.
 
 ## 4a. Empty-State False-Positive Detection
 
