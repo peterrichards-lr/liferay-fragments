@@ -29,7 +29,11 @@ export default defineConfig({
     : process.env.CI
       ? 1
       : 2,
-  reporter: [['html', { open: 'never' }], ['list']],
+  reporter: [
+    ['html', { open: 'never' }],
+    ['list'],
+    ['json', { outputFile: 'playwright-results.json' }],
+  ],
   globalSetup: require.resolve('./tests/global-setup'),
   globalTeardown: require.resolve('./tests/global-teardown'),
   use: {

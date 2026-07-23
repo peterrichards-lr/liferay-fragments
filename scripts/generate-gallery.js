@@ -36,6 +36,60 @@ function generateGallery() {
     console.warn('[WARN] Could not load visual-analysis.json:', e.message);
   }
 
+  // Load Playwright JSON test results if available.
+  // The JSON reporter (playwright.config.js) writes playwright-results.json with per-test
+  // status ('passed'/'failed'/'skipped') and error messages. We build a lookup map keyed
+  // by "{fragmentName}-{viewport}" so generate-gallery.js can show actual test outcomes
+  // instead of the misleading file-existence check.
+  const playwrightResultsMap = {};
+  const playwrightResultsPaths = [
+    path.join(process.cwd(), 'e2e-tests', 'playwright-results.json'),
+    path.join(process.cwd(), 'docs', 'test-results', 'playwright-results.json'),
+  ];
+  for (const resultsPath of playwrightResultsPaths) {
+    if (fs.existsSync(resultsPath)) {
+      try {
+        const pw = JSON.parse(fs.readFileSync(resultsPath, 'utf8'));
+        // Playwright JSON structure: { suites: [{ specs: [{ title, tests: [{ projectName, status, results: [{error}] }] }] }] }
+        const flattenSpecs = (suites) => {
+          const specs = [];
+          for (const suite of suites || []) {
+            specs.push(...(suite.specs || []));
+            specs.push(...flattenSpecs(suite.suites));
+          }
+          return specs;
+        };
+        const specs = flattenSpecs(pw.suites || []);
+        for (const spec of specs) {
+          // Title format: "Verify: {collectionFolder} > {fragmentName}"
+          const titleMatch = spec.title.match(/^Verify:\s+.+\s+>\s+(.+)$/);
+          if (!titleMatch) continue;
+          const fragmentName = titleMatch[1].trim();
+          for (const test of spec.tests || []) {
+            const viewport = (test.projectName || 'desktop').toLowerCase();
+            const key = `${fragmentName}-${viewport}`;
+            const errorMsg =
+              test.results &&
+              test.results[0] &&
+              test.results[0].error &&
+              test.results[0].error.message
+                ? test.results[0].error.message.split('\n')[0].trim()
+                : null;
+            playwrightResultsMap[key] = {
+              status: test.status || 'unknown',
+              error: errorMsg,
+            };
+          }
+        }
+        console.log(`[INFO] Loaded Playwright results from: ${resultsPath} (${Object.keys(playwrightResultsMap).length} entries)`);
+        break;
+      } catch (e) {
+        console.warn(`[WARN] Could not load playwright-results.json from ${resultsPath}:`, e.message);
+      }
+    }
+  }
+  const hasPlaywrightResults = Object.keys(playwrightResultsMap).length > 0;
+
   // Determine latest tested version and status
   let testedVersion = 'Unknown';
   let testsPassed = false;
@@ -261,7 +315,24 @@ function generateGallery() {
             }
           }
 
-          if (is404) {
+          // Status priority (highest wins):
+          // 1. 🔴 Failed (Test)   — Playwright reported status: 'failed'
+          // 2. 🔴 Failed (404)    — page HTML contains 404 markers
+          // 3. ⚠️ Blank/Anomaly  — verify-snapshots.js pixel analysis
+          // 4. ❌ Diff %          — verify-snapshots.js baseline regression
+          // 5. 🟢 Passed          — Playwright reported status: 'passed'
+          // 6. ⏭️ Skipped         — Playwright reported status: 'skipped'
+          // 7. ⚠️ Unverified      — no Playwright result and no PNG file
+          const pwKey = `${fragMetadata.name}-${vp}`;
+          const pwResult = playwrightResultsMap[pwKey];
+
+          if (pwResult && pwResult.status === 'failed') {
+            // Highest priority: actual Playwright test failure
+            const errDetail = pwResult.error
+              ? `<br><small>${pwResult.error.replace(/[`*_<>]/g, ' ').substring(0, 120)}...</small>`
+              : '';
+            liveImages[vp + '_status'] = `<br>🔴 **Failed (Test)**${errDetail}`;
+          } else if (is404) {
             liveImages[vp + '_status'] = '<br>🔴 **Failed (404 Page)**';
           } else if (
             visualAnalysis &&
@@ -275,10 +346,24 @@ function generateGallery() {
               const diffFileName = `${safeCollectionName}-${safeFragmentName}-${vp}-diff.png`;
               liveImages[vp + '_status'] =
                 `<br>❌ **Diff: ${analysisResult.diffPercentage.toFixed(1)}%**<br>[View Diff](./images/diffs/${diffFileName})`;
+            } else if (pwResult && pwResult.status === 'passed') {
+              liveImages[vp + '_status'] = '<br>🟢 **Passed**';
+            } else if (pwResult && pwResult.status === 'skipped') {
+              liveImages[vp + '_status'] = '<br>⏭️ **Skipped**';
             } else {
               liveImages[vp + '_status'] = '<br>🟢 **Passed**';
             }
+          } else if (pwResult && pwResult.status === 'passed') {
+            liveImages[vp + '_status'] = '<br>🟢 **Passed**';
+          } else if (pwResult && pwResult.status === 'skipped') {
+            liveImages[vp + '_status'] = '<br>⏭️ **Skipped**';
+          } else if (hasPlaywrightResults) {
+            // We have a results file but no entry for this fragment/viewport —
+            // log a warning and mark as unverified rather than falsely passing.
+            console.warn(`[WARN] No Playwright result found for key: '${pwKey}'. Marking as Unverified.`);
+            liveImages[vp + '_status'] = '<br>⚠️ **Unverified**';
           } else if (fs.existsSync(fsPath)) {
+            // Legacy fallback: no Playwright results file at all — use file existence
             liveImages[vp + '_status'] = '<br>🟢 **Passed**';
           } else {
             liveImages[vp + '_status'] = '<br>⚠️ **Unverified**';

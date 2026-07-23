@@ -185,7 +185,8 @@ handle_exit() {
     if [ "$TESTS_PASSED" = true ]; then
         # Clean up transient logs and reports on successful execution
         rm -rf ldm_startup.log e2e-tests/playwright_output.log state.json \
-               playwright-report/ test-results/ e2e-tests/playwright-report/ e2e-tests/test-results/
+               playwright-report/ test-results/ e2e-tests/playwright-report/ e2e-tests/test-results/ \
+               e2e-tests/playwright-results.json
                
         write_signal "SUCCESS" 0
         echo "State Coordinator: SUCCESS"
@@ -785,13 +786,20 @@ if command -v docker &> /dev/null && docker info &> /dev/null; then
     fi
 fi
 
+# Persist playwright-results.json so the gallery can be regenerated without re-running tests.
+# Copy to docs/test-results/ alongside the markdown results file.
+if [ -f "e2e-tests/playwright-results.json" ]; then
+    cp "e2e-tests/playwright-results.json" "docs/test-results/playwright-results.json"
+    echo "  -> Playwright JSON results persisted to docs/test-results/playwright-results.json"
+fi
+
 if [ $TEST_EXIT_CODE -eq 0 ]; then
     echo "  -> All tests passed."
     TESTS_PASSED=true
     sed -i.bak "s/- \*\*Status\*\*: Running.../- \*\*Status\*\*: Completed/" "$RESULTS_FILE" && rm "${RESULTS_FILE}.bak"
     echo "## Summary" >> "$RESULTS_FILE"
     echo "All tests passed successfully." >> "$RESULTS_FILE"
-    
+
     echo "  -> Regenerating documentation gallery..."
     node scripts/generate-gallery.js
     echo "  -> Gallery regenerated successfully."
@@ -801,6 +809,11 @@ else
     sed -i.bak "s/- \*\*Status\*\*: Running.../- \*\*Status\*\*: Failed/" "$RESULTS_FILE" && rm "${RESULTS_FILE}.bak"
     echo "## Summary" >> "$RESULTS_FILE"
     echo "Some Playwright tests failed." >> "$RESULTS_FILE"
+
+    # Regenerate gallery even on failure so it reflects actual failed/passed status per fragment.
+    echo "  -> Regenerating documentation gallery (with test failure statuses)..."
+    node scripts/generate-gallery.js
+    echo "  -> Gallery regenerated successfully."
 fi
 
 echo ""
