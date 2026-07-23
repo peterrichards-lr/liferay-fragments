@@ -101,6 +101,36 @@ tests. Key indicators:
 - **`✘`** — Fragment failed to render. Check the Playwright HTML report under
   `e2e-tests/playwright-report/`.
 
+## 4a. Empty-State False-Positive Detection
+
+> [!IMPORTANT]
+> A fragment that shows the shared Liferay **empty state** (`c-empty-state`)
+> must be treated as a **FAIL**, not a pass. CSS `min-height` rules on slider
+> or gallery containers give the fragment a non-zero bounding box height even
+> when no data is loaded, which fools a naive height > 10px check.
+
+`fragments.spec.js` contains an explicit check **before** the bounding box
+guard that locates `.c-empty-state` inside the fragment element and throws:
+
+```
+Fragment 'X' rendered an empty state instead of content.
+Data was not loaded — check collection seeding, API permissions, or fragment
+configuration. (Selector: .c-empty-state found N element(s) inside fragment)
+```
+
+**Affected fragments** (use `renderEmptyState` internally):
+- `dynamic-collection-slider` — "Collection is Empty"
+- `activity-heatmap` — empty heatmap grid
+- `dynamic-object-gallery` — empty gallery grid
+- `meta-object-table` — empty table
+- `object-linked-chart` — empty chart
+
+**When a fragment fails with this error**, investigate:
+1. Was the collection/object seeded in `global-setup.js`? Check `test-data.json`.
+2. Does the collection have Guest view permissions? Check `addGuestPermissions`.
+3. Is the SAP policy allowing the content-set-elements endpoint for Guest access?
+4. Is `collectionId` mapped correctly via `pageConfig.fragmentConfig`?
+
 ## 5. ⚠️ Known Platform Blocker — LPD-91054
 
 > [!WARNING]
@@ -124,4 +154,4 @@ tests. Key indicators:
 
 <!-- markdownlint-disable MD049 -->
 ---
-*Last Updated: 2026-07-21* | *Last Reviewed: 2026-07-21*
+*Last Updated: 2026-07-23* | *Last Reviewed: 2026-07-23*
