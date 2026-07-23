@@ -264,6 +264,23 @@ test.describe('Responsive Fragment Rendering', () => {
             fragmentElement = page.locator('#wrapper, .portlet-layout').first();
           }
 
+          // Detect fragments that rendered the shared Liferay empty state instead of real content.
+          // renderEmptyState() injects <div class="c-empty-state c-empty-state-animation"> into
+          // the fragment. A fragment that shows an empty state has NOT passed — its data failed
+          // to load (missing collection seed, API permission issue, or bad config).
+          // This check must run BEFORE the bounding box check because CSS min-height rules
+          // (e.g. min-height: 350px on .slider-track) give the container a non-zero height even
+          // when completely empty, which would fool the height > 10px guard below.
+          const emptyState = fragmentElement.locator('.c-empty-state');
+          const emptyStateCount = await emptyState.count();
+          if (emptyStateCount > 0 && (await emptyState.first().isVisible())) {
+            throw new Error(
+              `Fragment '${pageInfo.fragmentName}' rendered an empty state instead of content. ` +
+              `Data was not loaded — check collection seeding, API permissions, or fragment configuration. ` +
+              `(Selector: .c-empty-state found ${emptyStateCount} element(s) inside fragment)`
+            );
+          }
+
           // Verify the bounding box is non-zero and has height
 
           const box = await fragmentElement.boundingBox();
