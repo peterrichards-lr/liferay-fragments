@@ -60,6 +60,57 @@
         "required": ["erc", "name", "items"],
         "additionalProperties": false
       }
+    },
+    "verification": {
+      "type": "object",
+      "description": "Per-fragment custom success criteria applied by fragments.spec.js after generic checks. Any failure here causes the Playwright test to report 'failed' and the gallery to show 🔴 Failed (Test).",
+      "additionalProperties": false,
+      "properties": {
+        "requiredSelectors": {
+          "type": "array",
+          "description": "CSS selectors that must be present and meet the minCount threshold for the test to pass",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["selector", "description"],
+            "properties": {
+              "selector": {
+                "type": "string",
+                "description": "CSS selector to locate elements within the fragment"
+              },
+              "minCount": {
+                "type": "integer",
+                "minimum": 1,
+                "default": 1,
+                "description": "Minimum number of matching elements required (default: 1)"
+              },
+              "description": {
+                "type": "string",
+                "description": "Human-readable explanation of what this check verifies — shown in test failure output"
+              }
+            }
+          }
+        },
+        "forbiddenSelectors": {
+          "type": "array",
+          "description": "CSS selectors that must NOT be visible for the test to pass (e.g. error banners, fallback UI)",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["selector", "description"],
+            "properties": {
+              "selector": {
+                "type": "string",
+                "description": "CSS selector to locate elements that must not be visible"
+              },
+              "description": {
+                "type": "string",
+                "description": "Human-readable explanation of what this check verifies — shown in test failure output"
+              }
+            }
+          }
+        }
+      }
     }
   }
 }

@@ -31,5 +31,14 @@
       }
     ]
   },
-  "requiredObjects": ["COMPANY_MILESTONE"]
+  "requiredObjects": ["COMPANY_MILESTONE"],
+  "verification": {
+    "requiredSelectors": [
+      {
+        "selector": "tbody tr",
+        "minCount": 1,
+        "description": "Table must have at least one data row (proves object records were loaded)"
+      }
+    ]
+  }
 }

@@ -158,6 +158,81 @@ configuration. (Selector: .c-empty-state found N element(s) inside fragment)
 3. Is the SAP policy allowing the content-set-elements endpoint for Guest access?
 4. Is `collectionId` mapped correctly via `pageConfig.fragmentConfig`?
 
+## 4b. Unified Failure Accumulator
+
+`fragments.spec.js` uses a single `failures[]` array to collect **all** failure
+signals. No signal is silently swallowed. The screenshot is always taken — even
+when failures exist — so the gallery captures the broken state as evidence.
+
+| Signal | Previously | Now |
+|---|---|---|
+| HTTP 4xx/5xx on navigation | `throw` immediately (no screenshot) | `failures.push()` → screenshot taken |
+| `console.error` (any) | Only TypeError/ReferenceError failed | ALL console errors accumulate |
+| `pageerror` (JS exception) | Only TypeError/ReferenceError failed | ALL JS exceptions accumulate |
+| Loading spinner stuck | `throw` → swallowed by catch | `failures.push()` |
+| Empty state visible | `throw` → swallowed by catch | `failures.push()` |
+| Height ≤ 10px | `throw` → swallowed by catch | `failures.push()` |
+| Custom verification block | not checked | `failures.push()` for each failure |
+
+A single `throw` at the end reports the complete list. Playwright marks the
+test as `failed` with all failures enumerated, and the gallery shows:
+`🔴 Failed (Test): Fragment 'X' failed verification with N issue(s): ...`
+
+## 4c. Per-Fragment Verification Block
+
+Each data-driven fragment can declare custom success criteria in
+`test/test-data.json` under a `"verification"` key. These are passed through
+to `generated-test-pages.json` by `global-setup.js` and applied by
+`fragments.spec.js` in Phase 1b (after generic checks, before screenshot).
+
+> [!NOTE]
+> The generic `.c-empty-state` check applies to **all** fragments universally
+> and does **not** need to be repeated in the `verification` block.
+
+### Schema
+
+```json
+{
+  "verification": {
+    "requiredSelectors": [
+      {
+        "selector": ".slider-slide",
+        "minCount": 1,
+        "description": "At least one slide must render (proves collection items were loaded)"
+      }
+    ],
+    "forbiddenSelectors": [
+      {
+        "selector": "[id^='error-']:not(.d-none)",
+        "description": "Error banner must not be visible (no fetch or API error occurred)"
+      }
+    ]
+  }
+}
+```
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `requiredSelectors[].selector` | `string` | ✅ | CSS selector scoped to the fragment element |
+| `requiredSelectors[].minCount` | `integer` | ❌ (default: 1) | Minimum matching elements required |
+| `requiredSelectors[].description` | `string` | ✅ | Shown in failure output and gallery tooltip |
+| `forbiddenSelectors[].selector` | `string` | ✅ | CSS selector that must not be visible |
+| `forbiddenSelectors[].description` | `string` | ✅ | Shown in failure output and gallery tooltip |
+
+The schema is validated by the linter (`scripts/lint-fragments.js` via
+`schemas/test-data.schema.json`) at commit time — malformed `verification`
+blocks are caught before the E2E suite runs.
+
+### Fragments with verification blocks
+
+| Fragment | Required | Forbidden |
+|---|---|---|
+| `dynamic-collection-slider` | `.slider-slide` ≥ 1 | `[id^='error-']:not(.d-none)` |
+| `dynamic-object-gallery` | `.gallery-item` ≥ 1 | — |
+| `activity-heatmap` | `.heatmap-cell` ≥ 7 | — |
+| `meta-object-table` | `tbody tr` ≥ 1 | — |
+| `object-linked-chart` | `canvas` ≥ 1 | — |
+
 ## 5. ⚠️ Known Platform Blocker — LPD-91054
 
 > [!WARNING]

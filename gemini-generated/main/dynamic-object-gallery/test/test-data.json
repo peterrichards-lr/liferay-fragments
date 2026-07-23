@@ -8,5 +8,14 @@
       "columns": "3"
     }
   },
-  "requiredObjects": ["PRODUCT_SHOWCASE"]
+  "requiredObjects": ["PRODUCT_SHOWCASE"],
+  "verification": {
+    "requiredSelectors": [
+      {
+        "selector": ".gallery-item",
+        "minCount": 1,
+        "description": "At least one gallery item must render (proves object records were loaded)"
+      }
+    ]
+  }
 }

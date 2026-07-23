@@ -9,5 +9,14 @@
       "chartTitle": "Activity Heatmap",
       "baseColor": "var(--primary)"
     }
+  },
+  "verification": {
+    "requiredSelectors": [
+      {
+        "selector": ".heatmap-cell",
+        "minCount": 7,
+        "description": "Heatmap must render at least 7 cells (5 legend + data cells proves real rendering)"
+      }
+    ]
   }
 }

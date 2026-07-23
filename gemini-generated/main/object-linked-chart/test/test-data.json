@@ -15,5 +15,14 @@
       "showLegend": true
     }
   },
-  "requiredObjects": ["SALES_REPORT"]
+  "requiredObjects": ["SALES_REPORT"],
+  "verification": {
+    "requiredSelectors": [
+      {
+        "selector": "canvas",
+        "minCount": 1,
+        "description": "Chart canvas must be present (proves Chart.js rendered successfully with data)"
+      }
+    ]
+  }
 }
