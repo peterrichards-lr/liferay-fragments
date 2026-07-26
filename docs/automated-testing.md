@@ -201,23 +201,23 @@ LIFERAY_USER="admin@mycompany.com" LIFERAY_PASSWORD="MySecurePassword123" ./scri
   safeguard to prevent execution in CI environments (e.g., GitHub Actions, where
   `CI=true`).
 - **[LPD-91054] Global Fragment Auto-Deploy Silently Fails (Liferay 2026.Q1 LTS)**:
-  There is a confirmed Liferay platform bug ([LPD-91054](https://liferay.atlassian.net/browse/LPD-91054))
+  There was a confirmed Liferay platform bug ([LPD-91054](https://liferay.atlassian.net/browse/LPD-91054))
   affecting **Liferay 2026.Q1 LTS** where fragment ZIPs dropped into the
-  auto-deploy folder with a global scope (`companyWebId: "liferay.com"`) are
-  **silently dropped** by the auto-deploy scanner. Affected collections are never
-  imported into the database — they are neither APPROVED nor DRAFT.
+  auto-deploy folder with a global scope (`companyWebId: "liferay.com"`) were
+  **silently dropped** by the auto-deploy scanner.
 
-  **Impact on E2E tests**: Approximately 84 of 130 tested fragments are affected,
-  causing their Playwright test pages to render with 0 DOM elements and producing
-  ~252 consistent test failures. The 46 fragments that pass are from collections
-  whose ZIPs happen to survive the broken scanner (typically simpler collections).
+  **Status**: ✅ **RESOLVED in `2026.q1.11-lts`** (confirmed Jul 26, 2026). First full E2E run
+  completed successfully with 27/27 collections and 129 fragments auto-deployed.
+  Upgrade to `2026.q1.11-lts` or later to resolve this issue.
 
-  **Status**: Waiting for Liferay to release a hotfix or fix pack. No workaround
-  has been implemented — manual UI import or the Fragments Toolkit CLI can deploy
-  fragments successfully but are not suitable for automated CI.
+- **OSGi State Locking on External Drives / Fresh Volumes** (requires LDM ≥ `2.15.22-pre.24`):
+  Docker volumes for Liferay's OSGi state are initialised with `root:root` ownership,
+  preventing Liferay's non-root process from writing its lock manager file. Additionally,
+  external drives (e.g. SanDisk) can cause NIO file locking failures.
 
-  **Resolution**: Once LPD-91054 is fixed in a Liferay patch release, the E2E
-  failure count should drop to 0 (or near 0) without any changes to this project.
+  **Resolution**: The test runner now passes `--clean-state` (wipes OSGi state before boot)
+  and `--internal-state` (uses an anonymous Docker volume, bypassing external drive locking)
+  to `ldm run`. These flags require **LDM ≥ `2.15.22-pre.24`**.
 
 - **Liferay Version-Targeted Deployment**: The test runner queries the target Liferay instance to determine its release version (e.g. `2026.q1.8-lts`) and automatically selects the compatible ZIP suffix variant to deploy:
   - **Latest (`-collection-min.zip`)**: For Liferay `2026.q1` or later. These use `"dataType": "number"` and boolean literals for checkboxes, while numeric text/length fields use string representations.
@@ -442,6 +442,6 @@ sequenceDiagram
     Runner->>Runner: generate-gallery.js (Compile documentation gallery md)
 ```
 
-## <!-- markdownlint-disable MD049 -->
-
-_Last Updated: 2026-07-23_ | _Last Reviewed: 2026-07-23_
+<!-- markdownlint-disable MD049 -->
+---
+*Last Updated: 2026-07-26* | *Last Reviewed: 2026-07-26*
