@@ -543,6 +543,18 @@ if [ -z "$PROJECT_PATH" ]; then
 fi
 echo "  -> LDM Project Path: $PROJECT_PATH"
 
+# Fix permissions on all LDM project bind-mount directories.
+# On macOS with Docker Desktop, bind mounts from external drives (e.g. SanDisk)
+# are created with root:root ownership. Liferay runs as uid 1000 and needs write
+# access to osgi/modules, osgi/client-extensions, deploy, logs, etc. to create
+# OSGi lock files. We use an Alpine container to chmod -R 777 the entire project
+# directory, which covers all sub-directories that LDM may have created.
+echo "  -> Fixing bind-mount permissions on LDM project directory..."
+docker run --rm \
+    -v "${PROJECT_PATH}:/mnt/ldm-project" \
+    alpine sh -c "find /mnt/ldm-project -type d -exec chmod 777 {} + && echo '  -> Bind-mount permissions fixed.'"
+
+
 echo "  -> Waiting for Liferay to become ready..."
 log_command "ldm wait \"$PROJECT_NAME\" -d --stream-status"
 if curl -s -I "$BASE_URL" &> /dev/null; then
