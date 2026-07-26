@@ -514,9 +514,12 @@ else
     if [ ${#FEATURES[@]} -gt 0 ]; then
         FEATURE_ARGS="--feature ${FEATURES[*]}"
     fi
-    # Increase CodeCache and Memory to prevent JIT stalls. 
-    log_command "ldm run \"$PROJECT_NAME\" \"$TAG_FLAG\" \"$LIFERAY_TAG\" --port \"$PORT\" --non-interactive --no-captcha --fast-login --sidecar --db postgresql $LDM_VERBOSE $FEATURE_ARGS --jvm-args \"-Xms2g -Xmx4g -XX:ReservedCodeCacheSize=512m\""
-    if ! ldm run "$PROJECT_NAME" "$TAG_FLAG" "$LIFERAY_TAG" --port "$PORT" --non-interactive --no-captcha --fast-login --sidecar --db postgresql $LDM_VERBOSE $FEATURE_ARGS --jvm-args "-Xms2g -Xmx4g -XX:ReservedCodeCacheSize=512m" > ldm_startup.log 2>&1; then
+    # Increase CodeCache and Memory to prevent JIT stalls.
+    # --clean-state: wipe OSGi state volume before boot to prevent stale lock files.
+    # --internal-state: use anonymous Docker volume for OSGi state (fixes locking on external drives, e.g. SanDisk).
+    # Requires LDM >= 2.15.22-pre.24.
+    log_command "ldm run \"$PROJECT_NAME\" \"$TAG_FLAG\" \"$LIFERAY_TAG\" --port \"$PORT\" --non-interactive --no-captcha --fast-login --sidecar --db postgresql --clean-state --internal-state $LDM_VERBOSE $FEATURE_ARGS --jvm-args \"-Xms2g -Xmx4g -XX:ReservedCodeCacheSize=512m\""
+    if ! ldm run "$PROJECT_NAME" "$TAG_FLAG" "$LIFERAY_TAG" --port "$PORT" --non-interactive --no-captcha --fast-login --sidecar --db postgresql --clean-state --internal-state $LDM_VERBOSE $FEATURE_ARGS --jvm-args "-Xms2g -Xmx4g -XX:ReservedCodeCacheSize=512m" > ldm_startup.log 2>&1; then
         echo "Error: LDM failed to start the environment."
         echo "Hint: Check ldm_startup.log or run 'ldm logs $PROJECT_NAME' for more details."
         cat <<EOF >> "$RESULTS_FILE"
