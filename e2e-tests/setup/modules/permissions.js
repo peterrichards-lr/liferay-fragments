@@ -170,7 +170,7 @@ async function configurePermissions(ctx, page) {
 
       let objResp;
       let attempts = 0;
-      const maxAttempts = 5;
+      const maxAttempts = 15; // Increased from 5: fresh Liferay boots need up to 75s for object registration
       while (attempts < maxAttempts) {
         objResp = await page.request.get(
           `${ctx.baseURL}/o/object-admin/v1.0/object-definitions/by-external-reference-code/${erc}`,
@@ -208,9 +208,9 @@ async function configurePermissions(ctx, page) {
         }
         if (attempts < maxAttempts) {
           console.log(
-            `     Object Definition ${erc} not found yet. Retrying in 3 seconds (Attempt ${attempts}/${maxAttempts})...`
+            `     Object Definition ${erc} not found yet. Retrying in 5 seconds (Attempt ${attempts}/${maxAttempts})...`
           );
-          await new Promise((resolve) => setTimeout(resolve, 3000));
+          await new Promise((resolve) => setTimeout(resolve, 5000));
         }
       }
 
