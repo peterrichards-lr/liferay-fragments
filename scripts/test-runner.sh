@@ -529,14 +529,10 @@ else
     fi
     # Increase CodeCache and Memory to prevent JIT stalls.
     # --clean-state: wipe OSGi state volume before boot to prevent stale lock files.
-    # --internal-state: use anonymous Docker volume for OSGi state (fixes locking on external drives, e.g. SanDisk).
-    # --fix-permissions: fix root:root ownership on bind-mount dirs created by Docker on external drives. Requires LDM >= 2.15.22-pre.25.
-    # -Dosgi.locking=none: disable OSGi file-based lock acquisition. Required on external drives (e.g. SanDisk)
-    #   where the filesystem does not support POSIX file locking. Timing-independent and safe for single-instance
-    #   dev/test environments. Avoids the race condition where Liferay acquires OSGi locks before any chmod
-    #   workaround can run.
-    log_command "ldm run \"$PROJECT_NAME\" \"$TAG_FLAG\" \"$LIFERAY_TAG\" --port \"$PORT\" --non-interactive --no-captcha --fast-login --sidecar --db postgresql --clean-state --internal-state --fix-permissions $LDM_VERBOSE $FEATURE_ARGS --jvm-args \"-Xms2g -Xmx4g -XX:ReservedCodeCacheSize=512m -Dosgi.locking=none\""
-    if ! ldm run "$PROJECT_NAME" "$TAG_FLAG" "$LIFERAY_TAG" --port "$PORT" --non-interactive --no-captcha --fast-login --sidecar --db postgresql --clean-state --internal-state --fix-permissions $LDM_VERBOSE $FEATURE_ARGS --jvm-args "-Xms2g -Xmx4g -XX:ReservedCodeCacheSize=512m -Dosgi.locking=none" > ldm_startup.log 2>&1; then
+    # --internal-state: use anonymous Docker volume for OSGi state.
+    # --fix-permissions: fix root:root ownership on bind-mount dirs. Requires LDM >= 2.15.22-pre.25.
+    log_command "ldm run \"$PROJECT_NAME\" \"$TAG_FLAG\" \"$LIFERAY_TAG\" --port \"$PORT\" --non-interactive --no-captcha --fast-login --sidecar --db postgresql --clean-state --internal-state --fix-permissions $LDM_VERBOSE $FEATURE_ARGS --jvm-args \"-Xms2g -Xmx4g -XX:ReservedCodeCacheSize=512m\""
+    if ! ldm run "$PROJECT_NAME" "$TAG_FLAG" "$LIFERAY_TAG" --port "$PORT" --non-interactive --no-captcha --fast-login --sidecar --db postgresql --clean-state --internal-state --fix-permissions $LDM_VERBOSE $FEATURE_ARGS --jvm-args "-Xms2g -Xmx4g -XX:ReservedCodeCacheSize=512m" > ldm_startup.log 2>&1; then
         echo "Error: LDM failed to start the environment."
         echo "Hint: Check ldm_startup.log or run 'ldm logs $PROJECT_NAME' for more details."
         cat <<EOF >> "$RESULTS_FILE"
