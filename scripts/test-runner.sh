@@ -470,6 +470,14 @@ if ! grep -q "feature.flag.LPS-178052=true" "$LDM_COMMON_DIR/portal-ext.properti
     echo "feature.flag.LPS-178052=true" >> "$LDM_COMMON_DIR/portal-ext.properties"
 fi
 
+# Disable OSGi file locking for SanDisk / external drive compatibility.
+# -Dosgi.locking=none JVM arg is present but ignored by Equinox in this Liferay version.
+# module.framework.properties.osgi.locking=none injects the property directly into the
+# OSGi framework launcher before StorageManager.open() is called.
+if ! grep -q "module.framework.properties.osgi.locking=none" "$LDM_COMMON_DIR/portal-ext.properties"; then
+    echo "module.framework.properties.osgi.locking=none" >> "$LDM_COMMON_DIR/portal-ext.properties"
+fi
+
 echo "  -> Verifying Liferay DXP activation key..."
 if ! ls "$LDM_COMMON_DIR"/*.xml 1> /dev/null 2>&1; then
     echo "Error: No activation key (.xml) found in $LDM_COMMON_DIR."
