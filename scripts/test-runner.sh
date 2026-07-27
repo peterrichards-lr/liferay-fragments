@@ -364,7 +364,12 @@ echo ""
 echo "Cleaning up previous test artifacts..."
 echo "  -> Purging old visual snapshots..."
 rm -rf e2e-tests/snapshots/ e2e-tests/playwright-report/ e2e-tests/playwright_output.log \
-       playwright-report/ test-results/ state.json ldm_startup.log
+       playwright-report/ test-results/ state.json ldm_startup.log \
+       e2e-tests/playwright-results.json \
+       e2e-tests/generated-test-pages.json \
+       e2e-tests/visual-analysis.json \
+       e2e-tests/state.json \
+       docs/test-results/playwright-results.json
 # Clean up any orphaned Docker containers to prevent port or naming conflicts
 if [ "$EXISTING_PROJECT" = false ]; then
     # Issue #140: Fully delete any pre-existing LDM project with the same name to ensure
