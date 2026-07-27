@@ -527,16 +527,33 @@ else
     if [ ${#FEATURES[@]} -gt 0 ]; then
         FEATURE_ARGS="--feature ${FEATURES[*]}"
     fi
+
+    # SanDisk / External Drive Fix: Java's FileLock (used by OSGi StorageManager) does not work
+    # on exFAT or other non-POSIX filesystems. LDM creates bind-mount directories in the current
+    # working directory, so running ldm run from SanDisk causes OSGi lock failures.
+    # Solution: run ldm run from a local APFS directory (~/.ldm/workspaces/) so all bind-mounts
+    # land on the internal drive where file locking is fully supported.
+    LDM_WORKSPACE_BASE="${HOME}/.ldm/workspaces"
+    LDM_LOCAL_PROJECT_DIR="${LDM_WORKSPACE_BASE}/${PROJECT_NAME}"
+    ORIGINAL_DIR="$(pwd)"
+    # Detect if CWD is on an external/network volume (not /Users or /private)
+    if [[ "$ORIGINAL_DIR" == /Volumes/* ]] || [[ "$ORIGINAL_DIR" == /mnt/* ]] || [[ "$ORIGINAL_DIR" == /media/* ]]; then
+        echo "  -> External drive detected ($ORIGINAL_DIR). Redirecting LDM project to local drive: $LDM_LOCAL_PROJECT_DIR"
+        mkdir -p "$LDM_WORKSPACE_BASE"
+        # Clean up any stale local project directory from a previous failed run
+        rm -rf "$LDM_LOCAL_PROJECT_DIR"
+        cd "$LDM_WORKSPACE_BASE" || { echo "Error: Cannot cd to $LDM_WORKSPACE_BASE"; exit 1; }
+        RUNS_FROM_EXTERNAL=true
+    else
+        RUNS_FROM_EXTERNAL=false
+    fi
+
     # Increase CodeCache and Memory to prevent JIT stalls.
     # --clean-state: wipe OSGi state volume before boot to prevent stale lock files.
-    # --internal-state: use anonymous Docker volume for OSGi state (fixes locking on external drives, e.g. SanDisk).
-    # --fix-permissions: fix root:root ownership on bind-mount dirs created by Docker on external drives. Requires LDM >= 2.15.22-pre.25.
-    # -Dosgi.locking=none: disable OSGi file-based lock acquisition. Required on external drives (e.g. SanDisk)
-    #   where the filesystem does not support POSIX file locking. Timing-independent and safe for single-instance
-    #   dev/test environments. Avoids the race condition where Liferay acquires OSGi locks before any chmod
-    #   workaround can run.
-    log_command "ldm run \"$PROJECT_NAME\" \"$TAG_FLAG\" \"$LIFERAY_TAG\" --port \"$PORT\" --non-interactive --no-captcha --fast-login --sidecar --db postgresql --clean-state --internal-state --fix-permissions $LDM_VERBOSE $FEATURE_ARGS --jvm-args \"-Xms2g -Xmx4g -XX:ReservedCodeCacheSize=512m -Dosgi.locking=none\""
-    if ! ldm run "$PROJECT_NAME" "$TAG_FLAG" "$LIFERAY_TAG" --port "$PORT" --non-interactive --no-captcha --fast-login --sidecar --db postgresql --clean-state --internal-state --fix-permissions $LDM_VERBOSE $FEATURE_ARGS --jvm-args "-Xms2g -Xmx4g -XX:ReservedCodeCacheSize=512m -Dosgi.locking=none" > ldm_startup.log 2>&1; then
+    # --internal-state: use anonymous Docker volume for OSGi state.
+    # --fix-permissions: fix root:root ownership on bind-mount dirs. Requires LDM >= 2.15.22-pre.25.
+    log_command "ldm run \"$PROJECT_NAME\" \"$TAG_FLAG\" \"$LIFERAY_TAG\" --port \"$PORT\" --non-interactive --no-captcha --fast-login --sidecar --db postgresql --clean-state --internal-state --fix-permissions $LDM_VERBOSE $FEATURE_ARGS --jvm-args \"-Xms2g -Xmx4g -XX:ReservedCodeCacheSize=512m\""
+    if ! ldm run "$PROJECT_NAME" "$TAG_FLAG" "$LIFERAY_TAG" --port "$PORT" --non-interactive --no-captcha --fast-login --sidecar --db postgresql --clean-state --internal-state --fix-permissions $LDM_VERBOSE $FEATURE_ARGS --jvm-args "-Xms2g -Xmx4g -XX:ReservedCodeCacheSize=512m" > "$ORIGINAL_DIR/ldm_startup.log" 2>&1; then
         echo "Error: LDM failed to start the environment."
         echo "Hint: Check ldm_startup.log or run 'ldm logs $PROJECT_NAME' for more details."
         cat <<EOF >> "$RESULTS_FILE"
@@ -544,11 +561,14 @@ else
 The test runner failed to start the Liferay environment. 
 Log snippet:
 \`\`\`
-$(tail -n 5 ldm_startup.log)
+$(tail -n 5 "$ORIGINAL_DIR/ldm_startup.log")
 \`\`\`
 EOF
+        cd "$ORIGINAL_DIR" 2>/dev/null || true
         exit 1
     fi
+    # Restore working directory after ldm run (which may have run from a local workspace)
+    cd "$ORIGINAL_DIR" || { echo "Error: Cannot return to original directory $ORIGINAL_DIR"; exit 1; }
 fi
 
 # Resolve project path for deployment
