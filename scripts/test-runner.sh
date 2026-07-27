@@ -517,9 +517,9 @@ else
     # Increase CodeCache and Memory to prevent JIT stalls.
     # --clean-state: wipe OSGi state volume before boot to prevent stale lock files.
     # --internal-state: use anonymous Docker volume for OSGi state (fixes locking on external drives, e.g. SanDisk).
-    # Requires LDM >= 2.15.22-pre.24.
-    log_command "ldm run \"$PROJECT_NAME\" \"$TAG_FLAG\" \"$LIFERAY_TAG\" --port \"$PORT\" --non-interactive --no-captcha --fast-login --sidecar --db postgresql --clean-state --internal-state $LDM_VERBOSE $FEATURE_ARGS --jvm-args \"-Xms2g -Xmx4g -XX:ReservedCodeCacheSize=512m\""
-    if ! ldm run "$PROJECT_NAME" "$TAG_FLAG" "$LIFERAY_TAG" --port "$PORT" --non-interactive --no-captcha --fast-login --sidecar --db postgresql --clean-state --internal-state $LDM_VERBOSE $FEATURE_ARGS --jvm-args "-Xms2g -Xmx4g -XX:ReservedCodeCacheSize=512m" > ldm_startup.log 2>&1; then
+    # --fix-permissions: fix root:root ownership on bind-mount dirs created by Docker on external drives. Requires LDM >= 2.15.22-pre.25.
+    log_command "ldm run \"$PROJECT_NAME\" \"$TAG_FLAG\" \"$LIFERAY_TAG\" --port \"$PORT\" --non-interactive --no-captcha --fast-login --sidecar --db postgresql --clean-state --internal-state --fix-permissions $LDM_VERBOSE $FEATURE_ARGS --jvm-args \"-Xms2g -Xmx4g -XX:ReservedCodeCacheSize=512m\""
+    if ! ldm run "$PROJECT_NAME" "$TAG_FLAG" "$LIFERAY_TAG" --port "$PORT" --non-interactive --no-captcha --fast-login --sidecar --db postgresql --clean-state --internal-state --fix-permissions $LDM_VERBOSE $FEATURE_ARGS --jvm-args "-Xms2g -Xmx4g -XX:ReservedCodeCacheSize=512m" > ldm_startup.log 2>&1; then
         echo "Error: LDM failed to start the environment."
         echo "Hint: Check ldm_startup.log or run 'ldm logs $PROJECT_NAME' for more details."
         cat <<EOF >> "$RESULTS_FILE"
@@ -543,16 +543,6 @@ if [ -z "$PROJECT_PATH" ]; then
 fi
 echo "  -> LDM Project Path: $PROJECT_PATH"
 
-# Fix permissions on all LDM project bind-mount directories.
-# On macOS with Docker Desktop, bind mounts from external drives (e.g. SanDisk)
-# are created with root:root ownership. Liferay runs as uid 1000 and needs write
-# access to osgi/modules, osgi/client-extensions, deploy, logs, etc. to create
-# OSGi lock files. We use an Alpine container to chmod -R 777 the entire project
-# directory, which covers all sub-directories that LDM may have created.
-echo "  -> Fixing bind-mount permissions on LDM project directory..."
-docker run --rm \
-    -v "${PROJECT_PATH}:/mnt/ldm-project" \
-    alpine sh -c "find /mnt/ldm-project -type d -exec chmod 777 {} + && echo '  -> Bind-mount permissions fixed.'"
 
 
 echo "  -> Waiting for Liferay to become ready..."
