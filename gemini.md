@@ -392,26 +392,45 @@ confirmed Liferay platform bug:
 - ✅ All showcase object entries, Commerce products, and web content seeded.
 - ✅ All test pages created successfully.
 - ✅ `docs/automated-testing.md` documents LPD-91054 as the known blocker.
+### ✅ LPD-91054 Confirmed Fixed (2026-07-26)
+
+First successful full E2E run on `2026.q1.11-lts` (Jul 26, 2026):
+- **27/27 collections, 129 fragments** auto-deployed successfully.
+- **138 passed / 252 failed** — failures are rendering issues, not deployment.
+- Gallery and results committed in PR #190.
+
+### E2E Infrastructure — Current State (2026-07-26)
+
+| PR | Change | Status |
+|---|---|---|
+| #188 | `--clean-state --internal-state` added to `ldm run` | ✅ Merged |
+| #189 | Object definition retry: 5×3s → 15×5s | ✅ Merged |
+| #190 | Docs + gallery for `2026.q1.11-lts` run | ✅ Merged |
+| #192 | chmod bind-mount dirs after `ldm run` (SanDisk workaround) | ⏳ Queued |
+
+### Bind-Mount Permissions on External Drive — RESOLVED
+
+**Root cause**: LDM creates project bind-mount dirs (`osgi/modules`,
+`osgi/client-extensions`, `deploy`, `logs`) with `root:root` ownership on
+macOS. Liferay uid 1000 cannot create OSGi lock files there.
+
+**Resolution**: LDM `v2.15.22-pre.25` ships a native `--fix-permissions` flag.
+PR #192's Alpine chmod workaround has been removed. The `ldm run` call in
+`test-runner.sh` now passes `--fix-permissions` directly. Closes #191.
 
 ### Known Minor Issues (Non-Blocking)
 
-- ⚠️ `CAMPAIGN_INTERACTION` — `[WARN] Could not parse className hash suffix`
-  from an empty string. Guest permissions step silently skipped for this object.
+- ⚠️ `CAMPAIGN_INTERACTION` — `[WARN] Could not parse className hash suffix`.
+  Guest permissions step silently skipped for this object.
 - ⚠️ `parallax_hero_bg.png` — Missing from `e2e-tests/assets/`. Affects
-  `overlay-background` and `modern-parallax-hero` document seeding. These
-  pages still render but without the background image.
+  `overlay-background` and `modern-parallax-hero` document seeding.
 
-### Resumption Plan (When LPD-91054 Is Patched)
+### Next Steps (2026-07-27)
 
-1. Upgrade the Liferay DXP version in `e2e-test-env` to the patched release.
-2. Run `./scripts/test-runner.sh -k` locally on a **fresh** instance
-   (`ldm rm --delete e2e-test-env` first).
-3. Confirm `DEPLOY WAIT` resolves with ≥5 collections found within 580s.
-4. Confirm approval loop finds 27 collections / 129 approved fragments.
-5. Trigger the GitHub Actions E2E workflow and confirm pass.
-6. Fix the two minor issues above (`CAMPAIGN_INTERACTION` hash parse,
-   `parallax_hero_bg.png` missing asset) as a follow-up PR.
+1. ✅ LDM `pre.25` confirmed available — `--fix-permissions` native flag replaces PR #192 workaround (fix/e2e-native-fix-permissions).
+2. Re-run full E2E — expect 252 → ~170 failures (Group A / object timing resolved).
+3. Begin Phase 3 (Issue #187): inspect Group B fragment DOM failures.
 
-## <!-- markdownlint-disable MD049 -->
-
-_Last Updated: 2026-07-14_ | _Last Reviewed: 2026-07-14_
+<!-- markdownlint-disable MD049 -->
+---
+*Last Updated: 2026-07-27* | *Last Reviewed: 2026-07-27*
