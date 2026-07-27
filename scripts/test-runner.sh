@@ -522,9 +522,11 @@ else
     # Increase CodeCache and Memory to prevent JIT stalls.
     # --clean-state: wipe OSGi state volume before boot to prevent stale lock files.
     # --internal-state: use anonymous Docker volume for OSGi state (fixes locking on external drives, e.g. SanDisk).
-    # --fix-permissions: fix root:root ownership on bind-mount dirs created by Docker on external drives. Requires LDM >= 2.15.22-pre.25.
-    log_command "ldm run \"$PROJECT_NAME\" \"$TAG_FLAG\" \"$LIFERAY_TAG\" --port \"$PORT\" --non-interactive --no-captcha --fast-login --sidecar --db postgresql --clean-state --internal-state --fix-permissions $LDM_VERBOSE $FEATURE_ARGS --jvm-args \"-Xms2g -Xmx4g -XX:ReservedCodeCacheSize=512m\""
-    if ! ldm run "$PROJECT_NAME" "$TAG_FLAG" "$LIFERAY_TAG" --port "$PORT" --non-interactive --no-captcha --fast-login --sidecar --db postgresql --clean-state --internal-state --fix-permissions $LDM_VERBOSE $FEATURE_ARGS --jvm-args "-Xms2g -Xmx4g -XX:ReservedCodeCacheSize=512m" > ldm_startup.log 2>&1; then
+    # --no-wait: start the container stack without waiting for Liferay to boot. This allows
+    #   us to fix bind-mount permissions on SanDisk before Liferay attempts to acquire OSGi
+    #   locks. --fix-permissions is insufficient because it fires after Liferay's entrypoint.
+    log_command "ldm run \"$PROJECT_NAME\" \"$TAG_FLAG\" \"$LIFERAY_TAG\" --port \"$PORT\" --non-interactive --no-captcha --fast-login --sidecar --db postgresql --clean-state --internal-state --no-wait $LDM_VERBOSE $FEATURE_ARGS --jvm-args \"-Xms2g -Xmx4g -XX:ReservedCodeCacheSize=512m\""
+    if ! ldm run "$PROJECT_NAME" "$TAG_FLAG" "$LIFERAY_TAG" --port "$PORT" --non-interactive --no-captcha --fast-login --sidecar --db postgresql --clean-state --internal-state --no-wait $LDM_VERBOSE $FEATURE_ARGS --jvm-args "-Xms2g -Xmx4g -XX:ReservedCodeCacheSize=512m" > ldm_startup.log 2>&1; then
         echo "Error: LDM failed to start the environment."
         echo "Hint: Check ldm_startup.log or run 'ldm logs $PROJECT_NAME' for more details."
         cat <<EOF >> "$RESULTS_FILE"
@@ -548,7 +550,17 @@ if [ -z "$PROJECT_PATH" ]; then
 fi
 echo "  -> LDM Project Path: $PROJECT_PATH"
 
-
+if [ "$EXISTING_PROJECT" = false ]; then
+    # Fix bind-mount permissions on external drives (e.g. SanDisk) BEFORE Liferay boots.
+    # OSGi acquires locks on osgi/modules and osgi/client-extensions at startup.
+    # Docker creates these bind-mount dirs as root:root, which Liferay (uid 1000) cannot lock.
+    # We use Alpine to chmod 777 all directories in the project path, then call ldm wait
+    # to trigger the actual Liferay boot — ensuring correct permissions are in place first.
+    echo "  -> Fixing bind-mount permissions on external drive (pre-boot SanDisk workaround)..."
+    docker run --rm \
+        -v "${PROJECT_PATH}:/mnt/ldm-project" \
+        alpine sh -c "find /mnt/ldm-project -type d -exec chmod 777 {} + && echo '  -> Bind-mount permissions fixed.'"
+fi
 
 echo "  -> Waiting for Liferay to become ready..."
 log_command "ldm wait \"$PROJECT_NAME\" -d --stream-status"
