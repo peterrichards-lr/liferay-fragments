@@ -547,12 +547,23 @@ EOF
     fi
 fi
 
-# Resolve project path for deployment
-log_command "ldm list -v"
-PROJECT_PATH=$(ldm list -v | grep -A 1 "$PROJECT_NAME" | grep "Path:" | awk '{print $2}')
-if [ -z "$PROJECT_PATH" ]; then
-    echo "Error: Could not resolve project path for '$PROJECT_NAME'."
-    exit 1
+# Resolve project path for deployment.
+# LDM creates the project directory as PROJECT_NAME under the CWD at ldm run time.
+# ldm list -v only outputs Path: for the last project in the list, so parsing is unreliable.
+# Derive the path directly; fall back to ldm list -v only if the expected directory is absent.
+EXPECTED_PROJECT_PATH="$(pwd)/${PROJECT_NAME}"
+if [ -d "$EXPECTED_PROJECT_PATH" ]; then
+    PROJECT_PATH="$EXPECTED_PROJECT_PATH"
+else
+    log_command "ldm list -v"
+    PROJECT_PATH=$(ldm list -v 2>&1 | grep -A 5 "$PROJECT_NAME" | grep "Path:" | awk '{print $2}')
+    if [ -z "$PROJECT_PATH" ]; then
+        echo "Error: Could not resolve project path for '$PROJECT_NAME'."
+        echo "  Expected: $EXPECTED_PROJECT_PATH (not found)"
+        echo "  ldm list -v output:"
+        ldm list -v 2>&1 | head -20
+        exit 1
+    fi
 fi
 echo "  -> LDM Project Path: $PROJECT_PATH"
 
