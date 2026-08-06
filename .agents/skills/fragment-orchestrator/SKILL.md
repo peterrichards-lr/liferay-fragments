@@ -24,3 +24,7 @@ Route user requests to the appropriate specialist skill based on intent.
 1. Match the user's request to one row in the Intent Router table above.
 2. Read the linked SKILL.md for that specialist skill.
 3. Follow the workflow, references, and output contract defined in that skill.
+
+<!-- markdownlint-disable MD049 -->
+---
+*Last Updated: 2026-07-06* | *Last Reviewed: 2026-08-06*

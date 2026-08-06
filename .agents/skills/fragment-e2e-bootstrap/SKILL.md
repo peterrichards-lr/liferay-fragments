@@ -83,3 +83,7 @@ Run the test suite using `scripts/test-runner.sh`. In Windows environments, invo
 
 - **Drop Zone Collision Prevention**: The framework's `buildPageElementTree` generates unique random IDs for all `FragmentDropZone` element definitions. This prevents Liferay's server-side page layout importer from clashing on clashing ID attributes when rendering multiple instances of the same fragment.
 - **Row-Level Screenshotting**: The Playwright spec `fragments.spec.js` checks the page. If there are multiple instances of the fragment on the test page (e.g. 4 side-by-side cards), it automatically screenshots the parent row/container (`.lfr-layout-structure-item-row, .row, #wrapper`) instead of only capturing the first single instance. This guarantees that all products are captured side-by-side across desktop, tablet, and mobile viewports in the visual gallery.
+
+<!-- markdownlint-disable MD049 -->
+---
+*Last Updated: 2026-06-26* | *Last Reviewed: 2026-08-06*
