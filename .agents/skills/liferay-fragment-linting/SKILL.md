@@ -71,3 +71,7 @@ The linter enforces several categories of rules across all page fragments:
   ```bash
   node scripts/generate-gallery.js
   ```
+
+<!-- markdownlint-disable MD049 -->
+---
+*Last Updated: 2026-06-26* | *Last Reviewed: 2026-08-06*

@@ -58,3 +58,7 @@ If a future Liferay release (e.g., `2027.Q1`) introduces a breaking change to th
    ```powershell
    $env:PORT="8081"; & "C:\Program Files\Git\bin\bash.exe" scripts/test-runner.sh -p e2e-test-env -f <collection-name>
    ```
+
+<!-- markdownlint-disable MD049 -->
+---
+*Last Updated: 2026-06-26* | *Last Reviewed: 2026-08-06*

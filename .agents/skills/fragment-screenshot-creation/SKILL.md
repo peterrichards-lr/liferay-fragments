@@ -80,3 +80,7 @@ git commit -m "docs: regenerate visual screenshots and gallery for <Fragment Nam
   ```ftl
   [#assign myCheckbox = ((configuration.myCheckbox!"")?string == "true") /]
   ```
+
+<!-- markdownlint-disable MD049 -->
+---
+*Last Updated: 2026-06-26* | *Last Reviewed: 2026-08-06*

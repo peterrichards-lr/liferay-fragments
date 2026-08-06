@@ -69,3 +69,7 @@ To track visual regression across commits, the captured screenshots under `docs/
 
 - **Cause**: Fragment collections were created, modified, or deleted without updating `docs/gallery.md`.
 - **Fix**: Re-run `node scripts/generate-gallery.js` to compile the visual table structures again.
+
+<!-- markdownlint-disable MD049 -->
+---
+*Last Updated: 2026-06-26* | *Last Reviewed: 2026-08-06*
