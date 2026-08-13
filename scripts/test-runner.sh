@@ -505,11 +505,24 @@ echo "[4/5] Provisioning Liferay environment via LDM..."
 
 if [ "$EXISTING_PROJECT" = true ]; then
     echo "  -> Checking status of existing project $PROJECT_NAME..."
-    STATUS=$(ldm list | sed 's/\x1b\[[0-9;]*m//g' | grep "[│|] $PROJECT_NAME [│|]" | awk -F'[|?│]' '{print $4}' | xargs)
+    # `ldm list` renders: │ Project │ Version │ Target │ Status │ URL │
+    # The leading delimiter yields an empty $1, so Status is $5 (not $4, which
+    # is Target and would always read "local" for a local project).
+    STATUS=$(ldm list | sed 's/\x1b\[[0-9;]*m//g' | grep "[│|] $PROJECT_NAME [│|]" | awk -F'[|?│]' '{print $5}' | xargs)
     if [ "$STATUS" != "Running" ]; then
         echo "  -> Project '$PROJECT_NAME' is $STATUS. Starting it..."
         log_command "ldm up \"$PROJECT_NAME\" -y"
-        ldm up "$PROJECT_NAME" -y > /dev/null 2>&1
+        # Do not let a non-zero exit abort the run under `set -e`; an
+        # "already running" project is a success case for our purposes.
+        LDM_UP_OUTPUT=$(ldm up "$PROJECT_NAME" -y 2>&1) || {
+            if echo "$LDM_UP_OUTPUT" | grep -qi "already running"; then
+                echo "  -> Project '$PROJECT_NAME' was already running. Continuing."
+            else
+                echo "Error: Failed to start existing project '$PROJECT_NAME'."
+                echo "$LDM_UP_OUTPUT" | tail -20
+                exit 1
+            fi
+        }
         BASE_URL=$(ldm list | sed 's/\x1b\[[0-9;]*m//g' | grep "[│|] $PROJECT_NAME [│|]" | grep -Eo "https?://[a-zA-Z0-9.:-]+" | head -n 1)
         if [ -z "$BASE_URL" ]; then
             echo "Error: Could not find URL for project '$PROJECT_NAME' after starting."
@@ -775,6 +788,40 @@ export KEEP_ALIVE="$KEEP_ALIVE"
 
 echo -n "$BASE_URL" > e2e-tests/resolved_base_url.txt
 
+# Tell global-setup how many fragment collections it should expect to find
+# before it stops waiting for Liferay auto-deploy. Without this the setup phase
+# waits for a hardcoded 5, which a filtered run can never satisfy, so it burns
+# the entire 10-minute timeout before proceeding (Issue #211).
+# Computed here at repo root so it also applies when -s/--skip-deploy is used.
+if [ -n "$FILTER_PATTERN" ]; then
+    MATCHED_COLLECTIONS=0
+    for coll_dir in *; do
+        [ -d "$coll_dir" ] || continue
+        [ -f "$coll_dir/main/collection.json" ] || continue
+        COLL_NAME=$(jq -r '.name // empty' "$coll_dir/main/collection.json" 2>/dev/null || echo "")
+        if matches_filter "$coll_dir" || matches_filter "$COLL_NAME"; then
+            MATCHED_COLLECTIONS=$((MATCHED_COLLECTIONS + 1))
+            continue
+        fi
+        # A filter naming a single fragment still requires its parent collection.
+        if [ -d "$coll_dir/main" ]; then
+            for frag_dir in "$coll_dir/main"/*; do
+                [ -d "$frag_dir" ] || continue
+                [ -f "$frag_dir/main/fragment.json" ] || continue
+                FRAG_NAME=$(jq -r '.name // empty' "$frag_dir/main/fragment.json" 2>/dev/null || echo "")
+                if matches_filter "$(basename "$frag_dir")" || matches_filter "$FRAG_NAME"; then
+                    MATCHED_COLLECTIONS=$((MATCHED_COLLECTIONS + 1))
+                    break
+                fi
+            done
+        fi
+    done
+    if [ "$MATCHED_COLLECTIONS" -gt 0 ]; then
+        export EXPECTED_COLLECTIONS="$MATCHED_COLLECTIONS"
+        echo "  -> Filter matches $MATCHED_COLLECTIONS collection(s); deploy gate will expect that many."
+    fi
+fi
+
 set +e
 cd e2e-tests
 
@@ -784,6 +831,16 @@ if [ -n "$FILTER_PATTERN" ]; then
     GREP_PATTERN="${FILTER_PATTERN//-/[- ]}"
     log_command "npx playwright test --grep \"$GREP_PATTERN\""
     npx playwright test --grep "$GREP_PATTERN" > playwright_output.log 2>&1 || TEST_EXIT_CODE=$?
+    # A filter that provisions an environment and then matches no tests is a
+    # filter defect, not a test failure. Say so explicitly (Issue #212).
+    if grep -q "No tests found" playwright_output.log 2>/dev/null; then
+        echo ""
+        echo "[ERROR] The filter '$FILTER_PATTERN' matched NO tests, after fully"
+        echo "        provisioning the environment and seeding pages."
+        echo "        Test titles are 'Verify: <Collection Name> (<folder>) > <Fragment Name>'."
+        echo "        Check the filter against those identifiers — note that --grep is"
+        echo "        case-sensitive."
+    fi
 else
     log_command "npx playwright test"
     npx playwright test > playwright_output.log 2>&1 || TEST_EXIT_CODE=$?

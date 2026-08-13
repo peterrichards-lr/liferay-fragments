@@ -13,15 +13,25 @@ try {
   );
 }
 
+// Compose the identifiers a --grep may be built from. The collection folder is
+// only appended when it differs from the display name, to keep titles readable.
+function buildTestTitle(pageInfo) {
+  const label = pageInfo.collectionName || pageInfo.collectionFolder || '';
+  const folder = pageInfo.collectionFolder || '';
+  const scope =
+    folder && folder !== label ? `${label} (${folder})` : label || folder;
+  return `${scope} > ${pageInfo.fragmentName}`;
+}
+
 test.describe('Responsive Fragment Rendering', () => {
   // Run all tests as Guest (unauthenticated) to check true visitor experience and prevent admin menus
   test.use({ storageState: { cookies: [], origins: [] } });
 
   for (const pageInfo of testPages) {
-    test(`Verify: ${pageInfo.collectionFolder || pageInfo.collectionName} > ${pageInfo.fragmentName}`, async ({
-      page,
-      baseURL,
-    }) => {
+    // The title carries both the collection display name and its folder so that
+    // a --grep built from any identifier accepted by the seeding filter
+    // (collection name, collection folder, or fragment name) also matches here.
+    test(`Verify: ${buildTestTitle(pageInfo)}`, async ({ page, baseURL }) => {
       // ─── Unified Failure Accumulator ─────────────────────────────────────────
       // ALL failure signals push to failures[]. No signal is silently swallowed.
       // The screenshot is always attempted so the gallery captures the broken state
@@ -179,8 +189,8 @@ test.describe('Responsive Fragment Rendering', () => {
           // Loading spinners — wait for them to disappear
           const loaders = fragmentElement.locator(
             '.loading-animation, .loading-animation-squares, .spinner, ' +
-            '.loading-animation-bounce, .loading-animation-dots, ' +
-            '[class*="loading-animation"], [class*="spinner"]'
+              '.loading-animation-bounce, .loading-animation-dots, ' +
+              '[class*="loading-animation"], [class*="spinner"]'
           );
           const loaderCount = await loaders.count();
           for (let i = 0; i < loaderCount; i++) {
@@ -236,7 +246,10 @@ test.describe('Responsive Fragment Rendering', () => {
             } else {
               await page.evaluate(() => {
                 const sb = document.querySelector('#searchBar');
-                if (sb) { sb.classList.add('show'); sb.style.display = 'block'; }
+                if (sb) {
+                  sb.classList.add('show');
+                  sb.style.display = 'block';
+                }
               });
             }
             if (pageInfo.fragmentName !== 'Master Page Header') {
@@ -264,7 +277,7 @@ test.describe('Responsive Fragment Rendering', () => {
           ) {
             failures.push(
               `Fragment '${pageInfo.fragmentName}' rendered an empty state instead of content — ` +
-              `data was not loaded (check collection seeding, API permissions, or fragment configuration)`
+                `data was not loaded (check collection seeding, API permissions, or fragment configuration)`
             );
           }
 
@@ -290,14 +303,12 @@ test.describe('Responsive Fragment Rendering', () => {
           if (verification) {
             // Required selectors — must be present and meet minCount threshold
             for (const req of verification.requiredSelectors || []) {
-              const found = await fragmentElement
-                .locator(req.selector)
-                .count();
+              const found = await fragmentElement.locator(req.selector).count();
               const min = req.minCount ?? 1;
               if (found < min) {
                 failures.push(
                   `Verification failed — ${req.description}: ` +
-                  `required selector '${req.selector}' found ${found} element(s), expected ≥ ${min}`
+                    `required selector '${req.selector}' found ${found} element(s), expected ≥ ${min}`
                 );
               }
             }
@@ -311,7 +322,7 @@ test.describe('Responsive Fragment Rendering', () => {
               ) {
                 failures.push(
                   `Verification failed — ${forb.description}: ` +
-                  `forbidden selector '${forb.selector}' is visible`
+                    `forbidden selector '${forb.selector}' is visible`
                 );
               }
             }
@@ -335,8 +346,12 @@ test.describe('Responsive Fragment Rendering', () => {
               `[WARN] Element screenshot failed for ${pageInfo.fragmentName}, falling back to wrapper. Reason: ${e.message}`
             );
             try {
-              await wrapper.first().screenshot({ path: snapshotPath, timeout: 5000 });
-              const fallbackHtml = await wrapper.first().evaluate((el) => el.outerHTML);
+              await wrapper
+                .first()
+                .screenshot({ path: snapshotPath, timeout: 5000 });
+              const fallbackHtml = await wrapper
+                .first()
+                .evaluate((el) => el.outerHTML);
               fs.writeFileSync(htmlPath, fallbackHtml, 'utf8');
             } catch (wrapperErr) {
               failures.push(

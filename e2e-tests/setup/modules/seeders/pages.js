@@ -3,6 +3,7 @@ const path = require('path');
 const PicklistSeeder = require('./picklists');
 const DocumentSeeder = require('./documents');
 const CollectionSeeder = require('./collections');
+const { resolveCollectionFolder } = require('../collection-path');
 
 // ERC placeholders are matched as bare substrings, so a shorter ERC that is a
 // prefix of a longer one (e.g. SLIDE-IMG-1 vs SLIDE-IMG-10) would corrupt its
@@ -570,7 +571,7 @@ async function seed(ctx, apiContext) {
 
     let collectionFolder = '';
     if (collectionFound) {
-      collectionFolder = path.basename(currentDir);
+      collectionFolder = resolveCollectionFolder(currentDir);
     } else {
       const parentDirName = path.basename(path.dirname(path.dirname(file)));
       if (parentDirName !== 'fragments' && parentDirName !== '..') {

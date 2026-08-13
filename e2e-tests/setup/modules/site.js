@@ -1,6 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 const { globSync } = require('glob');
+const { resolveCollectionFolder } = require('./collection-path');
 
 async function provisionSite(ctx, apiContext) {
   // 1. Reset and Create Dedicated E2E Site
@@ -117,7 +118,22 @@ async function provisionSite(ctx, apiContext) {
     // or until the 10-minute timeout is reached, before proceeding.
     const DEPLOY_MAX_ATTEMPTS = 30; // 30 × 20s = 10 minutes max
     const DEPLOY_POLL_MS = 20 * 1000; // 20 seconds between attempts
-    const DEPLOY_MIN_COLLECTIONS = 5; // minimum expected deployed collections
+    // A filtered run deploys only the collections matching the filter, so the
+    // runner passes the real expectation through EXPECTED_COLLECTIONS. Falling
+    // back to 5 keeps unfiltered runs unchanged (Issue #211).
+    const parsedExpected = Number.parseInt(
+      process.env.EXPECTED_COLLECTIONS || '',
+      10
+    );
+    const DEPLOY_MIN_COLLECTIONS =
+      Number.isInteger(parsedExpected) && parsedExpected > 0
+        ? parsedExpected
+        : 5;
+    if (process.env.EXPECTED_COLLECTIONS) {
+      console.log(
+        `  -> [DEPLOY WAIT] Expecting ${DEPLOY_MIN_COLLECTIONS} collection(s) for this filtered run.`
+      );
+    }
 
     let collections = [];
     for (let attempt = 0; attempt < DEPLOY_MAX_ATTEMPTS; attempt++) {
@@ -180,9 +196,17 @@ async function provisionSite(ctx, apiContext) {
       await new Promise((resolve) => setTimeout(resolve, DEPLOY_POLL_MS));
     }
 
-    if (collections.length < DEPLOY_MIN_COLLECTIONS) {
+    if (collections.length === 0) {
+      console.error(
+        `  -> [DEPLOY WAIT] Timed out with ZERO collections deployed. ` +
+          `Fragment auto-deploy has almost certainly failed — every fragment test ` +
+          `will fail to find its fragment. Check the Liferay container logs and ` +
+          `the deploy directory before trusting these results.`
+      );
+    } else if (collections.length < DEPLOY_MIN_COLLECTIONS) {
       console.warn(
-        `  -> [DEPLOY WAIT] Timed out. Only ${collections.length} collections found. ` +
+        `  -> [DEPLOY WAIT] Timed out. Only ${collections.length} of an expected ` +
+          `${DEPLOY_MIN_COLLECTIONS} collections found. ` +
           `Proceeding optimistically — some fragment tests may fail.`
       );
     }
@@ -382,7 +406,7 @@ async function provisionSite(ctx, apiContext) {
         if (fs.existsSync(collectionFile)) {
           const collData = JSON.parse(fs.readFileSync(collectionFile, 'utf8'));
           collectionName = collData.name || '';
-          collectionFolder = path.basename(currentDir);
+          collectionFolder = resolveCollectionFolder(currentDir);
           collectionFound = true;
           break;
         }
