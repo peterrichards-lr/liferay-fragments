@@ -50,6 +50,18 @@ fi
 COMPANY_WEB_ID="${COMPANY_WEB_ID:-liferay.com}"
 GROUP_KEY="${GROUP_KEY:-Global}"
 
+# Site used when a collection carries fragment `resources` and no site was
+# requested explicitly. Fragment resources are only served for site-scoped
+# fragments, so such collections cannot sit at Global or system scope. Guest is
+# the default because its groupKey is the literal string "Guest" on every
+# instance, making the published ZIP portable. Override with --site <groupKey>
+# or RESOURCE_FALLBACK_SITE.
+RESOURCE_FALLBACK_SITE="${RESOURCE_FALLBACK_SITE:-Guest}"
+
+# Tracks whether --site was passed, so an explicit choice always wins over any
+# default or automatic fallback.
+SITE_EXPLICIT=false
+
 # Robust timestamp for both macOS and Linux (numeric)
 TIMESTAMP=$(date +%s)000
 
@@ -105,6 +117,7 @@ while [[ "$#" -gt 0 ]]; do
             ;;
         --site)
             GROUP_KEY="$2"
+            SITE_EXPLICIT=true
             shift
             ;;
         *)
@@ -276,18 +289,47 @@ ensure_descriptor() {
         
         local JSON_CONTENT
         
-        # 1. System-wide Scoping (Explicitly requested or Default fallback)
-        if [[ "$COMPANY_WEB_ID" == "*" ]]; then
-            if [ "$HAS_RESOURCES" = true ]; then
-                log_error "Fragment/Collection '$ITEM_NAME' contains a 'resources' directory."
-                log_error "Liferay does not support system-level deployment (companyWebId: \"*\") of fragments with resources."
-                log_error "Please build this collection with a specific --instance or --site target."
-                exit 1
+        # 0. An explicit --site always wins. Nothing below may override a site
+        #    the caller asked for, including the resources fallback.
+        if [ "$SITE_EXPLICIT" = true ]; then
+            if [[ "$COMPANY_WEB_ID" == "*" ]]; then
+                # A site was named alongside --global; the site is the more
+                # specific instruction, and omitting companyWebId keeps the ZIP
+                # portable across instances.
+                JSON_CONTENT=$(jq -n --arg gk "$GROUP_KEY" '{groupKey: $gk}')
+            else
+                JSON_CONTENT=$(jq -n --arg id "$COMPANY_WEB_ID" --arg gk "$GROUP_KEY" \
+                    '{companyWebId: $id, groupKey: $gk}')
             fi
-            
+
+        # 1. DEFAULT for resource-bearing collections: retarget at a site.
+        #    Liferay only serves fragment `resources` for site-scoped fragments,
+        #    so leaving such a collection at Global or system scope ships a ZIP
+        #    whose assets never resolve. Guest is the default because its
+        #    groupKey is the literal string "Guest" on every instance, making the
+        #    published ZIP portable — unlike the Global site, whose groupKey is
+        #    the per-instance companyId. Override with --site <groupKey> or
+        #    RESOURCE_FALLBACK_SITE.
+        elif [ "$HAS_RESOURCES" = true ] && { [[ "$COMPANY_WEB_ID" == "*" ]] || [[ "$GROUP_KEY" == "Global" ]] || [[ -z "$GROUP_KEY" ]]; }; then
+            log_warn "'$ITEM_NAME' contains a 'resources' directory, which Liferay only"
+            log_warn "serves for site-scoped fragments — system, instance and Global scope"
+            log_warn "cannot host it. Defaulting to the '$RESOURCE_FALLBACK_SITE' site."
+            log_warn "Override with --site <groupKey> or RESOURCE_FALLBACK_SITE=<groupKey>."
+            if [[ "$COMPANY_WEB_ID" == "*" ]]; then
+                # No instance pinned, so keep the ZIP portable across instances.
+                JSON_CONTENT=$(jq -n --arg gk "$RESOURCE_FALLBACK_SITE" '{groupKey: $gk}')
+            else
+                # An instance was named (default or --instance); preserve it and
+                # add the site that can actually serve the resources.
+                JSON_CONTENT=$(jq -n --arg id "$COMPANY_WEB_ID" --arg gk "$RESOURCE_FALLBACK_SITE" \
+                    '{companyWebId: $id, groupKey: $gk}')
+            fi
+
+        # 2. System-wide Scoping (Explicitly requested or Default fallback)
+        elif [[ "$COMPANY_WEB_ID" == "*" ]]; then
             # System-wide scope only uses companyWebId
             JSON_CONTENT=$(jq -n --arg id "*" '{companyWebId: $id}')
-            
+
         # 2. Global Site Scoping
         elif [[ "$GROUP_KEY" == "Global" ]]; then
             # Target the default virtual instance to deploy to Global scope without hitting groupKey resolution errors

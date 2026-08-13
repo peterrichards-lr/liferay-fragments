@@ -15,8 +15,12 @@ jobs:
         run: sudo apt-get install jq
 
       - name: Create zip files
-        # Ensure it creates the zips using the safe default site scoping
-        run: ./create-fragment-zips.sh --all
+        # Published ZIPs are consumed by auto-deploying them into an arbitrary
+        # Liferay instance, so they must not pin a virtual instance. --global
+        # emits {"companyWebId": "*"} (system-wide, all instances); the default
+        # would emit {"companyWebId": "liferay.com"} and silently fail to deploy
+        # for anyone whose web ID differs.
+        run: ./create-fragment-zips.sh --all --global
 
       - name: Create Release and Upload Assets
         uses: softprops/action-gh-release@v3
