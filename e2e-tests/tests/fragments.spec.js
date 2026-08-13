@@ -134,200 +134,209 @@ test.describe('Responsive Fragment Rendering', () => {
         );
       }
 
-      // ─── Capture Visual Snapshot ──────────────────────────────────────────────
-      if (pageInfo.excludeFromGallery) {
+      // ─── Verify Fragment & Capture Visual Snapshot ────────────────────────────
+      // Snapshot capture is optional; verification is not. Only the screenshot
+      // is skipped for excludeFromGallery fragments — presence and
+      // content-quality checks below run for every fragment, so a fragment that
+      // renders nothing fails instead of passing vacuously (Issue #216).
+      const captureSnapshot = !pageInfo.excludeFromGallery;
+      if (!captureSnapshot) {
         console.log(
           `[SKIP] Skipping screenshot for ${pageInfo.fragmentName} (excludeFromGallery: true)`
         );
-      } else {
-        const viewportName = test.info().project.name;
-        const snapshotDir = path.join(
-          __dirname,
-          '..',
-          'snapshots',
-          pageInfo.collectionName
-        );
-        if (!fs.existsSync(snapshotDir)) {
-          fs.mkdirSync(snapshotDir, { recursive: true });
-        }
-        const snapshotPath = path.join(
-          snapshotDir,
-          `${pageInfo.fragmentName}-${viewportName}.png`
-        );
-        const htmlPath = path.join(
-          snapshotDir,
-          `${pageInfo.fragmentName}-${viewportName}.html`
-        );
+      }
 
-        // Locate the primary fragment element to screenshot
-        let fragmentElement;
-        const fragmentCount = await page.locator(fragmentSelector).count();
-        if (fragmentCount === 0) {
-          failures.push(
-            `Fragment '${pageInfo.fragmentName}' was not found on the page (selector: ${fragmentSelector} returned 0 elements)`
-          );
+      const viewportName = test.info().project.name;
+      const snapshotDir = path.join(
+        __dirname,
+        '..',
+        'snapshots',
+        pageInfo.collectionName
+      );
+      // Only create the directory when a snapshot will actually be written,
+      // so excluded fragments do not leave empty collection folders behind.
+      if (captureSnapshot && !fs.existsSync(snapshotDir)) {
+        fs.mkdirSync(snapshotDir, { recursive: true });
+      }
+      const snapshotPath = path.join(
+        snapshotDir,
+        `${pageInfo.fragmentName}-${viewportName}.png`
+      );
+      const htmlPath = path.join(
+        snapshotDir,
+        `${pageInfo.fragmentName}-${viewportName}.html`
+      );
+
+      // Locate the primary fragment element to screenshot
+      let fragmentElement;
+      const fragmentCount = await page.locator(fragmentSelector).count();
+      if (fragmentCount === 0) {
+        failures.push(
+          `Fragment '${pageInfo.fragmentName}' was not found on the page (selector: ${fragmentSelector} returned 0 elements)`
+        );
+      } else {
+        if (pageInfo.fragmentName === 'Master Page Header') {
+          fragmentElement = page.locator('#wrapper, .portlet-layout').first();
+        } else if (fragmentCount > 1) {
+          fragmentElement = page
+            .locator('.lfr-layout-structure-item-row, .row')
+            .first();
         } else {
-          if (pageInfo.fragmentName === 'Master Page Header') {
-            fragmentElement = page.locator('#wrapper, .portlet-layout').first();
-          } else if (fragmentCount > 1) {
+          fragmentElement = page.locator(fragmentSelector).first();
+        }
+      }
+
+      if (fragmentElement) {
+        // ─── Phase 1: Content-Quality Assertions ───────────────────────────
+        // All checks accumulate to failures[]. We do NOT throw early so that
+        // every failure is reported and the screenshot is still captured.
+
+        await expect(fragmentElement).toBeVisible({ timeout: 5000 });
+        await fragmentElement.scrollIntoViewIfNeeded();
+
+        // Loading spinners — wait for them to disappear
+        const loaders = fragmentElement.locator(
+          '.loading-animation, .loading-animation-squares, .spinner, ' +
+            '.loading-animation-bounce, .loading-animation-dots, ' +
+            '[class*="loading-animation"], [class*="spinner"]'
+        );
+        const loaderCount = await loaders.count();
+        for (let i = 0; i < loaderCount; i++) {
+          const loader = loaders.nth(i);
+          if (await loader.isVisible()) {
+            try {
+              await expect(loader).toBeHidden({ timeout: 10000 });
+            } catch {
+              failures.push(
+                `Fragment '${pageInfo.fragmentName}' is stuck in a loading state — spinner remains visible after 10s`
+              );
+            }
+          }
+        }
+
+        // Loading text — wait for it to disappear
+        const loadingTexts = fragmentElement.locator('text=/Loading/i');
+        const loadingTextCount = await loadingTexts.count();
+        for (let i = 0; i < loadingTextCount; i++) {
+          const loader = loadingTexts.nth(i);
+          if (await loader.isVisible()) {
+            try {
+              await expect(loader).toBeHidden({ timeout: 15000 });
+            } catch {
+              failures.push(
+                `Fragment '${pageInfo.fragmentName}' is stuck in a loading state — "${await loader.textContent()}" remains visible after 15s`
+              );
+            }
+          }
+        }
+
+        // Let rendering settle (leaflet maps, chart animations)
+        await page.waitForTimeout(500);
+
+        // Fragment-specific interaction before screenshot
+        if (pageInfo.fragmentName === 'Content Map') {
+          const marker = page.locator('.leaflet-marker-icon').first();
+          await expect(marker).toBeVisible({ timeout: 5000 });
+          await marker.click();
+          const popup = page.locator('.leaflet-popup-content-wrapper');
+          await expect(popup).toBeVisible({ timeout: 5000 });
+          await page.waitForTimeout(500);
+        }
+
+        if (
+          pageInfo.fragmentName === 'Search Bar' ||
+          pageInfo.fragmentName === 'Master Page Header'
+        ) {
+          const btn = page.locator('.btn-search').first();
+          if ((await btn.count()) > 0) {
+            await btn.click();
+            await page.waitForTimeout(500);
+          } else {
+            await page.evaluate(() => {
+              const sb = document.querySelector('#searchBar');
+              if (sb) {
+                sb.classList.add('show');
+                sb.style.display = 'block';
+              }
+            });
+          }
+          if (pageInfo.fragmentName !== 'Master Page Header') {
             fragmentElement = page
               .locator('.lfr-layout-structure-item-row, .row')
               .first();
-          } else {
-            fragmentElement = page.locator(fragmentSelector).first();
           }
         }
 
-        if (fragmentElement) {
-          // ─── Phase 1: Content-Quality Assertions ───────────────────────────
-          // All checks accumulate to failures[]. We do NOT throw early so that
-          // every failure is reported and the screenshot is still captured.
-
-          await expect(fragmentElement).toBeVisible({ timeout: 5000 });
-          await fragmentElement.scrollIntoViewIfNeeded();
-
-          // Loading spinners — wait for them to disappear
-          const loaders = fragmentElement.locator(
-            '.loading-animation, .loading-animation-squares, .spinner, ' +
-              '.loading-animation-bounce, .loading-animation-dots, ' +
-              '[class*="loading-animation"], [class*="spinner"]'
-          );
-          const loaderCount = await loaders.count();
-          for (let i = 0; i < loaderCount; i++) {
-            const loader = loaders.nth(i);
-            if (await loader.isVisible()) {
-              try {
-                await expect(loader).toBeHidden({ timeout: 10000 });
-              } catch {
-                failures.push(
-                  `Fragment '${pageInfo.fragmentName}' is stuck in a loading state — spinner remains visible after 10s`
-                );
-              }
-            }
-          }
-
-          // Loading text — wait for it to disappear
-          const loadingTexts = fragmentElement.locator('text=/Loading/i');
-          const loadingTextCount = await loadingTexts.count();
-          for (let i = 0; i < loadingTextCount; i++) {
-            const loader = loadingTexts.nth(i);
-            if (await loader.isVisible()) {
-              try {
-                await expect(loader).toBeHidden({ timeout: 15000 });
-              } catch {
-                failures.push(
-                  `Fragment '${pageInfo.fragmentName}' is stuck in a loading state — "${await loader.textContent()}" remains visible after 15s`
-                );
-              }
-            }
-          }
-
-          // Let rendering settle (leaflet maps, chart animations)
-          await page.waitForTimeout(500);
-
-          // Fragment-specific interaction before screenshot
-          if (pageInfo.fragmentName === 'Content Map') {
-            const marker = page.locator('.leaflet-marker-icon').first();
-            await expect(marker).toBeVisible({ timeout: 5000 });
-            await marker.click();
-            const popup = page.locator('.leaflet-popup-content-wrapper');
-            await expect(popup).toBeVisible({ timeout: 5000 });
+        if (pageInfo.fragmentName === 'Search Overlay') {
+          const triggerEl = page.locator('.search-trigger').first();
+          if ((await triggerEl.count()) > 0) {
+            await triggerEl.click();
             await page.waitForTimeout(500);
           }
+          fragmentElement = page.locator('#wrapper, .portlet-layout').first();
+        }
 
-          if (
-            pageInfo.fragmentName === 'Search Bar' ||
-            pageInfo.fragmentName === 'Master Page Header'
-          ) {
-            const btn = page.locator('.btn-search').first();
-            if ((await btn.count()) > 0) {
-              await btn.click();
-              await page.waitForTimeout(500);
-            } else {
-              await page.evaluate(() => {
-                const sb = document.querySelector('#searchBar');
-                if (sb) {
-                  sb.classList.add('show');
-                  sb.style.display = 'block';
-                }
-              });
-            }
-            if (pageInfo.fragmentName !== 'Master Page Header') {
-              fragmentElement = page
-                .locator('.lfr-layout-structure-item-row, .row')
-                .first();
-            }
-          }
+        // Generic: empty state (applies to all fragments using renderEmptyState)
+        // Must run before bounding box — CSS min-height keeps height > 10px even when empty
+        const emptyState = fragmentElement.locator('.c-empty-state');
+        if (
+          (await emptyState.count()) > 0 &&
+          (await emptyState.first().isVisible())
+        ) {
+          failures.push(
+            `Fragment '${pageInfo.fragmentName}' rendered an empty state instead of content — ` +
+              `data was not loaded (check collection seeding, API permissions, or fragment configuration)`
+          );
+        }
 
-          if (pageInfo.fragmentName === 'Search Overlay') {
-            const triggerEl = page.locator('.search-trigger').first();
-            if ((await triggerEl.count()) > 0) {
-              await triggerEl.click();
-              await page.waitForTimeout(500);
-            }
-            fragmentElement = page.locator('#wrapper, .portlet-layout').first();
-          }
+        // Generic: bounding box height
+        const box = await fragmentElement.boundingBox();
+        if (!box || box.height <= 10) {
+          failures.push(
+            `Fragment '${pageInfo.fragmentName}' rendered with insufficient height (${
+              box ? box.height : 0
+            }px) — it may be empty or failing to render content`
+          );
+        }
 
-          // Generic: empty state (applies to all fragments using renderEmptyState)
-          // Must run before bounding box — CSS min-height keeps height > 10px even when empty
-          const emptyState = fragmentElement.locator('.c-empty-state');
-          if (
-            (await emptyState.count()) > 0 &&
-            (await emptyState.first().isVisible())
-          ) {
-            failures.push(
-              `Fragment '${pageInfo.fragmentName}' rendered an empty state instead of content — ` +
-                `data was not loaded (check collection seeding, API permissions, or fragment configuration)`
-            );
-          }
-
-          // Generic: bounding box height
-          const box = await fragmentElement.boundingBox();
-          if (!box || box.height <= 10) {
-            failures.push(
-              `Fragment '${pageInfo.fragmentName}' rendered with insufficient height (${
-                box ? box.height : 0
-              }px) — it may be empty or failing to render content`
-            );
-          }
-
-          // ─── Phase 1b: Per-Fragment Verification Block ──────────────────────
-          // Each fragment can declare custom success criteria in test-data.json
-          // under a "verification" key. This is passed through to pageInfo by
-          // global-setup.js. Generic checks above are always applied in addition.
-          //
-          // Schema:
-          //   verification.requiredSelectors: [{ selector, minCount, description }]
-          //   verification.forbiddenSelectors: [{ selector, description }]
-          const verification = pageInfo.verification;
-          if (verification) {
-            // Required selectors — must be present and meet minCount threshold
-            for (const req of verification.requiredSelectors || []) {
-              const found = await fragmentElement.locator(req.selector).count();
-              const min = req.minCount ?? 1;
-              if (found < min) {
-                failures.push(
-                  `Verification failed — ${req.description}: ` +
-                    `required selector '${req.selector}' found ${found} element(s), expected ≥ ${min}`
-                );
-              }
-            }
-
-            // Forbidden selectors — must not be visible
-            for (const forb of verification.forbiddenSelectors || []) {
-              const el = fragmentElement.locator(forb.selector).first();
-              if (
-                (await fragmentElement.locator(forb.selector).count()) > 0 &&
-                (await el.isVisible())
-              ) {
-                failures.push(
-                  `Verification failed — ${forb.description}: ` +
-                    `forbidden selector '${forb.selector}' is visible`
-                );
-              }
+        // ─── Phase 1b: Per-Fragment Verification Block ──────────────────────
+        // Each fragment can declare custom success criteria in test-data.json
+        // under a "verification" key. This is passed through to pageInfo by
+        // global-setup.js. Generic checks above are always applied in addition.
+        //
+        // Schema:
+        //   verification.requiredSelectors: [{ selector, minCount, description }]
+        //   verification.forbiddenSelectors: [{ selector, description }]
+        const verification = pageInfo.verification;
+        if (verification) {
+          // Required selectors — must be present and meet minCount threshold
+          for (const req of verification.requiredSelectors || []) {
+            const found = await fragmentElement.locator(req.selector).count();
+            const min = req.minCount ?? 1;
+            if (found < min) {
+              failures.push(
+                `Verification failed — ${req.description}: ` +
+                  `required selector '${req.selector}' found ${found} element(s), expected ≥ ${min}`
+              );
             }
           }
 
+          // Forbidden selectors — must not be visible
+          for (const forb of verification.forbiddenSelectors || []) {
+            const el = fragmentElement.locator(forb.selector).first();
+            if (
+              (await fragmentElement.locator(forb.selector).count()) > 0 &&
+              (await el.isVisible())
+            ) {
+              failures.push(
+                `Verification failed — ${forb.description}: ` +
+                  `forbidden selector '${forb.selector}' is visible`
+              );
+            }
+          }
+        }
+
+        if (captureSnapshot) {
           // ─── Phase 2: Screenshot Capture ────────────────────────────────────
           // Always attempt the screenshot — even if Phase 1 found failures —
           // so the gallery shows the broken state as evidence for diagnosis.
