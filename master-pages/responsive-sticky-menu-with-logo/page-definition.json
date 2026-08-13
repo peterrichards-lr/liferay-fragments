@@ -4,7 +4,7 @@
     "pageElements": [
       {
         "definition": {
-          "fragment": { "key": "responsive-menu", "siteKey": "10189949220231" },
+          "fragment": { "key": "responsive-menu" },
           "fragmentConfig": {
             "menuItemSelectedBgColor": "var(--primary, #0B5FFF)",
             "enableDebug": false,
@@ -63,8 +63,7 @@
               {
                 "definition": {
                   "fragment": {
-                    "key": "logo-zone",
-                    "siteKey": "10189949220231"
+                    "key": "logo-zone"
                   },
                   "fragmentConfig": {
                     "flexGap": "var(--spacer-2, .5rem)",
@@ -89,8 +88,7 @@
                       {
                         "definition": {
                           "fragment": {
-                            "key": "logo",
-                            "siteKey": "10189949220231"
+                            "key": "logo"
                           },
                           "fragmentConfig": {
                             "logoAltText": "",
@@ -150,8 +148,7 @@
               {
                 "definition": {
                   "fragment": {
-                    "key": "zone-layout",
-                    "siteKey": "10189949220231"
+                    "key": "zone-layout"
                   },
                   "fragmentConfig": {
                     "flexGap": "var(--spacer-2, .5rem)",
@@ -184,8 +181,7 @@
                       {
                         "definition": {
                           "fragment": {
-                            "key": "login-and-user-menu",
-                            "siteKey": "10189949220231"
+                            "key": "login-and-user-menu"
                           },
                           "fragmentConfig": {
                             "iconName": "user",

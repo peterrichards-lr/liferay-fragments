@@ -19,8 +19,7 @@ function buildPageElementTree(
   defaultFragmentKey,
   defaultFragmentConfig,
   fragmentKeyToDir,
-  objectDefinitions = [],
-  globalSiteKey = 'L_GLOBAL'
+  objectDefinitions = []
 ) {
   if (typeof node === 'string') {
     node = { type: 'Fragment', key: node };
@@ -147,8 +146,7 @@ function buildPageElementTree(
               defaultFragmentKey,
               defaultFragmentConfig,
               fragmentKeyToDir,
-              objectDefinitions,
-              globalSiteKey
+              objectDefinitions
             )
           ),
         };
@@ -200,8 +198,7 @@ function buildPageElementTree(
               defaultFragmentKey,
               defaultFragmentConfig,
               fragmentKeyToDir,
-              objectDefinitions,
-              globalSiteKey
+              objectDefinitions
             )
           ),
         },
@@ -354,8 +351,7 @@ function buildPageElementTree(
           defaultFragmentKey,
           defaultFragmentConfig,
           fragmentKeyToDir,
-          objectDefinitions,
-          globalSiteKey
+          objectDefinitions
         )
       );
     } else if (node.children && node.children.length > 0) {
@@ -383,8 +379,7 @@ function buildPageElementTree(
                 defaultFragmentKey,
                 defaultFragmentConfig,
                 fragmentKeyToDir,
-                objectDefinitions,
-                globalSiteKey
+                objectDefinitions
               )
             );
           }
@@ -406,8 +401,7 @@ function buildPageElementTree(
             defaultFragmentKey,
             defaultFragmentConfig,
             fragmentKeyToDir,
-            objectDefinitions,
-            globalSiteKey
+            objectDefinitions
           )
         );
       } else {
@@ -501,8 +495,7 @@ function buildPageElementTree(
                 defaultFragmentKey,
                 defaultFragmentConfig,
                 fragmentKeyToDir,
-                objectDefinitions,
-                globalSiteKey
+                objectDefinitions
               )
             ),
           },
@@ -516,8 +509,7 @@ function buildPageElementTree(
             defaultFragmentKey,
             defaultFragmentConfig,
             fragmentKeyToDir,
-            objectDefinitions,
-            globalSiteKey
+            objectDefinitions
           )
         );
       }
@@ -531,7 +523,6 @@ async function seed(ctx, apiContext) {
   const {
     siteId,
     siteERC,
-    globalSiteKey,
     fragmentFiles,
     existingLayouts,
     objectDefinitions,
@@ -736,8 +727,7 @@ async function seed(ctx, apiContext) {
           fragmentKey,
           seededConfigOverrides,
           fragmentKeyToDir,
-          objectDefinitions,
-          globalSiteKey
+          objectDefinitions
         );
 
         if (rootPageElement && rootPageElement.type !== 'Root') {
