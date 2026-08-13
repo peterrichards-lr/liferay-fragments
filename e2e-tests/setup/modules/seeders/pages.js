@@ -107,11 +107,17 @@ function buildPageElementTree(
       });
     }
 
+    // Do NOT set `siteKey` here. Liferay expects the site's `key` field — for
+    // the Global site that is an opaque numeric group key (e.g. 73885835506376),
+    // not its external reference code `L_GLOBAL`. Given any other value it
+    // silently discards the whole Fragment element from the persisted layout:
+    // the page is created, HTTP 200 is returned, no error is logged, and the
+    // fragment is simply absent from the rendered page. Omitting siteKey lets
+    // Liferay resolve the fragment from the available scopes. See Issue #187.
     const definition = {
       type: 'BasicFragment',
       fragment: {
         key: key,
-        siteKey: globalSiteKey,
       },
       fragmentConfig: resolvedConfig,
       fragmentFields: resolvedFields,
@@ -273,7 +279,6 @@ function buildPageElementTree(
         : `ObjectField_${fieldKey}`,
       fragment: {
         key: key,
-        siteKey: globalSiteKey,
       },
       fragmentConfig: {
         ...resolvedConfig,
@@ -958,7 +963,6 @@ async function seed(ctx, apiContext) {
                                           : `ObjectField_${fieldKey}`,
                                         fragment: {
                                           key: fragmentKey,
-                                          siteKey: globalSiteKey,
                                         },
                                         fragmentConfig:
                                           testData &&
@@ -1015,7 +1019,6 @@ async function seed(ctx, apiContext) {
                             type: 'BasicFragment',
                             fragment: {
                               key: fragmentKey,
-                              siteKey: globalSiteKey,
                             },
                             fragmentConfig: seededConfigOverrides,
                             indexed: true,
