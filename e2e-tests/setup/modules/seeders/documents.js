@@ -1,6 +1,28 @@
 const fs = require('fs');
 const path = require('path');
 
+// Maps a file extension to the MIME type declared on the multipart upload.
+// Liferay stores this against the file entry and serves it back as the
+// Content-Type header, so it must match the actual bytes being uploaded.
+const MIME_TYPES_BY_EXTENSION = {
+  '.png': 'image/png',
+  '.jpg': 'image/jpeg',
+  '.jpeg': 'image/jpeg',
+  '.webp': 'image/webp',
+  '.gif': 'image/gif',
+  '.svg': 'image/svg+xml',
+  '.pdf': 'application/pdf',
+};
+
+function resolveMimeType(doc, absFilePath) {
+  // An explicit declaration in test-data.json always wins.
+  if (doc.mimeType) {
+    return doc.mimeType;
+  }
+  const extension = path.extname(absFilePath).toLowerCase();
+  return MIME_TYPES_BY_EXTENSION[extension] || 'application/octet-stream';
+}
+
 async function seed(
   ctx,
   apiContext,
@@ -44,13 +66,14 @@ async function seed(
 
       try {
         const fileBuffer = fs.readFileSync(absFilePath);
+        const mimeType = resolveMimeType(doc, absFilePath);
         const uploadResp = await apiContext.post(
           `/o/headless-delivery/v1.0/sites/${ctx.siteId}/documents`,
           {
             multipart: {
               file: {
                 name: doc.title,
-                mimeType: 'image/png',
+                mimeType: mimeType,
                 buffer: fileBuffer,
               },
               document: JSON.stringify({
@@ -67,7 +90,7 @@ async function seed(
           const contentUrl = uploadJson.contentUrl;
           const docId = uploadJson.id;
           console.log(
-            `       Successfully uploaded document ${doc.title} -> URL: ${contentUrl}, ID: ${docId}`
+            `       Successfully uploaded document ${doc.title} (${mimeType}) -> URL: ${contentUrl}, ID: ${docId}`
           );
           assetMap[doc.externalReferenceCode] = contentUrl;
           documentIdMap[doc.externalReferenceCode] = docId;

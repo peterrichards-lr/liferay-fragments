@@ -1,11 +1,28 @@
 {
+  "documents": [
+    {
+      "externalReferenceCode": "AURA-LOOKBOOK-HERO",
+      "title": "aura-lookbook-hero.webp",
+      "filePath": "e2e-tests/assets/aura/aura-lookbook-hero.webp"
+    }
+  ],
   "pageLayout": {
     "type": "Fragment",
     "key": "aura-scoped-container",
     "children": [
       {
         "type": "Fragment",
-        "key": "aura-lookbook"
+        "key": "aura-lookbook",
+        "fragmentFields": [
+          {
+            "id": "image",
+            "value": {
+              "image": {
+                "url": "AURA-LOOKBOOK-HERO"
+              }
+            }
+          }
+        ]
       }
     ]
   }

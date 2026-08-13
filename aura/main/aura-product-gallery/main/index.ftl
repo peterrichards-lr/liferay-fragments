@@ -1,4 +1,4 @@
-<section style="padding: 48px 0">
+<section class="aura-gallery" style="padding: 48px 0">
   <div class="aura-container">
     <h2
       class="slogan"
@@ -15,11 +15,11 @@
           data-lfr-editable-id="img1"
           data-lfr-editable-type="image"
           src=""
-          alt="Aura frame 1"
+          alt="Aura frame in blue crystal"
         />
         <figcaption style="margin-top: 8px">
           <strong data-lfr-editable-id="cap1" data-lfr-editable-type="text"
-            >Havana</strong
+            >Blue</strong
           >
         </figcaption>
       </figure>
@@ -29,11 +29,11 @@
           data-lfr-editable-id="img2"
           data-lfr-editable-type="image"
           src=""
-          alt="Aura frame 2"
+          alt="Aura frame in burgundy"
         />
         <figcaption style="margin-top: 8px">
           <strong data-lfr-editable-id="cap2" data-lfr-editable-type="text"
-            >Blue</strong
+            >Burgundy</strong
           >
         </figcaption>
       </figure>
@@ -43,11 +43,11 @@
           data-lfr-editable-id="img3"
           data-lfr-editable-type="image"
           src=""
-          alt="Aura frame 3"
+          alt="Aura frame in plum"
         />
         <figcaption style="margin-top: 8px">
           <strong data-lfr-editable-id="cap3" data-lfr-editable-type="text"
-            >Crystal</strong
+            >Plum</strong
           >
         </figcaption>
       </figure>
@@ -57,11 +57,11 @@
           data-lfr-editable-id="img4"
           data-lfr-editable-type="image"
           src=""
-          alt="Aura frame 4"
+          alt="Aura frame in rose"
         />
         <figcaption style="margin-top: 8px">
           <strong data-lfr-editable-id="cap4" data-lfr-editable-type="text"
-            >Burgundy</strong
+            >Rose</strong
           >
         </figcaption>
       </figure>
