@@ -1,11 +1,67 @@
 {
+  "documents": [
+    {
+      "externalReferenceCode": "AURA-FRAME-BLUE",
+      "title": "aura-frame-blue.jpeg",
+      "filePath": "e2e-tests/assets/aura/aura-frame-blue.jpeg"
+    },
+    {
+      "externalReferenceCode": "AURA-FRAME-BURGUNDY",
+      "title": "aura-frame-burgundy.jpeg",
+      "filePath": "e2e-tests/assets/aura/aura-frame-burgundy.jpeg"
+    },
+    {
+      "externalReferenceCode": "AURA-FRAME-PLUM",
+      "title": "aura-frame-plum.jpeg",
+      "filePath": "e2e-tests/assets/aura/aura-frame-plum.jpeg"
+    },
+    {
+      "externalReferenceCode": "AURA-FRAME-ROSE",
+      "title": "aura-frame-rose.jpeg",
+      "filePath": "e2e-tests/assets/aura/aura-frame-rose.jpeg"
+    }
+  ],
   "pageLayout": {
     "type": "Fragment",
     "key": "aura-scoped-container",
     "children": [
       {
         "type": "Fragment",
-        "key": "aura-product-gallery"
+        "key": "aura-product-gallery",
+        "fragmentFields": [
+          {
+            "id": "img1",
+            "value": {
+              "image": {
+                "url": "AURA-FRAME-BLUE"
+              }
+            }
+          },
+          {
+            "id": "img2",
+            "value": {
+              "image": {
+                "url": "AURA-FRAME-BURGUNDY"
+              }
+            }
+          },
+          {
+            "id": "img3",
+            "value": {
+              "image": {
+                "url": "AURA-FRAME-PLUM"
+              }
+            }
+          },
+          {
+            "id": "img4",
+            "value": {
+              "image": {
+                "url": "AURA-FRAME-ROSE"
+              }
+            }
+          }
+        ]
       }
     ]
   }

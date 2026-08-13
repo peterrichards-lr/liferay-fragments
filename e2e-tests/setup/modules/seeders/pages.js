@@ -4,6 +4,13 @@ const PicklistSeeder = require('./picklists');
 const DocumentSeeder = require('./documents');
 const CollectionSeeder = require('./collections');
 
+// ERC placeholders are matched as bare substrings, so a shorter ERC that is a
+// prefix of a longer one (e.g. SLIDE-IMG-1 vs SLIDE-IMG-10) would corrupt its
+// sibling if substituted first. Always consume the longest keys first.
+function assetKeysLongestFirst(assetMap) {
+  return Object.keys(assetMap).sort((a, b) => b.length - a.length);
+}
+
 function buildPageElementTree(
   node,
   siteERC,
@@ -51,7 +58,7 @@ function buildPageElementTree(
         } else {
           let replacedStr = val;
           // Check substring matches for stringified JSON (like optionsJSON in image-choice)
-          Object.keys(assetMap).forEach((assetKey) => {
+          assetKeysLongestFirst(assetMap).forEach((assetKey) => {
             if (replacedStr.includes(assetKey)) {
               // Note: using string split/join to support all environments for replaceAll
               replacedStr = replacedStr
@@ -213,7 +220,7 @@ function buildPageElementTree(
         } else {
           let replacedStr = val;
           // Check substring matches for stringified JSON (like optionsJSON in image-choice)
-          Object.keys(assetMap).forEach((assetKey) => {
+          assetKeysLongestFirst(assetMap).forEach((assetKey) => {
             if (replacedStr.includes(assetKey)) {
               // Note: using string split/join to support all environments for replaceAll
               replacedStr = replacedStr
@@ -642,7 +649,7 @@ async function seed(ctx, apiContext) {
               if (assetMap[val]) {
                 return assetMap[val];
               } else {
-                Object.keys(assetMap).forEach((assetKey) => {
+                assetKeysLongestFirst(assetMap).forEach((assetKey) => {
                   if (replacedStr.includes(assetKey)) {
                     replacedStr = replacedStr
                       .split(assetKey)
@@ -1203,7 +1210,7 @@ async function seed(ctx, apiContext) {
       // Per-fragment custom verification criteria (requiredSelectors / forbiddenSelectors).
       // Defined in each fragment's test/test-data.json under "verification".
       // Applied by fragments.spec.js after generic content-quality checks.
-      verification: testData ? (testData.verification || null) : null,
+      verification: testData ? testData.verification || null : null,
     });
   }
 

@@ -1,4 +1,4 @@
-<section style="padding: 48px 0">
+<section class="aura-lookbook" style="padding: 48px 0">
   <div class="aura-container grid grid-2">
     <div>
       <img

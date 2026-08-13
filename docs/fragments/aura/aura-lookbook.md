@@ -22,13 +22,18 @@ The fragment is built upon a 2-column grid layout (`grid grid-2`) using native H
 
 - Utilizes CSS classes like `aura-container`, `grid`, and `grid-2` for layout.
 - Uses `img-soft` for image styling.
+- The root `<section>` carries the `aura-lookbook` class, which activates the image-sizing rules in `aura.css`. These constrain the featured image to `--aura-lookbook-aspect` with `object-fit: cover` — a 4/5 portrait crop on desktop, widening to 16/10 below 900px. Removing the class leaves the `<img>` at its intrinsic size and breaks the split layout.
 - Uses the `var(--aura-heading-color)` CSS token for theming the heading text.
 - Standard Liferay button classes (`btn`, `btn-primary`, `btn-secondary lighten`).
 
-## <!-- markdownlint-disable MD049 -->
+## E2E Test Data
 
-_Last Updated: 2026-07-02_ | _Last Reviewed: 2026-07-02_
+`test/test-data.json` seeds the `image` editable from `e2e-tests/assets/aura/aura-lookbook-hero.webp`, uploaded to Documents & Media under the ERC `AURA-LOOKBOOK-HERO`.
 
-## <!-- markdownlint-disable MD049 -->
+Because the desktop slot crops to a 4/5 portrait via `object-fit: cover`, the asset is pre-padded to 4:5 on its native background colour. A source at any other aspect ratio would have its edges cropped away — for a branded hero, that means losing wordmark or price detail.
 
-_Last Updated: 2026-07-09_ | _Last Reviewed: 2026-07-09_
+<!-- markdownlint-disable MD049 -->
+
+---
+
+_Last Updated: 2026-08-13_ | _Last Reviewed: 2026-08-13_

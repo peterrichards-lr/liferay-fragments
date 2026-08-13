@@ -15,18 +15,28 @@ Editable elements:
 
 - `title` (text): The main gallery heading.
 - `img1` to `img4` (image): The images for the 4 product slots.
-- `cap1` to `cap4` (text): The bold captions below each respective image.
+- `cap1` to `cap4` (text): The bold captions below each respective image. They default to the colourway names `Blue`, `Burgundy`, `Plum`, and `Rose`.
 
 ## Dependencies
 
 - Leverages the `aura-container` class and a `grid grid-4` layout.
 - The gallery items use the `<figure>` and `<figcaption>` elements styled with `aura-card` and `img-soft` classes.
+- The root `<section>` carries the `aura-gallery` class, which activates the image-sizing rules in `aura.css`. These normalise every slot to `--aura-gallery-aspect` (4/3) with `object-fit: contain` over a white backdrop, so source photography of differing dimensions and aspect ratios still yields a uniform grid. Removing the class leaves each `<img>` at its intrinsic size and breaks the layout.
 - Uses the `var(--aura-heading-color)` CSS token for the heading, maintaining Theme Tokens compliance.
 
-## <!-- markdownlint-disable MD049 -->
+## E2E Test Data
 
-_Last Updated: 2026-07-02_ | _Last Reviewed: 2026-07-02_
+`test/test-data.json` seeds the four image slots from local assets in `e2e-tests/assets/aura/`, uploaded to Documents & Media and resolved by external reference code:
 
-## <!-- markdownlint-disable MD049 -->
+| Editable | ERC | Asset |
+| --- | --- | --- |
+| `img1` | `AURA-FRAME-BLUE` | `aura-frame-blue.jpeg` |
+| `img2` | `AURA-FRAME-BURGUNDY` | `aura-frame-burgundy.jpeg` |
+| `img3` | `AURA-FRAME-PLUM` | `aura-frame-plum.jpeg` |
+| `img4` | `AURA-FRAME-ROSE` | `aura-frame-rose.jpeg` |
 
-_Last Updated: 2026-07-09_ | _Last Reviewed: 2026-07-09_
+<!-- markdownlint-disable MD049 -->
+
+---
+
+_Last Updated: 2026-08-13_ | _Last Reviewed: 2026-08-13_

@@ -39,7 +39,10 @@ The E2E bootstrap framework automatically provisions the following resources on 
    - You can declare local files (like images, icons, or PDF brochures) in the top-level `"documents"` array of `test-data.json`.
    - The framework uploads these files to Liferay's Document Library using the Headless Delivery API and assigns them the specified `externalReferenceCode` (ERC).
    - In page layout configurations (e.g. image URLs), the ERC placeholder is automatically resolved to the real published URL of the uploaded asset.
+   - **MIME Types**: The upload MIME type is derived from the file extension (`.png`, `.jpg`/`.jpeg`, `.webp`, `.gif`, `.svg`, `.pdf`), falling back to `application/octet-stream`. Declare an explicit `"mimeType"` on the document entry to override the derived value. Liferay stores this against the file entry and serves it back as the `Content-Type` header, so it must match the actual bytes.
+   - **Image Editables**: To populate a `data-lfr-editable-type="image"` slot, reference the ERC from a `fragmentFields` entry shaped as `{"id": "<editable-id>", "value": {"image": {"url": "<ERC>"}}}`. This path resolves by whole-string equality, so it is immune to the substring hazard below.
    - **Stringified JSON Configurations**: For fragments that accept stringified JSON (like `"optionsJSON"`), the framework performs a deep global substring replacement (`replacedStr.split(erc).join(url)`). This ensures ERC placeholders embedded inside nested structures or stringified configuration properties are correctly mapped to their Liferay URLs.
+   - **ERC Naming**: Because the substring pass matches bare placeholders, keys are consumed longest-first so a shorter ERC cannot corrupt a longer sibling. Still avoid ERCs that are strict prefixes of one another, and zero-pad numbered sequences to a fixed width (`SLIDE-IMG-01`, not `SLIDE-IMG-1`).
    - Guest view permissions are automatically granted to these files so that E2E visual capture executes cleanly.
 
 3. **Structured Content (Web Content Articles)**:
@@ -86,4 +89,4 @@ Run the test suite using `scripts/test-runner.sh`. In Windows environments, invo
 
 <!-- markdownlint-disable MD049 -->
 ---
-*Last Updated: 2026-06-26* | *Last Reviewed: 2026-08-06*
+*Last Updated: 2026-08-13* | *Last Reviewed: 2026-08-13*
