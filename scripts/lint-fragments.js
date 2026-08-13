@@ -711,6 +711,56 @@ function runLinter() {
     }
   });
 
+  // --- PORTABILITY CHECK: NO siteKey IN FRAGMENT REFERENCES (Issue #187) ---
+  // `siteKey` is Liferay's `groupKey`. At company scope the Global site's
+  // groupKey is the companyId, which is generated per instance — so it can
+  // never be committed. Worse, an unresolvable value is not rejected: Liferay
+  // returns HTTP 200 and silently discards the entire Fragment element, so the
+  // page renders without it and nothing is logged. Omitting siteKey lets
+  // Liferay resolve from the ambient scope and is portable across instances.
+  console.log(`Checking fragment references for non-portable siteKey...`);
+  const SITEKEY_SCAN_GLOBS = [
+    '*/page-definition.json',
+    '*/*/page-definition.json',
+    '**/test/test-data.json',
+    'e2e-tests/setup/**/*.js',
+  ];
+  const siteKeyOffenders = [];
+  SITEKEY_SCAN_GLOBS.forEach((pattern) => {
+    globSync(pattern, {
+      cwd: process.cwd(),
+      ignore: ['node_modules/**', ...ldmIgnores],
+    }).forEach((rel) => {
+      const abs = path.join(process.cwd(), rel);
+      let content = '';
+      try {
+        content = fs.readFileSync(abs, 'utf8');
+      } catch (e) {
+        return;
+      }
+      content.split('\n').forEach((line, i) => {
+        // Ignore comment lines so the explanatory notes do not trip the check.
+        const trimmed = line.trim();
+        if (trimmed.startsWith('//') || trimmed.startsWith('*')) return;
+        if (/["']?siteKey["']?\s*:/.test(line)) {
+          siteKeyOffenders.push(`${rel}:${i + 1}`);
+        }
+      });
+    });
+  });
+  if (siteKeyOffenders.length > 0) {
+    siteKeyOffenders.forEach((loc) => {
+      logError(
+        'Portability',
+        `siteKey found at ${loc}. Fragment references must omit siteKey — ` +
+          `Liferay silently drops the Fragment element when it cannot resolve ` +
+          `the value, and the Global site's groupKey is per-instance. See #187.`
+      );
+    });
+  } else {
+    console.log('No non-portable siteKey references found.');
+  }
+
   // --- GALLERY DRIFT CHECK ---
   console.log(`Checking for Gallery drift...`);
   const GALLERY_FILE = path.join(process.cwd(), 'docs', 'gallery.md');
