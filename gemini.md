@@ -63,8 +63,13 @@
   `NullPointerException` in Java-side importers.
 - **Mandatory Metadata**: Row definitions MUST include `gutters: true` and
   `columnsSpacing: true` to satisfy 2026.Q1 validation requirements.
-- **Scoping Rule**: When programmatically creating test pages, always use the
-  explicit `siteERC` in the fragment reference `siteKey` property.
+- **Scoping Rule**: When programmatically creating test pages, **never set the
+  `siteKey` property** on a fragment reference — use `{ "key": "<fragment-key>" }`
+  alone. Liferay expects the site's `key`, not its ERC; the Global site's `key`
+  is an opaque per-instance numeric group key, so passing `L_GLOBAL` (or a site
+  id or name) fails to resolve and Liferay silently drops the whole Fragment
+  element with no error and an HTTP 200 response. Omitting it resolves correctly
+  and is portable between instances. See Issue #187.
 - **Race Condition Prevention**:
   - **Sequential Creation**: Programmatic page creation MUST be executed
     sequentially (one-by-one) with a minimum 1s stagger to prevent duplicate key
@@ -392,20 +397,22 @@ confirmed Liferay platform bug:
 - ✅ All showcase object entries, Commerce products, and web content seeded.
 - ✅ All test pages created successfully.
 - ✅ `docs/automated-testing.md` documents LPD-91054 as the known blocker.
+
 ### ✅ LPD-91054 Confirmed Fixed (2026-07-26)
 
 First successful full E2E run on `2026.q1.11-lts` (Jul 26, 2026):
+
 - **27/27 collections, 129 fragments** auto-deployed successfully.
 - **138 passed / 252 failed** — failures are rendering issues, not deployment.
 - Gallery and results committed in PR #190.
 
 ### E2E Infrastructure — Current State (2026-07-26)
 
-| PR | Change | Status |
-|---|---|---|
-| #188 | `--clean-state --internal-state` added to `ldm run` | ✅ Merged |
-| #189 | Object definition retry: 5×3s → 15×5s | ✅ Merged |
-| #190 | Docs + gallery for `2026.q1.11-lts` run | ✅ Merged |
+| PR   | Change                                                     | Status    |
+| ---- | ---------------------------------------------------------- | --------- |
+| #188 | `--clean-state --internal-state` added to `ldm run`        | ✅ Merged |
+| #189 | Object definition retry: 5×3s → 15×5s                      | ✅ Merged |
+| #190 | Docs + gallery for `2026.q1.11-lts` run                    | ✅ Merged |
 | #192 | chmod bind-mount dirs after `ldm run` (SanDisk workaround) | ⏳ Queued |
 
 ### Bind-Mount Permissions on External Drive — RESOLVED
@@ -432,5 +439,7 @@ PR #192's Alpine chmod workaround has been removed. The `ldm run` call in
 3. Begin Phase 3 (Issue #187): inspect Group B fragment DOM failures.
 
 <!-- markdownlint-disable MD049 -->
+
 ---
-*Last Updated: 2026-07-27* | *Last Reviewed: 2026-07-27*
+
+_Last Updated: 2026-07-27_ | _Last Reviewed: 2026-07-27_

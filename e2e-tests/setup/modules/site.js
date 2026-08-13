@@ -101,7 +101,6 @@ async function provisionSite(ctx, apiContext) {
     // JSON WS DTO does not expose groupId. ThemeDisplay.getCompanyGroupId() is the
     // canonical source set by Liferay itself.
     let querySiteId = ctx.companyGroupId || ctx.siteId;
-    ctx.globalSiteKey = 'L_GLOBAL';
     if (ctx.companyGroupId) {
       console.log(
         `  -> Using company group ID from ThemeDisplay: ${querySiteId}`

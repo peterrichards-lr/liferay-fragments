@@ -20,7 +20,6 @@ class SetupContext {
     this.siteFriendlyUrl = '/fragments-e2e-test-site';
     this.realisedVersion = '';
     this.useStringForNumbers = true;
-    this.globalSiteKey = 'L_GLOBAL';
     this.companyGroupId = 0;
 
     this.dbFragmentKeyToERC = {};

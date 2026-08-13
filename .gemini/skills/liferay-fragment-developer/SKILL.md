@@ -96,8 +96,17 @@ before being considered "Done".
   - When programmatically creating test pages, the `pageDefinition` JSON MUST
     use **Capitalized** element types (`Root`, `Section`, `Row`, `Column`,
     `Fragment`).
-  - Fragment references MUST use the nested structure:
-    `"fragment": { "key": "fragment-key", "siteKey": "site-erc" }`.
+  - Fragment references MUST use the nested structure, with **no `siteKey`**:
+    `"fragment": { "key": "fragment-key" }`.
+  - **Never set `siteKey`.** Liferay expects the site's `key` field, not its
+    external reference code. For the Global site the `key` is an opaque
+    per-instance numeric group key (e.g. `73885835506376`) while its ERC is
+    `L_GLOBAL` — so an ERC, a site id, or a site name all fail to resolve, and
+    Liferay then **silently discards the entire Fragment element**: the page is
+    created, the API returns HTTP 200, nothing is logged, and the fragment is
+    absent from the rendered page. Omitting `siteKey` lets Liferay resolve the
+    fragment from the available scopes and is portable across instances. This
+    was the root cause of Issue #187.
 - **JSON WS Registration Check**:
   - Use the `fragment.fragmententry/get-fragment-entries` JSON WS endpoint
     during setup to verify the ZIP was actually registered by the database.
