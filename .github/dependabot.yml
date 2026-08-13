@@ -4,3 +4,30 @@ updates:
     directory: '/'
     schedule:
       interval: 'weekly'
+
+  # npm was absent until #218, so no update PRs were ever raised for
+  # package.json / package-lock.json. Four high-severity advisories in
+  # transitive packages sat open on the default branch until they were found
+  # and patched by hand.
+  - package-ecosystem: 'npm'
+    directory: '/'
+    schedule:
+      interval: 'weekly'
+    open-pull-requests-limit: 5
+    labels:
+      - 'dependencies'
+    commit-message:
+      prefix: 'chore(deps)'
+      prefix-development: 'chore(deps-dev)'
+    groups:
+      # Keep routine version churn to a single reviewable PR per week. Security
+      # updates are deliberately left ungrouped so they arrive on their own and
+      # stay easy to prioritise.
+      dev-tooling:
+        applies-to: version-updates
+        patterns:
+          - 'prettier'
+          - '@playwright/test'
+        update-types:
+          - 'minor'
+          - 'patch'
