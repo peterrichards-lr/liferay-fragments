@@ -157,8 +157,14 @@ function buildPageElementTree(
 
       if (!node.dropZoneId && parentDir) {
         let content = '';
-        const ftlPath = path.join(parentDir, 'index.ftl');
-        const htmlPath = path.join(parentDir, 'index.html');
+        const ftlPath = fs.existsSync(path.join(parentDir, 'main', 'index.ftl'))
+          ? path.join(parentDir, 'main', 'index.ftl')
+          : path.join(parentDir, 'index.ftl');
+        const htmlPath = fs.existsSync(
+          path.join(parentDir, 'main', 'index.html')
+        )
+          ? path.join(parentDir, 'main', 'index.html')
+          : path.join(parentDir, 'index.html');
         if (fs.existsSync(ftlPath)) {
           content = fs.readFileSync(ftlPath, 'utf8');
         } else if (fs.existsSync(htmlPath)) {
