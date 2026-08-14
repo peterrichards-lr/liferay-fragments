@@ -14,25 +14,27 @@
 All operational rules live in dedicated skill modules under [`.agents/skills/`](./.agents/skills/).
 When beginning any task, read the corresponding `SKILL.md` before taking action:
 
-| Skill | Activate when… | Path |
-|---|---|---|
-| **Fragment Development** | Creating, structuring, and mapping properties for page & form fragments | [`.agents/skills/liferay-fragment-development/SKILL.md`](./.agents/skills/liferay-fragment-development/SKILL.md) |
-| **Fragment Quality Gate** | Creating, modifying, or committing any fragment (localization, themes, docs) | [`.agents/skills/fragment-quality-gate/SKILL.md`](./.agents/skills/fragment-quality-gate/SKILL.md) |
-| **Fragment Linting** | Running and satisfying the fragment linter (`npm run lint`) | [`.agents/skills/liferay-fragment-linting/SKILL.md`](./.agents/skills/liferay-fragment-linting/SKILL.md) |
-| **Backward-Compat Build** | Packaging fragment ZIP collections across Liferay versions (3-target build) | [`.agents/skills/backward-compat-build/SKILL.md`](./.agents/skills/backward-compat-build/SKILL.md) |
-| **Compat Transform** | Extending build-time configuration compatibility transforms using `jq` | [`.agents/skills/liferay-compat-transform/SKILL.md`](./.agents/skills/liferay-compat-transform/SKILL.md) |
-| **E2E Verification** | Running Playwright E2E tests, verifying rendering, or checking results | [`.agents/skills/e2e-verification/SKILL.md`](./.agents/skills/e2e-verification/SKILL.md) |
-| **E2E Bootstrap** | Zipping, seeding, and bootstrapping fragments and mock data for E2E | [`.agents/skills/fragment-e2e-bootstrap/SKILL.md`](./.agents/skills/fragment-e2e-bootstrap/SKILL.md) |
-| **Screenshot Creation** | Capturing, verifying, and committing fragment screenshots | [`.agents/skills/fragment-screenshot-creation/SKILL.md`](./.agents/skills/fragment-screenshot-creation/SKILL.md) |
-| **Visual Gallery** | Updating responsive fragment visual gallery markdown | [`.agents/skills/liferay-visual-gallery/SKILL.md`](./.agents/skills/liferay-visual-gallery/SKILL.md) |
-| **Fragment Orchestrator** | Multi-phase fragment lifecycle routing | [`.agents/skills/fragment-orchestrator/SKILL.md`](./.agents/skills/fragment-orchestrator/SKILL.md) |
-| **GitHub Workflow** | Creating branches, PRs, auto-merge, or running `git` / `gh` CLI commands | [`.agents/skills/github-workflow/SKILL.md`](./.agents/skills/github-workflow/SKILL.md) |
-| **Issue Tracking** | Planning work, creating/closing GitHub issues with `gh-issue-sync.cjs` | [`.agents/skills/issue-tracking/SKILL.md`](./.agents/skills/issue-tracking/SKILL.md) |
-| **Documentation Maintenance** | Reviewing docs, keeping guides in sync, and updating timestamp footers | [`.agents/skills/docs-maintenance/SKILL.md`](./.agents/skills/docs-maintenance/SKILL.md) |
-| **Sequential Workflows** | Executing ordered multi-phase tasks (scaffold → lint → build → test → doc) | [`.agents/skills/sequential-workflows/SKILL.md`](./.agents/skills/sequential-workflows/SKILL.md) |
-| **Multi-Agent Collaboration** | Coordinating concurrent or hierarchical subagents | [`.agents/skills/multi-agent-collaboration/SKILL.md`](./.agents/skills/multi-agent-collaboration/SKILL.md) |
-| **Tech Debt** | Spotting and recording code smells, duplication, or over-complexity | [`.agents/skills/tech-debt/SKILL.md`](./.agents/skills/tech-debt/SKILL.md) |
-| **No Assumptions** | Always active — verifying code and configuration before answering | [`.agents/skills/no-assumptions/SKILL.md`](./.agents/skills/no-assumptions/SKILL.md) |
+| Skill                            | Activate when…                                                                                                                       | Path                                                                                                                   |
+| -------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------ | ---------------------------------------------------------------------------------------------------------------------- |
+| **Fragment Development**         | Creating, structuring, and mapping properties for page & form fragments                                                              | [`.agents/skills/liferay-fragment-development/SKILL.md`](./.agents/skills/liferay-fragment-development/SKILL.md)       |
+| **Fragment Developer Workflows** | Auditing an existing fragment, deprecating one, or working the verification gate; also guest access, permissions and object batching | [`.agents/skills/liferay-fragment-developer/SKILL.md`](./.agents/skills/liferay-fragment-developer/SKILL.md)           |
+| **Form Fragment Developer**      | Building form fragments — form field APIs, lifecycle, object integration, UI standards                                               | [`.agents/skills/liferay-form-fragment-developer/SKILL.md`](./.agents/skills/liferay-form-fragment-developer/SKILL.md) |
+| **Fragment Quality Gate**        | Creating, modifying, or committing any fragment (localization, themes, docs)                                                         | [`.agents/skills/fragment-quality-gate/SKILL.md`](./.agents/skills/fragment-quality-gate/SKILL.md)                     |
+| **Fragment Linting**             | Running and satisfying the fragment linter (`npm run lint`)                                                                          | [`.agents/skills/liferay-fragment-linting/SKILL.md`](./.agents/skills/liferay-fragment-linting/SKILL.md)               |
+| **Backward-Compat Build**        | Packaging fragment ZIP collections across Liferay versions (3-target build)                                                          | [`.agents/skills/backward-compat-build/SKILL.md`](./.agents/skills/backward-compat-build/SKILL.md)                     |
+| **Compat Transform**             | Extending build-time configuration compatibility transforms using `jq`                                                               | [`.agents/skills/liferay-compat-transform/SKILL.md`](./.agents/skills/liferay-compat-transform/SKILL.md)               |
+| **E2E Verification**             | Running Playwright E2E tests, verifying rendering, or checking results                                                               | [`.agents/skills/e2e-verification/SKILL.md`](./.agents/skills/e2e-verification/SKILL.md)                               |
+| **E2E Bootstrap**                | Zipping, seeding, and bootstrapping fragments and mock data for E2E                                                                  | [`.agents/skills/fragment-e2e-bootstrap/SKILL.md`](./.agents/skills/fragment-e2e-bootstrap/SKILL.md)                   |
+| **Screenshot Creation**          | Capturing, verifying, and committing fragment screenshots                                                                            | [`.agents/skills/fragment-screenshot-creation/SKILL.md`](./.agents/skills/fragment-screenshot-creation/SKILL.md)       |
+| **Visual Gallery**               | Updating responsive fragment visual gallery markdown                                                                                 | [`.agents/skills/liferay-visual-gallery/SKILL.md`](./.agents/skills/liferay-visual-gallery/SKILL.md)                   |
+| **Fragment Orchestrator**        | Multi-phase fragment lifecycle routing                                                                                               | [`.agents/skills/fragment-orchestrator/SKILL.md`](./.agents/skills/fragment-orchestrator/SKILL.md)                     |
+| **GitHub Workflow**              | Creating branches, PRs, auto-merge, or running `git` / `gh` CLI commands                                                             | [`.agents/skills/github-workflow/SKILL.md`](./.agents/skills/github-workflow/SKILL.md)                                 |
+| **Issue Tracking**               | Planning work, creating/closing GitHub issues with `gh-issue-sync.cjs`                                                               | [`.agents/skills/issue-tracking/SKILL.md`](./.agents/skills/issue-tracking/SKILL.md)                                   |
+| **Documentation Maintenance**    | Reviewing docs, keeping guides in sync, and updating timestamp footers                                                               | [`.agents/skills/docs-maintenance/SKILL.md`](./.agents/skills/docs-maintenance/SKILL.md)                               |
+| **Sequential Workflows**         | Executing ordered multi-phase tasks (scaffold → lint → build → test → doc)                                                           | [`.agents/skills/sequential-workflows/SKILL.md`](./.agents/skills/sequential-workflows/SKILL.md)                       |
+| **Multi-Agent Collaboration**    | Coordinating concurrent or hierarchical subagents                                                                                    | [`.agents/skills/multi-agent-collaboration/SKILL.md`](./.agents/skills/multi-agent-collaboration/SKILL.md)             |
+| **Tech Debt**                    | Spotting and recording code smells, duplication, or over-complexity                                                                  | [`.agents/skills/tech-debt/SKILL.md`](./.agents/skills/tech-debt/SKILL.md)                                             |
+| **No Assumptions**               | Always active — verifying code and configuration before answering                                                                    | [`.agents/skills/no-assumptions/SKILL.md`](./.agents/skills/no-assumptions/SKILL.md)                                   |
 
 ---
 
@@ -45,8 +47,10 @@ When beginning any task, read the corresponding `SKILL.md` before taking action:
 - **Mandatory Documentation Timestamps**: Every `.md` file created or modified must end with:
   ```markdown
   <!-- markdownlint-disable MD049 -->
+
   ---
-  *Last Updated: YYYY-MM-DD* | *Last Reviewed: YYYY-MM-DD*
+
+  _Last Updated: YYYY-MM-DD_ | _Last Reviewed: YYYY-MM-DD_
   ```
 - **DRY & Tech-Debt Recording**: Check for existing utilities before writing new helpers. If technical debt is identified, log it via the issue tracking workflow.
 
@@ -61,5 +65,7 @@ When beginning any task, read the corresponding `SKILL.md` before taking action:
   - **On Completion**: Reset `.agent-state.md` to `IDLE` once the PR is merged.
 
 <!-- markdownlint-disable MD049 -->
+
 ---
-*Last Updated: 2026-08-14* | *Last Reviewed: 2026-08-14*
+
+_Last Updated: 2026-08-14_ | _Last Reviewed: 2026-08-14_
