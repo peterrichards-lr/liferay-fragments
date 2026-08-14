@@ -11,6 +11,8 @@ temp
 node_modules/**
 
 # Test output and state
+__pycache__/
+*.pyc
 /playwright-report
 /test-results
 /**/playwright_output.log
@@ -74,3 +76,6 @@ generated-test-pages.json
 # LDM project sandbox directories (created by 'ldm run <project>')
 /aica/
 /aica-e2e/
+/e2e-remote/
+/scripts/*-plan.json
+/scripts/*-gaps.json
