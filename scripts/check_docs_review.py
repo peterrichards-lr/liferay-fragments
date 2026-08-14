@@ -5,7 +5,7 @@ from pathlib import Path
 from datetime import datetime
 
 def check_docs_review(max_review_days, max_update_days, max_gap_days):
-    pattern = re.compile(r"\*Last Updated:\s*([\d\-]+)\*\s*\|\s*\*Last Reviewed:\s*([\d\-]+)\*")
+    pattern = re.compile(r"[*_]Last Updated:\s*([\d\-]+)[*_]\s*\|\s*[*_]Last Reviewed:\s*([\d\-]+)[*_]")
     today = datetime.now()
     
     ignore_dirs = {".venv", "node_modules", ".smoke_venv", ".git", ".agents", "temp_extract", "temp_inspect"}

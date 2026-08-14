@@ -76,4 +76,4 @@ The linter enforces several categories of rules across all page fragments:
 
 ---
 
-_Last Updated: 2026-06-26_ | _Last Reviewed: 2026-08-06_
+_Last Updated: 2026-08-14_ | _Last Reviewed: 2026-08-06_

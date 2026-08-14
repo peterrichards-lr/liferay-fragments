@@ -13,3 +13,9 @@ If the fragment interacts with Liferay custom objects, it must support Site-scop
    Filter the results to locate the exact definition.
 3. **Appended Scopes**: If the definition's scope is `'site'`, append `/scopes/${siteId}` to the base API path.
 4. **Validation Helper**: Always use a strict validation helper (e.g., `Liferay.Fragment.Commons.isValidIdentifier()`) before using record IDs or ERCs in API calls. Block invalid strings like `"undefined"`, `"null"`, `"0"`, and `"[object Object]"`.
+
+<!-- markdownlint-disable MD049 -->
+
+---
+
+_Last Updated: 2026-08-14_ | _Last Reviewed: 2026-08-14_

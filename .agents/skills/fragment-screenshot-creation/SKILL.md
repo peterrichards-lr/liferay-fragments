@@ -85,4 +85,4 @@ git commit -m "docs: regenerate visual screenshots and gallery for <Fragment Nam
 
 ---
 
-_Last Updated: 2026-06-26_ | _Last Reviewed: 2026-08-06_
+_Last Updated: 2026-08-14_ | _Last Reviewed: 2026-08-06_

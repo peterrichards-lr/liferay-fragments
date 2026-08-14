@@ -74,4 +74,4 @@ To track visual regression across commits, the captured screenshots under `docs/
 
 ---
 
-_Last Updated: 2026-06-26_ | _Last Reviewed: 2026-08-06_
+_Last Updated: 2026-08-14_ | _Last Reviewed: 2026-08-06_

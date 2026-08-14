@@ -9,4 +9,4 @@ Liferay 2026.Q1+ imposes strict API validation rules on `configuration.json` pro
 
 ---
 
-_Last Updated: 2026-07-10_ | _Last Reviewed: 2026-07-10_
+_Last Updated: 2026-08-14_ | _Last Reviewed: 2026-07-10_

@@ -26,4 +26,4 @@ Local pre-commit hooks run automatically on every commit. Ensure your branch pas
 
 ---
 
-_Last Updated: 2026-07-10_ | _Last Reviewed: 2026-07-10_
+_Last Updated: 2026-08-14_ | _Last Reviewed: 2026-07-10_

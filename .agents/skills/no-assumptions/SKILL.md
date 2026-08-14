@@ -104,4 +104,4 @@ Confident assertion *without having consulted any evidence* is forbidden.
 
 ---
 
-_Last Updated: 2026-07-21_ | _Last Reviewed: 2026-07-21_
+_Last Updated: 2026-08-14_ | _Last Reviewed: 2026-07-21_

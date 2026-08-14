@@ -17,4 +17,4 @@ A utility to enhance Liferay Alerts and Announcements with custom styling.
 
 ---
 
-_Last Updated: 2026-07-09_ | _Last Reviewed: 2026-07-09_
+_Last Updated: 2026-08-14_ | _Last Reviewed: 2026-07-09_

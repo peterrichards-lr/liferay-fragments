@@ -63,4 +63,4 @@ If a future Liferay release (e.g., `2027.Q1`) introduces a breaking change to th
 
 ---
 
-_Last Updated: 2026-06-26_ | _Last Reviewed: 2026-08-06_
+_Last Updated: 2026-08-14_ | _Last Reviewed: 2026-08-06_
