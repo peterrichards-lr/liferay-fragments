@@ -248,8 +248,7 @@ not proceed until the required status checks pass:
 > > one that was already addressed.
 
 <!-- markdownlint-disable MD049 -->
+
 ---
-*Last Updated: 2026-08-06* | *Last Reviewed: 2026-08-06*
 
-
-
+_Last Updated: 2026-08-06_ | _Last Reviewed: 2026-08-06_

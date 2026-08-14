@@ -43,10 +43,8 @@ The fragment is grouped into two main fieldsets:
 - **Background Handling**: Uses a clever `linear-gradient` over the mapped `var(--background-image)` directly in the `.welcome-banner` class to ensure white text remains legible regardless of the background image chosen.
 - **Responsive Handling**: Includes a media query (`max-width: 767.98px`) to optimize the banner text alignment and button sizing for mobile viewing.
 
-## <!-- markdownlint-disable MD049 -->
+<!-- markdownlint-disable MD049 -->
 
-_Last Updated: 2026-07-02_ | _Last Reviewed: 2026-07-02_
-
-## <!-- markdownlint-disable MD049 -->
+---
 
 _Last Updated: 2026-07-09_ | _Last Reviewed: 2026-07-09_

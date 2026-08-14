@@ -18,10 +18,8 @@ In order to use this fragment in unauthenticated pages, you need to update a
 Service Access Policy to allow access to
 **com.liferay.headless.delivery.internal.resource.v1_0.DocumentResourceImpl#getDocument**
 
-## <!-- markdownlint-disable MD049 -->
+<!-- markdownlint-disable MD049 -->
 
-_Last Updated: 2026-07-02_ | _Last Reviewed: 2026-07-02_
-
-## <!-- markdownlint-disable MD049 -->
+---
 
 _Last Updated: 2026-07-09_ | _Last Reviewed: 2026-07-09_

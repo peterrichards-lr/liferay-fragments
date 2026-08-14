@@ -26,10 +26,8 @@ The fragment provides the following configuration options within `configuration.
 - **CSS**: Uses Clay CSS classes and custom CSS (assumed in `index.css`) for the drop zone styling (`.drop-zone`, `.drag-over`, etc.).
 - **FreeMarker**: Renders the HTML structure, maps form input attributes (e.g., `required`, `accept`), and integrates with Liferay's localization and Clay icons.
 
-## <!-- markdownlint-disable MD049 -->
+<!-- markdownlint-disable MD049 -->
 
-_Last Updated: 2026-07-02_ | _Last Reviewed: 2026-07-02_
-
-## <!-- markdownlint-disable MD049 -->
+---
 
 _Last Updated: 2026-07-09_ | _Last Reviewed: 2026-07-09_

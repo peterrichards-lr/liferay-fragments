@@ -136,6 +136,8 @@ Use the automated deployment script to push assets to your Liferay instance:
 
 _For more details, see the [Full Documentation](./docs/README.md)._
 
-## <!-- markdownlint-disable MD049 -->
+<!-- markdownlint-disable MD049 -->
+
+---
 
 _Last Updated: 2026-07-02_ | _Last Reviewed: 2026-07-02_

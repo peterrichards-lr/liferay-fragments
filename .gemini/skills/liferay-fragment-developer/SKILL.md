@@ -149,10 +149,8 @@ To ensure fragments render successfully for anonymous/Guest users in production 
 - **Custom Objects (Batch Client Extensions)**: Custom object schemas must be seeded as batch client extensions rather than manual UI creation to ensure database-level stability and avoid E2E timing delays.
 - **Resolution Registry Fallback**: Ensure that client-side scripts query a fallback registry in `Liferay.Fragment.Commons.resolveObjectPath` when the definition endpoint is inaccessible, preventing JS errors.
 
-## <!-- markdownlint-disable MD049 -->
+<!-- markdownlint-disable MD049 -->
 
-_Last Updated: 2026-07-02_ | _Last Reviewed: 2026-07-02_
-
-## <!-- markdownlint-disable MD049 -->
+---
 
 _Last Updated: 2026-07-09_ | _Last Reviewed: 2026-07-09_

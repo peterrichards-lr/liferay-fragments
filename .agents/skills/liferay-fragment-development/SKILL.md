@@ -82,5 +82,7 @@ Every fragment must follow these structural guidelines:
   - **Usage**: Guidelines on how to add and configure it in the page editor.
 
 <!-- markdownlint-disable MD049 -->
+
 ---
-*Last Updated: 2026-07-13* | *Last Reviewed: 2026-08-06*
+
+_Last Updated: 2026-07-13_ | _Last Reviewed: 2026-08-06_

@@ -20,10 +20,8 @@ Editable regions for each of the four cards:
 
 - Heavily relies on `aura-container`, `grid`, `grid-4`, and `aura-card` CSS classes for the horizontal card layout.
 
-## <!-- markdownlint-disable MD049 -->
+<!-- markdownlint-disable MD049 -->
 
-_Last Updated: 2026-07-02_ | _Last Reviewed: 2026-07-02_
-
-## <!-- markdownlint-disable MD049 -->
+---
 
 _Last Updated: 2026-07-09_ | _Last Reviewed: 2026-07-09_

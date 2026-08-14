@@ -23,10 +23,8 @@ rendering items with multiple layout options.
 - **Slide Height**: Manually adjust the vertical height of slides.
 - **Autoplay**: Configurable timing and looping options.
 
-## <!-- markdownlint-disable MD049 -->
+<!-- markdownlint-disable MD049 -->
 
-_Last Updated: 2026-07-02_ | _Last Reviewed: 2026-07-02_
-
-## <!-- markdownlint-disable MD049 -->
+---
 
 _Last Updated: 2026-07-09_ | _Last Reviewed: 2026-07-09_

@@ -761,6 +761,59 @@ function runLinter() {
     console.log('No non-portable siteKey references found.');
   }
 
+  // --- DOCS FOOTER INTEGRITY (Issue #210) ---
+  // scripts/append_timestamps.py appends a "Last Updated / Last Reviewed"
+  // footer. Its original pattern matched only asterisk emphasis, while Prettier
+  // rewrites emphasis to underscores — so after formatting the script no longer
+  // recognised its own footer and appended another, and the `---` beneath the
+  // lint directive was parsed as a setext underline that turned the directive
+  // into a heading. That silently produced duplicate footers in 184 files and
+  // mangled directives in 192. Both are cheap to detect, so assert on them.
+  console.log(`Checking documentation footer integrity...`);
+  const footerOffenders = [];
+  globSync('**/*.md', {
+    cwd: process.cwd(),
+    ignore: [
+      'node_modules/**',
+      'zips/**',
+      'playwright-report/**',
+      'test-results/**',
+      'scratch/**',
+      ...ldmIgnores,
+    ],
+  }).forEach((rel) => {
+    let content = '';
+    try {
+      content = fs.readFileSync(path.join(process.cwd(), rel), 'utf8');
+    } catch (e) {
+      return;
+    }
+    if (/^#+[ \t]*<!--[ \t]*markdownlint-disable/m.test(content)) {
+      footerOffenders.push(
+        `${rel}: lint directive rendered as a heading ('## <!-- markdownlint-disable ... -->')`
+      );
+    }
+    // Only inspect the tail, so footer examples quoted in the body of docs that
+    // describe this convention are not mistaken for real duplicates.
+    const tail = content.slice(-600);
+    const footerCount = (tail.match(/Last Updated:/g) || []).length;
+    if (footerCount > 1) {
+      footerOffenders.push(
+        `${rel}: ${footerCount} stacked footers at end of file`
+      );
+    }
+  });
+  if (footerOffenders.length > 0) {
+    footerOffenders.forEach((offender) => {
+      logError(
+        'Docs Footer',
+        `${offender}. Run 'python3 scripts/append_timestamps.py --normalize <file>' to repair. See #210.`
+      );
+    });
+  } else {
+    console.log('Documentation footers are well-formed.');
+  }
+
   // --- GALLERY DRIFT CHECK ---
   console.log(`Checking for Gallery drift...`);
   const GALLERY_FILE = path.join(process.cwd(), 'docs', 'gallery.md');

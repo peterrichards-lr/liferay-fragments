@@ -31,10 +31,8 @@ This fragment utilizes the **Shared Resources Architecture**:
 - **`storage.js`**: (Note: Declared in build but used internal cookie helper in
   current version).
 
-## <!-- markdownlint-disable MD049 -->
+<!-- markdownlint-disable MD049 -->
 
-_Last Updated: 2026-07-02_ | _Last Reviewed: 2026-07-02_
-
-## <!-- markdownlint-disable MD049 -->
+---
 
 _Last Updated: 2026-07-09_ | _Last Reviewed: 2026-07-09_

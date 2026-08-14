@@ -103,5 +103,7 @@ node scripts/lint-fragments.js --collection form-fragments
 ```
 
 <!-- markdownlint-disable MD049 -->
+
 ---
-*Last Updated: 2026-07-21* | *Last Reviewed: 2026-07-21*
+
+_Last Updated: 2026-07-21_ | _Last Reviewed: 2026-07-21_

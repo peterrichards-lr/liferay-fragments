@@ -91,10 +91,8 @@ or pages using a unique session ID.
   to house a form or call-to-action within a hero-style banner. It features a
   semi-transparent background for better text legibility over images.
 
-## <!-- markdownlint-disable MD049 -->
+<!-- markdownlint-disable MD049 -->
 
-_Last Updated: 2026-07-02_ | _Last Reviewed: 2026-07-02_
-
-## <!-- markdownlint-disable MD049 -->
+---
 
 _Last Updated: 2026-07-09_ | _Last Reviewed: 2026-07-09_

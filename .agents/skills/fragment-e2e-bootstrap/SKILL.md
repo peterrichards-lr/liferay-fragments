@@ -88,5 +88,7 @@ Run the test suite using `scripts/test-runner.sh`. In Windows environments, invo
 - **Row-Level Screenshotting**: The Playwright spec `fragments.spec.js` checks the page. If there are multiple instances of the fragment on the test page (e.g. 4 side-by-side cards), it automatically screenshots the parent row/container (`.lfr-layout-structure-item-row, .row, #wrapper`) instead of only capturing the first single instance. This guarantees that all products are captured side-by-side across desktop, tablet, and mobile viewports in the visual gallery.
 
 <!-- markdownlint-disable MD049 -->
+
 ---
-*Last Updated: 2026-08-13* | *Last Reviewed: 2026-08-13*
+
+_Last Updated: 2026-08-13_ | _Last Reviewed: 2026-08-13_

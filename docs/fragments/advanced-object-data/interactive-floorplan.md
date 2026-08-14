@@ -14,6 +14,8 @@ The Interactive Floorplan fragment allows you to display a map, diagram, or floo
 
 Provide the necessary Liferay Object ERC in the configuration. When configured and permissioned correctly, users can click anywhere on the background image to open a modal that captures details and saves a new pin at that specific location.
 
-## <!-- markdownlint-disable MD049 -->
+<!-- markdownlint-disable MD049 -->
+
+---
 
 _Last Updated: 2026-07-10_ | _Last Reviewed: 2026-07-10_

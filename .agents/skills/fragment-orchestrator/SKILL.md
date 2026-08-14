@@ -26,5 +26,7 @@ Route user requests to the appropriate specialist skill based on intent.
 3. Follow the workflow, references, and output contract defined in that skill.
 
 <!-- markdownlint-disable MD049 -->
+
 ---
-*Last Updated: 2026-07-06* | *Last Reviewed: 2026-08-06*
+
+_Last Updated: 2026-07-06_ | _Last Reviewed: 2026-08-06_

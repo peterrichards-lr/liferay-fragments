@@ -17,10 +17,8 @@ content or object fields.
 - **Date Field**: The mapped field containing the date value.
 - **Format**: Choose from short, medium, long, or full date styles.
 
-## <!-- markdownlint-disable MD049 -->
+<!-- markdownlint-disable MD049 -->
 
-_Last Updated: 2026-07-02_ | _Last Reviewed: 2026-07-02_
-
-## <!-- markdownlint-disable MD049 -->
+---
 
 _Last Updated: 2026-07-09_ | _Last Reviewed: 2026-07-09_

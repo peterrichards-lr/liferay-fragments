@@ -17,10 +17,8 @@ fetches results from a Liferay Object API.
 - **Label Field**: The field name to display in results (e.g., `name`, `title`).
 - **Value Field**: The field name to store as the input value (usually `id`).
 
-## <!-- markdownlint-disable MD049 -->
+<!-- markdownlint-disable MD049 -->
 
-_Last Updated: 2026-07-02_ | _Last Reviewed: 2026-07-02_
-
-## <!-- markdownlint-disable MD049 -->
+---
 
 _Last Updated: 2026-07-09_ | _Last Reviewed: 2026-07-09_

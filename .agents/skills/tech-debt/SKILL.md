@@ -148,5 +148,7 @@ Do **not** raise a tech debt issue for:
 > comment to that issue instead of creating a duplicate.
 
 <!-- markdownlint-disable MD049 -->
+
 ---
-*Last Updated: 2026-07-21* | *Last Reviewed: 2026-07-21*
+
+_Last Updated: 2026-07-21_ | _Last Reviewed: 2026-07-21_

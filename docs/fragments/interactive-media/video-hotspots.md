@@ -17,6 +17,8 @@ The Video Hotspots fragment allows you to overlay interactive, animated hotspot 
 
 Add this fragment to any page where you want to feature interactive video content. Use the configuration panel to position the hotspots visually.
 
-## <!-- markdownlint-disable MD049 -->
+<!-- markdownlint-disable MD049 -->
+
+---
 
 _Last Updated: 2026-07-10_ | _Last Reviewed: 2026-07-10_

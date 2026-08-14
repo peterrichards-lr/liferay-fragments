@@ -32,10 +32,8 @@ Announcements** widget to provide a more modern and interactive user experience.
 3. Configure the modifier's options (Accordion, Button styles, etc.) to achieve
    the desired look and feel.
 
-## <!-- markdownlint-disable MD049 -->
+<!-- markdownlint-disable MD049 -->
 
-_Last Updated: 2026-07-02_ | _Last Reviewed: 2026-07-02_
-
-## <!-- markdownlint-disable MD049 -->
+---
 
 _Last Updated: 2026-07-09_ | _Last Reviewed: 2026-07-09_

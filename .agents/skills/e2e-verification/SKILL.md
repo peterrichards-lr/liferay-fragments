@@ -255,5 +255,7 @@ blocks are caught before the E2E suite runs.
 > resolves with ≥5 collections found.
 
 <!-- markdownlint-disable MD049 -->
+
 ---
-*Last Updated: 2026-07-23* | *Last Reviewed: 2026-07-23*
+
+_Last Updated: 2026-07-23_ | _Last Reviewed: 2026-07-23_

@@ -95,5 +95,7 @@ dist/<collection-name>-pre2025q3-min.zip          # pre-2025.Q3
   these as strings via the Headless Delivery API.
 
 <!-- markdownlint-disable MD049 -->
+
 ---
-*Last Updated: 2026-07-21* | *Last Reviewed: 2026-07-21*
+
+_Last Updated: 2026-07-21_ | _Last Reviewed: 2026-07-21_

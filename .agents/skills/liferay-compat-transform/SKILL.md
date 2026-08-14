@@ -60,5 +60,7 @@ If a future Liferay release (e.g., `2027.Q1`) introduces a breaking change to th
    ```
 
 <!-- markdownlint-disable MD049 -->
+
 ---
-*Last Updated: 2026-06-26* | *Last Reviewed: 2026-08-06*
+
+_Last Updated: 2026-06-26_ | _Last Reviewed: 2026-08-06_

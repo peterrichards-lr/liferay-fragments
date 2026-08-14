@@ -64,10 +64,8 @@ Accessed via `input.attributes`.
 5.  **Initialization**: Use `fragmentElement.querySelector` to find the input
     element within the fragment to avoid collisions.
 
-## <!-- markdownlint-disable MD049 -->
+<!-- markdownlint-disable MD049 -->
 
-_Last Updated: 2026-07-02_ | _Last Reviewed: 2026-07-02_
-
-## <!-- markdownlint-disable MD049 -->
+---
 
 _Last Updated: 2026-07-09_ | _Last Reviewed: 2026-07-09_

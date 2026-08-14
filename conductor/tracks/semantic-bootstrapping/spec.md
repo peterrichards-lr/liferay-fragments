@@ -37,10 +37,8 @@ Currently, the automated E2E bootstrapping script injects a generic `stat-card` 
 - **Containers:** `zone-layout`, `linear-gradient-container`, `overlay-background`, `modern-parallax-hero`
 - **Intended Children:** `primary-card`, `secondary-card`, `hero-video`, `service-card`
 
-## <!-- markdownlint-disable MD049 -->
+<!-- markdownlint-disable MD049 -->
 
-_Last Updated: 2026-07-02_ | _Last Reviewed: 2026-07-02_
-
-## <!-- markdownlint-disable MD049 -->
+---
 
 _Last Updated: 2026-07-09_ | _Last Reviewed: 2026-07-09_

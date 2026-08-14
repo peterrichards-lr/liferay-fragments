@@ -163,5 +163,7 @@ All Pull Requests **must** link back to their issue using `Closes #<id>` or
 the PR is merged and maintains a clean audit trail.
 
 <!-- markdownlint-disable MD049 -->
+
 ---
-*Last Updated: 2026-07-21* | *Last Reviewed: 2026-07-21*
+
+_Last Updated: 2026-07-21_ | _Last Reviewed: 2026-07-21_
