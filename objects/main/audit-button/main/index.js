@@ -20,7 +20,7 @@ const initAuditButton = () => {
           apiPath = '/o/c/auditentries';
         }
       } catch (err) {
-        console.error(err);
+        console.warn('[audit-button] Definition resolution fallback:', err.message || err);
         apiPath = '/o/c/auditentries';
       }
     };

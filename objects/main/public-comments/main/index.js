@@ -77,7 +77,7 @@ const initPublicComments = () => {
         apiPath = configuration.objectAPIPath || '/o/c/comments/';
       }
     } catch (err) {
-      console.error(err);
+      console.warn('[public-comments] Definition resolution fallback:', err.message || err);
       apiPath = configuration.objectAPIPath || '/o/c/comments/';
     }
   };
