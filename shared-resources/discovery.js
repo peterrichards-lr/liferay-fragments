@@ -347,6 +347,28 @@ window.Liferay.Fragment.Commons.resolveObjectPath = async (restContextPath) => {
     throw new Error('Invalid restContextPath');
   }
 
+  const cleanPath = restContextPath.replace(/\/$/, '');
+  const mapping = fallbackPaths[cleanPath];
+  const isSignedIn = window.Liferay?.ThemeDisplay?.isSignedIn?.() ?? false;
+
+  // For unauthenticated/Guest users, bypass admin definition endpoint to avoid browser network 403 errors
+  if (!isSignedIn && mapping && Liferay.ThemeDisplay) {
+    const scope = mapping.scope || 'site';
+    const apiPath =
+      scope === 'site'
+        ? `${cleanPath}/scopes/${Liferay.ThemeDisplay.getScopeGroupId()}`
+        : cleanPath;
+    return {
+      apiPath,
+      definition: {
+        name: mapping.name,
+        scope,
+        restContextPath: cleanPath,
+        objectFields: mapping.objectFields || [],
+      },
+    };
+  }
+
   const ADMIN_API_BASE = '/o/object-admin/v1.0';
   const objectPath = restContextPath.replace('/o/c/', '');
 
@@ -373,9 +395,6 @@ window.Liferay.Fragment.Commons.resolveObjectPath = async (restContextPath) => {
     };
   } catch (e) {
     console.warn('[Commons] Path resolution fallback engaged:', e.message || e);
-
-    const cleanPath = restContextPath.replace(/\/$/, '');
-    const mapping = fallbackPaths[cleanPath];
 
     if (mapping && Liferay.ThemeDisplay) {
       const scope = mapping.scope || 'site';
@@ -406,6 +425,28 @@ window.Liferay.Fragment.Commons.resolveObjectPathByERC = async (erc) => {
     throw new Error('Invalid ERC');
   }
 
+  const mapping = fallbackMap[erc];
+  const isSignedIn = window.Liferay?.ThemeDisplay?.isSignedIn?.() ?? false;
+
+  // For unauthenticated/Guest users, bypass admin definition endpoint to avoid browser network 403 errors
+  if (!isSignedIn && mapping && Liferay.ThemeDisplay) {
+    const restContextPath = mapping.path;
+    const scope = mapping.scope || 'site';
+    const apiPath =
+      scope === 'site'
+        ? `${restContextPath}/scopes/${Liferay.ThemeDisplay.getScopeGroupId()}`
+        : restContextPath;
+    return {
+      apiPath,
+      definition: {
+        name: mapping.name,
+        scope,
+        restContextPath,
+        objectFields: mapping.objectFields || [],
+      },
+    };
+  }
+
   const ADMIN_API_BASE = '/o/object-admin/v1.0';
 
   try {
@@ -429,7 +470,6 @@ window.Liferay.Fragment.Commons.resolveObjectPathByERC = async (erc) => {
   } catch (e) {
     console.warn('[Commons] ERC resolution fallback engaged:', e.message || e);
 
-    const mapping = fallbackMap[erc];
     if (mapping && Liferay.ThemeDisplay) {
       const restContextPath = mapping.path;
       const scope = mapping.scope || 'site';
