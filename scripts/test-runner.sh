@@ -18,12 +18,178 @@ export PATH="$PATH:/c/Windows/System32"
 export PATH="$PATH:/c/Users/prichards/AppData/Local/Microsoft/WinGet/Packages/jqlang.jq_Microsoft.Winget.Source_8wekyb3d8bbwe"
 export PATH="$PATH:/c/Users/prichards/AppData/Local/Microsoft/WinGet/Links"
 
-# Wrapper function to enforce clean, color-free plain-text outputs for all LDM commands
+# Compute target node. Empty means local; anything else is a remote LDM node
+# registered via `ldm target add`. Set by --node.
+NODE_TARGET=""
+
+# Wrapper function to enforce clean, color-free plain-text outputs for all LDM commands.
+# Forwards --node so every LDM invocation acts on the intended compute node.
 ldm() {
-    command ldm "$@"
+    if [ -n "$NODE_TARGET" ]; then
+        command ldm --node "$NODE_TARGET" "$@"
+    else
+        command ldm "$@"
+    fi
 }
 
 
+
+# ─── Remote node support (Issue #225) ────────────────────────────────────────
+# Populated by resolve_node_target() when --node names a remote LDM target.
+NODE_HOST=""
+NODE_USER=""
+NODE_KEY=""
+SSH_TUNNEL_PID=""
+
+# Read host/user/key for the requested target from LDM's own configuration.
+# `ldm target ls` renders a box-drawing table, and parsing that positionally is
+# what previously caused a silent failure (Issue #213), so read the structured
+# config instead.
+resolve_node_target() {
+    [ -z "$NODE_TARGET" ] && return 0
+    if [ "$NODE_TARGET" = "local" ]; then
+        NODE_TARGET=""
+        return 0
+    fi
+
+    local parsed
+    parsed=$(command ldm config 2>/dev/null | sed 's/\x1b\[[0-9;]*m//g' \
+        | grep '^  targets' | python3 -c "
+import sys, ast
+raw = sys.stdin.read()
+if not raw.strip():
+    raise SystemExit(1)
+targets = ast.literal_eval(raw.split('=', 1)[1].strip())
+t = targets.get('$NODE_TARGET')
+if not t:
+    raise SystemExit(2)
+print(t.get('host', ''))
+print(t.get('user', ''))
+print(t.get('key_path', ''))
+" 2>/dev/null)
+
+    case $? in
+        1) echo "[ERROR] Could not read target configuration from 'ldm config'."; exit 1 ;;
+        2) echo "[ERROR] Unknown LDM target node '$NODE_TARGET'. Run 'ldm target ls'."; exit 1 ;;
+    esac
+
+    NODE_HOST=$(echo "$parsed" | sed -n '1p')
+    NODE_USER=$(echo "$parsed" | sed -n '2p')
+    NODE_KEY=$(echo "$parsed" | sed -n '3p')
+
+    if [ -z "$NODE_HOST" ] || [ -z "$NODE_USER" ]; then
+        echo "[ERROR] Target '$NODE_TARGET' has no host/user recorded in LDM config."
+        exit 1
+    fi
+    echo "  -> Remote node '$NODE_TARGET': ${NODE_USER}@${NODE_HOST}"
+}
+
+node_ssh_opts() {
+    local opts="-o BatchMode=yes -o ConnectTimeout=15 -o StrictHostKeyChecking=accept-new"
+    [ -n "$NODE_KEY" ] && opts="$opts -i $NODE_KEY"
+    echo "$opts"
+}
+
+node_ssh() {
+    # shellcheck disable=SC2046
+    ssh $(node_ssh_opts) "${NODE_USER}@${NODE_HOST}" "$@"
+}
+
+# Resolve the directory the container actually mounts at /mnt/liferay/deploy.
+#
+# Deliberately asks the container rather than assuming a path. LDM currently
+# writes the orchestrating host's paths into a remote project's compose file, so
+# the deploy directory on the node is not where a remote project directory would
+# suggest. Reading the live mount is correct both now and once that is fixed.
+resolve_remote_deploy_dir() {
+    local dir
+    dir=$(node_ssh "docker inspect $PROJECT_NAME --format '{{range .Mounts}}{{if eq .Destination \"/mnt/liferay/deploy\"}}{{.Source}}{{end}}{{end}}'" 2>/dev/null | tr -d '\r')
+    if [ -z "$dir" ]; then
+        echo "[ERROR] Could not resolve the deploy mount for '$PROJECT_NAME' on '$NODE_TARGET'." >&2
+        echo "        Is the container running there? Try: ldm --node $NODE_TARGET list" >&2
+        exit 1
+    fi
+    echo "$dir"
+}
+
+# Place one artefact where Liferay's auto-deploy scanner will consume it, on
+# whichever host the container runs. Staged as .tmp then renamed so the scanner
+# never observes a partial file.
+deploy_artifact() {
+    local src="$1" name="$2"
+    if [ -n "$NODE_TARGET" ]; then
+        # shellcheck disable=SC2046
+        scp $(node_ssh_opts) -q "$src" "${NODE_USER}@${NODE_HOST}:${REMOTE_DEPLOY_DIR}/${name}.tmp"
+        node_ssh "mv '${REMOTE_DEPLOY_DIR}/${name}.tmp' '${REMOTE_DEPLOY_DIR}/${name}'"
+    else
+        cp "$src" "$PROJECT_PATH/deploy/${name}.tmp"
+        mv "$PROJECT_PATH/deploy/${name}.tmp" "$PROJECT_PATH/deploy/${name}"
+    fi
+}
+
+# Forward the container's port to this machine so Playwright can drive Liferay at
+# the host it believes it is serving. Liferay's virtual host is configured for
+# localhost, so reaching it by public IP invites redirect and CSRF mismatches;
+# tunnelling also keeps the web port closed in the security group.
+# Local end of the tunnel. Deliberately not reused from $PORT: another tunnel,
+# a local Liferay, or a published container port may already hold it, in which
+# case `ssh -L` fails to bind while still backgrounding — and BASE_URL would then
+# point at whatever else is listening. Testing the wrong instance is worse than
+# not running, so bind a port we know is free and address that.
+TUNNEL_LOCAL_PORT=""
+
+find_free_local_port() {
+    local candidate=$1
+    local limit=$((candidate + 50))
+    while [ "$candidate" -lt "$limit" ]; do
+        if ! lsof -nP -iTCP:"$candidate" -sTCP:LISTEN > /dev/null 2>&1; then
+            echo "$candidate"
+            return 0
+        fi
+        candidate=$((candidate + 1))
+    done
+    return 1
+}
+
+start_node_tunnel() {
+    [ -z "$NODE_TARGET" ] && return 0
+
+    TUNNEL_LOCAL_PORT=$(find_free_local_port "$PORT") || {
+        echo "[ERROR] No free local port found in ${PORT}-$((PORT + 50)) for the SSH tunnel."
+        exit 1
+    }
+    if [ "$TUNNEL_LOCAL_PORT" != "$PORT" ]; then
+        echo "  -> Local port ${PORT} is in use; tunnelling on ${TUNNEL_LOCAL_PORT} instead."
+    fi
+
+    # shellcheck disable=SC2046
+    ssh $(node_ssh_opts) -f -N -L "${TUNNEL_LOCAL_PORT}:localhost:${PORT}" "${NODE_USER}@${NODE_HOST}" || {
+        echo "[ERROR] Could not open SSH tunnel to ${NODE_USER}@${NODE_HOST}:${PORT}."
+        exit 1
+    }
+    SSH_TUNNEL_PID=$(pgrep -f "ssh.*-L ${TUNNEL_LOCAL_PORT}:localhost:${PORT}.*${NODE_HOST}" | head -1)
+
+    # Confirm the forward actually carries traffic before trusting it.
+    local code
+    code=$(curl -s -o /dev/null -w '%{http_code}' --max-time 25 "http://localhost:${TUNNEL_LOCAL_PORT}/" || echo 000)
+    case "$code" in
+        200|302)
+            echo "  -> SSH tunnel verified: localhost:${TUNNEL_LOCAL_PORT} -> ${NODE_HOST}:${PORT} (HTTP ${code}, pid ${SSH_TUNNEL_PID:-unknown})"
+            ;;
+        *)
+            echo "[ERROR] SSH tunnel opened but Liferay did not answer through it (HTTP ${code})."
+            stop_node_tunnel
+            exit 1
+            ;;
+    esac
+}
+
+stop_node_tunnel() {
+    if [ -n "$SSH_TUNNEL_PID" ]; then
+        kill "$SSH_TUNNEL_PID" 2>/dev/null && echo "  -> Closed SSH tunnel (pid $SSH_TUNNEL_PID)"
+        SSH_TUNNEL_PID=""
+    fi
+}
 
 # Estimate variables (ballpark seconds)
 EST_BUILD_EXISTING_SKIP_DEPLOY=5
@@ -142,6 +308,7 @@ cleanup() {
     echo ""
     echo "======================================================"
     if [ "$KEEP_ALIVE" = true ]; then
+        stop_node_tunnel
         echo " [KEEP ALIVE] Skipping environment teardown."
         echo " Liferay is still running at $BASE_URL"
         if [ -n "$PROJECT_PATH" ]; then
@@ -234,6 +401,10 @@ while [[ "$#" -gt 0 ]]; do
         -s|--skip-deploy)
             SKIP_DEPLOY=true
             ;;
+        -n|--node)
+            NODE_TARGET="$2"
+            shift
+            ;;
         -f|--filter)
             FILTER_PATTERN="$2"
             shift
@@ -251,6 +422,9 @@ while [[ "$#" -gt 0 ]]; do
             echo "  -k, --keep-alive       Do not tear down environment on exit/completion"
             echo "  -p, --project <name>   Use an existing LDM project"
             echo "  -s, --skip-deploy      Skip fragment ZIP compilation and deployment"
+            echo "  -n, --node <target>    Run against a remote LDM compute node (see 'ldm target ls')."
+            echo "                         Fragment ZIPs are copied to the node over SSH and the"
+            echo "                         Liferay port is tunnelled to localhost for Playwright."
             echo "  -f, --filter <pattern> Filter tests and page creation to matching fragments/collections"
             echo "  --feature <flags>      Additional feature flags to enable (space-separated)"
             echo "  -h, --help             Show this help screen"
@@ -262,6 +436,9 @@ while [[ "$#" -gt 0 ]]; do
     esac
     shift
 done
+
+# Resolve the requested compute node before anything talks to LDM or Docker.
+resolve_node_target
 
 # Recalculate building estimate based on actual parameters
 if [ "$EXISTING_PROJECT" = true ]; then
@@ -582,7 +759,7 @@ echo "  -> LDM Project Path: $PROJECT_PATH"
 # remote node, so the registry cannot be trusted for this. Container visibility
 # to the local Docker daemon is reliable: LDM creates a local project directory
 # either way, but the container itself only appears here when it is local.
-if [ "$SKIP_DEPLOY" != true ] && ! docker inspect "$PROJECT_NAME" > /dev/null 2>&1; then
+if [ -z "$NODE_TARGET" ] && [ "$SKIP_DEPLOY" != true ] && ! docker inspect "$PROJECT_NAME" > /dev/null 2>&1; then
     echo ""
     echo "[ERROR] Container '$PROJECT_NAME' is not visible to the local Docker"
     echo "        daemon, so it is running on a remote LDM node."
@@ -602,7 +779,10 @@ if [ "$SKIP_DEPLOY" != true ] && ! docker inspect "$PROJECT_NAME" > /dev/null 2>
     exit 1
 fi
 
-if [ ! -d "$PROJECT_PATH/deploy" ]; then
+if [ -n "$NODE_TARGET" ]; then
+    REMOTE_DEPLOY_DIR=$(resolve_remote_deploy_dir)
+    echo "  -> Remote deploy directory: ${NODE_TARGET}:${REMOTE_DEPLOY_DIR}"
+elif [ ! -d "$PROJECT_PATH/deploy" ]; then
     echo ""
     echo "[ERROR] '$PROJECT_PATH/deploy' is not a directory on this machine, so"
     echo "        fragment ZIPs cannot be placed where Liferay will find them."
@@ -770,8 +950,7 @@ else
         DEPLOY_ZIP="$zip_file"
         ZIP_NAME=$(basename "$DEPLOY_ZIP")
         echo "     Deploying $ZIP_NAME..."
-        cp "$DEPLOY_ZIP" "$PROJECT_PATH/deploy/${ZIP_NAME}.tmp"
-        mv "$PROJECT_PATH/deploy/${ZIP_NAME}.tmp" "$PROJECT_PATH/deploy/${ZIP_NAME}"
+        deploy_artifact "$DEPLOY_ZIP" "${ZIP_NAME}"
         sleep 2 # Throttle deployment to reduce DB contention
     done
 
@@ -783,8 +962,7 @@ else
         
         FRAG_ZIP_NAME=$(basename "$zip_file")
         echo "     Deploying Root Fragment: $FRAG_ZIP_NAME..."
-        cp "$zip_file" "$PROJECT_PATH/deploy/${FRAG_ZIP_NAME}.tmp"
-        mv "$PROJECT_PATH/deploy/${FRAG_ZIP_NAME}.tmp" "$PROJECT_PATH/deploy/${FRAG_ZIP_NAME}"
+        deploy_artifact "$zip_file" "${FRAG_ZIP_NAME}"
         sleep 2 # Throttle deployment to reduce DB contention
     done
     
@@ -796,8 +974,7 @@ else
             [ -f "$cx_zip" ] || continue
             CX_ZIP_NAME=$(basename "$cx_zip")
             echo "     Deploying $CX_ZIP_NAME ($CX_TYPE)..."
-            cp "$cx_zip" "$PROJECT_PATH/deploy/${CX_ZIP_NAME}.tmp"
-            mv "$PROJECT_PATH/deploy/${CX_ZIP_NAME}.tmp" "$PROJECT_PATH/deploy/${CX_ZIP_NAME}"
+            deploy_artifact "$cx_zip" "${CX_ZIP_NAME}"
         done
     done
 
@@ -821,6 +998,13 @@ fi
 echo ""
 echo "Executing Playwright Test Suite..."
 write_signal "TESTING" "$EST_TESTING"
+# With a remote node, Playwright still runs here. Tunnel the port and address
+# Liferay as localhost so its configured virtual host matches (Issue #225).
+if [ -n "$NODE_TARGET" ]; then
+    start_node_tunnel
+    BASE_URL="http://localhost:${TUNNEL_LOCAL_PORT}"
+    echo "  -> BASE_URL rewritten for tunnel: $BASE_URL"
+fi
 export BASE_URL="$BASE_URL"
 export LIFERAY_VERSION="$REALISED_VERSION"
 export PW_TEST_SCREENSHOT_NO_FONTS_READY=1
