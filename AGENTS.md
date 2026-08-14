@@ -55,10 +55,10 @@ When beginning any task, read the corresponding `SKILL.md` before taking action:
 ## Current Work State
 
 - **Platform Target**: Liferay DXP `2026.q1.11-lts` (LPD-91054 fixed).
-- **In Flight**:
-  - Run full E2E suite (`./scripts/test-runner.sh`) using native `--fix-permissions` from LDM `v2.15.22-pre.25`.
-  - Inspect Group B fragment rendering and DOM failures (Issue #187).
-  - Resolve missing mock assets (`parallax_hero_bg.png` in `e2e-tests/assets/`).
+- **In Flight & External Blockers**:
+  - **LDM Integration**: Evaluated `v2.15.28-pre.1` (verified `--json` outputs, DB health, DOCKER_HOST isolation). Waiting on next LDM build for `--node` remote path generation (#1090) and live HTTP probe (#1091).
+  - **Test Runner (Issue #225)**: Plan to replace table parsing with structured `ldm list --json` / `ldm status --json` in `scripts/test-runner.sh`.
+  - **E2E & Fragments (Issue #187)**: Inspect Group B fragment rendering and DOM failures. Missing asset `parallax_hero_bg.png` in `e2e-tests/assets/`.
 
 <!-- markdownlint-disable MD049 -->
 ---
