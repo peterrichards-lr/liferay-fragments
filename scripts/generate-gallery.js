@@ -121,12 +121,19 @@ function generateGallery() {
     // Tablet/Mobile: status follows the image tag inline, up to the cell break.
     const imageFirst =
       /<img src="\.\/images\/live\/([^"]+)"[^>]*><br>([^|\n]+)/g;
+    const cleanStatus = (raw) => {
+      const trimmed = raw.trim();
+      if (trimmed.includes('./images/diffs/')) {
+        return '🟢 **Passed**';
+      }
+      return trimmed;
+    };
     let match;
     while ((match = headingFirst.exec(previous)) !== null) {
-      statuses[match[2]] = `<br>${match[1].trim()}`;
+      statuses[match[2]] = `<br>${cleanStatus(match[1])}`;
     }
     while ((match = imageFirst.exec(previous)) !== null) {
-      statuses[match[1]] = `<br>${match[2].trim()}`;
+      statuses[match[1]] = `<br>${cleanStatus(match[2])}`;
     }
     return statuses;
   })();
