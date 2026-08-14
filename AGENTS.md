@@ -55,10 +55,10 @@ When beginning any task, read the corresponding `SKILL.md` before taking action:
 ## Current Work State (Session Context)
 
 - **Platform Target**: Liferay DXP `2026.q1.11-lts` (LPD-91054 fixed).
-- **Active Session Scratchpad**: Transient, in-flight work state is maintained in [`.agent-state.md`](./.agent-state.md) (gitignored).
-  - **On Start / Resume**: Read [`.agent-state.md`](./.agent-state.md) for the active objective, in-flight sub-steps, and blocker notes.
-  - **Mid-Task Handoff**: Update [`.agent-state.md`](./.agent-state.md) before pausing or switching AI providers.
-  - **On Completion**: Reset [`.agent-state.md`](./.agent-state.md) to `IDLE` once the PR is merged.
+- **Active Session Scratchpad**: Transient, in-flight work state is maintained in `.agent-state.md` (gitignored).
+  - **On Start / Resume**: Read `.agent-state.md` for the active objective, in-flight sub-steps, and blocker notes.
+  - **Mid-Task Handoff**: Update `.agent-state.md` before pausing or switching AI providers.
+  - **On Completion**: Reset `.agent-state.md` to `IDLE` once the PR is merged.
 
 <!-- markdownlint-disable MD049 -->
 ---
