@@ -3013,5 +3013,85 @@
     "type": "article",
     "id": 40635,
     "erc": "MAP-MARKER-ARTICLE-02"
+  },
+  {
+    "type": "document",
+    "id": 41741,
+    "erc": "HERO-BG"
+  },
+  {
+    "type": "document",
+    "id": 42344,
+    "erc": "SLIDE-IMG-01"
+  },
+  {
+    "type": "document",
+    "id": 42356,
+    "erc": "SLIDE-IMG-02"
+  },
+  {
+    "type": "document",
+    "id": 42368,
+    "erc": "SLIDE-IMG-03"
+  },
+  {
+    "type": "structure",
+    "id": "42379",
+    "erc": "SLIDER-SLIDE-STRUCT-V3"
+  },
+  {
+    "type": "article",
+    "id": 42386,
+    "erc": "SLIDE-ARTICLE-01"
+  },
+  {
+    "type": "article",
+    "id": 42396,
+    "erc": "SLIDE-ARTICLE-02"
+  },
+  {
+    "type": "article",
+    "id": 42406,
+    "erc": "SLIDE-ARTICLE-03"
+  },
+  {
+    "type": "structure",
+    "id": "43251",
+    "erc": "MAP-MARKER-STRUCT-V1"
+  },
+  {
+    "type": "article",
+    "id": 43257,
+    "erc": "MAP-MARKER-ARTICLE-01"
+  },
+  {
+    "type": "article",
+    "id": 43267,
+    "erc": "MAP-MARKER-ARTICLE-02"
+  },
+  {
+    "type": "document",
+    "id": 43417,
+    "erc": "AURA-FRAME-BLUE"
+  },
+  {
+    "type": "document",
+    "id": 43429,
+    "erc": "AURA-FRAME-BURGUNDY"
+  },
+  {
+    "type": "document",
+    "id": 43441,
+    "erc": "AURA-FRAME-PLUM"
+  },
+  {
+    "type": "document",
+    "id": 43453,
+    "erc": "AURA-FRAME-ROSE"
+  },
+  {
+    "type": "document",
+    "id": 43488,
+    "erc": "AURA-LOOKBOOK-HERO"
   }
 ]

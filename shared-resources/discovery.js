@@ -372,7 +372,7 @@ window.Liferay.Fragment.Commons.resolveObjectPath = async (restContextPath) => {
       definition,
     };
   } catch (e) {
-    console.error('[Commons] Path resolution failed:', e);
+    console.warn('[Commons] Path resolution fallback engaged:', e.message || e);
 
     const cleanPath = restContextPath.replace(/\/$/, '');
     const mapping = fallbackPaths[cleanPath];
@@ -427,7 +427,7 @@ window.Liferay.Fragment.Commons.resolveObjectPathByERC = async (erc) => {
       definition,
     };
   } catch (e) {
-    console.error('[Commons] ERC resolution failed:', e);
+    console.warn('[Commons] ERC resolution fallback engaged:', e.message || e);
 
     const mapping = fallbackMap[erc];
     if (mapping && Liferay.ThemeDisplay) {
