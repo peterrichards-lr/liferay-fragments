@@ -814,6 +814,66 @@ function runLinter() {
     console.log('Documentation footers are well-formed.');
   }
 
+  // --- AI PROVIDER AGNOSTICISM ---
+  // AGENTS.md is the single source of truth, with thin redirect stubs for each
+  // provider's auto-discovery (CLAUDE.md, gemini.md, .cursorrules,
+  // .windsurfrules). That only holds if the canonical tree stays free of
+  // provider-specific paths, and if skill content lives in .agents/skills/
+  // rather than a vendor directory — otherwise switching provider silently
+  // loses guidance. Form-fragment guidance previously sat only under .gemini/
+  // and was absent from the router entirely, so any non-Gemini agent never
+  // found it.
+  console.log(`Checking AI provider agnosticism...`);
+  const PROVIDER_DIRS = [
+    '.gemini',
+    '.claude',
+    '.cursor',
+    '.windsurf',
+    '.cline',
+  ];
+  const agnosticismOffenders = [];
+
+  // 1. The canonical context must not point into a provider directory.
+  ['AGENTS.md', ...globSync('.agents/**/*.md', { cwd: process.cwd() })].forEach(
+    (rel) => {
+      let content = '';
+      try {
+        content = fs.readFileSync(path.join(process.cwd(), rel), 'utf8');
+      } catch (e) {
+        return;
+      }
+      PROVIDER_DIRS.forEach((dir) => {
+        // Escape the leading dot for the regex.
+        const re = new RegExp(`\\${dir}/`, 'g');
+        if (re.test(content)) {
+          agnosticismOffenders.push(
+            `${rel} references the provider-specific path '${dir}/'`
+          );
+        }
+      });
+    }
+  );
+
+  // 2. Skill content must not live outside the neutral tree.
+  PROVIDER_DIRS.forEach((dir) => {
+    globSync(`${dir}/skills/**/*.md`, { cwd: process.cwd() }).forEach((rel) => {
+      agnosticismOffenders.push(
+        `${rel} holds skill content outside '.agents/skills/'`
+      );
+    });
+  });
+
+  if (agnosticismOffenders.length > 0) {
+    agnosticismOffenders.forEach((offender) => {
+      logError(
+        'Provider Agnosticism',
+        `${offender}. Keep canonical context in AGENTS.md and .agents/skills/ so the repository works with any AI provider.`
+      );
+    });
+  } else {
+    console.log('Agent context is provider-agnostic.');
+  }
+
   // --- GALLERY DRIFT CHECK ---
   console.log(`Checking for Gallery drift...`);
   const GALLERY_FILE = path.join(process.cwd(), 'docs', 'gallery.md');

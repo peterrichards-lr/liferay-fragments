@@ -9,15 +9,15 @@ Route user requests to the appropriate specialist skill based on intent.
 
 ## Intent Router
 
-| User Intent                                                       | Skill                   | Path                                                                                                                                 |
-| ----------------------------------------------------------------- | ----------------------- | ------------------------------------------------------------------------------------------------------------------------------------ |
-| Create, scaffold, structure, or map properties for page fragments | Fragment Development    | [../liferay-fragment-development/SKILL.md](../liferay-fragment-development/SKILL.md)                                                 |
-| Lint fragments or fix validation issues                           | Fragment Linting        | [../liferay-fragment-linting/SKILL.md](../liferay-fragment-linting/SKILL.md)                                                         |
-| Build compatibility transforms via jq (create-fragment-zips.sh)   | Compat Transform        | [../liferay-compat-transform/SKILL.md](../liferay-compat-transform/SKILL.md)                                                         |
-| Generate visual gallery/documentation                             | Visual Gallery          | [../liferay-visual-gallery/SKILL.md](../liferay-visual-gallery/SKILL.md)                                                             |
-| Create fragment screenshots                                       | Screenshot Creation     | [../fragment-screenshot-creation/SKILL.md](../fragment-screenshot-creation/SKILL.md)                                                 |
-| Bootstrap Playwright E2E tests for fragments                      | E2E Bootstrap           | [../fragment-e2e-bootstrap/SKILL.md](../fragment-e2e-bootstrap/SKILL.md)                                                             |
-| Create form fragments                                             | Form Fragment Developer | [../../../.gemini/skills/liferay-form-fragment-developer/SKILL.md](../../../.gemini/skills/liferay-form-fragment-developer/SKILL.md) |
+| User Intent                                                       | Skill                   | Path                                                                                       |
+| ----------------------------------------------------------------- | ----------------------- | ------------------------------------------------------------------------------------------ |
+| Create, scaffold, structure, or map properties for page fragments | Fragment Development    | [../liferay-fragment-development/SKILL.md](../liferay-fragment-development/SKILL.md)       |
+| Lint fragments or fix validation issues                           | Fragment Linting        | [../liferay-fragment-linting/SKILL.md](../liferay-fragment-linting/SKILL.md)               |
+| Build compatibility transforms via jq (create-fragment-zips.sh)   | Compat Transform        | [../liferay-compat-transform/SKILL.md](../liferay-compat-transform/SKILL.md)               |
+| Generate visual gallery/documentation                             | Visual Gallery          | [../liferay-visual-gallery/SKILL.md](../liferay-visual-gallery/SKILL.md)                   |
+| Create fragment screenshots                                       | Screenshot Creation     | [../fragment-screenshot-creation/SKILL.md](../fragment-screenshot-creation/SKILL.md)       |
+| Bootstrap Playwright E2E tests for fragments                      | E2E Bootstrap           | [../fragment-e2e-bootstrap/SKILL.md](../fragment-e2e-bootstrap/SKILL.md)                   |
+| Create form fragments                                             | Form Fragment Developer | [../liferay-form-fragment-developer/SKILL.md](../liferay-form-fragment-developer/SKILL.md) |
 
 ## How to Use
 
