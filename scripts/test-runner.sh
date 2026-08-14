@@ -32,6 +32,13 @@ ldm() {
     fi
 }
 
+# Query a field from a project's JSON entry in `ldm list --json`.
+# Uses jq for structured, locale-independent field extraction.
+ldm_project_field() {
+    local proj="$1" expr="$2"
+    ldm list --json 2>/dev/null | jq -r --arg p "$proj" ".[] | select(.project == \$p) | $expr" 2>/dev/null || true
+}
+
 
 
 # ─── Remote node support (Issue #225) ────────────────────────────────────────
@@ -553,7 +560,7 @@ if [ "$EXISTING_PROJECT" = false ]; then
     # a completely fresh database on every run. Without this, `ldm run` reuses the
     # existing project's PostgreSQL volume from the previous CI run, causing stale
     # fragment data to persist and producing 252 consistent test failures.
-    if ldm list --no-color --no-unicode 2>/dev/null | grep -q "$PROJECT_NAME"; then
+    if [ -n "$(ldm_project_field "$PROJECT_NAME" '.project // empty')" ]; then
         echo "  -> Found existing LDM project '$PROJECT_NAME'. Deleting to ensure a clean environment..."
         ldm rm "$PROJECT_NAME" --delete -y > /dev/null 2>&1 || true
         echo "  -> Existing LDM project deleted."
@@ -571,9 +578,8 @@ echo "[2/5] Configuring Environment Parameters..."
 
 if [ "$EXISTING_PROJECT" = true ]; then
     echo "  -> Using Existing Project: $PROJECT_NAME"
-    # Resolve URL and Path for existing project
-    # Use grep to extract the actual HTTP URL, ignoring any ANSI color codes
-    BASE_URL=$(ldm list | sed 's/\x1b\[[0-9;]*m//g' | grep "[│|] $PROJECT_NAME [│|]" | grep -Eo "https?://[a-zA-Z0-9.:-]+" | head -n 1)
+    # Resolve URL for existing project via structured JSON
+    BASE_URL=$(ldm_project_field "$PROJECT_NAME" '.url // empty')
     if [ -z "$BASE_URL" ]; then
         echo "Error: Could not find URL for existing project '$PROJECT_NAME'. Is it running?"
         exit 1
@@ -682,25 +688,24 @@ echo "[4/5] Provisioning Liferay environment via LDM..."
 
 if [ "$EXISTING_PROJECT" = true ]; then
     echo "  -> Checking status of existing project $PROJECT_NAME..."
-    # `ldm list` renders: │ Project │ Version │ Target │ Status │ URL │
-    # The leading delimiter yields an empty $1, so Status is $5 (not $4, which
-    # is Target and would always read "local" for a local project).
-    STATUS=$(ldm list | sed 's/\x1b\[[0-9;]*m//g' | grep "[│|] $PROJECT_NAME [│|]" | awk -F'[|?│]' '{print $5}' | xargs)
+    STATUS=$(ldm_project_field "$PROJECT_NAME" '.status // empty')
     if [ "$STATUS" != "Running" ]; then
-        echo "  -> Project '$PROJECT_NAME' is $STATUS. Starting it..."
+        echo "  -> Project '$PROJECT_NAME' is ${STATUS:-Stopped}. Starting it..."
         log_command "ldm up \"$PROJECT_NAME\" -y"
-        # Do not let a non-zero exit abort the run under `set -e`; an
-        # "already running" project is a success case for our purposes.
-        LDM_UP_OUTPUT=$(ldm up "$PROJECT_NAME" -y 2>&1) || {
-            if echo "$LDM_UP_OUTPUT" | grep -qi "already running"; then
-                echo "  -> Project '$PROJECT_NAME' was already running. Continuing."
-            else
-                echo "Error: Failed to start existing project '$PROJECT_NAME'."
-                echo "$LDM_UP_OUTPUT" | tail -20
-                exit 1
-            fi
-        }
-        BASE_URL=$(ldm list | sed 's/\x1b\[[0-9;]*m//g' | grep "[│|] $PROJECT_NAME [│|]" | grep -Eo "https?://[a-zA-Z0-9.:-]+" | head -n 1)
+        set +e
+        LDM_UP_OUTPUT=$(ldm up "$PROJECT_NAME" -y 2>&1)
+        LDM_UP_EXIT=$?
+        set -e
+        if [ $LDM_UP_EXIT -eq 0 ]; then
+            echo "  -> Project '$PROJECT_NAME' started."
+        elif [ $LDM_UP_EXIT -eq 5 ] || echo "$LDM_UP_OUTPUT" | grep -qi "already running"; then
+            echo "  -> Project '$PROJECT_NAME' was already running. Continuing."
+        else
+            echo "Error: Failed to start existing project '$PROJECT_NAME' (exit code $LDM_UP_EXIT)."
+            echo "$LDM_UP_OUTPUT" | tail -20
+            exit 1
+        fi
+        BASE_URL=$(ldm_project_field "$PROJECT_NAME" '.url // empty')
         if [ -z "$BASE_URL" ]; then
             echo "Error: Could not find URL for project '$PROJECT_NAME' after starting."
             exit 1
@@ -737,9 +742,8 @@ EOF
     fi
 fi
 
-# Resolve project path for deployment
-log_command "ldm list -v"
-PROJECT_PATH=$(ldm list -v | grep -A 1 "$PROJECT_NAME" | grep "Path:" | awk '{print $2}')
+# Resolve project path for deployment via structured JSON
+PROJECT_PATH=$(ldm_project_field "$PROJECT_NAME" '.path // empty')
 if [ -z "$PROJECT_PATH" ]; then
     echo "Error: Could not resolve project path for '$PROJECT_NAME'."
     exit 1
@@ -789,6 +793,13 @@ elif [ ! -d "$PROJECT_PATH/deploy" ]; then
     exit 1
 fi
 
+# Preflight Database Health Check (Item 3 in LDM v2.15.28+)
+DB_UNHEALTHY=$(ldm_project_field "$PROJECT_NAME" '.db_unhealthy // false')
+if [ "$DB_UNHEALTHY" = "true" ]; then
+    echo "Error: Database container for '$PROJECT_NAME' is unhealthy (e.g. Postgres crash/panic)."
+    exit 1
+fi
+
 echo "  -> Waiting for Liferay to become ready..."
 log_command "ldm wait \"$PROJECT_NAME\" -d --stream-status"
 if curl -s -I "$BASE_URL" &> /dev/null; then
@@ -799,10 +810,9 @@ elif ! ldm wait "$PROJECT_NAME" -d --stream-status; then
 fi
 echo "  -> Liferay is up and running at $BASE_URL!"
 
-# 4.1 Extract Realised Version
+# 4.1 Extract Realised Version via structured JSON
 echo "  -> Resolving portal version..."
-REALISED_VERSION=$(ldm list | grep "$PROJECT_NAME" | awk -F'[|?│]' '{print $3}' | xargs || echo "")
-REALISED_VERSION=$(echo "$REALISED_VERSION" | sed 's/\x1b\[[0-9;]*m//g')
+REALISED_VERSION=$(ldm_project_field "$PROJECT_NAME" '.version // empty')
 
 if [[ ! "$REALISED_VERSION" =~ ^[0-9]{4}\.[a-zA-Z0-9] ]]; then
     echo "  -> LDM version '$REALISED_VERSION' is not in Year.Quarter format, checking JSON WS..."
