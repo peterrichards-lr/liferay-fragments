@@ -31,3 +31,21 @@ updates:
         update-types:
           - 'minor'
           - 'patch'
+    ignore:
+      # Require a human for major bumps of the two build-critical runtime
+      # dependencies. glob went 10.5.0 -> 13.0.6 unattended in #223 — three
+      # majors — auto-merged on a green 'Lint Fragments' check. It happened to
+      # be compatible (verified: globSync still exported, same 128 matches, all
+      # ten consumers load), but that was luck rather than assurance: glob is
+      # used by the linter, the gallery generator, the build config sync and the
+      # E2E seeders, and `ajv` backs every schema validation. A single lint job
+      # is not enough evidence to land a breaking change in either.
+      #
+      # Minor, patch and security updates still flow automatically; only majors
+      # are held back.
+      - dependency-name: 'glob'
+        update-types:
+          - 'version-update:semver-major'
+      - dependency-name: 'ajv'
+        update-types:
+          - 'version-update:semver-major'
