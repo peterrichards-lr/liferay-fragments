@@ -521,7 +521,7 @@ if ! npx playwright test --version &> /dev/null; then
 fi
 
 # LDM Version check
-LDM_VERSION=$(ldm --version | awk '{print $2}')
+LDM_VERSION=$(command ldm --version | awk '{print $2}')
 if [ -z "$LDM_VERSION" ]; then
     echo "Error: Could not determine LDM version."
     echo "Hint: Run 'ldm --version' manually to check your installation."
@@ -629,7 +629,7 @@ fi
 
 echo "  -> Initializing LDM common assets..."
 log_command "ldm init-common -y"
-ldm init-common -y > /dev/null 2>&1
+command ldm init-common -y > /dev/null 2>&1
 
 echo "  -> Enabling modern Headless API feature flags in common properties..."
 # Ensure properties file and parent directories exist to prevent grep errors
