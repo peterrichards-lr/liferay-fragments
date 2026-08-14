@@ -81,14 +81,56 @@ function generateGallery() {
             };
           }
         }
-        console.log(`[INFO] Loaded Playwright results from: ${resultsPath} (${Object.keys(playwrightResultsMap).length} entries)`);
+        console.log(
+          `[INFO] Loaded Playwright results from: ${resultsPath} (${Object.keys(playwrightResultsMap).length} entries)`
+        );
         break;
       } catch (e) {
-        console.warn(`[WARN] Could not load playwright-results.json from ${resultsPath}:`, e.message);
+        console.warn(
+          `[WARN] Could not load playwright-results.json from ${resultsPath}:`,
+          e.message
+        );
       }
     }
   }
   const hasPlaywrightResults = Object.keys(playwrightResultsMap).length > 0;
+
+  // Statuses already recorded in docs/gallery.md, keyed by live image filename
+  // (which uniquely encodes collection + fragment + viewport).
+  //
+  // Gallery generation is repository-wide, but a test run may be scoped with
+  // `-f <pattern>`. Without this, every fragment outside the filter has no
+  // Playwright result and gets rewritten to "Unverified" — a filtered run over
+  // 5 fragments silently downgraded all 130, and the pre-commit hook then
+  // staged it. Absent results mean "not exercised this run", not "unverified",
+  // so the previously recorded status is carried forward instead (Issue #214).
+  const previousStatuses = (() => {
+    const statuses = {};
+    if (!fs.existsSync(GALLERY_FILE)) return statuses;
+    let previous = '';
+    try {
+      previous = fs.readFileSync(GALLERY_FILE, 'utf8');
+    } catch (e) {
+      console.warn(
+        `[WARN] Could not read existing gallery for status carry-forward: ${e.message}`
+      );
+      return statuses;
+    }
+    // Desktop: status sits on the heading line, image on the line below.
+    const headingFirst = /<br>(.+?)\s*\n<img src="\.\/images\/live\/([^"]+)"/g;
+    // Tablet/Mobile: status follows the image tag inline, up to the cell break.
+    const imageFirst =
+      /<img src="\.\/images\/live\/([^"]+)"[^>]*><br>([^|\n]+)/g;
+    let match;
+    while ((match = headingFirst.exec(previous)) !== null) {
+      statuses[match[2]] = `<br>${match[1].trim()}`;
+    }
+    while ((match = imageFirst.exec(previous)) !== null) {
+      statuses[match[1]] = `<br>${match[2].trim()}`;
+    }
+    return statuses;
+  })();
+  let carriedForwardCount = 0;
 
   // Determine latest tested version and status
   let testedVersion = 'Unknown';
@@ -357,10 +399,17 @@ function generateGallery() {
             liveImages[vp + '_status'] = '<br>🟢 **Passed**';
           } else if (pwResult && pwResult.status === 'skipped') {
             liveImages[vp + '_status'] = '<br>⏭️ **Skipped**';
+          } else if (hasPlaywrightResults && previousStatuses[liveFileName]) {
+            // Results exist but not for this fragment/viewport, so it was simply
+            // outside the run's filter. Keep what was last recorded rather than
+            // discarding a real result (Issue #214).
+            liveImages[vp + '_status'] = previousStatuses[liveFileName];
+            carriedForwardCount++;
           } else if (hasPlaywrightResults) {
-            // We have a results file but no entry for this fragment/viewport —
-            // log a warning and mark as unverified rather than falsely passing.
-            console.warn(`[WARN] No Playwright result found for key: '${pwKey}'. Marking as Unverified.`);
+            // No current result and nothing previously recorded — genuinely unknown.
+            console.warn(
+              `[WARN] No Playwright result found for key: '${pwKey}'. Marking as Unverified.`
+            );
             liveImages[vp + '_status'] = '<br>⚠️ **Unverified**';
           } else if (fs.existsSync(fsPath)) {
             // Legacy fallback: no Playwright results file at all — use file existence
@@ -457,6 +506,14 @@ function generateGallery() {
       markdown += `--- \n\n`;
     });
   });
+
+  if (carriedForwardCount > 0) {
+    console.log(
+      `Carried forward ${carriedForwardCount} previously recorded status(es) for ` +
+        `fragment/viewport combinations outside this run's scope. ` +
+        `Run the full suite to refresh them.`
+    );
+  }
 
   return markdown.trim() + '\n';
 }
