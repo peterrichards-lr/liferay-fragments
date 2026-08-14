@@ -4,5 +4,6 @@
   "htmlPath": "index.ftl",
   "jsPath": "index.js",
   "name": "Welcome Banner",
-  "type": "component"
+  "type": "component",
+  "thumbnailPath": "thumbnail.png"
 }

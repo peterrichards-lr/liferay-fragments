@@ -8,6 +8,7 @@
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "create-fragment": "node scripts/create-fragment.js",
+    "thumbnails": "python3 scripts/generate-thumbnails.py",
     "docs:gallery": "node scripts/generate-gallery.js",
     "test:visual": "node scripts/verify-snapshots.js",
     "test:visual:update": "node scripts/verify-snapshots.js --update",

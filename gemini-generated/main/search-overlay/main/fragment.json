@@ -5,5 +5,6 @@
   "icon": "search",
   "jsPath": "index.js",
   "name": "Modern Search Overlay",
-  "type": "component"
+  "type": "component",
+  "thumbnailPath": "thumbnail.png"
 }

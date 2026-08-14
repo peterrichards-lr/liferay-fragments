@@ -5,5 +5,6 @@
   "cssPath": "index.css",
   "icon": "bolt",
   "name": "Link Form to Applicant",
-  "type": "component"
+  "type": "component",
+  "thumbnailPath": "thumbnail.png"
 }

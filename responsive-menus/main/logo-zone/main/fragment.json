@@ -5,5 +5,6 @@
   "cssPath": "index.css",
   "icon": "bolt",
   "name": "Logo Zone",
-  "type": "component"
+  "type": "component",
+  "thumbnailPath": "thumbnail.png"
 }

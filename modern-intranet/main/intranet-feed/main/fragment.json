@@ -4,5 +4,6 @@
   "htmlPath": "index.ftl",
   "jsPath": "index.js",
   "name": "Intranet Feed",
-  "type": "component"
+  "type": "component",
+  "thumbnailPath": "thumbnail.png"
 }
