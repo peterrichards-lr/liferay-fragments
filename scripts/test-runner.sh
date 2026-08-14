@@ -802,13 +802,34 @@ fi
 
 echo "  -> Waiting for Liferay to become ready..."
 log_command "ldm wait \"$PROJECT_NAME\" -d --stream-status"
-if curl -s -I "$BASE_URL" &> /dev/null; then
-    echo "  -> Liferay is already up and responsive!"
+
+# Readiness comes from LDM's own probe (http_ready, added in v2.15.28-pre.2 for
+# LDM #1091) rather than a local curl.
+#
+# The previous shortcut was `curl -s -I "$BASE_URL" &> /dev/null`, which exits 0
+# for ANY HTTP response — a 404, or a 302 to /c/portal/license_activation, both
+# counted as "up and responsive". An unlicensed or half-started instance would
+# therefore be declared ready and the suite would run against it, producing a
+# full set of misleading fragment failures indistinguishable from a real defect.
+# Verified: `curl -s -I` on a nonexistent path exits 0.
+if [ "$(ldm_project_field "$PROJECT_NAME" '.http_ready // false')" = "true" ]; then
+    echo "  -> Liferay already reports ready (LDM http_ready)."
 elif ! ldm wait "$PROJECT_NAME" -d --stream-status; then
     echo "Error: Liferay did not start within the expected time or failed readiness checks."
     exit 1
 fi
-echo "  -> Liferay is up and running at $BASE_URL!"
+
+# Confirm readiness after waiting rather than trusting the wait's exit code
+# alone, so a run never starts against an instance that is not actually serving.
+HTTP_READY=$(ldm_project_field "$PROJECT_NAME" '.http_ready // false')
+if [ "$HTTP_READY" != "true" ]; then
+    HTTP_STATUS=$(ldm_project_field "$PROJECT_NAME" '.http_status // empty')
+    echo "Error: Liferay is not serving HTTP for '$PROJECT_NAME' (http_status: ${HTTP_STATUS:-unknown})."
+    echo "       Refusing to run the suite against an unresponsive instance — every"
+    echo "       fragment test would fail in a way that looks like a rendering fault."
+    exit 1
+fi
+echo "  -> Liferay is up and serving at $BASE_URL!"
 
 # 4.1 Extract Realised Version via structured JSON
 echo "  -> Resolving portal version..."
