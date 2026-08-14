@@ -47,6 +47,7 @@ generated-test-pages.json
 
 # State Coordinator and local databases
 .progress-signal
+.agent-state.md
 *.db
 **/*.db
 
