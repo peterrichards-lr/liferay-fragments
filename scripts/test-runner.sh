@@ -569,6 +569,46 @@ if [ -z "$PROJECT_PATH" ]; then
 fi
 echo "  -> LDM Project Path: $PROJECT_PATH"
 
+# Fragment ZIPs are deployed by copying them into "$PROJECT_PATH/deploy" for
+# Liferay's auto-deploy scanner to consume, which assumes that directory is on
+# this machine. If it is not, the copy either fails or writes into a stray local
+# directory the container never reads: fragments never deploy, no collections are
+# found, and every fragment test then fails with "Fragment ... was not found on
+# the page" — indistinguishable from a genuine rendering fault (see #187).
+#
+# Fail loudly here rather than produce a full run of misleading results.
+#
+# 'ldm list' reports Target 'local' even for a project whose containers run on a
+# remote node, so the registry cannot be trusted for this. Container visibility
+# to the local Docker daemon is reliable: LDM creates a local project directory
+# either way, but the container itself only appears here when it is local.
+if [ "$SKIP_DEPLOY" != true ] && ! docker inspect "$PROJECT_NAME" > /dev/null 2>&1; then
+    echo ""
+    echo "[ERROR] Container '$PROJECT_NAME' is not visible to the local Docker"
+    echo "        daemon, so it is running on a remote LDM node."
+    echo ""
+    echo "        Fragment deployment copies ZIPs into '$PROJECT_PATH/deploy' for"
+    echo "        Liferay's auto-deploy scanner. LDM creates that directory"
+    echo "        locally even for a remote project, but the container mounts the"
+    echo "        remote host's copy — so the ZIPs would land somewhere nothing"
+    echo "        reads. Fragments never deploy, no collections are found, and"
+    echo "        every fragment test fails with 'Fragment ... was not found on"
+    echo "        the page', which is indistinguishable from a real rendering"
+    echo "        fault (see #187)."
+    echo ""
+    echo "        Remote nodes are not supported yet (Issue #225). To use one,"
+    echo "        place the ZIPs in the deploy directory bind-mounted into the"
+    echo "        container on that host, then re-run with --skip-deploy."
+    exit 1
+fi
+
+if [ ! -d "$PROJECT_PATH/deploy" ]; then
+    echo ""
+    echo "[ERROR] '$PROJECT_PATH/deploy' is not a directory on this machine, so"
+    echo "        fragment ZIPs cannot be placed where Liferay will find them."
+    exit 1
+fi
+
 echo "  -> Waiting for Liferay to become ready..."
 log_command "ldm wait \"$PROJECT_NAME\" -d --stream-status"
 if curl -s -I "$BASE_URL" &> /dev/null; then
