@@ -10,6 +10,15 @@ thumbnails, gallery inclusion, and functional validation for each fragment.
 
 | Collection / Fragment             | Docs | i18n | Thumb | Visual | Gallery | Func. Validated |
 | :-------------------------------- | :--- | :--- | :---- | :----- | :------ | :-------------- |
+| **Advanced Object Data**          | YES  | YES  | NO    | NO     | NO      | YES             |
+| - data-grid-inline-editing        | YES  | YES  | NO    | NO     | NO      | YES             |
+| - interactive-floorplan           | YES  | YES  | NO    | NO     | NO      | YES             |
+| **Aura Design System**            | YES  | YES  | YES   | YES    | PART    | YES             |
+| - aura-final-cta                  | YES  | YES  | YES   | YES    | PART    | YES             |
+| - aura-lookbook                   | YES  | YES  | YES   | YES    | PART    | YES             |
+| - aura-product-gallery            | YES  | YES  | YES   | YES    | PART    | YES             |
+| - aura-scoped-container           | YES  | YES  | YES   | YES    | YES     | YES             |
+| - aura-usp-grid                   | YES  | YES  | YES   | YES    | PART    | YES             |
 | **Commerce**                      | YES  | YES  | YES   | YES    | YES     | YES             |
 | - dynamic-badge-overlay           | YES  | YES  | YES   | YES    | YES     | YES             |
 | - purchased-products              | YES  | YES  | YES   | YES    | YES     | YES             |
@@ -81,6 +90,9 @@ thumbnails, gallery inclusion, and functional validation for each fragment.
 | **Hero Assets**                   | YES  | YES  | YES   | YES    | YES     | YES             |
 | - hero-video                      | YES  | YES  | YES   | YES    | YES     | YES             |
 | - overlay-background              | YES  | YES  | YES   | YES    | YES     | YES             |
+| **Interactive Media**             | YES  | YES  | NO    | NO     | NO      | YES             |
+| - scratch-off-promo-card          | YES  | YES  | NO    | NO     | NO      | YES             |
+| - video-hotspots                  | YES  | YES  | NO    | NO     | NO      | YES             |
 | **Layout Components**             | YES  | YES  | PART  | PART   | YES     | YES             |
 | - card-content                    | YES  | YES  | NO    | YES    | YES     | YES             |
 | - grid-column                     | YES  | YES  | -     | -      | YES     | YES             |
@@ -538,7 +550,5 @@ Final refinements to repository standards and build integrity.
       referenced by configuration or logic.
 
 <!-- markdownlint-disable MD049 -->
-
 ---
-
-_Last Updated: 2026-07-02_ | _Last Reviewed: 2026-07-02_
+*Last Updated: 2026-08-14* | *Last Reviewed: 2026-08-14*
