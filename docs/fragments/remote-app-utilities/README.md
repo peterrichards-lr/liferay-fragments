@@ -18,10 +18,8 @@ external web applications or pages.
 - **Visual Polish**: Includes configurable borders, shadows, and loading states
   to match your Liferay theme.
 
-## <!-- markdownlint-disable MD049 -->
+<!-- markdownlint-disable MD049 -->
 
-_Last Updated: 2026-07-02_ | _Last Reviewed: 2026-07-02_
-
-## <!-- markdownlint-disable MD049 -->
+---
 
 _Last Updated: 2026-07-09_ | _Last Reviewed: 2026-07-09_

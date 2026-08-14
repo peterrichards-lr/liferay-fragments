@@ -179,5 +179,7 @@ If two parallel workers edited the same file (a scope violation):
 | Polling subagent status in a loop | Wastes tool calls; system notifies automatically |
 
 <!-- markdownlint-disable MD049 -->
+
 ---
-*Last Updated: 2026-07-22* | *Last Reviewed: 2026-07-22*
+
+_Last Updated: 2026-07-22_ | _Last Reviewed: 2026-07-22_

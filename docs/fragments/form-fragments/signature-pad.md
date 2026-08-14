@@ -29,10 +29,8 @@ The fragment provides the following configuration options within `configuration.
 - **FreeMarker**: Maps form inputs and applies inline CSS variables (`--pad-height`).
 - **CSS**: Uses Bootstrap/Clay classes (`btn-outline-secondary`) and custom CSS (assumed in `index.css`) for the canvas borders and layout.
 
-## <!-- markdownlint-disable MD049 -->
+<!-- markdownlint-disable MD049 -->
 
-_Last Updated: 2026-07-02_ | _Last Reviewed: 2026-07-02_
-
-## <!-- markdownlint-disable MD049 -->
+---
 
 _Last Updated: 2026-07-09_ | _Last Reviewed: 2026-07-09_

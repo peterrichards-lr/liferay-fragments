@@ -32,10 +32,8 @@ The fragment provides the following configuration options within `configuration.
 - **FreeMarker**: Conditionally renders the strength meter, requirement checklist, and visibility toggle based on the `configuration` object. Applies Liferay localization strings (e.g., `at-least-x-characters`).
 - **CSS**: Uses Bootstrap/Clay classes (`progress`, `progress-bar`, `input-group`) and assumes custom CSS in `index.css` for styling `.met` and `.unmet` requirement states.
 
-## <!-- markdownlint-disable MD049 -->
+<!-- markdownlint-disable MD049 -->
 
-_Last Updated: 2026-07-02_ | _Last Reviewed: 2026-07-02_
-
-## <!-- markdownlint-disable MD049 -->
+---
 
 _Last Updated: 2026-07-09_ | _Last Reviewed: 2026-07-09_

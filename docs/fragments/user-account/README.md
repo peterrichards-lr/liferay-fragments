@@ -35,10 +35,8 @@ facilitate the testing of authentication and authorization flows.
 - **Meridian Theme Integration**: Uses standard Clay components and Meridian
   typography for a consistent administrative UI.
 
-## <!-- markdownlint-disable MD049 -->
+<!-- markdownlint-disable MD049 -->
 
-_Last Updated: 2026-07-02_ | _Last Reviewed: 2026-07-02_
-
-## <!-- markdownlint-disable MD049 -->
+---
 
 _Last Updated: 2026-07-09_ | _Last Reviewed: 2026-07-09_

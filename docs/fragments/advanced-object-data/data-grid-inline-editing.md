@@ -14,6 +14,8 @@ The Data Grid with Inline Editing fragment utilizes Tabulator to render an inter
 
 Simply drop the fragment onto a page and configure the target Liferay Object ERC. Ensure the viewing user has the necessary permissions to read and update the specified object definition.
 
-## <!-- markdownlint-disable MD049 -->
+<!-- markdownlint-disable MD049 -->
+
+---
 
 _Last Updated: 2026-07-10_ | _Last Reviewed: 2026-07-10_

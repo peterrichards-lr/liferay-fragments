@@ -195,5 +195,7 @@ If any phase gate fails, you MUST:
 downstream. Errors compound across phases.
 
 <!-- markdownlint-disable MD049 -->
+
 ---
-*Last Updated: 2026-07-22* | *Last Reviewed: 2026-07-22*
+
+_Last Updated: 2026-07-22_ | _Last Reviewed: 2026-07-22_

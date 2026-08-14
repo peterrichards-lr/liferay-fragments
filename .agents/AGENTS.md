@@ -58,5 +58,7 @@ the corresponding task:
 | **Visual Gallery** | Generating and updating the fragment visual gallery | [`.agents/skills/liferay-visual-gallery/SKILL.md`](skills/liferay-visual-gallery/SKILL.md) |
 
 <!-- markdownlint-disable MD049 -->
+
 ---
-*Last Updated: 2026-07-22* | *Last Reviewed: 2026-07-22*
+
+_Last Updated: 2026-07-22_ | _Last Reviewed: 2026-07-22_

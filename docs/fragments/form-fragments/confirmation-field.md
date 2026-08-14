@@ -18,10 +18,8 @@ specialized **Submit Button** fragment for enforced client-side validation.
 4.  **Validation**: The fragment automatically provides real-time feedback if
     the values do not match upon blurring the fields.
 
-## <!-- markdownlint-disable MD049 -->
+<!-- markdownlint-disable MD049 -->
 
-_Last Updated: 2026-07-02_ | _Last Reviewed: 2026-07-02_
-
-## <!-- markdownlint-disable MD049 -->
+---
 
 _Last Updated: 2026-07-09_ | _Last Reviewed: 2026-07-09_

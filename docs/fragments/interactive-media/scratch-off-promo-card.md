@@ -15,6 +15,8 @@ The Scratch-Off Promo Card fragment provides an engaging, interactive marketing 
 
 Drag and drop any Liferay fragment or content into the drop zone provided by this fragment. The content will be obscured by the canvas layer until the user interacts with it.
 
-## <!-- markdownlint-disable MD049 -->
+<!-- markdownlint-disable MD049 -->
+
+---
 
 _Last Updated: 2026-07-10_ | _Last Reviewed: 2026-07-10_

@@ -22,6 +22,8 @@ Local pre-commit hooks run automatically on every commit. Ensure your branch pas
 2.  **Fragment Lint Check:** Audit fragments quality gate (`npm run lint`).
 3.  **Workspace Cleanliness Check:** Scans the root directory for untracked files/sandboxes (`scripts/check-cleanliness.js`).
 
-## <!-- markdownlint-disable MD049 -->
+<!-- markdownlint-disable MD049 -->
+
+---
 
 _Last Updated: 2026-07-10_ | _Last Reviewed: 2026-07-10_

@@ -34,10 +34,8 @@ to provide a seamless user experience across all device sizes.
 - **Meridian Theme Integration**: Fully supports Meridian CSS tokens for
   consistent typography, spacing, and accessibility.
 
-## <!-- markdownlint-disable MD049 -->
+<!-- markdownlint-disable MD049 -->
 
-_Last Updated: 2026-07-02_ | _Last Reviewed: 2026-07-02_
-
-## <!-- markdownlint-disable MD049 -->
+---
 
 _Last Updated: 2026-07-09_ | _Last Reviewed: 2026-07-09_

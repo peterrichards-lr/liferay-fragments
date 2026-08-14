@@ -37,10 +37,8 @@ The fragment can be configured via standard Liferay fragment configuration prope
 - **Theme Variables**: Utilizes standard CSS Custom Properties for typography, colors, and spacing (e.g., `var(--primary)`, `var(--h2-font-size)`, `var(--spacer-5)`).
 - **Mappable Field Ergonomics**: Contains CSS rules to ensure `[data-layout-mode='edit']` correctly displays the mapped metadata fields in a dashboard-like layout while hiding them in live view.
 
-## <!-- markdownlint-disable MD049 -->
+<!-- markdownlint-disable MD049 -->
 
-_Last Updated: 2026-07-02_ | _Last Reviewed: 2026-07-02_
-
-## <!-- markdownlint-disable MD049 -->
+---
 
 _Last Updated: 2026-07-09_ | _Last Reviewed: 2026-07-09_

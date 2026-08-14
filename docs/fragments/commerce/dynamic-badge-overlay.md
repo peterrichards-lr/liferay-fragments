@@ -23,10 +23,8 @@ Commerce display.
 - **Freshness**: Number of days a product is considered "New".
 - **Stock Threshold**: The level at which "Limited Stock" is triggered.
 
-## <!-- markdownlint-disable MD049 -->
+<!-- markdownlint-disable MD049 -->
 
-_Last Updated: 2026-07-02_ | _Last Reviewed: 2026-07-02_
-
-## <!-- markdownlint-disable MD049 -->
+---
 
 _Last Updated: 2026-07-09_ | _Last Reviewed: 2026-07-09_

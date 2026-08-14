@@ -443,5 +443,7 @@ sequenceDiagram
 ```
 
 <!-- markdownlint-disable MD049 -->
+
 ---
-*Last Updated: 2026-07-26* | *Last Reviewed: 2026-07-26*
+
+_Last Updated: 2026-07-26_ | _Last Reviewed: 2026-07-26_

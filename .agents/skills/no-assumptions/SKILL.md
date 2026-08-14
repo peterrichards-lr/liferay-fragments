@@ -101,5 +101,7 @@ Reasonable inference *from evidence already in context* is permitted.
 Confident assertion *without having consulted any evidence* is forbidden.
 
 <!-- markdownlint-disable MD049 -->
+
 ---
-*Last Updated: 2026-07-21* | *Last Reviewed: 2026-07-21*
+
+_Last Updated: 2026-07-21_ | _Last Reviewed: 2026-07-21_

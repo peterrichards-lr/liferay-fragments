@@ -33,10 +33,8 @@ The fragment utilizes Liferay's inline editing and mapping capabilities (`data-l
 - **FreeMarker**: Basic layout generation pulling in the URL and label configurations.
 - **CSS**: Depends heavily on Bootstrap grid/utility classes (`d-flex`, `justify-content-between`, `progress`, `progress-bar`, `btn-primary`, `border-left`). Specific component styles are assumed to be in `index.css` (e.g., `.course-card-image-container`, `.course-card-title`).
 
-## <!-- markdownlint-disable MD049 -->
+<!-- markdownlint-disable MD049 -->
 
-_Last Updated: 2026-07-02_ | _Last Reviewed: 2026-07-02_
-
-## <!-- markdownlint-disable MD049 -->
+---
 
 _Last Updated: 2026-07-09_ | _Last Reviewed: 2026-07-09_

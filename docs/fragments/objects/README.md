@@ -44,10 +44,8 @@ with a specific record (e.g., a Support Ticket).
 - **Automated Filtering**: Automatically filters for "Public" visibility to
   ensure only appropriate content is displayed to end-users.
 
-## <!-- markdownlint-disable MD049 -->
+<!-- markdownlint-disable MD049 -->
 
-_Last Updated: 2026-07-02_ | _Last Reviewed: 2026-07-02_
-
-## <!-- markdownlint-disable MD049 -->
+---
 
 _Last Updated: 2026-07-09_ | _Last Reviewed: 2026-07-09_
