@@ -20,4 +20,4 @@ navigates the user to the previously visited page or a parent Liferay page.
 
 ---
 
-_Last Updated: 2026-07-09_ | _Last Reviewed: 2026-07-09_
+_Last Updated: 2026-08-14_ | _Last Reviewed: 2026-07-09_

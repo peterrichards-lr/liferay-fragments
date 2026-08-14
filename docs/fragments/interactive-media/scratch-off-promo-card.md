@@ -19,4 +19,4 @@ Drag and drop any Liferay fragment or content into the drop zone provided by thi
 
 ---
 
-_Last Updated: 2026-07-10_ | _Last Reviewed: 2026-07-10_
+_Last Updated: 2026-08-14_ | _Last Reviewed: 2026-07-10_

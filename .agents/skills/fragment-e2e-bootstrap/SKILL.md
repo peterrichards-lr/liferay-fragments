@@ -91,4 +91,4 @@ Run the test suite using `scripts/test-runner.sh`. In Windows environments, invo
 
 ---
 
-_Last Updated: 2026-08-13_ | _Last Reviewed: 2026-08-13_
+_Last Updated: 2026-08-14_ | _Last Reviewed: 2026-08-13_

@@ -21,4 +21,4 @@ of specific browser cookies and triggers actions based on their values.
 
 ---
 
-_Last Updated: 2026-07-09_ | _Last Reviewed: 2026-07-09_
+_Last Updated: 2026-08-14_ | _Last Reviewed: 2026-07-09_
