@@ -6,7 +6,10 @@
   "icon": "color-picker",
   "name": "Color Swatches",
   "typeOptions": {
-    "fieldTypes": ["text"]
+    "fieldTypes": [
+      "text"
+    ]
   },
-  "type": "input"
+  "type": "input",
+  "thumbnailPath": "thumbnail.png"
 }

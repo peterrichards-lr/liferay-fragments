@@ -6,7 +6,10 @@
   "icon": "user",
   "name": "User Attribute",
   "typeOptions": {
-    "fieldTypes": ["text"]
+    "fieldTypes": [
+      "text"
+    ]
   },
-  "type": "input"
+  "type": "input",
+  "thumbnailPath": "thumbnail.png"
 }

@@ -5,5 +5,6 @@
   "cssPath": "index.css",
   "icon": "cookie",
   "name": "Campaign Insights",
-  "type": "component"
+  "type": "component",
+  "thumbnailPath": "thumbnail.png"
 }

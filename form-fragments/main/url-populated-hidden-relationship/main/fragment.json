@@ -6,7 +6,10 @@
   "icon": "bolt",
   "name": "URL Populated Hidden Relationship",
   "typeOptions": {
-    "fieldTypes": ["relationship"]
+    "fieldTypes": [
+      "relationship"
+    ]
   },
-  "type": "input"
+  "type": "input",
+  "thumbnailPath": "thumbnail.png"
 }

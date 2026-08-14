@@ -4,5 +4,6 @@
   "htmlPath": "index.ftl",
   "jsPath": "index.js",
   "name": "Course Progress Card",
-  "type": "component"
+  "type": "component",
+  "thumbnailPath": "thumbnail.png"
 }

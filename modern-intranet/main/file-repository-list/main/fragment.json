@@ -4,5 +4,6 @@
   "htmlPath": "index.ftl",
   "jsPath": "index.js",
   "name": "File Repository List",
-  "type": "component"
+  "type": "component",
+  "thumbnailPath": "thumbnail.png"
 }

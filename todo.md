@@ -161,14 +161,7 @@ thumbnails, gallery inclusion, and functional validation for each fragment.
 
 ## Fragments Requiring Visuals & Thumbnails
 
-The following fragments still require a high-quality screenshot (`docs/images/`)
-and a corresponding `thumbnail.png` in their root directory.
-
-- **Dashboard**: `dashboard-filter`
-- **Form Fragments**: `submit-button`, `user-field`
-- **Gemini**: `ai-chat-ui`, `interactive-wizard`, `search-overlay`
-- **Miscellaneous**: `modify-my-profile-link`, `my-dashboard-link`
-- **User Account**: `who-am-i`, `my-rights`, `ping`
+- [x] **Automated 100% Thumbnail Coverage**: All 130 fragments across all collections now have 320x180 (16:9) `thumbnail.png` files generated and declared via `thumbnailPath: thumbnail.png` in `fragment.json`. Maintained automatically via `npm run thumbnails` (`scripts/generate-thumbnails.py`).
 
 ## High Priority (Bugs & Security)
 

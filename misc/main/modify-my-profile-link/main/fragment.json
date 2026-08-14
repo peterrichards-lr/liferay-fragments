@@ -5,5 +5,6 @@
   "cssPath": "index.css",
   "icon": "bolt",
   "name": "Modify My Profile Link",
-  "type": "component"
+  "type": "component",
+  "thumbnailPath": "thumbnail.png"
 }

@@ -6,7 +6,11 @@
   "icon": "money",
   "name": "Currency Masked Input",
   "typeOptions": {
-    "fieldTypes": ["number", "text"]
+    "fieldTypes": [
+      "number",
+      "text"
+    ]
   },
-  "type": "input"
+  "type": "input",
+  "thumbnailPath": "thumbnail.png"
 }
