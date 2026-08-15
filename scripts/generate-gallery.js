@@ -10,6 +10,50 @@ const SNAPSHOTS_DIR = path.join(process.cwd(), 'e2e-tests', 'snapshots');
 const TEST_RESULTS_DIR = path.join(DOCS_DIR, 'test-results');
 
 /**
+ * Reduce a Playwright JSON test entry to 'passed' | 'failed' | 'skipped'.
+ *
+ * The reporter exposes two different status vocabularies and they do not
+ * overlap except on 'skipped':
+ *
+ *   spec.tests[].status            -> 'expected' | 'unexpected' | 'flaky' | 'skipped'
+ *   spec.tests[].results[].status  -> 'passed' | 'failed' | 'timedOut' | 'skipped'
+ *
+ * This module previously stored the first and compared it against the second,
+ * so a failing test (status 'unexpected') matched neither the failed branch nor
+ * the passed branch and fell through the whole chain. Combined with the
+ * carry-forward added in #214, that silently republished a fragment's previous
+ * status — so a run with 110 failures produced a gallery showing zero. See #254.
+ */
+function normalisePlaywrightStatus(test) {
+  const result =
+    test.results && test.results.length
+      ? test.results[test.results.length - 1]
+      : null;
+
+  // Prefer the concrete per-attempt status when the reporter provides it.
+  if (result && result.status) {
+    if (result.status === 'passed') return 'passed';
+    if (result.status === 'skipped') return 'skipped';
+    // 'failed', 'timedOut', 'interrupted' are all failures for our purposes.
+    return 'failed';
+  }
+
+  switch (test.status) {
+    case 'expected':
+    case 'passed':
+      return 'passed';
+    case 'skipped':
+      return 'skipped';
+    case 'unexpected':
+    case 'flaky':
+    case 'failed':
+      return 'failed';
+    default:
+      return 'unknown';
+  }
+}
+
+/**
  * Fragment Gallery Generator Logic
  */
 function generateGallery() {
@@ -76,7 +120,7 @@ function generateGallery() {
                 ? test.results[0].error.message.split('\n')[0].trim()
                 : null;
             playwrightResultsMap[key] = {
-              status: test.status || 'unknown',
+              status: normalisePlaywrightStatus(test),
               error: errorMsg,
             };
           }
@@ -138,6 +182,7 @@ function generateGallery() {
     return statuses;
   })();
   let carriedForwardCount = 0;
+  let matchedResultCount = 0;
 
   // Determine latest tested version and status
   let testedVersion = 'Unknown';
@@ -374,6 +419,7 @@ function generateGallery() {
           // 7. ⚠️ Unverified      — no Playwright result and no PNG file
           const pwKey = `${fragMetadata.name}-${vp}`;
           const pwResult = playwrightResultsMap[pwKey];
+          if (pwResult) matchedResultCount++;
 
           if (pwResult && pwResult.status === 'failed') {
             // Highest priority: actual Playwright test failure
@@ -513,6 +559,22 @@ function generateGallery() {
       markdown += `--- \n\n`;
     });
   });
+
+  // A loaded results file that matches nothing is a bug signal — most likely a
+  // key-format drift between the test titles and this lookup. Never let the
+  // carry-forward absorb it, or every fragment silently republishes its old
+  // status (#254).
+  if (hasPlaywrightResults && matchedResultCount === 0) {
+    console.error(
+      `[ERROR] Loaded ${Object.keys(playwrightResultsMap).length} Playwright ` +
+        `results but none matched a fragment/viewport key. The gallery would ` +
+        `republish stale statuses, so it has not been updated. This usually ` +
+        `means the test title format changed — see #254.`
+    );
+    throw new Error(
+      'Playwright results loaded but no fragment/viewport keys matched'
+    );
+  }
 
   if (carriedForwardCount > 0) {
     console.log(
