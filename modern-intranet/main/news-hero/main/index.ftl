@@ -21,7 +21,7 @@
           data-lfr-editable-type="image"
         >
           <img
-            src="https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&q=80&w=1632&ixlib=rb-4.0.3"
+            src=""
             alt="News Image"
             class="news-hero-image"
           />
