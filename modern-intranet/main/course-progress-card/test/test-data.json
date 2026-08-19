@@ -1,0 +1,23 @@
+{
+  "documents": [
+    {
+      "externalReferenceCode": "AURA-FRAME-BLUE",
+      "title": "aura-frame-blue.jpeg",
+      "filePath": "e2e-tests/assets/aura/aura-frame-blue.jpeg"
+    }
+  ],
+  "pageLayout": {
+    "type": "Fragment",
+    "key": "course-progress-card",
+    "fragmentFields": [
+      {
+        "id": "course-image",
+        "value": {
+          "image": {
+            "url": "AURA-FRAME-BLUE"
+          }
+        }
+      }
+    ]
+  }
+}

@@ -8,7 +8,7 @@
         data-lfr-editable-type="image"
       >
         <img
-          src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&q=80&w=400"
+          src=""
           alt="Course Thumbnail"
           class="course-card-image"
         />

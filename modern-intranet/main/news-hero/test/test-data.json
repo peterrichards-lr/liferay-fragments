@@ -1,0 +1,23 @@
+{
+  "documents": [
+    {
+      "externalReferenceCode": "AURA-LOOKBOOK-HERO",
+      "title": "aura-lookbook-hero.webp",
+      "filePath": "e2e-tests/assets/aura/aura-lookbook-hero.webp"
+    }
+  ],
+  "pageLayout": {
+    "type": "Fragment",
+    "key": "news-hero",
+    "fragmentFields": [
+      {
+        "id": "news-image",
+        "value": {
+          "image": {
+            "url": "AURA-LOOKBOOK-HERO"
+          }
+        }
+      }
+    ]
+  }
+}
