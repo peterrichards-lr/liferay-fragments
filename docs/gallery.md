@@ -1199,7 +1199,7 @@ A collection of high-fidelity fragments for constructing modern corporate intran
 
 | Tablet (768px) | Mobile (375px) |
 | :---: | :---: |
-| <img src="./images/live/objects-view-comments-tablet.png" width="350" alt="Tablet"><br>🟢 **Passed** | <img src="./images/live/objects-view-comments-mobile.png" width="175" alt="Mobile"><br>❌ **Diff: 1.8%**<br>[View Diff](./images/diffs/objects-view-comments-mobile-diff.png) |
+| <img src="./images/live/objects-view-comments-tablet.png" width="350" alt="Tablet"><br>🟢 **Passed** | <img src="./images/live/objects-view-comments-mobile.png" width="175" alt="Mobile"><br>❌ **Diff: 1.8%** |
 
 [Detailed Documentation](./fragments/objects/public-comments.md)
 

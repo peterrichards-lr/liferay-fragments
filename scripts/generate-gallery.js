@@ -440,7 +440,7 @@ function generateGallery() {
             } else if (analysisResult.status === 'regression') {
               const diffFileName = `${safeCollectionName}-${safeFragmentName}-${vp}-diff.png`;
               liveImages[vp + '_status'] =
-                `<br>❌ **Diff: ${analysisResult.diffPercentage.toFixed(1)}%**<br>[View Diff](./images/diffs/${diffFileName})`;
+                `<br>❌ **Diff: ${analysisResult.diffPercentage.toFixed(1)}%**`;
             } else if (pwResult && pwResult.status === 'passed') {
               liveImages[vp + '_status'] = '<br>🟢 **Passed**';
             } else if (pwResult && pwResult.status === 'skipped') {
