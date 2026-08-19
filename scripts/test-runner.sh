@@ -162,8 +162,8 @@ start_node_tunnel() {
     [ -z "$NODE_TARGET" ] && return 0
     [ -n "$SSH_TUNNEL_PID" ] && return 0
 
-    TUNNEL_LOCAL_PORT=$(find_free_local_port "$PORT") || {
-        echo "[ERROR] No free local port found in ${PORT}-$((PORT + 50)) for the SSH tunnel."
+    TUNNEL_LOCAL_PORT=$(find_free_local_port $((PORT + 1))) || {
+        echo "[ERROR] No free local port found in $((PORT + 1))-$((PORT + 50)) for the SSH tunnel."
         exit 1
     }
     if [ "$TUNNEL_LOCAL_PORT" != "$PORT" ]; then
