@@ -695,7 +695,6 @@ EOF
 # 4. Environment Provisioning
 echo ""
 echo "[4/5] Provisioning Liferay environment via LDM..."
-start_node_tunnel
 
 if [ "$EXISTING_PROJECT" = true ]; then
     echo "  -> Checking status of existing project $PROJECT_NAME..."
@@ -725,6 +724,9 @@ if [ "$EXISTING_PROJECT" = true ]; then
         export BASE_URL
     else
         echo "  -> Project '$PROJECT_NAME' is $STATUS."
+    fi
+    if [ -n "$NODE_TARGET" ]; then
+        start_node_tunnel
     fi
     echo "  -> Skipping LDM run (using existing project $PROJECT_NAME)..."
 else
