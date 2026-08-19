@@ -841,15 +841,16 @@ elif ! ldm wait "$PROJECT_NAME" -d --stream-status; then
     exit 1
 fi
 
-# Confirm readiness after waiting rather than trusting the wait's exit code
-# alone, so a run never starts against an instance that is not actually serving.
-HTTP_READY=$(ldm_project_field "$PROJECT_NAME" '.http_ready // false')
-if [ "$HTTP_READY" != "true" ]; then
-    HTTP_STATUS=$(ldm_project_field "$PROJECT_NAME" '.http_status // empty')
-    echo "Error: Liferay is not serving HTTP for '$PROJECT_NAME' (http_status: ${HTTP_STATUS:-unknown})."
-    echo "       Refusing to run the suite against an unresponsive instance — every"
-    echo "       fragment test would fail in a way that looks like a rendering fault."
-    exit 1
+# Confirm readiness for local instances after waiting
+if [ -z "$NODE_TARGET" ]; then
+    HTTP_READY=$(ldm_project_field "$PROJECT_NAME" '.http_ready // false')
+    if [ "$HTTP_READY" != "true" ]; then
+        HTTP_STATUS=$(ldm_project_field "$PROJECT_NAME" '.http_status // empty')
+        echo "Error: Liferay is not serving HTTP for '$PROJECT_NAME' (http_status: ${HTTP_STATUS:-unknown})."
+        echo "       Refusing to run the suite against an unresponsive instance — every"
+        echo "       fragment test would fail in a way that looks like a rendering fault."
+        exit 1
+    fi
 fi
 echo "  -> Liferay is up and serving at $BASE_URL!"
 
