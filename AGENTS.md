@@ -59,6 +59,7 @@ When beginning any task, read the corresponding `SKILL.md` before taking action:
 ## Current Work State (Session Context)
 
 - **Platform Target**: Liferay DXP `2026.q1.11-lts` (LPD-91054 fixed).
+- **Mandatory Target Node**: **`aws-1`** (`51.20.52.201`). All remote test execution and LDM container deployments for `liferay-fragments` MUST default to `aws-1`.
 - **Active Session Scratchpad**: Transient, in-flight work state is maintained in `.agent-state.md` (gitignored).
   - **On Start / Resume**: Read `.agent-state.md` for the active objective, in-flight sub-steps, and blocker notes.
   - **Mid-Task Handoff**: Update `.agent-state.md` before pausing or switching AI providers.
@@ -68,4 +69,4 @@ When beginning any task, read the corresponding `SKILL.md` before taking action:
 
 ---
 
-_Last Updated: 2026-08-14_ | _Last Reviewed: 2026-08-14_
+_Last Updated: 2026-08-19_ | _Last Reviewed: 2026-08-19_
