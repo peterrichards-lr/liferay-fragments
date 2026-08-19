@@ -26,18 +26,18 @@
   "documents": [
     {
       "externalReferenceCode": "SLIDE-IMG-01",
-      "title": "gravity_recommendation.png",
-      "filePath": "e2e-tests/assets/gravity_recommendation.png"
+      "title": "aura-lookbook-hero.webp",
+      "filePath": "e2e-tests/assets/aura/aura-lookbook-hero.webp"
     },
     {
       "externalReferenceCode": "SLIDE-IMG-02",
-      "title": "coffee_authentication.png",
-      "filePath": "e2e-tests/assets/coffee_authentication.png"
+      "title": "aura-frame-blue.jpeg",
+      "filePath": "e2e-tests/assets/aura/aura-frame-blue.jpeg"
     },
     {
       "externalReferenceCode": "SLIDE-IMG-03",
-      "title": "polite_ai_agent.png",
-      "filePath": "e2e-tests/assets/polite_ai_agent.png"
+      "title": "aura-frame-burgundy.jpeg",
+      "filePath": "e2e-tests/assets/aura/aura-frame-burgundy.jpeg"
     }
   ],
   "webContentArticles": [

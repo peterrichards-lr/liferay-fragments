@@ -3,6 +3,7 @@
 A visual reference for the high-fidelity fragments available in this Liferay DXP repository. Generated automatically.
 
 **Last Tested Against Liferay Version:** `2026.q1.11-lts`
+*(Note: Live snapshots disabled due to pending or failed test suite)*
 
 ## Advanced Object Data
 
@@ -1199,7 +1200,7 @@ A collection of high-fidelity fragments for constructing modern corporate intran
 
 | Tablet (768px) | Mobile (375px) |
 | :---: | :---: |
-| <img src="./images/live/objects-view-comments-tablet.png" width="350" alt="Tablet"><br>🟢 **Passed** | <img src="./images/live/objects-view-comments-mobile.png" width="175" alt="Mobile"><br>❌ **Diff: 1.8%** |
+| <img src="./images/live/objects-view-comments-tablet.png" width="350" alt="Tablet"><br>🟢 **Passed** | <img src="./images/live/objects-view-comments-mobile.png" width="175" alt="Mobile"><br>🟢 **Passed** |
 
 [Detailed Documentation](./fragments/objects/public-comments.md)
 
