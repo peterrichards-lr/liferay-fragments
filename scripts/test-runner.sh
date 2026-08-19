@@ -524,7 +524,7 @@ if ! docker info &> /dev/null; then
 fi
 
 # Check Playwright Browsers
-if ! npx playwright test --version &> /dev/null; then
+if ! ./node_modules/.bin/playwright --version &> /dev/null && ! npx playwright --version &> /dev/null; then
     echo "Error: Playwright is not initialized."
     echo "Hint: Run 'npm install' to install dependencies."
     exit 1
@@ -1107,7 +1107,7 @@ if [ -n "$FILTER_PATTERN" ]; then
     export TEST_FILTER="$FILTER_PATTERN"
     GREP_PATTERN="${FILTER_PATTERN//-/[- ]}"
     log_command "npx playwright test --grep \"$GREP_PATTERN\""
-    npx playwright test --grep "$GREP_PATTERN" > playwright_output.log 2>&1 || TEST_EXIT_CODE=$?
+    ../node_modules/.bin/playwright test --grep "$GREP_PATTERN" > playwright_output.log 2>&1 || TEST_EXIT_CODE=$?
     # A filter that provisions an environment and then matches no tests is a
     # filter defect, not a test failure. Say so explicitly (Issue #212).
     if grep -q "No tests found" playwright_output.log 2>/dev/null; then
@@ -1119,8 +1119,8 @@ if [ -n "$FILTER_PATTERN" ]; then
         echo "        case-sensitive."
     fi
 else
-    log_command "npx playwright test"
-    npx playwright test > playwright_output.log 2>&1 || TEST_EXIT_CODE=$?
+    log_command "../node_modules/.bin/playwright test"
+    ../node_modules/.bin/playwright test > playwright_output.log 2>&1 || TEST_EXIT_CODE=$?
 fi
 cd ..
 set -e

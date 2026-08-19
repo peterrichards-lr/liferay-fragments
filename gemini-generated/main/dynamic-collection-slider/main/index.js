@@ -180,7 +180,12 @@ const initSlider = () => {
   const collectionId = configuration.collectionId || '';
   const initialSlides = fragmentElement.querySelectorAll('.slider-slide');
 
-  if (initialSlides.length === 0 && collectionId && layoutMode === 'view') {
+  if (
+    initialSlides.length === 0 &&
+    collectionId &&
+    collectionId !== '0' &&
+    layoutMode === 'view'
+  ) {
     const url = `/o/headless-delivery/v1.0/content-sets/${collectionId}/content-set-elements`;
     const fetchFn =
       typeof Liferay !== 'undefined' && Liferay.Util && Liferay.Util.fetch
@@ -294,7 +299,7 @@ const initSlider = () => {
         setupSliderUI();
       })
       .catch((err) => {
-        console.error('Error rendering Collection Slider:', err);
+        console.warn('Unable to load Collection Slider items:', err);
         const errorEl = fragmentElement.querySelector(
           `#error-${fragmentEntryLinkNamespace}`
         );
@@ -305,6 +310,7 @@ const initSlider = () => {
         }
         setupSliderUI();
       });
+  }
   } else {
     // Check config warning for non-view or empty collections
     if (initialSlides.length === 0 && layoutMode !== 'view') {
