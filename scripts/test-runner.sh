@@ -160,6 +160,7 @@ find_free_local_port() {
 
 start_node_tunnel() {
     [ -z "$NODE_TARGET" ] && return 0
+    [ -n "$SSH_TUNNEL_PID" ] && return 0
 
     TUNNEL_LOCAL_PORT=$(find_free_local_port "$PORT") || {
         echo "[ERROR] No free local port found in ${PORT}-$((PORT + 50)) for the SSH tunnel."
@@ -175,13 +176,17 @@ start_node_tunnel() {
         exit 1
     }
     SSH_TUNNEL_PID=$(pgrep -f "ssh.*-L ${TUNNEL_LOCAL_PORT}:localhost:${PORT}.*${NODE_HOST}" | head -1)
+    echo "  -> Opened SSH tunnel (pid ${SSH_TUNNEL_PID:-unknown}): localhost:${TUNNEL_LOCAL_PORT} -> ${NODE_HOST}:${PORT}"
+}
 
-    # Confirm the forward actually carries traffic before trusting it.
+verify_node_tunnel() {
+    [ -z "$NODE_TARGET" ] && return 0
+
     local code
     code=$(curl -s -o /dev/null -w '%{http_code}' --max-time 25 "http://localhost:${TUNNEL_LOCAL_PORT}/" || echo 000)
     case "$code" in
         200|302)
-            echo "  -> SSH tunnel verified: localhost:${TUNNEL_LOCAL_PORT} -> ${NODE_HOST}:${PORT} (HTTP ${code}, pid ${SSH_TUNNEL_PID:-unknown})"
+            echo "  -> SSH tunnel verified: localhost:${TUNNEL_LOCAL_PORT} -> ${NODE_HOST}:${PORT} (HTTP ${code})"
             ;;
         *)
             echo "[ERROR] SSH tunnel opened but Liferay did not answer through it (HTTP ${code})."
@@ -685,6 +690,7 @@ EOF
 # 4. Environment Provisioning
 echo ""
 echo "[4/5] Provisioning Liferay environment via LDM..."
+start_node_tunnel
 
 if [ "$EXISTING_PROJECT" = true ]; then
     echo "  -> Checking status of existing project $PROJECT_NAME..."
@@ -1032,7 +1038,7 @@ write_signal "TESTING" "$EST_TESTING"
 # With a remote node, Playwright still runs here. Tunnel the port and address
 # Liferay as localhost so its configured virtual host matches (Issue #225).
 if [ -n "$NODE_TARGET" ]; then
-    start_node_tunnel
+    verify_node_tunnel
     BASE_URL="http://localhost:${TUNNEL_LOCAL_PORT}"
     echo "  -> BASE_URL rewritten for tunnel: $BASE_URL"
 fi
