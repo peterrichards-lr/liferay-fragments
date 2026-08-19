@@ -162,8 +162,8 @@ start_node_tunnel() {
     [ -z "$NODE_TARGET" ] && return 0
     [ -n "$SSH_TUNNEL_PID" ] && return 0
 
-    TUNNEL_LOCAL_PORT=$(find_free_local_port $((PORT + 1))) || {
-        echo "[ERROR] No free local port found in $((PORT + 1))-$((PORT + 50)) for the SSH tunnel."
+    TUNNEL_LOCAL_PORT=$(find_free_local_port "$PORT") || {
+        echo "[ERROR] No free local port found in ${PORT}-$((PORT + 50)) for the SSH tunnel."
         exit 1
     }
     if [ "$TUNNEL_LOCAL_PORT" != "$PORT" ]; then
@@ -182,18 +182,23 @@ start_node_tunnel() {
 verify_node_tunnel() {
     [ -z "$NODE_TARGET" ] && return 0
 
-    local code
-    code=$(curl -s -o /dev/null -w '%{http_code}' --max-time 25 "http://localhost:${TUNNEL_LOCAL_PORT}/" || echo 000)
-    case "$code" in
-        200|302)
-            echo "  -> SSH tunnel verified: localhost:${TUNNEL_LOCAL_PORT} -> ${NODE_HOST}:${PORT} (HTTP ${code})"
-            ;;
-        *)
-            echo "[ERROR] SSH tunnel opened but Liferay did not answer through it (HTTP ${code})."
-            stop_node_tunnel
-            exit 1
-            ;;
-    esac
+    echo "  -> Polling remote Liferay readiness over SSH tunnel (localhost:${TUNNEL_LOCAL_PORT})..."
+    local elapsed=0 timeout=900 code=000
+    while [ $elapsed -lt $timeout ]; do
+        code=$(curl -s -o /dev/null -w '%{http_code}' --max-time 10 "http://localhost:${TUNNEL_LOCAL_PORT}/" || echo 000)
+        case "$code" in
+            200|302)
+                echo "  -> SSH tunnel verified: localhost:${TUNNEL_LOCAL_PORT} -> ${NODE_HOST}:${PORT} (HTTP ${code})"
+                return 0
+                ;;
+        esac
+        sleep 5
+        elapsed=$((elapsed + 5))
+    done
+
+    echo "[ERROR] SSH tunnel opened but Liferay did not answer through it after ${timeout}s (HTTP ${code})."
+    stop_node_tunnel
+    exit 1
 }
 
 stop_node_tunnel() {
@@ -728,12 +733,16 @@ else
     if [ ${#FEATURES[@]} -gt 0 ]; then
         FEATURE_ARGS="--feature ${FEATURES[*]}"
     fi
+    REMOTE_WAIT_FLAG=""
+    if [ -n "$NODE_TARGET" ]; then
+        REMOTE_WAIT_FLAG="--no-wait"
+    fi
     # Increase CodeCache and Memory to prevent JIT stalls.
     # --clean-state: wipe OSGi state volume before boot to prevent stale lock files.
     # --internal-state: use anonymous Docker volume for OSGi state.
     # --fix-permissions: fix root:root ownership on bind-mount dirs. Requires LDM >= 2.15.22-pre.25.
-    log_command "ldm run \"$PROJECT_NAME\" \"$TAG_FLAG\" \"$LIFERAY_TAG\" --port \"$PORT\" --non-interactive --no-captcha --fast-login --sidecar --db postgresql --clean-state --internal-state --fix-permissions $LDM_VERBOSE $FEATURE_ARGS --jvm-args \"-Xms2g -Xmx4g -XX:ReservedCodeCacheSize=512m\""
-    if ! ldm run "$PROJECT_NAME" "$TAG_FLAG" "$LIFERAY_TAG" --port "$PORT" --non-interactive --no-captcha --fast-login --sidecar --db postgresql --clean-state --internal-state --fix-permissions $LDM_VERBOSE $FEATURE_ARGS --jvm-args "-Xms2g -Xmx4g -XX:ReservedCodeCacheSize=512m" > ldm_startup.log 2>&1; then
+    log_command "ldm run \"$PROJECT_NAME\" \"$TAG_FLAG\" \"$LIFERAY_TAG\" --port \"$PORT\" --non-interactive --no-captcha --fast-login --sidecar --db postgresql --clean-state --internal-state --fix-permissions $REMOTE_WAIT_FLAG $LDM_VERBOSE $FEATURE_ARGS --jvm-args \"-Xms2g -Xmx4g -XX:ReservedCodeCacheSize=512m\""
+    if ! ldm run "$PROJECT_NAME" "$TAG_FLAG" "$LIFERAY_TAG" --port "$PORT" --non-interactive --no-captcha --fast-login --sidecar --db postgresql --clean-state --internal-state --fix-permissions $REMOTE_WAIT_FLAG $LDM_VERBOSE $FEATURE_ARGS --jvm-args "-Xms2g -Xmx4g -XX:ReservedCodeCacheSize=512m" > ldm_startup.log 2>&1; then
         echo "Error: LDM failed to start the environment."
         echo "Hint: Check ldm_startup.log or run 'ldm logs $PROJECT_NAME' for more details."
         cat <<EOF >> "$RESULTS_FILE"
@@ -745,6 +754,9 @@ $(tail -n 5 ldm_startup.log)
 \`\`\`
 EOF
         exit 1
+    fi
+    if [ -n "$NODE_TARGET" ]; then
+        start_node_tunnel
     fi
 fi
 
@@ -818,7 +830,9 @@ log_command "ldm wait \"$PROJECT_NAME\" -d --stream-status"
 # therefore be declared ready and the suite would run against it, producing a
 # full set of misleading fragment failures indistinguishable from a real defect.
 # Verified: `curl -s -I` on a nonexistent path exits 0.
-if [ "$(ldm_project_field "$PROJECT_NAME" '.http_ready // false')" = "true" ]; then
+if [ -n "$NODE_TARGET" ]; then
+    verify_node_tunnel
+elif [ "$(ldm_project_field "$PROJECT_NAME" '.http_ready // false')" = "true" ]; then
     echo "  -> Liferay already reports ready (LDM http_ready)."
 elif ! ldm wait "$PROJECT_NAME" -d --stream-status; then
     echo "Error: Liferay did not start within the expected time or failed readiness checks."
