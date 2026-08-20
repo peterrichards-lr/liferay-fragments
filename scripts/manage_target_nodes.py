@@ -304,8 +304,11 @@ def power_on_node(node_name: str, config: dict) -> bool:
             and desc_res.stdout.strip() != "None"
         ):
             new_ip = desc_res.stdout.strip()
+            print(
+                f"✅ Target node '{node_name}' powered on (Dynamic Public IP: {new_ip})."
+            )
             user = config.get("user", "ldm-automation")
-            wait_for_ssh(new_ip)
+            wait_for_ssh(new_ip, user=user)
             update_node_host(node_name, new_ip)
         else:
             print(f"✅ Target node '{node_name}' powered on.")
