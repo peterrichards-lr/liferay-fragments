@@ -78,6 +78,20 @@ resolve_node_target() {
         exit 1
     fi
 
+    mkdir -p "$HOME/.ssh"
+    chmod 700 "$HOME/.ssh"
+    cat << 'EOF' > "$HOME/.ssh/config"
+Host *
+    StrictHostKeyChecking no
+    UserKnownHostsFile /dev/null
+    GlobalKnownHostsFile /dev/null
+    LogLevel ERROR
+EOF
+    chmod 600 "$HOME/.ssh/config"
+
+    echo "  -> Pre-flight verifying SSH and Docker daemon on ${NODE_USER}@${NODE_HOST}..."
+    node_ssh "docker --version" || true
+
     echo "  -> Auto-registering LDM target '$NODE_TARGET' (${NODE_USER}@${NODE_HOST})..."
     if [ -f "$HOME/.ssh/id_rsa" ]; then
         command ldm target add "$NODE_TARGET" --host "$NODE_HOST" --user "$NODE_USER" --key "$HOME/.ssh/id_rsa" --overwrite > /dev/null 2>&1 || true
