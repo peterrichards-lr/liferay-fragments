@@ -41,7 +41,9 @@ jobs:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ secrets.AWS_REGION || 'eu-north-1' }}
-      - run: |
+      - env:
+          NODE_POWER_CONFIG_URL: ${{ vars.NODE_POWER_CONFIG_URL }}
+        run: |
           TARGET_NODE="${{ inputs.node || vars.LDM_NODE_TARGET || 'aws-1' }}"
 
           if [ "${{ github.event_name }}" = "schedule" ]; then

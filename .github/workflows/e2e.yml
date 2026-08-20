@@ -95,6 +95,7 @@ jobs:
       - name: Run E2E Test Suite
         env:
           LDM_NODE_TARGET: ${{ env.LDM_NODE_TARGET }}
+          NODE_POWER_CONFIG_URL: ${{ vars.NODE_POWER_CONFIG_URL }}
         run: |
           ARGS=()
           if [ -n "${{ inputs.filter }}" ]; then
@@ -124,3 +125,4 @@ jobs:
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          NODE_POWER_CONFIG_URL: ${{ vars.NODE_POWER_CONFIG_URL }}
