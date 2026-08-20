@@ -51,6 +51,17 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ secrets.AWS_REGION || 'us-east-1' }}
 
+      - name: Configure SSH Private Key
+        run: |
+          if [ -n "${{ secrets.EC2_SSH_KEY || secrets.SSH_PRIVATE_KEY }}" ]; then
+            mkdir -p ~/.ssh
+            chmod 700 ~/.ssh
+            echo "${{ secrets.EC2_SSH_KEY || secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+            chmod 600 ~/.ssh/id_rsa
+            eval $(ssh-agent -s)
+            ssh-add ~/.ssh/id_rsa || true
+          fi
+
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
