@@ -855,6 +855,8 @@ log_command "ldm wait \"$PROJECT_NAME\" -d --stream-status"
 # full set of misleading fragment failures indistinguishable from a real defect.
 # Verified: `curl -s -I` on a nonexistent path exits 0.
 if [ -n "$NODE_TARGET" ]; then
+    echo "  -> Waiting for Liferay container readiness via LDM on '$NODE_TARGET'..."
+    command ldm wait "$PROJECT_NAME" -d --stream-status || true
     verify_node_tunnel
 elif [ "$(ldm_project_field "$PROJECT_NAME" '.http_ready // false')" = "true" ]; then
     echo "  -> Liferay already reports ready (LDM http_ready)."
