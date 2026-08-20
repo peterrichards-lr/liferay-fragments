@@ -25,6 +25,8 @@ const initContentMap = () => {
     mapElement.style.display = 'block';
   };
 
+  const escapeHtml = (str) => String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+
   const loadLeaflet = () => {
     if (window.L) {
       initLeaflet();
@@ -146,7 +148,7 @@ const initContentMap = () => {
             ) {
               const marker = L.marker([markerLat, markerLng]).addTo(map);
               if (title || description) {
-                marker.bindPopup(`<b>${title}</b><br>${description}`);
+                marker.bindPopup(`<b>${escapeHtml(title)}</b><br>${escapeHtml(description)}`);
               }
             }
           });
@@ -278,7 +280,7 @@ const initContentMap = () => {
                 });
                 if (description) {
                   const infowindow = new google.maps.InfoWindow({
-                    content: `<b>${title}</b><br>${description}`,
+                    content: `<b>${escapeHtml(title)}</b><br>${escapeHtml(description)}`,
                   });
                   marker.addListener('click', () => {
                     infowindow.open(map, marker);
