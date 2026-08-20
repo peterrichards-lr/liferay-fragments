@@ -103,7 +103,11 @@ resolve_node_target() {
 
 node_ssh_opts() {
     local opts="-o BatchMode=yes -o ConnectTimeout=15 -o StrictHostKeyChecking=accept-new"
-    [ -n "$NODE_KEY" ] && opts="$opts -i $NODE_KEY"
+    if [ -f "$HOME/.ssh/id_rsa" ]; then
+        opts="$opts -i $HOME/.ssh/id_rsa"
+    elif [ -n "$NODE_KEY" ] && [ -f "$NODE_KEY" ]; then
+        opts="$opts -i $NODE_KEY"
+    fi
     echo "$opts"
 }
 
