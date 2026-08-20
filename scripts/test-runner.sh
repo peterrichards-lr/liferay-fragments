@@ -62,19 +62,15 @@ resolve_node_target() {
         NODE_TARGET="aws-1"
     fi
 
-    if [ -f ".node-power-config.json" ]; then
-        NODE_HOST=$(python3 -c "import json; cfg=json.load(open('.node-power-config.json')); print(cfg.get('nodes',{}).get('$NODE_TARGET',{}).get('host',''))" 2>/dev/null || true)
-        NODE_USER=$(python3 -c "import json; cfg=json.load(open('.node-power-config.json')); print(cfg.get('nodes',{}).get('$NODE_TARGET',{}).get('user','ec2-user'))" 2>/dev/null || true)
+    # Trigger power wake FIRST (auto-downloads .node-power-config.json & resolves dynamic EC2 IP)
+    if [ -x "./scripts/node_power.sh" ]; then
+        echo "  -> Triggering power wake window for target node '$NODE_TARGET' (TTL: 2h)..."
+        ./scripts/node_power.sh wake "$NODE_TARGET" 2h || true
     fi
 
-    if [ -n "$NODE_HOST" ]; then
-        echo "  -> Auto-registering LDM target '$NODE_TARGET' (${NODE_USER:-ec2-user}@${NODE_HOST})..."
-        if [ -f "$HOME/.ssh/id_rsa" ]; then
-            command ldm target add "$NODE_TARGET" --host "$NODE_HOST" --user "${NODE_USER:-ec2-user}" --key "$HOME/.ssh/id_rsa" --overwrite > /dev/null 2>&1 || true
-        else
-            command ldm target add "$NODE_TARGET" --host "$NODE_HOST" --user "${NODE_USER:-ec2-user}" --overwrite > /dev/null 2>&1 || true
-        fi
-        command ldm target use "$NODE_TARGET" > /dev/null 2>&1 || true
+    if [ -f ".node-power-config.json" ]; then
+        NODE_HOST=$(python3 -c "import json; cfg=json.load(open('.node-power-config.json')); print(cfg.get('nodes',{}).get('$NODE_TARGET',{}).get('host',''))" 2>/dev/null || true)
+        NODE_USER=$(python3 -c "import json; cfg=json.load(open('.node-power-config.json')); print(cfg.get('nodes',{}).get('$NODE_TARGET',{}).get('user','ldm-automation'))" 2>/dev/null || true)
     fi
 
     if [ -z "$NODE_HOST" ] || [ -z "$NODE_USER" ]; then
@@ -82,23 +78,13 @@ resolve_node_target() {
         exit 1
     fi
 
-    if [ -x "./scripts/node_power.sh" ]; then
-        echo "  -> Triggering power wake window for target node '$NODE_TARGET' (TTL: 2h)..."
-        ./scripts/node_power.sh wake "$NODE_TARGET" 2h || true
-        # Recalculate NODE_HOST in case wake updated dynamic EC2 public IP
-        local dynamic_host
-        dynamic_host=$(python3 -c "import json; cfg=json.load(open('.node-power-config.json')); print(cfg.get('nodes',{}).get('$NODE_TARGET',{}).get('host',''))" 2>/dev/null || true)
-        if [ -n "$dynamic_host" ]; then
-            NODE_HOST="$dynamic_host"
-            echo "  -> Dynamic IP resolved for '$NODE_TARGET': ${NODE_USER}@${NODE_HOST}"
-            if [ -f "$HOME/.ssh/id_rsa" ]; then
-                command ldm target add "$NODE_TARGET" --host "$NODE_HOST" --user "${NODE_USER:-ec2-user}" --key "$HOME/.ssh/id_rsa" --overwrite > /dev/null 2>&1 || true
-            else
-                command ldm target add "$NODE_TARGET" --host "$NODE_HOST" --user "${NODE_USER:-ec2-user}" --overwrite > /dev/null 2>&1 || true
-            fi
-            command ldm target use "$NODE_TARGET" > /dev/null 2>&1 || true
-        fi
+    echo "  -> Auto-registering LDM target '$NODE_TARGET' (${NODE_USER}@${NODE_HOST})..."
+    if [ -f "$HOME/.ssh/id_rsa" ]; then
+        command ldm target add "$NODE_TARGET" --host "$NODE_HOST" --user "$NODE_USER" --key "$HOME/.ssh/id_rsa" --overwrite > /dev/null 2>&1 || true
+    else
+        command ldm target add "$NODE_TARGET" --host "$NODE_HOST" --user "$NODE_USER" --overwrite > /dev/null 2>&1 || true
     fi
+    command ldm target use "$NODE_TARGET" > /dev/null 2>&1 || true
 }
 
 node_ssh_opts() {

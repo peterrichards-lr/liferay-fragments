@@ -21,9 +21,11 @@ STATE_FILE = Path(__file__).parent.parent / ".node-power-state.json"
 LDMRC_FILE = Path.home() / ".ldmrc"
 
 
-REMOTE_CONFIG_URL = os.environ.get(
-    "NODE_POWER_CONFIG_URL",
-    "https://raw.githubusercontent.com/peterrichards-lr/liferay-docker-manager/master/.node-power-config.json",
+_raw_url = os.environ.get("NODE_POWER_CONFIG_URL", "").strip()
+REMOTE_CONFIG_URL = (
+    _raw_url
+    if _raw_url
+    else "https://raw.githubusercontent.com/peterrichards-lr/liferay-docker-manager/master/.node-power-config.json"
 )
 
 
