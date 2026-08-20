@@ -344,11 +344,6 @@ def cmd_wake(args: argparse.Namespace) -> None:
     }
     save_state(state)
 
-    try:
-        CONFIG_FILE.write_text(json.dumps({"nodes": nodes}, indent=2) + "\n")
-    except Exception:
-        pass
-
     print(
         f"⏰ Target node '{node_name}' woken until {wake_until_dt.strftime('%Y-%m-%d %H:%M:%S UTC')} (TTL: {args.ttl})."
     )
