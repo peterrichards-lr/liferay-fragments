@@ -27,7 +27,7 @@ concurrency:
 
 env:
   LDM_VERSION: v2.15.16-pre.10
-  LDM_NODE_TARGET: ${{ secrets.LDM_NODE_TARGET || inputs.node || 'aws-1' }}
+  LDM_NODE_TARGET: ${{ inputs.node || vars.LDM_NODE_TARGET || secrets.LDM_NODE_TARGET || 'aws-1' }}
 
 jobs:
   playwright-ldm:

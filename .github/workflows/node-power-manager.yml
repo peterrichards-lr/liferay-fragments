@@ -42,8 +42,9 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ secrets.AWS_REGION || 'us-east-1' }}
       - run: |
-          TARGET_NODE="${{ secrets.LDM_NODE_TARGET }}"
-          TARGET_NODE="${TARGET_NODE:-${{ inputs.node }}}"
+          TARGET_NODE="${{ inputs.node }}"
+          TARGET_NODE="${TARGET_NODE:-${{ vars.LDM_NODE_TARGET }}}"
+          TARGET_NODE="${TARGET_NODE:-${{ secrets.LDM_NODE_TARGET }}}"
           TARGET_NODE="${TARGET_NODE:-aws-1}"
 
           if [ "${{ github.event_name }}" = "schedule" ]; then
