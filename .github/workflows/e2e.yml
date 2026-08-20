@@ -64,9 +64,19 @@ jobs:
             chmod 700 ~/.ssh
             echo "$SSH_KEY" > ~/.ssh/id_rsa
             chmod 600 ~/.ssh/id_rsa
+            cat << 'EOF' > ~/.ssh/config
+          Host *
+              StrictHostKeyChecking no
+              UserKnownHostsFile /dev/null
+              GlobalKnownHostsFile /dev/null
+              ServerAliveInterval 15
+              ServerAliveCountMax 10
+              LogLevel ERROR
+          EOF
+            chmod 600 ~/.ssh/config
             eval $(ssh-agent -s)
             ssh-add ~/.ssh/id_rsa || true
-            echo "✅ SSH Private Key configured successfully."
+            echo "✅ SSH Private Key and keepalive config configured successfully."
           else
             echo "⚠️ Notice: No SSH Private Key secret found in repository secrets."
           fi

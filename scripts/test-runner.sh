@@ -85,6 +85,8 @@ Host *
     StrictHostKeyChecking no
     UserKnownHostsFile /dev/null
     GlobalKnownHostsFile /dev/null
+    ServerAliveInterval 15
+    ServerAliveCountMax 10
     LogLevel ERROR
 EOF
     chmod 600 "$HOME/.ssh/config"
@@ -102,7 +104,7 @@ EOF
 }
 
 node_ssh_opts() {
-    local opts="-o BatchMode=yes -o ConnectTimeout=15 -o StrictHostKeyChecking=accept-new"
+    local opts="-o BatchMode=yes -o ConnectTimeout=15 -o ServerAliveInterval=15 -o ServerAliveCountMax=10 -o StrictHostKeyChecking=accept-new"
     if [ -f "$HOME/.ssh/id_rsa" ]; then
         opts="$opts -i $HOME/.ssh/id_rsa"
     elif [ -n "$NODE_KEY" ] && [ -f "$NODE_KEY" ]; then
