@@ -23,7 +23,7 @@ LDMRC_FILE = Path.home() / ".ldmrc"
 
 REMOTE_CONFIG_URL = os.environ.get(
     "NODE_POWER_CONFIG_URL",
-    "https://raw.githubusercontent.com/peterrichards-lr/liferay-docker-manager/main/.node-power-config.json",
+    "https://raw.githubusercontent.com/peterrichards-lr/liferay-docker-manager/master/.node-power-config.json",
 )
 
 
@@ -52,7 +52,7 @@ def load_target_nodes() -> dict:
             "ec2_instance_id": "",
             "region": "",
             "host": "",
-            "user": "ubuntu",
+            "user": "ldm-automation",
         },
         "aws-2": {
             "name": "aws-2",
@@ -60,7 +60,7 @@ def load_target_nodes() -> dict:
             "ec2_instance_id": "",
             "region": "",
             "host": "",
-            "user": "ubuntu",
+            "user": "ldm-automation",
         },
     }
 
