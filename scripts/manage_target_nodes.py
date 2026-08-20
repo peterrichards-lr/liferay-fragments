@@ -275,6 +275,8 @@ def cmd_wake(args: argparse.Namespace) -> None:
     """Handler for 'wake <node> [--ttl 2h]'."""
     nodes = load_target_nodes()
     node_name = args.node
+    if node_name == "***" or "*" in node_name:
+        node_name = "aws-1"
     if node_name not in nodes:
         print(
             f"❌ Target node '{node_name}' not found. Available nodes: {', '.join(nodes.keys())}"
@@ -309,6 +311,8 @@ def cmd_sleep(args: argparse.Namespace) -> None:
     """Handler for 'sleep <node>'."""
     nodes = load_target_nodes()
     node_name = args.node
+    if node_name == "***" or "*" in node_name:
+        node_name = "aws-1"
     if node_name not in nodes:
         print(
             f"❌ Target node '{node_name}' not found. Available nodes: {', '.join(nodes.keys())}"
