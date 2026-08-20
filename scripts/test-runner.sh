@@ -83,6 +83,7 @@ resolve_node_target() {
         else
             command ldm target add "$NODE_TARGET" --host "$NODE_HOST" --user "${NODE_USER:-ec2-user}" --overwrite > /dev/null 2>&1 || true
         fi
+        command ldm target use "$NODE_TARGET" > /dev/null 2>&1 || true
     fi
 
     if [ -z "$NODE_HOST" ] || [ -z "$NODE_USER" ]; then
@@ -99,6 +100,12 @@ resolve_node_target() {
         if [ -n "$dynamic_host" ]; then
             NODE_HOST="$dynamic_host"
             echo "  -> Dynamic IP resolved for '$NODE_TARGET': ${NODE_USER}@${NODE_HOST}"
+            if [ -f "$HOME/.ssh/id_rsa" ]; then
+                command ldm target add "$NODE_TARGET" --host "$NODE_HOST" --user "${NODE_USER:-ec2-user}" --key "$HOME/.ssh/id_rsa" --overwrite > /dev/null 2>&1 || true
+            else
+                command ldm target add "$NODE_TARGET" --host "$NODE_HOST" --user "${NODE_USER:-ec2-user}" --overwrite > /dev/null 2>&1 || true
+            fi
+            command ldm target use "$NODE_TARGET" > /dev/null 2>&1 || true
         fi
     fi
 }
