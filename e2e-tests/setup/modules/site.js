@@ -382,7 +382,8 @@ async function provisionSite(ctx, apiContext) {
   if (process.env.TEST_FILTER) {
     let filterRegex;
     try {
-      filterRegex = new RegExp(process.env.TEST_FILTER, 'i');
+      const pattern = process.env.TEST_FILTER.replace(/-/g, '[- ]').replace(/,/g, '|');
+      filterRegex = new RegExp(`(${pattern})`, 'i');
     } catch (e) {
       const escaped = process.env.TEST_FILTER.replace(
         /[-\/\\^$*+?.()|[\]{}]/g,
