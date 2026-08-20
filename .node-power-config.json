@@ -1,0 +1,18 @@
+{
+  "nodes": {
+    "aws-1": {
+      "name": "aws-1",
+      "ec2_instance_id": "i-049889a61ec29e7ce",
+      "region": "eu-north-1",
+      "schedule": "auto",
+      "user": "ldm-automation"
+    },
+    "aws-2": {
+      "name": "aws-2",
+      "ec2_instance_id": "i-01194b1b4476dd3d7",
+      "region": "eu-north-1",
+      "schedule": "auto",
+      "user": "ldm-automation"
+    }
+  }
+}

@@ -269,20 +269,34 @@ def power_on_node(node_name: str, config: dict) -> bool:
     ec2_id = resolve_ec2_id(node_name, config)
     region = config.get("region", "eu-north-1")
     if ec2_id:
-        cmd = ["aws", "ec2", "start-instances", "--instance-ids", ec2_id]
+        state_cmd = [
+            "aws", "ec2", "describe-instances",
+            "--instance-ids", ec2_id,
+            "--query", "Reservations[0].Instances[0].State.Name",
+            "--output", "text"
+        ]
         if region:
-            cmd.extend(["--region", region])
-        print(f"▶ Booting AWS EC2 instance '{ec2_id}' for target node '{node_name}'...")
-        res = subprocess.run(cmd, capture_output=True, text=True, check=False)
-        if res.returncode != 0:
-            print(f"❌ AWS CLI error booting '{node_name}': {res.stderr.strip()}")
-            return False
+            state_cmd.extend(["--region", region])
+        state_res = subprocess.run(state_cmd, capture_output=True, text=True, check=False)
+        curr_state = state_res.stdout.strip() if state_res.returncode == 0 else ""
 
-        print(f"⏳ Waiting for AWS EC2 instance '{ec2_id}' to reach 'running' state...")
-        wait_cmd = ["aws", "ec2", "wait", "instance-running", "--instance-ids", ec2_id]
-        if region:
-            wait_cmd.extend(["--region", region])
-        subprocess.run(wait_cmd, capture_output=True, text=True, check=False)
+        if curr_state == "running":
+            print(f"ℹ AWS EC2 instance '{ec2_id}' for target node '{node_name}' is already running.")
+        else:
+            cmd = ["aws", "ec2", "start-instances", "--instance-ids", ec2_id]
+            if region:
+                cmd.extend(["--region", region])
+            print(f"▶ Booting AWS EC2 instance '{ec2_id}' for target node '{node_name}'...")
+            res = subprocess.run(cmd, capture_output=True, text=True, check=False)
+            if res.returncode != 0:
+                print(f"❌ AWS CLI error booting '{node_name}': {res.stderr.strip()}")
+                return False
+
+            print(f"⏳ Waiting for AWS EC2 instance '{ec2_id}' to reach 'running' state...")
+            wait_cmd = ["aws", "ec2", "wait", "instance-running", "--instance-ids", ec2_id]
+            if region:
+                wait_cmd.extend(["--region", region])
+            subprocess.run(wait_cmd, capture_output=True, text=True, check=False)
 
         desc_cmd = [
             "aws",
