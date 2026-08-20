@@ -50,19 +50,19 @@ def load_target_nodes() -> dict:
     nodes = {
         "aws-1": {
             "name": "aws-1",
-            "schedule": "auto",
-            "ec2_instance_id": "",
-            "region": "",
-            "host": "",
+            "ec2_instance_id": "i-049889a61ec29e7ce",
+            "region": "eu-north-1",
+            "host": "51.20.52.201",
             "user": "ldm-automation",
+            "schedule": "auto",
         },
         "aws-2": {
             "name": "aws-2",
-            "schedule": "auto",
-            "ec2_instance_id": "",
-            "region": "",
-            "host": "",
+            "ec2_instance_id": "i-01194b1b4476dd3d7",
+            "region": "eu-north-1",
+            "host": "13.51.55.181",
             "user": "ldm-automation",
+            "schedule": "auto",
         },
     }
 
