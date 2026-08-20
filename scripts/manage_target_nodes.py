@@ -234,25 +234,33 @@ def update_node_host(node_name: str, new_ip: str) -> None:
         pass
 
 
-def wait_for_ssh(host: str, port: int = 22, timeout_sec: int = 90) -> bool:
-    """Polls TCP port 22 until SSH daemon is ready and stable to accept connections."""
+def wait_for_ssh(host: str, port: int = 22, user: str = "ldm-automation", timeout_sec: int = 90) -> bool:
+    """Polls TCP port 22 and verifies SSH command execution until daemon is ready and stable."""
     import socket, time
 
-    print(f"⏳ Polling SSH availability on '{host}:{port}' (up to {timeout_sec}s)...")
+    print(f"⏳ Polling SSH availability and command handshake on '{host}:{port}' (up to {timeout_sec}s)...")
     start = time.time()
-    successes = 0
+    ssh_opts = ["-o", "BatchMode=yes", "-o", "ConnectTimeout=5", "-o", "StrictHostKeyChecking=no", "-o", "UserKnownHostsFile=/dev/null"]
+    key_path = Path.home() / ".ssh" / "id_rsa"
+    if key_path.exists():
+        ssh_opts.extend(["-i", str(key_path)])
+
     while time.time() - start < timeout_sec:
         try:
             with socket.create_connection((host, port), timeout=3):
-                successes += 1
-                if successes >= 3:
-                    print(f"✅ SSH daemon is online and stable on '{host}:{port}'.")
-                    time.sleep(3)
+                res = subprocess.run(
+                    ["ssh"] + ssh_opts + [f"{user}@{host}", "echo ready"],
+                    capture_output=True,
+                    text=True,
+                    timeout=6,
+                )
+                if res.returncode == 0 and "ready" in res.stdout:
+                    print(f"✅ SSH daemon and user authentication verified ready on '{user}@{host}:{port}'.")
                     return True
-        except (OSError, socket.timeout):
-            successes = 0
+        except (OSError, socket.timeout, subprocess.TimeoutExpired):
+            pass
         time.sleep(3)
-    print(f"⚠️ SSH poll timed out after {timeout_sec}s for '{host}:{port}'.")
+    print(f"⚠️ SSH poll timed out after {timeout_sec}s for '{user}@{host}:{port}'.")
     return False
 
 
@@ -295,12 +303,9 @@ def power_on_node(node_name: str, config: dict) -> bool:
             and desc_res.stdout.strip()
             and desc_res.stdout.strip() != "None"
         ):
-            new_ip = desc_res.stdout.strip()
-            print(
-                f"✅ Target node '{node_name}' powered on (Dynamic Public IP: {new_ip})."
-            )
+            user = config.get("user", "ldm-automation")
+            wait_for_ssh(new_ip, user=user)
             update_node_host(node_name, new_ip)
-            wait_for_ssh(new_ip)
         else:
             print(f"✅ Target node '{node_name}' powered on.")
         return True
