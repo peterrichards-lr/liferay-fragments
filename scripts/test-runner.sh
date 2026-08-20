@@ -88,10 +88,23 @@ print(t.get('key_path', ''))
         echo "[ERROR] Target '$NODE_TARGET' has no host/user recorded in LDM config."
         exit 1
     fi
-    echo "  -> Remote node '$NODE_TARGET': ${NODE_USER}@${NODE_HOST}"
     if [ -x "./scripts/node_power.sh" ]; then
         echo "  -> Triggering power wake window for target node '$NODE_TARGET' (TTL: 2h)..."
         ./scripts/node_power.sh wake "$NODE_TARGET" 2h || true
+        # Recalculate NODE_HOST in case wake updated the dynamic EC2 public IP
+        local dynamic_host
+        dynamic_host=$(python3 -c "
+import json, sys
+from pathlib import Path
+cfg = Path('.node-power-config.json')
+if cfg.exists():
+    data = json.loads(cfg.read_text())
+    print(data.get('nodes', {}).get('$NODE_TARGET', {}).get('host', ''))
+" 2>/dev/null || true)
+        if [ -n "$dynamic_host" ]; then
+            NODE_HOST="$dynamic_host"
+            echo "  -> Dynamic IP resolved for '$NODE_TARGET': ${NODE_USER}@${NODE_HOST}"
+        fi
     fi
 }
 
