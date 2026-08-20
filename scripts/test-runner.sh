@@ -21,20 +21,15 @@ export PATH="$PATH:/c/Users/prichards/AppData/Local/Microsoft/WinGet/Links"
 # Compute target node. Empty means local; anything else is a remote LDM node
 # registered via `ldm target add`. Set by --node or LDM_NODE_TARGET secret/env.
 NODE_TARGET="${NODE_TARGET:-${LDM_NODE_TARGET:-${LDM_TARGET_NODE:-}}}"
-if [ "$NODE_TARGET" = "***" ] || [[ "$NODE_TARGET" =~ \* ]]; then
+if [ "$NODE_TARGET" = "***" ] || [[ "$NODE_TARGET" == *"*"* ]]; then
     NODE_TARGET="aws-1"
 fi
 export LDM_NODE_TARGET="$NODE_TARGET"
 export NODE_TARGET="$NODE_TARGET"
 
 # Wrapper function to enforce clean, color-free plain-text outputs for all LDM commands.
-# Forwards --node so every LDM invocation acts on the intended compute node.
 ldm() {
-    if [ -n "$NODE_TARGET" ]; then
-        command ldm --node "$NODE_TARGET" "$@"
-    else
-        command ldm "$@"
-    fi
+    command ldm "$@"
 }
 
 # Query a field from a project's JSON entry in `ldm list --json`.
@@ -67,18 +62,15 @@ resolve_node_target() {
         NODE_TARGET="aws-1"
     fi
 
-    if [ -f ".node-power-config.json" ]; then
-        NODE_HOST=$(python3 -c "import json; cfg=json.load(open('.node-power-config.json')); print(cfg.get('nodes',{}).get('$NODE_TARGET',{}).get('host',''))" 2>/dev/null || true)
-        NODE_USER=$(python3 -c "import json; cfg=json.load(open('.node-power-config.json')); print(cfg.get('nodes',{}).get('$NODE_TARGET',{}).get('user','ec2-user'))" 2>/dev/null || true)
+    # Trigger power wake FIRST (auto-downloads .node-power-config.json & resolves dynamic EC2 IP)
+    if [ -x "./scripts/node_power.sh" ]; then
+        echo "  -> Triggering power wake window for target node '$NODE_TARGET' (TTL: 2h)..."
+        ./scripts/node_power.sh wake "$NODE_TARGET" 2h || true
     fi
 
-    if [ -n "$NODE_HOST" ]; then
-        echo "  -> Auto-registering LDM target '$NODE_TARGET' (${NODE_USER:-ec2-user}@${NODE_HOST})..."
-        if [ -f "$HOME/.ssh/id_rsa" ]; then
-            command ldm target add "$NODE_TARGET" --host "$NODE_HOST" --user "${NODE_USER:-ec2-user}" --key "$HOME/.ssh/id_rsa" --overwrite > /dev/null 2>&1 || true
-        else
-            command ldm target add "$NODE_TARGET" --host "$NODE_HOST" --user "${NODE_USER:-ec2-user}" --overwrite > /dev/null 2>&1 || true
-        fi
+    if [ -f ".node-power-config.json" ]; then
+        NODE_HOST=$(python3 -c "import json; cfg=json.load(open('.node-power-config.json')); print(cfg.get('nodes',{}).get('$NODE_TARGET',{}).get('host',''))" 2>/dev/null || true)
+        NODE_USER=$(python3 -c "import json; cfg=json.load(open('.node-power-config.json')); print(cfg.get('nodes',{}).get('$NODE_TARGET',{}).get('user','ldm-automation'))" 2>/dev/null || true)
     fi
 
     if [ -z "$NODE_HOST" ] || [ -z "$NODE_USER" ]; then
@@ -86,22 +78,36 @@ resolve_node_target() {
         exit 1
     fi
 
-    if [ -x "./scripts/node_power.sh" ]; then
-        echo "  -> Triggering power wake window for target node '$NODE_TARGET' (TTL: 2h)..."
-        ./scripts/node_power.sh wake "$NODE_TARGET" 2h || true
-        # Recalculate NODE_HOST in case wake updated dynamic EC2 public IP
-        local dynamic_host
-        dynamic_host=$(python3 -c "import json; cfg=json.load(open('.node-power-config.json')); print(cfg.get('nodes',{}).get('$NODE_TARGET',{}).get('host',''))" 2>/dev/null || true)
-        if [ -n "$dynamic_host" ]; then
-            NODE_HOST="$dynamic_host"
-            echo "  -> Dynamic IP resolved for '$NODE_TARGET': ${NODE_USER}@${NODE_HOST}"
-        fi
+    mkdir -p "$HOME/.ssh"
+    chmod 700 "$HOME/.ssh"
+    cat << 'EOF' > "$HOME/.ssh/config"
+Host *
+    StrictHostKeyChecking no
+    UserKnownHostsFile /dev/null
+    GlobalKnownHostsFile /dev/null
+    LogLevel ERROR
+EOF
+    chmod 600 "$HOME/.ssh/config"
+
+    echo "  -> Pre-flight verifying SSH and Docker daemon on ${NODE_USER}@${NODE_HOST}..."
+    node_ssh "docker --version" || true
+
+    echo "  -> Auto-registering LDM target '$NODE_TARGET' (${NODE_USER}@${NODE_HOST})..."
+    if [ -f "$HOME/.ssh/id_rsa" ]; then
+        command ldm target add "$NODE_TARGET" --host "$NODE_HOST" --user "$NODE_USER" --key "$HOME/.ssh/id_rsa" --overwrite > /dev/null 2>&1 || true
+    else
+        command ldm target add "$NODE_TARGET" --host "$NODE_HOST" --user "$NODE_USER" --overwrite > /dev/null 2>&1 || true
     fi
+    command ldm target use "$NODE_TARGET" > /dev/null 2>&1 || true
 }
 
 node_ssh_opts() {
     local opts="-o BatchMode=yes -o ConnectTimeout=15 -o StrictHostKeyChecking=accept-new"
-    [ -n "$NODE_KEY" ] && opts="$opts -i $NODE_KEY"
+    if [ -f "$HOME/.ssh/id_rsa" ]; then
+        opts="$opts -i $HOME/.ssh/id_rsa"
+    elif [ -n "$NODE_KEY" ] && [ -f "$NODE_KEY" ]; then
+        opts="$opts -i $NODE_KEY"
+    fi
     echo "$opts"
 }
 
@@ -757,8 +763,8 @@ else
     # --clean-state: wipe OSGi state volume before boot to prevent stale lock files.
     # --internal-state: use anonymous Docker volume for OSGi state.
     # --fix-permissions: fix root:root ownership on bind-mount dirs. Requires LDM >= 2.15.22-pre.25.
-    log_command "ldm run \"$PROJECT_NAME\" \"$TAG_FLAG\" \"$LIFERAY_TAG\" --port \"$PORT\" --non-interactive --no-captcha --fast-login --sidecar --db postgresql --clean-state --internal-state --fix-permissions $REMOTE_WAIT_FLAG $LDM_VERBOSE $FEATURE_ARGS --jvm-args \"-Xms2g -Xmx4g -XX:ReservedCodeCacheSize=512m\""
-    if ! ldm run "$PROJECT_NAME" "$TAG_FLAG" "$LIFERAY_TAG" --port "$PORT" --non-interactive --no-captcha --fast-login --sidecar --db postgresql --clean-state --internal-state --fix-permissions $REMOTE_WAIT_FLAG $LDM_VERBOSE $FEATURE_ARGS --jvm-args "-Xms2g -Xmx4g -XX:ReservedCodeCacheSize=512m" > ldm_startup.log 2>&1; then
+    log_command "ldm run \"$PROJECT_NAME\" \"$TAG_FLAG\" \"$LIFERAY_TAG\" --port \"$PORT\" --non-interactive --no-captcha --fast-login --sidecar --db postgresql --internal-state $REMOTE_WAIT_FLAG $LDM_VERBOSE $FEATURE_ARGS --jvm-args \"-Xms2g -Xmx4g -XX:ReservedCodeCacheSize=512m\""
+    if ! ldm run "$PROJECT_NAME" "$TAG_FLAG" "$LIFERAY_TAG" --port "$PORT" --non-interactive --no-captcha --fast-login --sidecar --db postgresql --internal-state $REMOTE_WAIT_FLAG $LDM_VERBOSE $FEATURE_ARGS --jvm-args "-Xms2g -Xmx4g -XX:ReservedCodeCacheSize=512m" > ldm_startup.log 2>&1; then
         echo "Error: LDM failed to start the environment."
         echo "=================== LDM STARTUP LOG ==================="
         cat ldm_startup.log 2>/dev/null || true

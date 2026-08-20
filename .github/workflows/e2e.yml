@@ -14,6 +14,11 @@ on:
         options:
           - aws-1
           - aws-2
+      ldm_version:
+        description: 'LDM Binary Version Tag (e.g. v2.15.16-pre.10)'
+        required: false
+        default: ''
+        type: string
       filter:
         description: 'Test Filter Pattern (e.g. aura, dynamic-collection-slider)'
         required: false
@@ -26,8 +31,8 @@ concurrency:
   cancel-in-progress: true
 
 env:
-  LDM_VERSION: v2.15.16-pre.10
-  LDM_NODE_TARGET: ${{ inputs.node || vars.LDM_NODE_TARGET || secrets.LDM_NODE_TARGET || 'aws-1' }}
+  LDM_VERSION: ${{ inputs.ldm_version || vars.LDM_VERSION || 'v2.15.16-pre.10' }}
+  LDM_NODE_TARGET: ${{ inputs.node || vars.LDM_NODE_TARGET || 'aws-1' }}
 
 jobs:
   playwright-ldm:
@@ -49,17 +54,21 @@ jobs:
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: ${{ secrets.AWS_REGION || 'us-east-1' }}
+          aws-region: ${{ secrets.AWS_REGION || 'eu-north-1' }}
 
       - name: Configure SSH Private Key
         run: |
-          if [ -n "${{ secrets.EC2_SSH_KEY || secrets.SSH_PRIVATE_KEY }}" ]; then
+          SSH_KEY="${{ secrets.EC2_SSH_KEY || secrets.SSH_PRIVATE_KEY || secrets.AWS_SSH_KEY || secrets.SSH_KEY || secrets.EC2_PRIVATE_KEY || secrets.AWS_PRIVATE_KEY || secrets.LDM_SSH_KEY }}"
+          if [ -n "$SSH_KEY" ]; then
             mkdir -p ~/.ssh
             chmod 700 ~/.ssh
-            echo "${{ secrets.EC2_SSH_KEY || secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+            echo "$SSH_KEY" > ~/.ssh/id_rsa
             chmod 600 ~/.ssh/id_rsa
             eval $(ssh-agent -s)
             ssh-add ~/.ssh/id_rsa || true
+            echo "✅ SSH Private Key configured successfully."
+          else
+            echo "⚠️ Notice: No SSH Private Key secret found in repository secrets."
           fi
 
       - name: Set up Node.js
@@ -91,6 +100,7 @@ jobs:
       - name: Run E2E Test Suite
         env:
           LDM_NODE_TARGET: ${{ env.LDM_NODE_TARGET }}
+          NODE_POWER_CONFIG_URL: ${{ vars.NODE_POWER_CONFIG_URL }}
         run: |
           ARGS=()
           if [ -n "${{ inputs.filter }}" ]; then
@@ -113,10 +123,11 @@ jobs:
       - name: Sleep remote target node (mandatory cleanup)
         if: always()
         run: |
-          TARGET_NODE="${{ secrets.LDM_NODE_TARGET || inputs.node || 'local' }}"
+          TARGET_NODE="${{ inputs.node || vars.LDM_NODE_TARGET || env.LDM_NODE_TARGET || 'aws-1' }}"
           if [ "$TARGET_NODE" != "local" ] && [ -n "$TARGET_NODE" ]; then
             ./scripts/node_power.sh sleep "$TARGET_NODE" || true
           fi
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          NODE_POWER_CONFIG_URL: ${{ vars.NODE_POWER_CONFIG_URL }}
