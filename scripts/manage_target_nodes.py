@@ -207,12 +207,15 @@ def update_node_host(node_name: str, new_ip: str) -> None:
     # 1. Primary Interface: ldm target add CLI command
     if shutil.which("ldm"):
         print(f"  -> Auto-registering LDM target '{node_name}' ({user}@{new_ip})...")
-        subprocess.run(
-            ["ldm", "target", "add", node_name, "--host", new_ip, "--user", user, "--overwrite"],
-            capture_output=True,
-            text=True,
-            check=False,
-        )
+        try:
+            subprocess.run(
+                ["ldm", "target", "add", node_name, "--host", new_ip, "--user", user, "--overwrite"],
+                capture_output=True,
+                text=True,
+                check=False,
+            )
+        except (OSError, Exception) as err:
+            print(f"⚠️ Notice: Could not run ldm target add CLI: {err}")
 
     # 2. Defensive Safety: Update ~/.ldmrc JSON directly
     ldmrc = Path.home() / ".ldmrc"
