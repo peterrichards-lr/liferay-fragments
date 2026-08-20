@@ -98,3 +98,14 @@ jobs:
             docs/test-results/
             e2e-tests/snapshots/
           retention-days: 7
+
+      - name: Sleep remote target node (mandatory cleanup)
+        if: always()
+        run: |
+          TARGET_NODE="${{ secrets.LDM_NODE_TARGET || inputs.node || 'local' }}"
+          if [ "$TARGET_NODE" != "local" ] && [ -n "$TARGET_NODE" ]; then
+            ./scripts/node_power.sh sleep "$TARGET_NODE" || true
+          fi
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
