@@ -1,0 +1,20 @@
+{
+  "nodes": {
+    "aws-1": {
+      "name": "aws-1",
+      "ec2_instance_id": "",
+      "region": "",
+      "host": "51.20.52.201",
+      "user": "ec2-user",
+      "schedule": "auto"
+    },
+    "aws-2": {
+      "name": "aws-2",
+      "ec2_instance_id": "",
+      "region": "",
+      "host": "13.51.55.181",
+      "user": "ec2-user",
+      "schedule": "auto"
+    }
+  }
+}

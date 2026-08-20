@@ -22,7 +22,7 @@ fi
 
 case "$COMMAND" in
     wake)
-        NODE="$2"
+        NODE="${2:-${NODE_TARGET:-${LDM_NODE_TARGET:-${LDM_TARGET_NODE:-aws-1}}}}"
         TTL="${3:-2h}"
         if [ -z "$NODE" ]; then
             echo "❌ Usage: ./scripts/node_power.sh wake <node> [ttl]"
@@ -31,7 +31,7 @@ case "$COMMAND" in
         "$PYTHON_BIN" "$SCRIPT_DIR/manage_target_nodes.py" wake "$NODE" --ttl "$TTL"
         ;;
     sleep|stop)
-        NODE="$2"
+        NODE="${2:-${NODE_TARGET:-${LDM_NODE_TARGET:-${LDM_TARGET_NODE:-aws-1}}}}"
         if [ -z "$NODE" ]; then
             echo "❌ Usage: ./scripts/node_power.sh sleep <node>"
             exit 1

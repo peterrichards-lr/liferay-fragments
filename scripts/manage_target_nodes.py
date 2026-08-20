@@ -27,6 +27,7 @@ def load_target_nodes() -> dict:
             "name": "aws-1",
             "schedule": "auto",
             "ec2_instance_id": "",
+            "region": "",
             "host": "",
             "user": "ubuntu",
         },
@@ -34,6 +35,7 @@ def load_target_nodes() -> dict:
             "name": "aws-2",
             "schedule": "auto",
             "ec2_instance_id": "",
+            "region": "",
             "host": "",
             "user": "ubuntu",
         },
@@ -135,8 +137,11 @@ def is_in_shutdown_window(dt: datetime, schedule: str) -> bool:
 def power_on_node(node_name: str, config: dict) -> bool:
     """Boots or resumes the specified target node using AWS CLI or SSH."""
     ec2_id = config.get("ec2_instance_id")
+    region = config.get("region")
     if ec2_id:
         cmd = ["aws", "ec2", "start-instances", "--instance-ids", ec2_id]
+        if region:
+            cmd.extend(["--region", region])
         print(f"▶ Booting AWS EC2 instance '{ec2_id}' for target node '{node_name}'...")
         res = subprocess.run(cmd, capture_output=True, text=True)
         if res.returncode == 0:
@@ -153,8 +158,11 @@ def power_on_node(node_name: str, config: dict) -> bool:
 def power_off_node(node_name: str, config: dict) -> bool:
     """Shuts down or stops the specified target node using AWS CLI or SSH."""
     ec2_id = config.get("ec2_instance_id")
+    region = config.get("region")
     if ec2_id:
         cmd = ["aws", "ec2", "stop-instances", "--instance-ids", ec2_id]
+        if region:
+            cmd.extend(["--region", region])
         print(
             f"▶ Stopping AWS EC2 instance '{ec2_id}' for target node '{node_name}'..."
         )

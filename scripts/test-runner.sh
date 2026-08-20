@@ -19,8 +19,8 @@ export PATH="$PATH:/c/Users/prichards/AppData/Local/Microsoft/WinGet/Packages/jq
 export PATH="$PATH:/c/Users/prichards/AppData/Local/Microsoft/WinGet/Links"
 
 # Compute target node. Empty means local; anything else is a remote LDM node
-# registered via `ldm target add`. Set by --node.
-NODE_TARGET=""
+# registered via `ldm target add`. Set by --node or LDM_NODE_TARGET secret/env.
+NODE_TARGET="${NODE_TARGET:-${LDM_NODE_TARGET:-${LDM_TARGET_NODE:-}}}"
 
 # Wrapper function to enforce clean, color-free plain-text outputs for all LDM commands.
 # Forwards --node so every LDM invocation acts on the intended compute node.

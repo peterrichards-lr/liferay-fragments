@@ -43,13 +43,14 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ secrets.AWS_REGION }}
       - run: |
+          TARGET_NODE="${{ secrets.LDM_NODE_TARGET || vars.LDM_NODE_TARGET || inputs.node || 'aws-1' }}"
           if [ "${{ github.event_name }}" = "schedule" ]; then
             python3 scripts/manage_target_nodes.py enforce
           else
             case "${{ inputs.action }}" in
               status) python3 scripts/manage_target_nodes.py status ;;
-              wake) python3 scripts/manage_target_nodes.py wake "${{ inputs.node }}" --ttl "${{ inputs.ttl }}" ;;
-              sleep) python3 scripts/manage_target_nodes.py sleep "${{ inputs.node }}" ;;
+              wake) python3 scripts/manage_target_nodes.py wake "$TARGET_NODE" --ttl "${{ inputs.ttl }}" ;;
+              sleep) python3 scripts/manage_target_nodes.py sleep "$TARGET_NODE" ;;
               enforce) python3 scripts/manage_target_nodes.py enforce ;;
             esac
           fi
