@@ -91,17 +91,17 @@ print(t.get('user', ''))
 print(t.get('key_path', ''))
 " 2>/dev/null)
 
-    case $? in
-        1) echo "[ERROR] Could not read target configuration from 'ldm config'."; exit 1 ;;
-        2) echo "[ERROR] Unknown LDM target node '$NODE_TARGET'. Run 'ldm target ls'."; exit 1 ;;
-    esac
-
     NODE_HOST=$(echo "$parsed" | sed -n '1p')
     NODE_USER=$(echo "$parsed" | sed -n '2p')
     NODE_KEY=$(echo "$parsed" | sed -n '3p')
 
+    if [ -z "$NODE_HOST" ] && [ -f ".node-power-config.json" ]; then
+        NODE_HOST=$(python3 -c "import json; cfg=json.load(open('.node-power-config.json')); print(cfg.get('nodes',{}).get('$NODE_TARGET',{}).get('host',''))" 2>/dev/null || true)
+        NODE_USER=$(python3 -c "import json; cfg=json.load(open('.node-power-config.json')); print(cfg.get('nodes',{}).get('$NODE_TARGET',{}).get('user','ec2-user'))" 2>/dev/null || true)
+    fi
+
     if [ -z "$NODE_HOST" ] || [ -z "$NODE_USER" ]; then
-        echo "[ERROR] Target '$NODE_TARGET' has no host/user recorded in LDM config."
+        echo "[ERROR] Target '$NODE_TARGET' has no host/user recorded."
         exit 1
     fi
     if [ -x "./scripts/node_power.sh" ]; then
