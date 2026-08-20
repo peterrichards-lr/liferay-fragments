@@ -186,6 +186,23 @@ def update_node_host(node_name: str, new_ip: str) -> None:
     )
 
 
+def wait_for_ssh(host: str, port: int = 22, timeout_sec: int = 90) -> bool:
+    """Polls TCP port 22 until SSH daemon is ready to accept connections."""
+    import socket, time
+
+    print(f"⏳ Polling SSH availability on '{host}:{port}' (up to {timeout_sec}s)...")
+    start = time.time()
+    while time.time() - start < timeout_sec:
+        try:
+            with socket.create_connection((host, port), timeout=3):
+                print(f"✅ SSH daemon is online and accepting connections on '{host}:{port}'.")
+                return True
+        except (OSError, socket.timeout):
+            time.sleep(3)
+    print(f"⚠️ SSH poll timed out after {timeout_sec}s for '{host}:{port}'.")
+    return False
+
+
 def power_on_node(node_name: str, config: dict) -> bool:
     """Boots or resumes the specified target node using AWS CLI or SSH."""
     ec2_id = resolve_ec2_id(node_name, config)
@@ -230,6 +247,7 @@ def power_on_node(node_name: str, config: dict) -> bool:
                 f"✅ Target node '{node_name}' powered on (Dynamic Public IP: {new_ip})."
             )
             update_node_host(node_name, new_ip)
+            wait_for_ssh(new_ip)
         else:
             print(f"✅ Target node '{node_name}' powered on.")
         return True
