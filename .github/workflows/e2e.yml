@@ -27,7 +27,7 @@ concurrency:
 
 env:
   LDM_VERSION: v2.15.16-pre.10
-  LDM_NODE_TARGET: ${{ inputs.node || vars.LDM_NODE_TARGET || secrets.LDM_NODE_TARGET || 'aws-1' }}
+  LDM_NODE_TARGET: ${{ inputs.node || vars.LDM_NODE_TARGET || 'aws-1' }}
 
 jobs:
   playwright-ldm:
@@ -117,7 +117,7 @@ jobs:
       - name: Sleep remote target node (mandatory cleanup)
         if: always()
         run: |
-          TARGET_NODE="${{ secrets.LDM_NODE_TARGET || inputs.node || 'local' }}"
+          TARGET_NODE="${{ inputs.node || vars.LDM_NODE_TARGET || env.LDM_NODE_TARGET || 'aws-1' }}"
           if [ "$TARGET_NODE" != "local" ] && [ -n "$TARGET_NODE" ]; then
             ./scripts/node_power.sh sleep "$TARGET_NODE" || true
           fi
