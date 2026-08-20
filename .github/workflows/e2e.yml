@@ -86,12 +86,12 @@ jobs:
       - name: Install LDM Binary (${{ env.LDM_VERSION }})
         run: |
           if [ "${{ env.LDM_VERSION }}" = "latest" ] || [ -z "${{ env.LDM_VERSION }}" ]; then
-            DOWNLOAD_URL="https://github.com/peterrichards-lr/liferay-docker-manager/releases/latest/download/ldm-linux-amd64"
+            DOWNLOAD_URL="https://github.com/peterrichards-lr/liferay-docker-manager/releases/latest/download/ldm-linux"
           else
-            DOWNLOAD_URL="https://github.com/peterrichards-lr/liferay-docker-manager/releases/download/${{ env.LDM_VERSION }}/ldm-linux-amd64"
+            DOWNLOAD_URL="https://github.com/peterrichards-lr/liferay-docker-manager/releases/download/${{ env.LDM_VERSION }}/ldm-linux"
           fi
           echo "Downloading LDM from: $DOWNLOAD_URL"
-          curl -sSL -o /tmp/ldm-linux "$DOWNLOAD_URL" || curl -sSL -o /tmp/ldm-linux "https://github.com/peterrichards-lr/liferay-docker-manager/releases/download/${{ env.LDM_VERSION }}/ldm-linux"
+          curl -sSL -f -o /tmp/ldm-linux "$DOWNLOAD_URL" || curl -sSL -f -o /tmp/ldm-linux "https://github.com/peterrichards-lr/liferay-docker-manager/releases/latest/download/ldm-linux"
           chmod +x /tmp/ldm-linux
           sudo mv /tmp/ldm-linux /usr/local/bin/ldm
           ldm version --no-color --no-unicode || ldm --version || true
