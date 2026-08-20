@@ -185,15 +185,17 @@ def resolve_ec2_id(node_name: str, config: dict) -> str:
 
 
 def update_node_host(node_name: str, new_ip: str) -> None:
-    """Updates host in .node-power-config.json and LDM configuration."""
+    """Updates host in .node-power-config.json, ~/.ldmrc, and LDM configuration."""
     nodes = load_target_nodes()
+    user = "ldm-automation"
     if node_name in nodes:
         nodes[node_name]["host"] = new_ip
+        user = nodes[node_name].get("user", "ldm-automation")
     else:
         nodes[node_name] = {
             "name": node_name,
             "host": new_ip,
-            "user": "ldm-automation",
+            "user": user,
             "schedule": "auto",
         }
 
@@ -202,8 +204,9 @@ def update_node_host(node_name: str, new_ip: str) -> None:
     except Exception as e:
         print(f"⚠️ Could not write {CONFIG_FILE}: {e}")
 
-    user = nodes.get(node_name, {}).get("user", "ldm-automation")
+    # 1. Primary Interface: ldm target add CLI command
     if shutil.which("ldm"):
+        print(f"  -> Auto-registering LDM target '{node_name}' ({user}@{new_ip})...")
         subprocess.run(
             ["ldm", "target", "add", node_name, "--host", new_ip, "--user", user, "--overwrite"],
             capture_output=True,
@@ -211,20 +214,41 @@ def update_node_host(node_name: str, new_ip: str) -> None:
             check=False,
         )
 
+    # 2. Defensive Safety: Update ~/.ldmrc JSON directly
+    ldmrc = Path.home() / ".ldmrc"
+    try:
+        data = json.loads(ldmrc.read_text()) if ldmrc.exists() else {}
+        targets = data.get("targets", {})
+        targets[node_name] = {
+            "name": node_name,
+            "host": new_ip,
+            "user": user,
+            "active": True
+        }
+        data["targets"] = targets
+        ldmrc.write_text(json.dumps(data, indent=2) + "\n")
+    except Exception:
+        pass
+
 
 def wait_for_ssh(host: str, port: int = 22, timeout_sec: int = 90) -> bool:
-    """Polls TCP port 22 until SSH daemon is ready to accept connections."""
+    """Polls TCP port 22 until SSH daemon is ready and stable to accept connections."""
     import socket, time
 
     print(f"⏳ Polling SSH availability on '{host}:{port}' (up to {timeout_sec}s)...")
     start = time.time()
+    successes = 0
     while time.time() - start < timeout_sec:
         try:
             with socket.create_connection((host, port), timeout=3):
-                print(f"✅ SSH daemon is online and accepting connections on '{host}:{port}'.")
-                return True
+                successes += 1
+                if successes >= 3:
+                    print(f"✅ SSH daemon is online and stable on '{host}:{port}'.")
+                    time.sleep(3)
+                    return True
         except (OSError, socket.timeout):
-            time.sleep(3)
+            successes = 0
+        time.sleep(3)
     print(f"⚠️ SSH poll timed out after {timeout_sec}s for '{host}:{port}'.")
     return False
 
