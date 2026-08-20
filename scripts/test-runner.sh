@@ -759,8 +759,8 @@ else
     # --clean-state: wipe OSGi state volume before boot to prevent stale lock files.
     # --internal-state: use anonymous Docker volume for OSGi state.
     # --fix-permissions: fix root:root ownership on bind-mount dirs. Requires LDM >= 2.15.22-pre.25.
-    log_command "ldm run \"$PROJECT_NAME\" \"$TAG_FLAG\" \"$LIFERAY_TAG\" --port \"$PORT\" --non-interactive --no-captcha --fast-login --sidecar --db postgresql --clean-state --internal-state --fix-permissions $REMOTE_WAIT_FLAG $LDM_VERBOSE $FEATURE_ARGS --jvm-args \"-Xms2g -Xmx4g -XX:ReservedCodeCacheSize=512m\""
-    if ! ldm run "$PROJECT_NAME" "$TAG_FLAG" "$LIFERAY_TAG" --port "$PORT" --non-interactive --no-captcha --fast-login --sidecar --db postgresql --clean-state --internal-state --fix-permissions $REMOTE_WAIT_FLAG $LDM_VERBOSE $FEATURE_ARGS --jvm-args "-Xms2g -Xmx4g -XX:ReservedCodeCacheSize=512m" > ldm_startup.log 2>&1; then
+    log_command "ldm run \"$PROJECT_NAME\" \"$TAG_FLAG\" \"$LIFERAY_TAG\" --port \"$PORT\" --non-interactive --no-captcha --fast-login --sidecar --db postgresql --internal-state $REMOTE_WAIT_FLAG $LDM_VERBOSE $FEATURE_ARGS --jvm-args \"-Xms2g -Xmx4g -XX:ReservedCodeCacheSize=512m\""
+    if ! ldm run "$PROJECT_NAME" "$TAG_FLAG" "$LIFERAY_TAG" --port "$PORT" --non-interactive --no-captcha --fast-login --sidecar --db postgresql --internal-state $REMOTE_WAIT_FLAG $LDM_VERBOSE $FEATURE_ARGS --jvm-args "-Xms2g -Xmx4g -XX:ReservedCodeCacheSize=512m" > ldm_startup.log 2>&1; then
         echo "Error: LDM failed to start the environment."
         echo "=================== LDM STARTUP LOG ==================="
         cat ldm_startup.log 2>/dev/null || true
