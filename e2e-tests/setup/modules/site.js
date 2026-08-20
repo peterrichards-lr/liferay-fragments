@@ -212,21 +212,27 @@ async function provisionSite(ctx, apiContext) {
 
     if (collections.length > 0) {
       for (const collection of collections) {
-        const entriesResp = await apiContext.post(
-          `/api/jsonws/fragment.fragmententry/get-fragment-entries?p_auth=${ctx.pAuthToken}`,
-          {
-            form: {
-              groupId: querySiteId,
-              fragmentCollectionId: collection.fragmentCollectionId,
-              status: -1,
-              start: -1,
-              end: -1,
-            },
-          }
-        );
+        let entries = [];
+        for (let eAttempt = 0; eAttempt < 6; eAttempt++) {
+          const entriesResp = await apiContext.post(
+            `/api/jsonws/fragment.fragmententry/get-fragment-entries?p_auth=${ctx.pAuthToken}`,
+            {
+              form: {
+                groupId: querySiteId,
+                fragmentCollectionId: collection.fragmentCollectionId,
+                status: -1,
+                start: -1,
+                end: -1,
+              },
+            }
+          );
 
-        if (entriesResp.ok()) {
-          const entries = await entriesResp.json();
+          if (entriesResp.ok()) {
+            entries = await entriesResp.json();
+            if (entries.length > 0) break;
+          }
+          await new Promise((resolve) => setTimeout(resolve, 5000));
+        }
           for (const entry of entries) {
             let approved = entry.status === 0;
             if (!approved) {
@@ -382,7 +388,8 @@ async function provisionSite(ctx, apiContext) {
   if (process.env.TEST_FILTER) {
     let filterRegex;
     try {
-      filterRegex = new RegExp(process.env.TEST_FILTER, 'i');
+      const pattern = process.env.TEST_FILTER.replace(/-/g, '[- ]').replace(/,/g, '|');
+      filterRegex = new RegExp(`(${pattern})`, 'i');
     } catch (e) {
       const escaped = process.env.TEST_FILTER.replace(
         /[-\/\\^$*+?.()|[\]{}]/g,

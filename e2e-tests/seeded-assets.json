@@ -3093,5 +3093,30 @@
     "type": "document",
     "id": 43488,
     "erc": "AURA-LOOKBOOK-HERO"
+  },
+  {
+    "type": "document",
+    "id": 36467,
+    "erc": "AURA-FRAME-BLUE"
+  },
+  {
+    "type": "document",
+    "id": 36479,
+    "erc": "AURA-FRAME-BURGUNDY"
+  },
+  {
+    "type": "document",
+    "id": 36491,
+    "erc": "AURA-FRAME-PLUM"
+  },
+  {
+    "type": "document",
+    "id": 36503,
+    "erc": "AURA-FRAME-ROSE"
+  },
+  {
+    "type": "document",
+    "id": 36534,
+    "erc": "AURA-LOOKBOOK-HERO"
   }
 ]

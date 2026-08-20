@@ -19,8 +19,13 @@ export PATH="$PATH:/c/Users/prichards/AppData/Local/Microsoft/WinGet/Packages/jq
 export PATH="$PATH:/c/Users/prichards/AppData/Local/Microsoft/WinGet/Links"
 
 # Compute target node. Empty means local; anything else is a remote LDM node
-# registered via `ldm target add`. Set by --node.
-NODE_TARGET=""
+# registered via `ldm target add`. Set by --node or LDM_NODE_TARGET secret/env.
+NODE_TARGET="${NODE_TARGET:-${LDM_NODE_TARGET:-${LDM_TARGET_NODE:-}}}"
+if [ "$NODE_TARGET" = "***" ] || [[ "$NODE_TARGET" =~ \* ]]; then
+    NODE_TARGET="aws-1"
+fi
+export LDM_NODE_TARGET="$NODE_TARGET"
+export NODE_TARGET="$NODE_TARGET"
 
 # Wrapper function to enforce clean, color-free plain-text outputs for all LDM commands.
 # Forwards --node so every LDM invocation acts on the intended compute node.
@@ -58,37 +63,36 @@ resolve_node_target() {
         NODE_TARGET=""
         return 0
     fi
+    if [ "$NODE_TARGET" = "***" ] || [[ "$NODE_TARGET" =~ \* ]]; then
+        NODE_TARGET="aws-1"
+    fi
 
-    local parsed
-    parsed=$(command ldm config 2>/dev/null | sed 's/\x1b\[[0-9;]*m//g' \
-        | grep '^  targets' | python3 -c "
-import sys, ast
-raw = sys.stdin.read()
-if not raw.strip():
-    raise SystemExit(1)
-targets = ast.literal_eval(raw.split('=', 1)[1].strip())
-t = targets.get('$NODE_TARGET')
-if not t:
-    raise SystemExit(2)
-print(t.get('host', ''))
-print(t.get('user', ''))
-print(t.get('key_path', ''))
-" 2>/dev/null)
+    if [ -f ".node-power-config.json" ]; then
+        NODE_HOST=$(python3 -c "import json; cfg=json.load(open('.node-power-config.json')); print(cfg.get('nodes',{}).get('$NODE_TARGET',{}).get('host',''))" 2>/dev/null || true)
+        NODE_USER=$(python3 -c "import json; cfg=json.load(open('.node-power-config.json')); print(cfg.get('nodes',{}).get('$NODE_TARGET',{}).get('user','ec2-user'))" 2>/dev/null || true)
+    fi
 
-    case $? in
-        1) echo "[ERROR] Could not read target configuration from 'ldm config'."; exit 1 ;;
-        2) echo "[ERROR] Unknown LDM target node '$NODE_TARGET'. Run 'ldm target ls'."; exit 1 ;;
-    esac
-
-    NODE_HOST=$(echo "$parsed" | sed -n '1p')
-    NODE_USER=$(echo "$parsed" | sed -n '2p')
-    NODE_KEY=$(echo "$parsed" | sed -n '3p')
+    if [ -n "$NODE_HOST" ]; then
+        echo "  -> Auto-registering LDM target '$NODE_TARGET' (${NODE_USER:-ec2-user}@${NODE_HOST})..."
+        command ldm target add "$NODE_TARGET" --host "$NODE_HOST" --user "${NODE_USER:-ec2-user}" --overwrite > /dev/null 2>&1 || true
+    fi
 
     if [ -z "$NODE_HOST" ] || [ -z "$NODE_USER" ]; then
-        echo "[ERROR] Target '$NODE_TARGET' has no host/user recorded in LDM config."
+        echo "[ERROR] Target '$NODE_TARGET' has no host/user recorded."
         exit 1
     fi
-    echo "  -> Remote node '$NODE_TARGET': ${NODE_USER}@${NODE_HOST}"
+
+    if [ -x "./scripts/node_power.sh" ]; then
+        echo "  -> Triggering power wake window for target node '$NODE_TARGET' (TTL: 2h)..."
+        ./scripts/node_power.sh wake "$NODE_TARGET" 2h || true
+        # Recalculate NODE_HOST in case wake updated dynamic EC2 public IP
+        local dynamic_host
+        dynamic_host=$(python3 -c "import json; cfg=json.load(open('.node-power-config.json')); print(cfg.get('nodes',{}).get('$NODE_TARGET',{}).get('host',''))" 2>/dev/null || true)
+        if [ -n "$dynamic_host" ]; then
+            NODE_HOST="$dynamic_host"
+            echo "  -> Dynamic IP resolved for '$NODE_TARGET': ${NODE_USER}@${NODE_HOST}"
+        fi
+    fi
 }
 
 node_ssh_opts() {
@@ -183,20 +187,21 @@ verify_node_tunnel() {
     [ -z "$NODE_TARGET" ] && return 0
 
     echo "  -> Polling remote Liferay readiness over SSH tunnel (localhost:${TUNNEL_LOCAL_PORT})..."
-    local elapsed=0 timeout=900 code=000
+    local elapsed=0 timeout=900 code=000 api_code=000
     while [ $elapsed -lt $timeout ]; do
         code=$(curl -s -o /dev/null -w '%{http_code}' --max-time 10 "http://localhost:${TUNNEL_LOCAL_PORT}/" || echo 000)
-        case "$code" in
-            200|302)
-                echo "  -> SSH tunnel verified: localhost:${TUNNEL_LOCAL_PORT} -> ${NODE_HOST}:${PORT} (HTTP ${code})"
+        api_code=$(curl -s -o /dev/null -w '%{http_code}' --max-time 10 "http://localhost:${TUNNEL_LOCAL_PORT}/o/headless-delivery/v1.0/openapi.json" || echo 000)
+        if [ "$code" = "200" ] || [ "$code" = "302" ]; then
+            if [ "$api_code" = "200" ] || [ "$api_code" = "403" ] || [ "$api_code" = "302" ]; then
+                echo "  -> SSH tunnel & Headless APIs verified: localhost:${TUNNEL_LOCAL_PORT} -> ${NODE_HOST}:${PORT} (HTTP ${code}, API ${api_code})"
                 return 0
-                ;;
-        esac
+            fi
+        fi
         sleep 5
         elapsed=$((elapsed + 5))
     done
 
-    echo "[ERROR] SSH tunnel opened but Liferay did not answer through it after ${timeout}s (HTTP ${code})."
+    echo "[ERROR] SSH tunnel opened but Liferay did not answer through it after ${timeout}s (HTTP ${code}, API ${api_code})."
     stop_node_tunnel
     exit 1
 }
@@ -335,6 +340,11 @@ cleanup() {
         echo " Tearing down Liferay Docker Manager project..."
         log_command "ldm rm \"$PROJECT_NAME\" -y --delete"
         ldm rm "$PROJECT_NAME" -y --delete > /dev/null 2>&1 || true
+        stop_node_tunnel
+        if [ -n "$NODE_TARGET" ] && [ -x "./scripts/node_power.sh" ]; then
+            echo " Returning target node '$NODE_TARGET' to power sleep..."
+            ./scripts/node_power.sh sleep "$NODE_TARGET" || true
+        fi
         echo " Cleanup complete."
     fi
     echo "======================================================"
@@ -1107,6 +1117,7 @@ TEST_EXIT_CODE=0
 if [ -n "$FILTER_PATTERN" ]; then
     export TEST_FILTER="$FILTER_PATTERN"
     GREP_PATTERN="${FILTER_PATTERN//-/[- ]}"
+    GREP_PATTERN="${GREP_PATTERN//,/|}"
     log_command "npx playwright test --grep \"$GREP_PATTERN\""
     ../node_modules/.bin/playwright test --grep "$GREP_PATTERN" > playwright_output.log 2>&1 || TEST_EXIT_CODE=$?
     # A filter that provisions an environment and then matches no tests is a
