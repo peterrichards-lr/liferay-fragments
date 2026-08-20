@@ -9,6 +9,7 @@ Last Updated: 2026-08-20 | Last Reviewed: 2026-08-20
 
 import argparse
 import json
+import os
 import re
 import subprocess
 import sys
@@ -158,23 +159,82 @@ def resolve_ec2_id(node_name: str, config: dict) -> str:
     return ""
 
 
+def update_node_host(node_name: str, new_ip: str) -> None:
+    """Updates host in .node-power-config.json and LDM configuration."""
+    if CONFIG_FILE.exists():
+        try:
+            data = json.loads(CONFIG_FILE.read_text())
+            if node_name in data.get("nodes", {}):
+                data["nodes"][node_name]["host"] = new_ip
+                CONFIG_FILE.write_text(json.dumps(data, indent=2) + "\n")
+        except Exception:
+            pass
+
+    user = "ec2-user"
+    if CONFIG_FILE.exists():
+        try:
+            data = json.loads(CONFIG_FILE.read_text())
+            user = data.get("nodes", {}).get(node_name, {}).get("user", "ec2-user")
+        except Exception:
+            pass
+
+    subprocess.run(
+        ["ldm", "target", "add", node_name, "--host", new_ip, "--user", user, "--overwrite"],
+        capture_output=True,
+        text=True,
+        check=False,
+    )
+
+
 def power_on_node(node_name: str, config: dict) -> bool:
     """Boots or resumes the specified target node using AWS CLI or SSH."""
     ec2_id = resolve_ec2_id(node_name, config)
+    region = config.get("region", "eu-north-1")
     if ec2_id:
         cmd = ["aws", "ec2", "start-instances", "--instance-ids", ec2_id]
-        if config.get("region"):
-            cmd.extend(["--region", config["region"]])
+        if region:
+            cmd.extend(["--region", region])
         print(f"▶ Booting AWS EC2 instance '{ec2_id}' for target node '{node_name}'...")
         res = subprocess.run(cmd, capture_output=True, text=True, check=False)
-        if res.returncode == 0:
-            print(f"✅ Target node '{node_name}' successfully powered on.")
-            return True
-        print(f"⚠️ AWS CLI note for '{node_name}': {res.stderr.strip()}")
+        if res.returncode != 0:
+            print(f"❌ AWS CLI error booting '{node_name}': {res.stderr.strip()}")
+            return False
+
+        print(f"⏳ Waiting for AWS EC2 instance '{ec2_id}' to reach 'running' state...")
+        wait_cmd = ["aws", "ec2", "wait", "instance-running", "--instance-ids", ec2_id]
+        if region:
+            wait_cmd.extend(["--region", region])
+        subprocess.run(wait_cmd, capture_output=True, text=True, check=False)
+
+        desc_cmd = [
+            "aws",
+            "ec2",
+            "describe-instances",
+            "--instance-ids",
+            ec2_id,
+            "--query",
+            "Reservations[0].Instances[0].PublicIpAddress",
+            "--output",
+            "text",
+        ]
+        if region:
+            desc_cmd.extend(["--region", region])
+        desc_res = subprocess.run(desc_cmd, capture_output=True, text=True, check=False)
+        if (
+            desc_res.returncode == 0
+            and desc_res.stdout.strip()
+            and desc_res.stdout.strip() != "None"
+        ):
+            new_ip = desc_res.stdout.strip()
+            print(
+                f"✅ Target node '{node_name}' powered on (Dynamic Public IP: {new_ip})."
+            )
+            update_node_host(node_name, new_ip)
+        else:
+            print(f"✅ Target node '{node_name}' powered on.")
         return True
-    print(
-        f"ℹ Node '{node_name}' has no active EC2 instance ID. Proceeding with target deployment."
-    )
+
+    print(f"ℹ Node '{node_name}' has no active EC2 instance ID.")
     return True
 
 
@@ -192,8 +252,8 @@ def power_off_node(node_name: str, config: dict) -> bool:
         if res.returncode == 0:
             print(f"✅ Target node '{node_name}' successfully powered off.")
             return True
-        print(f"⚠️ AWS CLI note for '{node_name}': {res.stderr.strip()}")
-        return True
+        print(f"⚠️ AWS CLI error stopping '{node_name}': {res.stderr.strip()}")
+        return False
 
     host = config.get("host")
     user = config.get("user", "ubuntu")
@@ -227,6 +287,11 @@ def cmd_wake(args: argparse.Namespace) -> None:
     wake_until_dt = now + duration
     wake_until_str = wake_until_dt.isoformat()
 
+    ok = power_on_node(node_name, config)
+    if not ok:
+        print(f"❌ Failed to power on target node '{node_name}'. Exiting with error.")
+        sys.exit(1)
+
     state = load_state()
     state[node_name] = {
         "status": "woken",
@@ -235,7 +300,6 @@ def cmd_wake(args: argparse.Namespace) -> None:
     }
     save_state(state)
 
-    power_on_node(node_name, config)
     print(
         f"⏰ Target node '{node_name}' woken until {wake_until_dt.strftime('%Y-%m-%d %H:%M:%S UTC')} (TTL: {args.ttl})."
     )
@@ -252,6 +316,12 @@ def cmd_sleep(args: argparse.Namespace) -> None:
         sys.exit(1)
 
     config = nodes[node_name]
+
+    ok = power_off_node(node_name, config)
+    if not ok:
+        print(f"❌ Failed to power off target node '{node_name}'. Exiting with error.")
+        sys.exit(1)
+
     state = load_state()
     state[node_name] = {
         "status": "shutdown",
@@ -259,8 +329,6 @@ def cmd_sleep(args: argparse.Namespace) -> None:
         "shutdown_at": datetime.now(timezone.utc).isoformat(),
     }
     save_state(state)
-
-    power_off_node(node_name, config)
 
 
 def cmd_enforce(args: argparse.Namespace) -> None:
