@@ -62,6 +62,19 @@ resolve_node_target() {
         return 0
     fi
 
+    # Ensure target node is registered in LDM config if missing
+    local target_exists
+    target_exists=$(command ldm config 2>/dev/null | grep -F "'$NODE_TARGET':" || true)
+    if [ -z "$target_exists" ] && [ -f ".node-power-config.json" ]; then
+        local node_host node_user
+        node_host=$(python3 -c "import json; cfg=json.load(open('.node-power-config.json')); print(cfg.get('nodes',{}).get('$NODE_TARGET',{}).get('host',''))" 2>/dev/null || true)
+        node_user=$(python3 -c "import json; cfg=json.load(open('.node-power-config.json')); print(cfg.get('nodes',{}).get('$NODE_TARGET',{}).get('user','ec2-user'))" 2>/dev/null || true)
+        if [ -n "$node_host" ]; then
+            echo "  -> Auto-registering LDM target '$NODE_TARGET' (${node_user:-ec2-user}@${node_host})..."
+            command ldm target add "$NODE_TARGET" --host "$node_host" --user "${node_user:-ec2-user}" --overwrite > /dev/null 2>&1 || true
+        fi
+    fi
+
     local parsed
     parsed=$(command ldm config 2>/dev/null | sed 's/\x1b\[[0-9;]*m//g' \
         | grep '^  targets' | python3 -c "
