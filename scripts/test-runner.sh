@@ -74,7 +74,11 @@ resolve_node_target() {
 
     if [ -n "$NODE_HOST" ]; then
         echo "  -> Auto-registering LDM target '$NODE_TARGET' (${NODE_USER:-ec2-user}@${NODE_HOST})..."
-        command ldm target add "$NODE_TARGET" --host "$NODE_HOST" --user "${NODE_USER:-ec2-user}" --overwrite > /dev/null 2>&1 || true
+        if [ -f "$HOME/.ssh/id_rsa" ]; then
+            command ldm target add "$NODE_TARGET" --host "$NODE_HOST" --user "${NODE_USER:-ec2-user}" --key "$HOME/.ssh/id_rsa" --overwrite > /dev/null 2>&1 || true
+        else
+            command ldm target add "$NODE_TARGET" --host "$NODE_HOST" --user "${NODE_USER:-ec2-user}" --overwrite > /dev/null 2>&1 || true
+        fi
     fi
 
     if [ -z "$NODE_HOST" ] || [ -z "$NODE_USER" ]; then
