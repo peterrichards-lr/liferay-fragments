@@ -21,8 +21,29 @@ STATE_FILE = Path(__file__).parent.parent / ".node-power-state.json"
 LDMRC_FILE = Path.home() / ".ldmrc"
 
 
+REMOTE_CONFIG_URL = (
+    "https://raw.githubusercontent.com/peterrichards-lr/liferay-docker-manager/main/.node-power-config.json"
+)
+
+
+def ensure_config_file() -> None:
+    """Ensures .node-power-config.json exists locally by downloading from central liferay-docker-manager repo if missing."""
+    if not CONFIG_FILE.exists():
+        try:
+            import urllib.request
+
+            print(
+                "📥 Downloading central node power configuration from liferay-docker-manager repository..."
+            )
+            urllib.request.urlretrieve(REMOTE_CONFIG_URL, CONFIG_FILE)
+            print("✅ Central node power configuration downloaded successfully.")
+        except Exception as e:
+            print(f"⚠️ Could not download central node config: {e}")
+
+
 def load_target_nodes() -> dict:
     """Loads target node definitions from .node-power-config.json or ~/.ldmrc fallback."""
+    ensure_config_file()
     nodes = {
         "aws-1": {
             "name": "aws-1",
