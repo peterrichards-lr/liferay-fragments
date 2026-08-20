@@ -53,13 +53,17 @@ jobs:
 
       - name: Configure SSH Private Key
         run: |
-          if [ -n "${{ secrets.EC2_SSH_KEY || secrets.SSH_PRIVATE_KEY }}" ]; then
+          SSH_KEY="${{ secrets.EC2_SSH_KEY || secrets.SSH_PRIVATE_KEY || secrets.AWS_SSH_KEY || secrets.SSH_KEY || secrets.EC2_PRIVATE_KEY || secrets.AWS_PRIVATE_KEY || secrets.LDM_SSH_KEY }}"
+          if [ -n "$SSH_KEY" ]; then
             mkdir -p ~/.ssh
             chmod 700 ~/.ssh
-            echo "${{ secrets.EC2_SSH_KEY || secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+            echo "$SSH_KEY" > ~/.ssh/id_rsa
             chmod 600 ~/.ssh/id_rsa
             eval $(ssh-agent -s)
             ssh-add ~/.ssh/id_rsa || true
+            echo "✅ SSH Private Key configured successfully."
+          else
+            echo "⚠️ Notice: No SSH Private Key secret found in repository secrets."
           fi
 
       - name: Set up Node.js
