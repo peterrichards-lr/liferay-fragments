@@ -183,20 +183,21 @@ verify_node_tunnel() {
     [ -z "$NODE_TARGET" ] && return 0
 
     echo "  -> Polling remote Liferay readiness over SSH tunnel (localhost:${TUNNEL_LOCAL_PORT})..."
-    local elapsed=0 timeout=900 code=000
+    local elapsed=0 timeout=900 code=000 api_code=000
     while [ $elapsed -lt $timeout ]; do
         code=$(curl -s -o /dev/null -w '%{http_code}' --max-time 10 "http://localhost:${TUNNEL_LOCAL_PORT}/" || echo 000)
-        case "$code" in
-            200|302)
-                echo "  -> SSH tunnel verified: localhost:${TUNNEL_LOCAL_PORT} -> ${NODE_HOST}:${PORT} (HTTP ${code})"
+        api_code=$(curl -s -o /dev/null -w '%{http_code}' --max-time 10 "http://localhost:${TUNNEL_LOCAL_PORT}/o/headless-delivery/v1.0/openapi.json" || echo 000)
+        if [ "$code" = "200" ] || [ "$code" = "302" ]; then
+            if [ "$api_code" = "200" ] || [ "$api_code" = "403" ] || [ "$api_code" = "302" ]; then
+                echo "  -> SSH tunnel & Headless APIs verified: localhost:${TUNNEL_LOCAL_PORT} -> ${NODE_HOST}:${PORT} (HTTP ${code}, API ${api_code})"
                 return 0
-                ;;
-        esac
+            fi
+        fi
         sleep 5
         elapsed=$((elapsed + 5))
     done
 
-    echo "[ERROR] SSH tunnel opened but Liferay did not answer through it after ${timeout}s (HTTP ${code})."
+    echo "[ERROR] SSH tunnel opened but Liferay did not answer through it after ${timeout}s (HTTP ${code}, API ${api_code})."
     stop_node_tunnel
     exit 1
 }
@@ -1107,6 +1108,7 @@ TEST_EXIT_CODE=0
 if [ -n "$FILTER_PATTERN" ]; then
     export TEST_FILTER="$FILTER_PATTERN"
     GREP_PATTERN="${FILTER_PATTERN//-/[- ]}"
+    GREP_PATTERN="${GREP_PATTERN//,/|}"
     log_command "npx playwright test --grep \"$GREP_PATTERN\""
     ../node_modules/.bin/playwright test --grep "$GREP_PATTERN" > playwright_output.log 2>&1 || TEST_EXIT_CODE=$?
     # A filter that provisions an environment and then matches no tests is a
