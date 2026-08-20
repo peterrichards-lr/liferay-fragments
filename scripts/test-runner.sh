@@ -89,6 +89,10 @@ print(t.get('key_path', ''))
         exit 1
     fi
     echo "  -> Remote node '$NODE_TARGET': ${NODE_USER}@${NODE_HOST}"
+    if [ -x "./scripts/node_power.sh" ]; then
+        echo "  -> Triggering power wake window for target node '$NODE_TARGET' (TTL: 2h)..."
+        ./scripts/node_power.sh wake "$NODE_TARGET" 2h || true
+    fi
 }
 
 node_ssh_opts() {
@@ -336,6 +340,11 @@ cleanup() {
         echo " Tearing down Liferay Docker Manager project..."
         log_command "ldm rm \"$PROJECT_NAME\" -y --delete"
         ldm rm "$PROJECT_NAME" -y --delete > /dev/null 2>&1 || true
+        stop_node_tunnel
+        if [ -n "$NODE_TARGET" ] && [ -x "./scripts/node_power.sh" ]; then
+            echo " Returning target node '$NODE_TARGET' to power sleep..."
+            ./scripts/node_power.sh sleep "$NODE_TARGET" || true
+        fi
         echo " Cleanup complete."
     fi
     echo "======================================================"

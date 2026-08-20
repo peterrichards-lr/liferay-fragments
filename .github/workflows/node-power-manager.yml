@@ -1,0 +1,55 @@
+name: Target Node Cost & Power Control
+
+on:
+  schedule:
+    - cron: '0 * * * *'  # Hourly schedule enforcement
+  workflow_dispatch:
+    inputs:
+      action:
+        description: 'Action (status|wake|sleep|enforce)'
+        required: true
+        default: 'status'
+        type: choice
+        options:
+          - status
+          - wake
+          - sleep
+          - enforce
+      node:
+        description: 'Target Node Name (aws-1 or aws-2)'
+        required: false
+        default: 'aws-1'
+        type: choice
+        options:
+          - aws-1
+          - aws-2
+      ttl:
+        description: 'Wake Duration (e.g. 2h, 4h, 30m)'
+        required: false
+        default: '2h'
+
+jobs:
+  power-management:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install boto3
+      - uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_REGION }}
+      - run: |
+          if [ "${{ github.event_name }}" = "schedule" ]; then
+            python3 scripts/manage_target_nodes.py enforce
+          else
+            case "${{ inputs.action }}" in
+              status) python3 scripts/manage_target_nodes.py status ;;
+              wake) python3 scripts/manage_target_nodes.py wake "${{ inputs.node }}" --ttl "${{ inputs.ttl }}" ;;
+              sleep) python3 scripts/manage_target_nodes.py sleep "${{ inputs.node }}" ;;
+              enforce) python3 scripts/manage_target_nodes.py enforce ;;
+            esac
+          fi
