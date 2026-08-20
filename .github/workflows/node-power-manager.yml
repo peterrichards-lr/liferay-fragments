@@ -41,6 +41,15 @@ jobs:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ secrets.AWS_REGION || 'eu-north-1' }}
+      - name: Install Latest LDM Binary
+        run: |
+          echo "📥 Downloading latest LDM binary from liferay-docker-manager repository..."
+          curl -sSL "https://github.com/peterrichards-lr/liferay-docker-manager/releases/latest/download/ldm-linux-amd64" -o /tmp/ldm || true
+          if [ -s /tmp/ldm ]; then
+            sudo mv /tmp/ldm /usr/local/bin/ldm
+            sudo chmod +x /usr/local/bin/ldm
+            ldm --version || true
+          fi
       - env:
           NODE_POWER_CONFIG_URL: ${{ vars.NODE_POWER_CONFIG_URL }}
         run: |

@@ -31,7 +31,7 @@ concurrency:
   cancel-in-progress: true
 
 env:
-  LDM_VERSION: ${{ inputs.ldm_version || vars.LDM_VERSION || 'v2.15.16-pre.10' }}
+  LDM_VERSION: ${{ inputs.ldm_version || vars.LDM_VERSION || 'latest' }}
   LDM_NODE_TARGET: ${{ inputs.node || vars.LDM_NODE_TARGET || 'aws-1' }}
 
 jobs:
@@ -85,12 +85,16 @@ jobs:
 
       - name: Install LDM Binary (${{ env.LDM_VERSION }})
         run: |
-          DOWNLOAD_URL="https://github.com/peterrichards-lr/liferay-docker-manager/releases/download/${{ env.LDM_VERSION }}/ldm-linux"
-          echo "Downloading LDM ${{ env.LDM_VERSION }} from: $DOWNLOAD_URL"
-          wget -q -O ldm-linux "$DOWNLOAD_URL"
-          chmod +x ldm-linux
-          sudo mv ldm-linux /usr/local/bin/ldm
-          ldm version --no-color --no-unicode
+          if [ "${{ env.LDM_VERSION }}" = "latest" ] || [ -z "${{ env.LDM_VERSION }}" ]; then
+            DOWNLOAD_URL="https://github.com/peterrichards-lr/liferay-docker-manager/releases/latest/download/ldm-linux-amd64"
+          else
+            DOWNLOAD_URL="https://github.com/peterrichards-lr/liferay-docker-manager/releases/download/${{ env.LDM_VERSION }}/ldm-linux-amd64"
+          fi
+          echo "Downloading LDM from: $DOWNLOAD_URL"
+          curl -sSL -o /tmp/ldm-linux "$DOWNLOAD_URL" || curl -sSL -o /tmp/ldm-linux "https://github.com/peterrichards-lr/liferay-docker-manager/releases/download/${{ env.LDM_VERSION }}/ldm-linux"
+          chmod +x /tmp/ldm-linux
+          sudo mv /tmp/ldm-linux /usr/local/bin/ldm
+          ldm version --no-color --no-unicode || ldm --version || true
 
       - name: Provide Dummy LDM License
         run: |
