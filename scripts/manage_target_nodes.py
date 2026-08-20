@@ -51,6 +51,7 @@ def load_target_nodes() -> dict:
                         "name": name,
                         "schedule": "auto",
                         "ec2_instance_id": node_info.get("ec2_instance_id", ""),
+                        "region": node_info.get("region", ""),
                         "host": node_info.get("host", ""),
                         "user": node_info.get("user", "ubuntu"),
                     }
@@ -137,13 +138,12 @@ def is_in_shutdown_window(dt: datetime, schedule: str) -> bool:
 def power_on_node(node_name: str, config: dict) -> bool:
     """Boots or resumes the specified target node using AWS CLI or SSH."""
     ec2_id = config.get("ec2_instance_id")
-    region = config.get("region")
     if ec2_id:
         cmd = ["aws", "ec2", "start-instances", "--instance-ids", ec2_id]
-        if region:
-            cmd.extend(["--region", region])
+        if config.get("region"):
+            cmd.extend(["--region", config["region"]])
         print(f"▶ Booting AWS EC2 instance '{ec2_id}' for target node '{node_name}'...")
-        res = subprocess.run(cmd, capture_output=True, text=True)
+        res = subprocess.run(cmd, capture_output=True, text=True, check=False)
         if res.returncode == 0:
             print(f"✅ Target node '{node_name}' successfully powered on.")
             return True
@@ -158,15 +158,14 @@ def power_on_node(node_name: str, config: dict) -> bool:
 def power_off_node(node_name: str, config: dict) -> bool:
     """Shuts down or stops the specified target node using AWS CLI or SSH."""
     ec2_id = config.get("ec2_instance_id")
-    region = config.get("region")
     if ec2_id:
         cmd = ["aws", "ec2", "stop-instances", "--instance-ids", ec2_id]
-        if region:
-            cmd.extend(["--region", region])
+        if config.get("region"):
+            cmd.extend(["--region", config["region"]])
         print(
             f"▶ Stopping AWS EC2 instance '{ec2_id}' for target node '{node_name}'..."
         )
-        res = subprocess.run(cmd, capture_output=True, text=True)
+        res = subprocess.run(cmd, capture_output=True, text=True, check=False)
         if res.returncode == 0:
             print(f"✅ Target node '{node_name}' successfully powered off.")
             return True
@@ -178,7 +177,7 @@ def power_off_node(node_name: str, config: dict) -> bool:
     if host and host != "localhost":
         cmd = ["ssh", f"{user}@{host}", "sudo shutdown -h now"]
         print(f"▶ Sending SSH shutdown command to '{user}@{host}'...")
-        res = subprocess.run(cmd, capture_output=True, text=True)
+        res = subprocess.run(cmd, capture_output=True, text=True, check=False)
         if res.returncode == 0:
             print(f"✅ Target node '{node_name}' SSH shutdown command sent.")
             return True

@@ -36,14 +36,16 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - run: pip install boto3
       - uses: aws-actions/configure-aws-credentials@v4
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: ${{ secrets.AWS_REGION }}
+          aws-region: ${{ secrets.AWS_REGION || 'us-east-1' }}
       - run: |
-          TARGET_NODE="${{ secrets.LDM_NODE_TARGET || vars.LDM_NODE_TARGET || inputs.node || 'aws-1' }}"
+          TARGET_NODE="${{ secrets.LDM_NODE_TARGET }}"
+          TARGET_NODE="${TARGET_NODE:-${{ inputs.node }}}"
+          TARGET_NODE="${TARGET_NODE:-aws-1}"
+
           if [ "${{ github.event_name }}" = "schedule" ]; then
             python3 scripts/manage_target_nodes.py enforce
           else
