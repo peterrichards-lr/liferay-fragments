@@ -394,9 +394,36 @@ def cmd_enforce(args: argparse.Namespace) -> None:
                 "shutdown_at": now.isoformat(),
             }
         else:
-            print(f"  • Node '{name}': Outside shutdown window. Node active.")
+            print(f"  • Node '{name}': Business hours active. Ensuring node is booted.")
+            power_on_node(name, config)
 
     save_state(state)
+
+
+def query_live_ec2_status(ec2_id: str, region: str = "eu-north-1") -> tuple[str, str]:
+    """Queries live AWS EC2 instance state and public IP address via AWS CLI."""
+    if not ec2_id or ec2_id.startswith("i-0123456789") or ec2_id.startswith("i-0987654321"):
+        return ("UNKNOWN", "")
+    cmd = [
+        "aws",
+        "ec2",
+        "describe-instances",
+        "--instance-ids",
+        ec2_id,
+        "--query",
+        "Reservations[0].Instances[0].[State.Name, PublicIpAddress]",
+        "--output",
+        "text",
+    ]
+    if region:
+        cmd.extend(["--region", region])
+    res = subprocess.run(cmd, capture_output=True, text=True, check=False)
+    if res.returncode == 0 and res.stdout.strip():
+        parts = res.stdout.strip().split()
+        ec2_state = parts[0].upper() if len(parts) > 0 else "UNKNOWN"
+        public_ip = parts[1] if len(parts) > 1 and parts[1] != "None" else ""
+        return (f"EC2:{ec2_state}", public_ip)
+    return ("UNKNOWN", "")
 
 
 def cmd_status(args: argparse.Namespace) -> None:
@@ -415,18 +442,24 @@ def cmd_status(args: argparse.Namespace) -> None:
         f"Local Time: {now_local.strftime('%Y-%m-%d %H:%M:%S')} | Schedule Window: {'ACTIVE' if is_in_shutdown_window(now_local, 'auto') else 'INACTIVE'}\n"
     )
     print(
-        f"{'NODE':<10} {'SCHEDULE':<10} {'EC2 ID':<18} {'STATUS':<15} {'DETAILS':<25}"
+        f"{'NODE':<10} {'SCHEDULE':<10} {'EC2 ID':<20} {'STATUS':<15} {'DETAILS':<25}"
     )
     print("-" * 78)
 
     for name, config in nodes.items():
         schedule = config.get("schedule", "auto")
         ec2_id = config.get("ec2_instance_id", "N/A")
+        region = config.get("region", "eu-north-1")
         node_state = state.get(name, {})
         wake_until_str = node_state.get("wake_until", "")
 
         status_label = "ACTIVE"
         details = "Normal operation"
+
+        live_state, live_ip = query_live_ec2_status(ec2_id, region)
+        if live_state != "UNKNOWN":
+            status_label = live_state
+            details = f"IP: {live_ip}" if live_ip else "IP: Unassigned"
 
         if wake_until_str:
             try:
@@ -434,19 +467,19 @@ def cmd_status(args: argparse.Namespace) -> None:
                 if wake_until_dt > now:
                     rem = wake_until_dt - now
                     mins = int(rem.total_seconds() // 60)
-                    status_label = "WOKEN (TTL)"
-                    details = f"{mins} mins remaining"
+                    status_label = f"{live_state} (TTL)" if live_state != "UNKNOWN" else "WOKEN (TTL)"
+                    details = f"{mins} mins remaining | IP: {live_ip}" if live_ip else f"{mins} mins remaining"
                 else:
                     status_label = "TTL EXPIRED"
                     details = "Awaiting enforcement"
             except Exception:
                 pass
-        elif is_in_shutdown_window(now_local, schedule):
+        elif is_in_shutdown_window(now_local, schedule) and live_state == "UNKNOWN":
             status_label = "SHUTDOWN"
             details = "Scheduled off-hours"
 
         print(
-            f"{name:<10} {schedule:<10} {ec2_id:<18} {status_label:<15} {details:<25}"
+            f"{name:<10} {schedule:<10} {ec2_id:<20} {status_label:<15} {details:<25}"
         )
 
     print(

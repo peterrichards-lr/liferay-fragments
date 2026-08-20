@@ -760,7 +760,9 @@ else
     log_command "ldm run \"$PROJECT_NAME\" \"$TAG_FLAG\" \"$LIFERAY_TAG\" --port \"$PORT\" --non-interactive --no-captcha --fast-login --sidecar --db postgresql --clean-state --internal-state --fix-permissions $REMOTE_WAIT_FLAG $LDM_VERBOSE $FEATURE_ARGS --jvm-args \"-Xms2g -Xmx4g -XX:ReservedCodeCacheSize=512m\""
     if ! ldm run "$PROJECT_NAME" "$TAG_FLAG" "$LIFERAY_TAG" --port "$PORT" --non-interactive --no-captcha --fast-login --sidecar --db postgresql --clean-state --internal-state --fix-permissions $REMOTE_WAIT_FLAG $LDM_VERBOSE $FEATURE_ARGS --jvm-args "-Xms2g -Xmx4g -XX:ReservedCodeCacheSize=512m" > ldm_startup.log 2>&1; then
         echo "Error: LDM failed to start the environment."
-        echo "Hint: Check ldm_startup.log or run 'ldm logs $PROJECT_NAME' for more details."
+        echo "=================== LDM STARTUP LOG ==================="
+        cat ldm_startup.log 2>/dev/null || true
+        echo "======================================================="
         cat <<EOF >> "$RESULTS_FILE"
 ## Environment Failure
 The test runner failed to start the Liferay environment. 
