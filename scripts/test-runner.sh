@@ -63,62 +63,31 @@ resolve_node_target() {
         NODE_TARGET=""
         return 0
     fi
-
-    # Ensure target node is registered in LDM config if missing
-    local target_exists
-    target_exists=$(command ldm config 2>/dev/null | grep -F "'$NODE_TARGET':" || true)
-    if [ -z "$target_exists" ] && [ -f ".node-power-config.json" ]; then
-        local node_host node_user
-        node_host=$(python3 -c "import json; cfg=json.load(open('.node-power-config.json')); print(cfg.get('nodes',{}).get('$NODE_TARGET',{}).get('host',''))" 2>/dev/null || true)
-        node_user=$(python3 -c "import json; cfg=json.load(open('.node-power-config.json')); print(cfg.get('nodes',{}).get('$NODE_TARGET',{}).get('user','ec2-user'))" 2>/dev/null || true)
-        if [ -n "$node_host" ]; then
-            echo "  -> Auto-registering LDM target '$NODE_TARGET' (${node_user:-ec2-user}@${node_host})..."
-            command ldm target add "$NODE_TARGET" --host "$node_host" --user "${node_user:-ec2-user}" --overwrite > /dev/null 2>&1 || true
-        fi
+    if [ "$NODE_TARGET" = "***" ] || [[ "$NODE_TARGET" =~ \* ]]; then
+        NODE_TARGET="aws-1"
     fi
 
-    local parsed
-    parsed=$(command ldm config 2>/dev/null | sed 's/\x1b\[[0-9;]*m//g' \
-        | grep '^  targets' | python3 -c "
-import sys, ast
-raw = sys.stdin.read()
-if not raw.strip():
-    raise SystemExit(1)
-targets = ast.literal_eval(raw.split('=', 1)[1].strip())
-t = targets.get('$NODE_TARGET')
-if not t:
-    raise SystemExit(2)
-print(t.get('host', ''))
-print(t.get('user', ''))
-print(t.get('key_path', ''))
-" 2>/dev/null)
-
-    NODE_HOST=$(echo "$parsed" | sed -n '1p')
-    NODE_USER=$(echo "$parsed" | sed -n '2p')
-    NODE_KEY=$(echo "$parsed" | sed -n '3p')
-
-    if [ -z "$NODE_HOST" ] && [ -f ".node-power-config.json" ]; then
+    if [ -f ".node-power-config.json" ]; then
         NODE_HOST=$(python3 -c "import json; cfg=json.load(open('.node-power-config.json')); print(cfg.get('nodes',{}).get('$NODE_TARGET',{}).get('host',''))" 2>/dev/null || true)
         NODE_USER=$(python3 -c "import json; cfg=json.load(open('.node-power-config.json')); print(cfg.get('nodes',{}).get('$NODE_TARGET',{}).get('user','ec2-user'))" 2>/dev/null || true)
+    fi
+
+    if [ -n "$NODE_HOST" ]; then
+        echo "  -> Auto-registering LDM target '$NODE_TARGET' (${NODE_USER:-ec2-user}@${NODE_HOST})..."
+        command ldm target add "$NODE_TARGET" --host "$NODE_HOST" --user "${NODE_USER:-ec2-user}" --overwrite > /dev/null 2>&1 || true
     fi
 
     if [ -z "$NODE_HOST" ] || [ -z "$NODE_USER" ]; then
         echo "[ERROR] Target '$NODE_TARGET' has no host/user recorded."
         exit 1
     fi
+
     if [ -x "./scripts/node_power.sh" ]; then
         echo "  -> Triggering power wake window for target node '$NODE_TARGET' (TTL: 2h)..."
         ./scripts/node_power.sh wake "$NODE_TARGET" 2h || true
-        # Recalculate NODE_HOST in case wake updated the dynamic EC2 public IP
+        # Recalculate NODE_HOST in case wake updated dynamic EC2 public IP
         local dynamic_host
-        dynamic_host=$(python3 -c "
-import json, sys
-from pathlib import Path
-cfg = Path('.node-power-config.json')
-if cfg.exists():
-    data = json.loads(cfg.read_text())
-    print(data.get('nodes', {}).get('$NODE_TARGET', {}).get('host', ''))
-" 2>/dev/null || true)
+        dynamic_host=$(python3 -c "import json; cfg=json.load(open('.node-power-config.json')); print(cfg.get('nodes',{}).get('$NODE_TARGET',{}).get('host',''))" 2>/dev/null || true)
         if [ -n "$dynamic_host" ]; then
             NODE_HOST="$dynamic_host"
             echo "  -> Dynamic IP resolved for '$NODE_TARGET': ${NODE_USER}@${NODE_HOST}"
