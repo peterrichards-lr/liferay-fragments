@@ -185,23 +185,23 @@ def resolve_ec2_id(node_name: str, config: dict) -> str:
 
 def update_node_host(node_name: str, new_ip: str) -> None:
     """Updates host in .node-power-config.json and LDM configuration."""
-    if CONFIG_FILE.exists():
-        try:
-            data = json.loads(CONFIG_FILE.read_text())
-            if node_name in data.get("nodes", {}):
-                data["nodes"][node_name]["host"] = new_ip
-                CONFIG_FILE.write_text(json.dumps(data, indent=2) + "\n")
-        except Exception:
-            pass
+    nodes = load_target_nodes()
+    if node_name in nodes:
+        nodes[node_name]["host"] = new_ip
+    else:
+        nodes[node_name] = {
+            "name": node_name,
+            "host": new_ip,
+            "user": "ldm-automation",
+            "schedule": "auto",
+        }
 
-    user = "ec2-user"
-    if CONFIG_FILE.exists():
-        try:
-            data = json.loads(CONFIG_FILE.read_text())
-            user = data.get("nodes", {}).get(node_name, {}).get("user", "ec2-user")
-        except Exception:
-            pass
+    try:
+        CONFIG_FILE.write_text(json.dumps({"nodes": nodes}, indent=2) + "\n")
+    except Exception as e:
+        print(f"⚠️ Could not write {CONFIG_FILE}: {e}")
 
+    user = nodes.get(node_name, {}).get("user", "ldm-automation")
     subprocess.run(
         ["ldm", "target", "add", node_name, "--host", new_ip, "--user", user, "--overwrite"],
         capture_output=True,
@@ -343,6 +343,11 @@ def cmd_wake(args: argparse.Namespace) -> None:
         "woken_at": now.isoformat(),
     }
     save_state(state)
+
+    try:
+        CONFIG_FILE.write_text(json.dumps({"nodes": nodes}, indent=2) + "\n")
+    except Exception:
+        pass
 
     print(
         f"⏰ Target node '{node_name}' woken until {wake_until_dt.strftime('%Y-%m-%d %H:%M:%S UTC')} (TTL: {args.ttl})."
