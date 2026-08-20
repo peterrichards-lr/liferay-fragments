@@ -11,6 +11,7 @@ import argparse
 import json
 import os
 import re
+import shutil
 import subprocess
 import sys
 from datetime import datetime, timedelta, timezone
@@ -202,12 +203,13 @@ def update_node_host(node_name: str, new_ip: str) -> None:
         print(f"⚠️ Could not write {CONFIG_FILE}: {e}")
 
     user = nodes.get(node_name, {}).get("user", "ldm-automation")
-    subprocess.run(
-        ["ldm", "target", "add", node_name, "--host", new_ip, "--user", user, "--overwrite"],
-        capture_output=True,
-        text=True,
-        check=False,
-    )
+    if shutil.which("ldm"):
+        subprocess.run(
+            ["ldm", "target", "add", node_name, "--host", new_ip, "--user", user, "--overwrite"],
+            capture_output=True,
+            text=True,
+            check=False,
+        )
 
 
 def wait_for_ssh(host: str, port: int = 22, timeout_sec: int = 90) -> bool:
@@ -344,6 +346,21 @@ def cmd_wake(args: argparse.Namespace) -> None:
     }
     save_state(state)
 
+    ec2_id = resolve_ec2_id(node_name, config)
+    region = config.get("region", "eu-north-1")
+    if ec2_id:
+        subprocess.run(
+            [
+                "aws", "ec2", "create-tags",
+                "--resources", ec2_id,
+                "--tags", f"Key=WakeUntil,Value={wake_until_str}",
+                "--region", region,
+            ],
+            capture_output=True,
+            text=True,
+            check=False,
+        )
+
     print(
         f"⏰ Target node '{node_name}' woken until {wake_until_dt.strftime('%Y-%m-%d %H:%M:%S UTC')} (TTL: {args.ttl})."
     )
@@ -376,6 +393,21 @@ def cmd_sleep(args: argparse.Namespace) -> None:
     }
     save_state(state)
 
+    ec2_id = resolve_ec2_id(node_name, config)
+    region = config.get("region", "eu-north-1")
+    if ec2_id:
+        subprocess.run(
+            [
+                "aws", "ec2", "delete-tags",
+                "--resources", ec2_id,
+                "--tags", "Key=WakeUntil",
+                "--region", region,
+            ],
+            capture_output=True,
+            text=True,
+            check=False,
+        )
+
 
 def cmd_enforce(args: argparse.Namespace) -> None:
     """Handler for 'enforce' (evaluates schedules and active wake TTLs)."""
@@ -392,6 +424,25 @@ def cmd_enforce(args: argparse.Namespace) -> None:
         schedule = config.get("schedule", "auto")
         node_state = state.get(name, {})
         wake_until_str = node_state.get("wake_until", "")
+
+        ec2_id = resolve_ec2_id(name, config)
+        region = config.get("region", "eu-north-1")
+
+        if not wake_until_str and ec2_id:
+            tag_res = subprocess.run(
+                [
+                    "aws", "ec2", "describe-tags",
+                    "--filters", f"Name=resource-id,Values={ec2_id}", "Name=key,Values=WakeUntil",
+                    "--query", "Tags[0].Value",
+                    "--output", "text",
+                    "--region", region,
+                ],
+                capture_output=True,
+                text=True,
+                check=False,
+            )
+            if tag_res.returncode == 0 and tag_res.stdout.strip() and tag_res.stdout.strip() != "None":
+                wake_until_str = tag_res.stdout.strip()
 
         is_woken = False
         if wake_until_str:
