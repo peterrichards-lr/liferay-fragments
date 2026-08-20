@@ -459,7 +459,8 @@ def cmd_enforce(args: argparse.Namespace) -> None:
             tag_res = subprocess.run(
                 [
                     "aws", "ec2", "describe-tags",
-                    "--filters", f"Name=resource-id,Values={ec2_id}", "Name=key,Values=WakeUntil",
+                    "--filters", f"Name=resource-id,Values={ec2_id}",
+                    "--filters", "Name=key,Values=WakeUntil",
                     "--query", "Tags[0].Value",
                     "--output", "text",
                     "--region", region,
