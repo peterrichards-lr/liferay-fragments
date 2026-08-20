@@ -44,12 +44,12 @@ A lifestyle-focused design system with a scoped container architecture, high-fid
 **Snapshot Prerequisites / Layout Components:**
 - Fragment: `aura-scoped-container`
 
-#### Desktop (1920px) <br>🟢 **Passed**
+#### Desktop (1920px) <br>🔴 **Failed (Test)**<br><small>Error: Fragment 'Aura - Final CTA Banner' failed verification with 1 issue(s):...</small>
 <img src="./images/live/aura-design-system-aura-final-cta-banner-desktop.png" width="100%" alt="Desktop">
 
 | Tablet (768px) | Mobile (375px) |
 | :---: | :---: |
-| <img src="./images/live/aura-design-system-aura-final-cta-banner-tablet.png" width="350" alt="Tablet"><br>🟢 **Passed** | <img src="./images/live/aura-design-system-aura-final-cta-banner-mobile.png" width="175" alt="Mobile"><br>🟢 **Passed** |
+| <img src="./images/live/aura-design-system-aura-final-cta-banner-tablet.png" width="350" alt="Tablet"><br>🔴 **Failed (Test)**<br><small>Error: Fragment 'Aura - Final CTA Banner' failed verification with 1 issue(s):...</small> | <img src="./images/live/aura-design-system-aura-final-cta-banner-mobile.png" width="175" alt="Mobile"><br>🔴 **Failed (Test)**<br><small>Error: Fragment 'Aura - Final CTA Banner' failed verification with 1 issue(s):...</small> |
 
 [Detailed Documentation](./fragments/aura/aura-final-cta.md)
 
@@ -60,12 +60,12 @@ A lifestyle-focused design system with a scoped container architecture, high-fid
 **Snapshot Prerequisites / Layout Components:**
 - Fragment: `aura-scoped-container`
 
-#### Desktop (1920px) <br>🟢 **Passed**
+#### Desktop (1920px) <br>🔴 **Failed (Test)**<br><small>Error: Fragment 'Aura - Lookbook Row' failed verification with 1 issue(s):...</small>
 <img src="./images/live/aura-design-system-aura-lookbook-row-desktop.png" width="100%" alt="Desktop">
 
 | Tablet (768px) | Mobile (375px) |
 | :---: | :---: |
-| <img src="./images/live/aura-design-system-aura-lookbook-row-tablet.png" width="350" alt="Tablet"><br>🟢 **Passed** | <img src="./images/live/aura-design-system-aura-lookbook-row-mobile.png" width="175" alt="Mobile"><br>🟢 **Passed** |
+| <img src="./images/live/aura-design-system-aura-lookbook-row-tablet.png" width="350" alt="Tablet"><br>🔴 **Failed (Test)**<br><small>Error: Fragment 'Aura - Lookbook Row' failed verification with 1 issue(s):...</small> | <img src="./images/live/aura-design-system-aura-lookbook-row-mobile.png" width="175" alt="Mobile"><br>🔴 **Failed (Test)**<br><small>Error: Fragment 'Aura - Lookbook Row' failed verification with 1 issue(s):...</small> |
 
 [Detailed Documentation](./fragments/aura/aura-lookbook.md)
 
@@ -76,12 +76,12 @@ A lifestyle-focused design system with a scoped container architecture, high-fid
 **Snapshot Prerequisites / Layout Components:**
 - Fragment: `aura-scoped-container`
 
-#### Desktop (1920px) <br>🟢 **Passed**
+#### Desktop (1920px) <br>🔴 **Failed (Test)**<br><small>Error: Fragment 'Aura - Product Gallery' failed verification with 1 issue(s):...</small>
 <img src="./images/live/aura-design-system-aura-product-gallery-desktop.png" width="100%" alt="Desktop">
 
 | Tablet (768px) | Mobile (375px) |
 | :---: | :---: |
-| <img src="./images/live/aura-design-system-aura-product-gallery-tablet.png" width="350" alt="Tablet"><br>🟢 **Passed** | <img src="./images/live/aura-design-system-aura-product-gallery-mobile.png" width="175" alt="Mobile"><br>🟢 **Passed** |
+| <img src="./images/live/aura-design-system-aura-product-gallery-tablet.png" width="350" alt="Tablet"><br>🔴 **Failed (Test)**<br><small>Error: Fragment 'Aura - Product Gallery' failed verification with 1 issue(s):...</small> | <img src="./images/live/aura-design-system-aura-product-gallery-mobile.png" width="175" alt="Mobile"><br>🔴 **Failed (Test)**<br><small>Error: Fragment 'Aura - Product Gallery' failed verification with 1 issue(s):...</small> |
 
 [Detailed Documentation](./fragments/aura/aura-product-gallery.md)
 
@@ -92,12 +92,12 @@ A lifestyle-focused design system with a scoped container architecture, high-fid
 **Snapshot Prerequisites / Layout Components:**
 - Fragment: `aura-scoped-container`
 
-#### Desktop (1920px) <br>🟢 **Passed**
+#### Desktop (1920px) <br>🔴 **Failed (Test)**<br><small>Error: Fragment 'Aura - USP Grid' failed verification with 1 issue(s):...</small>
 <img src="./images/live/aura-design-system-aura-usp-grid-desktop.png" width="100%" alt="Desktop">
 
 | Tablet (768px) | Mobile (375px) |
 | :---: | :---: |
-| <img src="./images/live/aura-design-system-aura-usp-grid-tablet.png" width="350" alt="Tablet"><br>🟢 **Passed** | <img src="./images/live/aura-design-system-aura-usp-grid-mobile.png" width="175" alt="Mobile"><br>🟢 **Passed** |
+| <img src="./images/live/aura-design-system-aura-usp-grid-tablet.png" width="350" alt="Tablet"><br>🔴 **Failed (Test)**<br><small>Error: Fragment 'Aura - USP Grid' failed verification with 1 issue(s):...</small> | <img src="./images/live/aura-design-system-aura-usp-grid-mobile.png" width="175" alt="Mobile"><br>🔴 **Failed (Test)**<br><small>Error: Fragment 'Aura - USP Grid' failed verification with 1 issue(s):...</small> |
 
 [Detailed Documentation](./fragments/aura/aura-usp-grid.md)
 
