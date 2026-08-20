@@ -14,6 +14,11 @@ on:
         options:
           - aws-1
           - aws-2
+      ldm_version:
+        description: 'LDM Binary Version Tag (e.g. v2.15.16-pre.10)'
+        required: false
+        default: ''
+        type: string
       filter:
         description: 'Test Filter Pattern (e.g. aura, dynamic-collection-slider)'
         required: false
@@ -26,7 +31,7 @@ concurrency:
   cancel-in-progress: true
 
 env:
-  LDM_VERSION: v2.15.16-pre.10
+  LDM_VERSION: ${{ inputs.ldm_version || vars.LDM_VERSION || 'v2.15.16-pre.10' }}
   LDM_NODE_TARGET: ${{ inputs.node || vars.LDM_NODE_TARGET || 'aws-1' }}
 
 jobs:
