@@ -28,17 +28,8 @@ export LDM_NODE_TARGET="$NODE_TARGET"
 export NODE_TARGET="$NODE_TARGET"
 
 # Wrapper function to enforce clean, color-free plain-text outputs for all LDM commands.
-# Forwards -n so every LDM invocation acts on the intended compute node.
 ldm() {
-    local target="${NODE_TARGET:-aws-1}"
-    if [ "$target" = "***" ] || [[ "$target" == *"*"* ]]; then
-        target="aws-1"
-    fi
-    if [ -n "$target" ] && [ "$target" != "local" ]; then
-        command ldm -n "$target" "$@"
-    else
-        command ldm "$@"
-    fi
+    command ldm "$@"
 }
 
 # Query a field from a project's JSON entry in `ldm list --json`.
